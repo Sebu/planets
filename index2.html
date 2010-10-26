@@ -1,0 +1,186 @@
+<html>
+<head> 
+<title>webgl test2</title> 
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<script type="text/javascript" src="scenejs/lib/scenejs.js"></script> 
+<script type="application/javascript" src="stardateviz.js"></script>
+
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  background-color: white;
+  font-family: sans-serif;
+}
+CANVAS {
+  background-color: gray;
+}
+.fpsContainer {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  color: gray;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 10px;
+  padding: 10px;
+}
+.fps {
+  color: white;
+}
+#uiContainer {
+  z-index: 2;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 250px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: xx-small;
+  border-radius: 10px;
+  padding: 10px;
+}
+#ui {
+}
+.clickable {
+  cursor: pointer;
+}
+#viewContainer {
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+</head>
+
+<body>
+<body>
+<div class="fpsContainer">
+  <div id="topUI">
+  <div><span class="clickable" id="setSetting7">Change View</span>
+  <span style="float: right" class="clickable" id="setSetting8">*</span></div>
+  <div class="clickable" id="options">Options...
+  <div id="optionsContainer">
+  </div>
+  </div>
+  </div>
+</div>
+<div id="uiContainer">
+<div id="ui"></div>
+</div>
+<div id="viewContainer">
+<canvas id="gl_canvas" width="800" height="600" style="width: 800px; height: 600px;">
+  <p>This example requires a browser that supports the
+     <a href="http://www.w3.org/html/wg/html5/">HTML5</a> 
+     &lt;canvas&gt; feature.</p> 
+</canvas>
+</div>
+</body>
+  
+<script type="text/javascript"> 
+var scene = SceneJS.scene(
+  { canvasId: "gl_canvas" },
+  SceneJS.renderer({             /* Specifies which buffers are cleared for each frame
+             */
+            clear: {
+                depth : true,
+                color : true,
+                stencil: false
+            },
+
+            /* Specify clear values for the colour buffers
+             */
+            clearColor: {
+                r: 0.0,
+                g : 0.0,
+                b : 0.0
+            },
+
+ 
+
+           /* Specify the clear value for the depth buffer
+             */
+            clearDepth: 1.0,
+
+
+            /*----------------------------------------
+             Culling
+             -----------------------------------------*/
+
+            /* Enable/disable face culling
+             */
+            enableCullFace: true,
+
+            /* Specify facet culling mode, accepted values are: front, back, front_and_back
+             */
+            cullFace: "front",
+
+            /* Specify front/back-facing mode. Accepted values are cw or ccw
+             */
+            frontFace: "cw" },
+
+  SceneJS.lookAt({
+    eye : { x: 0.0, y: 0.0, z: -15 }, look : { z:1.0 }, up: { y: 1.0 } 
+    },
+
+    SceneJS.camera( {
+      optics: { type: "perspective", fovy : 45.0, aspect : 1.33, near : 0.10, far : 300.0}
+      },
+      SceneJS.light({
+         type:  "dir",
+         color: { r: 1.0, g: 1.0, b: 1.0 },
+         dir:   { x: 1.0, y: -1.0, z: 1.0 }
+      }),
+
+      SceneJS.light({
+              type:  "dir",
+              color: { r: 1.0, g: 1.0, b: 1.0 },
+              dir:   { x: -1.0, y: -1.0, z: -3.0 }
+            }),
+
+      SceneJS.material({
+              baseColor:      { r: 0.2, g: 0.9, b: 0.2 },
+              specularColor:  { r: 0.9, g: 0.9, b: 0.2 },
+              emit: 0.0, specular: 0.9, shine: 6.0
+           },
+				system = new SceneJS.Spherical({scale: 3.0},
+									   new SceneJS.Spherical({ scale: 2.5},
+											 new SceneJS.Spherical({ scale: 2.0},
+											 	 new SceneJS.Translate({x:0.0, y:5.0, z:0.0},
+			 										new SceneJS.Scale( {x:0.2, y:0.2, z:0.2 }, new SceneJS.Sphere())
+				        					)
+											 )
+										 ) 
+									 )
+		  )
+		)
+	)
+));
+
+SceneJS.bind("error", function(e) {
+   if (e.exception.message) {
+       alert("Error: " + e.exception.message);
+   } else {
+       alert("Error: " + e.exception);
+   }
+});
+
+var angle = 0.0;
+window.render = function() {
+		angle += 0.3;
+		system.setRotate(angle);
+    scene.render(); 
+};
+var pInterval = setInterval("window.render()", 10);  
+ 
+</script>
+
+
+
+ 
+</body>
+</html>
