@@ -5,7 +5,7 @@ SceneJS.Circle  = SceneJS.createNodeType("circle", "geometry");
 
 SceneJS.Sky.prototype._init = function(params) {
 
-	this.addNode( new SceneJS.Scale({ x:-5.0, y:-5.0, z:-5.0}, 
+	this.addNode( new SceneJS.Scale({ x:-15.0, y:-15.0, z:-15.0}, 
 			new SceneJS.Planet({emit:0.5, tex: "textures/starsmap.jpg"} )) 
 	);           
 }
@@ -67,7 +67,7 @@ SceneJS.Planet.prototype._init = function(params) {
 								        	SceneJS.material({              
 								        	baseColor: { r: 0.0, g: 0.0, b: 0.0 },
 						              specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-        						      emit: emit, specular: 0.0, shine: 1.0},
+        						      emit: emit, specular: 0.0, shine: 6.0},
 								          	new SceneJS.Texture({ layers: [{	uri: params.tex }] }, new SceneJS.Sphere())
 								          )
 	        						  )
@@ -91,20 +91,8 @@ SceneJS.Spherical.prototype._init = function(params) {
         this.addNode(this._zRotate = SceneJS.rotate({angle: params.angle, z: 1.0},
 											 SceneJS.translate( {x: 0.0, y: params.scale, z: 0.0  }, SceneJS.scale( {x: 0.1, y: 0.1, z: 0.1 }, new SceneJS.Sphere() )),
 											 SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale }, new SceneJS.Circle({angle: params.angle}) ),											        
-										   this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
-								              SceneJS.material({
-	              baseColor:      { r: 0.9 , g: 0.7, b: 0.2 },
-  	            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    	          emit: 0.0, specular: 0.0, shine: 1.0, opacity: 1.0
-           },
-        	
-		        	SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale }, SceneJS.material({
-	              baseColor:      { r: 0.9 , g: 0.7, b: 0.2 },
-  	            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    	          emit: 0.0, specular: 0.0, shine: 1.0, opacity: 0.2
-           			} )
-           		)
-		      ))
+										   this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0}
+								              )
 				));
         						
         this._yRotate.addNodes(tmpNodes);

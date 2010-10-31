@@ -15,9 +15,6 @@ html, body {
   background-color: rgb(25,25,25);
   font-family: sans-serif;
 }
-CANVAS {
-  background-color: rgb(25,25,25);
-}
 .slider {
 	width:94px;
 	height:5px;
@@ -41,7 +38,7 @@ CANVAS {
   left: 10px;
   z-index: 2;
   color: gray;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(150,150,150,0.5);
   border-radius: 10px;
   padding: 10px;
 }
@@ -54,7 +51,7 @@ CANVAS {
   top: 10px;
   right: 20px;
   width: 250px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(150,150,150,0.5);
   color: white;
   font-size: xx-small;
   border-radius: 10px;
@@ -81,17 +78,17 @@ CANVAS {
   <span style="float: right" class="clickable" id="setSetting8">*</span></div>
   <div class="clickable" id="options">Options...
   <div id="optionsContainer">
-  <input type="range">
+ 
   </div>
   </div>
   </div>
 </div>
 <div id="uiContainer">
-<div id="ui"></div>
+<div id="ui"> <input type="range"></div>
 </div>
 <div id="viewContainer">
 
-<canvas id="glCanvas" width="800" height="600" >
+<canvas id="glCanvas" width="1024" height="768" >
   <p>This example requires a browser that supports the
      <a href="http://www.w3.org/html/wg/html5/">HTML5</a> 
      &lt;canvas&gt; feature.</p> 
@@ -129,7 +126,9 @@ var scene = SceneJS.scene(
              */
             clearDepth: 1.0,
 
-
+            /* Set the width of rasterised lines
+             */
+            lineWidth: 1,
             /*----------------------------------------
              Culling
              -----------------------------------------*/
@@ -151,7 +150,7 @@ var scene = SceneJS.scene(
     },
 
     SceneJS.camera( {
-      optics: { type: "perspective", fovy : 45.0, aspect : 1.33, near : 0.10, far : 300.0}
+      optics: { type: "perspective", fovy : 90.0, aspect : 1.33, near : 0.10, far : 300.0}
       },
 
 
@@ -175,15 +174,22 @@ var scene = SceneJS.scene(
 				new SceneJS.Rotate({id: "pitch", angle: 0.0, x: 1.0},
 				new SceneJS.Rotate({id: "yaw", angle: 0.0, y: 1.0},
 				new SceneJS.Sky(),
-				new SceneJS.Planet({tex: "textures/earthmap1k.jpg"} ),           
-				new SceneJS.Spherical({scale: 3, angle: 90.0},
-								system2 = new SceneJS.Spherical({ scale: 3, angle: 24.0},
-										system3 = new SceneJS.Spherical({ scale: 3, angle: 90.0},
-											new SceneJS.Translate({x:0.0, y:3.0, z:0.0},
+				new SceneJS.Planet({tex: "textures/earthmap1k.jpg"} ), 
+SceneJS.material({
+	              baseColor:      { r: .5 , g: 0.7, b: 0.3 },
+  	            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+    	          emit: 0.2, specular: 0.0, shine: 1.0, opacity: 1.0
+           },
+        	
+
+				new SceneJS.Spherical({scale: 9, angle: 90.0},
+								system2 = new SceneJS.Spherical({ scale: 9, angle: 24.0},
+										system3 = new SceneJS.Spherical({ scale: 9, angle: 90.0},
+											new SceneJS.Translate({x:0.0, y:9.0, z:0.0},
 			 								 new SceneJS.Scale( { id: "sun", x:0.2, y:0.2, z:0.2 }, 
 										    new SceneJS.Planet({ emit: 0.2, tex: "textures/sunmap.jpg"} ))),
-											system4 = new SceneJS.Spherical({ scale: 3, angle: -90.0},
-										    new SceneJS.Translate({x:0.0, y:3.0, z:0.0},
+											system4 = new SceneJS.Spherical({ scale: 9, angle: -90.0},
+										    new SceneJS.Translate({x:0.0, y:9.0, z:0.0},
 			 										new SceneJS.Scale( {x:0.2, y:0.2, z:0.2 }, 
 														new SceneJS.Planet({tex: "textures/mercurymap.jpg"} )
 			 										
@@ -192,7 +198,7 @@ var scene = SceneJS.scene(
 										 ) 
 									 )
 								)
-						)
+						))
 						
 		  ))
 		  )
@@ -210,7 +216,7 @@ SceneJS.bind("error", function(e) {
 
 var angle = 0.0;
 window.render = function() {
-		angle += 2.0;
+		angle += 0.5;
 //		system.setRotate(angle);
 	  system2.setRotate(angle);
 	  system3.setRotate(angle/2.0);
@@ -225,6 +231,10 @@ window.render = function() {
     
 };
 
+SceneJS.withNode("sun").bind("picked",
+        function(event) {
+            alert("Picked: 'right-green-sphere'");
+        });
 
 var yaw = 0;
 var pitch = 0;
@@ -236,6 +246,7 @@ function mouseDown(event) {
     lastX = event.clientX;
     lastY = event.clientY;
     dragging = true;
+    SceneJS.withNode("theScene").pick(event.offsetX, event.offsetY);
 }
 
 function mouseUp() {
