@@ -1,6 +1,14 @@
 SceneJS.Spherical  = SceneJS.createNodeType("spherical");
 SceneJS.Planet  = SceneJS.createNodeType("planet");
+SceneJS.Sky  = SceneJS.createNodeType("sky");
 SceneJS.Circle  = SceneJS.createNodeType("circle", "geometry");
+
+SceneJS.Sky.prototype._init = function(params) {
+
+	this.addNode( new SceneJS.Scale({ x:-5.0, y:-5.0, z:-5.0}, 
+			new SceneJS.Planet({emit:0.5, tex: "textures/starsmap.jpg"} )) 
+	);           
+}
 
 SceneJS.Circle.prototype._init = function(params) {
     var slices = params.slices || 30;

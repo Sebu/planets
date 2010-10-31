@@ -157,10 +157,13 @@ var scene = SceneJS.scene(
 
 			 light = new SceneJS.Light({
              mode: "point",
-             pos: { x: 100.0, y: 30.0, z: -100.0 }, // Position
+             pos: { x: 0.0, y: 0.0, z: 0.0 }, // Position
              color: { r: 1.0, g: 1.0, b: 1.0 },
              diffuse: true,   // Contribute to diffuse lighting
              specular: true,  // Contribute to specular lighting
+             constantAttenuation: 1.0,
+             quadraticAttenuation: 0.0,
+             linearAttenuation: 0.0             
 
         }),
 
@@ -171,6 +174,7 @@ var scene = SceneJS.scene(
            },
 				new SceneJS.Rotate({id: "pitch", angle: 0.0, x: 1.0},
 				new SceneJS.Rotate({id: "yaw", angle: 0.0, y: 1.0},
+				new SceneJS.Sky(),
 				new SceneJS.Planet({tex: "textures/earthmap1k.jpg"} ),           
 				new SceneJS.Spherical({scale: 3, angle: 90.0},
 								system2 = new SceneJS.Spherical({ scale: 3, angle: 24.0},
