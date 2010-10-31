@@ -5,6 +5,7 @@
 
 <script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script> 
 <script type="text/javascript" src="scenejs/lib/scenejs.js"></script> 
+<script type="text/javascript" src="scenejs/lib/scenejs-query-node-pos.js"></script> 
 <script type="application/javascript" src="stardateviz.js"></script>
 
 <style>
@@ -15,7 +16,7 @@ html, body {
   font-family: sans-serif;
 }
 CANVAS {
-  background-color: gray;
+  background-color: rgb(25,25,25);
 }
 .slider {
 	width:94px;
@@ -90,7 +91,7 @@ CANVAS {
 </div>
 <div id="viewContainer">
 
-<canvas id="gl_canvas" width="800" height="600" >
+<canvas id="glCanvas" width="800" height="600" >
   <p>This example requires a browser that supports the
      <a href="http://www.w3.org/html/wg/html5/">HTML5</a> 
      &lt;canvas&gt; feature.</p> 
@@ -105,7 +106,7 @@ $(":range").rangeinput();
 <script type="text/javascript"> 
 
 var scene = SceneJS.scene(
-  { canvasId: "gl_canvas" },
+  { id: "theScene", canvasId: "glCanvas" },
   SceneJS.renderer({             /* Specifies which buffers are cleared for each frame
              */
             clear: {
@@ -152,7 +153,9 @@ var scene = SceneJS.scene(
     SceneJS.camera( {
       optics: { type: "perspective", fovy : 45.0, aspect : 1.33, near : 0.10, far : 300.0}
       },
-new SceneJS.Light({
+
+
+			 light = new SceneJS.Light({
              mode: "point",
              pos: { x: 100.0, y: 30.0, z: -100.0 }, // Position
              color: { r: 1.0, g: 1.0, b: 1.0 },
@@ -161,50 +164,33 @@ new SceneJS.Light({
 
         }),
 
-
-
-      SceneJS.material({
+       SceneJS.material({
               baseColor:      { r: 0.2, g: 0.9, b: 0.2 },
               specularColor:  { r: 0.9, g: 0.9, b: 0.2 },
               emit: 0.0, specular: 0.0, shine: 6.0
            },
-           
-				system = new SceneJS.Spherical({scale: 3.0, angle: 90.0},
-									  new SceneJS.Spherical({ scale: 2.5, angle: 90.0},
-											 new SceneJS.Spherical({ scale: 2.0, angle: 45.0},
-											 	 new SceneJS.Translate({x:0.0, y:5.0, z:0.0},
-			 										new SceneJS.Scale( {x:0.5, y:0.5, z:0.5 }, 
-														new SceneJS.Planet({tex: "textures/moonmap1k.jpg"} )
-			 										
-				        					)
-											 )
-										 ) 
-									 )
-								),
-				new SceneJS.Spherical({scale: 3.0, angle: 90.0},
-									  new SceneJS.Spherical({ scale: 2.5, angle: 90.0},
-											 new SceneJS.Spherical({ scale: 2.0, angle: 45.0},
-											 	 new SceneJS.Translate({x:0.0, y:5.0, z:0.0},
-			 										new SceneJS.Scale( {x:0.5, y:0.5, z:0.5 }, 
-														new SceneJS.Planet({tex: "textures/sunmap.jpg"} )
-			 										
-				        					)
-											 )
-										 ) 
-									 )
-								),								
-				system2 = new SceneJS.Spherical({scale: 3.0, angle: 90.0},
-									 new SceneJS.Spherical({ scale: 2.5, angle: 90.0},
-											 new SceneJS.Spherical({ scale: 2.0, angle: 45.0},
-											 	 new SceneJS.Translate({x:0.0, y:5.0, z:0.0},
-			 										new SceneJS.Scale( {x:0.5, y:0.5, z:0.5 }, 
+				new SceneJS.Rotate({id: "pitch", angle: 0.0, x: 1.0},
+				new SceneJS.Rotate({id: "yaw", angle: 0.0, y: 1.0},
+				new SceneJS.Planet({tex: "textures/earthmap1k.jpg"} ),           
+				new SceneJS.Spherical({scale: 3, angle: 90.0},
+								system2 = new SceneJS.Spherical({ scale: 3, angle: 24.0},
+										system3 = new SceneJS.Spherical({ scale: 3, angle: 90.0},
+											new SceneJS.Translate({x:0.0, y:3.0, z:0.0},
+			 								 new SceneJS.Scale( { id: "sun", x:0.2, y:0.2, z:0.2 }, 
+										    new SceneJS.Planet({ emit: 0.2, tex: "textures/sunmap.jpg"} ))),
+											system4 = new SceneJS.Spherical({ scale: 3, angle: -90.0},
+										    new SceneJS.Translate({x:0.0, y:3.0, z:0.0},
+			 										new SceneJS.Scale( {x:0.2, y:0.2, z:0.2 }, 
 														new SceneJS.Planet({tex: "textures/mercurymap.jpg"} )
 			 										
 				        					)
 											 )
 										 ) 
 									 )
-								)								
+								)
+						)
+						
+		  ))
 		  )
 		)
 	)
@@ -221,10 +207,60 @@ SceneJS.bind("error", function(e) {
 var angle = 0.0;
 window.render = function() {
 		angle += 2.0;
-		system.setRotate(angle);
-				system2.setRotate(angle/2.0);
+//		system.setRotate(angle);
+	  system2.setRotate(angle);
+	  system3.setRotate(angle/2.0);
+	  system4.setRotate(-angle/2.0);
+
+    var query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 12, canvasHeight : 12 	});
+		query.execute({ nodeId: "sun" });
+		var results = query.getResults();
+		var worldPos   = results.worldPos;
+		light.setPos(worldPos);
     scene.render(); 
+    
 };
+
+
+var yaw = 0;
+var pitch = 0;
+var lastX;
+var lastY;
+var dragging = false;
+
+function mouseDown(event) {
+    lastX = event.clientX;
+    lastY = event.clientY;
+    dragging = true;
+}
+
+function mouseUp() {
+    dragging = false;
+}
+
+/* On a mouse drag, we'll re-render the scene, passing in
+ * incremented angles in each time.
+ */
+function mouseMove(event) {
+    if (dragging) {
+        yaw += (event.clientX - lastX) * 0.5;
+        pitch += (event.clientY - lastY) * -0.5;
+
+        SceneJS.withNode("yaw").set("angle", yaw);
+        SceneJS.withNode("pitch").set("angle", pitch);
+
+        SceneJS.withNode("theScene").render();
+
+        lastX = event.clientX;
+        lastY = event.clientY;
+    }
+}
+
+var canvas = document.getElementById("glCanvas");
+canvas.addEventListener('mousedown', mouseDown, true);
+canvas.addEventListener('mousemove', mouseMove, true);
+canvas.addEventListener('mouseup', mouseUp, true);
+
 var pInterval = setInterval("window.render()", 30);  
  
 </script>
