@@ -1,3 +1,15 @@
+
+
+fixLight = function(light, node) {
+    var query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 1, canvasHeight : 1	});
+		query.execute({ nodeId: node });
+		var results = query.getResults();
+		var worldPos   = results.worldPos;
+		light.setPos(worldPos);
+}
+
+
+
 SceneJS.Spherical  = SceneJS.createNodeType("spherical");
 SceneJS.Planet  = SceneJS.createNodeType("planet");
 SceneJS.Sky  = SceneJS.createNodeType("sky");

@@ -182,8 +182,8 @@ SceneJS.material({
            },
         	
 
-				new SceneJS.Spherical({scale: 9, angle: 90.0},
-								system2 = new SceneJS.Spherical({ scale: 9, angle: 24.0},
+				 system = new SceneJS.Spherical({scale: 9, angle: 90.0},
+						system2 =	new SceneJS.Spherical({ scale: 9, angle: 24.0},
 										system3 = new SceneJS.Spherical({ scale: 9, angle: 90.0},
 											new SceneJS.Translate({x:0.0, y:9.0, z:0.0},
 			 								 new SceneJS.Scale( { id: "sun", x:0.2, y:0.2, z:0.2 }, 
@@ -217,16 +217,13 @@ SceneJS.bind("error", function(e) {
 var angle = 0.0;
 window.render = function() {
 		angle += 0.5;
-//		system.setRotate(angle);
-	  system2.setRotate(angle);
+		system.setRotate(angle);
+	  system2.setRotate(-angle*2.0);
 	  system3.setRotate(angle/2.0);
 	  system4.setRotate(-angle/2.0);
 
-    var query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 12, canvasHeight : 12 	});
-		query.execute({ nodeId: "sun" });
-		var results = query.getResults();
-		var worldPos   = results.worldPos;
-		light.setPos(worldPos);
+		fixLight(light,"sun");
+
     scene.render(); 
     
 };
@@ -246,7 +243,7 @@ function mouseDown(event) {
     lastX = event.clientX;
     lastY = event.clientY;
     dragging = true;
-    SceneJS.withNode("theScene").pick(event.offsetX, event.offsetY);
+//    SceneJS.withNode("theScene").pick(event.offsetX, event.offsetY);
 }
 
 function mouseUp() {
