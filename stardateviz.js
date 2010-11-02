@@ -1,11 +1,13 @@
 
+//Light.prototype = SceneJS.Light;
 
-fixLight = function(light, node) {
+
+SceneJS.Light.prototype.moveToNode = function(node) {
     var query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 1, canvasHeight : 1	});
 		query.execute({ nodeId: node });
 		var results = query.getResults();
 		var worldPos   = results.worldPos;
-		light.setPos(worldPos);
+		this.setPos(worldPos);
 }
 
 
@@ -27,9 +29,9 @@ SceneJS.Circle.prototype._init = function(params) {
     var angle = params.angle || 360;
         // this.setDensity(params.density);
      this._create = function() {
-        var radius = 1;
         var positions = [];
         var normals = [];
+        var colors = [];
         var uv = [];
         var arc = (angle / 180.0) * Math.PI;
         for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
@@ -51,6 +53,9 @@ SceneJS.Circle.prototype._init = function(params) {
                 positions.push(x);
                 positions.push(y);
                 positions.push(z);
+                colors.push(1.0);
+                colors.push(1.0);
+                colors.push(1.0);
 
         }
 
@@ -60,10 +65,12 @@ SceneJS.Circle.prototype._init = function(params) {
         }
 
         return {
+        		resource: "arc" + angle,
             primitive : "line-strip",
             positions : positions,
             normals: normals,
             uv : uv,
+            colors : colors,
             indices : indices
         };		     
 	   };

@@ -1,0 +1,92 @@
+html, body {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(25,25,25);
+  font-family: sans-serif;
+}
+/* slider root element */
+.slider { 
+	background:#151515; 
+	height:6px; 
+	position:relative; 
+	cursor:pointer;
+	border:1px solid #333;
+	width:150px;
+	top: 5px;
+	float:left; 
+	clear:right;
+	border-radius:10px; 
+}
+
+/* progress bar (enabled with progress: true) */
+.progress {
+	height:6px; 
+	background-color:#7BEB19; 
+	display:none;
+	border-radius:10px; 
+}
+
+/* drag handle */
+.handle { 
+	border:1px solid #333;
+	background:#83745B; 
+	height:12px;
+	width:12px;
+	top:-4px;
+	position:absolute; 
+	display:block; 
+	cursor:move;
+	border-radius:2px;	
+
+}
+
+/* the input field */
+.range {
+	border:1px inset #ddd;
+	float:left;
+	font-size:12px;
+	margin:0;
+	padding:0;
+	text-align:center;
+	width:20px;
+	border-radius:5px; 
+}
+
+
+.container {
+  z-index: 2;
+  position: absolute;
+  color: white;
+  background-color: rgba(150,150,150,0.5);
+  font-size: small;
+  border-radius: 5px;
+  padding: 10px;
+  
+}
+#uiContainer {
+  top: 10px;
+  left: 10px;
+}
+
+#infoContainer {
+  bottom: 10px;
+  right: 10px;
+}
+
+#helpContainer {
+  bottom: 10px;
+  left: 10px;
+}
+
+#glCanvas {
+ position: absolute; 
+
+}
+
+.clickable {
+  cursor: pointer;
+}
+
