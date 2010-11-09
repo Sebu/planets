@@ -18,7 +18,8 @@
       <option value="earth">Earth</option>
       <option value="sun">Sun</option>
     </select>
-   <div><input type="range" max="10" value="5" /></div>
+
+   <div>Speed<input type="range" id="speedRange" max="30" value="5"/></div>
 </div>
 
 <div class="container" id="infoContainer">
@@ -39,10 +40,14 @@ W,A,S,D + Mouse
   
 <script type="text/javascript"> 
 $(":range").rangeinput({ progress: true });
+
+$("#speedRange").bind("onSlide", function(event, value) { scale=value; } );
+
 var canvas = document.getElementById("glCanvas");
 
 
 var currentPos = "global";
+var scale = 5;
 var yaw = 0;
 var pitch = 0;
 var lastX;
@@ -81,6 +86,7 @@ function mouseMove(event) {
     }
 }
 
+
 canvas.addEventListener('mousedown', mouseDown, true);
 canvas.addEventListener('mousemove', mouseMove, true);
 canvas.addEventListener('mouseup', mouseUp, true);
@@ -97,8 +103,8 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
 			    SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0},
     				new SceneJS.Globe({scale: -15.0, emit: 0.5, tex: "textures/starsmap.jpg"}),
 		      	new SceneJS.Globe({scale: 1.0, id: "earth", tex: "textures/earthmap1k.jpg"}), 
-      			system1 = SceneJS.spherical({scale: 9, angle: 90.0, speed: 2.4},
-				      system2 =	SceneJS.spherical({ scale: 9, angle: -24.0, speed: -2.4},
+      			system1 = SceneJS.spherical({scale: 9, angle: 90.0, speed: 0.24},
+				      system2 =	SceneJS.spherical({ scale: 9, angle: -24.0, speed: -0.24},
                 new SceneJS.Planet({ emit: 0.2, inner_id: "sun", tex: "textures/sunmap.jpg"})
 //						    system3 = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 0.5}
 							 	 
@@ -142,8 +148,9 @@ SceneJS.bind("error", function(e) {
 
 window.render = function() {
 
-		system1.update();
-		system2.update();
+		
+		system1.update(scale);
+		system2.update(scale);
 //  	system3.update();				
 //		system4.update();
 		
