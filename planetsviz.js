@@ -1,5 +1,23 @@
 
 
+
+
+SceneJS.LookAt.prototype.move = function(delta) {
+	this._eyeX += 0.0 * delta;
+	this._eyeY += 0.0 * delta;
+	this._eyeZ += 1.0 * delta;
+	this._lookX = this._eyeX + 0.0;
+  this._lookY = this._eyeY + 0.0;
+	this._lookZ = this._eyeZ + 1.0;
+	this._setDirty();
+}
+
+
+//Camera.prototype.pitch = function(delta) {
+//	dir = this._dir;
+//	this._pos += this._dir * delta;
+//}
+
 getNodePos = function(node) {
   query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 1, canvasHeight : 1	});
 	query.execute({ nodeId: node });

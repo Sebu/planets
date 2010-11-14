@@ -5,8 +5,9 @@
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="planets.css">
 	<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script> 
-	<script type="text/javascript" src="scenejs/lib/scenejs.js"></script> 
-	<script type="text/javascript" src="scenejs/lib/scenejs-query-node-pos.js"></script> 
+	<script type="text/javascript" src="scenejs/scenejs.js"></script> 
+	<script type="text/javascript" src="scenejs/scenejs-query-node-pos.js"></script> 
+		<script type="text/javascript" src="sylvester/sylvester.js"></script> 
 	<script type="application/javascript" src="planetsviz.js"></script>
 </head>
 
@@ -31,7 +32,7 @@ Hilfe </br>
 W,A,S,D + Mouse
 </div>
 
-<canvas id="glCanvas">
+<canvas id="glCanvas" tabindex=1>
   <p>This example requires a browser that supports the
      <a href="http://www.w3.org/html/wg/html5/">HTML5</a> 
      &lt;canvas&gt; and <a href="http://www.khronos.org/webgl/WebGL">WebGL</a> features.</p> 
@@ -86,22 +87,36 @@ function mouseMove(event) {
     }
 }
 
+function keyboard(e) {
+	switch(e.keyCode) {
+		case 119: lookAt.move(0.2);  break;
+		case 115: lookAt.move(-0.2);  break;
+		default: return false;
+	}
+}
+
+function mouseWheel(event) {
+	lookAt.move(event.wheelDelta/120);
+}
 
 canvas.addEventListener('mousedown', mouseDown, true);
 canvas.addEventListener('mousemove', mouseMove, true);
 canvas.addEventListener('mouseup', mouseUp, true);
+canvas.addEventListener('keypress', keyboard, true);
+canvas.addEventListener('mousewheel', mouseWheel, true);
+canvas.addEventListener('DOMMouseScroll', mouseWheel, true);
 
 var scene = SceneJS.scene({ canvasId: "glCanvas" },
   renderer = SceneJS.renderer({             
     clear: { depth : true, color : true },
     clearColor: { r: 0.1, g : 0.1, b : 0.1 },
     enableCullFace: true, cullFace: "back", frontFace: "cw"},
-  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -15 }, look : { z:1.0 }, up: { y: 1.0 } },
+  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { z:0.0 }, up: { y: 1.0 } },
       camera = SceneJS.camera({},
 			  light = sunlight(),
 			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
 			    SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0},
-    				new SceneJS.Globe({scale: -15.0, emit: 0.5, tex: "textures/starsmap.jpg"}),
+			      new SceneJS.Stationary(new SceneJS.Globe({scale: -500.0, emit: 0.5, tex: "textures/starsmap.jpg"})),
 		      	new SceneJS.Globe({scale: 1.0, id: "earth", tex: "textures/earthmap1k.jpg"}), 
       			system1 = SceneJS.spherical({scale: 9, angle: 90.0, speed: 0.24},
 				      system2 =	SceneJS.spherical({ scale: 9, angle: -24.0, speed: -0.24},
@@ -125,7 +140,7 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
 resize = function() {
 	canvas.width = $(window).width();	
 	canvas.height = $(window).height();
-	camera.setOptics({ type: "perspective", fovy : 90.0, aspect : canvas.width/canvas.height, near : 0.10, far : 300.0});
+	camera.setOptics({ type: "perspective", fovy : 45.0, aspect : canvas.width/canvas.height, near : 0.10, far : 500.0});
 	renderer._props.props.viewport =  { x : 1, y : 1, width: canvas.width, height: canvas.height };
 }
 
@@ -133,7 +148,7 @@ resize = function() {
 
 function changeView(node) {
 //	alert("wurst"+node);
-	if(node=="global") pos = { x: 0.0, y: 0.0, z: -15 };
+	if(node=="global") pos = { x: 0.0, y: 0.0, z: -25 };
 	else pos = getNodePos(node);
 	lookAt.setEye(pos);
 } 
@@ -156,7 +171,7 @@ window.render = function() {
 		
 		//TODO: on model change :)
 		light.setPos(getNodePos("sun"));
-		changeView(currentPos);
+		//changeView(currentPos);
 
     scene.render(); 
 };
