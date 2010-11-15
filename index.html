@@ -20,7 +20,7 @@
       <option value="sun">Sun</option>
     </select>
 
-   <div>Speed<input type="range" id="speedRange" max="30" value="5"/></div>
+   <div>Speed<input type="range" id="speedRange" min="5" max="60" value="15"/></div>
 </div>
 
 <div class="container" id="infoContainer">
@@ -43,14 +43,14 @@ W,A,S,D + Mouse
 $(":range").rangeinput({ progress: true });
 
 
-$("#speedRange").bind("onSlide", function(event, value) { scale=value; } );
-$("#speedRange").bind("change", function(event, value) { scale=value; } );
+$("#speedRange").bind("onSlide", function(event, value) { scale=360.0/(30*value); } );
+$("#speedRange").bind("change", function(event, value) { scale=360.0/(30*value); } );
 
 var canvas = document.getElementById("glCanvas");
 
 
 var currentPos = "global";
-var scale = 5;
+var scale = 360.0/(30*15);
 var yaw = 0;
 var pitch = 0;
 var lastX;
@@ -121,13 +121,14 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
 			  light = sunlight(),
 			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
 			    SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0},
-			     // new SceneJS.Stationary(new SceneJS.Globe({scale: -500.0, emit: 0.5, tex: "textures/starsmap.jpg"})),
+			      //new SceneJS.Stationary(
+//			      new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}), //),
 		      	new SceneJS.Globe({scale: 1.0, id: "earth", tex: "textures/earthmap1k.jpg"}), 
-      			system1 = SceneJS.spherical({scale: 9, angle: 90.0, speed: 0.24, color: {r:0.0, g: 0.0, b: 0.0}},
-				      system2 =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 0.25, color: {r:0.0, g:1.0, b:0.0} },
-						    system3 = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 0.5, color: {r: 1.0, g: 0.0, b: 0.0} },
-  						    system4 = SceneJS.spherical({ scale: 9, angle: 10.0, speed: -0.5},
-                    new SceneJS.Planet({ emit: 0.2, inner_id: "sun", tex: "textures/mercurymap.jpg"})
+      			system1 = SceneJS.spherical({scale: 9, angle: 24.0, speed: 1.0, color: {r:0.3, g: 0.3, b: 0.3}},
+				      system2 =	SceneJS.spherical({ scale: 9, angle: 90.0, speed: 0.1, color: {r:0.0, g:1.0, b:0.0} },
+						    system3 = SceneJS.spherical({ scale: 9, angle: 10.0, speed: 0.3, color: {r: 1.0, g: 0.0, b: 0.0} },
+  						    system4 = SceneJS.spherical({ scale: 9, angle: 0.0, speed: -0.3, color: {r: 0.0, g: 0.0, b: 1.0}},
+                    new SceneJS.Planet({ scale: 0.5, inner_id: "sun", tex: "textures/mercurymap.jpg"})
                   )
 					 		  )
 						  )
@@ -169,8 +170,8 @@ window.render = function() {
 		
 		system1.update(scale);
 		system2.update(scale);
-//  	system3.update();				
-//		system4.update();
+  	system3.update(scale);				
+		system4.update(scale);
 		
 		//TODO: on model change :)
 		light.setPos(getNodePos("sun"));

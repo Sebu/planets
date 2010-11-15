@@ -1,6 +1,20 @@
 
 
+SceneJS._contextModule = new (function() {
 
+    var canvas;         // Currently active canvas
+    
+    SceneJS._eventModule.addListener(
+            SceneJS._eventModule.CANVAS_ACTIVATED,
+            function(c) {
+                canvas = c;
+            }
+    );
+    this.setLineWidth = function(width) {
+    	canvas.context.lineWidth(width);
+    }
+
+});
 
 SceneJS.LookAt.prototype.move = function(delta) {
 	this._eyeX += 0.0 * delta;
@@ -49,7 +63,7 @@ SceneJS.Globe.prototype._init = function(params) {
 				baseColor:  { r: 0.0, g: 0.0, b: 0.0 },
 				specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
 		  	emit: emit, specular: 0.0, shine: 6.0},
-				SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere({ rings: 6, sclices: 6}) )
+				SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere() )
 			)
 		)
 	);
@@ -61,12 +75,12 @@ SceneJS.Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
   this.addNode(
   	SceneJS.translate({x:0.0, y:0.0, z:9.0},
- 			SceneJS.scale( { id: params.inner_id, x:0.2, y:0.2, z:0.2 },
+ 			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	SceneJS.material({              
 					baseColor:  { r: 1.0, g: 1.0, b: 0.0 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    			emit: emit, specular: 0.0, shine: 6.0},
-					SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere({rings: 6, sclices: 6} ))
+    			emit: emit || 0.0, specular: 0.0, shine: 6.0},
+					SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere())
 				)
 			)
 		)
@@ -74,8 +88,8 @@ SceneJS.Planet.prototype._init = function(params) {
 };
 
 SceneJS.Circle.prototype._init = function(params) {
-    var angle = params.angle || 360;
-    var slices = Math.abs(Math.round(angle/10));
+    var angle = params.angle;
+    var slices = Math.abs(Math.round(angle/5));
         // this.setDensity(params.density);
      this._create = function() {
         var positions = [];
@@ -123,8 +137,27 @@ SceneJS.Circle.prototype._init = function(params) {
             indices : indices
         };		     
 	   };
+	   
 };
+SceneJS.Circle.prototype._render = function(traversalContext) {
+    if (this._handle) { // Was created before - test if not evicted since
+        if (!SceneJS._geometryModule.testGeometryExists(this._handle)) {
+            this._handle = null;
+        }
+    }
+    if (!this._handle) { // Either not created yet or has been evicted
+        if (this._create) { // Use callback to create
+            this._handle = SceneJS._geometryModule.createGeometry(this._resource, this._create());
+        } else { // Or supply arrays
+            this._handle = SceneJS._geometryModule.createGeometry(this._resource, this._geo);
+        }
+    }
+    SceneJS._geometryModule.pushGeometry(this._handle, { solid: this._solid });
+    SceneJS._contextModule.setLineWidth(2);
+    this._renderNodes(traversalContext);
+    SceneJS._geometryModule.popGeometry();
 
+};
 
 
 
@@ -137,19 +170,15 @@ SceneJS.Spherical.prototype._init = function(params) {
 	  tmpNodes =  this.removeNodes();
     this._color = params.color || { r: 0.5, g: 0.5, b: 0.5};
 	  
-	  // equator marker
-	  //this.addNode(SceneJS.translate( {x: 0.0, y: 0.0 , z: params.scale  }, SceneJS.scale( {x: 0.1, y: 0.1, z: 0.1 }, SceneJS.sphere() )));
-
-    this.addNode(										
-					// arc
-				 	SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
-				 		new SceneJS.Circle({angle: -params.angle})
-				 	)				
-    )							        
-		  
+//		this.addNode( 				
+//			SceneJS.rotate({angle: 90.0, x: 1.0},
+// 				SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
+//	 				new SceneJS.Circle({angle: this._yAngle})
+//		)));
+				 	
     this.addNode(
 
-   	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0},
+   	
     	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
 
 				SceneJS.material({
@@ -169,20 +198,24 @@ SceneJS.Spherical.prototype._init = function(params) {
 							SceneJS.sphere() 
 						)
 					),
-
+					// arc
+				 	SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
+				 		new SceneJS.Circle({angle: -params.angle})
+				 	),
 					// equator
 					SceneJS.rotate({angle: 90.0, x: 1.0},
 				 		SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
-				 			new SceneJS.Circle()
+				 			new SceneJS.Circle({angle: 360})
 				 		)
-				 	) 
+				 	),
+				 	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0}
 			 	)
 			)
 
 		)
 		);
     						
-    this._yRotate.addNodes(tmpNodes);
+    this._zRotate.addNodes(tmpNodes);
     this._zAngle= params.angle || 0;
     this.setAxis(this._zAngle);
     this._yAngle= params.yAngle || 0.0;
