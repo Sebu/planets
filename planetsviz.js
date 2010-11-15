@@ -49,7 +49,7 @@ SceneJS.Globe.prototype._init = function(params) {
 				baseColor:  { r: 0.0, g: 0.0, b: 0.0 },
 				specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
 		  	emit: emit, specular: 0.0, shine: 6.0},
-				SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere())
+				SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere({ rings: 6, sclices: 6}) )
 			)
 		)
 	);
@@ -60,13 +60,13 @@ SceneJS.Globe.prototype._init = function(params) {
 SceneJS.Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
   this.addNode(
-  	SceneJS.translate({x:0.0, y:9.0, z:0.0},
+  	SceneJS.translate({x:0.0, y:0.0, z:9.0},
  			SceneJS.scale( { id: params.inner_id, x:0.2, y:0.2, z:0.2 },
       	SceneJS.material({              
-					baseColor:  { r: 0.0, g: 0.0, b: 0.0 },
+					baseColor:  { r: 1.0, g: 1.0, b: 0.0 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
     			emit: emit, specular: 0.0, shine: 6.0},
-					SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere())
+					SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere({rings: 6, sclices: 6} ))
 				)
 			)
 		)
@@ -75,7 +75,7 @@ SceneJS.Planet.prototype._init = function(params) {
 
 SceneJS.Circle.prototype._init = function(params) {
     var angle = params.angle || 360;
-    var slices = Math.abs(Math.round(angle/5));
+    var slices = Math.abs(Math.round(angle/10));
         // this.setDensity(params.density);
      this._create = function() {
         var positions = [];
@@ -135,17 +135,25 @@ SceneJS.Spherical.prototype._init = function(params) {
         // this.setDensity(params.density);
         
 	  tmpNodes =  this.removeNodes();
-	  
+    this._color = params.color || { r: 0.5, g: 0.5, b: 0.5};
 	  
 	  // equator marker
 	  //this.addNode(SceneJS.translate( {x: 0.0, y: 0.0 , z: params.scale  }, SceneJS.scale( {x: 0.1, y: 0.1, z: 0.1 }, SceneJS.sphere() )));
+
+    this.addNode(										
+					// arc
+				 	SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
+				 		new SceneJS.Circle({angle: -params.angle})
+				 	)				
+    )							        
 		  
     this.addNode(
-   	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
-    	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0},
+
+   	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0},
+    	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
 
 				SceneJS.material({
-		      baseColor:      { r: 0.5 , g: 0.7, b: 0.3 },
+		      baseColor:      this._color,
           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
           emit: 0.2, specular: 0.0, shine: 1.0 
           },	    	
@@ -167,19 +175,14 @@ SceneJS.Spherical.prototype._init = function(params) {
 				 		SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
 				 			new SceneJS.Circle()
 				 		)
-				 	),	
-				 										
-					// arc
-				 	SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
-				 		new SceneJS.Circle({angle: params.angle})
-				 	)											        
+				 	) 
 			 	)
 			)
 
 		)
 		);
     						
-    this._zRotate.addNodes(tmpNodes);
+    this._yRotate.addNodes(tmpNodes);
     this._zAngle= params.angle || 0;
     this.setAxis(this._zAngle);
     this._yAngle= params.yAngle || 0.0;
