@@ -102,11 +102,11 @@ SceneJS.Curve.prototype._init = function(params) {
         colors.push(1.0);
      }
      var indices = [];
-     for (var i = 0; i < curvePos.length; i++) {
+     for (var i = 0; i <curvePos.length; i++) {
        indices.push(i);
      }
      return {
-       primitive : "line-loop",
+       primitive : "line-strip",
        positions : positions,
        colors : colors,
        indices : indices
@@ -246,7 +246,7 @@ SceneJS.Spherical.prototype._init = function(params) {
     this.setAxis(this._zAngle);
     this._yAngle= params.yAngle || 0.0;
     this._ySpeed= params.speed || 0.0;
-    this.update(1.0);
+    this.update(0.0);
         
         
 };
@@ -254,6 +254,10 @@ SceneJS.Spherical.prototype._init = function(params) {
 SceneJS.Spherical.prototype.setAxis = function(angle) {
 		this._zAngle = angle;
 		this._zRotate.setAngle(this._zAngle);
+};
+
+SceneJS.Spherical.prototype.getAxis = function() {
+		return  this._zAngle;
 };
 
 SceneJS.Spherical.prototype.setRotate = function(angle) {

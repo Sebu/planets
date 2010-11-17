@@ -136,11 +136,13 @@ anchor.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthm
 
 // mercury system
 var system = [];
+
+							
 anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 1.0, color: {r:0.3, g: 0.3, b: 0.3}},
 				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 1.0, color: {r:0.2, g:0.2, b:1.0} },
-						    		system[2] = SceneJS.spherical({ scale: 9, angle: -90.0, speed: 2.3, color: {r: 0.0, g: 1.0, b: 0.0} },
-  						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -2.3, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    new SceneJS.Planet({ emit: 0.1, scale: 0.3, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
+						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 2.0, color: {r: 0.0, g: 1.0, b: 0.0} },
+  						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -2.0, color: {r: 1.0, g: 0.0, b: 0.0}},
+                		    new SceneJS.Planet({ emit: 0.0, scale: 0.3, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
                 		  )
 					 		  		)
 						  		)	
@@ -148,20 +150,33 @@ anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 1.0,
 							);
 
 
-// demo
-calcCurve = function(node) {
+system[0]._anchor.addNode( SceneJS.spherical({ scale: 9, angle: 24.0, speed: 1.0, color: {r:0.2, g:0.2, b:1.0} },
+                  new SceneJS.Planet({ emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
+	              )
+							);
+							
+// TODO: calc max points and max motion estimation
+calcCurve = function(start,node) {
 	curvePos = [];
-	for(var i=0; i<360; i+=10) {
-			system[1].setAxis(0.0);
-			system[1].setRotate(0.0);
-			system[2].setRotate(i);
-			system[3].setRotate(-i);
-			pos = getNodePos(node);
-			curvePos.push(pos);
+	oldAxis = [];
+	for(var i=0; i<=start; i++) {
+		oldAxis[i] = system[i].getAxis();
+		system[i].setAxis(0.0);
+		system[i].setRotate(0.0);
+	}
+	for(var j=0; j<200; j+=5) {
+		for(var i=start+1; i<system.length; i++) {
+			tmp = j*system[i]._ySpeed;
+			system[i].setRotate(-tmp);
 		}
-		system[1].setAxis(24.0);
-		curve = new SceneJS.Curve({pos: curvePos});	
-		system[1]._anchor.addNode(curve);	
+		pos = getNodePos(node);
+		curvePos.push(pos);
+	}
+	for(var i=0; i<=start;i++)
+		system[i].setAxis(oldAxis[i]);
+			
+	curve = new SceneJS.Curve({pos: curvePos});	
+	system[start]._anchor.addNode(curve);	
 }
 
 resize = function() {
@@ -193,7 +208,7 @@ window.render = function() {
 			system[i].update(scale);
 		
 		//TODO: on model change :)
-		light.setPos(getNodePos("mercury"));
+		light.setPos(getNodePos("sun"));
 		//changeView(currentPos);
 
     scene.render(); 
@@ -208,7 +223,7 @@ setInterval("window.render()", 33);
 window.render();
 window.onresize=resize;
 
-calcCurve("mercury");
+calcCurve(1,"mercury");
 
 resize();
 
