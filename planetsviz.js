@@ -53,6 +53,7 @@ SceneJS.Spherical  = SceneJS.createNodeType("spherical");
 SceneJS.Planet  = SceneJS.createNodeType("planet");
 SceneJS.Globe  = SceneJS.createNodeType("globe");
 SceneJS.Circle  = SceneJS.createNodeType("circle", "geometry");
+SceneJS.Curve  = SceneJS.createNodeType("curve", "geometry");
 
 SceneJS.Globe.prototype._init = function(params) {
 	var emit = params.emit || 0.0;
@@ -63,7 +64,7 @@ SceneJS.Globe.prototype._init = function(params) {
 				baseColor:  { r: 0.0, g: 0.0, b: 0.0 },
 				specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
 		  	emit: emit, specular: 0.0, shine: 6.0},
-				SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere() )
+				new SceneJS.Texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere() )
 			)
 		)
 	);
@@ -86,6 +87,34 @@ SceneJS.Planet.prototype._init = function(params) {
 		)
   );      						
 };
+
+SceneJS.Curve.prototype._init = function(params) {
+    var curvePos = params.pos;
+    this._create = function() {
+      var positions = [];
+      var colors = [];
+      for (var i=0; i<curvePos.length; i++) {
+        positions.push(curvePos[i].x);
+        positions.push(curvePos[i].y);
+        positions.push(curvePos[i].z);
+        colors.push(1.0);
+        colors.push(0.4);
+        colors.push(1.0);
+     }
+     var indices = [];
+     for (var i = 0; i < curvePos.length; i++) {
+       indices.push(i);
+     }
+     return {
+       primitive : "line-loop",
+       positions : positions,
+       colors : colors,
+       indices : indices
+     };		     
+	 };
+	   
+};
+
 
 SceneJS.Circle.prototype._init = function(params) {
     var angle = params.angle;
@@ -139,6 +168,8 @@ SceneJS.Circle.prototype._init = function(params) {
 	   };
 	   
 };
+
+
 SceneJS.Circle.prototype._render = function(traversalContext) {
     if (this._handle) { // Was created before - test if not evicted since
         if (!SceneJS._geometryModule.testGeometryExists(this._handle)) {
@@ -170,18 +201,17 @@ SceneJS.Spherical.prototype._init = function(params) {
 	  tmpNodes =  this.removeNodes();
     this._color = params.color || { r: 0.5, g: 0.5, b: 0.5};
 	  
-//		this.addNode( 				
-//			SceneJS.rotate({angle: 90.0, x: 1.0},
-// 				SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
-//	 				new SceneJS.Circle({angle: this._yAngle})
-//		)));
+		this.addNode( 				
+			//SceneJS.rotate({angle: 90.0, x: 1.0},
+ 				SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
+	 				new SceneJS.Circle({angle: -	params.angle})
+		//)
+		));
 				 	
     this.addNode(
-
-   	
+   	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0},
     	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
-
-				SceneJS.material({
+				this._anchor = SceneJS.material({
 		      baseColor:      this._color,
           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
           emit: 0.2, specular: 0.0, shine: 1.0 
@@ -198,28 +228,24 @@ SceneJS.Spherical.prototype._init = function(params) {
 							SceneJS.sphere() 
 						)
 					),
-					// arc
-				 	SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
-				 		new SceneJS.Circle({angle: -params.angle})
-				 	),
+
 					// equator
 					SceneJS.rotate({angle: 90.0, x: 1.0},
 				 		SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
 				 			new SceneJS.Circle({angle: 360})
 				 		)
-				 	),
-				 	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0}
+				 	)
 			 	)
 			)
 
 		)
 		);
     						
-    this._zRotate.addNodes(tmpNodes);
+    this._anchor.addNodes(tmpNodes);
     this._zAngle= params.angle || 0;
     this.setAxis(this._zAngle);
     this._yAngle= params.yAngle || 0.0;
-    this._ySpeed=  params.speed || 0.0;
+    this._ySpeed= params.speed || 0.0;
     this.update(1.0);
         
         

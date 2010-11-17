@@ -17,7 +17,7 @@
    <select name="view" onchange="setCurrentPos(this.options[this.selectedIndex].value);">
       <option value="global">Global</option>
       <option value="earth">Earth</option>
-      <option value="sun">Sun</option>
+      <option value="mercury">Mercury</option>
     </select>
 
    <div>Speed<input type="range" id="speedRange" min="5" max="60" value="15"/></div>
@@ -111,28 +111,18 @@ canvas.addEventListener('keypress', keyboard, true);
 canvas.addEventListener('mousewheel', mouseWheel, true);
 canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
+// base structure
 var scene = SceneJS.scene({ canvasId: "glCanvas" },
   renderer = SceneJS.renderer({             
     clear: { depth : true, color : true },
     clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: true, cullFace: "back", frontFace: "cw"},
+    enableCullFace: true, cullFace: "back", frontFace: "cw"
+    },
   	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { z:0.0 }, up: { y: 1.0 } },
       camera = SceneJS.camera({},
 			  light = sunlight(),
 			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
-			    SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0},
-			      //new SceneJS.Stationary(
-//			      new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}), //),
-		      	new SceneJS.Globe({scale: 1.0, id: "earth", tex: "textures/earthmap1k.jpg"}), 
-      			system1 = SceneJS.spherical({scale: 9, angle: 24.0, speed: 1.0, color: {r:0.3, g: 0.3, b: 0.3}},
-				      system2 =	SceneJS.spherical({ scale: 9, angle: 90.0, speed: 0.1, color: {r:0.0, g:1.0, b:0.0} },
-						    system3 = SceneJS.spherical({ scale: 9, angle: 10.0, speed: 0.3, color: {r: 1.0, g: 0.0, b: 0.0} },
-  						    system4 = SceneJS.spherical({ scale: 9, angle: 0.0, speed: -0.3, color: {r: 0.0, g: 0.0, b: 1.0}},
-                    new SceneJS.Planet({ scale: 0.5, inner_id: "sun", tex: "textures/mercurymap.jpg"})
-                  )
-					 		  )
-						  )
-					  )
+			    anchor = SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0}
 	  	    )
         )
 		  )
@@ -140,6 +130,39 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
   )
 );
 
+//			      //new SceneJS.Stationary()
+anchor.addNode(new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}));
+anchor.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthmap1k.jpg"}));
+
+// mercury system
+var system = [];
+anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 1.0, color: {r:0.3, g: 0.3, b: 0.3}},
+				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 1.0, color: {r:0.2, g:0.2, b:1.0} },
+						    		system[2] = SceneJS.spherical({ scale: 9, angle: -90.0, speed: 2.3, color: {r: 0.0, g: 1.0, b: 0.0} },
+  						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -2.3, color: {r: 1.0, g: 0.0, b: 0.0}},
+                		    new SceneJS.Planet({ emit: 0.1, scale: 0.3, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
+                		  )
+					 		  		)
+						  		)	
+							  )
+							);
+
+
+// demo
+calcCurve = function(node) {
+	curvePos = [];
+	for(var i=0; i<360; i+=10) {
+			system[1].setAxis(0.0);
+			system[1].setRotate(0.0);
+			system[2].setRotate(i);
+			system[3].setRotate(-i);
+			pos = getNodePos(node);
+			curvePos.push(pos);
+		}
+		system[1].setAxis(24.0);
+		curve = new SceneJS.Curve({pos: curvePos});	
+		system[1]._anchor.addNode(curve);	
+}
 
 resize = function() {
 	canvas.width = $(window).width();	
@@ -151,7 +174,6 @@ resize = function() {
 
 
 function changeView(node) {
-//	alert("wurst"+node);
 	if(node=="global") pos = { x: 0.0, y: 0.0, z: -25 };
 	else pos = getNodePos(node);
 	lookAt.setEye(pos);
@@ -167,26 +189,27 @@ SceneJS.bind("error", function(e) {
 
 window.render = function() {
 
-		
-		system1.update(scale);
-		system2.update(scale);
-  	system3.update(scale);				
-		system4.update(scale);
+		for(i in system)
+			system[i].update(scale);
 		
 		//TODO: on model change :)
-		light.setPos(getNodePos("sun"));
+		light.setPos(getNodePos("mercury"));
 		//changeView(currentPos);
 
     scene.render(); 
 };
 
-SceneJS.withNode("sun").bind("picked",
+SceneJS.withNode("mercury").bind("picked",
         function(event) {
             alert("Picked: 'right-green-sphere'");
         });
 
 setInterval("window.render()", 33);  
+window.render();
 window.onresize=resize;
+
+calcCurve("mercury");
+
 resize();
 
 //resize render target after create in window.render
