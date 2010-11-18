@@ -4,11 +4,6 @@
 	<title>webgl test2</title> 
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="planets.css">
-	<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script> 
-	<script type="text/javascript" src="scenejs/scenejs.js"></script> 
-	<script type="text/javascript" src="scenejs/scenejs-query-node-pos.js"></script> 
-		<script type="text/javascript" src="sylvester/sylvester.js"></script> 
-	<script type="application/javascript" src="planetsviz.js"></script>
 </head>
 
 <body>
@@ -38,6 +33,12 @@ W,A,S,D + Mouse
      &lt;canvas&gt; and <a href="http://www.khronos.org/webgl/WebGL">WebGL</a> features.</p> 
 </canvas>
 
+
+<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script> 
+<script type="text/javascript" src="scenejs/scenejs.js"></script> 
+<script type="text/javascript" src="scenejs/scenejs-query-node-pos.js"></script> 
+<script type="text/javascript" src="sylvester/sylvester.js"></script> 
+<script type="text/javascript" src="planetsviz.js"></script>
   
 <script type="text/javascript"> 
 $(":range").rangeinput({ progress: true });
@@ -131,7 +132,7 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
 );
 
 //			      //new SceneJS.Stationary()
-anchor.addNode(new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}));
+//anchor.addNode(new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}));
 anchor.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthmap1k.jpg"}));
 
 // mercury system
@@ -150,10 +151,10 @@ anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 1.0,
 							);
 
 
-system[0]._anchor.addNode( SceneJS.spherical({ scale: 9, angle: 24.0, speed: 1.0, color: {r:0.2, g:0.2, b:1.0} },
-                  new SceneJS.Planet({ emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
-	              )
-							);
+//system[1]._anchor.addNode( sun = SceneJS.spherical({ scale: 9, angle: 10.0, speed: 1.0, color: {r:0.0, g:1.0, b:0.0} },
+  //               new SceneJS.Planet({ emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
+	  //            )
+			//			);
 							
 // TODO: calc max points and max motion estimation
 calcCurve = function(start,node) {
@@ -202,16 +203,27 @@ SceneJS.bind("error", function(e) {
    }
 });
 
+count = 0;
 window.render = function() {
 
-		for(i in system)
+	for(i in system) {
+//      console.log(i);
 			system[i].update(scale);
-		
-		//TODO: on model change :)
-		light.setPos(getNodePos("sun"));
-		//changeView(currentPos);
+
+  }
+//		sun.update(scale);
+
+		//TODO: on model change -> events?
+		light.setPos(getNodePos("mercury"));
+		changeView(currentPos);
 
     scene.render(); 
+
+    // TODO: use events
+    if(!count)  {
+      calcCurve(1,"mercury");
+    }
+    count++;
 };
 
 SceneJS.withNode("mercury").bind("picked",
@@ -220,11 +232,7 @@ SceneJS.withNode("mercury").bind("picked",
         });
 
 setInterval("window.render()", 33);  
-window.render();
 window.onresize=resize;
-
-calcCurve(1,"mercury");
-
 resize();
 
 //resize render target after create in window.render

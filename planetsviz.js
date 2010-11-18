@@ -78,9 +78,9 @@ SceneJS.Planet.prototype._init = function(params) {
   	SceneJS.translate({x:0.0, y:0.0, z:9.0},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	SceneJS.material({              
-					baseColor:  { r: 1.0, g: 1.0, b: 0.0 },
+					baseColor:  { r: 1.0, g: 1.0, b: 1.0 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    			emit: emit || 0.0, specular: 0.0, shine: 6.0},
+    			emit: emit || 0.0, specular: 0.1, shine: 7.0},
 					SceneJS.texture({ layers: [{	uri: params.tex }] }, SceneJS.sphere())
 				)
 			)
@@ -246,7 +246,7 @@ SceneJS.Spherical.prototype._init = function(params) {
     this.setAxis(this._zAngle);
     this._yAngle= params.yAngle || 0.0;
     this._ySpeed= params.speed || 0.0;
-    this.update(0.0);
+    this.update(1.0);
         
         
 };
