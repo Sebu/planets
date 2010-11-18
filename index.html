@@ -58,7 +58,7 @@ var lastX;
 var lastY;
 var dragging = false;
 
-function setCurrentPos(pos) { currentPos=pos; }
+function setCurrentPos(pos) { currentPos=pos;  		changeView(currentPos); }
 
 function mouseDown(event) {
     lastX = event.clientX;
@@ -80,6 +80,9 @@ function mouseMove(event) {
     if (dragging) {
         yaw += (event.clientX - lastX) * 0.5;
         pitch += (event.clientY - lastY) * -0.5;
+        
+//        lookAt.rotate(pitch,yaw,0.0);
+//        lookAt.update();
         SceneJS.withNode("yaw").set("angle", yaw);
         SceneJS.withNode("pitch").set("angle", pitch);
 
@@ -92,17 +95,17 @@ function mouseMove(event) {
 
 function keyboard(e) {
 	switch(e.keyCode) {
-		case 119: lookAt.move(0.2);  break;
-		case 115: lookAt.move(-0.2);  break;
+		case 119: lookAt.translate(0.0,0.0,1.2);  break;
+		case 115: lookAt.translate(0.0,0.0,-1.2);  break;
 		default: return false;
 	}
 }
 
 function mouseWheel(event) {
-	lookAt.move(event.wheelDelta/120);
+	lookAt.translate(0.0,0.0,event.wheelDelta/120);
 }
 function mouseWheel_firefox(event) {
-	lookAt.move(event.detail);
+	lookAt.translate(0.0,0.0,event.detail);
 }
 
 canvas.addEventListener('mousedown', mouseDown, true);
@@ -112,14 +115,23 @@ canvas.addEventListener('keypress', keyboard, true);
 canvas.addEventListener('mousewheel', mouseWheel, true);
 canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
+
+SceneJS.bind("node-created", 
+	function(params) {
+		console.log("wambo");
+		//if(params.nodeId=="renderer")
+		//	setup();
+	}
+);
+
 // base structure
 var scene = SceneJS.scene({ canvasId: "glCanvas" },
-  renderer = SceneJS.renderer({             
+  renderer = SceneJS.renderer({  id: "renderer" ,           
     clear: { depth : true, color : true },
     clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: true, cullFace: "back", frontFace: "cw"
+    enableCullFace: false, cullFace: "back", frontFace: "cw"
     },
-  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { z:0.0 }, up: { y: 1.0 } },
+  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z:1.0 }, up: { x:0.0, y: 1.0, z: 0.0 } },
       camera = SceneJS.camera({},
 			  light = sunlight(),
 			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
@@ -139,22 +151,23 @@ anchor.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthm
 var system = [];
 
 							
-anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 1.0, color: {r:0.3, g: 0.3, b: 0.3}},
-				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 1.0, color: {r:0.2, g:0.2, b:1.0} },
-						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 2.0, color: {r: 0.0, g: 1.0, b: 0.0} },
-  						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -2.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    new SceneJS.Planet({ emit: 0.0, scale: 0.3, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
+anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.0, g: 1.0, b: 1.0}},
+				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0} },
+						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 1.0, color: {r: 0.0, g: 1.0, b: 0.0} },
+  						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: 3.0, color: {r: 1.0, g: 0.0, b: 0.0}},
+                		    system[4] = new SceneJS.Planet({ speed: -3.0, emit: 0.0, scale: 0.3, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
                 		  )
 					 		  		)
 						  		)	
 							  )
 							);
 
+system[0].setVisuals(false);
 
 //system[1]._anchor.addNode( sun = SceneJS.spherical({ scale: 9, angle: 10.0, speed: 1.0, color: {r:0.0, g:1.0, b:0.0} },
-  //               new SceneJS.Planet({ emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
-	  //            )
-			//			);
+//                 new SceneJS.Planet({ speed: -1.0, emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
+//	              )
+//					);
 							
 // TODO: calc max points and max motion estimation
 calcCurve = function(start,node) {
@@ -165,7 +178,7 @@ calcCurve = function(start,node) {
 		system[i].setAxis(0.0);
 		system[i].setRotate(0.0);
 	}
-	for(var j=0; j<200; j+=5) {
+	for(var j=0; j<800; j+=5) {
 		for(var i=start+1; i<system.length; i++) {
 			tmp = j*system[i]._ySpeed;
 			system[i].setRotate(-tmp);
@@ -175,9 +188,12 @@ calcCurve = function(start,node) {
 	}
 	for(var i=0; i<=start;i++)
 		system[i].setAxis(oldAxis[i]);
-			
+
+  for(var i=start+1; i<system.length; i++)
+					system[i].setRotate(0.0);
+
 	curve = new SceneJS.Curve({pos: curvePos});	
-	system[start]._anchor.addNode(curve);	
+	system[start]._zRotate.addNode(curve);	
 }
 
 resize = function() {
@@ -203,27 +219,16 @@ SceneJS.bind("error", function(e) {
    }
 });
 
-count = 0;
 window.render = function() {
 
 	for(i in system) {
-//      console.log(i);
 			system[i].update(scale);
-
   }
 //		sun.update(scale);
 
 		//TODO: on model change -> events?
 		light.setPos(getNodePos("mercury"));
-		changeView(currentPos);
-
     scene.render(); 
-
-    // TODO: use events
-    if(!count)  {
-      calcCurve(1,"mercury");
-    }
-    count++;
 };
 
 SceneJS.withNode("mercury").bind("picked",
@@ -231,9 +236,18 @@ SceneJS.withNode("mercury").bind("picked",
             alert("Picked: 'right-green-sphere'");
         });
 
+
+
 setInterval("window.render()", 33);  
+
 window.onresize=resize;
+calcCurve(1,"mercury");
 resize();
+
+//function setup() {
+//}
+
+
 
 //resize render target after create in window.render
 
