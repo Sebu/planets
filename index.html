@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
-	<title>webgl test2</title> 
+	<title>webgl ancient planet visualization</title> 
 	<meta charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="planets.css">
+	<link rel="stylesheet" type="text/css" href="css/planets.css">
 </head>
 
 <body>
@@ -14,8 +14,18 @@
       <option value="earth">Earth</option>
       <option value="mercury">Mercury</option>
     </select>
-
    <div>Speed<input type="range" id="speedRange" min="5" max="60" value="15"/></div>
+   </br>
+   Change
+	<select onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'> <option value='mercury'>Mercury</option></select>   
+   <div id="parameters">
+   <div><input type="range" id="angleSys1" min="0" max="360" value="24"/></div>
+   <div><input type="range" id="speedSys1" min="0" max="5" value="0"/></div>
+   <div><input type="range" id="angleSys2" min="0" max="360" value="90"/></div>  
+   <div><input type="range" id="speedSys2" min="0" max="5" value="1"/></div>
+   <div><input type="range" id="angleSys3" min="0" max="360" value="90"/></div>  
+   <div><input type="range" id="speedSys3" min="0" max="5" value="3"/></div>   
+   </div>
 </div>
 
 <div class="container" id="infoContainer">
@@ -34,18 +44,13 @@ W,A,S,D + Mouse
 </canvas>
 
 
-<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script> 
-<script type="text/javascript" src="scenejs/scenejs.js"></script> 
-<script type="text/javascript" src="scenejs/scenejs-query-node-pos.js"></script> 
-<script type="text/javascript" src="sylvester/sylvester.js"></script> 
-<script type="text/javascript" src="planetsviz.js"></script>
+<script type="text/javascript" src="libs/jquery.tools.min.js"></script> 
+<script type="text/javascript" src="libs/scenejs.js"></script> 
+<script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script> 
+<script type="text/javascript" src="libs/planetsviz.js"></script>
   
 <script type="text/javascript"> 
-$(":range").rangeinput({ progress: true });
 
-
-$("#speedRange").bind("onSlide", function(event, value) { scale=360.0/(30*value); } );
-$("#speedRange").bind("change", function(event, value) { scale=360.0/(30*value); } );
 
 var canvas = document.getElementById("glCanvas");
 
@@ -60,6 +65,32 @@ var dragging = false;
 
 function setCurrentPos(pos) { currentPos=pos;  		changeView(currentPos); }
 
+function setCurrentPlanet(node) {
+	$("#angleSys1").bind("onSlide", function(event, value) { system[1].setAxis(value); } );
+	$("#angleSys1").bind("change", function(event, value) { system[1].setAxis(value); } );
+	$("#angleSys2").bind("onSlide", function(event, value) { system[2].setAxis(value); } );
+	$("#angleSys2").bind("change", function(event, value) { system[2].setAxis(value); } );
+	$("#angleSys3").bind("onSlide", function(event, value) { system[3].setAxis(value); } );
+	$("#angleSys3").bind("change", function(event, value) { system[3].setAxis(value); } );
+	
+	$("#speedSys1").bind("onSlide", function(event, value) { system[1].setSpeed(value); } );
+	$("#speedSys1").bind("change", function(event, value) { system[1].setSpeed(value); } );
+	$("#speedSys2").bind("onSlide", function(event, value) { system[2].setSpeed(value); } );
+	$("#speedSys2").bind("change", function(event, value) { system[2].setSpeed(value); } );
+	$("#speedSys3").bind("onSlide", function(event, value) { system[3].setSpeed(value); system[4].setSpeed(-value);  } );
+	$("#speedSys3").bind("change", function(event, value) { system[3].setSpeed(value); system[4].setSpeed(-value); } );
+	
+}
+
+
+
+
+$(":range").rangeinput({ progress: true });
+
+setCurrentPlanet("mercury");
+$("#speedRange").bind("onSlide", function(event, value) { scale=360.0/(30*value); } );
+$("#speedRange").bind("change", function(event, value) { scale=360.0/(30*value); } );
+
 function mouseDown(event) {
     lastX = event.clientX;
     lastY = event.clientY;
@@ -73,6 +104,25 @@ function mouseUp() {
 
 }
 
+// base structure
+var scene = SceneJS.scene({ canvasId: "glCanvas" },
+  renderer = SceneJS.renderer({  id: "renderer" ,           
+    clear: { depth : true, color : true },
+    clearColor: { r: 0.2, g : 0.2, b : 0.2 },
+    enableCullFace: true, cullFace: "back", frontFace: "cw"
+    },
+  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z:1.0 }, up: { x:0.0, y: 1.0, z: 0.0 } },
+      camera = SceneJS.camera({},
+			  light = sunlight(),
+			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
+			    anchor = SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0}
+	  	    )
+        )
+		  )
+	  )
+  )
+);
+
 /* On a mouse drag, we'll re-render the scene, passing in
  * incremented angles in each time.
  */
@@ -81,7 +131,7 @@ function mouseMove(event) {
         yaw += (event.clientX - lastX) * 0.5;
         pitch += (event.clientY - lastY) * -0.5;
         
-//        lookAt.rotate(pitch,yaw,0.0);
+//        lookAt.rotate(pitch*0.005,yaw*0.005,0.0);
 //        lookAt.update();
         SceneJS.withNode("yaw").set("angle", yaw);
         SceneJS.withNode("pitch").set("angle", pitch);
@@ -95,8 +145,10 @@ function mouseMove(event) {
 
 function keyboard(e) {
 	switch(e.keyCode) {
-		case 119: lookAt.translate(0.0,0.0,1.2);  break;
-		case 115: lookAt.translate(0.0,0.0,-1.2);  break;
+		case 119: lookAt.translate(0,0,1.2);  break;
+		case 115: lookAt.translate(0,0,-1.2);  break;
+		case 97: lookAt.translate(-1.2,0,0);  break;
+		case 100: lookAt.translate(1.2,0,0);  break;		
 		default: return false;
 	}
 }
@@ -116,32 +168,7 @@ canvas.addEventListener('mousewheel', mouseWheel, true);
 canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 
-SceneJS.bind("node-created", 
-	function(params) {
-		console.log("wambo");
-		//if(params.nodeId=="renderer")
-		//	setup();
-	}
-);
 
-// base structure
-var scene = SceneJS.scene({ canvasId: "glCanvas" },
-  renderer = SceneJS.renderer({  id: "renderer" ,           
-    clear: { depth : true, color : true },
-    clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: false, cullFace: "back", frontFace: "cw"
-    },
-  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z:1.0 }, up: { x:0.0, y: 1.0, z: 0.0 } },
-      camera = SceneJS.camera({},
-			  light = sunlight(),
-			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
-			    anchor = SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0}
-	  	    )
-        )
-		  )
-	  )
-  )
-);
 
 //			      //new SceneJS.Stationary()
 //anchor.addNode(new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}));
@@ -163,6 +190,9 @@ anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0,
 							);
 
 system[0].setVisuals(false);
+
+
+
 
 //system[1]._anchor.addNode( sun = SceneJS.spherical({ scale: 9, angle: 10.0, speed: 1.0, color: {r:0.0, g:1.0, b:0.0} },
 //                 new SceneJS.Planet({ speed: -1.0, emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
@@ -211,16 +241,7 @@ function changeView(node) {
 	lookAt.setEye(pos);
 } 
 
-SceneJS.bind("error", function(e) {
-   if (e.exception.message) {
-       alert("Error: " + e.exception.message);
-   } else {
-       alert("Error: " + e.exception);
-   }
-});
-
 window.render = function() {
-
 	for(i in system) {
 			system[i].update(scale);
   }
@@ -239,17 +260,9 @@ SceneJS.withNode("mercury").bind("picked",
 
 
 setInterval("window.render()", 33);  
-
 window.onresize=resize;
 calcCurve(1,"mercury");
 resize();
-
-//function setup() {
-//}
-
-
-
-//resize render target after create in window.render
 
 
 </script>
