@@ -1,5 +1,3 @@
-
-
 SceneJS._contextModule = new (function() {
 
     var canvas;         // Currently active canvas
@@ -127,14 +125,15 @@ SceneJS.Planet.prototype._init = function(params) {
 					baseColor:  { r: 1.0, g: 1.0, b: 1.0 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
     			emit: emit || 0.0, specular: 0.1, shine: 7.0},
-					SceneJS.texture({ layers: [{	uri: params.tex, flipY : false }] }, SceneJS.sphere())
+					//SceneJS.texture({ layers: [{	uri: params.tex, flipY : false }] },
+           SceneJS.sphere() //)
 				)
 			)
 		)
 	)	
   ); 
   this._yAngle= params.yAngle || 0.0;
-  this._ySpeed= params.speed || 0.0;       						
+  this._ySpeed= params.speed ? (360.0/params.speed) : 0.0;       						
 };
 
 SceneJS.Planet.prototype.setRotate = function(angle) {
@@ -143,7 +142,7 @@ SceneJS.Planet.prototype.setRotate = function(angle) {
 };
 
 SceneJS.Planet.prototype.setSpeed = function(speed) {
-		this._ySpeed = speed;
+		this._ySpeed = speed ? (360.0/speed) : 0.0;
 };
 
 SceneJS.Planet.prototype.update = function(step) {
@@ -264,11 +263,11 @@ SceneJS.Circle.prototype._render = function(traversalContext) {
 SceneJS.Spherical.prototype._init = function(params) {
         // this.setDensity(params.density);
         
+    this._curve = 
 	  tmpNodes =  this.removeNodes();
   	color = params.color || { r: 0.5, g: 0.5, b: 0.5};
   	this._visuals = [];//new Object();
 	  
-
 
 		// equator marker arc/angle			
 		this.addNode( 	SceneJS.rotate({angle: 90.0, x: 1.0},			
@@ -276,12 +275,23 @@ SceneJS.Spherical.prototype._init = function(params) {
 	 				this.arcangle = new SceneJS.Circle({width: 2, angle: 0})
 		)));					
 						 	
+    this.addNode( 		  // arc
+   		SceneJS.scale( {x: params.scale, y: -params.scale, z: params.scale },
+	 				this.arcangle2 = new SceneJS.Circle({angle: params.angle})));
+
+
+    this.addNode( 		  // arc
+   		SceneJS.scale( {x: -params.scale, y: params.scale, z: params.scale },
+	 				this.arcangle2 = new SceneJS.Circle({angle: params.angle})));
+
     this.addNode(
+
+	 				
+	  this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0},
    	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
    	
- 		  // arc
-   		SceneJS.scale( {x: -params.scale, y: params.scale, z: params.scale },
-	 				this.arcangle2 = new SceneJS.Circle({angle: params.angle})),
+
+
 
 		// equator marker ball
 		SceneJS.translate( {x: 0.0, y: 0.0, z: params.scale  }, 
@@ -289,8 +299,6 @@ SceneJS.Spherical.prototype._init = function(params) {
 				SceneJS.sphere() 
 			)
 		),
-	 				
-	   	this._zRotate = SceneJS.rotate({angle: 0.0, z: 1.0},
 				this._anchor = SceneJS.material({
 		      baseColor:      color,
           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
@@ -325,7 +333,10 @@ SceneJS.Spherical.prototype._init = function(params) {
     this._zAngle= params.angle || 0;
     this.setAxis(this._zAngle);
     this._yAngle= params.yAngle || 0.0;
-    this._ySpeed= params.speed || 0.0;
+    
+    this._ySpeed= params.speed ? (360.0 / params.speed) : 0.0;
+
+    console.log(this._ySpeed);
     this.update(1.0);
         
         
@@ -347,7 +358,11 @@ SceneJS.Spherical.prototype.getAxis = function() {
 };
 
 SceneJS.Spherical.prototype.setSpeed = function(speed) {
-		this._ySpeed = speed;
+		this._ySpeed = speed ? (360.0/speed) : 0.0;
+};
+
+SceneJS.Spherical.prototype.setArcAngle = function(angle) {
+  this.arcangle.angle = angle;
 };
 
 SceneJS.Spherical.prototype.setRotate = function(angle) {
