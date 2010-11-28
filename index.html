@@ -20,17 +20,17 @@
    
    <div id="parameters">
     Speed:
-   <div><input type="range" id="speedRange" min="5" max="100" value="10"/></div>
+   <div><input type="range" id="speedRange" min="0" max="100" value="10"/></div>
 
     Angle:
-   <div><input type="range" id="angleSys1" min="0" max="500" value="24"/></div>
-   <div><input type="range" id="angleSys2" min="0" max="500" value="90"/></div>  
-   <div><input type="range" id="angleSys3" min="0" max="500" value="30"/></div>  
+   <div><input type="range" id="angleSys1" min="0" max="1000" value="24"/></div>
+   <div><input type="range" id="angleSys2" min="0" max="1000" value="90"/></div>  
+   <div><input type="range" id="angleSys3" min="0" max="1000" value="30"/></div>  
    
     Speed:
-   <div><input type="range" id="speedSys1" min="0" max="500" value="0"/></div>
-   <div><input type="range" id="speedSys2" min="0" max="500" value="365"/></div>
-   <div><input type="range" id="speedSys3" min="0" max="500" value="110"/></div>   
+   <div><input type="range" id="speedSys1" min="0" max="1000" value="0"/></div>
+   <div><input type="range" id="speedSys2" min="0" max="1000" value="365"/></div>
+   <div><input type="range" id="speedSys3" min="0" max="1000" value="110"/></div>   
    </div>
 </div>
 
@@ -94,8 +94,8 @@ function setCurrentPlanet(node) {
 $(":range").rangeinput({ progress: true });
 
 setCurrentPlanet("mercury");
-$("#speedRange").bind("onSlide", function(event, value) { scale=1.0/value; } );
-$("#speedRange").bind("change", function(event, value) { scale=1.0/value; } );
+$("#speedRange").bind("onSlide", function(event, value) { scale=10.0/value; } );
+$("#speedRange").bind("change", function(event, value) { scale=10.0/value; } );
 
 function mouseDown(event) {
     lastX = event.clientX;
@@ -183,7 +183,7 @@ var system = [];
 
 							
 anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.0, g: 1.0, b: 1.0}},
-				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 330.0, color: {r:0.2, g:0.2, b:1.0} },
+				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0} },
 						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
                 		    new SceneJS.Planet({ speed: 0.0, emit: 1.0, scale: 0.2, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
@@ -211,19 +211,19 @@ calcCurve = function(start,node) {
   // save axis
 	for(var i=0; i<=start; i++) {
 		oldAxis[i] = system[i].getAxis();
-		system[i].setAxis(0.0);
     oldRotate[i] = system[i]._yAngle;
+		system[i].setAxis(0.0);
 		system[i].setRotate(0.0);
 	}
 
   for(var i=start+1; i<system.length; i++) {
   	oldRotate[i] = system[i]._yAngle;
-    system[i].update(-30.0);
+    system[i].update(-32.0);
   }
 
-	for(var j=0; j<60; j++) {
+	for(var j=0; j<32; j++) {
 		for(var i=start+1; i<system.length; i++) {
-			system[i].update(2.0);
+			system[i].update(4.0);
 		}
 		pos = getNodePos(node);
 		curvePos.push(pos);
@@ -236,8 +236,9 @@ calcCurve = function(start,node) {
   for(var i=0; i<system.length; i++)
 					system[i].setRotate(oldRotate[i]);
 
-  if(system[start]._curve)
-//    system[start]._anchor.removeNode(system[start]._curve);	
+  if(system[start]._curve) {
+     system[start]._anchor.removeNode(system[start]._curve);	
+  }
  	system[start]._curve = new SceneJS.Curve({pos: curvePos});	
 	system[start]._anchor.addNode(system[start]._curve);	
 }
@@ -258,6 +259,8 @@ function changeView(node) {
 } 
 
 window.render = function() {
+  calcCurve(0,"mercury");
+
 	for(i in system) {
 			system[i].update(scale);
   }
@@ -267,7 +270,6 @@ window.render = function() {
 
 		//TODO: on model change -> events?
 		light.setPos(getNodePos("mercury"));
-//    calcCurve(0,"mercury");
     scene.render(); 
     
 };

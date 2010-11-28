@@ -118,7 +118,6 @@ SceneJS.Globe.prototype._init = function(params) {
 SceneJS.Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
   this.addNode(
- 	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
   	SceneJS.translate({x:0.0, y:0.0, z:9.0},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	SceneJS.material({              
@@ -130,25 +129,11 @@ SceneJS.Planet.prototype._init = function(params) {
 				)
 			)
 		)
-	)	
   ); 
-  this._yAngle= params.yAngle || 0.0;
-  this._ySpeed= params.speed ? (360.0/params.speed) : 0.0;       						
+						
 };
 
-SceneJS.Planet.prototype.setRotate = function(angle) {
-		this._yAngle = angle;
-		this._yRotate.setAngle(this._yAngle);
-};
 
-SceneJS.Planet.prototype.setSpeed = function(speed) {
-		this._ySpeed = speed ? (360.0/speed) : 0.0;
-};
-
-SceneJS.Planet.prototype.update = function(step) {
-		this._yAngle += this._ySpeed*step;
-		this.setRotate(this._yAngle);
-};
 
 SceneJS.Curve.prototype._init = function(params) {
     var curvePos = params.pos;
@@ -263,7 +248,7 @@ SceneJS.Circle.prototype._render = function(traversalContext) {
 SceneJS.Spherical.prototype._init = function(params) {
         // this.setDensity(params.density);
         
-    this._curve = 
+    this._curve = null;
 	  tmpNodes =  this.removeNodes();
   	color = params.color || { r: 0.5, g: 0.5, b: 0.5};
   	this._visuals = [];//new Object();
@@ -332,7 +317,7 @@ SceneJS.Spherical.prototype._init = function(params) {
     this._anchor.addNodes(tmpNodes);
     this._zAngle= params.angle || 0;
     this.setAxis(this._zAngle);
-    this._yAngle= params.yAngle || 0.0;
+    this._yAngle= 0.0;
     
     this._ySpeed= params.speed ? (360.0 / params.speed) : 0.0;
 
