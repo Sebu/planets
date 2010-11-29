@@ -8,15 +8,22 @@
 
 <body>
 <div class="container" id="uiContainer">
-	 View:
-   <select name="view" onchange="setCurrentPos(this.options[this.selectedIndex].value);">
+	 Origin:
+   <select name="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);">
       <option value="global">Global</option>
       <option value="earth">Earth</option>
-      <option value="mercury">Mercury</option>
+      <option value="planet">Planet</option>
     </select>
    <br>
-   Planet: 
-	<select onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'> <option value='mercury'>Mercury</option></select>   
+	 LookAt:
+   <select name="view" onchange="currentLookAt = this.options[this.selectedIndex].value;">
+      <option value="global">Global</option>
+      <option value="earth">Earth</option>
+      <option value="planet">Planet</option>
+    </select>
+   <br>   
+   Parameters: 
+	<select onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'> <option value='mercury1'>Mercury1</option></select>   
    
    <div id="parameters">
     Speed:
@@ -62,6 +69,7 @@ var canvas = document.getElementById("glCanvas");
 
 
 var currentPos = "global";
+var currentLookAt = "earth";
 var scale = 1.0;
 var yaw = 0;
 var pitch = 0;
@@ -69,33 +77,26 @@ var lastX;
 var lastY;
 var dragging = false;
 
-function setCurrentPos(pos) { currentPos=pos;  		changeView(currentPos); }
-
 function setCurrentPlanet(node) {
-	$("#angleSys1").bind("onSlide", function(event, value) { system[1].setAxis(value); } );
-	$("#angleSys1").bind("change", function(event, value) { system[1].setAxis(value); } );
-	$("#angleSys2").bind("onSlide", function(event, value) { system[2].setAxis(value); } );
-	$("#angleSys2").bind("change", function(event, value) { system[2].setAxis(value); } );
-	$("#angleSys3").bind("onSlide", function(event, value) { system[3].setAxis(value); } );
-	$("#angleSys3").bind("change", function(event, value) { system[3].setAxis(value); } );
+	$("#angleSys1").bind("onSlide change", function(event, value) { system[1].setAxis(value); } );
+	$("#angleSys2").bind("onSlide change", function(event, value) { system[2].setAxis(value); } );
+	$("#angleSys3").bind("onSlide change", function(event, value) { system[3].setAxis(value); } );
 	
-	$("#speedSys1").bind("onSlide", function(event, value) { system[1].setSpeed(value); } );
-	$("#speedSys1").bind("change", function(event, value) { system[1].setSpeed(value); } );
-	$("#speedSys2").bind("onSlide", function(event, value) { system[2].setSpeed(value); } );
-	$("#speedSys2").bind("change", function(event, value) { system[2].setSpeed(value); } );
-	$("#speedSys3").bind("onSlide", function(event, value) { system[3].setSpeed(value); system[4].setSpeed(-value);  } );
-	$("#speedSys3").bind("change", function(event, value) { system[3].setSpeed(value); system[4].setSpeed(-value); } );
+	$("#speedSys1").bind("onSlide change", function(event, value) { system[0].setSpeed(value); } );
+	$("#speedSys2").bind("onSlide change", function(event, value) { system[1].setSpeed(value); } );
+	$("#speedSys3").bind("onSlide change", function(event, value) { system[2].setSpeed(value); system[3].setSpeed(-value);  } );
 	
 }
 
 
 
 
-$(":range").rangeinput({ progress: true });
+$(":range").rangeinput({ progress: true, keyboard: false });
 
-setCurrentPlanet("mercury");
-$("#speedRange").bind("onSlide", function(event, value) { scale=10.0/value; } );
-$("#speedRange").bind("change", function(event, value) { scale=10.0/value; } );
+setSpeedRange = function(event, value) { scale= value ? 10.0/value : 0.0; };
+
+setCurrentPlanet("planet");
+$("#speedRange").bind("onSlide change onkeypress", setSpeedRange  );
 
 function mouseDown(event) {
     lastX = event.clientX;
@@ -113,15 +114,11 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
   renderer = SceneJS.renderer({  id: "renderer" ,           
     clear: { depth : true, color : true },
     clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: false, cullFace: "back", frontFace: "cw"
+    enableCullFace: true, cullFace: "back", frontFace: "cw"
     },
-  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z:1.0 }, up: { x:0.0, y: 1.0, z: 0.0 } },
+  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } },
       camera = SceneJS.camera({},
-			  light = sunlight(),
-			  SceneJS.rotate({id: "pitch", angle: 0.0, x: 1.0},
-			    anchor = SceneJS.rotate({id: "yaw", angle: 0.0, y: 1.0}
-	  	    )
-        )
+			  light = sunlight()
 		  )
 	  )
   )
@@ -132,16 +129,11 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
  */
 function mouseMove(event) {
     if (dragging) {
-        yaw += (event.clientX - lastX) * 0.5;
-        pitch += (event.clientY - lastY) * -0.5;
+        yaw = (event.clientX - lastX) * 0.5;
+        pitch = (event.clientY - lastY) * -0.5;
         
-//        lookAt.rotate(pitch*0.005,yaw*0.005,0.0);
-//        lookAt.update();
-        SceneJS.withNode("yaw").set("angle", yaw);
-        SceneJS.withNode("pitch").set("angle", pitch);
-
-//        scene.render();
-
+        lookAt.rotate(pitch*0.005,yaw*0.005,0.0);
+        lookAt.update();
         lastX = event.clientX;
         lastY = event.clientY;
     }
@@ -176,17 +168,17 @@ canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 //			      //new SceneJS.Stationary()
 //anchor.addNode(new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}));
-anchor.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthmap1k.jpg"}));
+camera.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthmap1k.jpg"}));
 
 // mercury system
 var system = [];
 
 							
-anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.0, g: 1.0, b: 1.0}},
+camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.0, g: 1.0, b: 1.0}},
 				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0} },
 						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    new SceneJS.Planet({ speed: 0.0, emit: 1.0, scale: 0.2, inner_id: "mercury", tex: "textures/mercurymap.jpg"})
+                		    new SceneJS.Planet({ speed: 0.0, emit: 1.0, scale: 0.2, inner_id: "planet", tex: "textures/mercurymap.jpg"})
                 		  )
 					 		  		)
 						  		)	
@@ -196,12 +188,12 @@ anchor.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0,
 system[0].setVisuals(false);
 
 
-
-
-//system[1]._anchor.addNode( system[5] = SceneJS.spherical({ scale: 9, angle: -20.0, speed: 0.0, color: {r:0.0, g:1.0, b:0.0} },
-//               system[6] = new SceneJS.Planet({ speed: -1.0, emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
-//	              )
-//					);
+system[1]._anchor.addNode( systemsun = SceneJS.spherical({ scale: 9, angle: -20.0, speed: -111.0, color: {r:0.0, g:1.0, b:0.0} },
+               sun = new SceneJS.Planet({  emit: 1.0, scale: 0.3, inner_id: "sun", tex: "textures/sunmap.jpg"})
+	              )
+					);
+					
+systemsun.setVisuals(false);							
 							
 // TODO: calc max points and max motion estimation
 calcCurve = function(start,node) {
@@ -256,20 +248,29 @@ function changeView(node) {
 	if(node=="global") pos = { x: 0.0, y: 0.0, z: -25 };
 	else pos = getNodePos(node);
 	lookAt.setEye(pos);
+
 } 
 
 window.render = function() {
-  calcCurve(0,"mercury");
-
+  calcCurve(0,"planet");
+	calcCurve(1,"planet");
 	for(i in system) {
 			system[i].update(scale);
   }
   for(var i=1; i<system.length; i++)
     system[i].setArcAngle(-system[i-1]._yAngle);
-//		sun.update(scale);
 
+	systemsun.update(scale);
+
+		
+		if(currentLookAt!="global")
+			lookAt.setTarget(getNodePos(currentLookAt));
+
+		if(currentPos!="global")
+			changeView(currentPos);
+			
 		//TODO: on model change -> events?
-		light.setPos(getNodePos("mercury"));
+		light.setPos(getNodePos("sun"));
     scene.render(); 
     
 };
@@ -277,8 +278,6 @@ window.render = function() {
 
 setInterval("window.render()", 33);  
 window.onresize=resize;
-
-calcCurve(1,"mercury");
 resize();
 
 

@@ -14,6 +14,24 @@ SceneJS._contextModule = new (function() {
 
 });
 
+
+SceneJS.LookAt.prototype.setTarget = function(target) {
+
+	dx = target.x - this._lookX;
+  dy = target.y - this._lookY;
+	dz = target.z - this._lookZ;
+	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+	
+	this._eyeX += dx;
+	this._eyeY += dy;
+	this._eyeZ += dz;
+	this.translate(0.0,0.0,-dist);
+
+	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
+	this._setDirty(); 
+}
+
+
 SceneJS.LookAt.prototype._init = function(params) {
     this._mat = null;
     this._xform = null;
@@ -23,7 +41,7 @@ SceneJS.LookAt.prototype._init = function(params) {
 		this._roll = 0.0;		
 		this.up = params.up;
 		this.right = {x: 1.0, y:0.0, z:0.0};
-		this.dir = params.look;
+		this.dir = {x: 0.0, y:0.0, z:1.0};
 		
     this.setEye(params.eye);
     this.setUp(params.up);
@@ -262,12 +280,12 @@ SceneJS.Spherical.prototype._init = function(params) {
 						 	
     this.addNode( 		  // arc
    		SceneJS.scale( {x: params.scale, y: -params.scale, z: params.scale },
-	 				this.arcangle2 = new SceneJS.Circle({angle: params.angle})));
+	 				this.arcangle21 = new SceneJS.Circle({angle: params.angle})));
 
 
     this.addNode( 		  // arc
    		SceneJS.scale( {x: -params.scale, y: params.scale, z: params.scale },
-	 				this.arcangle2 = new SceneJS.Circle({angle: params.angle})));
+	 				this.arcangle22 = new SceneJS.Circle({angle: params.angle})));
 
     this.addNode(
 
@@ -321,7 +339,6 @@ SceneJS.Spherical.prototype._init = function(params) {
     
     this._ySpeed= params.speed ? (360.0 / params.speed) : 0.0;
 
-    console.log(this._ySpeed);
     this.update(1.0);
         
         
@@ -334,7 +351,8 @@ SceneJS.Spherical.prototype.setVisuals = function(state) {
 };
 SceneJS.Spherical.prototype.setAxis = function(angle) {
 		this._zAngle = angle;
-		this.arcangle2.angle = angle;
+		this.arcangle21.angle = angle;
+		this.arcangle22.angle = angle;
 		this._zRotate.setAngle(this._zAngle);
 };
 
