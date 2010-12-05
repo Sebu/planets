@@ -1,5 +1,4 @@
 SceneJS._contextModule = new (function() {
-
     var canvas;         // Currently active canvas
     
     SceneJS._eventModule.addListener(
@@ -93,11 +92,15 @@ SceneJS.LookAt.prototype.rotate = function(x,y,z) {
 }
 
 
+
+
 getNodePos = function(node) {
   query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 1, canvasHeight : 1	});
 	query.execute({ nodeId: node });
 	return query.getResults().worldPos;
 }
+
+
 
 sunlight = function() {
 	return new SceneJS.Light({
@@ -135,9 +138,9 @@ SceneJS.Globe.prototype._init = function(params) {
 
 SceneJS.Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
-  shiftval = params.shiftval || 9.0;
+  dist = params.dist || 9.0;
   this.addNode(
-  	SceneJS.translate({x:0.0, y:0.0, z:shiftval},
+  	SceneJS.translate({x:0.0, y:0.0, z: dist},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	SceneJS.material({              
 					baseColor:  { r: 1.0, g: 1.0, b: 1.0 },
@@ -223,9 +226,13 @@ SceneJS.Circle.prototype._init = function(params) {
         for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
                 indices.push(sliceNum);
         }
+        if(this.linewidth!=1)
+					resource = "facearc" + Math.round(this.angle)%360;
+				else
+					resource = "linearc" + Math.round(this.angle)%360;
 
         return {
-        		resource: "arc" + Math.round(angle)%360,
+        		resource: resource,
             primitive : (this.linewidth==1) ? "line-strip" : "triangle-strip",
             positions : positions,
             //normals: normals,
@@ -238,9 +245,9 @@ SceneJS.Circle.prototype._init = function(params) {
 
 SceneJS.Circle.prototype._render = function(traversalContext) {
 		if(this.linewidth!=1)
-			resource = "Farc" + Math.round(this.angle)%360;
+			resource = "facearc" + Math.round(this.angle)%360;
 		else
-			resource = "arc" + Math.round(this.angle)%360;
+			resource = "linearc" + Math.round(this.angle)%360;
 		this._handle  = resource;
     if (this._handle) { // Was created before - test if not evicted since
         if (!SceneJS._geometryModule.testGeometryExists(this._handle)) {
@@ -253,7 +260,7 @@ SceneJS.Circle.prototype._render = function(traversalContext) {
         } 
     }
     SceneJS._geometryModule.pushGeometry(this._handle, { solid: this._solid });
-    SceneJS._contextModule.setLineWidth(1);//this.linewidth);
+    SceneJS._contextModule.setLineWidth(2);//this.linewidth);
     this._renderNodes(traversalContext);
     SceneJS._geometryModule.popGeometry();
 
@@ -370,7 +377,8 @@ SceneJS.Spherical.prototype.getAxis = function() {
 };
 
 SceneJS.Spherical.prototype.setSpeed = function(speed) {
-		this._ySpeed = speed ? (360.0/speed) : 0.0;
+		this._ySpeed = (speed!=0) ? (360.0/speed) : 0.0;
+		console.log(this._ySpeed );
 };
 
 SceneJS.Spherical.prototype.setArcAngle = function(angle) {
