@@ -26,32 +26,36 @@
 	<select id="presets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
    <div id="parameters">
     overall speed:
-   <div id="speedRange"><input type="range" class="slider" min="0" max="2" step="0.01" onchange="speed= value; $('#speedRange > input').attr('value',value);"/>
+   <div id="speedRange"><input type="range" class="slider" onchange="speed= value; $('#speedRange > input').attr('value',value);"/>
    <input type="text" class="range" onchange="speed= value; $('#speedRange > input').attr('value',value);" />
    </div>
-   
-    sphere angle:
-   <div class="angle" id="angle1">
+   <br><br>
+   <div class="angle" id="angle1"><div class="caption">Sphere 1-2 (obliquity of ecliptic)</div>
    	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
    	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
-   <div class="angle" id="angle2">
+   <div class="angle" id="angle2"><div class="caption">Sphere 2-3 (right angle)</div>
    	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
    	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
-   <div class="angle" id="angle3">
+   <div class="angle" id="angle3"><div class="caption">Sphere 3-4 (unknown)</div>
    	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
    	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
 
-
-    sphere speed:
-   <div class="speed" id="speed1">
+		<br><br>
+    <div class="caption">Sphere Period (days)</div>
+   <div class="speed" id="speed1"><div class="caption">Sphere 1 (daily)</div>
    <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
    <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
-   <div class="speed" id="speed2">
+   <div class="speed" id="speed2"><div class="caption">Sphere 2 (zodiacal)</div>
    <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
    <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
-   <div class="speed" id="speed3">
+   <div class="speed" id="speed3"><div class="caption">Sphere 3, 4 (synodic)</div>
    <input type="range" class="slider" onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);" />
-   <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/></div> 
+   <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/>
+   </div>
+   <div id="speedSun"> <div class="caption">Sun (year)</div>
+   <input type="range" class="slider" onchange="systemsun.setSpeed(value); $('#speedSun > input').attr('value',value);" />
+   <input type="text" class="range" tabindex=7  onchange="systemsun.setSpeed(value); $('#speedSun > input').attr('value',value);"/>
+   </div>    
   <input type="button" onclick="reset()" value="reset">
    </div>
 </div>
@@ -103,7 +107,9 @@ function reset() {
 }
 
 function setCurrentPlanet(node) {
-		$("#speedRange > input").attr({"value":"0.2"});
+		$("#speedSun > input").attr({"value":"365.0","min":0, "max":1000});
+		$("#speedRange > input").attr({"value":"0.2","min":0, "max":2, "step":0.01});
+		
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
 		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",planetpresets[node].sphere[index].angle); } );
 

@@ -149,7 +149,7 @@ SceneJS.Planet.prototype._init = function(params) {
       	this._material = SceneJS.material({              
 					baseColor:  { r: 1.0, g: 1.0, b: 1.0 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    			emit: emit || 0.0, specular: 0.0, shine: 0.0},
+    			emit: emit || 0.0, specular: 0.0, shine: 1.0},
 					//SceneJS.texture({ layers: [{	uri: params.tex, flipY : false }] },
            SceneJS.sphere() //)
 				)

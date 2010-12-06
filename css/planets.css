@@ -7,41 +7,22 @@ html, body {
   background-color: rgb(25,25,25);
   font-family: sans-serif;
 }
-/* slider root element */
+
+
+
+.caption { 
+	font-weight: bold;
+	font-size:12px;	 
+}
+
 .slider { 
-	background:#151515; 
 	height:6px; 
 	position:relative; 
-	cursor:pointer;
-	border:1px solid #333;
-	width:110px;
+	width:130px;
 	top: 5px;
 	float:left; 
-	clear:right;
-	border-radius:10px; 
 }
 
-/* progress bar (enabled with progress: true) */
-.progress {
-	height:6px; 
-	background-color:#7BEB19; 
-	display:none;
-	border-radius:10px; 
-}
-
-/* drag handle */
-.handle { 
-	border:1px solid #333;
-	background:#83745B; 
-	height:12px;
-	width:12px;
-	top:-4px;
-	position:absolute; 
-	display:block; 
-	cursor:move;
-	border-radius:2px;	
-
-}
 
 /* the input field */
 .range {
@@ -52,7 +33,7 @@ html, body {
 	padding:1;
 	text-align:center;
 	width:32px;
-	border-radius:5px; 
+	border-radius:4px; 
 }
 
 
@@ -84,9 +65,5 @@ html, body {
 #glCanvas {
  position: absolute; 
 
-}
-
-.clickable {
-  cursor: pointer;
 }
 
