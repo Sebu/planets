@@ -23,39 +23,36 @@
     </select>
    <br>   
    Parameters: 
-	<select id="presets" onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'> 
-		<option value='Mercury1'>Mercury1</option>
-		<option value='Mercury2'>Mercury2</option>
-		<option value='Venus'>Venus</option>
-  </select>   
+	<select id="presets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
    <div id="parameters">
     overall speed:
-   <div id="speedRange"><input type="range" class="slider" min="0" max="2" step="0.01" onchange="scale= value; $('#speedRange > input').attr('value',value);"/>
-   <input type="text" class="range" onchange="scale= value; $('#speedRange > input').attr('value',value);" />
+   <div id="speedRange"><input type="range" class="slider" min="0" max="2" step="0.01" onchange="speed= value; $('#speedRange > input').attr('value',value);"/>
+   <input type="text" class="range" onchange="speed= value; $('#speedRange > input').attr('value',value);" />
    </div>
    
     sphere angle:
    <div class="angle" id="angle1">
    	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
-   	<input type="text" class="range"   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
+   	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
    <div class="angle" id="angle2">
    	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
-   	<input type="text" class="range"   onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
+   	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
    <div class="angle" id="angle3">
    	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
-   	<input type="text" class="range"   onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
+   	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
 
 
     sphere speed:
    <div class="speed" id="speed1">
    <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
-   <input type="text" class="range"   onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
+   <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
    <div class="speed" id="speed2">
    <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
-   <input type="text" class="range"   onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
+   <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
    <div class="speed" id="speed3">
    <input type="range" class="slider" onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);" />
-   <input type="text" class="range"   onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/></div>   
+   <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/></div> 
+  <input type="button" onclick="reset()" value="reset">
    </div>
 </div>
 
@@ -86,15 +83,25 @@ W,A,S,D + Mouse
 
 var canvas = document.getElementById("glCanvas");
 
+for(i in planets)
+ $("#presets").append("<option value='" + i + "'>" + i + "</option>"); 
 
 var currentPos = "global";
 var currentLookAt = "earth";
-var scale = 0.2;
+var speed = 0.2;
 var lastX;
 var lastY;
 var dragging = false;
 
+
+
+function reset() {
+  for(var i=0; i<system.length; i++)
+					system[i].setRotate(0.0);
+}
+
 function setCurrentPlanet(node) {
+		$("#speedRange > input").attr({"value":"0.2"});
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
 		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",planets[node].sphere[index].angle); } );
 
@@ -183,11 +190,11 @@ camera.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthm
 var system = [];
 
 							
-camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}},
+camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.7, g: 1.7, b: 1.5}},
 				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0} },
 						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    new SceneJS.Planet({ dist: 9.0, emit: 1.0, scale: 0.2, inner_id: "planet", tex: "textures/mercurymap.jpg"})
+                		    planet = new SceneJS.Planet({ dist: 9.0, emit: 1.0, scale: 0.2, inner_id: "planet", tex: "textures/mercurymap.jpg"})
                 		  )
 					 		  		)
 						  		)	
@@ -200,14 +207,19 @@ camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0,
 	 				arcangle = new SceneJS.Circle({width: 2, angle: 0})
 		)));					
 					
-system[0].setVisuals(["rotationarc"], false);
-system[1].setVisuals(["markerarc"], false);
 
-//system[1]._anchor.addNode( systemsun = SceneJS.spherical({ scale: 9, angle: 0.0, speed: 110.0, color: {r:0.0, g:1.0, b:0.0} },
-//               sun = new SceneJS.Planet({  emit: 1.0, scale: 0.3, shiftval:8.0, inner_id: "sun", tex: "textures/sunmap.jpg"})
-//	              )
-//					);
+
+system[1]._anchor.addNode( systemsun = SceneJS.spherical({ scale: 9, angle: 0.5, speed: 365.0, color: {r:0.0, g:1.0, b:0.0} },
+               sun = new SceneJS.Planet({  emit: 1.0, scale: 0.3, dist:8.0, inner_id: "sun", tex: "textures/sunmap.jpg"})
+	              )
+					);
 					
+
+system[0].setVisuals(["rotationarc","markerarc","equator","arc1","arc2","npole","spole","markerball"], false);
+system[1].setVisuals(["markerarc","rotationarc","arc1","arc2"], false);
+
+systemsun.setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+
 //systemsun.setVisuals(false);							
 							
 // TODO: calc max points and max motion estimation
@@ -270,23 +282,33 @@ window.render = function() {
   calcCurve(0,"planet");
 	calcCurve(1,"planet");
 	for(i in system) {
-			system[i].update(scale);
+			system[i].update(speed);
   }
   for(var i=1; i<system.length; i++)
     system[i].setArcAngle(-system[i-1]._yAngle);
 
   arcangle.angle = -system[3]._yAngle;
-	//systemsun.update(scale);
+	systemsun.update(speed);
 
 		
-		if(currentLookAt!="global")
-			lookAt.setTarget(getNodePos(currentLookAt));
+	if(currentLookAt!="global")
+		lookAt.setTarget(getNodePos(currentLookAt));
 
-		if(currentPos!="global")
-			changeView(currentPos);
+	if(currentPos!="global")
+		changeView(currentPos);
 			
 		//TODO: on model change -> events?
-//		light.setPos(getNodePos("sun"));
+		light.setPos(getNodePos("sun"));
+
+
+    sunpos = getNodePos("sun");
+    planetpos = getNodePos("planet");
+	  dx = sunpos.x - planetpos.x;
+    dy = sunpos.y - planetpos.y;
+	  dz = sunpos.z - planetpos.z;
+  	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+    planet.shade(dist>1.2);
+
     scene.render(); 
     
 };

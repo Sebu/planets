@@ -142,10 +142,10 @@ SceneJS.Planet.prototype._init = function(params) {
   this.addNode(
   	SceneJS.translate({x:0.0, y:0.0, z: dist},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
-      	SceneJS.material({              
+      	this._material = SceneJS.material({              
 					baseColor:  { r: 1.0, g: 1.0, b: 1.0 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    			emit: emit || 0.0, specular: 0.1, shine: 7.0},
+    			emit: emit || 0.0, specular: 0.0, shine: 0.0},
 					//SceneJS.texture({ layers: [{	uri: params.tex, flipY : false }] },
            SceneJS.sphere() //)
 				)
@@ -155,6 +155,9 @@ SceneJS.Planet.prototype._init = function(params) {
 						
 };
 
+SceneJS.Planet.prototype.shade = function(state) {
+  state ? this._material.setEmit(1.0) : this._material.setEmit(0.0);
+}
 
 
 SceneJS.Curve.prototype._init = function(params) {
@@ -193,19 +196,17 @@ SceneJS.Circle.prototype._init = function(params) {
      		//this.angle = angle;
 		    var slices = Math.abs(Math.round(this.angle/5));
         var positions = [];
-        var normals = [];
         var colors = [];
         var arc = (angle / 180.0) * Math.PI;
+        var x=0,y=0,z=0;
         for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
             var theta = sliceNum * arc / slices;
             var sinTheta = Math.sin(theta);
             var cosTheta = Math.cos(theta);
 
-                var x = sinTheta;
-                var y = cosTheta;
-                var z = 0.0; //sinTheta;
-                var u = 1;
-                var v = sliceNum / slices;
+                x = sinTheta;
+                y = cosTheta;
+                z = 0.0; //sinTheta;
 
 								if(this.linewidth!=1)
 									if(sliceNum % 2)
@@ -213,17 +214,27 @@ SceneJS.Circle.prototype._init = function(params) {
 									else 
 										z = -0.01;
 									
+                if(sliceNum==0) {
+                  positions.push(x);
+                  positions.push(y);
+                  positions.push(-z);
+                }  
                 positions.push(x);
                 positions.push(y);
                 positions.push(z);
-                colors.push(1.0);
-                colors.push(1.0);
-                colors.push(1.0);
 
+
+          
         }
+        
+        positions.push(x);
+        positions.push(y);
+        positions.push(-z);
+        
 
+        
         var indices = [];
-        for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
+        for (var sliceNum = 0; sliceNum <= slices+2; sliceNum++) {
                 indices.push(sliceNum);
         }
         if(this.linewidth!=1)
@@ -235,7 +246,6 @@ SceneJS.Circle.prototype._init = function(params) {
         		resource: resource,
             primitive : (this.linewidth==1) ? "line-strip" : "triangle-strip",
             positions : positions,
-            //normals: normals,
             colors : colors,
             indices : indices
         };		     
@@ -260,7 +270,7 @@ SceneJS.Circle.prototype._render = function(traversalContext) {
         } 
     }
     SceneJS._geometryModule.pushGeometry(this._handle, { solid: this._solid });
-    SceneJS._contextModule.setLineWidth(2);//this.linewidth);
+//    SceneJS._contextModule.setLineWidth(2);//this.linewidth);
     this._renderNodes(traversalContext);
     SceneJS._geometryModule.popGeometry();
 
@@ -272,7 +282,6 @@ SceneJS.Circle.prototype._render = function(traversalContext) {
 
 
 SceneJS.Spherical.prototype._init = function(params) {
-        // this.setDensity(params.density);
         
     this._curve = null;
 	  tmpNodes =  this.removeNodes();
@@ -316,7 +325,7 @@ SceneJS.Spherical.prototype._init = function(params) {
        		SceneJS.scale( {x: -params.scale, y: -params.scale, z: params.scale },
 	 				  new SceneJS.Circle({angle: 90.0}))),
 
-		SceneJS.translate( {x: 0.0, y: 0.0, z: params.scale  }, 
+		this._visuals["markerball"]  = SceneJS.translate( {x: 0.0, y: 0.0, z: params.scale  }, 
 			SceneJS.scale( {x: 0.1, y: 0.1, z: 0.1 }, 
 				SceneJS.sphere() 
 			)

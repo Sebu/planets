@@ -1,6 +1,10 @@
 
 var planets = { 
-	Mercury1: { sphere: [  {angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 30.0, speed: 111 } ] }, 
-	Mercury2: { sphere: [  {angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 30.0, speed: 111 } ] }, 
-	Venus: 		{ sphere: [  {angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 40.0, speed: 600 } ] }, 
+Mercury1: { sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 30.0, speed: 110 }] }, 
+Mercury2: { sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 30.0, speed: 570 }] }, 
+Venus1: 	{ sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 18.0, speed: 570 }] }, 
+Venus2: 	{ sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 365 }, { angle: 18.0, speed: 570 }] }, 
+Mars1: 		{ sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 730 }, { angle: 18.0, speed: 260 }] }, 
+Mars2: 		{ sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 730 }, { angle: 18.0, speed: 730 }] }, 
+Mars3: 		{ sphere: [{angle: 24.0, speed: 0 }, { angle: 90.0,  speed: 730 }, { angle: 18.0, speed: 790 }] }, 
 };

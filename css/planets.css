@@ -48,10 +48,10 @@ html, body {
 	border:1px inset #ddd;
 	float:left;
 	font-size:12px;
-	margin:0;
-	padding:0;
+	margin:1;
+	padding:1;
 	text-align:center;
-	width:30px;
+	width:32px;
 	border-radius:5px; 
 }
 
