@@ -14,7 +14,7 @@ html, body {
 	position:relative; 
 	cursor:pointer;
 	border:1px solid #333;
-	width:150px;
+	width:110px;
 	top: 5px;
 	float:left; 
 	clear:right;
@@ -63,7 +63,7 @@ html, body {
   background-color: rgba(150,150,150,0.5);
   font-size: small;
   border-radius: 5px;
-  padding: 10px;
+  padding: 4px;
   
 }
 #uiContainer {

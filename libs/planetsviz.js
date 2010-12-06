@@ -27,6 +27,7 @@ SceneJS.LookAt.prototype.setTarget = function(target) {
 	this.translate(0.0,0.0,-dist);
 
 	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
+  this.setUp(this.up);
 	this._setDirty(); 
 }
 
@@ -78,6 +79,9 @@ SceneJS.LookAt.prototype.translate = function(x,y,z) {
 	this._eyeX += this.dir.x * z;
 	this._eyeY += this.dir.y * z;
 	this._eyeZ += this.dir.z * z;
+	this._eyeX += this.right.x * x;
+	this._eyeY += this.right.y * x;
+	this._eyeZ += this.right.z * x;
 	this._lookX = this._eyeX + this.dir.x;
 	this._lookY = this._eyeY + this.dir.y;
 	this._lookZ = this._eyeZ + this.dir.z;
@@ -156,7 +160,7 @@ SceneJS.Planet.prototype._init = function(params) {
 };
 
 SceneJS.Planet.prototype.shade = function(state) {
-  state ? this._material.setEmit(1.0) : this._material.setEmit(0.0);
+  state ? this._material.setBaseColor({r: 1.0, g: 1.0, b:1.0}) : this._material.setBaseColor({r: 0.0, g: 0.0, b:0.0});
 }
 
 
