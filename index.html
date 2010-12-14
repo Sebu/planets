@@ -8,24 +8,26 @@
 
 <body>
 <div class="container" id="uiContainer">
-	 Origin:
-   <select name="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);">
+	<div class="caption">origin</div>
+   <select style="float:right;" name="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);">
       <option value="global">Global</option>
       <option value="earth">Earth</option>
       <option value="planet">Planet</option>
     </select>
    <br>
-	 LookAt:
-   <select name="view" onchange="currentLookAt = this.options[this.selectedIndex].value;">
+	<div class="caption">look at</div>
+   <select style="float:right;" name="view" onchange="currentLookAt = this.options[this.selectedIndex].value;">
       <option value="global">Global</option>
       <option value="earth">Earth</option>
       <option value="planet">Planet</option>
     </select>
    <br>   
-   presets: 
-	<select id="presets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
+  <div class="caption">presets</div>
+	<select  style="float:right;" id="presets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
    <div id="parameters">
-    overall speed:
+      <br><br>
+      
+    <div class="caption">speed</div>
    <div id="speedRange"><input type="range" class="slider" onchange="speed= value; $('#speedRange > input').attr('value',value);"/>
    <input type="text" class="range" onchange="speed= value; $('#speedRange > input').attr('value',value);" />
    </div>
@@ -56,6 +58,18 @@
    <input type="range" class="slider" onchange="systemsun.setSpeed(value); $('#speedSun > input').attr('value',value);" />
    <input type="text" class="range" tabindex=7  onchange="systemsun.setSpeed(value); $('#speedSun > input').attr('value',value);"/>
    </div>    
+   
+   <div class="caption">Rotation Start</div>
+   <div class="rotate" id="rotate1"><div class="caption">Sphere 1 (ascension, in degrees)</div>
+   	<input type="range" class="slider" onchange="system[1].setRotate(value); $('#rotate1 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=8   onchange="system[1].setRotate(value); $('#rotate1 > input').attr('value',value);"/></div>
+   <div class="rotate" id="rotate2"><div class="caption">Sphere 2 (longitude)</div>
+   	<input type="range" class="slider" onchange="system[2].setRotate(value); $('#rotate2 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=9  onchange="system[2].setRotate(value); $('#rotate2 > input').attr('value',value);"/></div>  
+   <div class="rotate" id="rotate3"><div class="caption">Sphere 3-4 (unknown)</div>
+   	<input type="range" class="slider" onchange="system[3].setRotate(value); $('#rotate3 > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=10 onchange="system[3].setRotate(value); $('#rotate3 > input').attr('value',value);"/></div>  
+   	   	
   <input type="button" onclick="reset()" value="reset">
    </div>
 </div>
@@ -102,7 +116,7 @@ var dragging = false;
 
 function reset() {
   for(var i=0; i<system.length; i++)
-					system[i].setRotate(0.0);
+					system[i].setRotate(planetpresets["Mercury1"].sphere[i].rotate);
 	systemsun.setRotate(0.0);
 }
 
@@ -115,9 +129,13 @@ function setCurrentPlanet(node) {
 
 		$(".speed > input").attr({"min":0, "max":1000});
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",planetpresets[node].sphere[index].speed); } );
+
+		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",planetpresets[node].sphere[index].rotate); } );
 		
 		$(".angle > input").change();
 		$(".speed > input").change();
+		$(".rotate > input").change();
 }
 
 setCurrentPlanet("Mercury1");
@@ -189,12 +207,9 @@ canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 
 
-
-//			      //new SceneJS.Stationary()
-//anchor.addNode(new SceneJS.Globe({scale: -20.0, emit: 0.5, tex: "textures/starsmap.jpg"}));
 camera.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthmap1k.jpg"}));
 
-// mercury system
+// planet system
 var system = [];
 
 							
@@ -287,8 +302,8 @@ function changeView(node) {
 } 
 
 window.render = function() {
-  calcCurve(0,"planet");
-	calcCurve(1,"planet");
+	//calcCurve(0,"planet");
+	//calcCurve(1,"planet");
 	for(i in system) {
 			system[i].update(speed);
   }

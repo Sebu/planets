@@ -360,9 +360,9 @@ SceneJS.Spherical.prototype._init = function(params) {
     		
 	
     this._anchor.addNodes(tmpNodes);
-    this._zAngle= params.angle || 0;
+    this._zAngle= params.angle || 0.0;
     this.setAxis(this._zAngle);
-    this._yAngle= 0.0;
+    this._yAngle= params.rotate || 0.0;
     
     this._ySpeed= params.speed ? (360.0 / params.speed) : 0.0;
 
@@ -401,9 +401,7 @@ SceneJS.Spherical.prototype.setArcAngle = function(angle) {
 
 SceneJS.Spherical.prototype.setRotate = function(angle) {
 		this._yAngle = angle;
-		this.arcangle11.angle = angle;
-//		this.arcangle12.angle = angle;
-
+		this.setArcAngle(angle);
 		this._yRotate.setAngle(this._yAngle);
 };
 
