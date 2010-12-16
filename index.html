@@ -28,60 +28,84 @@
       <br><br>
       
     <div class="caption">speed</div>
-   <div id="speedRange"><input type="range" class="slider" onchange="speed= value; $('#speedRange > input').attr('value',value);"/>
-   <input type="text" class="range" onchange="speed= value; $('#speedRange > input').attr('value',value);" />
-   </div>
+   <div id="speedRange"><input type="range" class="slider" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);"/>
+   <input type="text" class="range" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);" />
    <br><br>
-   <div class="angle" id="angle1"><div class="caption">Sphere 1-2 (obliquity of ecliptic)</div>
-   	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
-   <div class="angle" id="angle2"><div class="caption">Sphere 2-3 (right angle)</div>
-   	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
-   <div class="angle" id="angle3"><div class="caption">Sphere 3-4 (unknown)</div>
-   	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
-   	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
-
-		<br><br>
-    <div class="caption">Sphere Period (days)</div>
-   <div class="speed" id="speed1"><div class="caption">Sphere 1 (daily)</div>
-   <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
-   <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
-   <div class="speed" id="speed2"><div class="caption">Sphere 2 (zodiacal)</div>
-   <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
-   <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
-   <div class="speed" id="speed3"><div class="caption">Sphere 3, 4 (synodic)</div>
-   <input type="range" class="slider" onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);" />
-   <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/>
    </div>
-   <div id="speedSun"> <div class="caption">Sun (year)</div>
-   <input type="range" class="slider" onchange="systemsun.setSpeed(value); $('#speedSun > input').attr('value',value);" />
-   <input type="text" class="range" tabindex=7  onchange="systemsun.setSpeed(value); $('#speedSun > input').attr('value',value);"/>
-   </div>    
+
+    <div class="caption">Angle (degrees)</div>
+		<div>
+		  <div class="angle" id="angle1"><div>Sphere 1-2 (obliquity of ecliptic)</div>
+		 	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
+		  <div class="angle" id="angle2"><div>Sphere 2-3 (right angle)</div>
+		 	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
+		  <div class="angle" id="angle3"><div>Sphere 3-4 (unknown)</div>
+		 	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
+		 	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
+			<br><br>
+		</div>
+		
+    <div class="caption">Sphere Period (days)</div>
+		<div>
+		 <div class="speed" id="speed1"><div>Sphere 1 (daily)</div>
+		 <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
+		 <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
+		 <div class="speed" id="speed2"><div>Sphere 2 (zodiacal)</div>
+		 <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
+		 <div class="speed" id="speed3"><div>Sphere 3, 4 (synodic)</div>
+		 <input type="range" class="slider" onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/></div>
+		 <div id="speedSun"> <div>Sun (year)</div>
+		 <input type="range" class="slider" onchange="systemSun[0].setSpeed(value); $('#speedSun > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=7  onchange="systemSun[0].setSpeed(value); $('#speedSun > input').attr('value',value);"/></div>
+		 <br><br> 
+   </div>   
    
-   <div class="caption">Rotation Start</div>
-   <div class="rotate" id="rotate1"><div class="caption">Sphere 1 (ascension, in degrees)</div>
-   	<input type="range" class="slider" onchange="system[1].setRotate(value); $('#rotate1 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=8   onchange="system[1].setRotate(value); $('#rotate1 > input').attr('value',value);"/></div>
-   <div class="rotate" id="rotate2"><div class="caption">Sphere 2 (longitude)</div>
-   	<input type="range" class="slider" onchange="system[2].setRotate(value); $('#rotate2 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=9  onchange="system[2].setRotate(value); $('#rotate2 > input').attr('value',value);"/></div>  
-   <div class="rotate" id="rotate3"><div class="caption">Sphere 3-4 (unknown)</div>
-   	<input type="range" class="slider" onchange="system[3].setRotate(value); $('#rotate3 > input').attr('value',value);"/>
-   	<input type="text" class="range"  tabindex=10 onchange="system[3].setRotate(value); $('#rotate3 > input').attr('value',value);"/></div>  
-   	   	
+   <div class="caption">Rotation Start (degrees)</div>
+   <div>
+   <div class="rotate" id="rotate1"><div>Sphere 1 (ascension)</div>
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
+   <div class="rotate" id="rotate2"><div>Sphere 2 (longitude)</div>
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/></div>  
+   <div class="rotate" id="rotate3"><div>Sphere 3-4 (unknown)</div>
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/></div>  
+   	</div>   
+
+   <div class="caption">Moon</div>
+   <div>
+    <div class="moon" id="metonYear"><div>Years</div>
+   	<input type="range" class="slider" onchange="metonYear = Number(value); $('#metonYear > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=8   onchange="metonYear = Number(value); $('#metonYear > input').attr('value',value);"/></div>
+    <div class="moon" id="metonSynodicMonths"><div>Synodic months</div>
+   	<input type="range" class="slider" onchange="metonSynodicMonths = Number(value); $('#metonSynodicMonths > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=9  onchange="metonSynodicMonths = Number(value); $('#metonSynodicMonths > input').attr('value',value);"/></div>  
+    <div class="moon" id="metonDays"><div>days per cycle</div>
+   	<input type="range" class="slider" onchange="metonDays = Number(value); $('#metonDays > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=10 onchange="metonDays = Number(value); $('#metonDays > input').attr('value',value);"/></div>  
+    <div class="moon" id="moonAngle"><div>Angle</div>
+   	<input type="range" class="slider" onchange="systemMoon[1].setAxis(value); $('#moonAngle > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=11 onchange="systemMoon[1].setAxis(value); $('#moonAngle > input').attr('value',value);"/></div>  
+   </div>    		
+   	
+   	
+   	
   <input type="button" onclick="reset()" value="reset">
    </div>
 </div>
 
 <div class="container" id="infoContainer">
- Nice Planet Model
+ <div>days per year</div><div id="metonDaysPerYear">0</div>
+  <div>days per synodic month</div><div id="synodicDaysPerMonth">0</div>
+   <div>days per zodical month</div><div id="zodicalDaysPerMonth">0</div>
+    <div>days per draconitic month</div> <div id="draconiticDaysPerMonth">0</div>
 </div>
 
-<div class="container" id="helpContainer">
-Hilfe </br>
-W,A,S,D + Mouse
-</div>
 
 <canvas id="glCanvas" tabindex=1>
   <p>This example requires a browser that supports the
@@ -101,10 +125,8 @@ W,A,S,D + Mouse
 
 var canvas = document.getElementById("glCanvas");
 
-for(i in planetpresets)
- $("#presets").append("<option value='" + i + "'>" + i + "</option>");
- 
-
+var currentPlanet = {};
+$.extend(currentPlanet, planetPresets["Mercury1"]);
 var currentPos = "global";
 var currentLookAt = "earth";
 var speed = 0.2;
@@ -113,32 +135,112 @@ var lastY;
 var dragging = false;
 
 
+var metonYear = 19;
+var metonSynodicMonths = 235;
+var metonDraconiticMonths =  242;
+var metonDays = 6940; // days per cycle
+function metonZodicalMonths() { return metonYear + metonSynodicMonths; }
+
+function metonDaysPerYear() { return metonDays/metonYear; }
+function synodicDaysPerMonth() { return metonDays/metonSynodicMonths; }
+function zodicalDaysPerMonth() {return metonDays/metonZodicalMonths(); }
+function draconiticDaysPerMonth() {return metonDays/metonDraconiticMonths; }
+
+// planet system
+var system = [];
+var systemSun = [];
+var systemMoon = [];
+
+$(document).ready(function() {
+
+	
+  for(i in planetPresets)
+ 		$("#presets").append("<option value='" + i + "'>" + i + "</option>");
+ 
+ 
+	$(".caption").click(function() {
+	  $(this).next().toggle(200)
+	})
+
+	$(".moon > input").change(function() {
+		$("#metonDaysPerYear").html( metonDaysPerYear().toFixed(2) );
+		$("#synodicDaysPerMonth").html( synodicDaysPerMonth().toFixed(2) );
+		$("#zodicalDaysPerMonth").html( zodicalDaysPerMonth().toFixed(2) );
+		$("#draconiticDaysPerMonth").html( draconiticDaysPerMonth().toFixed(2) );
+		//systemSun[1].setSpeed(metonDaysPerYear() - 360/systemSun[0]._ySpeed);
+
+		draco = draconiticDaysPerMonth();
+		zodic = zodicalDaysPerMonth();
+		systemMoon[0].setSpeed(zodic);
+		//systemMoon[1].setSpeed( (draco - zodic) );
+		
+		
+	});
+	
+
+	//moon
+	$("#metonSynodicMonths > input").attr({"value":metonSynodicMonths, "min":0, "max":1000});
+	$("#metonYear > input").attr({"value":metonYear, "min":0, "max":100});
+	$("#metonDays > input").attr({"value":metonDays, "min":0, "max":10000});
+  $("#moonAngle > input").attr({"value":5, "min":0, "max":360});	
+	// BUG
+	$("#metonSynodicMonths > input").attr({"value":metonSynodicMonths});
+	$("#metonYear > input").attr({"value":metonYear});
+	$("#metonDays > input").attr({"value":metonDays});
+  $("#moonAngle > input").attr({"value":5});	
+
+
+  $(".moon > input").change();
+		
+	reset();	
+})
+
+setCurrentPlanet("Mercury1");
+	
 
 function reset() {
-  for(var i=0; i<system.length; i++)
-					system[i].setRotate(planetpresets["Mercury1"].sphere[i].rotate);
-	systemsun.setRotate(0.0);
+	if(system.length==0) return;
+  for(var i=0; i<3; i++) {
+					system[i].setRotate(currentPlanet.sphere[i].rotate);
+  }
+  system[3].setRotate(0);
+	systemSun[0].setRotate(0);
+	systemSun[1].setRotate(0);	
+	systemMoon[0].setRotate(0);
+	systemMoon[1].setRotate(0);	
+	
 }
 
+
 function setCurrentPlanet(node) {
-		$("#speedSun > input").attr({"value":"365.0","min":0, "max":1000});
-		$("#speedRange > input").attr({"value":"0.2","min":0, "max":2, "step":0.01});
 		
+		currentPlanet = {};
+		$.extend(currentPlanet, planetPresets[node]);
+		
+		$("#speedSun > input").attr({"value":"365.0","value":"365.0","min":0, "max":1000});
+  	$("#speedSun > input").attr({"value":"365.0"});
+		$("#speedRange > input").attr({"value":"0.2","min":0, "max":2, "step":0.01});
+		$("#speedRange > input").attr({"value":"0.2"});
+				
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",planetpresets[node].sphere[index].angle); } );
+		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].angle); } );
 
 		$(".speed > input").attr({"min":0, "max":1000});
-		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",planetpresets[node].sphere[index].speed); } );
+		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].speed); } );
 
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",planetpresets[node].sphere[index].rotate); } );
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotate); } );
+		
+		
+
 		
 		$(".angle > input").change();
 		$(".speed > input").change();
-		$(".rotate > input").change();
+		//$(".rotate > input").change();
+		reset();
 }
 
-setCurrentPlanet("Mercury1");
+
 
 function mouseDown(event) {
     lastX = event.clientX;
@@ -150,21 +252,6 @@ function mouseUp() {
     dragging = false;
 
 }
-
-// base structure
-var scene = SceneJS.scene({ canvasId: "glCanvas" },
-  renderer = SceneJS.renderer({  id: "renderer" ,           
-    clear: { depth : true, color : true },
-    clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: true, cullFace: "back", frontFace: "cw", linewidth: 2
-    },
-  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } },
-      camera = SceneJS.camera({},
-			  light = sunlight()
-		  )
-	  )
-  )
-);
 
 /* On a mouse drag, we'll re-render the scene, passing in
  * incremented angles in each time.
@@ -206,18 +293,29 @@ canvas.addEventListener('mousewheel', mouseWheel, true);
 canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 
+// base structure
+var scene = SceneJS.scene({ canvasId: "glCanvas" },
+  renderer = SceneJS.renderer({  id: "renderer" ,           
+    clear: { depth : true, color : true },
+    clearColor: { r: 0.2, g : 0.2, b : 0.2 },
+    enableCullFace: true, cullFace: "back", frontFace: "cw", linewidth: 2
+    },
+  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } },
+      camera = SceneJS.camera({},
+			  light = sunlight()
+		  )
+	  )
+  )
+);
+
 
 camera.addNode(new SceneJS.Globe({scale: 0.4, id: "earth", tex: "textures/earthmap1k.jpg"}));
-
-// planet system
-var system = [];
-
 							
 camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.7, g: 1.7, b: 1.5}},
 				      		system[1] =	SceneJS.spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0} },
 						    		system[2] = SceneJS.spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = SceneJS.spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    planet = new SceneJS.Planet({ dist: 9.0, emit: 1.0, scale: 0.2, inner_id: "planet", tex: "textures/mercurymap.jpg"})
+                		    planet = new SceneJS.Planet({ dist: 9.0, emit: 1.0, scale: 0.2, inner_id: "planet"})
                 		  )
 					 		  		)
 						  		)	
@@ -232,18 +330,31 @@ camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0,
 					
 
 
-system[0]._anchor.addNode( systemsun = SceneJS.spherical({ scale: 10, angle: 24.5, speed: 365.0, color: {r:0.0, g:1.0, b:0.0} },
-               sun = new SceneJS.Planet({  emit: 1.0, scale: 0.3, dist:8.0, inner_id: "sun", tex: "textures/sunmap.jpg"})
-	              )
-					);
-					
+system[0]._anchor.addNode(  systemSun[0] = SceneJS.spherical({ angle: 24, speed: 365.0 },
+														  systemSun[1] = SceneJS.spherical({ angle: 0.5, speed: 0.0 },
+               								  sun = new SceneJS.Planet({  emit: 1.0, scale: 0.3, dist:8.0, inner_id: "sun"})
+	              							)
+	              						)
+													);
+
+system[0]._anchor.addNode(  systemMoon[0] = SceneJS.spherical({ angle: 24, speed: 0.0 },
+														  systemMoon[1] = SceneJS.spherical({ angle: 5.0, speed: 0.0 },
+								                moon = new SceneJS.Planet({  emit: 1.0, scale: 0.2, dist: 3.0, inner_id: "moon"})
+	              						  )
+	              					  )
+												 );					
 
 system[0].setVisuals(["rotationarc","markerarc","equator","arc1","arc2","npole","spole","markerball"], false);
 system[1].setVisuals(["markerarc","rotationarc","arc1","arc2"], false);
 
-systemsun.setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
-//systemsun.setVisuals(false);							
+
+systemMoon[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+systemMoon[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+
+//systemSun.setVisuals(false);							
 							
 // TODO: calc max points and max motion estimation
 calcCurve = function(start,node) {
@@ -302,16 +413,24 @@ function changeView(node) {
 } 
 
 window.render = function() {
-	//calcCurve(0,"planet");
-	//calcCurve(1,"planet");
+	calcCurve(0,"planet");
+	calcCurve(1,"planet");
+	
+	// encapsulate in array [s1, s2, ... , moon2]
 	for(i in system) {
 			system[i].update(speed);
   }
+	systemSun[0].update(speed);
+	systemSun[1].update(speed);
+	systemMoon[0].update(speed);
+	systemMoon[1].update(speed);
+		
   for(var i=1; i<system.length; i++)
     system[i].setArcAngle(-system[i-1]._yAngle);
 
   arcangle.angle = -system[3]._yAngle;
-	systemsun.update(speed);
+  
+  
 
 		
 	if(currentLookAt!="global")
@@ -324,6 +443,7 @@ window.render = function() {
 		light.setPos(getNodePos("sun"));
 
 
+		// put into function
     sunpos = getNodePos("sun");
     planetpos = getNodePos("planet");
 	  dx = sunpos.x - planetpos.x;

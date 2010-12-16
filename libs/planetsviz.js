@@ -132,7 +132,7 @@ SceneJS.Globe.prototype._init = function(params) {
 				baseColor:  { r: 0.0, g: 0.0, b: 0.0 },
 				specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
 		  	emit: emit, specular: 0.0, shine: 6.0},
-				new SceneJS.Texture({ layers: [{	uri: params.tex, flipY : false }] }, SceneJS.sphere() )
+				new SceneJS.Texture({ layers: [{	uri: params.tex, rotate : {z: 18.0 }}] }, SceneJS.sphere() )
 			)
 		)
 	);
@@ -391,7 +391,6 @@ SceneJS.Spherical.prototype.getAxis = function() {
 
 SceneJS.Spherical.prototype.setSpeed = function(speed) {
 		this._ySpeed = (speed!=0) ? (360.0/speed) : 0.0;
-		console.log(this._ySpeed );
 };
 
 SceneJS.Spherical.prototype.setArcAngle = function(angle) {
