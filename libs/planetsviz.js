@@ -129,9 +129,9 @@ SceneJS.Globe.prototype._init = function(params) {
 	this.addNode( 
 		SceneJS.scale({ x: params.scale, y: params.scale, z: params.scale}, 
 			SceneJS.material({              
-				baseColor:  { r: 0.0, g: 0.0, b: 0.0 },
+				baseColor:  { r: 0.0, g: 0.0, b: 0.9 },
 				specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-		  	emit: emit, specular: 0.0, shine: 6.0},
+		  	emit: emit, specular: 0.0, shine: 2.0},
 				new SceneJS.Texture({ layers: [{	uri: params.tex, rotate : {z: 18.0 }}] }, SceneJS.sphere() )
 			)
 		)
@@ -191,17 +191,19 @@ SceneJS.Curve.prototype._init = function(params) {
 	   
 };
 
+SceneJS.Circle.prototype.setAngle = function(angle) {
+	 this.angle = angle%360;
+}
 
 SceneJS.Circle.prototype._init = function(params) {
-		 this.angle = params.angle;
+		 this.setAngle(params.angle);
 		 this.linewidth = params.width || 1;
-        // this.setDensity(params.density);
+
      this._create = function(angle) {
-     		//this.angle = angle;
 		    var slices = Math.abs(Math.round(this.angle/5));
         var positions = [];
         var colors = [];
-        var arc = (angle / 180.0) * Math.PI;
+        var arc = (this.angle / 180.0) * Math.PI;
         var x=0,y=0,z=0;
         for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
             var theta = sliceNum * arc / slices;
@@ -242,9 +244,9 @@ SceneJS.Circle.prototype._init = function(params) {
                 indices.push(sliceNum);
         }
         if(this.linewidth!=1)
-					resource = "facearc" + Math.round(this.angle)%360;
+					resource = "facearc" + Math.round(this.angle);
 				else
-					resource = "linearc" + Math.round(this.angle)%360;
+					resource = "linearc" + Math.round(this.angle);
 
         return {
         		resource: resource,
@@ -259,9 +261,9 @@ SceneJS.Circle.prototype._init = function(params) {
 
 SceneJS.Circle.prototype._render = function(traversalContext) {
 		if(this.linewidth!=1)
-			resource = "facearc" + Math.round(this.angle)%360;
+			resource = "facearc" + Math.round(this.angle);
 		else
-			resource = "linearc" + Math.round(this.angle)%360;
+			resource = "linearc" + Math.round(this.angle);
 		this._handle  = resource;
     if (this._handle) { // Was created before - test if not evicted since
         if (!SceneJS._geometryModule.testGeometryExists(this._handle)) {
@@ -290,7 +292,7 @@ SceneJS.Spherical.prototype._init = function(params) {
     this._curve = null;
 	  tmpNodes =  this.removeNodes();
   	color = params.color || { r: 0.5, g: 0.5, b: 0.5};
-  	this._visuals = [];//new Object();
+  	this._visuals = [];
 	  
 
 		// equator marker arc/angle			
@@ -373,15 +375,14 @@ SceneJS.Spherical.prototype._init = function(params) {
 
 SceneJS.Spherical.prototype.setVisuals = function(vis, state) {
     for(i in vis) {
-      console.log(vis[i]);
       this._visuals[vis[i]].setEnabled(state);		
     }
 				
 };
 SceneJS.Spherical.prototype.setAxis = function(angle) {
 		this._zAngle = angle;
-		this.arcangle21.angle = angle;
-		this.arcangle22.angle = angle;
+		this.arcangle21.setAngle(angle);
+		this.arcangle22.setAngle(angle);
 		this._zRotate.setAngle(this._zAngle);
 };
 
@@ -394,7 +395,7 @@ SceneJS.Spherical.prototype.setSpeed = function(speed) {
 };
 
 SceneJS.Spherical.prototype.setArcAngle = function(angle) {
-  this.arcangle11.angle = angle;
+  this.arcangle11.setAngle(angle);
 //  this.arcangle12.angle = angle;
 };
 

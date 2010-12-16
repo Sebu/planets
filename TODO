@@ -1,12 +1,122 @@
+DONE
 - sphere1: light color
 - different planet value from file
 - remove blue overlapped arc
 - rangeinput -> hit return
 - sun/moon
 - radius of sun (darken planets)
+- fix rotationArcs
 
-- moon ( hy )
-
+TODO
+- EMAIL new version
+- moon speed functions days per year
+- move moon to normal planet models :)
 - camera fix :/
+- memory leak :/ in curve code ( destroy geometry )
+- generate menu
+- more lambda :D
 - variable slider max ( depended on model )
-- memory leak :/
+
+
+Titles:
+Sphere 1-2 (obliquity of ecliptic)
+Sphere 2-3 (right angle)
+Sphere 3-4 (unknown)
+
+
+Sphere Period (days)
+Sphere 1 (daily)
+Sphere 2 (zodiacal)
+Sphere 3, 4 (synodic)
+Sun (year)
+
+Rotation Start
+Sphere 1 (ascension, in degrees)
+Sphere 2 (longitude)
+Sphere 3, 4
+Sun (longitude)
+
+Direction of rotation of Sphere 3
+SN
+NS
+
+The start point for ascension and longitude should be a point where the equators of Sphere 1 and Sphere 2 intersect.  This will ultimately be in the middle of Aries.
+
+
+- move moon to normal planet models :)
+
+
+metonyear = 19
+metonsynodicmonths = 235
+metonzodialmonths = metonyear + metonsynodicmonths
+metondays = 6940
+metondaysperyear = metondays/metonyear
+calippusyear = 4 metonyear
+calippussynodicmonths = 4 metonsynodicmonths
+calippuszodialmonths = 4 metonzodialmonths
+calippusdays = 4 metondays - 1
+sarossynodic = 223
+sarosdraconitic = 242
+exeligmos = 3 sarossynodic
+
+
+Moon
+
+Schiaparelli/Simplicius
+Sphere 2 west/east draconitic
+Sphere 3 east/west draconitic-zodiacal
+
+Schiaparelli/Simplicius fixed
+east/west draconitic-zodiacal
+west/east dracontic
+
+Mendell
+west/east dracontic + zodiacal
+east/west draconitic
+
+default angle 5 degrees between Sphere 2 and Sphere 3
+
+Sun
+west/east 365
+west/east remainder of year
+angle 1/2 degree
+
+Different types of years/synodic cycles
+
+Metonic 19 years
+       235 synodic months
+Hence, 254 zodiacal months
+Days in cycle = 6940
+
+Oktaeteris
+       8 years
+       99 months
+Hence,
+       107 zodiacal months
+Unknown number of days
+Set default as 2922 days (365 1/4 days per year)
+
+Callippan (4 times Meton, but days adjusted to get 365 1/4 day year)
+76 years
+940 months
+Hence
+       1016 zodiacal months
+27759 days
+
+Inputs
+Years
+Synodic months
+days per cycle
+
+Display
+days per year
+days per synodic month (fraction)
+days per zodical month
+days per draconitic month
+
+for Sun (all they need see is the sun
+angle sphere 1 - 2 default
+sphere 2 pop in value here (the period must be > 1 year)
+sphere 3 value here will be days per year - sphere 2. (read period for sphere 2)
+
+

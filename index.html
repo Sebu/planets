@@ -23,7 +23,7 @@
     </select>
    <br>   
   <div class="caption">presets</div>
-	<select  style="float:right;" id="presets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
+	<select  style="float:right;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
    <div id="parameters">
       <br><br>
       
@@ -93,17 +93,18 @@
    	<input type="text" class="range"  tabindex=11 onchange="systemMoon[1].setAxis(value); $('#moonAngle > input').attr('value',value);"/></div>  
    </div>    		
    	
-   	
+   <select style="float:right;" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>
    	
   <input type="button" onclick="reset()" value="reset">
    </div>
 </div>
 
 <div class="container" id="infoContainer">
+  <div>zodiacal month</div><div id="metonZodicalMonths">0</div>
  <div>days per year</div><div id="metonDaysPerYear">0</div>
-  <div>days per synodic month</div><div id="synodicDaysPerMonth">0</div>
-   <div>days per zodical month</div><div id="zodicalDaysPerMonth">0</div>
-    <div>days per draconitic month</div> <div id="draconiticDaysPerMonth">0</div>
+ <div>days per synodic month</div><div id="synodicDaysPerMonth">0</div>
+ <div>days per zodical month</div><div id="zodicalDaysPerMonth">0</div>
+ <div>days per draconitic month</div> <div id="draconiticDaysPerMonth">0</div>
 </div>
 
 
@@ -137,8 +138,9 @@ var dragging = false;
 
 var metonYear = 19;
 var metonSynodicMonths = 235;
-var metonDraconiticMonths =  242;
 var metonDays = 6940; // days per cycle
+var metonDraconiticMonths =  242;
+
 function metonZodicalMonths() { return metonYear + metonSynodicMonths; }
 
 function metonDaysPerYear() { return metonDays/metonYear; }
@@ -151,18 +153,27 @@ var system = [];
 var systemSun = [];
 var systemMoon = [];
 
+
+moonSpeed1 = moonModels["Mendell"].speed1;
+moonSpeed2 = moonModels["Mendell"].speed2;
+
+
 $(document).ready(function() {
 
 	
   for(i in planetPresets)
- 		$("#presets").append("<option value='" + i + "'>" + i + "</option>");
+ 		$("#planetPresets").append("<option value='" + i + "'>" + i + "</option>");
  
- 
+  for(i in moonModels) 
+ 		$("#moonPresets").append("<option value='" + i + "'>" + i + "</option>");
+
 	$(".caption").click(function() {
 	  $(this).next().toggle(200)
 	})
 
 	$(".moon > input").change(function() {
+
+		$("#metonZodicalMonths").html( metonZodicalMonths().toFixed() );
 		$("#metonDaysPerYear").html( metonDaysPerYear().toFixed(2) );
 		$("#synodicDaysPerMonth").html( synodicDaysPerMonth().toFixed(2) );
 		$("#zodicalDaysPerMonth").html( zodicalDaysPerMonth().toFixed(2) );
@@ -171,27 +182,22 @@ $(document).ready(function() {
 
 		draco = draconiticDaysPerMonth();
 		zodic = zodicalDaysPerMonth();
-		systemMoon[0].setSpeed(zodic);
-		//systemMoon[1].setSpeed( (draco - zodic) );
+		systemMoon[0].setSpeed(moonSpeed1(draco, zodic) );
+		systemMoon[1].setSpeed( moonSpeed2(draco, zodic) );
 		
 		
 	});
 	
 
 	//moon
-	$("#metonSynodicMonths > input").attr({"value":metonSynodicMonths, "min":0, "max":1000});
-	$("#metonYear > input").attr({"value":metonYear, "min":0, "max":100});
-	$("#metonDays > input").attr({"value":metonDays, "min":0, "max":10000});
-  $("#moonAngle > input").attr({"value":5, "min":0, "max":360});	
+	$("#metonSynodicMonths > input").attr({ "min":0, "max":1000});
+	$("#metonYear > input").attr({ "min":0, "max":100});
+	$("#metonDays > input").attr({ "min":0, "max":10000});
+  $("#moonAngle > input").attr({"min":0, "max":360});	
+
 	// BUG
-	$("#metonSynodicMonths > input").attr({"value":metonSynodicMonths});
-	$("#metonYear > input").attr({"value":metonYear});
-	$("#metonDays > input").attr({"value":metonDays});
-  $("#moonAngle > input").attr({"value":5});	
+  setCurrentMoon("Default");
 
-
-  $(".moon > input").change();
-		
 	reset();	
 })
 
@@ -211,6 +217,22 @@ function reset() {
 	
 }
 
+function setCurrentModel(node) {
+  currentModel = moonModels[node];
+  moonSpeed1 = currentModel.speed1;
+  moonSpeed2 = currentModel.speed2;
+  $(".moon > input").change();
+
+}
+
+function setCurrentMoon(node) {
+  currentMoon = moonPresets[node];
+	$("#metonSynodicMonths > input").attr({"value":currentMoon.metonSynodicMonths});
+	$("#metonYear > input").attr({"value":currentMoon.metonYear});
+	$("#metonDays > input").attr({"value":currentMoon.metonDays});
+  $("#moonAngle > input").attr({"value":5});
+  $(".moon > input").change();
+}
 
 function setCurrentPlanet(node) {
 		
@@ -298,7 +320,7 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
   renderer = SceneJS.renderer({  id: "renderer" ,           
     clear: { depth : true, color : true },
     clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: true, cullFace: "back", frontFace: "cw", linewidth: 2
+    enableCullFace: false, cullFace: "back", frontFace: "cw", linewidth: 2
     },
   	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } },
       camera = SceneJS.camera({},
@@ -330,29 +352,47 @@ camera.addNode(	system[0] = SceneJS.spherical({scale: 9, angle: 0.0, speed: 0.0,
 					
 
 
-system[0]._anchor.addNode(  systemSun[0] = SceneJS.spherical({ angle: 24, speed: 365.0 },
+system[0]._anchor.addNode(  systemSun[0] = SceneJS.spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
 														  systemSun[1] = SceneJS.spherical({ angle: 0.5, speed: 0.0 },
                								  sun = new SceneJS.Planet({  emit: 1.0, scale: 0.3, dist:8.0, inner_id: "sun"})
 	              							)
 	              						)
 													);
 
-system[0]._anchor.addNode(  systemMoon[0] = SceneJS.spherical({ angle: 24, speed: 0.0 },
-														  systemMoon[1] = SceneJS.spherical({ angle: 5.0, speed: 0.0 },
-								                moon = new SceneJS.Planet({  emit: 1.0, scale: 0.2, dist: 3.0, inner_id: "moon"})
+system[0]._anchor.addNode(  systemMoon[0] = SceneJS.spherical({ scale: 9, angle: 24.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}},
+														  systemMoon[1] = SceneJS.spherical({ scale: 9, angle: 5.0, speed: 0.0, color: {r: 0.0, g: 1.0, b: 0.0} },
+								                moon = new SceneJS.Planet({  emit: 1.0, scale: 0.2, dist: 9.0, inner_id: "moon"})
 	              						  )
 	              					  )
-												 );					
+												 );		
+
+
+		systemMoon[0]._anchor.addNode( 	SceneJS.rotate({angle: 90.0, x: 1.0},			
+ 				SceneJS.scale( {x: 9, y: 9, z: 9 },
+	 				arcangle1 = new SceneJS.Circle({width: 2, angle: 0})
+		)));					
+
+		systemMoon[1]._anchor.addNode( 	SceneJS.rotate({angle: 90.0, x: 1.0},			
+ 				SceneJS.scale( {x: 9, y: 9, z: 9 },
+	 				arcangle2 = new SceneJS.Circle({width: 2, angle: 0})
+		)));					
 
 system[0].setVisuals(["rotationarc","markerarc","equator","arc1","arc2","npole","spole","markerball"], false);
+
+systemMoon[0].setVisuals(["rotationarc"], false);
+systemMoon[1].setVisuals(["rotationarc"], false);
 system[1].setVisuals(["markerarc","rotationarc","arc1","arc2"], false);
 
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
+system[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
-systemMoon[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-systemMoon[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+system[2].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+planet.setEnabled(false);
+sun.setEnabled(false);
+arcangle.setEnabled(false);
 
 //systemSun.setVisuals(false);							
 							
@@ -412,27 +452,26 @@ function changeView(node) {
 
 } 
 
+updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1], systemMoon[0], systemMoon[1] ];
+
 window.render = function() {
-	calcCurve(0,"planet");
-	calcCurve(1,"planet");
+//	calcCurve(0,"planet");
+//  calcCurve(1,"planet");
 	
-	// encapsulate in array [s1, s2, ... , moon2]
-	for(i in system) {
-			system[i].update(speed);
+	for(i in updateList) {
+			updateList[i].update(speed);
   }
-	systemSun[0].update(speed);
-	systemSun[1].update(speed);
-	systemMoon[0].update(speed);
-	systemMoon[1].update(speed);
 		
-  for(var i=1; i<system.length; i++)
-    system[i].setArcAngle(-system[i-1]._yAngle);
-
-  arcangle.angle = -system[3]._yAngle;
-  
+//  for(var i=1; i<system.length; i++)
+//    system[i].setArcAngle(-system[i-1]._yAngle);
+  arcangle.setAngle(-system[3]._yAngle);
   
 
-		
+  arcangle1.setAngle(-systemMoon[0]._yAngle);
+
+  arcangle2.setAngle(-systemMoon[1]._yAngle);
+
+	
 	if(currentLookAt!="global")
 		lookAt.setTarget(getNodePos(currentLookAt));
 
@@ -458,6 +497,7 @@ window.render = function() {
 
 
 setInterval("window.render()", 33);  
+
 window.onresize=resize;
 resize();
 
