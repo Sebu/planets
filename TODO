@@ -6,11 +6,11 @@ DONE
 - sun/moon
 - radius of sun (darken planets)
 - fix rotationArcs
+- move moon to normal planet models :)
 
 TODO
 - EMAIL new version
 - moon speed functions days per year
-- move moon to normal planet models :)
 - camera fix :/
 - memory leak :/ in curve code ( destroy geometry )
 - generate menu
