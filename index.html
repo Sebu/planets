@@ -31,7 +31,7 @@
    <br><br>
    </div>
 
-   <div class="caption">Moon</div>
+   <div class="caption moon">Moon settings</div>
    <div>
     <div class="moon" id="metonYear"><div>Years</div>
    	<input type="range" class="slider" onchange="metonYear = Number(value); $('#metonYear > input').attr('value',value);"/>
@@ -326,7 +326,7 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
   renderer = SceneJS.renderer({  id: "renderer" ,           
     clear: { depth : true, color : true },
     clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: false, cullFace: "back", frontFace: "cw", linewidth: 2
+    enableCullFace: false, cullFace: "back", frontFace: "cw", linewidth: 1
     },
   	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } },
       camera = SceneJS.camera({},
@@ -340,10 +340,10 @@ var scene = SceneJS.scene({ canvasId: "glCanvas" },
 camera.addNode(new Planet({dist: 0.0, scale: 0.4, id: "earth"}));
 							
 camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.7, g: 1.7, b: 1.5}},
-				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0} },
+				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.4, g:0.4, b:1.0} },
 						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    planet = new Planet({ dist: 9.0, emit: 1.0, scale: 0.2, inner_id: "planet"})
+                		    planet = new Planet({ dist: 9.0, emit: 2.0, scale: 0.2, inner_id: "planet"})
                 		  )
 					 		  		)
 						  		)	
@@ -373,6 +373,7 @@ calcCurve = function(start,node) {
 	curvePos = [];
 	oldAxis = [];
   oldRotate = [];
+  step = 0;
   // save axis
 	for(var i=0; i<=start; i++) {
 		oldAxis[i] = system[i].getAxis();
@@ -384,11 +385,11 @@ calcCurve = function(start,node) {
   for(var i=start+1; i<system.length; i++) {
   	oldRotate[i] = system[i]._yAngle;
     system[i].update(-32.0);
+    step *= system[i]._ySpeed;
   }
-
-	for(var j=0; j<62; j++) {
+	for(var j=0; j<100; j++) {
 		for(var i=start+1; i<system.length; i++) {
-			system[i].update(2.0);
+			system[i].update(0.5/speed);
 		}
 		pos = getNodePos(node);
 		curvePos.push(pos);
@@ -401,8 +402,8 @@ calcCurve = function(start,node) {
   for(var i=0; i<system.length; i++)
 					system[i].setRotate(oldRotate[i]);
 
-  if(system[start]._curve) 
-  	 system[start]._curve.destroy();
+//  if(system[start]._curve) 
+//  	 system[start]._curve.destroy();
 
  	system[start]._curve = new Curve({pos: curvePos});	
 	system[start]._anchor.addNode(system[start]._curve);	
@@ -429,6 +430,11 @@ function changeView(node) {
 updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1] ];
 
 window.render = function() {
+
+  if(system[0]._curve) 
+  	 system[0]._curve.destroy();
+  if(system[1]._curve) 
+  	 system[1]._curve.destroy();
 
 	if(!currentPlanet.moon) {
 		calcCurve(0,"planet");

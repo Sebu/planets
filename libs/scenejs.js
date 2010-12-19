@@ -8617,11 +8617,9 @@ SceneJS._geometryModule = new (function() {
         currentGeoMap = geoMaps["glCanvas"];
         if(!currentGeoMap) return;
         geo = currentGeoMap[resource];
-        console.log(geo);
         destroyGeometry(geo);
         geo.vertexBuf.destroy();
         geo.indexBuf.destroy();
-        console.log(geo);
     };
 
     /**

@@ -6,9 +6,9 @@ Planet.prototype._init = function(params) {
   	SceneJS.translate({x:0.0, y:0.0, z: dist},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	this._material = SceneJS.material({              
-					baseColor:  { r: 1.2, g: 1.2, b: 1.9 },
+					baseColor:  { r: 2.2, g: 2.2, b: 2.9 },
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-    			emit: emit, specular: 0.0, shine: 1.0},
+    			emit: emit, specular: 0.0, shine: 3.0},
 					SceneJS.sphere()
 				)
 			)
