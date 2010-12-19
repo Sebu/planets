@@ -3,7 +3,7 @@ Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
   dist = params.dist;
   this.addNode(
-  	SceneJS.translate({x:0.0, y:0.0, z: dist},
+  	this._distNode = SceneJS.translate({x:0.0, y:0.0, z: dist},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	this._material = SceneJS.material({              
 					baseColor:  { r: 2.2, g: 2.2, b: 2.9 },
@@ -17,9 +17,15 @@ Planet.prototype._init = function(params) {
 						
 };
 
-Planet.prototype.shade = function(state) {
-  state ? this._material.setBaseColor({r: 1.0, g: 1.0, b:1.0}) : this._material.setBaseColor({r: 0.0, g: 0.0, b:0.0});
+Planet.prototype.setShade = function(state) {
+	this._material.setBaseColor({r: state, g: state, b:state});
+//  state ? this._material.setBaseColor({r: 1.0, g: 1.0, b:1.0}) : this._material.setBaseColor({r: 0.0, g: 0.0, b:0.0});
 }
+
+Planet.prototype.setDist = function(dist) {
+	this._distNode.setZ(dist);
+}
+
 
 
 Curve.prototype._init = function(params) {
@@ -47,7 +53,7 @@ Curve.prototype._init = function(params) {
      return {
        primitive : "line-strip",
        positions : positions,
-     //  colors : colors,
+
        indices : indices
      };		     
 	 };
@@ -254,7 +260,8 @@ Spherical.prototype.getAxis = function() {
 };
 
 Spherical.prototype.setSpeed = function(speed) {
-		this._ySpeed = (speed!=0) ? (360.0/speed) : 0.0;
+		this._speed = speed;
+		this._step = (speed!=0) ? (360.0/speed) : 0.0;
 };
 
 Spherical.prototype.setArcAngle = function(angle) {
@@ -268,6 +275,6 @@ Spherical.prototype.setRotate = function(angle) {
 };
 
 Spherical.prototype.update = function(step) {
-		this._yAngle += this._ySpeed*step;
+		this._yAngle += this._step*step;
 		this.setRotate(this._yAngle);
 };

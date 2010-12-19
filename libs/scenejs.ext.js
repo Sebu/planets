@@ -1,3 +1,7 @@
+Camera = SceneJS.Camera;
+
+
+
 Spherical  = SceneJS.createNodeType("spherical");
 Planet  = SceneJS.createNodeType("planet");
 Globe  = SceneJS.createNodeType("globe");
@@ -95,7 +99,7 @@ getNodePos = function(node) {
 
 
 
-sunlight = function() {
+Sunlight = function() {
 	return new SceneJS.Light({
           mode: "point",
           pos: { x: 0.0, y: 0.0, z: 0.0 }, // Position

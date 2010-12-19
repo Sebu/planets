@@ -7,13 +7,14 @@ DONE
 - radius of sun (darken planets)
 - fix rotationArcs
 - move moon to normal planet models :)
+- memory leak :/ in curve code ( destroy geometry )
 
 TODO
 - EMAIL new version
 - moon speed functions days per year
 - camera fix :/
-- memory leak :/ in curve code ( destroy geometry )
 - generate menu
+
 - more lambda :D
 - variable slider max ( depended on model )
 

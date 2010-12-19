@@ -237,7 +237,7 @@ function setCurrentPlanet(node) {
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
 		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].angle); } );
 
-		$(".speed > input").attr({"min":0, "max":1000});
+		$(".speed > input").attr({"min":0, "max":11000});
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].speed); } );
 
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
@@ -246,6 +246,8 @@ function setCurrentPlanet(node) {
 
 		$(".angle > input").change();
 		$(".speed > input").change();
+		
+		sun.setDist(currentPlanet.sunDist);
 				
 		if(currentPlanet.moon) {
 			$(".moon").show();
@@ -322,20 +324,16 @@ canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 
 // base structure
-var scene = SceneJS.scene({ canvasId: "glCanvas" },
-  renderer = SceneJS.renderer({  id: "renderer" ,           
-    clear: { depth : true, color : true },
-    clearColor: { r: 0.2, g : 0.2, b : 0.2 },
-    enableCullFace: false, cullFace: "back", frontFace: "cw", linewidth: 1
-    },
-  	lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } },
-      camera = SceneJS.camera({},
-			  light = sunlight()
-		  )
-	  )
-  )
-);
+var scene = SceneJS.scene({ canvasId: "glCanvas" }); 
+var renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 } });
+var lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+var camera = new Camera();
+var light = Sunlight();
 
+camera.addNode(light);
+lookAt.addNode(camera);
+renderer.addNode(lookAt);
+scene.addNode(renderer);
 
 camera.addNode(new Planet({dist: 0.0, scale: 0.4, id: "earth"}));
 							
@@ -343,7 +341,7 @@ camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, col
 				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.4, g:0.4, b:1.0} },
 						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    planet = new Planet({ dist: 9.0, emit: 2.0, scale: 0.2, inner_id: "planet"})
+                		    planet = new Planet({ dist: 9.0, emit: 0.0, scale: 0.2, inner_id: "planet"})
                 		  )
 					 		  		)
 						  		)	
@@ -361,6 +359,9 @@ system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0
 
 // don't show daily
 system[0].setVisuals(["rotationarc","markerarc","equator","arc1","arc2","npole","spole","markerball"], false);
+
+
+system[1].setVisuals(["markerarc"], false);
 
 
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
@@ -385,11 +386,12 @@ calcCurve = function(start,node) {
   for(var i=start+1; i<system.length; i++) {
   	oldRotate[i] = system[i]._yAngle;
     system[i].update(-32.0);
-    step *= system[i]._ySpeed;
+    step +=  Math.abs(system[i]._speed);
   }
+	
 	for(var j=0; j<100; j++) {
 		for(var i=start+1; i<system.length; i++) {
-			system[i].update(0.5/speed);
+			system[i].update(step/200.0);
 		}
 		pos = getNodePos(node);
 		curvePos.push(pos);
@@ -400,10 +402,8 @@ calcCurve = function(start,node) {
  
   // restore rotation
   for(var i=0; i<system.length; i++)
-					system[i].setRotate(oldRotate[i]);
+		system[i].setRotate(oldRotate[i]);
 
-//  if(system[start]._curve) 
-//  	 system[start]._curve.destroy();
 
  	system[start]._curve = new Curve({pos: curvePos});	
 	system[start]._anchor.addNode(system[start]._curve);	
@@ -462,7 +462,7 @@ window.render = function() {
     dy = sunpos.y - planetpos.y;
 	  dz = sunpos.z - planetpos.z;
   	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
-    planet.shade(dist>1.5);
+    planet.setShade(dist);
 
     scene.render(); 
     
