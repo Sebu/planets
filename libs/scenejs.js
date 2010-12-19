@@ -8612,6 +8612,18 @@ SceneJS._geometryModule = new (function() {
         return currentGeoMap[resource] ? true : false;
     };
 
+
+    this.extDestroyGeometry = function(resource) {
+        currentGeoMap = geoMaps["glCanvas"];
+        if(!currentGeoMap) return;
+        geo = currentGeoMap[resource];
+        console.log(geo);
+        destroyGeometry(geo);
+        geo.vertexBuf.destroy();
+        geo.indexBuf.destroy();
+        console.log(geo);
+    };
+
     /**
      * Creates geometry on the active canvas - can optionally take a resource ID. On success, when ID given
      * will return that ID, else if no ID given, will return a generated one.

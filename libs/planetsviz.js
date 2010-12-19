@@ -26,12 +26,7 @@ Curve.prototype._init = function(params) {
     var curvePos = params.pos;
 
     this._destroy = function() {
-			if (this._geo.vertexBuf) {
-				this._geo.vertexBuf.destroy();
-	    	console.log("destroy " + this._geo);
-			}
-			if (this._geo.indexBuf)
-				this._geo.indexBuf.destroy();
+      SceneJS._geometryModule.extDestroyGeometry(this._handle);
     }
     
     this._create = function() {

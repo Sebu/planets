@@ -8,13 +8,13 @@
 
 <body>
 <div class="container" id="uiContainer">
-   <select style="float:left;" name="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);">
+   <select style="float:left;" class="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);">
       <option value="global">Global</option>
       <option value="earth">Earth</option>
       <option value="planet">Planet</option>
     </select>
 
-   <select style="float:right;" name="view" onchange="currentLookAt = this.options[this.selectedIndex].value;">
+   <select style="float:right;" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;">
       <option value="global">Global</option>
       <option value="earth">Earth</option>
       <option value="planet">Planet</option>
@@ -154,7 +154,8 @@ var systemSun = [];
 
 $(document).ready(function() {
 
-	
+	$(".view").hide();
+
   for(i in planetPresets)
  		$("#planetPresets").append("<option value='" + i + "'>" + i + "</option>");
  
@@ -430,8 +431,8 @@ updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemS
 window.render = function() {
 
 	if(!currentPlanet.moon) {
-//		calcCurve(0,"planet");
-//	  calcCurve(1,"planet");
+		calcCurve(0,"planet");
+	  calcCurve(1,"planet");
 	}
 		
 	for(i in updateList) {
