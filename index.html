@@ -63,15 +63,15 @@
 		
     <div class="caption">Sphere Period (days)</div>
 		<div id="speeds">
-		 <div class="speed" id="speed1"><div>S 1 (daily)</div>
+		 <div class="speed" id="speed1" title="recommended 0 or 1"><div>S 1 (daily)</div>
 		 <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
 		 <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed2"><div>S 2 (zodiacal)</div>
 		 <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed3"><div>S 3,4 (synodic)</div>
-		 <input type="range" class="slider" onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="system[2].setSpeed(value); if(!currentPlanet.moon) system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); if(!currentPlanet.moon) system[3].setSpeed(-value); $('#speed3 > input').attr('value',value);"/></div>
 		 <div id="speedSun"> <div>Sun (year)</div>
 		 <input type="range" class="slider" onchange="systemSun[0].setSpeed(value); $('#speedSun > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=7  onchange="systemSun[0].setSpeed(value); $('#speedSun > input').attr('value',value);"/></div>
@@ -80,13 +80,13 @@
    
    <div class="caption">Rotation Start (degrees)</div>
    <div >
-   <div class="rotate" id="rotate1"><div>S 1 (ascension)</div>
+   <div class="rotate" id="rotate1"><div>S 1 (right ascension)</div>
    	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
    	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
    <div class="rotate" id="rotate2"><div>S 2 (longitude)</div>
    	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/>
    	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/></div>  
-   <div class="rotate" id="rotate3"><div>S 3-4 (unknown)</div>
+   <div class="rotate" id="rotate3"><div>S 3-4 (synodic)</div>
    	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/>
    	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/></div>  
    	</div>   
@@ -154,7 +154,7 @@ var systemSun = [];
 
 $(document).ready(function() {
 
-	$(".view").hide();
+//	$(".view").hide();
 
   for(i in planetPresets)
  		$("#planetPresets").append("<option value='" + i + "'>" + i + "</option>");
@@ -173,13 +173,20 @@ $(document).ready(function() {
 		$("#synodicDaysPerMonth").html( synodicDaysPerMonth().toFixed(2) );
 		$("#zodicalDaysPerMonth").html( zodicalDaysPerMonth().toFixed(2) );
 		$("#draconiticDaysPerMonth").html( draconiticDaysPerMonth().toFixed(2) );
-		//systemSun[1].setSpeed(metonDaysPerYear() - 360/systemSun[0]._ySpeed);
+    sunSpeed = (metonDaysPerYear()*systemSun[0].speed) / (systemSun[0].speed-metonDaysPerYear());
+
+		systemSun[1].setSpeed(sunSpeed);
 
 		if(currentPlanet.moon) {
 			draco = draconiticDaysPerMonth();
 			zodic = zodicalDaysPerMonth();
+
+      $("#speed2 > input").attr({"value": moonSpeed1(draco, zodic) });
+      $("#speed3 > input").attr({"value": moonSpeed2(draco, zodic) });
+
 			system[1].setSpeed( moonSpeed1(draco, zodic) );
 			system[2].setSpeed( moonSpeed2(draco, zodic) );
+			system[3].setSpeed( 0 );
 		}
 
 		
@@ -251,7 +258,7 @@ function setCurrentPlanet(node) {
 				
 		if(currentPlanet.moon) {
 			$(".moon").show();
-			$(".speed").hide();
+			$(".angle").hide();
 			$(".rotate").hide();	
 		  $("#metonSynodicMonths > input").attr({"value":currentPlanet.metonSynodicMonths});
 		  $("#metonDraconiticMonths > input").attr({"value":currentPlanet.metonDraconiticMonths});
@@ -261,7 +268,7 @@ function setCurrentPlanet(node) {
 	  	$(".moon > input").change();					
 		} else {
 			$(".moon").hide();
-			$(".speed").show();
+			$(".angle").show();
 			$(".rotate").show();				
 		}
 
@@ -335,9 +342,9 @@ lookAt.addNode(camera);
 renderer.addNode(lookAt);
 scene.addNode(renderer);
 
-camera.addNode(new Planet({dist: 0.0, scale: 0.4, id: "earth"}));
+camera.addNode(earth = new Planet({dist: 0.0, scale: 0.4, id: "earth"}));
 							
-camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:1.7, g: 1.7, b: 1.5}},
+camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}},
 				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.4, g:0.4, b:1.0} },
 						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
@@ -358,11 +365,9 @@ system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0
 													);
 
 // don't show daily
-system[0].setVisuals(["rotationarc","markerarc","equator","arc1","arc2","npole","spole","markerball"], false);
-
+system[0].setVisuals(["rotationarc","markerarc","arc1","arc2","npole","spole","markerball"], false);
 
 system[1].setVisuals(["markerarc"], false);
-
 
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
@@ -409,6 +414,18 @@ calcCurve = function(start,node) {
 	system[start]._anchor.addNode(system[start]._curve);	
 }
 
+function changeView(node) {
+	if(node=="global") pos = { x: 0.0, y: 0.0, z: -25 };
+	else pos = getNodePos(node);
+  if(node=="earth") earth.setEnabled(false);
+  else earth.setEnabled(true);
+	lookAt.setEye(pos);
+  lookAt.update();
+
+} 
+
+updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1] ];
+curves = [ 0, 1 ];
 
 
 function resize() {
@@ -419,20 +436,19 @@ function resize() {
 }
 
 
-
-function changeView(node) {
-	if(node=="global") pos = { x: 0.0, y: 0.0, z: -25 };
-	else pos = getNodePos(node);
-	lookAt.setEye(pos);
-
-} 
-
-updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1] ];
-
 window.render = function() {
+
+//  for(i in curves) {
+//    if(system[i]._curve) 
+//    	 system[i]._curve.destroy();
+//  	if(!currentPlanet.moon)
+//		calcCurve(0,"planet");
+
+//  }
 
   if(system[0]._curve) 
   	 system[0]._curve.destroy();
+
   if(system[1]._curve) 
   	 system[1]._curve.destroy();
 
@@ -445,11 +461,14 @@ window.render = function() {
 			updateList[i].update(speed);
   }
 		
-	if(currentLookAt!="global")
-		lookAt.setTarget(getNodePos(currentLookAt));
 
 	if(currentPos!="global")
 		changeView(currentPos);
+
+	if(currentLookAt!="global")
+		lookAt.setTarget(getNodePos(currentLookAt));
+
+
 			
 		//TODO: on model change -> events?
 		light.setPos(getNodePos("sun"));

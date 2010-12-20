@@ -23,6 +23,8 @@ SceneJS.LookAt.prototype.setTarget = function(target) {
 
 	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
   this.setUp(this.up);
+  this.update();
+  
 	this._setDirty(); 
 }
 

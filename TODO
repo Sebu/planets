@@ -10,11 +10,19 @@ DONE
 - memory leak :/ in curve code ( destroy geometry )
 
 TODO
+- moon
+  - angle 3-4 disable
+  - sun disable
+  - show period and
+
+- sun model in list
+- reset to defaults 
+- tooltip with description and default/recomended values
 - EMAIL new version
 - moon speed functions days per year
 - camera fix :/
 - generate menu
-
+- use Three.js
 - more lambda :D
 - variable slider max ( depended on model )
 
