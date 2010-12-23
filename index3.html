@@ -105,18 +105,72 @@
 </div>
 
 
-<div id="glCanvas"></div>
+<div id="canvas"></div>
 
 
+<script type="text/javascript" src="../three.js/src/Three.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Color.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Vector2.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Vector3.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Vector4.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Ray.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Rectangle.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Matrix3.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Matrix4.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Vertex.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Face3.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Face4.js"></script>
+<script type="text/javascript" src="../three.js/src/core/UV.js"></script>
+<script type="text/javascript" src="../three.js/src/core/Geometry.js"></script>
+<script type="text/javascript" src="../three.js/src/cameras/Camera.js"></script>
+<script type="text/javascript" src="../three.js/src/lights/Light.js"></script>
+<script type="text/javascript" src="../three.js/src/lights/AmbientLight.js"></script>
+<script type="text/javascript" src="../three.js/src/lights/DirectionalLight.js"></script>
+<script type="text/javascript" src="../three.js/src/lights/PointLight.js"></script>
+<script type="text/javascript" src="../three.js/src/objects/Object3D.js"></script>
+<script type="text/javascript" src="../three.js/src/objects/Particle.js"></script>
+<script type="text/javascript" src="../three.js/src/objects/Line.js"></script>
+<script type="text/javascript" src="../three.js/src/objects/Mesh.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/Material.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/LineBasicMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshBasicMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshLambertMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshPhongMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshDepthMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshNormalMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshFaceMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/MeshShaderMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/ParticleBasicMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/ParticleCircleMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/ParticleDOMMaterial.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/Texture.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/CubeReflectionMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/CubeRefractionMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/LatitudeReflectionMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/LatitudeRefractionMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/SphericalReflectionMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/SphericalRefractionMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/materials/mappings/UVMapping.js"></script>
+<script type="text/javascript" src="../three.js/src/scenes/Scene.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/Projector.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/DOMRenderer.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/CanvasRenderer.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/SVGRenderer.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/WebGLRenderer.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/renderables/RenderableFace3.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/renderables/RenderableObject.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/renderables/RenderableParticle.js"></script>
+<script type="text/javascript" src="../three.js/src/renderers/renderables/RenderableLine.js"></script>
+<script type="text/javascript" src="../three.js/src/extras/primitives/Sphere.js"></script>
+<script type="text/javascript" src="../three.js/src/extras/primitives/Plane.js"></script>
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script> 
-<script type="text/javascript" src="libs/ThreeExtras.js"></script> 
 <script type="text/javascript" src="libs/planetsviz2.js"></script>
 <script type="text/javascript" src="config.js"></script>
   
 <script type="text/javascript"> 
 
 
-var canvas = document.getElementById("glCanvas");
+var canvas = document.getElementById("canvas");
 
 var currentPlanet = {};
 $.extend(currentPlanet, planetPresets["Mercury1"]);
@@ -316,12 +370,7 @@ function mouseWheel_firefox(event) {
 	camera.translateZ(event.detail*6);
 }
 
-canvas.addEventListener('mousedown', mouseDown, true);
-canvas.addEventListener('mousemove', mouseMove, true);
-canvas.addEventListener('mouseup', mouseUp, true);
-canvas.addEventListener('keypress', keyboard, true);
-canvas.addEventListener('mousewheel', mouseWheel, true);
-canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
+
 
 
 // base structure
@@ -329,13 +378,26 @@ canvas.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 var scene = scene = new THREE.Scene(); 
 var renderer = new THREE.CanvasRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight);
-$("#glCanvas").append( renderer.domElement );
+$("#canvas").append( renderer.domElement );
+renderer.domElement.addEventListener('mousedown', mouseDown, true);
+renderer.domElement.addEventListener('mousemove', mouseMove, true);
+renderer.domElement.addEventListener('mouseup', mouseUp, true);
+renderer.domElement.addEventListener('keypress', keyboard, true);
+renderer.domElement.addEventListener('mousewheel', mouseWheel, true);
+renderer.domElement.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 var camera = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-camera.position.z = 500;
+camera.position.z = 100;
 var light = Sunlight();
 
-//scene.addNode(earth = new Planet({dist: 0.0, scale: 0.4, id: "earth"}));
+earth = new Planet({dist: 0.0, scale: 10, id: "earth"});
+console.log(earth);
+scene.addObject( earth.mesh );
+
+
+system[0] = new Spherical({scale: 11, angle: 11.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}});
+
+scene.addObject( system[0]._visuals["arc1"] );
 							
 //scene.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}},
 //				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.4, g:0.4, b:1.0} },
@@ -420,24 +482,16 @@ curves = [ 0, 1 ];
 
 
 resize = function() {
-	canvas.width = $(window).width();	
-	canvas.height = $(window).height();
-	renderer.setSize( canvas.width, canvas.height);
-	camera.setAspect(60.0, canvas.width/canvas.height, 1, 10000);
+	renderer.domElement.width = $(window).width();	
+	renderer.domElement.height = $(window).height();
+	renderer.setSize( renderer.domElement.width, renderer.domElement.height);
+	camera.setAspect(60, renderer.domElement.width/renderer.domElement.height, 1, 10000);
 }
 
+				
 
 
-mesh = new THREE.Mesh( new Plane( 300, 300, 3, 3 ),  new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
-mesh.position.y = - 250;
-mesh.rotation.x = - 90 * Math.PI / 180;
-scene.addObject(mesh);
-
-mesh = new THREE.Mesh( new Sphere( 200, 20, 20 ),  new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
-//mesh.overdraw = true;
-scene.addObject(mesh);
-
-
+console.log(scene);
 				
 window.render = function() {
 	
