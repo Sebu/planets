@@ -49,21 +49,21 @@
 
     <div class="caption">Angle (degrees)</div>
 		<div>
-		  <div class="angle" id="angle1"><div>S 1-2 (obliquity of ecliptic)</div>
+		  <div class="nomoon moon angle" id="angle1"><div>S 1-2 (obliquity of ecliptic)</div>
 		 	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
 		 	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
-		  <div class="angle" id="angle2"><div>S 2-3 (right angle)</div>
+		  <div class="nomoon moon angle" id="angle2"><div>S 2-3 (right angle)</div>
 		 	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
 		 	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
-		  <div class="angle" id="angle3"><div>S 3-4 (unknown)</div>
+		  <div class="nomoon angle" id="angle3"><div>S 3-4 (unknown)</div>
 		 	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
 		 	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
 			<br><br>
 		</div>
 		
-    <div class="caption">Sphere Period (days)</div>
+    <div class="nomoon moon caption">Sphere Period (days)</div>
 		<div id="speeds">
-		 <div class="speed" id="speed1" title="recommended 0 or 1"><div>S 1 (daily)</div>
+		 <div class="nomoon moon speed" id="speed1" title="recommended 0 or 1"><div>S 1 (daily)</div>
 		 <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
 		 <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed2"><div>S 2 (zodiacal)</div>
@@ -78,7 +78,7 @@
 		 <br><br> 
    </div>   
    
-   <div class="caption">Rotation Start (degrees)</div>
+   <div class="nomoon moon caption">Rotation Start (degrees)</div>
    <div >
    <div class="rotate" id="rotate1"><div>S 1 (right ascension)</div>
    	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
@@ -236,7 +236,7 @@ function setCurrentPlanet(node) {
 		currentPlanet = {};
 		$.extend(currentPlanet, planetPresets[node]);
 		
-		$("#speedSun > input").attr({"value":"365.0","value":"365.0","min":0, "max":1000});
+		$("#speedSun > input").attr({"value":"365.0","min":0, "max":1000});
   	$("#speedSun > input").attr({"value":"365.0"});
 		$("#speedRange > input").attr({"value":speed,"min":0, "max":2, "step":0.01});
 		$("#speedRange > input").attr({"value":speed});
@@ -244,6 +244,8 @@ function setCurrentPlanet(node) {
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
 		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].angle); } );
 
+    // TODO: maximum :)
+    
 		$(".speed > input").attr({"min":0, "max":11000});
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].speed); } );
 
@@ -257,9 +259,11 @@ function setCurrentPlanet(node) {
 		sun.setDist(currentPlanet.sunDist);
 				
 		if(currentPlanet.moon) {
-			$(".moon").show();
-			$(".angle").hide();
+			//$(".angle").hide();
 			$(".rotate").hide();	
+      $(".nomoon").hide();
+      sun.setEnabled(false);
+			$(".moon").show();
 		  $("#metonSynodicMonths > input").attr({"value":currentPlanet.metonSynodicMonths});
 		  $("#metonDraconiticMonths > input").attr({"value":currentPlanet.metonDraconiticMonths});
 
@@ -268,8 +272,10 @@ function setCurrentPlanet(node) {
 	  	$(".moon > input").change();					
 		} else {
 			$(".moon").hide();
+      $(".nomoon").show();
 			$(".angle").show();
-			$(".rotate").show();				
+			$(".rotate").show();
+      sun.setEnabled(true);				
 		}
 
 		
@@ -375,7 +381,7 @@ systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","ar
 			
 							
 // TODO: calc max points and max motion estimation
-calcCurve = function(start,node) {
+calcCurve = function(start,node,color) {
 	curvePos = [];
 	oldAxis = [];
   oldRotate = [];
@@ -411,6 +417,7 @@ calcCurve = function(start,node) {
 
 
  	system[start]._curve = new Curve({pos: curvePos});	
+  system[start]._anchor.setBaseColor(color);
 	system[start]._anchor.addNode(system[start]._curve);	
 }
 
@@ -446,15 +453,21 @@ window.render = function() {
 
 //  }
 
-  if(system[0]._curve) 
+  if(system[0]._curve) //  for(i in curves) {
+//    if(system[i]._curve) 
+//    	 system[i]._curve.destroy();
+//  	if(!currentPlanet.moon)
+//		calcCurve(0,"planet");
+
+//  }
   	 system[0]._curve.destroy();
 
   if(system[1]._curve) 
   	 system[1]._curve.destroy();
 
 	if(!currentPlanet.moon) {
-		calcCurve(0,"planet");
-	  calcCurve(1,"planet");
+		calcCurve(0,"planet", { r: 1.0, g: 1.0, b: 1.0});
+	  calcCurve(1,"planet", { r: 0.4, g: 0.4, b: 1.0});
 	}
 		
 	for(i in updateList) {

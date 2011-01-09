@@ -186,8 +186,14 @@ Spherical.prototype._init = function(params) {
 
    	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
    	
+        
+      this._anchor = SceneJS.material({
+		      baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
+          specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+          emit: 0.2, specular: 0.0, shine: 1.0 
+          }),	
 
-				this._anchor = SceneJS.material({
+				this._anchor2 = SceneJS.material({
 		      baseColor:      color,
           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
           emit: 0.2, specular: 0.0, shine: 1.0 
@@ -228,12 +234,12 @@ Spherical.prototype._init = function(params) {
 		);
     		
 				// equator marker arc/angle			
-		this._anchor.addNode( 	this._visuals["rotationarc"] = SceneJS.rotate({angle: 90.0, x: 1.0},			
+		this._anchor2.addNode( 	this._visuals["rotationarc"] = SceneJS.rotate({angle: 90.0, x: 1.0},			
  				SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
 	 				this.arcangle11 = new Circle({width: 2, angle: 0})
 		)));	
 		
-    this._anchor.addNodes(tmpNodes);
+    this._anchor2.addNodes(tmpNodes);
 
     this.setAxis(params.angle || 0.0);
     this.setRotate(params.rotate || 0.0);

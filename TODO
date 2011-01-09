@@ -8,23 +8,29 @@ DONE
 - fix rotationArcs
 - move moon to normal planet models :)
 - memory leak :/ in curve code ( destroy geometry )
+- reset to defaults 
+- EMAIL new version
+- MOON: angle 3-4 disable
+- MOON: sun disable
+- color for path und hippopede 
+- MOON: show period and
+
+
+MODEL
+ - update 
+ - setup
+ - 
 
 TODO
-- moon
-  - angle 3-4 disable
-  - sun disable
-  - show period and
-
-- sun model in list
-- reset to defaults 
-- tooltip with description and default/recomended values
-- EMAIL new version
-- moon speed functions days per year
 - camera fix :/
+- yavetz model
+- tooltip with description and default/recomended values
+- variable slider max ( depended on model )
+- sun model in list
+- moon speed functions days per year
 - generate menu
 - use Three.js
 - more lambda :D
-- variable slider max ( depended on model )
 
 
 Titles:
