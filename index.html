@@ -8,17 +8,8 @@
 
 <body>
 <div class="container" id="uiContainer">
-   <select style="float:left;" class="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);">
-      <option value="global">Global</option>
-      <option value="earth">Earth</option>
-      <option value="planet">Planet</option>
-    </select>
-
-   <select style="float:right;" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;">
-      <option value="global">Global</option>
-      <option value="earth">Earth</option>
-      <option value="planet">Planet</option>
-    </select>
+   <select style="float:left;" id="viewPos" class="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);"></select>
+   <select style="float:right;" id="lookAt" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;"></select>
 	<br>
 	<select  style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
   <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
@@ -96,6 +87,7 @@
    </div>
 </div>
 
+
 <div class="container moon" id="infoContainer">
   <div>zodiacal month</div><div id="metonZodicalMonths">0</div>
  <div>days per year</div><div id="metonDaysPerYear">0</div>
@@ -156,16 +148,23 @@ $(document).ready(function() {
 
 //	$(".view").hide();
 
+	viewPoints = ["Global", "Earth", "Planet"];
+	
+  for(i in viewPoints )
+ 		$("#viewPos,#lookAt").append("<option value='" + viewPoints[i].toLowerCase() + "'>" + viewPoints[i] + "</option>");
+ 		
+ 	// populate menues
   for(i in planetPresets)
  		$("#planetPresets").append("<option value='" + i + "'>" + i + "</option>");
- 
   for(i in moonModels) 
  		$("#moonPresets").append("<option value='" + i + "'>" + i + "</option>");
 
+	// animate hide/show
 	$(".caption").click(function() {
 	  $(this).next().toggle(200)
 	})
 
+	// onchange of a moon parameter -> update model
 	$(".moon > input").change(function() {
 
 		$("#metonZodicalMonths").html( metonZodicalMonths().toFixed() );
@@ -189,28 +188,26 @@ $(document).ready(function() {
 			system[3].setSpeed( 0 );
 		}
 
-		
-		
 	});
 	
 
-	//moon
+	// moon sliders setup
 	$("#metonSynodicMonths > input").attr({ "min":0, "max":1000});
 	$("#metonDraconiticMonths > input").attr({ "min":0, "max":1000});
 	$("#metonYear > input").attr({ "min":0, "max":100});
 	$("#metonDays > input").attr({ "min":0, "max":30000});
 
+	// start models
 	setCurrentPlanet("Mercury1");
 	setCurrentModel("Mendell");
 
-
-
 	reset();	
+
 })
 
 
 	
-
+// TODO: make more universal 
 function reset() {
 	if(system.length==0) return;
   for(var i=0; i<3; i++) {
@@ -222,6 +219,7 @@ function reset() {
 	
 }
 
+
 function setCurrentModel(node) {
   currentModel = moonModels[node];
   moonSpeed1 = currentModel.speed1;
@@ -232,7 +230,7 @@ function setCurrentModel(node) {
 
 
 function setCurrentPlanet(node) {
-		
+	
 		currentPlanet = {};
 		$.extend(currentPlanet, planetPresets[node]);
 		
@@ -370,14 +368,14 @@ system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0
 	              						)
 													);
 
+
+// HIDE VISUAL STUFF 
+// TODO: add checkboxes to website 
 // don't show daily
 system[0].setVisuals(["rotationarc","markerarc","arc1","arc2","npole","spole","markerball"], false);
-
 system[1].setVisuals(["markerarc"], false);
-
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-//sun.setEnabled(false);
 			
 							
 // TODO: calc max points and max motion estimation
@@ -421,6 +419,7 @@ calcCurve = function(start,node,color) {
 	system[start]._anchor.addNode(system[start]._curve);	
 }
 
+
 function changeView(node) {
 	if(node=="global") pos = { x: 0.0, y: 0.0, z: -25 };
 	else pos = getNodePos(node);
@@ -432,8 +431,6 @@ function changeView(node) {
 } 
 
 updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1] ];
-curves = [ 0, 1 ];
-
 
 function resize() {
 	canvas.width = $(window).width();	
@@ -445,21 +442,7 @@ function resize() {
 
 window.render = function() {
 
-//  for(i in curves) {
-//    if(system[i]._curve) 
-//    	 system[i]._curve.destroy();
-//  	if(!currentPlanet.moon)
-//		calcCurve(0,"planet");
-
-//  }
-
-  if(system[0]._curve) //  for(i in curves) {
-//    if(system[i]._curve) 
-//    	 system[i]._curve.destroy();
-//  	if(!currentPlanet.moon)
-//		calcCurve(0,"planet");
-
-//  }
+  if(system[0]._curve) 
   	 system[0]._curve.destroy();
 
   if(system[1]._curve) 
@@ -474,7 +457,6 @@ window.render = function() {
 			updateList[i].update(speed);
   }
 		
-
 	if(currentPos!="global")
 		changeView(currentPos);
 
@@ -482,7 +464,6 @@ window.render = function() {
 		lookAt.setTarget(getNodePos(currentLookAt));
 
 
-			
 		//TODO: on model change -> events?
 		light.setPos(getNodePos("sun"));
 
