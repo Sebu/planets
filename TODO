@@ -16,11 +16,6 @@ DONE
 - MOON: show period and
 
 
-MODEL
- - update 
- - setup
- - 
-
 TODO
 - camera fix :/
 - yavetz model
@@ -31,6 +26,58 @@ TODO
 - generate menu
 - use Three.js
 - more lambda :D
+
+
+MODEL
+ - update 
+ - setup
+ - 
+
+
+Sin x
+-(Cos[alpha] Cos[
+   gamma] (Sin[alpha] -
+    Cot[gamma] Tan[alpha]))/(,((-1 +
+      Cos[alpha]^2 Sin[gamma]^2) (Cos[alpha]^4 Sin[gamma]^2 -
+      Sin[alpha]^4 Sin[gamma]^2 +
+      Cos[alpha]^2 (-1 + Sin[alpha]^2 Sin[gamma]^2) -
+      Cos[alpha] Sin[alpha]^2 Sin[2 gamma] +
+      2 Cot[gamma] Sin[alpha] Tan[alpha] - Csc[gamma]^2 Tan[alpha]^2 +
+      Sin[alpha]^2 Tan[alpha]^2))) +
+Sin[alpha] ,((1 - (Sin[alpha] -
+        Cot[gamma] Tan[alpha])^2/(-Cos[alpha]^4 Sin[gamma]^2 +
+        Sin[alpha]^4 Sin[gamma]^2 +
+        Cos[alpha]^2 (1 - Sin[alpha]^2 Sin[gamma]^2) +
+        Cos[alpha] Sin[alpha]^2 Sin[2 gamma] -
+        2 Cot[gamma] Sin[alpha] Tan[alpha] + Csc[gamma]^2 Tan[alpha]^2 -
+        Sin[alpha]^2 Tan[alpha]^2))/(1 - Cos[alpha]^2 Sin[gamma]^2))
+
+Cos x
+(Sin[alpha] (Sin[alpha] -
+    Cot[gamma] Tan[alpha]))/(,((-1 +
+      Cos[alpha]^2 Sin[gamma]^2) (Cos[alpha]^4 Sin[gamma]^2 -
+      Sin[alpha]^4 Sin[gamma]^2 +
+      Cos[alpha]^2 (-1 + Sin[alpha]^2 Sin[gamma]^2) -
+      Cos[alpha] Sin[alpha]^2 Sin[2 gamma] +
+      2 Cot[gamma] Sin[alpha] Tan[alpha] - Csc[gamma]^2 Tan[alpha]^2 +
+      Sin[alpha]^2 Tan[alpha]^2))) +
+Sqrt[1 + Sin[alpha]^2/(-1 + Cos[alpha]^2 Sin[gamma]^2)]
+ ,(1 - (Sin[alpha] - Cot[gamma] Tan[alpha])^2/(-Cos[alpha]^4 Sin[gamma]^2 +
+      Sin[alpha]^4 Sin[gamma]^2 +
+      Cos[alpha]^2 (1 - Sin[alpha]^2 Sin[gamma]^2) +
+      Cos[alpha] Sin[alpha]^2 Sin[2 gamma] -
+      2 Cot[gamma] Sin[alpha] Tan[alpha] + Csc[gamma]^2 Tan[alpha]^2 -
+      Sin[alpha]^2 Tan[alpha]^2))
+
+
+
+
+
+
+
+
+
+
 
 
 Titles:

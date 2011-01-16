@@ -186,6 +186,7 @@ Spherical.prototype._init = function(params) {
 
    	this._yRotate = SceneJS.rotate({angle: 0.0, y: 1.0},
    	
+
         
       this._anchor = SceneJS.material({
 		      baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
@@ -239,7 +240,8 @@ Spherical.prototype._init = function(params) {
 	 				this.arcangle11 = new Circle({width: 2, angle: 0})
 		)));	
 		
-    this._anchor2.addNodes(tmpNodes);
+    this._anchor2.addNode(this._zRotate2 = SceneJS.rotate({angle: 0.0, z: 1.0}));
+    this._zRotate2.addNodes( tmpNodes );
 
     this.setAxis(params.angle || 0.0);
     this.setRotate(params.rotate || 0.0);
