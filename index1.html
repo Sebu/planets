@@ -61,9 +61,8 @@
 		 <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed3"><div>S 3,4 (synodic)</div>
-		 <input type="range" class="slider" onchange="system[2].setSpeed(value); 
- $('#speed3 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value);  $('#speed3 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="system[2].setSpeed(value); if(!currentPlanet.moon) system[3].setSpeed(-value/2); $('#speed3 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); if(!currentPlanet.moon) system[3].setSpeed(-value/2); $('#speed3 > input').attr('value',value);"/></div>
 		 <div id="speedSun"> <div>Sun (year)</div>
 		 <input type="range" class="slider" onchange="systemSun[0].setSpeed(value); $('#speedSun > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=7  onchange="systemSun[0].setSpeed(value); $('#speedSun > input').attr('value',value);"/></div>
@@ -202,8 +201,8 @@ $(document).ready(function() {
 	setCurrentPlanet("Mercury1");
 	setCurrentModel("Mendell");
 
-  system[2]._zRotate2.setAngle(10.0);
-  system[3]._zRotate2.setAngle(-60.0);
+//  system[2]._zRotate2.setAngle(10.0);
+//  system[3]._zRotate2.setAngle(-60.0);
 	reset();	
 
 })
@@ -216,7 +215,7 @@ function reset() {
   for(var i=0; i<3; i++) {
 					system[i].setRotate(currentPlanet.sphere[i].rotate);
   }
-  system[3].setRotate(0);
+  system[3].setRotate(0.0);
 	systemSun[0].setRotate(0);
 	systemSun[1].setRotate(0);	
 	
@@ -359,8 +358,8 @@ camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, col
 
 // inner motion
 						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
-  						  		  system[3] = new Spherical({ scale: 9, angle: 0.0, speed: 110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    planet = new Planet({ dist: 9.0, emit: 0.0, scale: 0.2, inner_id: "planet"})
+  						  		  system[3] = new Spherical({ scale: 9, angle: 17.5, speed: -55.0, color: {r: 1.0, g: 0.0, b: 0.0}},
+                		    planet = new Planet({ ydist: 9.0, emit: 0.0, scale: 0.2, inner_id: "planet"})
                 		  )
 					 		  		)
 						  		)	
@@ -383,6 +382,9 @@ system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0
 // don't show daily
 system[0].setVisuals(["rotationarc","markerarc","arc1","arc2","npole","spole","markerball"], false);
 system[1].setVisuals(["markerarc"], false);
+system[2].setVisuals(["rotationarc","markerarc","markerball"], false);
+system[3].setVisuals(["rotationarc","markerarc","markerball"], false);
+
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 			
@@ -458,8 +460,8 @@ window.render = function() {
   	 system[1]._curve.destroy();
 
 	if(!currentPlanet.moon) {
-//		calcCurve(0,"planet", { r: 1.0, g: 1.0, b: 1.0});
-//	  calcCurve(1,"planet", { r: 0.4, g: 0.4, b: 1.0});
+		calcCurve(0,"planet", { r: 1.0, g: 1.0, b: 1.0});
+	  calcCurve(1,"planet", { r: 0.4, g: 0.4, b: 1.0});
 	}
 		
 	for(i in updateList) {

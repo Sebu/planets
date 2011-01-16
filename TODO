@@ -14,11 +14,10 @@ DONE
 - MOON: sun disable
 - color for path und hippopede 
 - MOON: show period and
-
+- yavetz model
 
 TODO
 - camera fix :/
-- yavetz model
 - tooltip with description and default/recomended values
 - variable slider max ( depended on model )
 - sun model in list

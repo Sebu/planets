@@ -1,9 +1,12 @@
 
 Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
-  dist = params.dist;
+  dist = params.dist || 0.0;
+  ydist = params.ydist || 0.0;
   this.addNode(
-  	this._distNode = SceneJS.translate({x:0.0, y:0.0, z: dist},
+  	this._zRotate =	SceneJS.rotate({angle: 15, z: 1.0},
+  	this._distNode = SceneJS.translate({x:0.0, y: ydist, z: dist},
+
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	this._material = SceneJS.material({              
 					baseColor:  { r: 2.2, g: 2.2, b: 2.9 },
@@ -11,6 +14,7 @@ Planet.prototype._init = function(params) {
     			emit: emit, specular: 0.0, shine: 3.0},
 					SceneJS.sphere()
 				)
+			)
 			)
 		)
   ); 

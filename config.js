@@ -6,7 +6,7 @@ Mercury1: {
   sphere: [
     {angle: 24.0, speed: 0, speedmax: 1000, rotate: 0 },
     {angle: 90.0,  speed: 365, speedmax: 1000, rotate: 0 },
-    {angle: 30.0, speed: 110, speedmax: 1000, rotate: 0 }]}, 
+    {angle: 30.0, speed: 110, speedmax: 1000, rotate: 95.0}]}, 
 
 Mercury2: { 
   sunDist: 8,
