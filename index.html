@@ -13,6 +13,7 @@
 	<br>
 	<select  style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
   <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
+  <select style="float:right;" class="nomoon" id="planetModels" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>
    <div id="parameters">
       <br><br>
       
@@ -346,13 +347,13 @@ lookAt.addNode(camera);
 renderer.addNode(lookAt);
 scene.addNode(renderer);
 
-camera.addNode(earth = new Planet({dist: 0.0, scale: 0.4, id: "earth"}));
+camera.addNode(earth = new Planet({dist: 0.0, scale: 0.4, emit:0.0, color: {r: 0.9, g:0.9, b:18.5}, id: "earth"}));
 							
 camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}},
 				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.4, g:0.4, b:1.0} },
 						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
   						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: {r: 1.0, g: 0.0, b: 0.0}},
-                		    planet = new Planet({ dist: 9.0, emit: 0.0, scale: 0.2, inner_id: "planet"})
+                		    planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet"})
                 		  )
 					 		  		)
 						  		)	
@@ -363,7 +364,7 @@ camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, col
 
 system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
 														  systemSun[1] = new Spherical({ angle: 0.5, speed: 0.0 },
-               								  sun = new Planet({  emit: 1.0, scale: 0.3, dist:8.0, inner_id: "sun"})
+               								  sun = new Planet({  emit: 0.5, scale: 0.3, dist:8.0, inner_id: "sun", color: {r:1.0,g:1.0,b:0.0}} )
 	              							)
 	              						)
 													);
@@ -475,7 +476,10 @@ window.render = function() {
     dy = sunpos.y - planetpos.y;
 	  dz = sunpos.z - planetpos.z;
   	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
-    planet.setShade(dist);
+    if(dist < 2.0) 
+      planet.setShade(0.2);
+    else 
+      planet.setShade(1.0);
 
     scene.render(); 
     

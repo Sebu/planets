@@ -1,20 +1,31 @@
 
 Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
-  dist = params.dist;
+  this._dist = params.dist || 0.0;
+  this._ydist = params.ydist || 0.0;
+  this._beta = params.beta || 0.0;
+  this._color = params.color || { r: 2.2, g: 2.2, b: 2.9 };
   this.addNode(
-  	this._distNode = SceneJS.translate({x:0.0, y:0.0, z: dist},
+    this._betaRotate = SceneJS.rotate({angle: this._beta, x: 1.0},
+  	this._distNode = SceneJS.translate({x:0.0, y: this._ydist, z: this._dist},
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	this._material = SceneJS.material({              
-					baseColor:  { r: 2.2, g: 2.2, b: 2.9 },
+					baseColor:  this._color,
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
     			emit: emit, specular: 0.0, shine: 3.0},
 					SceneJS.sphere()
 				)
 			)
+)
 		)
   ); 
 						
+};
+
+Planet.prototype.setBeta = function(angle) {
+		this._beta = angle;
+
+		this._betaRotate.setAngle(this._beta);
 };
 
 Planet.prototype.setShade = function(state) {

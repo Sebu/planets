@@ -6,7 +6,7 @@ Mercury1: {
   sphere: [
     {angle: 24.0, speed: 0, speedmax: 1000, rotate: 0 },
     {angle: 90.0,  speed: 365, speedmax: 1000, rotate: 0 },
-    {angle: 30.0, speed: 110, speedmax: 1000, rotate: 0 }]}, 
+    {angle: 30.0, speed: 110, speedmax: 1000, rotate: 0 },]}, 
 
 Mercury2: { 
   sunDist: 8,
@@ -116,5 +116,9 @@ Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { retu
 SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } },
 };
 
+var planetModels = { 
+Schiparelli: { speed: function(s)  {return -s; }, offset: 0.0, },
+Yavetz: { speed: function(s)  {return -s/2; }, offset: 90.0 },
+};
 
 var sunPresets = { angle: 0, speed: 365};
