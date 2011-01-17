@@ -1,7 +1,6 @@
 
 Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
-<<<<<<< HEAD
   this._dist = params.dist || 0.0;
   this._ydist = params.ydist || 0.0;
   this._beta = params.beta || 0.0;
@@ -9,14 +8,6 @@ Planet.prototype._init = function(params) {
   this.addNode(
     this._betaRotate = SceneJS.rotate({angle: this._beta, x: 1.0},
   	this._distNode = SceneJS.translate({x:0.0, y: this._ydist, z: this._dist},
-=======
-  dist = params.dist || 0.0;
-  ydist = params.ydist || 0.0;
-  this.addNode(
-  	this._zRotate =	SceneJS.rotate({angle: 15, z: 1.0},
-  	this._distNode = SceneJS.translate({x:0.0, y: ydist, z: dist},
-
->>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
  			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
       	this._material = SceneJS.material({              
 					baseColor:  this._color,
@@ -25,11 +16,7 @@ Planet.prototype._init = function(params) {
 					SceneJS.sphere()
 				)
 			)
-<<<<<<< HEAD
-)
-=======
 			)
->>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
 		)
   ); 
 						
