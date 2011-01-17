@@ -204,6 +204,11 @@ $(document).ready(function() {
 	setCurrentPlanet("Mercury1");
 	setCurrentModel("Mendell");
 
+<<<<<<< HEAD
+=======
+//  system[2]._zRotate2.setAngle(10.0);
+//  system[3]._zRotate2.setAngle(-60.0);
+>>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
 	reset();	
 
 })
@@ -216,7 +221,11 @@ function reset() {
   for(var i=0; i<3; i++) {
 					system[i].setRotate(currentPlanet.sphere[i].rotate);
   }
+<<<<<<< HEAD
   system[3].setRotate(95.0);
+=======
+  system[3].setRotate(0.0);
+>>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
 	systemSun[0].setRotate(0);
 	systemSun[1].setRotate(0);	
 	
@@ -364,8 +373,13 @@ camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, col
 
 // inner motion
 						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: {r: 0.0, g: 1.0, b: 0.0} },
+<<<<<<< HEAD
   						  		  system[3] = new Spherical({ scale: 9, angle: 0.0, speed: -55.0, color: {r: 1.0, g: 0.0, b: 0.0}},
                 		    planet = new Planet({ ydist: 9.0, beta: 44.0, emit: 0.0, scale: 0.2, inner_id: "planet"})
+=======
+  						  		  system[3] = new Spherical({ scale: 9, angle: 17.5, speed: -55.0, color: {r: 1.0, g: 0.0, b: 0.0}},
+                		    planet = new Planet({ ydist: 9.0, emit: 0.0, scale: 0.2, inner_id: "planet"})
+>>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
                 		  )
 					 		  		)
 						  		)	
@@ -390,6 +404,10 @@ system[0].setVisuals(["rotationarc","markerarc","arc1","arc2","npole","spole","m
 system[1].setVisuals(["markerarc"], false);
 system[2].setVisuals(["rotationarc","markerarc","markerball"], false);
 system[3].setVisuals(["rotationarc","markerarc","markerball"], false);
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 			
@@ -465,7 +483,11 @@ window.render = function() {
   	 system[1]._curve.destroy();
 
 	if(!currentPlanet.moon) {
+<<<<<<< HEAD
 //		calcCurve(0,"planet", { r: 1.0, g: 1.0, b: 1.0});
+=======
+		calcCurve(0,"planet", { r: 1.0, g: 1.0, b: 1.0});
+>>>>>>> bd416af5b499220b1968407ad01ae97f5b8e9ecd
 	  calcCurve(1,"planet", { r: 0.4, g: 0.4, b: 1.0});
 	}
 		
