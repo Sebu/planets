@@ -1,4 +1,20 @@
 
+
+var posAngle = 10;
+
+var colors = {
+	Earth:  {r: 0.9, g:0.9, b:18.5},
+  Planet: {r: 1.0, g:1.0, b:1.0},
+	Sun: 		{r:1.0,g:1.0,b:0.0},
+	S0: 		{r:0.7, g: 0.7, b: 0.5},
+	S1:			{r:0.4, g:0.4, b:1.0},
+	S2: 		{r: 0.0, g: 1.0, b: 0.0},
+	S3: 		{r: 1.0, g: 0.0, b: 0.0},
+	Path: 	{r: 1.0, g: 1.0, b: 1.0},
+	Hippo: 	{r: 0.4, g: 0.4, b: 1.0},
+	
+};
+
 var planetPresets = { 
 
 Mercury1: { 
@@ -77,7 +93,7 @@ Moon1: {
   metonSynodicMonths: 235,
   metonDays:6940,
   metonDraconiticMonths: 242,
-  moon:true,
+  type:"moon",
   sphere: [
     {angle: 24.0, speed: 0, rotate: 0 },
     {angle: 5.0,  speed: 0, rotate: 0 },
@@ -89,7 +105,7 @@ Moon2: {
   metonSynodicMonths: 99,
   metonDays:2922,
   metonDraconiticMonths: 242, 
-  moon:true,
+  type:"moon",
   sphere: [
     {angle: 24.0, speed: 0, rotate: 0 },
     {angle: 5.0,  speed: 0, rotate: 0 },
@@ -101,11 +117,20 @@ Moon3: {
   metonSynodicMonths: 940,
   metonDays:27759,
   metonDraconiticMonths: 242,
-  moon:true,
+  type:"moon",
   sphere: [
     {angle: 24.0, speed: 0, rotate: 0 },
     {angle: 5.0,  speed: 0, rotate: 0 },
     {angle: 0.0, speed: 0, rotate: 0 }]},  
+    
+Sun: { 
+  type:"sun",
+  color: {r:1.0,g:1.0,b:0.0},
+  sphere: [
+    {angle: 24.0, speed: 0, rotate: 0 },
+    {angle: 0.5,  speed: 365.0, rotate: 0 },
+    {angle: 0.0, speed: 0, rotate: 0 }] }, 
+
 };
 
 
@@ -122,3 +147,4 @@ Yavetz: { speed: function(s)  {return -s/2; }, offset: 90.0 },
 };
 
 var sunPresets = { angle: 0, speed: 365};
+

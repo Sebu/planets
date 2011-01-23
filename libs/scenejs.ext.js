@@ -9,7 +9,14 @@ Circle  = SceneJS.createNodeType("circle", "geometry");
 Curve  = SceneJS.createNodeType("curve", "geometry");
 
 
-SceneJS.LookAt.prototype.setTarget = function(target) {
+function distance(from,to) {
+	  dx = from.x - to.x;
+    dy = from.y - to.y;
+	  dz = from.z - to.z;
+  	return Math.sqrt(dx*dx+dy*dy+dz*dz);
+}
+
+SceneJS.LookAt.prototype.rotateTarget = function(target) {
 
 	dx = target.x - this._lookX;
   dy = target.y - this._lookY;
@@ -22,10 +29,26 @@ SceneJS.LookAt.prototype.setTarget = function(target) {
 	this.translate(0.0,0.0,-dist);
 
 	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
-  this.setUp(this.up);
+//  this.setUp(this.up);
   this.update();
   
 	this._setDirty(); 
+}
+
+SceneJS.LookAt.prototype.setTarget = function(target) {
+
+	dx = this.dir.x = target.x - this._eyeX;
+  dy = this.dir.y = target.y - this._eyeY;
+  dz = this.dir.z = target.z - this._eyeZ;
+	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+	
+	// TODO: normalize 
+	this.dir.x /= dist;
+  this.dir.y /= dist;
+	this.dir.z /= dist;
+	
+	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
+  this._setDirty(); 
 }
 
 
@@ -99,6 +122,47 @@ getNodePos = function(node) {
 	return query.getResults().worldPos;
 }
 
+
+// TODO: calc max points and max motion estimation
+function calcCurve(start,node,color) {
+	curvePos = [];
+	oldAxis = [];
+  oldRotate = [];
+  step = 0;
+  // save axis
+	for(var i=0; i<=start; i++) {
+		oldAxis[i] = system[i].getAxis();
+    oldRotate[i] = system[i]._yAngle;
+		system[i].setAxis(0.0);
+		system[i].setRotate(0.0);
+	}
+
+  for(var i=start+1; i<system.length; i++) {
+  	oldRotate[i] = system[i]._yAngle;
+    system[i].update(-32.0);
+//    step += 100;// / Math.abs(system[i]._speed);
+  }
+	
+	for(var j=0; j<200; j++) {
+		for(var i=start+1; i<system.length; i++) {
+			system[i].update(1.0);
+		}
+		pos = getNodePos(node);
+		curvePos.push(pos);
+	}
+  // restore axis
+	for(var i=0; i<=start;i++)
+		system[i].setAxis(oldAxis[i]);
+ 
+  // restore rotation
+  for(var i=0; i<system.length; i++)
+		system[i].setRotate(oldRotate[i]);
+
+
+ 	system[start]._curve = new Curve({pos: curvePos});	
+  system[start]._anchor.setBaseColor(color);
+	system[start]._anchor.addNode(system[start]._curve);	
+}
 
 
 Sunlight = function() {

@@ -15,9 +15,20 @@ DONE
 - color for path und hippopede 
 - MOON: show period and
 - yavetz model
+- only path and planet view
+- path approximation step
+- planet color
+- fix rotation start slider 3
+- sun model in list
+- hide/unhide triangle
+- view from earth with horizon (set latitude), earth plane east, west ,,, tropics
+- moon and sun same size
 
 TODO
-- camera fix :/
+- merge models
+- directions (earth plane east, west ,,, tropics)
+
+NEXT
 - tooltip with description and default/recomended values
 - variable slider max ( depended on model )
 - sun model in list
@@ -31,49 +42,6 @@ MODEL
  - update 
  - setup
  - 
-
-
-Sin x
--(Cos[alpha] Cos[
-   gamma] (Sin[alpha] -
-    Cot[gamma] Tan[alpha]))/(,((-1 +
-      Cos[alpha]^2 Sin[gamma]^2) (Cos[alpha]^4 Sin[gamma]^2 -
-      Sin[alpha]^4 Sin[gamma]^2 +
-      Cos[alpha]^2 (-1 + Sin[alpha]^2 Sin[gamma]^2) -
-      Cos[alpha] Sin[alpha]^2 Sin[2 gamma] +
-      2 Cot[gamma] Sin[alpha] Tan[alpha] - Csc[gamma]^2 Tan[alpha]^2 +
-      Sin[alpha]^2 Tan[alpha]^2))) +
-Sin[alpha] ,((1 - (Sin[alpha] -
-        Cot[gamma] Tan[alpha])^2/(-Cos[alpha]^4 Sin[gamma]^2 +
-        Sin[alpha]^4 Sin[gamma]^2 +
-        Cos[alpha]^2 (1 - Sin[alpha]^2 Sin[gamma]^2) +
-        Cos[alpha] Sin[alpha]^2 Sin[2 gamma] -
-        2 Cot[gamma] Sin[alpha] Tan[alpha] + Csc[gamma]^2 Tan[alpha]^2 -
-        Sin[alpha]^2 Tan[alpha]^2))/(1 - Cos[alpha]^2 Sin[gamma]^2))
-
-Cos x
-(Sin[alpha] (Sin[alpha] -
-    Cot[gamma] Tan[alpha]))/(,((-1 +
-      Cos[alpha]^2 Sin[gamma]^2) (Cos[alpha]^4 Sin[gamma]^2 -
-      Sin[alpha]^4 Sin[gamma]^2 +
-      Cos[alpha]^2 (-1 + Sin[alpha]^2 Sin[gamma]^2) -
-      Cos[alpha] Sin[alpha]^2 Sin[2 gamma] +
-      2 Cot[gamma] Sin[alpha] Tan[alpha] - Csc[gamma]^2 Tan[alpha]^2 +
-      Sin[alpha]^2 Tan[alpha]^2))) +
-Sqrt[1 + Sin[alpha]^2/(-1 + Cos[alpha]^2 Sin[gamma]^2)]
- ,(1 - (Sin[alpha] - Cot[gamma] Tan[alpha])^2/(-Cos[alpha]^4 Sin[gamma]^2 +
-      Sin[alpha]^4 Sin[gamma]^2 +
-      Cos[alpha]^2 (1 - Sin[alpha]^2 Sin[gamma]^2) +
-      Cos[alpha] Sin[alpha]^2 Sin[2 gamma] -
-      2 Cot[gamma] Sin[alpha] Tan[alpha] + Csc[gamma]^2 Tan[alpha]^2 -
-      Sin[alpha]^2 Tan[alpha]^2))
-
-
-
-
-
-
-
 
 
 
@@ -104,7 +72,7 @@ NS
 The start point for ascension and longitude should be a point where the equators of Sphere 1 and Sphere 2 intersect.  This will ultimately be in the middle of Aries.
 
 
-- move moon to normal planet models :)
+
 
 
 metonyear = 19

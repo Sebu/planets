@@ -1,19 +1,24 @@
 
+
 Planet.prototype._init = function(params) {
   var emit = params.emit || 0.0;
   this._dist = params.dist || 0.0;
-  this._ydist = params.ydist || 0.0;
   this._beta = params.beta || 0.0;
+  this._scale = params.scale;
   this._color = params.color || { r: 2.2, g: 2.2, b: 2.9 };
   this.addNode(
     this._betaRotate = SceneJS.rotate({angle: this._beta, x: 1.0},
-  	this._distNode = SceneJS.translate({x:0.0, y: this._ydist, z: this._dist},
- 			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
+  	this._distNode = SceneJS.translate({x: 0.0, y: this._dist, z: 0.0},
+ 			SceneJS.scale( { id: params.inner_id, x:this._scale, y: this._scale, z: this._scale },
       	this._material = SceneJS.material({              
 					baseColor:  this._color,
 					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
     			emit: emit, specular: 0.0, shine: 3.0},
+
+//    			new SceneJS.Texture({ layers: [ {  uri:"textures/earthmap1k.jpg" }] },
 					SceneJS.sphere()
+					//)
+					
 				)
 			)
 			)
@@ -24,17 +29,17 @@ Planet.prototype._init = function(params) {
 
 Planet.prototype.setBeta = function(angle) {
 		this._beta = angle;
-
 		this._betaRotate.setAngle(this._beta);
 };
 
-Planet.prototype.setShade = function(state) {
-	this._material.setBaseColor({r: state, g: state, b:state});
+Planet.prototype.setShade = function(color) {
+	this._material.setBaseColor(color);
 //  state ? this._material.setBaseColor({r: 1.0, g: 1.0, b:1.0}) : this._material.setBaseColor({r: 0.0, g: 0.0, b:0.0});
 }
 
 Planet.prototype.setDist = function(dist) {
-	this._distNode.setZ(dist);
+	this._dist = dist;
+	this._distNode.setY(dist);
 }
 
 
@@ -250,9 +255,8 @@ Spherical.prototype._init = function(params) {
  				SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
 	 				this.arcangle11 = new Circle({width: 2, angle: 0})
 		)));	
-		
-    this._anchor2.addNode(this._zRotate2 = SceneJS.rotate({angle: 0.0, z: 1.0}));
-    this._zRotate2.addNodes( tmpNodes );
+	
+		this._anchor2.addNodes(tmpNodes);
 
     this.setAxis(params.angle || 0.0);
     this.setRotate(params.rotate || 0.0);
