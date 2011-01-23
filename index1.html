@@ -8,9 +8,9 @@
 
 <body>
 <div class="container" id="uiContainer">
-   <div style="float:left;">P<select  id="viewPos" class="view" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);"></select></div>
-   <div style="float:right;">L<select  id="lookAt" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;"></select></div>
-	<br>
+   <div style="float:left;"><img src="textures/origin.png"/><select  id="viewPos" class="view" style="position: relative;top:-6px;" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);"></select></div>
+   <div style="float:right;"><img src="textures/lookat.png"/><select  id="lookAt" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;"></select></div>
+	<br><br>
 	<select  style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
   <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
   <select style="float:right;" class="nomoon" id="planetModels" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>
@@ -152,7 +152,9 @@ $(document).ready(function() {
 	
   for(i in viewPoints )
  		$("#viewPos,#lookAt").append("<option value='" + viewPoints[i].toLowerCase() + "'>" + viewPoints[i] + "</option>");
- 		
+
+	$("#lookAt option[value='earth']").attr('selected',true);
+	 		
  	// populate menues
   for(i in planetPresets)
  		$("#planetPresets").append("<option value='" + i + "'>" + i + "</option>");
