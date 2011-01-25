@@ -345,6 +345,38 @@ lookAt.addNode(camera);
 renderer.addNode(lookAt);
 scene.addNode(renderer);
 
+camera.addNode(
+  new SceneJS.translate({x: 10.0, y:0.0, z:4.0},  
+    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
+    )
+  )
+);
+
+camera.addNode(
+  new SceneJS.translate({x: -5.0, y:7.0, z:-4.0},  
+    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
+    )
+  )
+);
+
+
+camera.addNode(
+  new SceneJS.translate({x: -3.0, y:4.0, z:2.0},  
+    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
+    )
+  )
+);
+
+
+camera.addNode(
+  new SceneJS.translate({x: 7.0, y:0.0, z:-2.0},  
+    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
+    )
+  )
+);
+
+
+camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
 
 camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
 							
@@ -382,7 +414,7 @@ visMode = function(state) {
 systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
-system[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+system[0].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 system[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 system[2].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
