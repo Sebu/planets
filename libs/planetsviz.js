@@ -91,13 +91,14 @@ Cloud.prototype._init = function(params) {
         var x=0,y=0,z=0;
         for (var sliceNum = 0; sliceNum < params.count; sliceNum++) {
 
-                x = (Math.random()-0.5)*params.scale;
-                y = (Math.random()-0.5)*params.scale;
-                z = (Math.random()-0.5)*params.scale;
+                x = (Math.random()-0.5); //*params.scale;
+                y = (Math.random()-0.5); //*params.scale;
+                z = (Math.random()-0.5); //*params.scale;
 
-                positions.push(x);
-                positions.push(y);
-                positions.push(z);
+                norm = Math.sqrt(x*x+y*y+z*z)/10.0;
+                positions.push(x/norm);
+                positions.push(y/norm);
+                positions.push(z/norm);
 
                indices.push(sliceNum);
 
