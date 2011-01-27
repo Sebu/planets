@@ -42,7 +42,75 @@ Planet.prototype.setDist = function(dist) {
 	this._distNode.setY(dist);
 }
 
+Curve.prototype._init = function(params) {
+    var curvePos = params.pos;
 
+    this._destroy = function() {
+      SceneJS._geometryModule.extDestroyGeometry(this._handle);
+    }
+    
+    this._create = function() {
+      var positions = [];
+      var colors = [];
+      for (var i=0; i<curvePos.length; i++) {
+        positions.push(curvePos[i].x);
+        positions.push(curvePos[i].y);
+        positions.push(curvePos[i].z);
+        colors.push(1.0);
+        colors.push(0.4);
+        colors.push(1.0);
+     }
+     var indices = [];
+     for (var i = 0; i <curvePos.length; i++) {
+       indices.push(i);
+     }
+     return {
+       primitive : "line-strip",
+       positions : positions,
+
+       indices : indices
+     };		     
+	 };
+	   
+};
+
+
+
+Circle.prototype.setAngle = function(angle) {
+	 this.angle = angle%360;
+}
+
+Cloud.prototype._init = function(params) {
+     this._count = params.count; 
+      
+
+     this._create = function() {
+        var positions = [];
+        var indices = [];
+
+        var x=0,y=0,z=0;
+        for (var sliceNum = 0; sliceNum < params.count; sliceNum++) {
+
+                x = (Math.random()-0.5)*params.scale;
+                y = (Math.random()-0.5)*params.scale;
+                z = (Math.random()-0.5)*params.scale;
+
+                positions.push(x);
+                positions.push(y);
+                positions.push(z);
+
+               indices.push(sliceNum);
+
+        }        
+
+        return {
+            primitive : "points",
+            positions : positions,
+            indices : indices
+        };		     
+	   };
+	   
+};
 
 Curve.prototype._init = function(params) {
     var curvePos = params.pos;

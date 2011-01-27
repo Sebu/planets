@@ -7,6 +7,7 @@ Planet  = SceneJS.createNodeType("planet");
 Globe  = SceneJS.createNodeType("globe");
 Circle  = SceneJS.createNodeType("circle", "geometry");
 Curve  = SceneJS.createNodeType("curve", "geometry");
+Cloud  = SceneJS.createNodeType("cloud", "geometry");
 
 
 function distance(from,to) {

@@ -335,7 +335,7 @@ var system = [];
 var systemSun = [];
 
 var scene = SceneJS.scene({ canvasId: "glCanvas" }); 
-var renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 } });
+var renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
 var lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
 var camera = new Camera();
 var light = Sunlight();
@@ -365,35 +365,8 @@ camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, col
 
 
 
-system[1].addNode(
-  new SceneJS.translate({x: 10.0, y:0.0, z:4.0},  
-    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
-    )
-  )
-);
+system[1].addNode( new SceneJS.cloud({count:1000, scale:20.0}) );
 
-system[1].addNode(
-  new SceneJS.translate({x: -5.0, y:7.0, z:-4.0},  
-    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
-    )
-  )
-);
-
-
-system[1].addNode(
-  new SceneJS.translate({x: -3.0, y:4.0, z:2.0},  
-    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
-    )
-  )
-);
-
-
-system[1].addNode(
-  new SceneJS.translate({x: 7.0, y:0.0, z:-2.0},  
-    new Planet({beta:0.0, dist: 0.0, scale: 0.05, emit:1.0, color: colors["Earth"]}
-    )
-  )
-);
 
 system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
 														  systemSun[1] = new Spherical({ scale: 9, angle: 0.5, speed: 0.0 },

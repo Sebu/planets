@@ -7562,6 +7562,7 @@ SceneJS._shaderModule = new (function() {
         }
         src.push("  vec4 tmpVertex = uVMatrix * (uMMatrix * vec4(aVertex, 1.0)); ");
         src.push("  vViewVertex = tmpVertex;");
+        src.push("  gl_PointSize = 2.0;");
         src.push("  gl_Position = uPMatrix * vViewVertex;");
 
         src.push("  vec3 tmpVec;");
@@ -8232,6 +8233,15 @@ SceneJS._rendererModule = new (function() {
                 return mode || "ccw";
             }
             context.frontFace(glEnum(context, mode));
+        },
+
+        pointSize: function(context, width) {
+            if (!context) {
+                return width || 1;
+            }
+            //context.lineWidth(width);
+            //context.enable(0x8642);//context.VERTEX_PROGRAM_POINT_SIZE);
+            //context.enable(0x0B10);
         },
 
         lineWidth: function(context, width) {
