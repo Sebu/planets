@@ -16,7 +16,8 @@
   <select style="float:right;" class="nomoon" id="planetModels" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>
    <div id="parameters">
       <br><br>
-      <input type=checkbox name="visMode" checked="true" onClick="visMode(this)">show poles, equators
+      <input type=checkbox name="visMode" checked="true" onClick="visMode(this)">show poles, equators<br>
+      <input type=checkbox name="visMode" checked="true" onClick="showPath=!showPath;">show path
     <div class="caption">speed</div>
    <div id="speedRange"><input type="range" class="slider" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);"/>
    <input type="text" class="range" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);" />
@@ -139,6 +140,7 @@ var currentPlanet = {};
 var currentPos = "free";
 var currentLookAt = "earth";
 var speed = 0.1;
+var showPath = true;
 
 $(document).ready(function() {
 
@@ -432,7 +434,7 @@ window.render = function() {
   if(system[1]._curve) 
   	 system[1]._curve.destroy();
 
-	if(currentPlanet.type!="moon") {
+	if(showPath && currentPlanet.type!="moon") {
 		calcCurve(0,"planet", colors["Path"] );
 	  calcCurve(1,"planet", colors["Hippo"] );
 	}
