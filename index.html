@@ -306,7 +306,7 @@ function setCurrentPlanet(node) {
 			$(".moon").hide();
       $(".nomoon").show();
 			$(".angle").show();
-			$(".rotate").show();
+			$(".rotate").hide();
 			$("#angle3").show();
   		$("#speed3").show();
       sun.setEnabled(true);				
@@ -338,7 +338,7 @@ var systemSun = [];
 
 var scene = SceneJS.scene({ canvasId: "glCanvas" }); 
 var renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-var lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -25 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+var lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -30 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
 var camera = new Camera();
 var light = Sunlight();
 
@@ -372,7 +372,7 @@ system[1].addNode( new SceneJS.cloud({count:400, scale:20.0}) );
 
 system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
 														  systemSun[1] = new Spherical({ scale: 9, angle: 0.5, speed: 0.0 },
-               								  sun = new Planet({  beta: 90.0, emit: 0.5, scale: 0.2, dist: 9.0, inner_id: "sun", color:colors["Sun"] } )
+               								  sun = new Planet({  beta: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: "sun", color:colors["Sun"] } )
 	              							)
 	              						)
 													);
@@ -397,7 +397,7 @@ system[2].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1"
 system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
 if(state.checked || state==true) {
-	system[0].setVisuals(["equator"], true);
+//	system[0].setVisuals(["equator"], true);
 	system[1].setVisuals(["equator","npole","spole","rotationarc","arc1","arc2","markerball"], true);
 	system[2].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], true);
 	system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], true);

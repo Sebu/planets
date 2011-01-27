@@ -23,10 +23,16 @@ DONE
 - hide/unhide triangle
 - view from earth with horizon (set latitude), earth plane east, west ,,, tropics
 - moon and sun same size
-
-TODO
 - show/hide path 
 - stars on fixed dist
+
+TODO
+- RECHNUNG :D Geld!!!!
+- quaternion
+- fix point size O_o
+- yavetz show lines
+- hide lines for s1,s2 etc.
+
 - merge models
 - directions (earth plane east, west ,,, tropics)
 
