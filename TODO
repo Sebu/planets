@@ -28,11 +28,13 @@ DONE
 - fix point size O_o
 - hide lines for s1,s2 etc.
 - arcball 
-
-TODO
 - yavetz show lines
 - sun 2 sphere model ;)
-- earth view
+
+TODO
+- earth view latitude plane
+- update hippode only on demand
+
 - RECHNUNG :D Geld!!!!
 
 

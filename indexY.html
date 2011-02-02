@@ -10,9 +10,6 @@
 <div class="container" id="uiContainer">
    <div title="position" style="float:left;"><img src="textures/origin.png"/><select  id="viewPos" class="view" style="position: relative;top:-6px;" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);"></select></div>
    <div title="look at" style="float:right;"><img src="textures/lookat.png"/><select  id="lookAt" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;"></select></div>
-	<br><br>
-	<select  title="Planet presets" style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
-  <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
    <div id="parameters">
       <br><br>
     <div class="caption">
@@ -30,8 +27,6 @@
       <input type=checkbox name="visMode" checked="true" onClick="showHippo=!showHippo;">hippopede
        <br>
       <input type=checkbox name="visMode" checked="true" onClick="visMode('stars',this);">stars
-      <br>
-
     </div>
     <div class="caption">speed</div>
    <div id="speedRange"><input type="range" class="slider" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);"/>
@@ -69,9 +64,13 @@
 		  <div class="nomoon moon angle" id="angle2"><div>S 2-3 (right angle)</div>
 		 	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
 		 	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
-		  <div class="nomoon angle" id="angle3"><div>S 3-4 (unknown)</div>
-		 	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
-		 	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
+		  <div class="nomoon angle" id="angle3"><div>alpha (unknown)</div>
+		 	<input type="range" class="slider" onchange="system[3].setAxis(value); system[2].setArcBeta(180-value); $('#angle3 > input').attr('value',value);"/>
+		 	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); system[2].setArcBeta(180-value); $('#angle3 > input').attr('value',value);"/></div>  
+		  <div class="nomoon latitude" id="angle4"><div>beta (latitude)</div>
+		 	<input type="range" class="slider" onchange="planet.setBeta(value); system[3].setArcBeta(180-value); $('#angle4 > input').attr('value',value);"/>
+		 	<input type="text" class="range"  tabindex=3 onchange="planet.setBeta(value); system[3].setArcBeta(180-value); $('#angle4 > input').attr('value',value);"/></div>  
+			<br><br>
 			<br><br>
 		</div>
 		
@@ -114,8 +113,6 @@
 
   	
   <input type="button" onclick="reset()" value="reset">
-  	      <input type="text" class="range" min="0" max="90" value="0" onchange="posAngle=90-value; changeView(currentPos);"/>
-
    </div>
 </div>
 
@@ -158,8 +155,6 @@ var currentPlanet = {};
 var currentPos = "free";
 var currentLookAt = "earth";
 var speed = 0.1;
-
-var posAngle=0.0;
 var showPath = true;
 var showHippo = true;
 
@@ -193,8 +188,7 @@ $(document).ready(function() {
 
 	$("#speed3 > input").change(function() {
 		if(currentPlanet.type=="planet") {
-			system[3].setSpeed(-system[2]._speed);
-//			system[3].setSpeed(-system[2]._speed/2.0);
+			system[3].setSpeed(-system[2]._speed/2.0);
 		}
 		else if(currentPlanet.type=="sun") {
   	  sunSpeed =   (360.0*system[1]._speed)/(365.25-system[1]._speed);
@@ -280,12 +274,12 @@ function setCurrentPlanet(node) {
 		  sunDist: 8,
 		  color:colors["Planet"],
 		  type: "planet",
-		  beta: 90.0,
+		  beta: 30.0,
 		  sphere: [
     		{angle: 24.0, speed: 0, rotate: 0 },
     		{angle: 90.0,  speed: 365, rotate: 0 },
     		{angle: 18.0, speed: 570, rotate: 0 },
-    		{angle: 0.0, speed: 0, rotate: 0 },
+    		{angle: 0.0, speed: 0, rotate: 95.0 },
     		],
 		};
 		
@@ -376,14 +370,6 @@ scene.addNode(renderer);
 
 
 
-camera.addNode( earthPlane = SceneJS.translate({x:0.0, y:0.0, z:0.4},	
-									earthPlaneAngle = SceneJS.rotate({angle: 90.0, x: 1.0},
-										SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0}) 
-									)
-								)
-							);
-							
-earthPlane.setEnabled(false);							
 
 camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
 							
@@ -435,29 +421,15 @@ function changeView(node) {
 	if(node=="free") pos = { x: 0.0, y: 0.0, z: -25 };
 	else pos = getNodePos(node);
 	
+  posAngle=90.0;
+	angle = (posAngle/180.0) * Math.PI;
+	pos.x -= Math.sin(angle)*0.4; 
+	pos.y += Math.cos(angle)*0.4; 
+		
 	earth.setEnabled(true);
 	planet.setEnabled(true);
-	earthPlane.setEnabled(false);
-	
-
-  
-	angle = (posAngle/180.0) * Math.PI;
-	sinPhi = Math.sin(angle)*0.4;
-	cosPhi = Math.cos(angle)*0.4;
-	earthPlane.setXYZ({x: 0.0, y:cosPhi,z:sinPhi});
-	earthPlaneAngle.setAngle(posAngle);	  			
-	if(node=="earth") {
-	  earthPlane.setEnabled(true);
-  	earth.setEnabled(false);
-		pos.x = 0.0;
-		pos.y = cosPhi+0.5; 
-		pos.z = sinPhi+0.5;
-	}
-
 //  if(node=="earth") earth.setEnabled(false);
-	if(node=="planet") {
-		planet.setEnabled(false);
-	}
+	if(node=="planet") planet.setEnabled(false);
 	
 	lookAt.setEye(pos);
   lookAt.update();
@@ -476,11 +448,13 @@ window.render = function() {
 		time = 0;
 	  if(system[0]._curve) 
 	  	 system[0]._curve.destroy();
+	
 		if(showPath && currentPlanet.type!="moon") calcCurve(0,"planet", colors["Path"] );
-		
+
 	  if(system[1]._curve) 
 	  	 system[1]._curve.destroy();
 	  if(showHippo && currentPlanet.type!="moon") calcCurve(1,"planet", colors["Hippo"] );
+		
 	}
 		
 	for(i in updateList) {

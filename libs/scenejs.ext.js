@@ -24,31 +24,28 @@ SceneJS.LookAt.prototype.rotateTarget = function(target) {
 	dz = target.z - this._lookZ;
 	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
 	
+	// move position
 	this._eyeX += dx;
 	this._eyeY += dy;
 	this._eyeZ += dz;
 	this.translate(0.0,0.0,-dist);
 
-	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
-//  this.setUp(this.up);
   this.update();
-  
 	this._setDirty(); 
 }
 
 SceneJS.LookAt.prototype.setTarget = function(target) {
 
-	dx = this.dir.x = target.x - this._eyeX;
-  dy = this.dir.y = target.y - this._eyeY;
-  dz = this.dir.z = target.z - this._eyeZ;
-	dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+	this.dir.elements[0] = target.x - this._eyeX;
+  this.dir.elements[1] = target.y - this._eyeY;
+  this.dir.elements[2] = target.z - this._eyeZ;
 	
-	// TODO: normalize 
-	this.dir.x /= dist;
-  this.dir.y /= dist;
-	this.dir.z /= dist;
+	// TODO: fix degenerate :D
+	this.dir = this.dir.toUnitVector();
+	this.up = this.up.toUnitVector();
+	this.right = this.up.cross(this.dir);	
 	
-	this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
+	this.update();
   this._setDirty(); 
 }
 
@@ -134,12 +131,12 @@ function calcCurve(start,node,color) {
   for(var i=start+1; i<system.length; i++) {
   	oldRotate[i] = system[i]._yAngle;
     system[i].update(-32.0);
-//    step += 100;// / Math.abs(system[i]._speed);
+    step += Math.abs(system[i]._step);
   }
 	
-	for(var j=0; j<200; j++) {
+	for(var j=0; j<80; j++) {
 		for(var i=start+1; i<system.length; i++) {
-			system[i].update(1.0);
+			system[i].update(15.0/step);
 		}
 		pos = getNodePos(node);
 		curvePos.push(pos);

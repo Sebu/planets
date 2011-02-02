@@ -30,8 +30,6 @@
       <input type=checkbox name="visMode" checked="true" onClick="showHippo=!showHippo;">hippopede
        <br>
       <input type=checkbox name="visMode" checked="true" onClick="visMode('stars',this);">stars
-      <br>
-
     </div>
     <div class="caption">speed</div>
    <div id="speedRange"><input type="range" class="slider" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);"/>
@@ -66,12 +64,6 @@
 		  <div class="nomoon moon angle" id="angle1"><div>S 1-2 (obliquity of ecliptic)</div>
 		 	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
 		 	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
-		  <div class="nomoon moon angle" id="angle2"><div>S 2-3 (right angle)</div>
-		 	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
-		  <div class="nomoon angle" id="angle3"><div>S 3-4 (unknown)</div>
-		 	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
-		 	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
 			<br><br>
 		</div>
 		
@@ -87,12 +79,6 @@
 		 <div class="speed" id="speed2"><div>S 2 (zodiacal)</div>
 		 <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
-		 <div class="speed" id="speed3"><div>S 3,4 (synodic)</div>
-		 <input type="range" class="slider" onchange="system[2].setSpeed(value); $('#speed3 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); $('#speed3 > input').attr('value',value);"/></div>
-		 <div id="speedSun"> <div>Sun (year)</div>
-		 <input type="range" class="slider" onchange="sunYear = value; $('#speedSun > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=7  onchange="sunYear = value; $('#speedSun > input').attr('value',value);"/></div>
 		 <br><br> 
    </div>   
    
@@ -114,8 +100,6 @@
 
   	
   <input type="button" onclick="reset()" value="reset">
-  	      <input type="text" class="range" min="0" max="90" value="0" onchange="posAngle=90-value; changeView(currentPos);"/>
-
    </div>
 </div>
 
@@ -158,8 +142,6 @@ var currentPlanet = {};
 var currentPos = "free";
 var currentLookAt = "earth";
 var speed = 0.1;
-
-var posAngle=0.0;
 var showPath = true;
 var showHippo = true;
 
@@ -193,7 +175,7 @@ $(document).ready(function() {
 
 	$("#speed3 > input").change(function() {
 		if(currentPlanet.type=="planet") {
-			system[3].setSpeed(-system[2]._speed);
+//			system[3].setSpeed(-system[2]._speed);
 //			system[3].setSpeed(-system[2]._speed/2.0);
 		}
 		else if(currentPlanet.type=="sun") {
@@ -313,7 +295,6 @@ function setCurrentPlanet(node) {
 		
 		sun.setDist(currentPlanet.sunDist);
 		planet.setBeta(currentPlanet.beta);
-		system[3].setArcBeta(180-currentPlanet.beta);
 	
 				
 		if(currentPlanet.type=="moon") {
@@ -376,25 +357,17 @@ scene.addNode(renderer);
 
 
 
-camera.addNode( earthPlane = SceneJS.translate({x:0.0, y:0.0, z:0.4},	
-									earthPlaneAngle = SceneJS.rotate({angle: 90.0, x: 1.0},
-										SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0}) 
-									)
-								)
-							);
-							
-earthPlane.setEnabled(false);							
 
 camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
 							
 camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
 				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: colors["S1"] },
-						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: colors["S2"] },
-  						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
+//						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: colors["S2"] },
+//  						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
                 		    planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
                 		  )
-					 		  		)
-						  		)	
+//					 		  		)
+//						  		)	
 							  )
 							);
 
@@ -412,7 +385,7 @@ system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0
 
 
 
-updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1] ];
+updateList = [ system[0], system[1],  systemSun[0], systemSun[1] ];
 
 
 
@@ -435,29 +408,15 @@ function changeView(node) {
 	if(node=="free") pos = { x: 0.0, y: 0.0, z: -25 };
 	else pos = getNodePos(node);
 	
+  posAngle=90.0;
+	angle = (posAngle/180.0) * Math.PI;
+	pos.x -= Math.sin(angle)*0.4; 
+	pos.y += Math.cos(angle)*0.4; 
+		
 	earth.setEnabled(true);
 	planet.setEnabled(true);
-	earthPlane.setEnabled(false);
-	
-
-  
-	angle = (posAngle/180.0) * Math.PI;
-	sinPhi = Math.sin(angle)*0.4;
-	cosPhi = Math.cos(angle)*0.4;
-	earthPlane.setXYZ({x: 0.0, y:cosPhi,z:sinPhi});
-	earthPlaneAngle.setAngle(posAngle);	  			
-	if(node=="earth") {
-	  earthPlane.setEnabled(true);
-  	earth.setEnabled(false);
-		pos.x = 0.0;
-		pos.y = cosPhi+0.5; 
-		pos.z = sinPhi+0.5;
-	}
-
 //  if(node=="earth") earth.setEnabled(false);
-	if(node=="planet") {
-		planet.setEnabled(false);
-	}
+	if(node=="planet") planet.setEnabled(false);
 	
 	lookAt.setEye(pos);
   lookAt.update();
@@ -471,17 +430,6 @@ window.render = function() {
 //  if(system[1]._curve) 
 //  	 system[1]._curve.destroy();
 
-	time++;
-	if(time>20) {
-		time = 0;
-	  if(system[0]._curve) 
-	  	 system[0]._curve.destroy();
-		if(showPath && currentPlanet.type!="moon") calcCurve(0,"planet", colors["Path"] );
-		
-	  if(system[1]._curve) 
-	  	 system[1]._curve.destroy();
-	  if(showHippo && currentPlanet.type!="moon") calcCurve(1,"planet", colors["Hippo"] );
-	}
 		
 	for(i in updateList) {
 			updateList[i].update(speed);

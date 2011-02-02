@@ -42,6 +42,10 @@ Planet.prototype.setDist = function(dist) {
 	this._distNode.setY(dist);
 }
 
+
+
+
+
 Curve.prototype._init = function(params) {
     var curvePos = params.pos;
 
@@ -151,8 +155,14 @@ Circle.prototype.setAngle = function(angle) {
 	 this.angle = angle%360;
 }
 
+Circle.prototype.setBeta = function(angle) {
+	 this._beta = angle%360;
+}
+
 Circle.prototype._init = function(params) {
 		 this.setAngle(params.angle);
+		 this.setBeta(params.beta||90);
+		 
 		 this.linewidth = params.width || 1;
 
      this._create = function(angle) {
@@ -160,30 +170,35 @@ Circle.prototype._init = function(params) {
         var positions = [];
         var colors = [];
         var arc = (this.angle / 180.0) * Math.PI;
-        var x=0,y=0,z=0;
+				var beta = (this._beta/180)*Math.PI;
+				var cosPhi = Math.cos(beta);
+				var sinPhi = Math.sin(beta);				
+        var x=0,y=0,z=0.2,delta=0;
         for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
             var theta = sliceNum * arc / slices;
             var sinTheta = Math.sin(theta);
             var cosTheta = Math.cos(theta);
 
-                x = sinTheta;
-                y = cosTheta;
-                z = 0.0; //sinTheta;
+
+
+                x = sinTheta*sinPhi;
+                y = cosTheta*sinPhi;
+                z = cosPhi; //0.2; //sinTheta;
 
 								if(this.linewidth!=1)
 									if(sliceNum % 2)
-										z = 0.01;
+										delta = 0.01;
 									else 
-										z = -0.01;
+										delta = -0.01;
 									
                 if(sliceNum==0) {
                   positions.push(x);
                   positions.push(y);
-                  positions.push(-z);
+                  positions.push(z-delta);
                 }  
                 positions.push(x);
                 positions.push(y);
-                positions.push(z);
+                positions.push(z+delta);
 
 
           
@@ -191,7 +206,7 @@ Circle.prototype._init = function(params) {
         
         positions.push(x);
         positions.push(y);
-        positions.push(-z);
+        positions.push(z-delta);
         
 
         
@@ -200,9 +215,9 @@ Circle.prototype._init = function(params) {
                 indices.push(sliceNum);
         }
         if(this.linewidth!=1)
-					resource = "facearc" + Math.round(this.angle);
+					resource = "facearc" + Math.round(this.angle) +":"+ Math.round(this._beta);
 				else
-					resource = "linearc" + Math.round(this.angle);
+					resource = "linearc" + Math.round(this.angle) +":"+ Math.round(this._beta);
 
         return {
         		resource: resource,
@@ -219,9 +234,9 @@ Circle.prototype._init = function(params) {
 
 Circle.prototype._render = function(traversalContext) {
 		if(this.linewidth!=1)
-			resource = "facearc" + Math.round(this.angle);
+			resource = "facearc" + Math.round(this.angle) +":"+ Math.round(this._beta);
 		else
-			resource = "linearc" + Math.round(this.angle);
+			resource = "linearc" + Math.round(this.angle) +":"+ Math.round(this._beta);
 		this._handle  = resource;
     if (this._handle) { // Was created before - test if not evicted since
         if (!SceneJS._geometryModule.testGeometryExists(this._handle)) {
@@ -285,11 +300,12 @@ Spherical.prototype._init = function(params) {
           emit: 1.0, specular: 0.0, shine: 1.0 
           },	
     	
-		// equator marker ball
-    this._visuals["markerarc"] = SceneJS.rotate({angle: 90.0, y: 1.0},
-       		SceneJS.scale( {x: -params.scale, y: -params.scale, z: params.scale },
-	 				  new Circle({angle: 90.0}))),
 
+    this._visuals["markerarc"] = SceneJS.rotate({angle: 90.0, y: 1.0},
+       		SceneJS.scale( {x: -params.scale, y: params.scale, z: params.scale },
+	 				  new Circle({ angle: 90.0}))),
+
+		// equator marker ball
 		this._visuals["markerball"]  = SceneJS.translate( {x: 0.0, y: 0.0, z: params.scale  }, 
 			SceneJS.scale( {x: 0.1, y: 0.1, z: 0.1 }, 
 				SceneJS.sphere() 
@@ -319,7 +335,7 @@ Spherical.prototype._init = function(params) {
 		)
 		);
     		
-				// equator marker arc/angle			
+		// equator marker arc/angle			
 		this._anchor2.addNode( 	this._visuals["rotationarc"] = SceneJS.rotate({angle: 90.0, x: 1.0},			
  				SceneJS.scale( {x: params.scale, y: params.scale, z: params.scale },
 	 				this.arcangle11 = new Circle({width: 2, angle: 0})
@@ -354,6 +370,11 @@ Spherical.prototype.getAxis = function() {
 Spherical.prototype.setSpeed = function(speed) {
 		this._speed = speed;
 		this._step = (speed!=0) ? (360.0/speed) : 0.0;
+};
+
+
+Spherical.prototype.setArcBeta = function(angle) {
+  this.arcangle11.setBeta(angle);
 };
 
 Spherical.prototype.setArcAngle = function(angle) {
