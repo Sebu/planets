@@ -48,15 +48,11 @@ function mouseUp() {
 function mouseMove(event) {
     if (dragging) {
         pitch = (event.clientY - lastY) * 0.005;
-
-//        console.log(lookAt._pitch);
-//        if(lookAt._pitch>Math.PI/2)
-//          yaw = (event.clientX - lastX) * 0.005;
-//        else 
-          yaw = (event.clientX - lastX) * -0.005;
+        yaw = (event.clientX - lastX) * -0.005;
         
-        lookAt.rotate(pitch, yaw, 0.0);
-        lookAt.update();
+        lookAt.rotateY(yaw);
+        lookAt.rotateX(pitch);
+
         lastX = event.clientX;
         lastY = event.clientY;
     }

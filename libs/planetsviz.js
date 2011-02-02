@@ -276,13 +276,13 @@ Spherical.prototype._init = function(params) {
       this._anchor = SceneJS.material({
 		      baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-          emit: 0.2, specular: 0.0, shine: 1.0 
+          emit: 1.0, specular: 0.0, shine: 1.0 
           }),	
 
 				this._anchor2 = SceneJS.material({
 		      baseColor:      color,
           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-          emit: 0.2, specular: 0.0, shine: 1.0 
+          emit: 1.0, specular: 0.0, shine: 1.0 
           },	
     	
 		// equator marker ball

@@ -26,15 +26,15 @@ DONE
 - show/hide path 
 - stars on fixed dist
 - fix point size O_o
-
+- hide lines for s1,s2 etc.
+- arcball 
 
 TODO
-- RECHNUNG :D Geld!!!!
-- quaternion arcball 
+- yavetz show lines
 - sun 2 sphere model ;)
 - earth view
-- yavetz show lines
-- hide lines for s1,s2 etc.
+- RECHNUNG :D Geld!!!!
+
 
 - merge models
 - directions (earth plane east, west ,,, tropics)

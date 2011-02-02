@@ -57,64 +57,57 @@ SceneJS.LookAt.prototype._init = function(params) {
     this._mat = null;
     this._xform = null;
 
-		this._yaw = 0.0;
-		this._pitch = 0.0;		
-		this._roll = 0.0;		
-		this.up = params.up;
-		this.right = {x: 1.0, y:0.0, z:0.0};
-		this.dir = {x: 0.0, y:0.0, z:1.0};
-		
+		this.up = Vector.create([0, 1, 0]);
+		this.right = Vector.create([1,0,0]); 
+		this.dir = Vector.create([0,0,1]);
     this.setEye(params.eye);
-    this.setUp(params.up);
-
-    this.setLook(params.look);
+		
+		this.update();
 
 };
 
+SceneJS.LookAt.prototype.rotate = function(angle, axis) {
+	m = Matrix.Rotation(angle,axis);
+	this.right = m.multiply(this.right);
+	this.dir = m.multiply(this.dir);
+	this.up = m.multiply(this.up);
+	this.update();
+}
+
+SceneJS.LookAt.prototype.rotateX = function(angle) {
+	m = Matrix.Rotation(angle,this.right);
+	this.dir = m.multiply(this.dir);
+	this.up = m.multiply(this.up);
+	this.update();
+}
+
+SceneJS.LookAt.prototype.rotateY = function(angle) {
+	m = Matrix.Rotation(angle,this.up);
+	this.right = m.multiply(this.right);
+	this.dir = m.multiply(this.dir);
+	this.update();
+}
+
 SceneJS.LookAt.prototype.update = function() {
-  sinPitch = Math.sin(this._pitch);
-  cosPitch = Math.cos(this._pitch);
-  sinYaw   = Math.sin(this._yaw); 
-  cosYaw   = Math.cos(this._yaw);
-  sinRoll  = Math.sin(this._roll);
-  cosRoll  = Math.cos(this._roll);
-  
-  this.right.x = cosYaw*cosRoll + sinYaw*sinPitch*sinRoll;
-  this.right.y = sinRoll*cosPitch;
-  this.right.z = cosYaw*sinPitch*sinRoll - sinYaw*cosRoll;
-
-  this.up.x = sinYaw*sinPitch*cosRoll - cosYaw*sinRoll;
-  this.up.y = cosRoll*cosPitch;
-  this.up.z = sinRoll*sinYaw + cosRoll*cosYaw*sinPitch;
-
-  this.dir.x = cosPitch*sinYaw;
-  this.dir.y = -sinPitch;
-  this.dir.z = cosPitch*cosYaw;  
-  
-  this.setLook({x: this._eyeX + this.dir.x, y: this._eyeY + this.dir.y, z: this._eyeZ + this.dir.z});
-  this.setUp(this.up);
+  this.setLook({x: this._eyeX + this.dir.elements[0], y: this._eyeY + this.dir.elements[1], z: this._eyeZ + this.dir.elements[2]});
+  this.setUp({x: this.up.elements[0], y: this.up.elements[1], z: this.up.elements[2]});
 	this._setDirty();  
 }
 
 SceneJS.LookAt.prototype.translate = function(x,y,z) {
-	this._eyeX += this.dir.x * z;
-	this._eyeY += this.dir.y * z;
-	this._eyeZ += this.dir.z * z;
-	this._eyeX += this.right.x * x;
-	this._eyeY += this.right.y * x;
-	this._eyeZ += this.right.z * x;
-	this._lookX = this._eyeX + this.dir.x;
-	this._lookY = this._eyeY + this.dir.y;
-	this._lookZ = this._eyeZ + this.dir.z;
-	this._setDirty();
+	this._eyeX += this.dir.elements[0] * z;
+	this._eyeY += this.dir.elements[1] * z;
+	this._eyeZ += this.dir.elements[2] * z;
+	this._eyeX += this.right.elements[0] * x;
+	this._eyeY += this.right.elements[1] * x;
+	this._eyeZ += this.right.elements[2] * x;
+	this._lookX = this._eyeX + this.dir.elements[0];
+	this._lookY = this._eyeY + this.dir.elements[1];
+	this._lookZ = this._eyeZ + this.dir.elements[2];
+//	this._setDirty();
 }
 
 
-SceneJS.LookAt.prototype.rotate = function(x,y,z) {
-	this._pitch += x;
-	this._yaw  += y;
-	this._roll += z;
-}
 
 
 getNodePos = function(node) {

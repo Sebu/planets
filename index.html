@@ -13,7 +13,6 @@
 	<br><br>
 	<select  title="Planet presets" style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
   <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
-  <select style="float:right;" class="nomoon" id="planetModels" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>
    <div id="parameters">
       <br><br>
     <div class="caption">
@@ -135,8 +134,9 @@
 
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script>
  
-<script type="text/javascript" src="libs/scenejs.js"></script> 
+<script type="text/javascript" src="libs/scenejs.min.js"></script> 
 <script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script> 
+<script type="text/javascript" src="libs/sylvester.js"></script> 
 <script type="text/javascript" src="libs/scenejs.ext.js"></script> 
 
 <script type="text/javascript" src="libs/planetsviz.js"></script>
@@ -339,8 +339,11 @@ function setCurrentPlanet(node) {
 			
 //			system[0].setEnabled(false);
 		}
-
-		
+	
+	  if(system[1]._curve) 
+	  	 system[1]._curve.destroy();
+	  if(currentPlanet.type!="moon")
+			calcCurve(1,"planet", colors["Hippo"] );
 		//$(".rotate > input").change();
 	//	reset();
 }
@@ -405,29 +408,12 @@ updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemS
 // TODO: add checkboxes to website 
 // don't show daily
 visMode = function(sys, state) {
+	if(sys=="stars") {
+	  stars.setEnabled(state.checked);
+	  return;
+	}
 
-if(sys=="stars") {
-  stars.setEnabled(state.checked);
-  return;
-}
-
-system[sys].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state.checked);
-
-//systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-//systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-
-//system[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-//system[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-//system[2].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-//system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);style="display:none" 
-
-//if(state.checked || state==true) {
-//	system[0].setVisuals(["equator"], true);
-//	system[1].setVisuals(["equator","npole","spole","rotationarc","arc1","arc2","markerball"], true);
-//	system[2].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], true);
-//	system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], true);
-//} 
-
+	system[sys].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state.checked);
 }
 
 
@@ -452,17 +438,20 @@ function changeView(node) {
 } 
 
 
+time = 0;
 window.render = function() {
 
-  if(system[0]._curve) 
-  	 system[0]._curve.destroy();
 
-  if(system[1]._curve) 
-  	 system[1]._curve.destroy();
+//  if(system[1]._curve) 
+//  	 system[1]._curve.destroy();
 
-	if(currentPlanet.type!="moon") {
-		if(showPath) calcCurve(0,"planet", colors["Path"] );
-	  if(showHippo) calcCurve(1,"planet", colors["Hippo"] );
+	time++;
+	if(time>20) {
+		time = 0;
+	  if(system[0]._curve) 
+	  	 system[0]._curve.destroy();
+	
+		if(showPath && currentPlanet.type!="moon") calcCurve(0,"planet", colors["Path"] );
 	}
 		
 	for(i in updateList) {
