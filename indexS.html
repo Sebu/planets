@@ -435,7 +435,7 @@ window.render = function() {
 		time = 0;
 	  if(system[0]._curve) 
 	  	 system[0]._curve.destroy();
-		if(showPath && currentPlanet.type!="moon") calcCurve(0,"planet", colors["Path"] );
+		if(showPath && currentPlanet.type!="moon") calcCurve(-1,"planet", colors["Path"] );
 		
 	}
 		

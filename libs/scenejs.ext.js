@@ -149,7 +149,7 @@ function calcCurve(start,node,color) {
   for(var i=0; i<system.length; i++)
 		system[i].setRotate(oldRotate[i]);
 
-
+  if (start==-1) start=0;
  	system[start]._curve = new Curve({pos: curvePos});	
   system[start]._anchor.setBaseColor(color);
 	system[start]._anchor.addNode(system[start]._curve);	
