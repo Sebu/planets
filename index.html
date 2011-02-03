@@ -63,6 +63,9 @@
 		 <img class="triangle" style="display:none" src="textures/closed.png"/>
     Angle (degrees)</div>
 		<div>
+		  <div class="nomoon moon" id="latitude"><div> latitude</div>
+		 	<input type="range" class="slider" onchange="system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=1   onchange="system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/></div>
 		  <div class="nomoon moon angle" id="angle1"><div>S 1-2 (obliquity of ecliptic)</div>
 		 	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
 		 	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
@@ -114,8 +117,6 @@
 
   	
   <input type="button" onclick="reset()" value="reset">
-  	      <input type="text" class="range" min="0" max="90" value="0" onchange="posAngle=90-value; changeView(currentPos);"/>
-
    </div>
 </div>
 
@@ -308,6 +309,9 @@ function setCurrentPlanet(node) {
 		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotate); } );
 		
 
+		$("#latitude > input").attr({"min":"0", "max":90, "step":0.05});
+		$("#latitude > input").attr({"value":"38"});
+
 		$(".angle > input").change();
 		$(".speed > input").change();
 		
@@ -377,7 +381,7 @@ scene.addNode(renderer);
 
 
 camera.addNode( earthPlane = SceneJS.translate({x:0.0, y:0.0, z:0.4},	
-									earthPlaneAngle = SceneJS.rotate({angle: 90.0, x: 1.0},
+									earthPlaneAngle = SceneJS.rotate({angle: 0.0, x: 1.0},
 										SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0}) 
 									)
 								)
@@ -437,21 +441,24 @@ function changeView(node) {
 	
 	earth.setEnabled(true);
 	planet.setEnabled(true);
-	earthPlane.setEnabled(false);
+  earthPlane.setEnabled(true);
 	
 
   
 	angle = (posAngle/180.0) * Math.PI;
 	sinPhi = Math.sin(angle)*0.4;
 	cosPhi = Math.cos(angle)*0.4;
-	earthPlane.setXYZ({x: 0.0, y:cosPhi,z:sinPhi});
-	earthPlaneAngle.setAngle(posAngle);	  			
+//	earthPlane.setXYZ({x: 0.0, y:cosPhi,z:sinPhi});
+//	earthPlaneAngle.setAngle(posAngle);	  			
 	if(node=="earth") {
 	  earthPlane.setEnabled(true);
   	earth.setEnabled(false);
-		pos.x = 0.0;
-		pos.y = cosPhi+0.5; 
-		pos.z = sinPhi+0.5;
+//		pos.x = 0.0;
+//		pos.y = cosPhi+0.5; 
+//		pos.z = sinPhi+0.5;
+		pos.y = 0.5; 
+		pos.z = 0.5;
+
 	}
 
 //  if(node=="earth") earth.setEnabled(false);
