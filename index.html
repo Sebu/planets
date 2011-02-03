@@ -442,22 +442,18 @@ function changeView(node) {
 	earth.setEnabled(true);
 	planet.setEnabled(true);
   earthPlane.setEnabled(true);
-	
 
   
-	angle = (posAngle/180.0) * Math.PI;
-	sinPhi = Math.sin(angle)*0.4;
-	cosPhi = Math.cos(angle)*0.4;
-//	earthPlane.setXYZ({x: 0.0, y:cosPhi,z:sinPhi});
-//	earthPlaneAngle.setAngle(posAngle);	  			
 	if(node=="earth") {
 	  earthPlane.setEnabled(true);
   	earth.setEnabled(false);
-//		pos.x = 0.0;
-//		pos.y = cosPhi+0.5; 
-//		pos.z = sinPhi+0.5;
 		pos.y = 0.5; 
 		pos.z = 0.5;
+
+    lookAt.dir = $V([0,0,1]);
+    lookAt.up = $V([0,1,0]);
+    lookAt.right = $V([1,0,0]);
+    lookAt.update();
 
 	}
 
@@ -495,7 +491,7 @@ window.render = function() {
   }
 		
 	if(currentPos!="free") {
-		changeView(currentPos);
+//		changeView(currentPos);
 		if(currentLookAt!="free")
 			lookAt.setTarget(getNodePos(currentLookAt));		
 	} else {
