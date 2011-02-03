@@ -50,8 +50,8 @@ function mouseMove(event) {
         pitch = (event.clientY - lastY) * 0.005;
         yaw = (event.clientX - lastX) * -0.005;
         
-        lookAt.rotateY(yaw);
-        lookAt.rotateX(pitch);
+        lookAt.rotateUp(yaw);
+        lookAt.rotateRight(pitch);
 
         lastX = event.clientX;
         lastY = event.clientY;
@@ -60,8 +60,8 @@ function mouseMove(event) {
 
 function keyboard(e) {
 	switch(e.keyCode) {
-		case 119: lookAt.rotateX(-0.02);  break;
-		case 115: lookAt.rotateX(0.02);  break;
+		case 119: lookAt.rotateRight(-0.02);  break;
+		case 115: lookAt.rotateRight(0.02);  break;
 		case 97:  lookAt.rotateY(0.02);  break;
 		case 100: lookAt.rotateY(-0.02);  break;		
 		default: return false;

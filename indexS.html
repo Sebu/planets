@@ -292,7 +292,6 @@ function setCurrentPlanet(node) {
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
 		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotate); } );
 		
-		$("#latitude > input").attr({"min":"0", "max":90});
 		$("#latitude > input").attr({"value":"38"});
 
 		$(".angle > input").change();

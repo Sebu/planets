@@ -71,14 +71,32 @@ SceneJS.LookAt.prototype.rotate = function(angle, axis) {
 	this.update();
 }
 
+
 SceneJS.LookAt.prototype.rotateX = function(angle) {
-	m = Matrix.Rotation(angle,this.right);
+	m = Matrix.Rotation(angle,$V([1,0,0]));
+	this.right = m.multiply(this.right);
 	this.dir = m.multiply(this.dir);
 	this.up = m.multiply(this.up);
 	this.update();
 }
 
 SceneJS.LookAt.prototype.rotateY = function(angle) {
+	m = Matrix.Rotation(angle,$V([0,1,0]));
+	this.right = m.multiply(this.right);
+	this.dir = m.multiply(this.dir);
+	this.up = m.multiply(this.up);
+	this.update();
+}
+
+
+SceneJS.LookAt.prototype.rotateRight = function(angle) {
+	m = Matrix.Rotation(angle,this.right);
+	this.dir = m.multiply(this.dir);
+	this.up = m.multiply(this.up);
+	this.update();
+}
+
+SceneJS.LookAt.prototype.rotateUp = function(angle) {
 	m = Matrix.Rotation(angle,this.up);
 	this.right = m.multiply(this.right);
 	this.dir = m.multiply(this.dir);
