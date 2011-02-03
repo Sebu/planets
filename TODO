@@ -33,16 +33,22 @@ DONE
 - earth view latitude plane
 
 TODO
+- RECHNUNG :D Geld!!!!
 - merge!!!
 - email yavetz sphere 3-4
 - fix path in simple model
 - in planet view rotate x and y not right up
 - update hippode only on demand
 
-- RECHNUNG :D Geld!!!!
+- show box with lat. etc.   
+
+auftrag:
+- more spheres
+  - only mars,venus,  mercury
+  - period sum to zero ( of sphere 3-5)
+  - sphere 5 like 3: alpha  4: -alpha + beta 5: -beta/beta
 
 
-- merge models
 - directions (earth plane east, west ,,, tropics)
 
 NEXT
