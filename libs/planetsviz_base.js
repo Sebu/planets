@@ -60,10 +60,10 @@ function mouseMove(event) {
 
 function keyboard(e) {
 	switch(e.keyCode) {
-		case 119: lookAt.translate(0,0,1.2);  break;
-		case 115: lookAt.translate(0,0,-1.2);  break;
-		case 97:  lookAt.translate(1.2,0,0);  break;
-		case 100: lookAt.translate(-1.2,0,0);  break;		
+		case 119: lookAt.rotateX(-0.02);  break;
+		case 115: lookAt.rotateX(0.02);  break;
+		case 97:  lookAt.rotateY(0.02);  break;
+		case 100: lookAt.rotateY(-0.02);  break;		
 		default: return false;
 	}
 }

@@ -369,7 +369,7 @@ Spherical.prototype.getAxis = function() {
 
 Spherical.prototype.setSpeed = function(speed) {
 		this._speed = speed;
-		this._step = (speed!=0) ? (360.0/speed) : 0.0;
+		this._step = (this._speed!=0) ? (360.0/this._speed) : 0.0;
 };
 
 
@@ -388,6 +388,6 @@ Spherical.prototype.setRotate = function(angle) {
 };
 
 Spherical.prototype.update = function(step) {
-		this._yAngle += this._step*step;
+		this._yAngle -= this._step*step;
 		this.setRotate(this._yAngle);
 };
