@@ -388,6 +388,6 @@ Spherical.prototype.setRotate = function(angle) {
 };
 
 Spherical.prototype.update = function(step) {
-		this._yAngle -= this._step*step;
+		this._yAngle += this._step*step;
 		this.setRotate(this._yAngle);
 };

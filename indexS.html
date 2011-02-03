@@ -222,7 +222,7 @@ $(document).ready(function() {
 
 	// SETUP START
 	// start models
-	setCurrentPlanet("Mercury1");
+	setCurrentPlanet("Sun");
 	setCurrentModel("Mendell");
 //	visMode(true);
 
@@ -362,7 +362,7 @@ camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, 
 							
 camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
 				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: colors["S1"] },
-//						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: colors["S2"] },
+//						    		system[2] = new Spherical({ scale: 9, angle: 0.0, speed: 110.0, color: colors["S2"] },
 //  						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
                 		    planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
                 		  )
@@ -430,6 +430,15 @@ window.render = function() {
 //  if(system[1]._curve) 
 //  	 system[1]._curve.destroy();
 
+	time++;
+	if(time>20) {
+		time = 0;
+	  if(system[0]._curve) 
+	  	 system[0]._curve.destroy();
+		if(showPath && currentPlanet.type!="moon") calcCurve(0,"planet", colors["Path"] );
+		
+	}
+		
 		
 	for(i in updateList) {
 			updateList[i].update(speed);
