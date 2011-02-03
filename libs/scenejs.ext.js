@@ -130,7 +130,7 @@ function calcCurve(start,node,color) {
 
   for(var i=start+1; i<system.length; i++) {
   	oldRotate[i] = system[i]._yAngle;
-    system[i].update(-32.0);
+//    system[i].update(-32.0);
     step += Math.abs(system[i]._step);
   }
 	

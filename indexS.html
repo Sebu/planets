@@ -11,7 +11,7 @@
    <div title="position" style="float:left;"><img src="textures/origin.png"/><select  id="viewPos" class="view" style="position: relative;top:-6px;" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);"></select></div>
    <div title="look at" style="float:right;"><img src="textures/lookat.png"/><select  id="lookAt" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;"></select></div>
 	<br><br>
-	<select  title="Planet presets" style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
+
   <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
    <div id="parameters">
       <br><br>
@@ -360,13 +360,14 @@ scene.addNode(renderer);
 
 camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
 							
-camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
+camera.addNode( system[-1] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},	
+                system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
 				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: colors["S1"] },
 //						    		system[2] = new Spherical({ scale: 9, angle: 0.0, speed: 110.0, color: colors["S2"] },
 //  						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
                 		    planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
                 		  )
-//					 		  		)
+					 		  		)
 //						  		)	
 							  )
 							);
@@ -385,7 +386,7 @@ system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0
 
 
 
-updateList = [ system[0], system[1],  systemSun[0], systemSun[1] ];
+updateList = [ system[-1], system[0], system[1],  systemSun[0], systemSun[1] ];
 
 
 
