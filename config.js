@@ -127,7 +127,7 @@ Sun: {
   type:"sun",
   color: {r:1.0,g:1.0,b:0.0},
   sphere: [
-    {angle: 24.0, speed: 0, rotate: 0 },
+    {angle: 24.0, speed: 1, rotate: 0 },
     {angle: 0.5,  speed: 365.0, rotate: 0 },
     {angle: 0.0, speed: 0, rotate: 0 }] }, 
 
