@@ -1,3 +1,5 @@
+model.update -> dirty -> update -> render
+
 DONE
 - sphere1: light color
 - different planet value from file
@@ -31,32 +33,33 @@ DONE
 - yavetz show lines
 - sun 2 sphere model ;)
 - earth view latitude plane
+- RECHNUNG :D Geld!!!!
+- in planet view rotate x and y not right up
 
 TODO
-- RECHNUNG :D Geld!!!!
 - merge!!!
-- email yavetz sphere 3-4
-- fix path in simple model
-- in planet view rotate x and y not right up
-- update hippode only on demand
-
+- generate menu
 - show box with lat. etc.   
+- fix path in simple model
+- email yavetz sphere 3-4
+
+
+
+
+
+NEXT
+- update hippode only on demand
+- directions (earth plane east, west ,,, tropics)
+- tooltip with description and default/recomended values
+- variable slider max ( depended on model )
+- sun model in list
+- moon speed functions days per year
 
 auftrag:
 - more spheres
   - only mars,venus,  mercury
   - period sum to zero ( of sphere 3-5)
   - sphere 5 like 3: alpha  4: -alpha + beta 5: -beta/beta
-
-
-- directions (earth plane east, west ,,, tropics)
-
-NEXT
-- tooltip with description and default/recomended values
-- variable slider max ( depended on model )
-- sun model in list
-- moon speed functions days per year
-- generate menu
 - use Three.js
 - more lambda :D
 
@@ -65,8 +68,6 @@ MODEL
  - update 
  - setup
  - 
-
-
 
 
 

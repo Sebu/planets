@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head> 
+		<title>webgl ancient planet visualization</title> 
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/planets.css">
+	</head>
+	
+	<div class="container" id="uiContainer">
+	   <div id="parameters"></div>
+	   <input type="button" onclick="model.reset()" value="reset">
+	</div>
+	
+	<div id="mainBox" tabindex=1></div>
+	
+	<div class="container" id="infoContainer">
+	  <div>zodiacal month</div><div id="metonZodicalMonths">0</div>
+    <div>days per year</div><div id="metonDaysPerYear">0</div>
+	 	<div>days per synodic month</div><div id="synodicDaysPerMonth">0</div>
+	 	<div>days per zodical month</div><div id="zodicalDaysPerMonth">0</div>
+	 	<div>days per draconitic month</div> <div id="draconiticDaysPerMonth">0</div>
+	</div>
+	
+	
+	<script type="text/javascript" src="libs/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="libs/scenejs.min.js"></script> 
+	<script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script> 
+	<script type="text/javascript" src="libs/sylvester.js"></script> 
+
+	<script type="text/javascript" src="libs/scenejs.ext.js"></script> 
+	<script type="text/javascript" src="libs/planetsviz_base.js"></script>
+	<script type="text/javascript" src="config.js"></script>
+		
+<script type="text/javascript"> 
+
+$("#mainBox").append( "<canvas tabindex=1 id='glCanvas'><p>This example requires a browser that supports the<a href='http://www.w3.org/html/wg/html5/'>HTML5</a>&lt;canvas&gt; and <a href='http://www.khronos.org/webgl/WebGL'>WebGL</a>features.</p></canvas>" );	
+
+
+addCaption = function(id,text) {
+	return "<div class='caption' id='"+id+"'><img class='triangle' src='textures/open.png'> <img class='triangle' style='display:none' src='textures/closed.png'>"+text+"</div>"
+}
+
+// setup site
+$(document).ready(function() {
+
+//	$(".view").hide();
+	model = new PModel();
+
+	canvas = document.getElementById("glCanvas");
+	canvas.addEventListener('mousedown', function(e) { model.mouseDown(e); }, true);
+	canvas.addEventListener('mousemove', function(e) { model.mouseMove(e); }, true);
+	canvas.addEventListener('mouseup', function(e) { model.mouseUp(e); }, true);
+	canvas.addEventListener('keypress', function(e) { model.keyboard(e); }, true);
+	canvas.addEventListener('mousewheel', function(e) { model.mouseWheel(e); }, true);
+	canvas.addEventListener('DOMMouseScroll', function(e) { model.mouseWheel_firefox(e); }, true);
+	
+	$.extend(model.currentPlanet, planetPresets["Mercury1"]);
+	
+	 $("#uiContainer").prepend("<select style='float:right;' id='moonPresets' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select>");
+	  
+		$("#uiContainer").prepend("<select title='Planet presets' style='float:left;' id='planetPresets' onchange='setCurrentPlanet(this.options[this.selectedIndex].value); model.reset();'> </select>");
+		
+			$("#uiContainer").prepend("<div title='look at' style='float:right;'><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div><br><br>");
+			
+	$("#uiContainer").prepend("<div title='position' style='float:left;'><img src='textures/origin.png'><select  id='viewPos' class='view' style='position: relative;top:-6px;' onchange='model.currentPos = this.options[this.selectedIndex].value; model.changeView(model.currentPos);'></select></div>");
+
+
+	
+	$("#vis").hide();
+	viewPoints = ["Free", "Earth", "Planet"];
+	
+  for(i in viewPoints )
+ 		$("#viewPos,#lookAt").append("<option value='" + viewPoints[i].toLowerCase() + "'>" + viewPoints[i] + "</option>");
+
+	$("#lookAt option[value='earth']").attr('selected',true);
+	
+		
+ 	// populate menues
+  for(i in planetPresets)
+ 		$("#planetPresets").append("<option value='" + i + "'>" + i + "</option>");
+  for(i in moonModels) 
+ 		$("#moonPresets").append("<option value='" + i + "'>" + i + "</option>");
+ 		
+ 		
+ 		
+	$("#parameters").append( function(index,html) {
+		return addCaption("moon","Moon settings") + "<div>" +
+						addSlider("moon","metonYear","Years") +
+						addSlider("moon","metonSynodicMonths", "Synodic months") + 
+						"</div>";
+	});
+	
+	$("#parameters").append( function(index,html) {
+		return addCaption("angle","Angle (degrees)") + "<div>" +
+						addSlider("angle", "angle0", "Latitude") +
+						addSlider("angle", "angle1", "S 1-2 (obliquity of ecliptic)") +
+						addSlider("angle", "angle2", "S 2-3 (right angle)") + 
+						addSlider("angle", "angle3", "S 3-4 (unknown)") + 
+						"</div>";
+	});
+	
+	$("#parameters").append( function(index,html) {
+		return addCaption("speed","Sphere Period (days)") + "<div>" +
+						addSlider("speed", "speed1", "S 1 (daily)") +
+						addSlider("speed", "speed2", "S 2 (zodiacal)") +
+						addSlider("speed", "speed3", "S 3,4 (synodic)") + 
+//						addSlider("angle", "angle3", "Sun (year)") + 
+						"</div>";
+	});	
+
+	// animate hide/show
+	// TODO: add triangle :)
+	$(".caption").click(function() {
+		$(".triangle",this).toggle();
+	  $(this).next().toggle(0);
+	})
+	
+	// SETUP START
+	// start models
+	setCurrentPlanet("Mercury1");
+	model.setCurrentMoonModel("Mendell");
+
+	setInterval("model.update()", 33);  
+
+	window.onresize=model.resize();
+	model.resize();
+	
+})
+
+function setCurrentPlanet(node) {
+	
+		model.currentPlanet = {
+		  sunDist: 8,
+		  color:colors["Planet"],
+		  type: "planet",
+		  beta: 90.0,
+		  sphere: [
+    		{angle: 24.0, speed: 0, rotate: 0 },
+    		{angle: 90.0,  speed: 365, rotate: 0 },
+    		{angle: 18.0, speed: 570, rotate: 0 },
+    		{angle: 0.0, speed: 0, rotate: 0 },
+    		],
+		};
+		
+		$.extend(true, model.currentPlanet, planetPresets[node]);
+		
+		$("#speedSun > input").attr({"value":model.sunYear,"min":0, "max":1000});
+  	$("#speedSun > input").attr({"value":model.sunYear});
+		$("#speedRange > input").attr({"value":model.speed,"min":0, "max":2, "step":0.01});
+		$("#speedRange > input").attr({"value":model.speed});
+				
+		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
+		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].angle); } );
+
+		$(".speed > input").attr({"min":0, "max":11000});
+		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].speed); } );
+
+		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].rotate); } );
+		
+		$("#latitude > input").attr({"min":"0", "max":90});
+		$("#latitude > input").attr({"value":"38"});
+
+		$(".angle > input").change();
+		$(".speed > input").change();
+		
+		model.sun.setDist(model.currentPlanet.sunDist);
+		model.planet.setBeta(model.currentPlanet.beta);
+		model.system[3].setArcBeta(180-model.currentPlanet.beta);
+	
+	
+		$("#infoContainer").hide();
+		$("#moon").click();	
+
+		$(".rotate").hide();	
+		$("#angle").click();	
+		$(".speed").hide();	
+					
+		if(model.currentPlanet.type=="moon") {
+	     model.sun.setEnabled(false);
+			$(".moon").show();
+			$("#infoContainer").show();
+			// moon sliders setup
+		  $("#metonSynodicMonths > input").attr({"value":model.currentPlanet.metonSynodicMonths});
+		  $("#metonDraconiticMonths > input").attr({"value":model.currentPlanet.metonDraconiticMonths});
+			$("#metonYear > input").attr({"value":model.currentPlanet.metonYear});
+	  	$("#metonDays > input").attr({"value":model.currentPlanet.metonDays});
+	  	$(".moon > input").change();	
+			// onchange of a moon parameter -> update model	
+			$(".moon > input").change(function() {
+
+				if(model.currentPlanet.type=="moon") {
+		
+					$("#metonZodicalMonths").html( model.metonZodicalMonths().toFixed() );
+					$("#metonDaysPerYear").html( model.metonDaysPerYear().toFixed(2) );
+					$("#synodicDaysPerMonth").html( model.synodicDaysPerMonth().toFixed(2) );
+					$("#zodicalDaysPerMonth").html( model.zodicalDaysPerMonth().toFixed(2) );
+					$("#draconiticDaysPerMonth").html( model.draconiticDaysPerMonth().toFixed(2) );
+
+					draco = draconiticDaysPerMonth();
+					zodic = zodicalDaysPerMonth();
+
+				  $("#speed2 > input").attr({"value": moonSpeed1(draco, zodic) });
+				  $("#speed3 > input").attr({"value": moonSpeed2(draco, zodic) });
+
+					model.system[1].setSpeed( moonSpeed1(draco, zodic) );
+					model.system[2].setSpeed( moonSpeed2(draco, zodic) );
+					model.system[3].setSpeed( 0 );
+				}
+
+			});	  	
+						
+		} else if(model.currentPlanet.type=="planet") {
+      $(".nomoon").show();
+			$(".angle").show();
+			$("#angle3").show();
+  		$("#speed3").show();
+      model.sun.setEnabled(true);	
+			$("#speed3 > input").change(function() {
+				model.system[3].setSpeed(-model.system[2]._speed);
+			});
+		} else if(model.currentPlanet.type=="sun") {
+			$(".angle").show();
+  		$("#angle3").hide();
+  		$(".speed").hide();
+  		$("#speed3").hide();
+			$(".rotate").show();
+			model.sun.setEnabled(false);	
+			$("#speed3 > input").change(function() {
+	  	  sunSpeed =   (360.0*model.system[1]._speed)/(365.25-model.system[1]._speed);
+	      $("#speed3 > input").attr({"value":sunSpeed });
+				model.system[2].setSpeed(sunSpeed);	
+				model.system[3].setSpeed(0);	
+			});			
+		}
+
+		
+	model.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+	model.systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+	model.reset();	
+}
+	
+</script>
+
+</body>
+</html>

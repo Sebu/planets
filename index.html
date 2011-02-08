@@ -8,11 +8,11 @@
 
 <body>
 <div class="container" id="uiContainer">
-   <div title="position" style="float:left;"><img src="textures/origin.png"/><select  id="viewPos" class="view" style="position: relative;top:-6px;" onchange="currentPos = this.options[this.selectedIndex].value; changeView(currentPos);"></select></div>
-   <div title="look at" style="float:right;"><img src="textures/lookat.png"/><select  id="lookAt" class="view" onchange="currentLookAt = this.options[this.selectedIndex].value;"></select></div>
+   <div title="position" style="float:left;"><img src="textures/origin.png"/><select  id="viewPos" class="view" style="position: relative;top:-6px;" onchange="model.currentPos = this.options[this.selectedIndex].value; model.changeView(model.currentPos);"></select></div>
+   <div title="look at" style="float:right;"><img src="textures/lookat.png"/><select  id="lookAt" class="view" onchange="model.currentLookAt = this.options[this.selectedIndex].value;"></select></div>
 	<br><br>
-	<select  title="Planet presets" style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value);reset();"> </select>   
-  <select style="float:right;" class="moon" id="moonPresets" onchange="setCurrentModel(this.options[this.selectedIndex].value);reset();">  </select>	
+	<select  title="Planet presets" style="float:left;" id="planetPresets" onchange="setCurrentPlanet(this.options[this.selectedIndex].value); model.reset();"> </select>   
+  <select style="float:right;" class="moon" id="moonPresets" onchange="model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();">  </select>	
    <div id="parameters">
       <br><br>
     <div class="caption">
@@ -20,22 +20,22 @@
 		 <img class="triangle" src="textures/closed.png"/>
     Show</div>
     <div id="vis">
-      <input type=checkbox name="visMode" checked="true" onClick="visMode(0,this)">S1
-      <input type=checkbox name="visMode" checked="true" onClick="visMode(1,this)">S2
-      <input type=checkbox name="visMode" checked="true" onClick="visMode(2,this)">S3
-      <input type=checkbox name="visMode" checked="true" onClick="visMode(3,this)">S4
+      <input type=checkbox name="visMode" checked="true" onClick="model.visMode(0,this)">S1
+      <input type=checkbox name="visMode" checked="true" onClick="model.visMode(1,this)">S2
+      <input type=checkbox name="visMode" checked="true" onClick="model.visMode(2,this)">S3
+      <input type=checkbox name="visMode" checked="true" onClick="model.visMode(3,this)">S4
       <br>
 
-      <input type=checkbox name="visMode" checked="true" onClick="showPath=!showPath;">path
-      <input type=checkbox name="visMode" checked="true" onClick="showHippo=!showHippo;">hippopede
+      <input type=checkbox name="visMode" checked="true" onClick="model.showPath=!model.showPath;">path
+      <input type=checkbox name="visMode" checked="true" onClick="model.showHippo=!model.showHippo;">hippopede
        <br>
-      <input type=checkbox name="visMode" checked="true" onClick="visMode('stars',this);">stars
+      <input type=checkbox name="visMode" checked="true" onClick="model.visMode('stars',this);">stars
       <br>
 
     </div>
     <div class="caption">speed</div>
-   <div id="speedRange"><input type="range" class="slider" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);"/>
-   <input type="text" class="range" onchange="speed= Number(value); $('#speedRange > input').attr('value',value);" />
+   <div id="speedRange"><input type="range" class="slider" onchange="model.speed= Number(value); $('#speedRange > input').attr('value',value);"/>
+   <input type="text" class="range" onchange="model.speed= Number(value); $('#speedRange > input').attr('value',value);" />
    <br><br>
    </div>
 
@@ -64,17 +64,17 @@
     Angle (degrees)</div>
 		<div>
 		  <div class="nomoon moon" id="latitude"><div> latitude</div>
-		 	<input type="range" class="slider" onchange="system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=1   onchange="system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/></div>
+		 	<input type="range" class="slider" onchange="model.system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=1   onchange="model.system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/></div>
 		  <div class="nomoon moon angle" id="angle1"><div>S 1-2 (obliquity of ecliptic)</div>
-		 	<input type="range" class="slider" onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=1   onchange="system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
+		 	<input type="range" class="slider" onchange="model.system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=1   onchange="model.system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
 		  <div class="nomoon moon angle" id="angle2"><div>S 2-3 (right angle)</div>
-		 	<input type="range" class="slider" onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=2  onchange="system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
+		 	<input type="range" class="slider" onchange="model.system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=2  onchange="model.system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
 		  <div class="nomoon angle" id="angle3"><div>S 3-4 (unknown)</div>
-		 	<input type="range" class="slider" onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
-		 	<input type="text" class="range"  tabindex=3 onchange="system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
+		 	<input type="range" class="slider" onchange="model.system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
+		 	<input type="text" class="range"  tabindex=3 onchange="model.system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
 			<br><br>
 		</div>
 		
@@ -85,14 +85,14 @@
 		<div id="speeds">
 
 		 <div class="nomoon moon speed" id="speed1" title="recommended 0 or 1"><div>S 1 (daily)</div>
-		 <input type="range" class="slider" onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
-		 <input type="text" class="range"   tabindex=4 onchange="system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="model.system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
+		 <input type="text" class="range"   tabindex=4 onchange="model.system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed2"><div>S 2 (zodiacal)</div>
-		 <input type="range" class="slider" onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=5  onchange="system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="model.system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=5  onchange="model.system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed3"><div>S 3,4 (synodic)</div>
-		 <input type="range" class="slider" onchange="system[2].setSpeed(value); $('#speed3 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=6  onchange="system[2].setSpeed(value); $('#speed3 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="model.system[2].setSpeed(value); $('#speed3 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=6  onchange="model.system[2].setSpeed(value); $('#speed3 > input').attr('value',value);"/></div>
 		 <div id="speedSun"> <div>Sun (year)</div>
 		 <input type="range" class="slider" onchange="sunYear = value; $('#speedSun > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=7  onchange="sunYear = value; $('#speedSun > input').attr('value',value);"/></div>
@@ -105,18 +105,18 @@
    Rotation Start (degrees)</div>
    <div >
    <div class="rotate" id="rotate1"><div>S 1 (right ascension)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
+   	<input type="range" class="slider" onchange="model.currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=8   onchange="model.currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
    <div class="rotate" id="rotate2"><div>S 2 (longitude)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/></div>  
+   	<input type="range" class="slider" onchange="model.currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=9  onchange="model.currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/></div>  
    <div class="rotate" id="rotate3"><div>S 3-4 (synodic)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/>
-   	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/></div>  
+   	<input type="range" class="slider" onchange="model.currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=10 onchange="model.currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/></div>  
    	</div>   
 
   	
-  <input type="button" onclick="reset()" value="reset">
+  <input type="button" onclick="model.reset()" value="reset">
    </div>
 </div>
 
@@ -138,38 +138,35 @@
 
 
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script>
- 
 <script type="text/javascript" src="libs/scenejs.min.js"></script> 
 <script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script> 
 <script type="text/javascript" src="libs/sylvester.js"></script> 
+
 <script type="text/javascript" src="libs/scenejs.ext.js"></script> 
-
-<script type="text/javascript" src="libs/planetsviz.js"></script>
 <script type="text/javascript" src="libs/planetsviz_base.js"></script>
-
 <script type="text/javascript" src="config.js"></script>
   
 <script type="text/javascript"> 
 
 
-$.extend(currentPlanet, planetPresets["Mercury1"]);
 
-// TODO: move to model
-var currentPlanet = {};
-var currentPos = "free";
-var currentLookAt = "earth";
-var speed = 0.1;
-
-var posAngle=0.0;
-var showPath = true;
-var showHippo = true;
-
+// setup site
 $(document).ready(function() {
 
 //	$(".view").hide();
-	addControlListener();
+	model = new PModel();
 
-			$("#vis").hide();
+	canvas = document.getElementById("glCanvas");
+	canvas.addEventListener('mousedown', function(e) { model.mouseDown(e); }, true);
+	canvas.addEventListener('mousemove', function(e) { model.mouseMove(e); }, true);
+	canvas.addEventListener('mouseup', function(e) { model.mouseUp(e); }, true);
+	canvas.addEventListener('keypress', function(e) { model.keyboard(e); }, true);
+	canvas.addEventListener('mousewheel', function(e) { model.mouseWheel(e); }, true);
+	canvas.addEventListener('DOMMouseScroll', function(e) { model.mouseWheel_firefox(e); }, true);
+	
+	$.extend(model.currentPlanet, planetPresets["Mercury1"]);
+	
+	$("#vis").hide();
 	viewPoints = ["Free", "Earth", "Planet"];
 	
   for(i in viewPoints )
@@ -193,17 +190,16 @@ $(document).ready(function() {
 
 
 	$("#speed3 > input").change(function() {
-		if(currentPlanet.type=="planet") {
-			system[3].setSpeed(-system[2]._speed);
-//			system[3].setSpeed(-system[2]._speed/2.0);
+		if(model.currentPlanet.type=="planet") {
+			model.system[3].setSpeed(-model.system[2]._speed);
 		}
-		else if(currentPlanet.type=="sun") {
-  	  sunSpeed =   (360.0*system[1]._speed)/(365.25-system[1]._speed);
+		else if(model.currentPlanet.type=="sun") {
+  	  sunSpeed =   (360.0*model.system[1]._speed)/(365.25-model.system[1]._speed);
   	  //sunSpeed = (metonDaysPerYear()*systemSun[0].speed) / (systemSun[0].speed-metonDaysPerYear());
 //  	  console.log(sunSpeed);
       $("#speed3 > input").attr({"value":sunSpeed });
-			system[2].setSpeed(sunSpeed);	
-			system[3].setSpeed(0);	
+			model.system[2].setSpeed(sunSpeed);	
+			model.system[3].setSpeed(0);	
 		}
 	});
 	
@@ -211,7 +207,7 @@ $(document).ready(function() {
 	// onchange of a moon parameter -> update model	
 	$(".moon > input").change(function() {
 
-		if(currentPlanet.type=="moon") {
+		if(model.currentPlanet.type=="moon") {
 		
 			$("#metonZodicalMonths").html( metonZodicalMonths().toFixed() );
 			$("#metonDaysPerYear").html( metonDaysPerYear().toFixed(2) );
@@ -225,9 +221,9 @@ $(document).ready(function() {
       $("#speed2 > input").attr({"value": moonSpeed1(draco, zodic) });
       $("#speed3 > input").attr({"value": moonSpeed2(draco, zodic) });
 
-			system[1].setSpeed( moonSpeed1(draco, zodic) );
-			system[2].setSpeed( moonSpeed2(draco, zodic) );
-			system[3].setSpeed( 0 );
+			model.system[1].setSpeed( moonSpeed1(draco, zodic) );
+			model.system[2].setSpeed( moonSpeed2(draco, zodic) );
+			model.system[3].setSpeed( 0 );
 		}
 
 	});
@@ -242,42 +238,23 @@ $(document).ready(function() {
 	// SETUP START
 	// start models
 	setCurrentPlanet("Mercury1");
-	setCurrentModel("Mendell");
-//	visMode(true);
+	model.setCurrentMoonModel("Mendell");
 
-systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-	reset();	
+	model.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+	model.systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+	model.reset();	
 
+	setInterval("model.update()", 33);  
+
+	window.onresize=model.resize();
+	model.resize();
+	
 })
-
-
-	
-// TODO: make more universal 
-function reset() {
-	if(system.length==0) return;
-  for(var i=0; i<system.length; i++) {
-					system[i].setRotate(currentPlanet.sphere[i].rotate);
-  }
-  
-	systemSun[0].setRotate(0);
-	systemSun[1].setRotate(0);	
-	
-}
-
-
-function setCurrentModel(node) {
-  currentModel = moonModels[node];
-  moonSpeed1 = currentModel.speed1;
-  moonSpeed2 = currentModel.speed2;
-  $(".moon > input").change();
-
-}
 
 
 function setCurrentPlanet(node) {
 	
-		currentPlanet = {
+		model.currentPlanet = {
 		  sunDist: 8,
 		  color:colors["Planet"],
 		  type: "planet",
@@ -290,23 +267,23 @@ function setCurrentPlanet(node) {
     		],
 		};
 		
-		$.extend(true, currentPlanet, planetPresets[node]);
+		$.extend(true, model.currentPlanet, planetPresets[node]);
 		
-		$("#speedSun > input").attr({"value":sunYear,"min":0, "max":1000});
-  	$("#speedSun > input").attr({"value":sunYear});
-		$("#speedRange > input").attr({"value":speed,"min":0, "max":2, "step":0.01});
-		$("#speedRange > input").attr({"value":speed});
+		$("#speedSun > input").attr({"value":model.sunYear,"min":0, "max":1000});
+  	$("#speedSun > input").attr({"value":model.sunYear});
+		$("#speedRange > input").attr({"value":model.speed,"min":0, "max":2, "step":0.01});
+		$("#speedRange > input").attr({"value":model.speed});
 				
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].angle); } );
+		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].angle); } );
 
     // TODO: maximum :)
     
 		$(".speed > input").attr({"min":0, "max":11000});
-		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].speed); } );
+		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].speed); } );
 
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotate); } );
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].rotate); } );
 		
 
 		$("#latitude > input").attr({"min":"0", "max":90});
@@ -315,41 +292,41 @@ function setCurrentPlanet(node) {
 		$(".angle > input").change();
 		$(".speed > input").change();
 		
-		sun.setDist(currentPlanet.sunDist);
-		planet.setBeta(currentPlanet.beta);
-		system[3].setArcBeta(180-currentPlanet.beta);
+		model.sun.setDist(model.currentPlanet.sunDist);
+		model.planet.setBeta(model.currentPlanet.beta);
+		model.system[3].setArcBeta(180-model.currentPlanet.beta);
 	
 				
-		if(currentPlanet.type=="moon") {
+		if(model.currentPlanet.type=="moon") {
 			//$(".angle").hide();
 			$(".rotate").hide();	
       $(".nomoon").hide();
-      sun.setEnabled(false);
+      model.sun.setEnabled(false);
 			$(".moon").show();
-		  $("#metonSynodicMonths > input").attr({"value":currentPlanet.metonSynodicMonths});
-		  $("#metonDraconiticMonths > input").attr({"value":currentPlanet.metonDraconiticMonths});
+		  $("#metonSynodicMonths > input").attr({"value":model.currentPlanet.metonSynodicMonths});
+		  $("#metonDraconiticMonths > input").attr({"value":model.currentPlanet.metonDraconiticMonths});
 
-			$("#metonYear > input").attr({"value":currentPlanet.metonYear});
-	  	$("#metonDays > input").attr({"value":currentPlanet.metonDays});
+			$("#metonYear > input").attr({"value":model.currentPlanet.metonYear});
+	  	$("#metonDays > input").attr({"value":model.currentPlanet.metonDays});
 	  	$(".moon > input").change();					
-		} else if(currentPlanet.type=="planet") {
+		} else if(model.currentPlanet.type=="planet") {
 			$(".moon").hide();
       $(".nomoon").show();
 			$(".angle").show();
 			$(".rotate").hide();
 			$("#angle3").show();
   		$("#speed3").show();
-      sun.setEnabled(true);				
-		} else if(currentPlanet.type=="sun") {
+      model.sun.setEnabled(true);				
+		} else if(model.currentPlanet.type=="sun") {
 			$(".moon").hide();
       $(".nomoon").show();
 			$(".angle").show();
   		$("#angle3").hide();
   		$("#speed3").hide();
 			$(".rotate").show();
-			sun.setEnabled(false);	
+			model.sun.setEnabled(false);	
 			
-//			system[0].setEnabled(false);
+//			model.system[0].setEnabled(false);
 		}
 	
 
@@ -360,165 +337,14 @@ function setCurrentPlanet(node) {
 
 
 
-// SETUP
-// base structure
-// planet system
-var system = [];
-var systemSun = [];
 
-var scene = SceneJS.scene({ canvasId: "glCanvas" }); 
-var renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-var lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -30 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
-var camera = new Camera();
-var light = Sunlight();
 
-camera.addNode(light);
-lookAt.addNode(camera);
-renderer.addNode(lookAt);
-scene.addNode(renderer);
+					
 
 
 
 
-camera.addNode( earthPlane = SceneJS.translate({x:0.0, y:0.0, z:0.4},	
-									earthPlaneAngle = SceneJS.rotate({angle: 0.0, x: 1.0},
-										SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0}) 
-									)
-								)
-							);
-							
-earthPlane.setEnabled(false);							
 
-camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
-							
-camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
-				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: colors["S1"] },
-						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: colors["S2"] },
-  						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
-                		    planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
-                		  )
-					 		  		)
-						  		)	
-							  )
-							);
-
-
-
-system[1].addNode( stars = new SceneJS.cloud({count:400, scale:20.0}) );
-
-
-system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
-														  systemSun[1] = new Spherical({ scale: 9, angle: 0.5, speed: 0.0 },
-               								  sun = new Planet({  beta: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: "sun", color:colors["Sun"] } )
-	              							)
-	              						)
-													);
-
-
-
-updateList = [ system[0], system[1], system[2], system[3], systemSun[0], systemSun[1] ];
-
-
-
-// HIDE VISUAL STUFF 
-// TODO: add checkboxes to website 
-// don't show daily
-visMode = function(sys, state) {
-	if(sys=="stars") {
-	  stars.setEnabled(state.checked);
-	  return;
-	}
-
-	system[sys].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state.checked);
-}
-
-
-							
-
-function changeView(node) {
-	if(node=="free") pos = { x: 0.0, y: 0.0, z: -25 };
-	else pos = getNodePos(node);
-	
-	earth.setEnabled(true);
-	planet.setEnabled(true);
-  earthPlane.setEnabled(true);
-
-  
-	if(node=="earth") {
-	  earthPlane.setEnabled(true);
-  	earth.setEnabled(false);
-		pos.y = 0.5; 
-		pos.z = 0.5;
-
-    lookAt.dir = $V([0,0,1]);
-    lookAt.up = $V([0,1,0]);
-    lookAt.right = $V([1,0,0]);
-    lookAt.update();
-
-	}
-
-//  if(node=="earth") earth.setEnabled(false);
-	if(node=="planet") {
-		planet.setEnabled(false);
-	}
-	
-	lookAt.setEye(pos);
-  lookAt.update();
-} 
-
-
-time = 21;
-window.render = function() {
-
-
-//  if(system[1]._curve) 
-//  	 system[1]._curve.destroy();
-
-	time++;
-	if(time>20) {
-		time = 0;
-	  if(system[0]._curve) 
-	  	 system[0]._curve.destroy();
-		if(showPath && currentPlanet.type!="moon") calcCurve(0,"planet", colors["Path"] );
-		
-	  if(system[1]._curve) 
-	  	 system[1]._curve.destroy();
-	  if(showHippo && currentPlanet.type!="moon") calcCurve(1,"planet", colors["Hippo"] );
-	}
-		
-	for(i in updateList) {
-			updateList[i].update(speed);
-  }
-		
-	if(currentPos!="free") {
-//		changeView(currentPos);
-		if(currentLookAt!="free")
-			lookAt.setTarget(getNodePos(currentLookAt));		
-	} else {
-		if(currentLookAt!="free")
-			lookAt.rotateTarget(getNodePos(currentLookAt));
-	}
-
-
-
-	//TODO: on model change -> events?
-	sunPos = getNodePos("sun");
-	light.setPos(sunPos);
-  if(currentPlanet.type!="sun" && 
-  	distance(sunPos,getNodePos("planet")) < 2.0) 
-    planet.setShade({r: 0.2, g: 0.2, b:0.2});
-  else 
-    planet.setShade(currentPlanet.color);
-
-  scene.render(); 
-    
-};
-
-
-setInterval("window.render()", 33);  
-
-window.onresize=resize;
-resize();
 
 
 </script>
