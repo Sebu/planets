@@ -2,7 +2,7 @@
 
 // UI HELPERS
 addSlider = function(cls, id, text) {
-	 return "<div class='"+cls+"' id='"+ id +"'><div>" + text + "</div><input type='range' class='slider' onchange='$(\"#" +id+"> input\").attr(\"value\",value);'/> <input type='text' class='range' onchange='$(\"#" + id + "> input\").attr(\"value\",value);'/></div>"
+	 return "<div class='"+cls+"' id='"+ id +"'><div>" + text + "</div><input type='range' class='slider' onchange='$(\"#" +id+" > input\").attr(\"value\",value);'/> <input type='text' class='range' onchange='$(\"#" + id + " > input\").attr(\"value\",value);'/></div>"
 }
 
 // BASIS MODEL
@@ -10,6 +10,7 @@ addSlider = function(cls, id, text) {
 
 PModel = function(params) {
 									
+	this.spheres = params.spheres;
 	this.time = 21;
 	this.sunYear = 365.0;
 	this.metonYear = 0;
@@ -17,11 +18,11 @@ PModel = function(params) {
 	this.metonDays = 0; // days per cycle
 	this.metonDraconiticMonths =  0;
 	
-	metonZodicalMonths = function() { return this.metonYear + this.metonSynodicMonths; }
-	metonDaysPerYear = function() { return this.metonDays/this.metonYear; }
-	synodicDaysPerMonth = function() { return this.metonDays/this.metonSynodicMonths; }
-	zodicalDaysPerMonth = function() {return this.metonDays/this.metonZodicalMonths(); }
-	draconiticDaysPerMonth = function() {return this.metonDays/this.metonDraconiticMonths; }
+	this.metonZodicalMonths = function() { return this.metonYear + this.metonSynodicMonths; }
+	this.metonDaysPerYear = function() { return this.metonDays/this.metonYear; }
+	this.synodicDaysPerMonth = function() { return this.metonDays/this.metonSynodicMonths; }
+	this.zodicalDaysPerMonth = function() {return this.metonDays/this.metonZodicalMonths(); }
+	this.draconiticDaysPerMonth = function() {return this.metonDays/this.metonDraconiticMonths; }
 
 	// CONTROLLS
 	this.lastX = 0;
@@ -35,8 +36,10 @@ PModel = function(params) {
 	this.speed = 0.1;
 
 	this.posAngle=0.0;
+	this.beta=0;
 	this.showPath = true;
 	this.showHippo = true;	
+	this.curves = {};
 											
 	// SETUP
 	// base structure
@@ -56,29 +59,48 @@ PModel = function(params) {
 	this.scene.addNode(this.renderer);
 
 
-	this.camera.addNode( this.earthPlane = SceneJS.translate({x:0.0, y:0.0, z:0.4},	
-										this.earthPlaneAngle = SceneJS.rotate({angle: 0.0, x: 1.0},
-											SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0}) 
-										)
-									)
-								);
+	this.camera.addNode( SceneJS.material({              
+												baseColor:  { r: 0.5, g: 0.5, b: 1.0 },
+												specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+    										emit: 0.0, specular: 0.0, shine: 3.0},
+    										this.earthPlane = SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0})
+    									 )
+    								 );
 							
 	this.earthPlane.setEnabled(false);							
 
 	this.camera.addNode(this.earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
+
+	this.camera.addNode(this._anchor = SceneJS.material({
+		      baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
+          specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+          emit: 1.0, specular: 0.0, shine: 1.0 
+          }));
 							
-	this.camera.addNode(	this.system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
-						    		this.system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: colors["S1"] },
-								  		this.system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: colors["S2"] },
-								  		  this.system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
-		              		    this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
-		              		  )
-						 		  		)
-										)	
-									)
-								);
+	this.camera.addNode(	this.system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]}) );
+//	,
+//						    		this.system[1] =	new Spherical({ scale: 9, angle: 0.0, speed: 0.0, color: colors["S1"] },
+//								  		this.system[2] = new Spherical({ scale: 9, angle: 0.0, speed: 0.0, color: colors["S2"] },
+//								  		  this.system[3] = new Spherical({ scale: 9, angle: 0.0, speed: 0.0, color: colors["S3"] },
+//		              		    this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
+//		              		  )
+//						 		  		)
+//										)	
+//									)
+//								);
 
 
+	i=1;
+	this.updateList = [];
+	this.updateList[0] = this.system[0];
+	for(;i<=params.spheres;i++) {
+		tmp = this.system[i]  = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S"+i+""]});
+		this.system[i-1]._anchor2.addNode( tmp );
+		this.updateList[i] = tmp;
+	}							
+	this.system[i-1]._anchor2.addNode(this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] }) );
+	
+//  this.updateList[i] = 
 
 	this.system[1].addNode( this.stars = new SceneJS.cloud({count:400, scale:20.0}) );
 
@@ -90,7 +112,7 @@ PModel = function(params) {
 			            						)
 														);
 														
-  this.updateList = [ this.system[0], this.system[1], this.system[2], this.system[3], this.systemSun[0], this.systemSun[1] ];
+
 
 
 	this.resize = function() {
@@ -98,7 +120,7 @@ PModel = function(params) {
 		canvas.width = $(window).width();	
 		canvas.height = $(window).height();
 		model.camera.setOptics({ type: "perspective", fovy : 45.0, aspect : canvas.width/canvas.height, near : 0.10, far : 500.0});
-		renderer._props.props.viewport =  { x : 1, y : 1, width: canvas.width, height: canvas.height };
+		this.renderer._props.props.viewport =  { x : 1, y : 1, width: canvas.width, height: canvas.height };
 	}
 
 
@@ -107,13 +129,33 @@ PModel = function(params) {
 	}
 
 
+	this.removeCurve = function(node) {
+		if(this.curves[node]) 
+	 		this.curves[node].destroy();
+	}
+		
+	this.addCurve = function(node, anchor, curvePos, color) {
+ 		this.curves[node] = new Curve({pos: curvePos});	
+  	anchor.setBaseColor(color);
+		anchor.addNode(this.curves[node]);	
+	}
+
 	this.render = function() {
 
 			this.time++;
 			if(this.time>20) {
 				this.time = 0;
-				if(this.showPath && this.currentPlanet.type!="moon") addCurve(this.system[0], this.calcCurve(0,"planet"), colors["Path"]);
-				if(this.showHippo && this.currentPlanet.type!="moon") addCurve(this.system[1], this.calcCurve(1,"planet"), colors["Hippo"]);
+				this.removeCurve(0);
+				this.removeCurve(1);
+				if(this.showPath) {
+					if (this.spheres==1) {
+						this.addCurve(0, this._anchor, this.calcCurve(-1,"planet"), colors["Path"]);				
+					}
+					else {
+						this.addCurve(0, this.system[0]._anchor, this.calcCurve(0,"planet"), colors["Path"]);
+					}
+				}
+				if(this.showHippo) 	this.addCurve(1, this.system[1]._anchor, this.calcCurve(1,"planet"), colors["Hippo"]);
 			}
 		
 			for(i in model.updateList) {
@@ -149,7 +191,7 @@ PModel = function(params) {
 	
 		this.earth.setEnabled(true);
 		this.planet.setEnabled(true);
-		this.earthPlane.setEnabled(true);
+		this.earthPlane.setEnabled(false);
 
 		
 		if(node=="earth") {
@@ -176,8 +218,8 @@ PModel = function(params) {
 
 	this.setCurrentMoonModel = function(node) {
 		var currentModel = moonModels[node];
-		moonSpeed1 = currentModel.speed1;
-		moonSpeed2 = currentModel.speed2;
+		this.moonSpeed1 = currentModel.speed1;
+		this.moonSpeed2 = currentModel.speed2;
 		$(".moon > input").change();
 	}
 
@@ -204,15 +246,15 @@ PModel = function(params) {
 
 	this.calcCurve =function(start,node) {
 		curvePos = [];
-		oldAxis = [];
+		oldAngle = [];
 		oldRotate = [];
 		step = 0;
 
 		// save axis
 		for(var i=0; i<=start; i++) {
-			oldAxis[i] = this.system[i].getAxis();
+			oldAngle[i] = this.system[i].getAngle();
 		  oldRotate[i] = this.system[i]._yAngle;
-			this.system[i].setAxis(0.0);
+			this.system[i].setAngle(0.0);
 			this.system[i].setRotate(0.0);
 		}
 
@@ -231,7 +273,7 @@ PModel = function(params) {
 		}
 		// restore axis
 		for(var i=0; i<=start;i++)
-			this.system[i].setAxis(oldAxis[i]);
+			this.system[i].setAngle(oldAngle[i]);
 	 
 		// restore rotation
 		for(var i=0; i<this.system.length; i++)
@@ -279,10 +321,10 @@ PModel = function(params) {
 
 	this.keyboard = function(e) {
 		switch(e.keyCode) {
-			case 119: model.lookAt.rotateRight(-0.02);  break;
-			case 115: model.lookAt.rotateRight(0.02);  break;
-			case 97:  model.lookAt.rotateY(0.02);  break;
-			case 100: model.lookAt.rotateY(-0.02);  break;		
+			case 119: model.lookAt.translate(0,0,0.2);  break;
+			case 115: model.lookAt.translate(0,0,-0.2);  break;
+			case 97:  model.lookAt.translate(0.2,0,0);  break;
+			case 100: model.lookAt.translate(-0.2,0,0);  break;		
 			default: return false;
 		}
 	}

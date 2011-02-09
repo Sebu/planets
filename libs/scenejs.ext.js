@@ -354,7 +354,7 @@ Spherical.prototype._init = function(params) {
 	
 		this._anchor2.addNodes(tmpNodes);
 
-    this.setAxis(params.angle || 0.0);
+    this.setAngle(params.angle || 0.0);
     this.setRotate(params.rotate || 0.0);
     this.setSpeed(params.speed);
        
@@ -367,14 +367,14 @@ Spherical.prototype.setVisuals = function(vis, state) {
     }
 				
 };
-Spherical.prototype.setAxis = function(angle) {
+Spherical.prototype.setAngle = function(angle) {
 		this._zAngle = angle;
 		this.arcangle21.setAngle(angle);
 		this.arcangle22.setAngle(angle);
 		this._zRotate.setAngle(this._zAngle);
 };
 
-Spherical.prototype.getAxis = function() {
+Spherical.prototype.getAngle = function() {
 		return this._zAngle;
 };
 
@@ -527,13 +527,7 @@ getNodePos = function(node) {
 
 
 
-function addCurve(node, curvePos, color) {
-	if(node._curve) 
-	 	 node._curve.destroy();
- 	node._curve = new Curve({pos: curvePos});	
-  node._anchor.setBaseColor(color);
-	node._anchor.addNode(node._curve);	
-}
+
 
 
 
