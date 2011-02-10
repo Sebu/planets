@@ -168,6 +168,41 @@ $(document).ready(function() {
 		$(".triangle",this).toggle();
 	  $(this).next().toggle(0);
 	})
+
+	$("#speed3 > input").change(function() {
+    
+    if(model.currentPlanet.type=="planet") {
+	    $("#speed3 > input").change(function() {
+		    model.system[3].setSpeed(-model.system[2]._speed);
+	    });
+    } else if(model.currentPlanet.type=="sun") {
+  	  sunSpeed =   (360.0*model.system[1]._speed)/(365.25-model.system[1]._speed);
+      $("#speed3 > input").attr({"value":sunSpeed });
+		  model.system[2].setSpeed(sunSpeed);	
+		  model.system[3].setSpeed(0);	
+    }
+	});	
+	
+			// onchange of a moon parameter -> update model	
+	$(".moon > input").change(function() {
+    if(model.currentPlanet.type=="moon") {
+			$("#metonZodicalMonths").html( model.metonZodicalMonths().toFixed() );
+			$("#metonDaysPerYear").html( model.metonDaysPerYear().toFixed(2) );
+			$("#synodicDaysPerMonth").html( model.synodicDaysPerMonth().toFixed(2) );
+			$("#zodicalDaysPerMonth").html( model.zodicalDaysPerMonth().toFixed(2) );
+			$("#draconiticDaysPerMonth").html( model.draconiticDaysPerMonth().toFixed(2) );
+
+			draco = model.draconiticDaysPerMonth();
+			zodic = model.zodicalDaysPerMonth();
+		
+		  $("#speed2 > input").attr({"value": model.moonSpeed1(draco, zodic) });
+		  $("#speed3 > input").attr({"value": model.moonSpeed2(draco, zodic) });
+
+			model.system[1].setSpeed( model.moonSpeed1(draco, zodic) );
+			model.system[2].setSpeed( model.moonSpeed2(draco, zodic) );
+			model.system[3].setSpeed( 0 );
+    }
+	});	
 	
 	// SETUP START
 	// start models
@@ -241,6 +276,9 @@ function setCurrentPlanet(node) {
 
 		$("#speed").hide();	
 		$(".speed").hide();	
+
+	model.system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], true);
+
 					
 		if(model.currentPlanet.type=="moon") {
  			$("#moon").show();
@@ -259,28 +297,7 @@ function setCurrentPlanet(node) {
 	  	$("#metonDays > input").attr({"value":model.currentPlanet.metonDays});
 	
 	  	$(".moon > input").change();	
-	  	
-			// onchange of a moon parameter -> update model	
-			$(".moon > input").change(function() {
-
-					$("#metonZodicalMonths").html( model.metonZodicalMonths().toFixed() );
-					$("#metonDaysPerYear").html( model.metonDaysPerYear().toFixed(2) );
-					$("#synodicDaysPerMonth").html( model.synodicDaysPerMonth().toFixed(2) );
-					$("#zodicalDaysPerMonth").html( model.zodicalDaysPerMonth().toFixed(2) );
-					$("#draconiticDaysPerMonth").html( model.draconiticDaysPerMonth().toFixed(2) );
-
-					draco = model.draconiticDaysPerMonth();
-					zodic = model.zodicalDaysPerMonth();
-				
-				  $("#speed2 > input").attr({"value": model.moonSpeed1(draco, zodic) });
-				  $("#speed3 > input").attr({"value": model.moonSpeed2(draco, zodic) });
-
-					model.system[1].setSpeed( model.moonSpeed1(draco, zodic) );
-					model.system[2].setSpeed( model.moonSpeed2(draco, zodic) );
-					model.system[3].setSpeed( 0 );
-			});	  	
-
-	  	$(".moon > input").change();	
+    	model.system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 				  				
 		} else if(model.currentPlanet.type=="planet") {
 			$("#angle").show();
@@ -291,9 +308,7 @@ function setCurrentPlanet(node) {
   		$(".rotate").show();
       model.sun.setEnabled(true);	
       
-			$("#speed3 > input").change(function() {
-				model.system[3].setSpeed(-model.system[2]._speed);
-			});
+
 		} else if(model.currentPlanet.type=="sun") {
 			$("#angle").show();
 			$(".angle").show();
@@ -304,13 +319,8 @@ function setCurrentPlanet(node) {
   		$("#angle3").hide();
   		$("#speed3").hide();
 			model.sun.setEnabled(false);	
-			
-			$("#speed3 > input").change(function() {
-	  	  sunSpeed =   (360.0*model.system[1]._speed)/(365.25-model.system[1]._speed);
-	      $("#speed3 > input").attr({"value":sunSpeed });
-				model.system[2].setSpeed(sunSpeed);	
-				model.system[3].setSpeed(0);	
-			});			
+    	model.system[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);			
+		
 		}
 
 	$("#latitude > input").change();
