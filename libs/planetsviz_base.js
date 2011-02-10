@@ -305,7 +305,7 @@ PModel = function(params) {
   this.pitch =0;
 	this.mouseMove = function(event) {
 		  if (this.dragging) {
-		      this.pitch += pitch = (event.clientY - this.lastY) * 0.005;
+		      pitch = (event.clientY - this.lastY) * 0.005;
 		      yaw = (event.clientX - this.lastX) * -0.005;
 		      
 		      if(this.currentPos=="earth") {
@@ -315,8 +315,10 @@ PModel = function(params) {
 			    }
 			    
           console.log();
-          if(this.pitch<1) pitch =0;
-  		      model.lookAt.rotateRight(pitch);
+          if(this.pitch+pitch>0.4)  pitch = 0;
+          else if(this.pitch+pitch<-1.9)  pitch = 0;
+          this.pitch += pitch;
+		      model.lookAt.rotateRight(pitch);
 
 		      this.lastX = event.clientX;
 		      this.lastY = event.clientY;
