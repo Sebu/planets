@@ -150,7 +150,7 @@ $(document).ready(function() {
  	$("#speed1 > input").change(function() { model.system[0].setSpeed(this.value); });
  	$("#speed2 > input").change(function() { model.system[1].setSpeed(this.value); });
 	$("#speed3 > input").change(function() { model.system[2].setSpeed(this.value); });
-	$("#speed4 > input").change(function() { model.beta=this.value; });
+	$("#speed4 > input").change(function() { model.beta= Number(this.value); });
 
 	$("#parameters").append( function(index,html) {
 		return addCaption("rotate","Rotation Start (degrees)") + "<div>" +
@@ -295,11 +295,12 @@ function setCurrentPlanet(node) {
       model.sun.setEnabled(true);	
       
 			$("#speed3 > input").change(function() {
-				model.system[3].setSpeed(-model.system[2]._speed+model.beta);
+				model.system[3].setSpeed(-(model.system[2]._speed + model.beta));
 				model.system[4].setSpeed(model.beta);				
 			});
+
 			$("#speed4 > input").change(function() {
-				model.system[3].setSpeed(-model.system[2]._speed+model.beta);
+				model.system[3].setSpeed(-(model.system[2]._speed + model.beta));
 				model.system[4].setSpeed(model.beta);				
 			});
 
