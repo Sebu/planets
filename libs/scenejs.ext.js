@@ -452,6 +452,7 @@ SceneJS.LookAt.prototype._init = function(params) {
 		this.dir = Vector.create([0,0,1]);
     this.setEye(params.eye);
 		
+    this.rotateY(0.1);
 		this.update();
 
 };
