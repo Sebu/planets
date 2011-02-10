@@ -112,7 +112,8 @@ PModel = function(params) {
 			            						)
 														);
 														
-
+		this.updateList[i] =  this.systemSun[0];
+		this.updateList[i+1] =  this.systemSun[1];
 
 
 	this.resize = function() {
