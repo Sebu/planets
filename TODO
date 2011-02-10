@@ -1,4 +1,4 @@
-S0 rotate z + rotate y + S1 rotate z + rotate y + S2 rotate z + rotate y + S3 rotate z + rotate y
+S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 rotate z * rotate -S2/2 * rotate beta
 
 
 
@@ -44,6 +44,13 @@ DONE
 - fix path in simple model
 
 TODO
+- speed represents one day of movement in seconds
+  - seconds in seconds 1 - 900.000.000  via years days minutes per second
+  - aka one synodic cycle per minute 
+
+
+- default view angle
+  - y not 0 maybe 20?
 - directions (earth plane east, west ,,, tropics)
 - yavetz markerarc on right circle
 - legend with colors of spheres
