@@ -1,4 +1,4 @@
-
+S0 rotate z + rotate y + S1 rotate z + rotate y + S2 rotate z + rotate y + S3 rotate z + rotate y
 
 
 
@@ -44,6 +44,13 @@ DONE
 - fix path in simple model
 
 TODO
+- directions (earth plane east, west ,,, tropics)
+- yavetz markerarc on right circle
+- legend with colors of spheres
+
+- fix max angle for earth view 
+- observer latitude with presets ( athens 38, canidos 36.66 cyzicus 40.23, heliopolis 30)
+
 - show box with lat. etc.   
 - email yavetz sphere 3-4
 
@@ -51,7 +58,7 @@ TODO
 
 NEXT
 - update hippode only on demand
-- directions (earth plane east, west ,,, tropics)
+
 - tooltip with description and default/recomended values
 - variable slider max ( depended on model )
 - sun model in list

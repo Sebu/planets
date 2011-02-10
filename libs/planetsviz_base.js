@@ -102,7 +102,7 @@ PModel = function(params) {
 	
 //  this.updateList[i] = 
 
-	this.system[1].addNode( this.stars = new SceneJS.cloud({count:400, scale:20.0}) );
+	this.system[1].addNode( this.stars = new SceneJS.cloud({count:100, scale:20.0}) );
 
 
 	this.system[0]._anchor.addNode(  this.systemSun[0] = new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
@@ -302,9 +302,10 @@ PModel = function(params) {
 	/* On a mouse drag, we'll re-render the scene, passing in
 	 * incremented angles in each time.
 	 */
+  this.pitch =0;
 	this.mouseMove = function(event) {
 		  if (this.dragging) {
-		      pitch = (event.clientY - this.lastY) * 0.005;
+		      this.pitch += pitch = (event.clientY - this.lastY) * 0.005;
 		      yaw = (event.clientX - this.lastX) * -0.005;
 		      
 		      if(this.currentPos=="earth") {
@@ -313,7 +314,9 @@ PModel = function(params) {
 			      model.lookAt.rotateUp(yaw);
 			    }
 			    
-		      model.lookAt.rotateRight(pitch);
+          console.log();
+          if(this.pitch<1) pitch =0;
+  		      model.lookAt.rotateRight(pitch);
 
 		      this.lastX = event.clientX;
 		      this.lastY = event.clientY;
