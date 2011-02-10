@@ -315,8 +315,10 @@ PModel = function(params) {
 			    }
 			    
           console.log();
-          if(this.pitch+pitch>0.4)  pitch = 0;
-          else if(this.pitch+pitch<-1.9)  pitch = 0;
+          if(this.currentPos=="earth") {
+            if(this.pitch+pitch>0.4)  pitch = 0;
+            else if(this.pitch+pitch<-1.9)  pitch = 0;
+          }
           this.pitch += pitch;
 		      model.lookAt.rotateRight(pitch);
 
