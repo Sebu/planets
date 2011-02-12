@@ -37,6 +37,7 @@ PModel = function(params) {
 
 	this.posAngle=0.0;
 	this.beta=0;
+  this.gamma=0;
 	this.showPath = true;
 	this.showHippo = true;	
 	this.curves = {};
@@ -156,7 +157,7 @@ PModel = function(params) {
 						this.addCurve(0, this.system[0]._anchor, this.calcCurve(0,"planet"), colors["Path"]);
 					}
 				}
-				if(this.showHippo) 	this.addCurve(1, this.system[1]._anchor, this.calcCurve(1,"planet"), colors["Hippo"]);
+				if(this.showHippo) 	this.addCurve(1, this.system[2]._anchor, this.calcCurve(2,"planet"), colors["Hippo"]);
 			}
 		
 			for(i in model.updateList) {

@@ -143,7 +143,8 @@ $(document).ready(function() {
 						addSlider("speed", "speed1", "S 1 (daily)") +
 						addSlider("speed", "speed2", "S 2 (zodiacal)") +
 						addSlider("speed", "speed3", "alpha") + 
-						addSlider("beta", "speed4", "beta") + 
+						addSlider("speed", "speed4", "beta") + 
+						addSlider("speed", "speed5", "gamma") + 
 						"</div>";
 	});	
 
@@ -151,6 +152,7 @@ $(document).ready(function() {
  	$("#speed2 > input").change(function() { model.system[1].setSpeed(this.value); });
 	$("#speed3 > input").change(function() { model.system[2].setSpeed(this.value); });
 	$("#speed4 > input").change(function() { model.beta= Number(this.value); });
+	$("#speed5 > input").change(function() { model.gamma= Number(this.value); });
 
 	$("#parameters").append( function(index,html) {
 		return addCaption("rotate","Rotation Start (degrees)") + "<div>" +
@@ -195,7 +197,8 @@ function setCurrentPlanet(node) {
     		{angle: 24.0, speed: 0, rotate: 0 },
     		{angle: 90.0,  speed: 365, rotate: 0 },
     		{angle: 18.0, speed: 570, rotate: 0 },
-    		{angle: 0.0, speed: 0, rotate: 0 },
+    		{angle: 5.0, speed: 100, rotate: 0 },
+    		{angle: 5.0, speed: 100, rotate: 0 },
     		],
 		};
 		
@@ -208,6 +211,7 @@ function setCurrentPlanet(node) {
 				
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
 		$(".angle ").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].angle); } );
+
 
 		$(".speed > input").attr({"min":0, "max":11000});
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].speed); } );
@@ -295,13 +299,18 @@ function setCurrentPlanet(node) {
       model.sun.setEnabled(true);	
       
 			$("#speed3 > input").change(function() {
-				model.system[3].setSpeed(-(model.system[2]._speed + model.beta));
-				model.system[4].setSpeed(model.beta);				
+				model.system[4].setSpeed(model.gamma);				
+				model.system[3].setSpeed(-(model.system[2]._speed - model.beta));
 			});
 
 			$("#speed4 > input").change(function() {
-				model.system[3].setSpeed(-(model.system[2]._speed + model.beta));
-				model.system[4].setSpeed(model.beta);				
+				model.system[4].setSpeed(model.gamma);				
+				model.system[3].setSpeed(-(model.system[2]._speed - model.beta));
+			});
+
+			$("#speed5 > input").change(function() {
+				model.system[4].setSpeed(model.gamma);				
+				model.system[3].setSpeed(-(model.system[2]._speed - model.beta));
 			});
 
 		} else if(model.currentPlanet.type=="sun") {
