@@ -130,9 +130,9 @@ $(document).ready(function() {
 						"</div>";
 	});
 
- 	$("#latitude > input").change(function() { model.system[0].setAngle(90-this.value); });
- 	$("#angle1 > input").change(function() { model.system[1].setAngle(this.value); });
- 	$("#angle2 > input").change(function() { model.system[2].setAngle(this.value); });
+ 	$("#latitude > input").change(function() { model.sphere[0].setAngle(90-this.value); });
+ 	$("#angle1 > input").change(function() { model.sphere[1].setAngle(this.value); });
+ 	$("#angle2 > input").change(function() { model.sphere[2].setAngle(this.value); });
 // 	$("#angle3 > input").change(function() { model.system[3].setAngle(this.value); });
 	
 	
@@ -145,8 +145,8 @@ $(document).ready(function() {
 						"</div>";
 	});	
 
- 	$("#speed1 > input").change(function() { model.system[0].setSpeed(this.value); });
- 	$("#speed2 > input").change(function() { model.system[1].setSpeed(this.value); });
+ 	$("#speed1 > input").change(function() { model.sphere[0].setSpeed(this.value); });
+ 	$("#speed2 > input").change(function() { model.sphere[1].setSpeed(this.value); });
 //	$("#speed3 > input").change(function() { model.system[2].setSpeed(this.value); });
 
 	$("#parameters").append( function(index,html) {
@@ -158,8 +158,8 @@ $(document).ready(function() {
 						"</div>";
 	});	
 
- 	$("#rotate1 > input").change(function() { model.system[0].rotate = this.value; });
- 	$("#rotate2 > input").change(function() { model.system[1].rotate = this.value; });
+ 	$("#rotate1 > input").change(function() { model.sphere[0].rotate = this.value; });
+ 	$("#rotate2 > input").change(function() { model.sphere[1].rotate = this.value; });
 //	$("#rotate3 > input").change(function() { model.system[2].rotate = this.value; });
 	
 	// animate hide/show
@@ -275,9 +275,9 @@ function setCurrentPlanet(node) {
 				  $("#speed2 > input").attr({"value": model.moonSpeed1(draco, zodic) });
 				  $("#speed3 > input").attr({"value": model.moonSpeed2(draco, zodic) });
 
-					model.system[1].setSpeed( model.moonSpeed1(draco, zodic) );
-					model.system[2].setSpeed( model.moonSpeed2(draco, zodic) );
-					model.system[3].setSpeed( 0 );
+					model.sphere[1].setSpeed( model.moonSpeed1(draco, zodic) );
+					model.sphere[2].setSpeed( model.moonSpeed2(draco, zodic) );
+					model.sphere[3].setSpeed( 0 );
 			});	  	
 
 	  	$(".moon > input").change();	
@@ -303,10 +303,10 @@ function setCurrentPlanet(node) {
 			model.sun.setEnabled(false);	
 			
 			$("#speed3 > input").change(function() {
-	  	  sunSpeed =   (360.0*model.system[1]._speed)/(365.25-model.system[1]._speed);
+	  	  sunSpeed =   (360.0*model.sphere[1]._speed)/(365.25-model.sphere[1]._speed);
 	      $("#speed3 > input").attr({"value":sunSpeed });
-				model.system[2].setSpeed(sunSpeed);	
-				model.system[3].setSpeed(0);	
+				model.sphere[2].setSpeed(sunSpeed);
+				model.sphere[3].setSpeed(0);
 			});			
 		}
 

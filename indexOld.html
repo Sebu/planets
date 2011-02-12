@@ -64,17 +64,17 @@
     Angle (degrees)</div>
 		<div>
 		  <div class="nomoon moon" id="latitude"><div> latitude</div>
-		 	<input type="range" class="slider" onchange="model.system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=1   onchange="model.system[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/></div>
+		 	<input type="range" class="slider" onchange="model.sphere[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=1   onchange="model.sphere[0].setAxis(90-value); $('#latitude > input').attr('value',value);"/></div>
 		  <div class="nomoon moon angle" id="angle1"><div>S 1-2 (obliquity of ecliptic)</div>
-		 	<input type="range" class="slider" onchange="model.system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=1   onchange="model.system[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
+		 	<input type="range" class="slider" onchange="model.sphere[1].setAxis(value); $('#angle1 > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=1   onchange="model.sphere[1].setAxis(value); $('#angle1 > input').attr('value',value);"/></div>
 		  <div class="nomoon moon angle" id="angle2"><div>S 2-3 (right angle)</div>
-		 	<input type="range" class="slider" onchange="model.system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
-		 	<input type="text" class="range" tabindex=2  onchange="model.system[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>  
+		 	<input type="range" class="slider" onchange="model.sphere[2].setAxis(value); $('#angle2 > input').attr('value',value);"/>
+		 	<input type="text" class="range" tabindex=2  onchange="model.sphere[2].setAxis(value); $('#angle2 > input').attr('value',value);"/></div>
 		  <div class="nomoon angle" id="angle3"><div>S 3-4 (unknown)</div>
-		 	<input type="range" class="slider" onchange="model.system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
-		 	<input type="text" class="range"  tabindex=3 onchange="model.system[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>  
+		 	<input type="range" class="slider" onchange="model.sphere[3].setAxis(value); $('#angle3 > input').attr('value',value);"/>
+		 	<input type="text" class="range"  tabindex=3 onchange="model.sphere[3].setAxis(value); $('#angle3 > input').attr('value',value);"/></div>
 			<br><br>
 		</div>
 		
@@ -85,14 +85,14 @@
 		<div id="speeds">
 
 		 <div class="nomoon moon speed" id="speed1" title="recommended 0 or 1"><div>S 1 (daily)</div>
-		 <input type="range" class="slider" onchange="model.system[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
-		 <input type="text" class="range"   tabindex=4 onchange="model.system[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="model.sphere[0].setSpeed(value); $('#speed1 > input').attr('value',value);" />
+		 <input type="text" class="range"   tabindex=4 onchange="model.sphere[0].setSpeed(value); $('#speed1 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed2"><div>S 2 (zodiacal)</div>
-		 <input type="range" class="slider" onchange="model.system[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=5  onchange="model.system[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="model.sphere[1].setSpeed(value); $('#speed2 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=5  onchange="model.sphere[1].setSpeed(value); $('#speed2 > input').attr('value',value);"/></div>
 		 <div class="speed" id="speed3"><div>S 3,4 (synodic)</div>
-		 <input type="range" class="slider" onchange="model.system[2].setSpeed(value); $('#speed3 > input').attr('value',value);" />
-		 <input type="text" class="range" tabindex=6  onchange="model.system[2].setSpeed(value); $('#speed3 > input').attr('value',value);"/></div>
+		 <input type="range" class="slider" onchange="model.sphere[2].setSpeed(value); $('#speed3 > input').attr('value',value);" />
+		 <input type="text" class="range" tabindex=6  onchange="model.sphere[2].setSpeed(value); $('#speed3 > input').attr('value',value);"/></div>
 		 <div id="speedSun"> <div>Sun (year)</div>
 		 <input type="range" class="slider" onchange="sunYear = value; $('#speedSun > input').attr('value',value);" />
 		 <input type="text" class="range" tabindex=7  onchange="sunYear = value; $('#speedSun > input').attr('value',value);"/></div>
@@ -191,15 +191,15 @@ $(document).ready(function() {
 
 	$("#speed3 > input").change(function() {
 		if(model.currentPlanet.type=="planet") {
-			model.system[3].setSpeed(-model.system[2]._speed);
+			model.sphere[3].setSpeed(-model.sphere[2]._speed);
 		}
 		else if(model.currentPlanet.type=="sun") {
-  	  sunSpeed =   (360.0*model.system[1]._speed)/(365.25-model.system[1]._speed);
+  	  sunSpeed =   (360.0*model.sphere[1]._speed)/(365.25-model.sphere[1]._speed);
   	  //sunSpeed = (metonDaysPerYear()*systemSun[0].speed) / (systemSun[0].speed-metonDaysPerYear());
 //  	  console.log(sunSpeed);
       $("#speed3 > input").attr({"value":sunSpeed });
-			model.system[2].setSpeed(sunSpeed);	
-			model.system[3].setSpeed(0);	
+			model.sphere[2].setSpeed(sunSpeed);
+			model.sphere[3].setSpeed(0);
 		}
 	});
 	
@@ -221,9 +221,9 @@ $(document).ready(function() {
       $("#speed2 > input").attr({"value": moonSpeed1(draco, zodic) });
       $("#speed3 > input").attr({"value": moonSpeed2(draco, zodic) });
 
-			model.system[1].setSpeed( moonSpeed1(draco, zodic) );
-			model.system[2].setSpeed( moonSpeed2(draco, zodic) );
-			model.system[3].setSpeed( 0 );
+			model.sphere[1].setSpeed( moonSpeed1(draco, zodic) );
+			model.sphere[2].setSpeed( moonSpeed2(draco, zodic) );
+			model.sphere[3].setSpeed( 0 );
 		}
 
 	});
@@ -294,7 +294,7 @@ function setCurrentPlanet(node) {
 		
 		model.sun.setDist(model.currentPlanet.sunDist);
 		model.planet.setBeta(model.currentPlanet.beta);
-		model.system[3].setArcBeta(180-model.currentPlanet.beta);
+		model.sphere[3].setArcBeta(180-model.currentPlanet.beta);
 	
 				
 		if(model.currentPlanet.type=="moon") {
