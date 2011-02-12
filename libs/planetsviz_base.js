@@ -338,5 +338,6 @@ PModel = function(params) {
         model.lookAt.translate(0.0, 0.0, event.detail);
     }
 
+
 }
 
