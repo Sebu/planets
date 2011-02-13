@@ -81,14 +81,14 @@
    <div class="caption">Rotation Start (degrees)</div>
    <div >
    <div class="rotate" id="rotate1"><div>S 1 (right ascension)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotateStart = Number(value); $('#rotate1 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotateStart = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
    <div class="rotate" id="rotate2"><div>S 2 (longitude)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/></div>  
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotateStart = Number(value); $('#rotate2 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotateStart = Number(value); $('#rotate2 > input').attr('value',value);"/></div>
    <div class="rotate" id="rotate3"><div>S 3-4 (synodic)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/>
-   	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/></div>  
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotateStart = Number(value); $('#rotate3 > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotateStart = Number(value); $('#rotate3 > input').attr('value',value);"/></div>
    	</div>   
 
   	
@@ -210,7 +210,7 @@ $(document).ready(function() {
   for(i in moonModels) 
  		$("#moonPresets").append("<option value='" + i + "'>" + i + "</option>");
 
-	$(".caption").click(function() {
+	$(".box").click(function() {
 	  $(this).next().toggle(200)
 	})
 
@@ -262,11 +262,11 @@ $(document).ready(function() {
 function reset() {
 	if(system.length==0) return;
   for(var i=0; i<3; i++) {
-					system[i].setRotate(currentPlanet.sphere[i].rotate);
+					system[i].setRotateAngle(currentPlanet.sphere[i].rotateStart);
   }
-  system[3].setRotate(0);
-	systemSun[0].setRotate(0);
-	systemSun[1].setRotate(0);	
+  system[3].setRotateAngle(0);
+	systemSun[0].setRotateAngle(0);
+	systemSun[1].setRotateAngle(0);
 	
 }
 
@@ -290,13 +290,13 @@ function setCurrentPlanet(node) {
 		$("#speedRange > input").attr({"value":speed});
 				
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].angle); } );
+		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].axisAngle); } );
 
 		$(".speed > input").attr({"min":0, "max":11000});
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].speed); } );
 
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotate); } );
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotateStart); } );
 		
 
 		$(".angle > input").change();
@@ -395,9 +395,9 @@ console.log(earth);
 scene.addObject( earth.mesh );
 
 
-system[0] = new Spherical({scale: 11, angle: 11.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}});
+system[0] = new Spherical({scale: 11, axisAngle: 11.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}});
 
-scene.addObject( system[0]._visuals["arc1"] );
+scene.addObject( system[0].visuals["arc1"] );
 							
 //scene.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}},
 //				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.4, g:0.4, b:1.0} },
@@ -435,15 +435,15 @@ calcCurve = function(start,node) {
   // save axis
 	for(var i=0; i<=start; i++) {
 		oldAxis[i] = system[i].getAxis();
-    oldRotate[i] = system[i]._yAngle;
+    oldRotate[i] = system[i].rotateAngle;
 		system[i].setAxis(0.0);
-		system[i].setRotate(0.0);
+		system[i].setRotateAngle(0.0);
 	}
 
   for(var i=start+1; i<system.length; i++) {
-  	oldRotate[i] = system[i]._yAngle;
+  	oldRotate[i] = system[i].rotateAngle;
     system[i].update(-32.0);
-    step +=  Math.abs(system[i]._speed);
+    step +=  Math.abs(system[i].speed);
   }
 	
 	for(var j=0; j<100; j++) {
@@ -459,11 +459,11 @@ calcCurve = function(start,node) {
  
   // restore rotation
   for(var i=0; i<system.length; i++)
-		system[i].setRotate(oldRotate[i]);
+		system[i].setRotateAngle(oldRotate[i]);
 
 
  	system[start]._curve = new Curve({pos: curvePos});	
-	system[start]._anchor.addNode(system[start]._curve);	
+	system[start].curve.addNode(system[start]._curve);
 }						
 
 function changeView(node) {

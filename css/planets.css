@@ -55,6 +55,7 @@ html, body {
   
 }
 #uiContainer {
+  width: 170px;
   top: 10px;
   left: 10px;
 }

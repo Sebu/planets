@@ -89,14 +89,14 @@
    Rotation Start (degrees)</div>
    <div >
    <div class="rotate" id="rotate1"><div>S 1 (right ascension)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotate = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[1].rotateStart = Number(value); $('#rotate1 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=8   onchange="currentPlanet.sphere[1].rotateStart = Number(value); $('#rotate1 > input').attr('value',value);"/></div>
    <div class="rotate" id="rotate2"><div>S 2 (longitude)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/>
-   	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotate = Number(value); $('#rotate2 > input').attr('value',value);"/></div>  
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[2].rotateStart = Number(value); $('#rotate2 > input').attr('value',value);"/>
+   	<input type="text" class="range" tabindex=9  onchange="currentPlanet.sphere[2].rotateStart = Number(value); $('#rotate2 > input').attr('value',value);"/></div>
    <div class="rotate" id="rotate3"><div>S 3-4 (synodic)</div>
-   	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/>
-   	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotate = Number(value); $('#rotate3 > input').attr('value',value);"/></div>  
+   	<input type="range" class="slider" onchange="currentPlanet.sphere[3].rotateStart = Number(value); $('#rotate3 > input').attr('value',value);"/>
+   	<input type="text" class="range"  tabindex=10 onchange="currentPlanet.sphere[3].rotateStart = Number(value); $('#rotate3 > input').attr('value',value);"/></div>
    	</div>   
 
   	
@@ -127,8 +127,7 @@
 <script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script> 
 <script type="text/javascript" src="libs/scenejs.ext.js"></script> 
 
-<script type="text/javascript" src="libs/planetsviz.js"></script>
-<script type="text/javascript" src="libs/planetsviz_base.js"></script>
+<script type="text/javascript" src="libs/BasePlanetModel.js"></script>
 
 <script type="text/javascript" src="config.js"></script>
   
@@ -163,7 +162,7 @@ $(document).ready(function() {
 
 	// animate hide/show
 	// TODO: add triangle :)
-	$(".caption").click(function() {
+	$(".box").click(function() {
 		$(".triangle",this).toggle();
 	  $(this).next().toggle(0)
 	})
@@ -171,10 +170,10 @@ $(document).ready(function() {
 
 	$("#speed3 > input").change(function() {
 		if(currentPlanet.type=="planet") {
-			system[3].setSpeed(-system[2]._speed/2.0);
+			system[3].setSpeed(-system[2].speed/2.0);
 		}
 		else if(currentPlanet.type=="sun") {
-  	  sunSpeed =   (360.0*system[1]._speed)/(365.25-system[1]._speed);
+  	  sunSpeed =   (360.0*system[1].speed)/(365.25-system[1].speed);
   	  //sunSpeed = (metonDaysPerYear()*systemSun[0].speed) / (systemSun[0].speed-metonDaysPerYear());
 //  	  console.log(sunSpeed);
       $("#speed3 > input").attr({"value":sunSpeed });
@@ -231,11 +230,11 @@ $(document).ready(function() {
 function reset() {
 	if(system.length==0) return;
   for(var i=0; i<system.length; i++) {
-					system[i].setRotate(currentPlanet.sphere[i].rotate);
+					system[i].setRotateAngle(currentPlanet.sphere[i].rotateStart);
   }
   
-	systemSun[0].setRotate(0);
-	systemSun[1].setRotate(0);	
+	systemSun[0].setRotateAngle(0);
+	systemSun[1].setRotateAngle(0);
 	
 }
 
@@ -255,12 +254,12 @@ function setCurrentPlanet(node) {
 		  sunDist: 8,
 		  color:colors["Planet"],
 		  type: "planet",
-		  beta: 30.0,
+		  betaRotate: 30.0,
 		  sphere: [
-    		{angle: 24.0, speed: 0, rotate: 0 },
-    		{angle: 90.0,  speed: 365, rotate: 0 },
-    		{angle: 18.0, speed: 570, rotate: 0 },
-    		{angle: 0.0, speed: 0, rotate: 95.0 },
+    		{axisAngle: 24.0, speed: 0, rotateStart: 0 },
+    		{axisAngle: 90.0,  speed: 365, rotateStart: 0 },
+    		{axisAngle: 18.0, speed: 570, rotateStart: 0 },
+    		{axisAngle: 0.0, speed: 0, rotateStart: 95.0 },
     		],
 		};
 		
@@ -272,7 +271,7 @@ function setCurrentPlanet(node) {
 		$("#speedRange > input").attr({"value":speed});
 				
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].angle); } );
+		$(".angle").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].axisAngle); } );
 
     // TODO: maximum :)
     
@@ -280,14 +279,14 @@ function setCurrentPlanet(node) {
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].speed); } );
 
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotate); } );
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",currentPlanet.sphere[index].rotateStart); } );
 		
 
 		$(".angle > input").change();
 		$(".speed > input").change();
 		
 		sun.setDist(currentPlanet.sunDist);
-		planet.setBeta(currentPlanet.beta);
+		planet.setBeta(currentPlanet.betaRotate);
 	
 				
 		if(currentPlanet.type=="moon") {
@@ -339,12 +338,12 @@ renderer.addNode(lookAt);
 scene.addNode(renderer);
 
 
-camera.addNode(earth = new Planet({beta:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
+camera.addNode(earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "earth"}));
 							
-camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, color: colors["S0"]},
-				      		system[1] =	new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: colors["S1"] },
-						    		system[2] = new Spherical({ scale: 9, angle: 90.0, speed: 110.0, color: colors["S2"] },
-  						  		  system[3] = new Spherical({ scale: 9, angle: 30.0, speed: -110.0, color: colors["S3"] },
+camera.addNode(	system[0] = new Spherical({scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S0"]},
+				      		system[1] =	new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: colors["S1"] },
+						    		system[2] = new Spherical({ scale: 9, axisAngle: 90.0, speed: 110.0, color: colors["S2"] },
+  						  		  system[3] = new Spherical({ scale: 9, axisAngle: 30.0, speed: -110.0, color: colors["S3"] },
                 		    planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: "planet",  color:colors["Planet"] })
                 		  )
 					 		  		)
@@ -354,9 +353,9 @@ camera.addNode(	system[0] = new Spherical({scale: 9, angle: 0.0, speed: 0.0, col
 
 
 
-system[0]._anchor.addNode(  systemSun[0] = new Spherical({ scale: 9, angle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
-														  systemSun[1] = new Spherical({ scale: 9, angle: 0.5, speed: 0.0 },
-               								  sun = new Planet({  beta: 90.0, emit: 0.5, scale: 0.2, dist: 9.0, inner_id: "sun", color:colors["Sun"] } )
+system[0].curve.addNode(  systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
+														  systemSun[1] = new Spherical({ scale: 9, axisAngle: 0.5, speed: 0.0 },
+               								  sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.2, dist: 9.0, inner_id: "sun", color:colors["Sun"] } )
 	              							)
 	              						)
 													);

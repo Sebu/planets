@@ -52,7 +52,7 @@
 	<script type="text/javascript" src="libs/sylvester.js"></script> 
 
 	<script type="text/javascript" src="libs/scenejs.ext.js"></script> 
-	<script type="text/javascript" src="libs/planetsviz_base.js"></script>
+	<script type="text/javascript" src="libs/BasePlanetModel.js"></script>
 	<script type="text/javascript" src="config.js"></script>
 		
 <script type="text/javascript"> 
@@ -68,7 +68,7 @@ addCaption = function(id,text) {
 $(document).ready(function() {
 
 //	$(".view").hide();
-	model = new PModel({spheres: 4});
+	model = new BasePlanetModel({spheres: 4});
 
 	canvas = document.getElementById("glCanvas");
 	canvas.addEventListener('mousedown', function(e) { model.mouseDown(e); }, true);
@@ -127,29 +127,29 @@ $(document).ready(function() {
 						addSlider("angle", "angle1", "S 1-2 (obliquity of ecliptic)") +
 						addSlider("angle", "angle2", "S 2-3 (right angle)") + 
 						addSlider("angle", "angle3", "S 3-4 (unknown)") + 
-						addSlider("angle", "angle4", "beta (latitude)") + 						
+						addSlider("angle", "angle4", "betaRotate (latitude)") +
 						"</div>";
 	});
 
- 	$("#latitude > input").change(function() { model.sphere[0].setAngle(90-this.value); });
- 	$("#angle1 > input").change(function() { model.sphere[1].setAngle(this.value); });
- 	$("#angle2 > input").change(function() { model.sphere[2].setAngle(this.value); });
- 	$("#angle3 > input").change(function() { model.sphere[3].setAngle(this.value); });
- 	$("#angle4 > input").change(function() { model.sphere[4].setAngle(this.value); });
+ 	$("#latitude > input").change(function() { model.sphere[0].setAxisAngle(90-this.value); });
+ 	$("#angle1 > input").change(function() { model.sphere[1].setAxisAngle(this.value); });
+ 	$("#angle2 > input").change(function() { model.sphere[2].setAxisAngle(this.value); });
+ 	$("#angle3 > input").change(function() { model.sphere[3].setAxisAngle(this.value); });
+ 	$("#angle4 > input").change(function() { model.sphere[4].setAxisAngle(this.value); });
 	
 	$("#parameters").append( function(index,html) {
 		return addCaption("speed","Sphere Period (days)") + "<div>" +
 						addSlider("speed", "speed1", "S 1 (daily)") +
 						addSlider("speed", "speed2", "S 2 (zodiacal)") +
 						addSlider("speed", "speed3", "S 3,4 (synodic)") + 
-						addSlider("beta", "speed4", "beta") + 
+						addSlider("betaRotate", "speed4", "betaRotate") +
 						"</div>";
 	});	
 
  	$("#speed1 > input").change(function() { model.sphere[0].setSpeed(this.value); });
  	$("#speed2 > input").change(function() { model.sphere[1].setSpeed(this.value); });
 	$("#speed3 > input").change(function() { model.sphere[2].setSpeed(this.value); });
-	$("#speed4 > input").change(function() { model.beta=this.value; });
+	$("#speed4 > input").change(function() { model.betaRotate=this.value; });
 
 	$("#parameters").append( function(index,html) {
 		return addCaption("rotate","Rotation Start (degrees)") + "<div>" +
@@ -160,13 +160,13 @@ $(document).ready(function() {
 						"</div>";
 	});	
 
- 	$("#rotate1 > input").change(function() { model.sphere[0].rotate = this.value; });
- 	$("#rotate2 > input").change(function() { model.sphere[1].rotate = this.value; });
-	$("#rotate3 > input").change(function() { model.sphere[2].rotate = this.value; });
+ 	$("#rotate1 > input").change(function() { model.sphere[0].rotateStart = this.value; });
+ 	$("#rotate2 > input").change(function() { model.sphere[1].rotateStart = this.value; });
+	$("#rotate3 > input").change(function() { model.sphere[2].rotateStart = this.value; });
 	
 	// animate hide/show
 	// TODO: add triangle :)
-	$(".caption").click(function() {
+	$(".box").click(function() {
 		$(".triangle",this).toggle();
 	  $(this).next().toggle(0);
 	})
@@ -189,12 +189,12 @@ function setCurrentPlanet(node) {
 		  sunDist: 8,
 		  color:colors["Planet"],
 		  type: "planet",
-		  beta: 90.0,
+		  betaRotate: 90.0,
 		  sphere: [
-    		{angle: 24.0, speed: 0, rotate: 0 },
-    		{angle: 90.0,  speed: 365, rotate: 0 },
-    		{angle: 18.0, speed: 570, rotate: 0 },
-    		{angle: 0.0, speed: 0, rotate: 0 },
+    		{axisAngle: 24.0, speed: 0, rotateStart: 0 },
+    		{axisAngle: 90.0,  speed: 365, rotateStart: 0 },
+    		{axisAngle: 18.0, speed: 570, rotateStart: 0 },
+    		{axisAngle: 0.0, speed: 0, rotateStart: 0 },
     		],
 		};
 		
@@ -206,13 +206,13 @@ function setCurrentPlanet(node) {
 		$("#speedRange > input").attr({"value":model.speed});
 				
 		$(".angle > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".angle ").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].angle); } );
+		$(".angle ").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].axisAngle); } );
 
 		$(".speed > input").attr({"min":0, "max":11000});
 		$(".speed").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].speed); } );
 
 		$(".rotate > input").attr({"min":"0", "max":360, "step":0.05});
-		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].rotate); } );
+		$(".rotate").attr("value", function(index,value) { $("input",this).attr("value",model.currentPlanet.sphere[index].rotateStart); } );
 		
 		$("#latitude > input").attr({"min":"0", "max":90});
 		$("#latitude > input").attr({"value":"38"});
@@ -225,8 +225,8 @@ function setCurrentPlanet(node) {
 		$("#metonDays > input").attr({ "min":0, "max":30000});
 		
 		model.sun.setDist(model.currentPlanet.sunDist);
-		model.planet.setBeta(model.currentPlanet.beta);
-		model.sphere[3].setArcBeta(180-model.currentPlanet.beta);
+		model.planet.setBeta(model.currentPlanet.betaRotate);
+		model.sphere[3].setArcBeta(180-model.currentPlanet.betaRotate);
 	
 	
 		$("#infoContainer").hide();
@@ -265,14 +265,14 @@ function setCurrentPlanet(node) {
 			// onchange of a moon parameter -> update model	
 			$(".moon > input").change(function() {
 
-					$("#metonZodicalMonths").html( model.metonZodicalMonths().toFixed() );
-					$("#metonDaysPerYear").html( model.metonDaysPerYear().toFixed(2) );
-					$("#synodicDaysPerMonth").html( model.synodicDaysPerMonth().toFixed(2) );
-					$("#zodicalDaysPerMonth").html( model.zodicalDaysPerMonth().toFixed(2) );
-					$("#draconiticDaysPerMonth").html( model.draconiticDaysPerMonth().toFixed(2) );
+					$("#metonZodicalMonths").html( model.getMetonZodicalMonths().toFixed() );
+					$("#metonDaysPerYear").html( model.getMetonDaysPerYear().toFixed(2) );
+					$("#synodicDaysPerMonth").html( model.getSynodicDaysPerMonth().toFixed(2) );
+					$("#zodicalDaysPerMonth").html( model.getZodicalDaysPerMonth().toFixed(2) );
+					$("#draconiticDaysPerMonth").html( model.getDraconiticDaysPerMonth().toFixed(2) );
 
-					draco = model.draconiticDaysPerMonth();
-					zodic = model.zodicalDaysPerMonth();
+					draco = model.getDraconiticDaysPerMonth();
+					zodic = model.getZodicalDaysPerMonth();
 				
 				  $("#speed2 > input").attr({"value": model.moonSpeed1(draco, zodic) });
 				  $("#speed3 > input").attr({"value": model.moonSpeed2(draco, zodic) });
@@ -294,12 +294,12 @@ function setCurrentPlanet(node) {
       model.sun.setEnabled(true);	
       
 			$("#speed3 > input").change(function() {
-				model.sphere[3].setSpeed(-model.sphere[2]._speed+model.beta);
-				model.sphere[4].setSpeed(model.beta);
+				model.sphere[3].setSpeed(-model.sphere[2].speed+model.betaRotate);
+				model.sphere[4].setSpeed(model.betaRotate);
 			});
 			$("#speed4 > input").change(function() {
-				model.sphere[3].setSpeed(-model.sphere[2]._speed+model.beta);
-				model.sphere[4].setSpeed(model.beta);
+				model.sphere[3].setSpeed(-model.sphere[2].speed+model.betaRotate);
+				model.sphere[4].setSpeed(model.betaRotate);
 			});
 
 		} else if(model.currentPlanet.type=="sun") {
@@ -314,7 +314,7 @@ function setCurrentPlanet(node) {
 			model.sun.setEnabled(false);	
 			
 			$("#speed3 > input").change(function() {
-	  	  sunSpeed =   (360.0*model.sphere[1]._speed)/(365.25-model.sphere[1]._speed);
+	  	  sunSpeed =   (360.0*model.sphere[1].speed)/(365.25-model.sphere[1].speed);
 	      $("#speed3 > input").attr({"value":sunSpeed });
 				model.sphere[2].setSpeed(sunSpeed);
 				model.sphere[3].setSpeed(0);

@@ -33,15 +33,15 @@ Planet.prototype.setDist = function(dist) {
 Circle = function(params) {
 	THREE.Geometry.call( this );
 	
-		this.setAngle = function(angle) {
-		 this.angle = angle%360;
+		this.setAxisAngle = function(angle) {
+		 this.axisAngle = angle%360;
 		};
 		 
-		 this.setAngle(params.angle);
+		 this.setAxisAngle(params.axisAngle);
 //		 this.linewidth = params.width || 1;
 
-		    var slices = Math.abs(Math.round(this.angle/5));
-        var arc = (this.angle / 180.0) * Math.PI;
+		    var slices = Math.abs(Math.round(this.axisAngle/5));
+        var arc = (this.axisAngle / 180.0) * Math.PI;
         var x=0,y=0,z=0;
         for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
             var theta = sliceNum * arc / slices;
@@ -67,10 +67,10 @@ Spherical = function Spherical(params) {
         
     this._curve = null;
   	color = params.color || { r: 0.5, g: 0.5, b: 0.5};
-  	this._visuals = [];
+  	this.visuals = [];
 	  
-		this._visuals["arc1"] = new THREE.Line(new Circle( params ), new THREE.LineBasicMaterial( { color: 0xe1e0e0 } ));
-		this._visuals["arc1"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );						 	
+		this.visuals["arc1"] = new THREE.Line(new Circle( params ), new THREE.LineBasicMaterial( { color: 0xe1e0e0 } ));
+		this.visuals["arc1"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
 //    this.addNode( 		  // arc
 //   		this._visuals["arc1"] = SceneJS.scale( {x: params.scale, y: -params.scale, z: params.scale },
 //	 				this.arcangle21 = new Circle({angle: params.angle})));
@@ -137,8 +137,8 @@ Spherical = function Spherical(params) {
 //		)));	
 		
 
-    this.setAxis(params.angle || 0.0);
-    this.setRotate(params.rotate || 0.0);
+    this.setAxis(params.axisAngle || 0.0);
+    this.setRotateAngle(params.rotateStart || 0.0);
     this.setSpeed(params.speed);
        
         
@@ -146,40 +146,40 @@ Spherical = function Spherical(params) {
 
 Spherical.prototype.setVisuals = function(vis, state) {
     for(i in vis) {
-      this._visuals[vis[i]].setEnabled(state);		
+      this.visuals[vis[i]].setEnabled(state);
     }
 				
 };
 
 Spherical.prototype.setAxis = function(angle) {
-		this._zAngle = angle;
+		this.axisAngle = angle;
 //		this.arcangle21.setAngle(angle);
 //		this.arcangle22.setAngle(angle);
 //		this._zRotate.setAngle(this._zAngle);
 };
 
 Spherical.prototype.getAxis = function() {
-		return this._zAngle;
+		return this.axisAngle;
 };
 
 Spherical.prototype.setSpeed = function(speed) {
-		this._speed = speed;
-		this._step = (speed!=0) ? (360.0/speed) : 0.0;
+		this.speed = speed;
+		this.step = (speed!=0) ? (360.0/speed) : 0.0;
 };
 
 Spherical.prototype.setArcAngle = function(angle) {
 //  this.arcangle11.setAngle(-angle);
 };
 
-Spherical.prototype.setRotate = function(angle) {
-		this._yAngle = angle;
+Spherical.prototype.setRotateAngle = function(angle) {
+		this.rotateAngle = angle;
 		this.setArcAngle(angle);
 //		this._yRotate.setAngle(this._yAngle);
 };
 
 Spherical.prototype.update = function(step) {
-		this._yAngle += this._step*step;
-		this.setRotate(this._yAngle);
+		this.rotateAngle += this.step*step;
+		this.setRotateAngle(this.rotateAngle);
 };
 
 
