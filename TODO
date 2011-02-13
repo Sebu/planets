@@ -1,3 +1,7 @@
+S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 rotate z * rotate -S2/2 * rotate beta
+
+
+
 model.update -> dirty -> update -> render
 
 DONE
@@ -37,9 +41,26 @@ DONE
 - in planet view rotate x and y not right up
 - generate menu
 - merge!!!
-- fix path in simple model
+
+- default view angle
+  - y  10
+- fix max angle for earth view 
+- view presets (world, earth)
+- yavetz markerarc on right circle
 
 TODO
+- fix path in simple model
+- legend with colors of spheres
+- directions (earth plane east, west ,,, tropics)
+- UIHelper BASICS
+- observer latitude with presets ( athens 38, canidos 36.66 cyzicus 40.23, heliopolis 30)
+- speed represents one day of movement in seconds
+  - seconds in seconds 1 - 900.000.000  via years days minutes per second
+  - aka one synodic cycle per minute 
+
+
+
+
 - show box with lat. etc.   
 - email yavetz sphere 3-4
 
@@ -47,7 +68,7 @@ TODO
 
 NEXT
 - update hippode only on demand
-- directions (earth plane east, west ,,, tropics)
+
 - tooltip with description and default/recomended values
 - variable slider max ( depended on model )
 - sun model in list

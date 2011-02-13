@@ -121,37 +121,7 @@ Cloud.prototype._init = function(params) {
 
 };
 
-Curve.prototype._init = function(params) {
-    var curvePos = params.pos;
 
-    this._destroy = function() {
-        SceneJS._geometryModule.extDestroyGeometry(this._handle);
-    }
-
-    this._create = function() {
-        var positions = [];
-        var colors = [];
-        for (var i = 0; i < curvePos.length; i++) {
-            positions.push(curvePos[i].x);
-            positions.push(curvePos[i].y);
-            positions.push(curvePos[i].z);
-            colors.push(1.0);
-            colors.push(0.4);
-            colors.push(1.0);
-        }
-        var indices = [];
-        for (var i = 0; i < curvePos.length; i++) {
-            indices.push(i);
-        }
-        return {
-            primitive : "line-strip",
-            positions : positions,
-
-            indices : indices
-        };
-    };
-
-};
 
 
 Circle.prototype.setAngle = function(angle) {
@@ -298,7 +268,7 @@ Spherical.prototype._init = function(params) {
 
                                     this.visuals["markerarc"] = SceneJS.rotate({angle: 90.0, y: 1.0},
                                             SceneJS.scale({x: -params.scale, y: params.scale, z: params.scale },
-                                                    new Circle({ angle: 90.0}))),
+                                                   this.markerArc = new Circle({ angle: 90.0}))),
 
                                 // equator marker ball
                                     this.visuals["markerball"] = SceneJS.translate({x: 0.0, y: 0.0, z: params.scale  },
@@ -390,6 +360,7 @@ Spherical.prototype.getStep = function(step) {
 
 
 Spherical.prototype.setArcBeta = function(angle) {
+    this.markerArc.setAngle(180-angle);
     this.arcangle11.setBeta(angle);
 };
 

@@ -15,6 +15,8 @@ var BaseScene = function(params) {
     this.renderer.addNode(this.lookAt);
     this.scene.addNode(this.renderer);
 
+    // initial start rotation
+    this.lookAt.rotateY(0.1);
 
     this.resize = function() {
         canvas = document.getElementById("glCanvas");
@@ -38,6 +40,7 @@ var BaseScene = function(params) {
     /* On a mouse drag, we'll re-render the scene, passing in
      * incremented angles in each time.
      */
+    this.pitch = 0;
     this.mouseMove = function(event) {
         if (this.dragging) {
             pitch = (event.clientY - this.lastY) * 0.005;
@@ -48,8 +51,13 @@ var BaseScene = function(params) {
             } else {
                 model.lookAt.rotateUp(yaw);
             }
-
-            model.lookAt.rotateRight(pitch);
+  
+            if(model.currentPos=="Earth") {
+              if(this.pitch+pitch>0.4)  pitch = 0;
+              else if(this.pitch+pitch<-1.9)  pitch = 0;
+            }
+            this.pitch += pitch;
+  		      this.lookAt.rotateRight(pitch);
 
             this.lastX = event.clientX;
             this.lastY = event.clientY;
@@ -88,6 +96,7 @@ var BasePlanetModel = function() {
 
     this.currentPlanet = {};
     this.currentPos = "Free";
+    this.pitch=0;
     this.currentLookAt = "Earth";
     this.speed = 0.1;
     this.setSpeed = function(val) {
@@ -114,6 +123,7 @@ var BasePlanetModel = function() {
 
         this.systemSun = [];
         this.viewPoints = {"Free":0, "Earth":0, "Planet":0};
+        this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
 
         this.light = Sunlight();
 
@@ -136,7 +146,7 @@ var BasePlanetModel = function() {
 
         this.earthPlane.setEnabled(false);
 
-        this.root.addNode(this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: "Earth"}));
+        this.root.addNode(this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], id: this.name+"Earth"}));
 
         this.root.addNode(this.curve = SceneJS.material({
             baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
@@ -198,18 +208,16 @@ var BasePlanetModel = function() {
         $.extend(true, this.currentPlanet, node);
 
         //TODO: better merge
-        $.extend(true, this.sphere[0], this.currentPlanet.sphere[0]);
-        $.extend(true, this.sphere[1], this.currentPlanet.sphere[1]);
-        $.extend(true, this.sphere[2], this.currentPlanet.sphere[2]);
-        $.extend(true, this.sphere[3], this.currentPlanet.sphere[3]);
-
+        for(i in this.sphere)
+          $.extend(true, this.sphere[i], this.currentPlanet.sphere[i]);
+        
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
-        this.sphere[3].setArcBeta(180 - this.currentPlanet.betaRotate);
+        if(this.sphere[3]) this.sphere[3].setArcBeta(this.currentPlanet.betaRotate);
 
         this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
         this.systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-        model.reset();
+
     }
 
 
@@ -254,10 +262,10 @@ var BasePlanetModel = function() {
 
         if (this.currentPos != "Free") {
             if (this.currentLookAt != "Free")
-                this.lookAt.setTarget(getNodePos(this.currentLookAt));
+                this.lookAt.setTarget(getNodePos(this.name+this.currentLookAt));
         } else {
             if (this.currentLookAt != "Free")
-                this.lookAt.rotateTarget(getNodePos(this.currentLookAt));
+                this.lookAt.rotateTarget(getNodePos(this.name+this.currentLookAt));
         }
 
 
@@ -287,7 +295,7 @@ var BasePlanetModel = function() {
 
     this.changeView = function(node) {
         if (node == "Free") pos = { x: 0.0, y: 0.0, z: -25 };
-        else pos = getNodePos(node);
+        else pos = getNodePos(this.name+node);
 
         this.earth.setEnabled(true);
         this.planet.setEnabled(true);
@@ -317,6 +325,7 @@ var BasePlanetModel = function() {
     }
 
 
+    // TODO: deprecated
     this.visMode = function(sys, state) {
         if (sys == "stars") {
             this.stars.setEnabled(state.checked);

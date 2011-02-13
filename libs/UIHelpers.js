@@ -3,7 +3,7 @@
  * User: seb
  * Date: 12.02.2011
  * Time: 13:53:01
- * some nice shortcuts for jQuery blocks
+ * some nice shortcuts for jQuery blocks to create a proto site
  */
 
 var UI = {
@@ -13,9 +13,11 @@ var UI = {
             $(selector).append("<option value='" + i + "'>" + i + "</option>");
     },
 
-    box : function(id, text) {
+    box : function(params) {
+        var id = params.id;
+        var text = params.text || params.id;
         return $("<div class='caption'" +
-                "onclick='$(\".triangle\", this).toggle(); $(this).next().toggle(0);'>" +
+                "onclick='$(\".triangle\", this).toggle(); $(this).next().toggle(300);'>" +
                 " <img class='triangle' src='textures/open.png'>" +
                 " <img class='triangle' style='display:none' src='textures/closed.png'>" +
                 text + "</div><div id='" + id + "'></div>");
@@ -28,11 +30,13 @@ var UI = {
         var min = params.min || 0;
         var max = params.max || 100;
         var step = params.step || 1;
+        var value = params.value || window[model]["get"+id]();
+        var change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
 
         ele =  $("<div id='" + id + "'>" +
             "<div>" + text + "</div>" +
-            "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ window[model]["get"+id]() +"' class='slider'  onchange='"+model+".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));'/>" +
-            "<input type='text' min="+min+" max="+max+" step="+step+" value='"+ window[model]["get"+id]() +"' class='range' onchange='"+model+".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));'/>" +
+            "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ value +"' class='slider'  onchange='"+change+"'/>" +
+            "<input type='text' min="+min+" max="+max+" step="+step+" value='" +value+ "' class='range' onchange='"+change+"'/>" +
             "</div>");
         return ele;
     },

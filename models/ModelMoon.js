@@ -60,6 +60,14 @@ ModelMoon = function(params) {
         return this.metonDays / this.metonDraconiticMonths;
     }
 
+    this.setCurrentPlanet = function(node) {
+      ModelMoon.prototype.setCurrentPlanet.call(this,node);
+      this.setMetonYear(this.currentPlanet.metonYear);
+      this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
+      this.setMetonDays(this.currentPlanet.metonDays);
+      this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
+
+    }
     this.setCurrentMoonModel = function(node) {
         var currentModel = moonModels[node];
         this.moonSpeed1 = currentModel.speed1;

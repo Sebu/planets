@@ -16,6 +16,12 @@ ModelYavetz = function(params) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
 
+    this.setAxisAngle3 = function(angle) {
+        this.sphere[2].setArcBeta(180-angle);
+        this.sphere[3].setAxisAngle(angle);
+    }
+
+
     this.updateHippo = function(step) {
         this.removeCurve(1);
         this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, "Planet"), colors["Hippo"]);
@@ -33,6 +39,11 @@ ModelYavetz = function(params) {
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
         this.sphere[3].setSpeed(-speed/2);
+    }
+
+    this.setCurrentPlanet = function(node) {
+      ModelYavetz.prototype.setCurrentPlanet.call(this,node);
+      this.setBeta(this.currentPlanet.betaRotate);
     }
 };
 

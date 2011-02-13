@@ -30,43 +30,68 @@ Mercury1: {
     {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
   ]},
 
+YavetzTest: { 
+  sunDist: 8,
+  model: "ModelYavetz",
+  betaRotate: 30.0,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 95 },
+  ]},
+
+SimpleTest: { 
+  model: "ModelSimple",
+  sphere: [
+    {axisAngle: 38.0, speed: 2, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }] },
+
 Mercury2: { 
   sunDist: 8,
   model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 365, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 570, rotateStart: 0 }] },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 570, rotateStart: 0 }
+]},
 
 Venus1: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 365, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
     {axisAngle: 18.0, speed: 570, rotateStart: 0 }]},
  
 Venus2: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 365, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
     {axisAngle: 18.0, speed: 570, rotateStart: 0 }] },
 
 Mars1: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 730, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 260, rotateStart: 0 },
     {axisAngle: 18.0, speed: 260, rotateStart: 0 }]},
  
 Mars2: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
     {axisAngle: 90.0,  speed: 730, rotateStart: 0 },
     {axisAngle: 18.0, speed: 730, rotateStart: 0 }]},
  
@@ -74,32 +99,36 @@ Mars3: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 730, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 760, rotateStart: 0 },
     {axisAngle: 18.0, speed: 760, rotateStart: 0 }]},
 
 Mars4: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 730, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 780, rotateStart: 0 },
     {axisAngle: 18.0, speed: 780, rotateStart: 0 }] },
 
 Jupiter: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 4380, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 4380, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
     {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 
 Saturn: {
   sunDist: 8,
     model: "Model4",
   sphere: [
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 10940, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 10940, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
     {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 
 Moon1: { 
@@ -110,6 +139,7 @@ Moon1: {
   metonDays:6940,
   metonDraconiticMonths: 242,
   sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
     {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
@@ -122,6 +152,7 @@ Moon2: {
   metonDays:2922,
   metonDraconiticMonths: 242, 
   sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
     {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }]},
@@ -134,6 +165,7 @@ Moon3: {
   metonDays:27759,
   metonDraconiticMonths: 242,
   sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
     {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }]},
@@ -142,8 +174,9 @@ Sun: {
   model: "ModelSun",
   color: {r:1.0,g:1.0,b:0.0},
   sphere: [
-    {axisAngle: 24.0, speed: 1, rotateStart: 0 },
-    {axisAngle: 0.5,  speed: 365.0, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 2, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 0.5,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }] }
 
 };
@@ -156,5 +189,9 @@ Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { retu
 SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } }
 };
 
-var sunPresets = { axisAngle: 0, speed: 365};
+var latitudePresets = {
+  Athenes: 38
+};
+
+//var sunPresets = { axisAngle: 0, speed: 365};
 
