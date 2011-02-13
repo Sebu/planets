@@ -12,6 +12,10 @@ ModelMoon = function(params) {
     params.spheres = 4;
     this.init(params);
 
+
+    
+    this.sun.setEnabled(false);
+
     this.metonYear = 0;
     this.setMetonYear = function(val) {
         this.metonYear = Number(val);
@@ -60,33 +64,33 @@ ModelMoon = function(params) {
         return this.metonDays / this.metonDraconiticMonths;
     }
 
-    this.setCurrentPlanet = function(node) {
-      ModelMoon.prototype.setCurrentPlanet.call(this,node);
-      this.setMetonYear(this.currentPlanet.metonYear);
-      this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
-      this.setMetonDays(this.currentPlanet.metonDays);
-      this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
-
-    }
     this.setCurrentMoonModel = function(node) {
         var currentModel = moonModels[node];
         this.moonSpeed1 = currentModel.speed1;
         this.moonSpeed2 = currentModel.speed2;
     }
+    this.setCurrentPlanet = function(node) {
+        ModelMoon.prototype.setCurrentPlanet.call(this,node);
+        this.setMetonYear(this.currentPlanet.metonYear);
+        this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
+        this.setMetonDays(this.currentPlanet.metonDays);
+        this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
+    }
+
+    //this.setCurrentMoonModel("Mendell");
+    //this.updateMoon();
 
     this.updateMoon = function() {
-        this.draco = model.getDraconiticDaysPerMonth();
-        this.zodic = model.getZodicalDaysPerMonth();
-        model.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
-        model.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
-        model.sphere[3].setSpeed(0);
+        this.draco = this.getDraconiticDaysPerMonth();
+        this.zodic = this.getZodicalDaysPerMonth();
+        this.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
+        this.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
+        this.sphere[3].setSpeed(0);
     }
 
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
-
-    this.setCurrentMoonModel("Mendell");
 };
 
 ModelMoon.prototype = new BasePlanetModel;

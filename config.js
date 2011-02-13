@@ -13,6 +13,7 @@ var colors = {
 	S1:			{r:0.4, g:0.4, b:1.0},
 	S2: 		{r: 0.0, g: 1.0, b: 0.0},
 	S3: 		{r: 1.0, g: 0.0, b: 0.0},
+	S4: 		{r: 0.0, g: 1.0, b: 1.0},
 	Path: 	{r: 1.0, g: 1.0, b: 1.0},
 	Hippo: 	{r: 0.4, g: 0.4, b: 1.0}
 	
@@ -44,10 +45,24 @@ YavetzTest: {
 SimpleTest: { 
   model: "ModelSimple",
   sphere: [
-    {axisAngle: 38.0, speed: 2, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0, rotateStart: 0 }] },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
+  ] },
+
+Model5Test: { 
+  model: "Model5",
+  alpha:200,
+  beta:100,
+  gamma:100,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 0, rotateStart: 0 },
+  ] },
 
 Mercury2: { 
   sunDist: 8,
@@ -174,7 +189,7 @@ Sun: {
   model: "ModelSun",
   color: {r:1.0,g:1.0,b:0.0},
   sphere: [
-    {axisAngle: 38.0, speed: 2, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 0.5,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }] }
@@ -190,8 +205,13 @@ SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) 
 };
 
 var latitudePresets = {
-  Athenes: 38
+  Athenes: 38,
+  Canidos: 36.66,
+  Heliopolis: 30,
+  Cyzicus: 40.23,  
+  Equator: 0,
+  North: 90 
+
 };
 
-//var sunPresets = { axisAngle: 0, speed: 365};
 

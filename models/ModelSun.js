@@ -12,6 +12,8 @@ ModelSun = function(params) {
     params.spheres = 4;
     this.init(params);
 
+    this.sun.setEnabled(false);
+
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }

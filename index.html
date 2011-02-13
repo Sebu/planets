@@ -16,12 +16,10 @@
             href='http://www.khronos.org/webgl/WebGL'>WebGL</a>features.</p></canvas>
 </div>
 
-<div class="container" id="helpContainer">
-    <div>zodiacal month</div>
-    <div id="metonZodicalMonths">a</div>
+<div class="container" id="legendContainer">
 </div>
 
-<div class="container" id="infoContainer">
+<div class="container" id="moonInfoContainer">
     <div>zodiacal month</div>
     <div id="metonZodicalMonths">0</div>
     <div>days per year</div>
@@ -54,8 +52,18 @@
 <script type="text/javascript">
 
 
+
+
     // setup site
     $(document).ready(function() {
+
+//        $("#uiContainer").hover(function() {
+//            $("#uiContainer,#legendContainer").fadeTo(300,1.0);
+//        }, function() {
+//            $("#uiContainer,#legendContainer").fadeTo(300,0.5);
+//        });
+//
+//        $("#uiContainer,#legendContainer").fadeTo(0,0.5);
 
         //	$(".view").hide();
         renderer = new BaseScene();
@@ -65,16 +73,20 @@
         models["ModelSun"] =  new ModelSun({renderer: renderer});
         models["ModelSimple"] = new ModelSimple({renderer: renderer});
         models["ModelYavetz"] = new ModelYavetz({renderer: renderer});
+        models["Model5"] = new Model5({renderer: renderer});
 
         model = models["Model4"];
 
-        $("#uiContainer").append("<div title='position'>View<select  id='viewPresets' class='view' style='position: relative;top:-6px;' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></div>");
+        $("#uiContainer").append("<div>View<select  id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></div>");
         UI.optionsFromHash("#viewPresets", model.viewPresets);
+
+        $("#uiContainer").append("<div><select  id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></div>");
+        UI.optionsFromHash("#longitudePresets", latitudePresets);
 
         $("#viewPresets option[value='World']").attr('selected', true);
 
 
-        $("#uiContainer").append("<div><select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></div>");
+        $("#uiContainer").append("<div>Presets<select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></div>");
         UI.optionsFromHash("#planetPreset", planetPresets);
 
         $("#uiContainer").append("<div><select  id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></div>");
@@ -133,18 +145,23 @@
         model.root.setEnabled(true);
 
         // build up ui
-        $("#infoContainer").hide();
-        $("#moonPresets").hide();
+        $("#moonInfoContainer").fadeOut(500);
+        $("#moonModel").fadeOut(500);
         $("#parameters > *").remove();
+        $("#legendContainer > *").remove();
 
-        UI.slider({model:"model", id: "Speed", min:0, max:2, step: 0.01, text: "Speed"}).appendTo("#parameters");
-        //$("#speedSun > input").attr({"min":0, "max":1000,"value":model.getsunYear});
+        // create legend
+        for(i in model.sphere) {
+            var color = "rgb("+colors["S"+i].r*255+","+colors["S"+i].g*255+","+colors["S"+i].b*255+")";
+            $("<div style='float:left;font-weight:bold;color:"+color+"'>Sphere "+(Number(i)+1)+" </div>").appendTo("#legendContainer");
+        }
+
+        UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Seconds per year"}).appendTo("#parameters");
 
         UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
-        UI.checkbox({model:"model", id:"showSphere0", text:"S1"}).appendTo("#vis");
-        UI.checkbox({model:"model", id:"showSphere1", text:"S2"}).appendTo("#vis");
-        UI.checkbox({model:"model", id:"showSphere2", text:"S3"}).appendTo("#vis");
-        UI.checkbox({model:"model", id:"showSphere3", text:"S4"}).appendTo("#vis");
+        for(i in model.sphere) {
+            UI.checkbox({model:"model", id:"showSphere"+i, text:"S"+(Number(i)+1)}).appendTo("#vis");
+        }
         UI.checkbox({model:"model", id:"showPath", text:"path"}).appendTo("#vis");
         UI.checkbox({model:"model", id:"showHippo", text:"hippo"}).appendTo("#vis");
         UI.checkbox({model:"model", id:"showStars", text:"stars"}).appendTo("#vis");
@@ -167,17 +184,16 @@
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:"model", id: "Speed2", max:1100, text:"S 3 (synodic)"}).appendTo("#speed");
+            UI.slider({model:"model", id:"Speed2",  max:1100, text:"S 3 (synodic)"}).appendTo("#speed");
 
             $("#moon input").change();
 
-            $("#infoContainer,#moonPresets").show();
+            $("#moonInfoContainer,#moonModel").fadeIn(500);
 
             // moon sliders setup
             // onchange of a moon parameter -> update model
             $("#MetonYear > input,#MetonSynodicMonths > input,#MetonDraconiticMonths > input,#MetonDays > input").change(function() {
 
-                console.log("change we can believe in");
                 $("#metonZodicalMonths").html(model.getMetonZodicalMonths().toFixed());
                 $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed(2));
                 $("#synodicDaysPerMonth").html(model.getSynodicDaysPerMonth().toFixed(2));
@@ -189,8 +205,12 @@
                 $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });
 
             });
-
-            $("#moon input").change();
+            model.setCurrentMoonModel("Mendell");
+            model.updateMoon();
+            $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
+            $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });            
+            
+//            $("#MetonYear > input,#MetonSynodicMonths > input,#MetonDraconiticMonths > input,#MetonDays > input").change();
             
         } else if (model.name == "ModelYavetz") {
 
@@ -198,8 +218,8 @@
              UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
              UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
              UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-             UI.slider({model:"model", id: "AxisAngle3", max: 360, step:0.05, text: "alpha"}).appendTo("#angle");
-             UI.slider({model:"model", id: "Beta", max: 360, step:0.05, text: "beta"}).appendTo("#angle");
+             UI.slider({model:"model", id: "Alpha", max: 360, step:0.05}).appendTo("#angle");
+             UI.slider({model:"model", id: "Beta", max: 360, step:0.05}).appendTo("#angle");
 
              UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
              UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
@@ -219,23 +239,40 @@
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
-
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:"model", id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
-
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:"model", id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3-4 (synodic)"}).appendTo("#rotateStart");
-        
+
+        } else if (model.name == "Model5") {
+
+            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
+            UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({model:"model", id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.slider({model:"model", id: "AxisAngle4", max: 360, step:0.05, text: "S 4-5 (unknown)"}).appendTo("#angle");
+            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
+            UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
+            UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:"model", id: "Alpha", max:1100}).appendTo("#speed");
+            UI.slider({model:"model", id: "Beta", max:1100}).appendTo("#speed");
+            UI.slider({model:"model", id: "Gamma", max:1100}).appendTo("#speed");
+            
+            UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.slider({model:"model", id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
+            UI.slider({model:"model", id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
+            UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3-4 (synodic)"}).appendTo("#rotateStart");
+
           } else if (model.name == "ModelSimple") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
@@ -247,7 +284,6 @@
             UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
@@ -256,8 +292,8 @@
         }
 
 
-        $("#angle  input, #speed  input").change();
-        $("#rotateStart").hide();
+        $("#moon input, #angle  input, #speed  input").change();
+        $("#rotateStart,#vis").hide();
     }
 
 </script>

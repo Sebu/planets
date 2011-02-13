@@ -16,7 +16,7 @@ var BaseScene = function(params) {
     this.scene.addNode(this.renderer);
 
     // initial start rotation
-    this.lookAt.rotateY(0.1);
+    this.lookAt.rotateY(Math.PI+0.1);
 
     this.resize = function() {
         canvas = document.getElementById("glCanvas");
@@ -98,13 +98,15 @@ var BasePlanetModel = function() {
     this.currentPos = "Free";
     this.pitch=0;
     this.currentLookAt = "Earth";
-    this.speed = 0.1;
+    this.speed = 0;
+    this.fps = 30.0;
     this.setSpeed = function(val) {
         this.speed = val;
     }
     this.getSpeed = function() {
         return this.speed;
     }
+    this.setSpeed(60);
 
     this.posAngle = 10.0;
     this.betaRotate = 0;
@@ -136,11 +138,17 @@ var BasePlanetModel = function() {
 
         this.root.addNode(this.light);
 
-        this.root.addNode(SceneJS.material({
+        this.root.addNode(this.earthPlane =  SceneJS.material({
             baseColor:  { r: 0.5, g: 0.5, b: 1.0 },
             specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
             emit: 0.0, specular: 0.0, shine: 3.0},
-                this.earthPlane = SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0})
+
+                // DIRECTION MARKERS 
+                SceneJS.translate({x:3},SceneJS.billboard({}, new SceneJS.Text({text : "NORTH"}))),
+                SceneJS.translate({x:-3},SceneJS.billboard({},new SceneJS.Text({text : "WEST"}))),
+                SceneJS.translate({z:3},SceneJS.billboard({},new SceneJS.Text({text : "EAST"}))),
+                SceneJS.translate({z:-3},SceneJS.billboard({}, new SceneJS.Text({text : "SOUTH"}))),
+                SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0})
                 )
                 );
 
@@ -180,12 +188,16 @@ var BasePlanetModel = function() {
         this.sphere[1].addNode(this.stars = new SceneJS.cloud({count:400, scale:20.0}));
 
 
+
         this.sphere[0].curve.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
                 this.systemSun[1] = new Spherical({ scale: 9, axisAngle: 0.5, speed: 0.0 },
                         this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] })
                         )
                 )
                 );
+
+        this.updateList[this.sphere.length] = this.systemSun[0];
+        this.updateList[this.sphere.length+1] = this.systemSun[1];
 
         this.root.setEnabled(false);
 
@@ -233,25 +245,8 @@ var BasePlanetModel = function() {
     }
     this.update = function() {
 
-        if (this.time > 20) {
-            this.time = 0;
-            this.removeCurve(0);
-
-            this.removeCurve(1);
-
-            if (this.sphere.length == 1) {
-                this.addCurve(0, this.curve, this.calcCurve(-1, this.name+"Planet"), colors["Path"]);
-            }
-            else {
-                this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name+"Planet"), colors["Path"]);
-            }
-
-              
-            this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, this.name+"Planet"), colors["Hippo"]);
-
-        }
         for (i in model.updateList) {
-            model.updateList[i].update(this.speed);
+            model.updateList[i].update((365.0/this.fps)/this.speed);
         }
         this.time++;
         this.render();
@@ -352,7 +347,7 @@ var BasePlanetModel = function() {
 
         for (var i = start + 1; i < this.sphere.length; i++) {
             oldRotate[i] = this.sphere[i].getRotateAngle();
-            //    system[i].update(-32.0);
+            this.sphere[i].update(-10.0);
             step += Math.abs(this.sphere[i].getStep());
         }
 

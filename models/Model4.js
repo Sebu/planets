@@ -7,7 +7,6 @@
  */
 
 
-
 Model4 = function(params) {
     params.name = "Model4";
     params.spheres = 4;
@@ -18,15 +17,18 @@ Model4 = function(params) {
         //Spherical.prototype.setAxisAngle.call(this, 90 - angle);
     }
 
-    this.updateHippo = function(step) {
-        this.removeCurve(1);
-        this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, "Planet"), colors["Hippo"]);
-    }
-
 
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
         this.sphere[3].setSpeed(-speed);
+    }
+
+    this.update = function() {
+        this.removeCurve(0);
+        this.removeCurve(1);
+        this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
+        this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, this.name + "Planet"), colors["Hippo"]);
+        Model4.prototype.update.call(this);
     }
 };
 

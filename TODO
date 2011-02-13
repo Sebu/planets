@@ -41,44 +41,37 @@ DONE
 - in planet view rotate x and y not right up
 - generate menu
 - merge!!!
-
 - default view angle
   - y  10
 - fix max angle for earth view 
 - view presets (world, earth)
 - yavetz markerarc on right circle
-
-TODO
-- fix path in simple model
 - legend with colors of spheres
 - directions (earth plane east, west ,,, tropics)
-- UIHelper BASICS
-- observer latitude with presets ( athens 38, canidos 36.66 cyzicus 40.23, heliopolis 30)
+- fix path in simple model
 - speed represents one day of movement in seconds
   - seconds in seconds 1 - 900.000.000  via years days minutes per second
-  - aka one synodic cycle per minute 
+  - aka one synodic cycle per minute
+- observer latitude with presets ( athens 38, canidos 36.66 cyzicus 40.23, heliopolis 30)
+- more spheres
+  - only mars,venus,  mercury
+  - period sum to zero ( of sphere 3-5)
+  - sphere 5 like 3: alpha  4: -alpha + beta 5: -beta/beta
 
-
-
-
-- show box with lat. etc.   
-- email yavetz sphere 3-4
-
-
+TODO
+- fix moon start
 
 NEXT
+- email yavetz sphere 3-4
+- show box with lat. etc.
 - update hippode only on demand
-
+- UIHelper BASICS
 - tooltip with description and default/recomended values
 - variable slider max ( depended on model )
 - sun model in list
 - moon speed functions days per year
 
 auftrag:
-- more spheres
-  - only mars,venus,  mercury
-  - period sum to zero ( of sphere 3-5)
-  - sphere 5 like 3: alpha  4: -alpha + beta 5: -beta/beta
 - use Three.js
 - more lambda :D
 
