@@ -144,11 +144,11 @@ var BasePlanetModel = function() {
             emit: 0.0, specular: 0.0, shine: 3.0},
 
                 // DIRECTION MARKERS 
-                SceneJS.translate({x:3},SceneJS.billboard({}, new SceneJS.Text({text : "NORTH"}))),
-                SceneJS.translate({x:-3},SceneJS.billboard({},new SceneJS.Text({text : "WEST"}))),
+                SceneJS.translate({x:3,y:0.1},SceneJS.billboard({}, new SceneJS.Text({text : "NORTH"}))),
+                SceneJS.translate({x:-3,y:0.1},SceneJS.billboard({},new SceneJS.Text({text : "WEST"}))),
                 SceneJS.translate({z:3},SceneJS.billboard({},new SceneJS.Text({text : "EAST"}))),
                 SceneJS.translate({z:-3},SceneJS.billboard({}, new SceneJS.Text({text : "SOUTH"}))),
-                SceneJS.cube({xSize: 6.0,  ySize: 0.01, zSize: 6.0})
+                SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0})) //xSize: 6.0,  ySize: 0.01, zSize: 6.0})
                 )
                 );
 

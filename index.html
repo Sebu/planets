@@ -156,6 +156,8 @@
             $("<div style='float:left;font-weight:bold;color:"+color+"'>Sphere "+(Number(i)+1)+" </div>").appendTo("#legendContainer");
         }
 
+            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude"}).appendTo("#parameters");
+
         UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Seconds per year"}).appendTo("#parameters");
 
         UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
@@ -177,7 +179,6 @@
             UI.slider({model:"model", id:"MetonDays", "max":30000, text:"days per cycle"}).appendTo("#moon");
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
 
@@ -215,7 +216,6 @@
         } else if (model.name == "ModelYavetz") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-             UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
              UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
              UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
              UI.slider({model:"model", id: "Alpha", max: 360, step:0.05}).appendTo("#angle");
@@ -235,7 +235,6 @@
         } else if (model.name == "Model4") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
@@ -251,7 +250,6 @@
         } else if (model.name == "Model5") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
@@ -271,7 +269,6 @@
           } else if (model.name == "ModelSimple") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
@@ -281,7 +278,6 @@
         } else if (model.name == "ModelSun") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "latitude"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:"model", id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
