@@ -158,7 +158,7 @@
 
             UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude"}).appendTo("#parameters");
 
-        UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Seconds per year"}).appendTo("#parameters");
+        UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed (Seconds per year)"}).appendTo("#parameters");
 
         UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
         for(i in model.sphere) {
@@ -171,7 +171,6 @@
 
 
         if (model.name == "ModelMoon") {
-
             UI.box({id:"moon", text:"Moon settings"}).appendTo("#parameters");
             UI.slider({model:"model", id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
             UI.slider({model:"model", id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
@@ -196,20 +195,16 @@
             $("#MetonYear > input,#MetonSynodicMonths > input,#MetonDraconiticMonths > input,#MetonDays > input").change(function() {
 
                 $("#metonZodicalMonths").html(model.getMetonZodicalMonths().toFixed());
-                $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed(2));
-                $("#synodicDaysPerMonth").html(model.getSynodicDaysPerMonth().toFixed(2));
-                $("#zodicalDaysPerMonth").html(model.getZodicalDaysPerMonth().toFixed(2));
-                $("#draconiticDaysPerMonth").html(model.getDraconiticDaysPerMonth().toFixed(2));
-
-                model.updateMoon();
+                $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed());
+                $("#synodicDaysPerMonth").html(model.getSynodicDaysPerMonth().toFixed());
+                $("#zodicalDaysPerMonth").html(model.getZodicalDaysPerMonth().toFixed());
+                $("#draconiticDaysPerMonth").html(model.getDraconiticDaysPerMonth().toFixed());
                 $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
                 $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });
 
             });
-            model.setCurrentMoonModel("Mendell");
-            model.updateMoon();
-            $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
-            $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });            
+//            $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
+//            $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });            
             
 //            $("#MetonYear > input,#MetonSynodicMonths > input,#MetonDraconiticMonths > input,#MetonDays > input").change();
             

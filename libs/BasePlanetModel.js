@@ -227,6 +227,8 @@ var BasePlanetModel = function() {
         this.planet.setBeta(this.currentPlanet.betaRotate);
         if(this.sphere[3]) this.sphere[3].setArcBeta(this.currentPlanet.betaRotate);
 
+        this.sphere[0].setVisuals(["arc1","arc2"], false);
+
         this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
         this.systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 

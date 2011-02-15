@@ -205,12 +205,12 @@ SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) 
 };
 
 var latitudePresets = {
-  Athenes: 38,
+  Athens: 38,
   Canidos: 36.66,
   Heliopolis: 30,
   Cyzicus: 40.23,  
   Equator: 0,
-  North: 90 
+  NorthPole: 90 
 
 };
 

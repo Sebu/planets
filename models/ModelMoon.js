@@ -9,7 +9,7 @@
 
 ModelMoon = function(params) {
     params.name = "ModelMoon";
-    params.spheres = 4;
+    params.spheres = 3;
     this.init(params);
 
 
@@ -19,6 +19,7 @@ ModelMoon = function(params) {
     this.metonYear = 0;
     this.setMetonYear = function(val) {
         this.metonYear = Number(val);
+        this.updateMoon();
     }
     this.getMetonYear = function() {
         return this.metonYear;
@@ -27,14 +28,17 @@ ModelMoon = function(params) {
     this.metonSynodicMonths = 0;
     this.setMetonSynodicMonths = function(val) {
         this.metonSynodicMonths = Number(val);
+        this.updateMoon();
     }
     this.getMetonSynodicMonths = function() {
         return this.metonSynodicMonths;
+        this.updateMoon();
     }
 
     this.metonDays = 0; // days per cycle
     this.setMetonDays = function(val) {
         this.metonDays = Number(val);
+        this.updateMoon();
     }
     this.getMetonDays = function() {
         return this.metonDays;
@@ -77,6 +81,8 @@ ModelMoon = function(params) {
         this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
     }
 
+    this.setCurrentMoonModel("Mendell");
+
     //this.setCurrentMoonModel("Mendell");
     //this.updateMoon();
 
@@ -85,7 +91,6 @@ ModelMoon = function(params) {
         this.zodic = this.getZodicalDaysPerMonth();
         this.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
         this.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
-        this.sphere[3].setSpeed(0);
     }
 
     this.setAxisAngle0 = function(angle) {
