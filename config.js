@@ -21,15 +21,60 @@ var colors = {
 
 var planetPresets = { 
 
-Mercury1: { 
-  sunDist: 8,
-  model: "Model4",
+Model5Mars1: { 
+  model: "Model5",
+  alpha:780,
+  beta:260,
+  gamma:390,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 730, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 0, rotateStart: 0 },
+  ] },
+
+Model5Mars2: { 
+  model: "Model5",
+  alpha:780,
+  beta:260,
+  gamma:390,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 730, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 45.0, speed: 0, rotateStart: 0 },
+  ] },
+
+Model5Mars3: { 
+  model: "Model5",
+  alpha:780,
+  beta:390,
+  gamma:780,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 730, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 45.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: -45.0, speed: 0, rotateStart: 0 },
+  ] },
+
+Model5Venus: { 
+  model: "Model5",
+  alpha:570,
+  beta:95,
+  gamma:114,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-  ]},
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 22.5, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 22.5, speed: 0, rotateStart: 0 },
+  ] },
+
+
+
 
 YavetzTest: { 
   sunDist: 8,
@@ -51,18 +96,15 @@ SimpleTest: {
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
 
-Model5Test: { 
-  model: "Model5",
-  alpha:200,
-  beta:100,
-  gamma:100,
+Mercury1: { 
+  sunDist: 8,
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0,  speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 0, rotateStart: 0 },
-  ] },
+    {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+  ]},
 
 Mercury2: { 
   sunDist: 8,
@@ -70,8 +112,8 @@ Mercury2: {
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 570, rotateStart: 0 }
+    {axisAngle: 90.0,  speed: 110, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 110, rotateStart: 0 }
 ]},
 
 Venus1: {

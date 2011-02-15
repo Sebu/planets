@@ -144,7 +144,7 @@ var BasePlanetModel = function() {
             emit: 0.0, specular: 0.0, shine: 3.0},
 
                 // DIRECTION MARKERS 
-                SceneJS.translate({id: "north", x:3,y:0.1},SceneJS.billboard({}, new SceneJS.Text({text : "NORTH"}))),
+                SceneJS.translate({id: "North", x:3,y:0.1},SceneJS.billboard({}, new SceneJS.Text({text : "NORTH"}))),
                 SceneJS.translate({x:-3,y:0.1},SceneJS.billboard({},new SceneJS.Text({text : "WEST"}))),
                 SceneJS.translate({z:3},SceneJS.billboard({},new SceneJS.Text({text : "EAST"}))),
                 SceneJS.translate({z:-3},SceneJS.billboard({}, new SceneJS.Text({text : "SOUTH"}))),
@@ -253,7 +253,7 @@ var BasePlanetModel = function() {
       
     }
     this.update = function() {
-    
+        
         if(this.running)   
           for (i in model.updateList) {
               model.updateList[i].update((365.0/this.fps)/this.speed);
@@ -264,6 +264,8 @@ var BasePlanetModel = function() {
 
 
     this.render = function() {
+
+
 
         if (this.currentPos != "Free") {
             if (this.currentLookAt != "Free")
@@ -284,6 +286,9 @@ var BasePlanetModel = function() {
             this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
+//        $("#North").remove();
+//        var north = getNodePosCanvas("North");
+//        $("body").append("<div id='North'; style='z-index:2; color: white;  background-color: rgba(150,150,150,0.2);  font-size: small;position: absolute;top:"+north.y.toFixed()+"px;left:"+ north.x.toFixed()+ "px;'>Planet</div>");
 
     }
 

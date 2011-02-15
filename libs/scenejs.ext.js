@@ -503,6 +503,16 @@ getNodePos = function(node) {
     return query.getResults().worldPos;
 }
 
+getNodePosCanvas = function(node) {
+    canvas = document.getElementById("glCanvas");
+
+    query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : canvas.width, canvasHeight : canvas.height    });
+    query.execute({ nodeId: node });
+    pos = query.getResults().canvasPos;
+//    console.log(pos);
+    return pos; //{x: pos.x+canvas.width*0.5, 
+            //y: pos.y+canvas.height*0.5};
+}
 
 Sunlight = function() {
     return new SceneJS.Light({
