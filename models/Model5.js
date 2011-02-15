@@ -51,7 +51,7 @@ Model5 = function(params) {
         var beta = (this.beta!=0) ? 360/this.beta : 0;
         var gamma = (this.gamma!=0) ? 360/this.gamma : 0;
         this.sphere[2].setStep(alpha);
-        this.sphere[3].setStep(-(alpha+beta));
+        this.sphere[3].setStep(-beta);
         this.sphere[4].setStep(gamma);
     }
 

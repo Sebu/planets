@@ -77,19 +77,19 @@
 
         model = models["Model4"];
 
-        $("#uiContainer").append("<div>View<select  id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></div>");
+        $("#uiContainer").append("<span><select  id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");
         UI.optionsFromHash("#viewPresets", model.viewPresets);
 
-        $("#uiContainer").append("<div><select  id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></div>");
+        $("#uiContainer").append("<span><select  id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
         UI.optionsFromHash("#longitudePresets", latitudePresets);
 
         $("#viewPresets option[value='World']").attr('selected', true);
 
 
-        $("#uiContainer").append("<div>Presets<select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></div>");
+        $("#uiContainer").append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
         UI.optionsFromHash("#planetPreset", planetPresets);
 
-        $("#uiContainer").append("<div><select  id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></div>");
+        $("#uiContainer").append("<span><select  id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
 
@@ -285,7 +285,7 @@
 
         $("#capvis,#caprotateStart").click();
         $("#moon input, #angle  input, #speed  input").change();
-        $("#rotateStart,#vis").hide();
+//        $("#rotateStart,#vis").hide();
     }
 
 </script>
