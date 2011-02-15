@@ -295,6 +295,8 @@ var BasePlanetModel = function() {
         var pos = getNodePosCanvas(node);
         $("body").append("<div id='"+node+"'; style='z-index:2; color: white;  background-color: rgba(150,150,150,0.2);  font-size: small;position: absolute;top:"+pos.y.toFixed()+"px;left:"+ pos.x.toFixed()+ "px;'>" +  text + "</div>");
     }
+
+
     this.reset = function () {
         if (this.sphere.length == 0) return;
         for (var i = 0; i < this.sphere.length; i++) {
