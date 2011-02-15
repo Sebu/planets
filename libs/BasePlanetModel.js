@@ -281,7 +281,7 @@ var BasePlanetModel = function() {
         this.light.setPos(sunPos);
         if (this.sun.getEnabled() &&
             distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
-            this.planet.setShade({r: 0.2, g: 0.2, b:0.2});
+            this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
         else
             this.planet.setShade(model.currentPlanet.color);
 
