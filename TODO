@@ -57,14 +57,15 @@ DONE
   - only mars,venus,  mercury
   - period sum to zero ( of sphere 3-5)
   - sphere 5 like 3: alpha  4: -alpha + beta 5: -beta/beta
+  - remove black sphere 0 
+  - fix sun shade
 
 TODO
 - fix moon start
 - labels
-- fix sun shade
 - fix triangle
-- remove black sphere 0 
 - fix view hippo and co.
+- 
 
 NEXT
 - email yavetz sphere 3-4

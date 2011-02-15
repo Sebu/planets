@@ -94,7 +94,8 @@
 
 
 
-        $("#uiContainer").append("<div id='parameters'></div><input type='button' onclick='model.reset()' value='reset'>");  
+        $("#uiContainer").append("<div id='parameters'></div><input type='button' onclick='model.reset()' value='reset'><input type='button' onclick='model.pause()' value='pause'>");  
+
         $("#vis").hide();
 //        $("#uiContainer").prepend("<div title='look at' ><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div>");
 //        $("#uiContainer").prepend("<div title='position'><img src='textures/origin.png'><select  id='viewPos' class='view' style='position: relative;top:-6px;' onchange='model.currentPos = this.options[this.selectedIndex].value; model.changeView(model.currentPos);'></select></div>");
@@ -282,9 +283,9 @@
 
         }
 
-
+        $("#capvis,#caprotateStart").click();
         $("#moon input, #angle  input, #speed  input").change();
-        $("#rotateStart,#vis").hide();
+//        $("#rotateStart,#vis").hide();
     }
 
 </script>

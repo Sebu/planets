@@ -66,10 +66,10 @@ var BaseScene = function(params) {
 
     this.keyboard = function(e) {
         switch (e.keyCode) {
-            case 119: model.lookAt.translate(0, 0, 0.2);  break;
-            case 115: model.lookAt.translate(0, 0, -0.2);  break;
-            case 97:  model.lookAt.translate(0.2, 0, 0);  break;
-            case 100: model.lookAt.translate(-0.2, 0, 0);  break;
+            case 119: model.lookAt.translate(0, 0, 0.6);  break;
+            case 115: model.lookAt.translate(0, 0, -0.6);  break;
+            case 97:  model.lookAt.translate(0.6, 0, 0);  break;
+            case 100: model.lookAt.translate(-0.6, 0, 0);  break;
             default: return false;
         }
     }
@@ -187,7 +187,9 @@ var BasePlanetModel = function() {
 
         this.sphere[1].addNode(this.stars = new SceneJS.cloud({count:400, scale:20.0}));
 
-
+        this["showSphere0"] = function(state) {
+          this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
+        } 
 
         this.sphere[0].curve.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
                 this.systemSun[1] = new Spherical({ scale: 9, axisAngle: 0.5, speed: 0.0 },
@@ -245,11 +247,17 @@ var BasePlanetModel = function() {
         anchor.setBaseColor(color);
         anchor.addNode(this.curves[node]);
     }
+    this.running=true;
+    this.pause = function() {
+      this.running=!this.running;
+      
+    }
     this.update = function() {
-
-        for (i in model.updateList) {
-            model.updateList[i].update((365.0/this.fps)/this.speed);
-        }
+    
+        if(this.running)   
+          for (i in model.updateList) {
+              model.updateList[i].update((365.0/this.fps)/this.speed);
+          }
         this.time++;
         this.render();
     }
@@ -269,8 +277,8 @@ var BasePlanetModel = function() {
         //TODO: on model change -> events?
         sunPos = getNodePos(this.name+"Sun");
         this.light.setPos(sunPos);
-        if (model.currentPlanet.type != "Sun" &&
-                distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
+        if (this.sun.getEnabled() &&
+            distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
             this.planet.setShade({r: 0.2, g: 0.2, b:0.2});
         else
             this.planet.setShade(model.currentPlanet.color);
