@@ -286,12 +286,15 @@ var BasePlanetModel = function() {
             this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
-//        $("#North").remove();
-//        var north = getNodePosCanvas("North");
-//        $("body").append("<div id='North'; style='z-index:2; color: white;  background-color: rgba(150,150,150,0.2);  font-size: small;position: absolute;top:"+north.y.toFixed()+"px;left:"+ north.x.toFixed()+ "px;'>Planet</div>");
+//      this.label(this.name+"Sun","Sun");
 
     }
 
+    this.label = function(node,text) {
+        $("#"+node).remove();
+        var pos = getNodePosCanvas(node);
+        $("body").append("<div id='"+node+"'; style='z-index:2; color: white;  background-color: rgba(150,150,150,0.2);  font-size: small;position: absolute;top:"+pos.y.toFixed()+"px;left:"+ pos.x.toFixed()+ "px;'>" +  text + "</div>");
+    }
     this.reset = function () {
         if (this.sphere.length == 0) return;
         for (var i = 0; i < this.sphere.length; i++) {
