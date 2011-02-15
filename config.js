@@ -21,6 +21,19 @@ var colors = {
 
 var planetPresets = { 
 
+Model5Mercury1: { 
+  model: "Model5",
+  alpha:110,
+  beta:36.6667,
+  gamma:55,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 15.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 15.0, speed: 0, rotateStart: 0 },
+  ] },
+
 Model5Mars1: { 
   model: "Model5",
   alpha:780,

@@ -362,13 +362,13 @@ var BasePlanetModel = function() {
 
         for (var i = start + 1; i < this.sphere.length; i++) {
             oldRotate[i] = this.sphere[i].getRotateAngle();
-            this.sphere[i].update(-10.0);
+            this.sphere[i].update(-20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
 
         for (var j = 0; j < 80; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                this.sphere[i].update(15.0 / step);
+                this.sphere[i].update(20.0 / step);
             }
             pos = getNodePos(node);
             curvePos.push(pos);
