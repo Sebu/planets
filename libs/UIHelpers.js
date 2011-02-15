@@ -16,11 +16,11 @@ var UI = {
     box : function(params) {
         var id = params.id;
         var text = params.text || params.id;
-        return $("<div id='cap" + id + "'" +
+        return $("<div class='caption' id='cap" + id + "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().toggle(300);'>" +
                 "<div class='triangle'><img src='textures/open.png'></div>" +
-                "<div class='triangle' style='display:none' ><img src='textures/closed.png'></div><div  class='caption'>" +
-                text + "</div></div><div id='" + id + "'></div>");
+                "<div class='triangle' style='display:none' ><img src='textures/closed.png'></div>" +
+                text + "</div><div id='" + id + "'></div>");
     },
 
     slider : function(params) {
