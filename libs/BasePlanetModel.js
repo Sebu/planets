@@ -110,10 +110,13 @@ var BasePlanetModel = function() {
 
     this.posAngle = 10.0;
     this.betaRotate = 0;
-
-    this.showPath = function(state) { this.curves[0].setEnabled(state);}
-    this.showHippo = function(state) { this.curves[1].setEnabled(state); }
-    this.showStars = function(state) { this.stars.setEnabled(state); }
+    
+    this.showCurve0 = true;
+    this.showCurve1 = true;
+    
+    this.setShowCurve0 = function(state) { this.showCurve0=state; }
+    this.setShowCurve1 = function(state) { this.showCurve1=state;  }
+    this.setShowStars = function(state) { this.stars.setEnabled(state); }
 
     // SETUP
     // base structure
@@ -144,10 +147,10 @@ var BasePlanetModel = function() {
             emit: 0.0, specular: 0.0, shine: 3.0},
 
                 // DIRECTION MARKERS 
-                SceneJS.translate({id: "North", x:3,y:0.1},SceneJS.billboard({}, new SceneJS.Text({text : "NORTH"}))),
-                SceneJS.translate({x:-3,y:0.1},SceneJS.billboard({},new SceneJS.Text({text : "WEST"}))),
-                SceneJS.translate({z:3},SceneJS.billboard({},new SceneJS.Text({text : "EAST"}))),
-                SceneJS.translate({z:-3},SceneJS.billboard({}, new SceneJS.Text({text : "SOUTH"}))),
+                SceneJS.translate({id: "North", x:4.5,y:0.2}),
+                SceneJS.translate({id: "South", x:-4.5,y:0.2}),
+                SceneJS.translate({id: "East", z:4.5,y:0.2}),
+                SceneJS.translate({id: "West", z:-4.5,y:0.2}),
                 SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0})) //xSize: 6.0,  ySize: 0.01, zSize: 6.0})
                 )
                 );
@@ -182,7 +185,7 @@ var BasePlanetModel = function() {
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
-            this["showSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
+            this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
         }
 
         this.sphere[1].addNode(this.stars = new SceneJS.cloud({count:400, scale:20.0}));
@@ -286,21 +289,27 @@ var BasePlanetModel = function() {
             this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
-//      this.label(this.name+"Sun","Sun");
+        //this.label(this.name+"Sun","Sun");
+        //this.label(this.name+"Planet","Planet");
+        //this.label("North","North");
+        //this.label("South","South");
+        //this.label("East","East");
+        //this.label("West","West");
 
     }
 
     this.label = function(node,text) {
         $("#"+node).remove();
         var pos = getNodePosCanvas(node);
-        $("body").append("<div id='"+node+"'; style='z-index:2; color: white;  background-color: rgba(150,150,150,0.2);  font-size: small;position: absolute;top:"+pos.y.toFixed()+"px;left:"+ pos.x.toFixed()+ "px;'>" +  text + "</div>");
+        
+        $("body").append("<div id='"+node+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
     }
 
 
     this.reset = function () {
         if (this.sphere.length == 0) return;
         for (var i = 0; i < this.sphere.length; i++) {
-            this.sphere[i].setRotateAngle(model.currentPlanet.sphere[i].rotateStart);
+            this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
         }
 
         this.systemSun[0].setRotateAngle(0);

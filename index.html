@@ -163,20 +163,22 @@
 
         UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
         for(i in model.sphere) {
-            UI.checkbox({model:"model", id:"showSphere"+i, text:"S"+(Number(i)+1)}).appendTo("#vis");
+            UI.checkbox({model:"model", id:"ShowSphere"+i, text:"S"+(Number(i)+1)}).appendTo("#vis");
         }
-        UI.checkbox({model:"model", id:"showPath", text:"path"}).appendTo("#vis");
-        UI.checkbox({model:"model", id:"showHippo", text:"hippo"}).appendTo("#vis");
-        UI.checkbox({model:"model", id:"showStars", text:"stars"}).appendTo("#vis");
+        UI.checkbox({model:"model", id:"ShowCurve0", text:"path"}).appendTo("#vis");
+        UI.checkbox({model:"model", id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
+        UI.checkbox({model:"model", id:"ShowStars", text:"stars"}).appendTo("#vis");
 
 
 
         if (model.name == "ModelMoon") {
-            UI.box({id:"moon", text:"Moon settings"}).appendTo("#parameters");
+            UI.box({id:"moon", text:"Moon year month day cycle"}).appendTo("#parameters");
             UI.slider({model:"model", id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
             UI.slider({model:"model", id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
-            UI.slider({model:"model", id:"MetonDraconiticMonths", "max":1000, text:"Draconitic months"}).appendTo("#moon");
-            UI.slider({model:"model", id:"MetonDays", "max":30000, text:"days per cycle"}).appendTo("#moon");
+            UI.slider({model:"model", id:"MetonDays", "max":30000, text:"days"}).appendTo("#moon");
+            
+            UI.box({id:"moon2", text:"Eclipse period"}).appendTo("#parameters");
+            UI.slider({model:"model", id:"MetonDraconiticMonths", "max":1000, text:"Draconitic months"}).appendTo("#moon2");
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -184,8 +186,8 @@
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:"model", id:"Speed2",  max:1100, text:"S 3 (synodic)"}).appendTo("#speed");
+            UI.slider({model:"model", id:"Speed1", min: -600, max:600, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:"model", id:"Speed2", min: -600, max:600, text:"S 3 (synodic)"}).appendTo("#speed");
 
             $("#moon input").change();
 
@@ -225,7 +227,8 @@
              UI.box("rotateStart", "Rotation Start (degrees)").appendTo("#parameters");
              UI.slider({model:"model", id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
              UI.slider({model:"model", id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-             UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3-4 (synodic)"}).appendTo("#rotateStart");
+             UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+             UI.slider({model:"model", id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
 
         } else if (model.name == "Model4") {
@@ -241,7 +244,8 @@
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:"model", id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-            UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3-4 (synodic)"}).appendTo("#rotateStart");
+             UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+             UI.slider({model:"model", id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
         } else if (model.name == "Model5") {
 
@@ -260,7 +264,9 @@
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:"model", id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-            UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3-4 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:"model", id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:"model", id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+            UI.slider({model:"model", id:"RotateStart4", max: 360, step:0.05, text:"S 5"}).appendTo("#rotateStart");
 
           } else if (model.name == "ModelSimple") {
 

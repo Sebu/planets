@@ -6,6 +6,8 @@ html, body {
   height: 100%;
   background-color: rgb(25,25,25);
   font-family: sans-serif;
+  -webkit-user-select:none;
+	-moz-user-select:none;
 }
 
 
@@ -42,6 +44,17 @@ html, body {
 	border-radius:4px; 
 }
 
+.label {
+  z-index: 2;
+  position: absolute;
+  color: white;
+  background-color: rgba(150,150,150,0.6);
+	font-weight: bold;
+	font-size:12px;	 
+  border-radius: 5px;
+  padding: 4px;
+  
+}
 
 
 .container {

@@ -46,7 +46,7 @@ var UI = {
         var id = params.id;
         var text = params.text || params.id;
         
-        return $("<input type=checkbox name='visMode' checked='true' onClick='"+model+"."+ id + "(this.checked)'>"+ text + "</input>");
+        return $("<input type=checkbox name='visMode' checked='true' onClick='"+model+".set"+ id + "(this.checked)'>"+ text + "</input>");
     }
 }
 

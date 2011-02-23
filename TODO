@@ -61,20 +61,22 @@ DONE
 - fix sun shade
 - fix triangle
 - labels
-
-TODO
+- rotateStart s3 s4
+- fix rotate start
+- moon labels
 - fix moon start
 - fix view hippo and co.
-- rotateStart s3 s4
+
+TODO
+- box with angles ( pos.x dot :) )
 
 NEXT
+- tooltip with description and default/recomended values
 - email yavetz sphere 3-4
 - show box with lat. etc.
 - update hippode only on demand
 - UIHelper BASICS
-- tooltip with description and default/recomended values
 - variable slider max ( depended on model )
-- sun model in list
 - moon speed functions days per year
 
 auftrag:

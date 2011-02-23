@@ -58,7 +58,7 @@ Model5 = function(params) {
     this.update = function() {
         this.removeCurve(0);
         //this.removeCurve(1);
-        this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
+        if(this.showCurve0) this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
         //this.addCurve(1, this.sphere[3].curve, this.calcCurve(2, this.name + "Planet"), colors["Hippo"]);
         Model5.prototype.update.call(this);
     }

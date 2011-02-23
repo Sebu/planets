@@ -18,17 +18,32 @@ Model4 = function(params) {
     }
 
 
+    this.setAxisAngle2 = function(angle) {
+    		this.sphere[2].setAxisAngle(angle);
+//            		this.updateHippo();
+    }
+    
+    this.setAxisAngle3 = function(angle) {
+    		this.sphere[3].setAxisAngle(angle);    
+//            		this.updateHippo();
+    }
+    
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
         this.sphere[3].setSpeed(-speed);
     }
 
+		this.updateHippo = function() {
+        this.removeCurve(1);
+        if(this.showCurve1) this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, this.name + "Planet"), colors["Hippo"]);
+		}
+		
     this.update = function() {
         this.removeCurve(0);
-        this.removeCurve(1);
-        this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
-        this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, this.name + "Planet"), colors["Hippo"]);
+        if(this.showCurve0) this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
+        this.updateHippo();
         Model4.prototype.update.call(this);
+        
     }
 };
 
