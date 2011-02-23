@@ -277,7 +277,7 @@ Spherical.prototype._init = function(params) {
                                                     )
                                             ),
                                 // northpole
-                                    this.visuals["npole"] = SceneJS.translate({x: 0.0, y: params.scale, z: 0.0  },
+                                    this.visuals["npole"] = SceneJS.translate({id:"" + params.inner_id +"pole",x: 0.0, y: params.scale, z: 0.0  },
                                             SceneJS.scale({x: 0.1, y: 0.1, z: 0.1 },
                                                     SceneJS.sphere()
                                                     )

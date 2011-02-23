@@ -58,8 +58,8 @@
 
 		function updateInfos() {
 			sunAngle = getNodeAngle(model.name+"Sun",model.name+"Planet",model.name+"Earth");
-			starsAngle = getNodeAngle("S0","S1",model.name+"Earth");
-			eclipticAngle = getNodeAngle("S1",model.name+"Planet",model.name+"Earth");
+			starsAngle = getNodeAngle("S0pole","S1pole",model.name+"Earth");
+			eclipticAngle = 90-getNodeAngle("S1pole",model.name+"Planet",model.name+"Earth");
 			$("#sunAngle").html(sunAngle.toFixed());
 			$("#eclipticAngle").html(eclipticAngle.toFixed());
 			$("#eclipticSpeed").html(starAngle.toFixed());
