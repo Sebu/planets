@@ -66,9 +66,10 @@ DONE
 - moon labels
 - fix moon start
 - fix view hippo and co.
+- box with angles ( pos.x dot :) )
 
 TODO
-- box with angles ( pos.x dot :) )
+
 
 NEXT
 - tooltip with description and default/recomended values

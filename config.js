@@ -201,7 +201,7 @@ Saturn: {
     {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
     {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 
-Moon1: { 
+MoonMeton: { 
   sunDist: 8,
   model: "ModelMoon",
   metonYear: 19,
@@ -213,8 +213,21 @@ Moon1: {
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
     {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
-  
-Moon2: {
+
+MoonCallippus: { 
+  sunDist: 8,
+  model: "ModelMoon",
+  metonYear: 76,
+  metonSynodicMonths: 940,
+  metonDays:27759,
+  metonDraconiticMonths: 242,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
+    {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }]},
+      
+Moon3: {
   sunDist: 8,
   model: "ModelMoon",
   metonYear: 8,
@@ -227,18 +240,7 @@ Moon2: {
     {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }]},
   
-Moon3: { 
-  sunDist: 8,
-  model: "ModelMoon",
-  metonYear: 76,
-  metonSynodicMonths: 940,
-  metonDays:27759,
-  metonDraconiticMonths: 242,
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0, rotateStart: 0 }]},
+
     
 Sun: { 
   model: "ModelSun",

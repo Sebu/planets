@@ -19,7 +19,11 @@
 <div class="container" id="legendContainer">
 </div>
 
-<div class="container" id="moonInfoContainer">
+<div class="container" id="infoContainer">
+    <div>angle planet/sun <span id="sunAngle">0</span></div>
+    <div>angle planet/ecliptic <span id="eclipticAngle">0</span></div>
+    <div>speed stars/ecliptic <span id="eclipticSpeed">0</span></div>
+<div id="moonInfoContainer">
     <div>zodiacal month</div>
     <div id="metonZodicalMonths">0</div>
     <div>days per year</div>
@@ -31,11 +35,12 @@
     <div>days per draconitic month</div>
     <div id="draconiticDaysPerMonth">0</div>
 </div>
+</div>
 
 
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script>
 <script type="text/javascript" src="libs/sylvester.js"></script>
-<script type="text/javascript" src="libs/scenejs.js"></script>
+<script type="text/javascript" src="libs/scenejs.min.js"></script>
 <script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script>
 <script type="text/javascript" src="libs/scenejs.ext.js"></script>
 
@@ -51,7 +56,14 @@
 <script type="text/javascript" src="models/Model5.js"></script>
 <script type="text/javascript">
 
-
+		function updateInfos() {
+			sunAngle = getNodeAngle(model.name+"Sun",model.name+"Planet",model.name+"Earth");
+			starsAngle = getNodeAngle("S0","S1",model.name+"Earth");
+			eclipticAngle = getNodeAngle("S1",model.name+"Planet",model.name+"Earth");
+			$("#sunAngle").html(sunAngle.toFixed());
+			$("#eclipticAngle").html(eclipticAngle.toFixed());
+			$("#eclipticSpeed").html(starAngle.toFixed());
+		}
 
 
     // setup site
@@ -130,11 +142,14 @@
             renderer.mouseWheel_firefox(e);
         }, true);
         setInterval("model.update()", 33);
+        setInterval("updateInfos()", 33);
         window.onresize = renderer.resize();
         model.resize();
 
 
     })
+
+
 
     function setCurrentPlanet(node) {
 
@@ -198,7 +213,7 @@
             $("#MetonYear > input,#MetonSynodicMonths > input,#MetonDraconiticMonths > input,#MetonDays > input").change(function() {
 
                 $("#metonZodicalMonths").html(model.getMetonZodicalMonths().toFixed());
-                $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed());
+                $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed(2));
                 $("#synodicDaysPerMonth").html(model.getSynodicDaysPerMonth().toFixed());
                 $("#zodicalDaysPerMonth").html(model.getZodicalDaysPerMonth().toFixed());
                 $("#draconiticDaysPerMonth").html(model.getDraconiticDaysPerMonth().toFixed());

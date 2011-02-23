@@ -73,7 +73,8 @@ html, body {
   left: 10px;
 }
 
-#moonInfoContainer {
+#infoContainer {
+	width: 200px;
   top: 10px;
   right: 10px;
 }

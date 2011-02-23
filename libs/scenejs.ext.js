@@ -271,7 +271,7 @@ Spherical.prototype._init = function(params) {
                                                    this.markerArc = new Circle({ angle: 90.0}))),
 
                                 // equator marker ball
-                                    this.visuals["markerball"] = SceneJS.translate({x: 0.0, y: 0.0, z: params.scale  },
+                                    this.visuals["markerball"] = SceneJS.translate({id:params.inner_id, x: 0.0, y: 0.0, z: params.scale  },
                                             SceneJS.scale({x: 0.1, y: 0.1, z: 0.1 },
                                                     SceneJS.sphere()
                                                     )
@@ -496,6 +496,18 @@ SceneJS.LookAt.prototype.translate = function(x, y, z) {
     //	this._setDirty();
 }
 
+sceneToSyl = function(pos) {
+ return Vector.create([pos.x, pos.y, pos.z]);
+}
+
+
+getNodeAngle = function(node1,node2,node3) {
+		center =  sceneToSyl(getNodePos(node3));
+	 	pos1 = center.subtract( sceneToSyl(getNodePos(node1)) ); 
+	 	pos2 = center.subtract( sceneToSyl(getNodePos(node2)) );
+	 	scale = 180.0/Math.PI;
+	  return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*scale;
+}
 
 getNodePos = function(node) {
     query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : 1, canvasHeight : 1    });
