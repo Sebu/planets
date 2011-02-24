@@ -1,7 +1,3 @@
-// UI HELPERS
-addSlider = function(cls, id, text) {
-    return "<div class='" + cls + "' id='" + id + "'><div>" + text + "</div><input type='range' class='slider' onchange='$(\"#" + id + " > input\").attr(\"value\",value);'/> <input type='text' class='range' onchange='$(\"#" + id + " > input\").attr(\"value\",value);'/></div>"
-}
 
 
 var BaseScene = function(params) {

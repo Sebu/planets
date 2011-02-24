@@ -23,6 +23,24 @@ var UI = {
                 text + "</div><div id='" + id + "'></div>");
     },
 
+    input : function(params) {
+        var model = params.model;
+        var id = params.id;
+        var text = params.text || params.id;
+        var min = params.min || 0;
+        var max = params.max || 100;
+        var step = params.step || 1;
+        var value = params.value || window[model]["get"+id]();
+        var change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
+
+        ele =  $("<div id='" + id + "'>" +
+            "<div>" + text + "</div>" +
+
+            "<input type='text' min="+min+" max="+max+" step="+step+" value='" +value+ "' class='range' onchange='"+change+"'/>" +
+            "</div>");
+        return ele;
+    },
+
     slider : function(params) {
         var model = params.model;
         var id = params.id;

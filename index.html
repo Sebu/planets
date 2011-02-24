@@ -23,7 +23,7 @@
     <div>angle planet/sun <span id="sunAngle">0</span></div>
     <div>angle planet/ecliptic <span id="eclipticAngle">0</span></div>
     <div>speed stars/ecliptic <span id="eclipticSpeed">0</span></div>
-<div id="moonInfoContainer">
+<div id="moonInfoContainer" style="display:none">
     <div>zodiacal month</div>
     <div id="metonZodicalMonths">0</div>
     <div>days per year</div>
@@ -59,7 +59,7 @@
 		function updateInfos() {
 			sunAngle = getNodeAngle(model.name+"Sun",model.name+"Planet",model.name+"Earth");
 			starsAngle = getNodeAngle("S0pole","S1pole",model.name+"Earth");
-			eclipticAngle = 90-getNodeAngle("S1pole",model.name+"Planet",model.name+"Earth");
+			eclipticAngle = getNodeAngle("S1pole",model.name+"Planet",model.name+"Earth")-90;
 			$("#sunAngle").html(sunAngle.toFixed());
 			$("#eclipticAngle").html(eclipticAngle.toFixed());
 			$("#eclipticSpeed").html(starAngle.toFixed());
