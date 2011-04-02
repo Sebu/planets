@@ -6,6 +6,53 @@
  * some nice shortcuts for jQuery blocks to create a proto site
  */
 
+
+$(function(){
+    // Check if browser supports <input type=range/>
+    var i = document.createElement("input");
+    i.setAttribute("type", "range");
+    var rangeNotSupported = (i.type === "text");
+    delete i;
+
+    // If browser doesn't support <input type=range/>
+    // then use jQuery UI to display them
+    if(rangeNotSupported) {
+        // loop through all <input type=range/>
+        // on the page
+        $("input[type=range]").each(function(){
+            var range = $(this);
+            
+            // Create <div/> to hold jQuery UI Slider
+            var sliderDiv = $("<div/>");
+            sliderDiv.width(range.width());
+            
+            // Insert jQuery UI Slider where the
+            // <input type=range/> is located
+            range.after(
+                sliderDiv.slider({
+                    // Set values that are set declaratively
+                    // in the <input type=range/> element
+                    min: parseFloat(range.attr("min")),
+                    max: parseFloat(range.attr("max")),
+                    value: parseFloat(range.val()),
+                    step: parseFloat(range.attr("step")),
+                    // Update the <input type=range/> when
+                    // value of slider changes
+                    slide: function(evt, ui) {
+                        range.val(ui.value);
+                    },
+                    change: function(evt, ui) {
+                        // set <input type=range/> value
+                        range.val(ui.value);
+                    }
+                })
+            ).
+            // Hide <input type=range/> from display
+            hide();
+        });
+    }
+});
+
 var UI = {
 
     optionsFromHash : function(selector, hash) {

@@ -3,25 +3,17 @@
 
 Planet = function(params) {
   var emit = params.emit || 0.0;
+  this.dist = params.dist || 0.0;
+  this.beta = params.betaRotate || 0.0;
+  this.scale = params.scale;
+  this.color = params.color || { r: 2.2, g: 2.2, b: 2.9 };  var emit = params.emit || 0.0;
   dist = params.dist;
   
   this.mesh = new THREE.Mesh(new Sphere( 1, 10, 10 ), new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ));
 	this.mesh.position.z = - dist;
 	this.mesh.scale = new THREE.Vector3( params.scale, params.scale, params.scale );
 	
-
-//  this.addNode(
-//  	this._distNode = SceneJS.translate({x:0.0, y:0.0, z: dist},
-// 			SceneJS.scale( { id: params.inner_id, x:params.scale, y:params.scale, z: params.scale },
-//      	this._material = SceneJS.material({              
-//					baseColor:  { r: 2.2, g: 2.2, b: 2.9 },
-//					specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-//    			emit: emit, specular: 0.0, shine: 3.0},
-//					SceneJS.sphere()
-//				)
-//			)
-//		)
-//  ); 	
+	
 };
 
 Planet.prototype.setDist = function(dist) {
@@ -137,50 +129,11 @@ Spherical = function Spherical(params) {
 //		)));	
 		
 
-    this.setAxis(params.axisAngle || 0.0);
-    this.setRotateAngle(params.rotateStart || 0.0);
-    this.setSpeed(params.speed);
        
         
 };
 
-Spherical.prototype.setVisuals = function(vis, state) {
-    for(i in vis) {
-      this.visuals[vis[i]].setEnabled(state);
-    }
-				
-};
 
-Spherical.prototype.setAxis = function(angle) {
-		this.axisAngle = angle;
-//		this.arcangle21.setAngle(angle);
-//		this.arcangle22.setAngle(angle);
-//		this._zRotate.setAngle(this._zAngle);
-};
-
-Spherical.prototype.getAxis = function() {
-		return this.axisAngle;
-};
-
-Spherical.prototype.setSpeed = function(speed) {
-		this.speed = speed;
-		this.step = (speed!=0) ? (360.0/speed) : 0.0;
-};
-
-Spherical.prototype.setArcAngle = function(angle) {
-//  this.arcangle11.setAngle(-angle);
-};
-
-Spherical.prototype.setRotateAngle = function(angle) {
-		this.rotateAngle = angle;
-		this.setArcAngle(angle);
-//		this._yRotate.setAngle(this._yAngle);
-};
-
-Spherical.prototype.update = function(step) {
-		this.rotateAngle += this.step*step;
-		this.setRotateAngle(this.rotateAngle);
-};
 
 
 
