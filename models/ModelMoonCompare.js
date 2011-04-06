@@ -99,7 +99,7 @@ ModelMoonCompare = function(params) {
     }
 
     this.setCurrentMoonModel("Mendell");
-    this.setCurrentMoonModel2("Mendell");
+    this.setCurrentMoonModel2("SchFixed");
 
     this.updateMoon = function() {
         this.draco = this.getDraconiticDaysPerMonth();
