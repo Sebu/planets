@@ -67,24 +67,27 @@ DONE
 - fix moon start
 - fix view hippo and co.
 - box with angles ( pos.x dot :) )
+- simple hippo model with motion
 
 TODO
-- renderer extract with better connection to canvas element
+
+proj = Plane.pointClosestTo(planet)
+
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection
-- show latitude/longitude 
-- menu with s2 start values (deprecated)
-- only show last or first spheres of a model 
-- simple hippo model with motion
-- compare moon models 
+- compare moon models
   - color mendell red / schfixed blue
   - (show diff in latitude)
+- show latitude/longitude
+- only show last or first spheres of a model
 
 NEXT
+- menu with s2 start values (deprecated)
+- renderer extract with better connection to canvas element
 - keyframe animation?DDDDd
-- tooltip with description and default/recomended values
+- tooltip with description and default/reconmended values
 - email yavetz sphere 3-4
 - show box with lat. etc.
-- update hippode only on demand
+- update hippopede only on demand
 - UIHelper BASICS
 - variable slider max ( depended on model )
 - moon speed functions days per year

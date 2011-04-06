@@ -7,8 +7,8 @@
  */
 
 
-ModelSimple = function(params) {
-    params.name = "ModelSimple";
+ModelHippo = function(params) {
+    params.name = "ModelHippo";
     params.spheres = 2;
     this.init(params);
 
@@ -16,6 +16,13 @@ ModelSimple = function(params) {
     
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
+    }
+
+
+
+    this.setSpeed0 = function(speed) {
+        this.sphere[0].setSpeed(speed);
+        this.sphere[1].setSpeed(-speed);
     }
 
     this.update = function() {
@@ -28,5 +35,5 @@ ModelSimple = function(params) {
 
 };
 
-ModelSimple.prototype = new BasePlanetModel;
-ModelSimple.prototype.constructor = ModelSimple;
+ModelHippo.prototype = new BasePlanetModel;
+ModelHippo.prototype.constructor = ModelHippo;

@@ -53,6 +53,7 @@
 <script type="text/javascript" src="models/ModelSun.js"></script>
 <script type="text/javascript" src="models/ModelYavetz.js"></script>
 <script type="text/javascript" src="models/ModelSimple.js"></script>
+<script type="text/javascript" src="models/ModelHippo.js"></script>
 <script type="text/javascript" src="models/Model5.js"></script>
 <script type="text/javascript">
 
@@ -62,7 +63,7 @@
 			eclipticAngle = getNodeAngle("S1pole",model.name+"Planet",model.name+"Earth")-90;
 			$("#sunAngle").html(sunAngle.toFixed());
 			$("#eclipticAngle").html(eclipticAngle.toFixed());
-			$("#eclipticSpeed").html(starAngle.toFixed());
+			$("#eclipticSpeed").html(starsAngle.toFixed());
 		}
 
 
@@ -84,6 +85,7 @@
         models["ModelMoon"] =  new ModelMoon({renderer: renderer});
         models["ModelSun"] =  new ModelSun({renderer: renderer});
         models["ModelSimple"] = new ModelSimple({renderer: renderer});
+        models["ModelHippo"] = new ModelHippo({renderer: renderer});
         models["ModelYavetz"] = new ModelYavetz({renderer: renderer});
         models["Model5"] = new Model5({renderer: renderer});
 
@@ -283,13 +285,20 @@
             UI.slider({model:"model", id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
             UI.slider({model:"model", id:"RotateStart4", max: 360, step:0.05, text:"S 5"}).appendTo("#rotateStart");
 
-          } else if (model.name == "ModelSimple") {
+        } else if (model.name == "ModelSimple") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+
+        } else if (model.name == "ModelHippo") {
+
+            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+            UI.slider({model:"model", id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
+            UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1,2"}).appendTo("#speed");
 
 
         } else if (model.name == "ModelSun") {

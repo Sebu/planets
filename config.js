@@ -108,7 +108,14 @@ SimpleTest: {
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
-
+HippoTest: {
+  model: "ModelHippo",
+  sphere: [
+    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
+  ] },
 Mercury1: { 
   sunDist: 8,
   model: "Model4",
