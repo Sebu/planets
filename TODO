@@ -70,9 +70,6 @@ DONE
 - simple hippo model with motion
 
 TODO
-
-proj = Plane.pointClosestTo(planet)
-
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection
 - compare moon models
   - color mendell red / schfixed blue

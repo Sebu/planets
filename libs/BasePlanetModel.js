@@ -137,6 +137,9 @@ var BasePlanetModel = function() {
 
         this.root.addNode(this.light);
 
+        this.root.addNode(this.debug = SceneJS.translate({id: "debug"},
+          SceneJS.scale({y:0.01}, SceneJS.sphere({radius: 0.2}) ) ));
+
         this.root.addNode(this.earthPlane =  SceneJS.material({
             baseColor:  { r: 0.5, g: 0.5, b: 1.0 },
             specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
@@ -147,7 +150,7 @@ var BasePlanetModel = function() {
                 SceneJS.translate({id: "South", x:-4.5,y:0.2}),
                 SceneJS.translate({id: "East", z:4.5,y:0.2}),
                 SceneJS.translate({id: "West", z:-4.5,y:0.2}),
-                SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0})) //xSize: 6.0,  ySize: 0.01, zSize: 6.0})
+                SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0}))
                 )
                 );
 
@@ -169,7 +172,7 @@ var BasePlanetModel = function() {
         for (var i = 1; i < this.sphere.length; i++) {
             tmp = this.sphere[i] = new Spherical({inner_id: "S" + i + "", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
-            this.updateList[i] = tmp;
+            this.updateList.push(tmp);
 
         }
         this.sphere[this.sphere.length - 1].anchor.addNode(this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet",  color:colors["Planet"] }));

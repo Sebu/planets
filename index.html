@@ -58,12 +58,18 @@
 <script type="text/javascript">
 
 		function updateInfos() {
-			sunAngle = getNodeAngle(model.name+"Sun",model.name+"Planet",model.name+"Earth");
-			starsAngle = getNodeAngle("S0pole","S1pole",model.name+"Earth");
-			eclipticAngle = getNodeAngle("S1pole",model.name+"Planet",model.name+"Earth")-90;
+//			sunAngle = getAngle(posSyl(model.name+"Sun"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth") );
+//			starsAngle = getAngle(posSyl("S0pole"),posSyl("S1pole"), posSyl(model.name+"Earth"));
+//			eclipticAngle = getAngle(posSyl("S1pole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
+      
+      plane = Plane.create(Vector.Zero(3), posSyl("S1pole").toUnitVector());      
+      pointOnPlane = plane.pointClosestTo(posSyl(model.name+"Planet"));
+        
+      model.debug.setXYZ(sylToScene(pointOnPlane) );
 			$("#sunAngle").html(sunAngle.toFixed());
 			$("#eclipticAngle").html(eclipticAngle.toFixed());
 			$("#eclipticSpeed").html(starsAngle.toFixed());
+      
 		}
 
 

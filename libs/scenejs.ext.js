@@ -1,6 +1,5 @@
 Camera = SceneJS.Camera;
 
-
 Spherical = SceneJS.createNodeType("spherical");
 Planet = SceneJS.createNodeType("planet");
 Globe = SceneJS.createNodeType("globe");
@@ -496,17 +495,28 @@ SceneJS.LookAt.prototype.translate = function(x, y, z) {
     //	this._setDirty();
 }
 
+
+
+sylToScene = function(pos) {
+ return {x: pos.elements[0], y: pos.elements[1], z: pos.elements[2]};
+}
+
 sceneToSyl = function(pos) {
  return Vector.create([pos.x, pos.y, pos.z]);
 }
 
+posSyl = function(node) {
+  return sceneToSyl(getNodePos(node));
+}
 
-getNodeAngle = function(node1,node2,node3) {
-		center =  sceneToSyl(getNodePos(node3));
-	 	pos1 = center.subtract( sceneToSyl(getNodePos(node1)) ); 
-	 	pos2 = center.subtract( sceneToSyl(getNodePos(node2)) );
-	 	scale = 180.0/Math.PI;
-	  return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*scale;
+
+PI_SCALE = 180.0/Math.PI;
+
+
+getAngle = function(node1, node2, center) {
+	 	pos1 = center.subtract( node1 ); 
+	 	pos2 = center.subtract( node2 );
+	  return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
 }
 
 getNodePos = function(node) {
