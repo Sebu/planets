@@ -50,6 +50,7 @@
 <script type="text/javascript" src="config.js"></script>
 <script type="text/javascript" src="models/Model4.js"></script>
 <script type="text/javascript" src="models/ModelMoon.js"></script>
+<script type="text/javascript" src="models/ModelMoonCompare.js"></script>
 <script type="text/javascript" src="models/ModelSun.js"></script>
 <script type="text/javascript" src="models/ModelYavetz.js"></script>
 <script type="text/javascript" src="models/ModelSimple.js"></script>
@@ -58,17 +59,17 @@
 <script type="text/javascript">
 
 		function updateInfos() {
-//			sunAngle = getAngle(posSyl(model.name+"Sun"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth") );
-//			starsAngle = getAngle(posSyl("S0pole"),posSyl("S1pole"), posSyl(model.name+"Earth"));
-//			eclipticAngle = getAngle(posSyl("S1pole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
+			sunAngle = getAngle(posSyl(model.name+"Sun"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth") );
+			starsAngle = getAngle(posSyl("S0pole"),posSyl("S1pole"), posSyl(model.name+"Earth"));
+			eclipticAngle = getAngle(posSyl("S1pole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
       
-      plane = Plane.create(Vector.Zero(3), posSyl("S1pole").toUnitVector());      
-      pointOnPlane = plane.pointClosestTo(posSyl(model.name+"Planet"));
-        
-      model.debug.setXYZ(sylToScene(pointOnPlane) );
 			$("#sunAngle").html(sunAngle.toFixed());
 			$("#eclipticAngle").html(eclipticAngle.toFixed());
 			$("#eclipticSpeed").html(starsAngle.toFixed());
+
+
+      pointOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Planet"));
+      model.debug.setXYZ(sylToScene(pointOnPlane) );
       
 		}
 
@@ -89,6 +90,7 @@
         models = {}; //new Object;
         models["Model4"] = new Model4({renderer: renderer});
         models["ModelMoon"] =  new ModelMoon({renderer: renderer});
+        models["ModelMoonCompare"] =  new ModelMoonCompare({renderer: renderer});
         models["ModelSun"] =  new ModelSun({renderer: renderer});
         models["ModelSimple"] = new ModelSimple({renderer: renderer});
         models["ModelHippo"] = new ModelHippo({renderer: renderer});
@@ -194,7 +196,7 @@
 
 
 
-        if (model.name == "ModelMoon") {
+        if (model.name == "ModelMoon" || model.name == "ModelMoonCompare") {
             UI.box({id:"moon", text:"Moon year month day cycle"}).appendTo("#parameters");
             UI.slider({model:"model", id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
             UI.slider({model:"model", id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
@@ -319,8 +321,10 @@
 
         }
 
+        fixRange();
         $("#capvis,#caprotateStart").click();
         $("#moon input, #angle  input, #speed  input").change();
+
 //        $("#rotateStart,#vis").hide();
     }
 

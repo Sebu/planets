@@ -314,6 +314,10 @@ Spherical.prototype._init = function(params) {
 
 };
 
+Spherical.prototype.getPlane = function() {
+  return Plane.create(Vector.Zero(3), posSyl("S1pole").toUnitVector());
+}
+
 Spherical.prototype.setVisuals = function(vis, state) {
     for (i in vis) {
         this.visuals[vis[i]].setEnabled(state);

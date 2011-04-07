@@ -116,6 +116,21 @@ HippoTest: {
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
+
+MoonCompare: { 
+  sunDist: 8,
+  model: "ModelMoonCompare",
+  metonYear: 19,
+  metonSynodicMonths: 235,
+  metonDays:6940,
+  metonDraconiticMonths: 242,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
+    {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
+
+
 Mercury1: { 
   sunDist: 8,
   model: "Model4",
