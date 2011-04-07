@@ -537,8 +537,8 @@ getNodePosCanvas = function(node) {
 
     pos = query.getResults().canvasPos;
 
-    if (pos.x<0 || pos.x>canvas.width) pos.z = -1.0;
-    if (pos.y<0 || pos.y>canvas.height) pos.z = -1.0;
+    if (pos.x<0 || pos.x>canvas.width-50) pos.z = -1.0;
+    if (pos.y<0 || pos.y>canvas.height-20) pos.z = -1.0;
     
     return pos;
 }

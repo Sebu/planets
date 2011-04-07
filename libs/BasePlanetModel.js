@@ -301,10 +301,10 @@ var BasePlanetModel = function() {
     }
 
     this.label = function(node,text) {
-        $("#"+node).remove();
+        $("#"+text).remove();
         var pos = getNodePosCanvas(node);
         if(pos.z<0) return;
-        $("body").append("<div id='"+node+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
+        $("body").append("<div id='"+text+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
     }
 
 

@@ -59,17 +59,22 @@
 <script type="text/javascript">
 
 		function updateInfos() {
-			sunAngle = getAngle(posSyl(model.name+"Sun"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth") );
+//			sunAngle = getAngle(posSyl(model.name+"Sun"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth") );
 			starsAngle = getAngle(posSyl("S0pole"),posSyl("S1pole"), posSyl(model.name+"Earth"));
 			eclipticAngle = getAngle(posSyl("S1pole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
       
+      planetOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Planet"));
+      sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Sun"));
+
+      sunAngle = getAngle(planetOnPlane, sunOnPlane, posSyl(model.name+"Earth"));
 			$("#sunAngle").html(sunAngle.toFixed());
 			$("#eclipticAngle").html(eclipticAngle.toFixed());
 			$("#eclipticSpeed").html(starsAngle.toFixed());
 
 
-      pointOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Planet"));
-      model.debug.setXYZ(sylToScene(pointOnPlane));
+
+    
+      model.debug.setXYZ(sylToScene(planetOnPlane));
       
 		}
 
@@ -177,11 +182,13 @@
         $("#legendContainer > *").remove();
 
         // create legend
+        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for(i in model.sphere) {
             var color = "rgb("+colors["S"+i].r*255+","+colors["S"+i].g*255+","+colors["S"+i].b*255+")";
             $("<div style='float:left;font-weight:bold;color:"+color+"'>Sphere "+(Number(i)+1)+" </div>").appendTo("#legendContainer");
         }
-
+        
+    
             UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude"}).appendTo("#parameters");
 
         UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed"}).appendTo("#parameters");
