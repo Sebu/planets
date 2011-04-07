@@ -7,6 +7,7 @@ var BaseScene = function(params) {
     this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -30 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
     this.camera = new Camera();
 
+//    this.camera.setOptics({fovy:90});
     this.lookAt.addNode(this.camera);
     this.renderer.addNode(this.lookAt);
     this.scene.addNode(this.renderer);
@@ -18,7 +19,7 @@ var BaseScene = function(params) {
         canvas = document.getElementById("glCanvas");
         canvas.width = $(window).width();
         canvas.height = $(window).height();
-        model.camera.setOptics({ type: "perspective", fov : 45.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
+        model.camera.setOptics({ type: "perspective", fovy: 90.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
         this.renderer._props.props.viewport = { x : 1, y : 1, width: canvas.width, height: canvas.height };
     }
 
@@ -286,12 +287,12 @@ var BasePlanetModel = function() {
             this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
-        //this.label(this.name+"Sun","Sun");
-        //this.label(this.name+"Planet","Planet");
-        //this.label("North","North");
-        //this.label("South","South");
-        //this.label("East","East");
-        //this.label("West","West");
+        this.label(this.name+"Sun","Sun");
+        this.label(this.name+"Planet","Planet");
+        this.label("North","North");
+        this.label("South","South");
+        this.label("East","East");
+        this.label("West","West");
 
     }
 

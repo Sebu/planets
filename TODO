@@ -70,6 +70,10 @@ DONE
 - simple hippo model with motion
 
 TODO
+- tooltips for sliders 
+- earth view 
+
+
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection
 - compare moon models
   - color mendell red / schfixed blue
