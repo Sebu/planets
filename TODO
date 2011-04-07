@@ -77,7 +77,8 @@ TODO
 - speed stars/ecliptic -> speed planet/ecliptic 
 - arc precission ( line segments )
 - stars color
-- global view labels : north/south pole equinox (equator ecliptic intersection)
+- negative angles
+- global view labels : north/south pole, equinox (equator ecliptic intersection)
 
 
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection

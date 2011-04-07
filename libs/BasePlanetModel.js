@@ -4,7 +4,7 @@ var BaseScene = function(params) {
 
     this.scene = SceneJS.scene({ canvasId: "glCanvas" });
     this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -15 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -13 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
     this.camera = new Camera();
 
 //    this.camera.setOptics({fovy:90});
@@ -320,7 +320,7 @@ var BasePlanetModel = function() {
     }
 
     this.changeView = function(node) {
-        if (node == "Free") pos = { x: 0.0, y: 0.0, z: -25 };
+        if (node == "Free") pos = { x: 0.0, y: 0.0, z: -15 };
         else pos = getNodePos(this.name+node);
 
         this.earth.setEnabled(true);
