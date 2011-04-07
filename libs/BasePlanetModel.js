@@ -4,7 +4,7 @@ var BaseScene = function(params) {
 
     this.scene = SceneJS.scene({ canvasId: "glCanvas" });
     this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -30 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -15 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
     this.camera = new Camera();
 
 //    this.camera.setOptics({fovy:90});
@@ -188,7 +188,11 @@ var BasePlanetModel = function() {
             this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
         }
 
-        this.sphere[1].addNode(this.stars = new SceneJS.cloud({count:400, scale:20.0}));
+        this.sphere[1].addNode(this.stars =  SceneJS.material({
+            baseColor:      { r: 1.0, g: 1.0, b: 1.0 },
+            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+            emit: 1.0, specular: 0.0, shine: 1.0
+        }, new SceneJS.cloud({count:400, scale:20.0})));
 
         this["showSphere0"] = function(state) {
           this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
@@ -299,7 +303,7 @@ var BasePlanetModel = function() {
     this.label = function(node,text) {
         $("#"+node).remove();
         var pos = getNodePosCanvas(node);
-        
+        if(pos.z<0) return;
         $("body").append("<div id='"+node+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
     }
 
@@ -377,10 +381,10 @@ var BasePlanetModel = function() {
             this.sphere[i].update(-20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
-
-        for (var j = 0; j < 80; j++) {
+        var maxSegments = 100-Math.round(20/step);
+        for (var j = 0; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                this.sphere[i].update(20.0 / step);
+                this.sphere[i].update(10.0 / step);
             }
             pos = getNodePos(node);
             curvePos.push(pos);

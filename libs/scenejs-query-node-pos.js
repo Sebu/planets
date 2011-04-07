@@ -150,7 +150,8 @@ SceneJS.utils.query.QueryNodePos.prototype.execute = function(params, completed)
     if (this._cfg.canvasWidth) {
         this._queryResult.canvasPos = {
             x: data.canvasPos[0] + (this._cfg.canvasWidth * 0.5),
-            y: this._cfg.canvasHeight - data.canvasPos[1] - (this._cfg.canvasHeight * 0.5)
+            y: this._cfg.canvasHeight - data.canvasPos[1] - (this._cfg.canvasHeight * 0.5),
+            z: data.cameraPos[2]
         };
     }
     if (completed) {

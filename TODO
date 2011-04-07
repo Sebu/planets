@@ -72,6 +72,12 @@ DONE
 TODO
 - tooltips for sliders 
 - earth view 
+- dist: 9*|sun-moon|
+- user: change FOV 
+- speed stars/ecliptic -> speed planet/ecliptic 
+- arc precission ( line segments )
+- stars color
+- global view labels : north/south pole equinox (equator ecliptic intersection)
 
 
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection

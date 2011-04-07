@@ -9,7 +9,7 @@ var colors = {
     Earth:      {r: 0.9, g:0.9, b:18.5},
     Planet:     {r: 1.0, g:1.0, b:1.0},
 	Sun: 		{r:1.0,g:1.0,b:0.0},
-	S0: 		{r:0.7, g: 0.7, b: 0.5},
+	S0: 		{r:1.0, g: 0.0, b: 1.0},
 	S1:			{r:0.4, g:0.4, b:1.0},
 	S2: 		{r: 0.0, g: 1.0, b: 0.0},
 	S3: 		{r: 1.0, g: 0.0, b: 0.0},
@@ -158,7 +158,7 @@ Venus1: {
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 570, rotateStart: 0 }]},
+    {axisAngle: 45.0, speed: 570, rotateStart: 0 }]},
  
 Venus2: {
   sunDist: 8,
@@ -167,7 +167,7 @@ Venus2: {
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 570, rotateStart: 0 }] },
+    {axisAngle: 80.0, speed: 570, rotateStart: 0 }] },
 
 Mars1: {
   sunDist: 8,
@@ -285,7 +285,7 @@ SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) 
 
 var latitudePresets = {
   Athens: 38,
-  Cnanidos: 36.66,
+  Canidos: 36.66,
   Heliopolis: 30,
   Cyzicus: 40.23,  
   Equator: 0,

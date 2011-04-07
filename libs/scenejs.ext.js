@@ -534,10 +534,13 @@ getNodePosCanvas = function(node) {
 
     query = new SceneJS.utils.query.QueryNodePos({ canvasWidth : canvas.width, canvasHeight : canvas.height    });
     query.execute({ nodeId: node });
+
     pos = query.getResults().canvasPos;
-//    console.log(pos);
-    return pos; //{x: pos.x+canvas.width*0.5, 
-            //y: pos.y+canvas.height*0.5};
+
+    if (pos.x<0 || pos.x>canvas.width) pos.z = -1.0;
+    if (pos.y<0 || pos.y>canvas.height) pos.z = -1.0;
+    
+    return pos;
 }
 
 Sunlight = function() {
