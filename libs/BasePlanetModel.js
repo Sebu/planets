@@ -1,93 +1,14 @@
 
 
-var BaseScene = function(params) {
-
-    this.scene = SceneJS.scene({ canvasId: "glCanvas" });
-    this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -13 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
-    this.camera = new Camera();
-
-//    this.camera.setOptics({fovy:90});
-    this.lookAt.addNode(this.camera);
-    this.renderer.addNode(this.lookAt);
-    this.scene.addNode(this.renderer);
-
-    // initial start rotation
-    this.lookAt.rotateY(Math.PI+0.1);
-
-    this.resize = function() {
-        canvas = document.getElementById("glCanvas");
-        canvas.width = $(window).width();
-        canvas.height = $(window).height();
-        model.camera.setOptics({ type: "perspective", fovy: 90.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
-        this.renderer._props.props.viewport = { x : 1, y : 1, width: canvas.width, height: canvas.height };
-    }
-
-    this.mouseDown = function (event) {
-        this.lastX = event.clientX;
-        this.lastY = event.clientY;
-        this.dragging = true;
-    }
-
-    this.mouseUp = function() {
-        this.dragging = false;
-
-    }
-
-    /* On a mouse drag, we'll re-render the scene, passing in
-     * incremented angles in each time.
-     */
-    this.pitch = 0;
-    this.mouseMove = function(event) {
-        if (this.dragging) {
-            pitch = (event.clientY - this.lastY) * 0.005;
-            yaw = (event.clientX - this.lastX) * -0.005;
-
-            if (model.currentPos == "Earth") {
-                model.lookAt.rotateY(yaw);
-            } else {
-                model.lookAt.rotateUp(yaw);
-            }
-  
-            if(model.currentPos=="Earth") {
-              if(this.pitch+pitch>0.4)  pitch = 0;
-              else if(this.pitch+pitch<-1.9)  pitch = 0;
-            }
-            this.pitch += pitch;
-  		      this.lookAt.rotateRight(pitch);
-
-            this.lastX = event.clientX;
-            this.lastY = event.clientY;
-        }
-    }
-
-    this.keyboard = function(e) {
-        switch (e.keyCode) {
-            case 119: model.lookAt.translate(0, 0, 0.6);  break;
-            case 115: model.lookAt.translate(0, 0, -0.6);  break;
-            case 97:  model.lookAt.translate(0.6, 0, 0);  break;
-            case 100: model.lookAt.translate(-0.6, 0, 0);  break;
-            default: return false;
-        }
-    }
-
-    this.mouseWheel = function(event) {
-        model.lookAt.translate(0.0, 0.0, event.wheelDelta / 120);
-    }
-    this.mouseWheel_firefox = function(event) {
-        model.lookAt.translate(0.0, 0.0, event.detail);
-    }
-}
 
 var BasePlanetModel = function() {
-
 
     // model specific moon
     this.sunYear = 365.0;
 
     this.time = 21;
 
-    // CONTROLLS this.lastX = 0;
+    // CONTROLS this.lastX = 0;
     this.lastY = 0;
     this.dragging = false;
 
@@ -171,7 +92,7 @@ var BasePlanetModel = function() {
         this.updateList = [];
         this.updateList[0] = this.sphere[0];
         for (var i = 1; i < this.sphere.length; i++) {
-            tmp = this.sphere[i] = new Spherical({inner_id: "S" + i + "", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S" + i + ""]});
+            tmp = this.sphere[i] = new Spherical({inner_id: "S" + i + "", scale: 9+i*0.02, axisAngle: 0.0, speed: 0.0, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
             this.updateList.push(tmp);
 
@@ -192,7 +113,7 @@ var BasePlanetModel = function() {
             baseColor:      { r: 1.0, g: 1.0, b: 1.0 },
             specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
             emit: 1.0, specular: 0.0, shine: 1.0
-        }, new SceneJS.cloud({count:400, scale:20.0})));
+        }, new SceneJS.cloud({count:50, scale:20.0})));
 
         this["showSphere0"] = function(state) {
           this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
@@ -291,22 +212,7 @@ var BasePlanetModel = function() {
             this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
-        this.label(this.name+"Sun","Sun");
-        this.label(this.name+"Planet","Planet");
-        this.label("North","North");
-        this.label("South","South");
-        this.label("East","East");
-        this.label("West","West");
-
     }
-
-    this.label = function(node,text) {
-        $("#"+text).remove();
-        var pos = getNodePosCanvas(node);
-        if(pos.z<0) return;
-        $("body").append("<div id='"+text+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
-    }
-
 
     this.reset = function () {
         if (this.sphere.length == 0) return;

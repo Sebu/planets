@@ -48,12 +48,12 @@ html, body {
   z-index: 2;
   position: absolute;
   color: white;
-  background-color: rgba(150,150,150,0.6);
+  background-color: rgba(150,150,150,0.5);
 	font-weight: bold;
-	font-size:12px;	 
-  border-radius: 5px;
-  padding: 4px;
-  
+	font-size:12px;
+    color: rgb(255,255,255);
+  border-radius: 10px;
+
 }
 
 

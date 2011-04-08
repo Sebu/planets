@@ -53,7 +53,7 @@
     // setup site
     $(document).ready(function() {
 
-        renderer = new BaseScene();
+        renderer = new Renderer();
         model =  new ModelMoonCompare({renderer: renderer});
 
         $("#uiContainer").append("<span><select  id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");

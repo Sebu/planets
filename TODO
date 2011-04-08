@@ -68,27 +68,25 @@ DONE
 - fix view hippo and co.
 - box with angles ( pos.x dot :) )
 - simple hippo model with motion
+- earth view
+- global view labels : north/south pole, equinox (equator ecliptic intersection)
+- arc precission ( line segments )
 
 TODO
-- tooltips for sliders 
-- earth view 
-- dist: 9*|sun-moon|
-- user: change FOV 
-- speed stars/ecliptic -> speed planet/ecliptic 
-- arc precission ( line segments )
-- stars color
+- speed stars/ecliptic -> speed planet/ecliptic
+- user: change FOV
 - negative angles
-- global view labels : north/south pole, equinox (equator ecliptic intersection)
-
-
+- tooltips for sliders
+- pause/start button
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection
-- compare moon models
-  - color mendell red / schfixed blue
-  - (show diff in latitude)
-- show latitude/longitude
-- only show last or first spheres of a model
 
 NEXT
+- show latitude/longitude
+- dist: 9*|sun-moon|
+- compare moon models
+  - (show diff in latitude)
+  - color mendell red / schfixed blue
+- only show last or first spheres of a model
 - menu with s2 start values (deprecated)
 - renderer extract with better connection to canvas element
 - keyframe animation?DDDDd

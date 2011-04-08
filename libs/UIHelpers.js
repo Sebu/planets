@@ -245,6 +245,12 @@ function style(element, styles) {
 
 var UI = {
 
+    label : function(pos,text) {
+        if(pos.z<0) return;
+        $("body").append("<div id='"+text+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
+    },
+
+
     optionsFromHash : function(selector, hash) {
         for (i in hash)
             $(selector).append("<option value='" + i + "'>" + i + "</option>");

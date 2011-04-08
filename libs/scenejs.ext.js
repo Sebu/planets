@@ -1,3 +1,88 @@
+var Renderer = function(params) {
+
+    this.domElement = $("<canvas tabindex=1 id='glCanvas'><p>This example requires a browser that supports the<a href='http://www.w3.org/html/wg/html5/'>HTML5</a>&lt;canvas&gt; and <a href='http://www.khronos.org/webgl/WebGL'>WebGL</a>features.</p></canvas>");
+
+
+    this.init = function () {
+    this.scene = SceneJS.scene({ canvasId: "glCanvas" });
+    this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
+    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -13 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+    this.camera = new Camera();
+
+//    this.camera.setOptics({fovy:90});
+    this.lookAt.addNode(this.camera);
+    this.renderer.addNode(this.lookAt);
+    this.scene.addNode(this.renderer);
+
+    // initial start rotation
+    this.lookAt.rotateY(Math.PI+0.1);
+
+    }
+
+    this.resize = function() {
+        canvas = document.getElementById("glCanvas");
+        canvas.width = $(window).width();
+        canvas.height = $(window).height();
+        model.camera.setOptics({ type: "perspective", fovy: 90.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
+        this.renderer._props.props.viewport = { x : 1, y : 1, width: canvas.width, height: canvas.height };
+    }
+
+    this.mouseDown = function (event) {
+        this.lastX = event.clientX;
+        this.lastY = event.clientY;
+        this.dragging = true;
+    }
+
+    this.mouseUp = function() {
+        this.dragging = false;
+
+    }
+
+    /* On a mouse drag, we'll re-render the scene, passing in
+     * incremented angles in each time.
+     */
+    this.pitch = 0;
+    this.mouseMove = function(event) {
+        if (this.dragging) {
+            pitch = (event.clientY - this.lastY) * 0.005;
+            yaw = (event.clientX - this.lastX) * -0.005;
+
+            if (model.currentPos == "Earth") {
+                model.lookAt.rotateY(yaw);
+            } else {
+                model.lookAt.rotateUp(yaw);
+            }
+
+            if(model.currentPos=="Earth") {
+              if(this.pitch+pitch>0.4)  pitch = 0;
+              else if(this.pitch+pitch<-1.9)  pitch = 0;
+            }
+            this.pitch += pitch;
+  		      this.lookAt.rotateRight(pitch);
+
+            this.lastX = event.clientX;
+            this.lastY = event.clientY;
+        }
+    }
+
+    this.keyboard = function(e) {
+        switch (e.keyCode) {
+            case 119: model.lookAt.translate(0, 0, 0.6);  break;
+            case 115: model.lookAt.translate(0, 0, -0.6);  break;
+            case 97:  model.lookAt.translate(0.6, 0, 0);  break;
+            case 100: model.lookAt.translate(-0.6, 0, 0);  break;
+            default: return false;
+        }
+    }
+
+    this.mouseWheel = function(event) {
+        model.lookAt.translate(0.0, 0.0, event.wheelDelta / 120);
+    }
+    this.mouseWheel_firefox = function(event) {
+        model.lookAt.translate(0.0, 0.0, event.detail);
+    }
+}
+
 Camera = SceneJS.Camera;
 
 Spherical = SceneJS.createNodeType("spherical");
@@ -276,13 +361,13 @@ Spherical.prototype._init = function(params) {
                                                     )
                                             ),
                                 // northpole
-                                    this.visuals["npole"] = SceneJS.translate({id:"" + params.inner_id +"pole",x: 0.0, y: params.scale, z: 0.0  },
+                                    this.visuals["npole"] = SceneJS.translate({id:"" + params.inner_id +"npole",x: 0.0, y: params.scale, z: 0.0  },
                                             SceneJS.scale({x: 0.1, y: 0.1, z: 0.1 },
                                                     SceneJS.sphere()
                                                     )
                                             ),
                                 // southhpole
-                                    this.visuals["spole"] = SceneJS.translate({x: 0.0, y: -params.scale, z: 0.0  },
+                                    this.visuals["spole"] = SceneJS.translate({id:"" + params.inner_id +"spole", x: 0.0, y: -params.scale, z: 0.0  },
                                             SceneJS.scale({x: 0.1, y: 0.1, z: 0.1 },
                                                     SceneJS.sphere()
                                                     )
@@ -315,7 +400,7 @@ Spherical.prototype._init = function(params) {
 };
 
 Spherical.prototype.getPlane = function() {
-  return Plane.create(Vector.Zero(3), posSyl("S1pole").toUnitVector());
+  return Plane.create(Vector.Zero(3), posSyl("S1npole").toUnitVector());
 }
 
 Spherical.prototype.setVisuals = function(vis, state) {
