@@ -19,14 +19,17 @@ var Renderer = function(params) {
 
     }
 
+    this.setFov = function(angle) {
+        this.camera.setOptics({fovy: angle});
+    }
+
     this.resize = function() {
         canvas = document.getElementById("glCanvas");
         canvas.width = $(window).width();
         canvas.height = $(window).height();
-        model.camera.setOptics({ type: "perspective", fovy: 90.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
+        this.camera.setOptics({ type: "perspective", fovy: 90.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
         this.renderer._props.props.viewport = { x : 1, y : 1, width: canvas.width, height: canvas.height };
     }
-
     this.mouseDown = function (event) {
         this.lastX = event.clientX;
         this.lastY = event.clientY;
@@ -38,15 +41,13 @@ var Renderer = function(params) {
 
     }
 
-    /* On a mouse drag, we'll re-render the scene, passing in
-     * incremented angles in each time.
-     */
+    // TODO: move all of them outside
     this.pitch = 0;
     this.mouseMove = function(event) {
         if (this.dragging) {
             pitch = (event.clientY - this.lastY) * 0.005;
-            yaw = (event.clientX - this.lastX) * -0.005;
 
+            yaw = (event.clientX - this.lastX) * -0.005;
             if (model.currentPos == "Earth") {
                 model.lookAt.rotateY(yaw);
             } else {
@@ -223,7 +224,7 @@ Circle.prototype._init = function(params) {
     this.linewidth = params.width || 1;
 
     this._create = function(angle) {
-        var slices = Math.abs(Math.round(this.angle / 5));
+        var slices = Math.abs(Math.round(this.angle / 3));
         var positions = [];
         var colors = [];
         var arc = (this.angle / 180.0) * Math.PI;
@@ -602,7 +603,7 @@ posSyl = function(node) {
 PI_SCALE = 180.0/Math.PI;
 
 
-getAngle = function(node1, node2, center) {
+calcAngle = function(node1, node2, center) {
 	 	pos1 = center.subtract( node1 ); 
 	 	pos2 = center.subtract( node2 );
 	  return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;

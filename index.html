@@ -18,7 +18,7 @@
 <div class="container" id="infoContainer">
     <div>angle planet/sun <span id="sunAngle">0</span></div>
     <div>angle planet/ecliptic <span id="eclipticAngle">0</span></div>
-    <div>speed stars/ecliptic <span id="eclipticSpeed">0</span></div>
+    <div>speed planet/ecliptic <span id="eclipticSpeed">0</span></div>
     <div id="moonInfoContainer" style="display:none">
         <div>zodiacal month</div>
         <div id="metonZodicalMonths">0</div>
@@ -55,14 +55,14 @@
 <script type="text/javascript">
 
 function update() {
-    starsAngle = getAngle(posSyl("S0npole"),posSyl("S1npole"), posSyl(model.name+"Earth"));
-    eclipticAngle = getAngle(posSyl("S1npole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
+    starsAngle = calcAngle(posSyl("S0npole"),posSyl("S1npole"), posSyl(model.name+"Earth"));
+    eclipticAngle = calcAngle(posSyl("S1npole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
 
     planetOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Planet"));
     sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Sun"));
 
-    sunAngle = getAngle(planetOnPlane, sunOnPlane, posSyl(model.name+"Earth"));
-    model.debug.setXYZ(sylToScene(planetOnPlane));
+    sunAngle = calcAngle(planetOnPlane, sunOnPlane, posSyl(model.name+"Earth"));
+    //model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(sunAngle.toFixed());
     $("#eclipticAngle").html(eclipticAngle.toFixed());
     $("#eclipticSpeed").html(starsAngle.toFixed());
@@ -115,10 +115,10 @@ $(document).ready(function() {
 
     model = models["Model4"];
 
-    $("#uiContainer").append("<span><select  id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");
+    $("#uiContainer").append("<span><select  title='current position' id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");
     UI.optionsFromHash("#viewPresets", model.viewPresets);
 
-    $("#uiContainer").append("<span><select  id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
+    $("#uiContainer").append("<span><select title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
     UI.optionsFromHash("#longitudePresets", latitudePresets);
 
     $("#viewPresets option[value='World']").attr('selected', true);
@@ -127,12 +127,14 @@ $(document).ready(function() {
     $("#uiContainer").append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
     UI.optionsFromHash("#planetPreset", planetPresets);
 
-    $("#uiContainer").append("<span><select  id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
+    $("#uiContainer").append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
     UI.optionsFromHash("#moonModel", moonModels);
 
 
 
-    $("#uiContainer").append("<div id='parameters'></div><input type='button' onclick='model.reset()' value='reset'><input id='pauseButton' type='button' onclick='model.pause()' value='pause'>");
+    $("#uiContainer").append("<div id='parameters'></div>");
+    $("#uiContainer").append("<input type='button' onclick='model.reset()' value='reset'>");
+    $("#uiContainer").append("<input id='pauseButton' type='button' onclick='model.pause();' value='pause' title='pause animation'>");
 
     $("#vis").hide();
 //        $("#uiContainer").prepend("<div title='look at' ><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div>");
@@ -167,9 +169,9 @@ $(document).ready(function() {
     canvas.addEventListener('DOMMouseScroll', function(e) {
         renderer.mouseWheel_firefox(e);
     }, true);
+    window.onresize = new Function("renderer.resize();");
     setInterval("update()", 33);
-    window.onresize = renderer.resize();
-    model.resize();
+    renderer.resize();
 
 
 })
@@ -199,9 +201,9 @@ function setCurrentPlanet(node) {
     }
 
 
-    UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude"}).appendTo("#parameters");
+    UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#parameters");
 
-    UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed"}).appendTo("#parameters");
+    UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#parameters");
 
     UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
     for(i in model.sphere) {

@@ -14,7 +14,7 @@ html, body {
 
 .caption { 
 	font-weight: bold;
-	font-size:12px;	 
+	font-size:12px;
 }
 
 
@@ -24,24 +24,25 @@ html, body {
 }
 
 .slider { 
-	height:6px; 
+	height:10px;
 	position:relative; 
 	width:130px;
-	top: 5px;
+	top: 4px;
 	float:left; 
 }
 
-
 /* the input field */
 .range {
-	border:1px inset #ddd;
+	border:1px  #ddd;
+    background: #333;
+    color: white;
 	float:left;
 	font-size:12px;
 	margin:1;
 	padding:1;
 	text-align:center;
-	width:32px;
-	border-radius:4px; 
+	width:30px;
+	border-radius:2px;
 }
 
 .label {

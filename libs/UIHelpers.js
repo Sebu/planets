@@ -287,6 +287,7 @@ var UI = {
     slider : function(params) {
         var model = params.model;
         var id = params.id;
+        var tooltip = params.tip || "";
         var text = params.text || params.id;
         var min = params.min || 0;
         var max = params.max || 100;
@@ -294,7 +295,7 @@ var UI = {
         var value = params.value || window[model]["get"+id]();
         var change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
 
-        ele =  $("<div id='" + id + "'>" +
+        ele =  $("<div title='" + tooltip + "' id='" + id + "'>" +
             "<div>" + text + "</div>" +
             "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ value +"' class='slider'  onchange='"+change+"'/>" +
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" +value+ "' class='range' onchange='"+change+"'/>" +
