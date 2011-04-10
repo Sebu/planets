@@ -13,13 +13,12 @@ ModelMoonCompare = function(params) {
     this.init(params);
 
 
-    this.sphere2 = new Array(2);
-    s20 = this.sphere2[0] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
-    s21 = this.sphere2[1] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
+    s20 = this.sphere[3] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    s21 = this.sphere[4] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
     this.updateList.push(s20);    
     this.updateList.push(s21);    
     this.sphere[0].anchor.addNode(s20);
-    this.sphere2[0].anchor.addNode(s21);
+    this.sphere[3].anchor.addNode(s21);
 
 
     
@@ -77,18 +76,16 @@ ModelMoonCompare = function(params) {
         return this.metonDays / this.metonDraconiticMonths;
     }
 
-    this.setCurrentMoonModel = function(node) {
-        var currentModel = moonModels[node];
-        this.moonSpeed1 = currentModel.speed1;
-        this.moonSpeed2 = currentModel.speed2;
+    this.setCurrentMoonModels = function(node1, node2) {
+        var currentModel1 = moonModels[node1];
+        var currentModel2 = moonModels[node2];
+        this.moonSpeed1 = currentModel1.speed1;
+        this.moonSpeed2 = currentModel1.speed2;
+        this.moonSpeed3 = currentModel2.speed1;
+        this.moonSpeed4 = currentModel2.speed2;
     }
 
-    this.setCurrentMoonModel2 = function(node) {
-        var currentModel2 = moonModels[node];
-        this.moonSpeed21 = currentModel2.speed1;
-        this.moonSpeed22 = currentModel2.speed2;
-    }
-
+    this.setCurrentMoonModels("Mendell", "SchFixed");
 
     this.setCurrentPlanet = function(node) {
         ModelMoonCompare.prototype.setCurrentPlanet.call(this,node);
@@ -98,33 +95,30 @@ ModelMoonCompare = function(params) {
         this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
     }
 
-    this.setCurrentMoonModel("Mendell");
-    this.setCurrentMoonModel2("SchFixed");
-
     this.updateMoon = function() {
         this.draco = this.getDraconiticDaysPerMonth();
         this.zodic = this.getZodicalDaysPerMonth();
         this.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
         this.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
-        this.sphere2[0].setSpeed(this.moonSpeed21(this.draco, this.zodic));
-        this.sphere2[1].setSpeed(this.moonSpeed22(this.draco, this.zodic));
+        this.sphere[3].setSpeed(this.moonSpeed3(this.draco, this.zodic));
+        this.sphere[4].setSpeed(this.moonSpeed4(this.draco, this.zodic));
 
     }
 
     this.reset = function () {
         ModelMoonCompare.prototype.reset.call(this);
-        this.sphere2[0].setRotateAngle(this.sphere[1].rotateStart);
-        this.sphere2[1].setRotateAngle(this.sphere[2].rotateStart);
+        this.sphere[3].setRotateAngle(this.sphere[1].rotateStart);
+        this.sphere[4].setRotateAngle(this.sphere[2].rotateStart);
     }
 
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(angle); 
-        this.sphere2[0].setAxisAngle(angle);
+        this.sphere[3].setAxisAngle(angle);
     }
 
     this.setAxisAngle2 = function(angle) {
         this.sphere[2].setAxisAngle(angle); 
-        this.sphere2[1].setAxisAngle(angle);
+        this.sphere[4].setAxisAngle(angle);
     }
 
     this.setAxisAngle0 = function(angle) {

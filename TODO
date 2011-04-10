@@ -74,12 +74,12 @@ DONE
 - tooltips for sliders
 - tooltip with description and default/reconmended values
 - UIHelper BASICS
+- user: change FOV
+- pause/start button
 
 TODO
 - negative angles
 - speed stars/ecliptic -> speed planet/ecliptic
-- pause/start button
-- user: change FOV
 
 NEXT
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection

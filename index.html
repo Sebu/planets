@@ -133,8 +133,7 @@ $(document).ready(function() {
 
 
     $("#uiContainer").append("<div id='parameters'></div>");
-    $("#uiContainer").append("<input type='button' onclick='model.reset()' value='reset'>");
-    $("#uiContainer").append("<input id='pauseButton' type='button' onclick='model.pause();' value='pause' title='pause animation'>");
+
 
     $("#vis").hide();
 //        $("#uiContainer").prepend("<div title='look at' ><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div>");
@@ -202,6 +201,8 @@ function setCurrentPlanet(node) {
 
 
     UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#parameters");
+
+    UI.slider({model:"renderer", id: "Fov", max: 160, step:1, text: "field of view"}).appendTo("#parameters");
 
     UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#parameters");
 
@@ -341,7 +342,12 @@ function setCurrentPlanet(node) {
     }
 
     fixRange();
-    $("#capvis,#caprotateStart").click();
+
+    $("#parameters").append("<input type='button' onclick='model.reset()' value='reset'>");
+    $("#parameters").append("<input id='pauseButton' type='button' onclick='model.pause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
+
+    model.pause();
+    $("#capvis,#caprotateStart, #pauseButton").click();
     $("#moon input, #angle  input, #speed  input").change();
 
 //        $("#rotateStart,#vis").hide();

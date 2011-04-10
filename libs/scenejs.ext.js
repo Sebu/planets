@@ -3,6 +3,8 @@ var Renderer = function(params) {
     this.domElement = $("<canvas tabindex=1 id='glCanvas'><p>This example requires a browser that supports the<a href='http://www.w3.org/html/wg/html5/'>HTML5</a>&lt;canvas&gt; and <a href='http://www.khronos.org/webgl/WebGL'>WebGL</a>features.</p></canvas>");
 
 
+    this._fov = 90;
+
     this.init = function () {
     this.scene = SceneJS.scene({ canvasId: "glCanvas" });
     this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
@@ -17,17 +19,24 @@ var Renderer = function(params) {
     // initial start rotation
     this.lookAt.rotateY(Math.PI+0.1);
 
+
     }
 
     this.setFov = function(angle) {
-        this.camera.setOptics({fovy: angle});
+        this._fov = angle;
+        this.resize();
+    }
+
+
+    this.getFov = function() {
+        return this._fov;
     }
 
     this.resize = function() {
         canvas = document.getElementById("glCanvas");
         canvas.width = $(window).width();
         canvas.height = $(window).height();
-        this.camera.setOptics({ type: "perspective", fovy: 90.0, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
+        this.camera.setOptics({ type: "perspective", fovy: this._fov, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
         this.renderer._props.props.viewport = { x : 1, y : 1, width: canvas.width, height: canvas.height };
     }
     this.mouseDown = function (event) {

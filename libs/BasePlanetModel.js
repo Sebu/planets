@@ -14,8 +14,8 @@ var BasePlanetModel = function() {
 
     this.currentPlanet = {};
     this.currentPos = "Free";
-    this.pitch=0;
     this.currentLookAt = "Earth";
+    this.pitch=0;
     this.speed = 0;
     this.fps = 30.0;
     this.setSpeed = function(val) {
