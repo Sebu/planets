@@ -409,8 +409,8 @@ Spherical.prototype._init = function(params) {
 
 };
 
-Spherical.prototype.getPlane = function() {
-  return Plane.create(Vector.Zero(3), posSyl("S1npole").toUnitVector());
+Spherical.prototype.getPlane = function(name) {
+  return Plane.create(Vector.Zero(3), posSyl(name+"S1npole").toUnitVector());
 }
 
 Spherical.prototype.setVisuals = function(vis, state) {

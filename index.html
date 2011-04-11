@@ -55,14 +55,14 @@
 <script type="text/javascript">
 
 function update() {
-    starsAngle = calcAngle(posSyl("S0npole"),posSyl("S1npole"), posSyl(model.name+"Earth"));
-    eclipticAngle = calcAngle(posSyl("S1npole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
+    starsAngle = calcAngle(posSyl(model.name+"S0npole"),posSyl(model.name+"S1npole"), posSyl(model.name+"Earth"));
+    eclipticAngle = calcAngle(posSyl(model.name+"S1npole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
 
-    planetOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Planet"));
-    sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Sun"));
+    planetOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Planet"));
+    sunOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Sun"));
 
     sunAngle = calcAngle(planetOnPlane, sunOnPlane, posSyl(model.name+"Earth"));
-    //model.debug.setXYZ(sylToScene(planetOnPlane));
+//    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(sunAngle.toFixed());
     $("#eclipticAngle").html(eclipticAngle.toFixed());
     $("#eclipticSpeed").html(starsAngle.toFixed());
@@ -76,9 +76,9 @@ function update() {
         UI.label(getNodePosCanvas("East"),"East");
         UI.label(getNodePosCanvas("West"),"West");
     } else {
-        UI.label(getNodePosCanvas("S0npole"),"Northpole");
-        UI.label(getNodePosCanvas("S0spole"),"Southpole");
-        UI.label(getNodePosCanvas("S0"),"Equinox");
+        UI.label(getNodePosCanvas(model.name+"S0npole"),"Northpole");
+        UI.label(getNodePosCanvas(model.name+"S0spole"),"Southpole");
+        UI.label(getNodePosCanvas(model.name+"S0"),"Equinox");
     }
     UI.label(getNodePosCanvas(model.name+"Planet"),"Planet");
     UI.label(getNodePosCanvas(model.name+"Sun"),"Sun");
@@ -146,7 +146,7 @@ $(document).ready(function() {
 
     // SETUP START
     // start models
-    setCurrentPlanet("Model5Mercury1");
+    setCurrentPlanet("Mercury1");
 
     // TODO: fix/move to renderer
     canvas = document.getElementById("glCanvas");

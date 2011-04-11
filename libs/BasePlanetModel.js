@@ -68,10 +68,10 @@ var BasePlanetModel = function() {
             emit: 0.0, specular: 0.0, shine: 3.0},
 
                 // DIRECTION MARKERS 
-                SceneJS.translate({id: "North", x:4.5,y:0.2}),
-                SceneJS.translate({id: "South", x:-4.5,y:0.2}),
-                SceneJS.translate({id: "East", z:4.5,y:0.2}),
-                SceneJS.translate({id: "West", z:-4.5,y:0.2}),
+                SceneJS.translate({id: "North", x:-4.5,y:0.2}),
+                SceneJS.translate({id: "South", x:4.5,y:0.2}),
+                SceneJS.translate({id: "East", z:-4.5,y:0.2}),
+                SceneJS.translate({id: "West", z:4.5,y:0.2}),
                 SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0}))
                 )
                 );
@@ -86,14 +86,14 @@ var BasePlanetModel = function() {
             emit: 1.0, specular: 0.0, shine: 1.0
         }));
 
-        this.root.addNode(this.sphere[0] = new Spherical({inner_id: "S0", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S0"]}));
+        this.root.addNode(this.sphere[0] = new Spherical({inner_id: this.name+"S0", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S0"]}));
 
 
         this.updateList = [];
         this.updateList[0] = this.sphere[0];
 
         for (var i = 1; i < this.sphere.length; i++) {
-            tmp = this.sphere[i] = new Spherical({inner_id: "S" + i + "", scale: 9+i*0.02, axisAngle: 0.0, speed: 0.0, color: colors["S" + i + ""]});
+            tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9+i*0.02, axisAngle: 0.0, speed: 0.0, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
             this.updateList.push(tmp);
 
@@ -185,7 +185,7 @@ var BasePlanetModel = function() {
         
         if(this.running)   
           for (i in model.updateList) {
-              model.updateList[i].update((365.0/this.fps)/this.speed);
+              model.updateList[i].update(-(365.0/this.fps)/this.speed);
           }
         this.time++;
         this.render();
