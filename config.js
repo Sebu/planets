@@ -21,6 +21,98 @@ var colors = {
 
 var planetPresets = { 
 
+    Mercury1: {
+  sunDist: 8,
+  model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+  ]},
+
+Mercury2: {
+  sunDist: 8,
+  model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 110, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 110, rotateStart: 0 }
+]},
+
+Venus1: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
+    {axisAngle: 45.0, speed: 570, rotateStart: 0 }]},
+
+Venus2: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
+    {axisAngle: 80.0, speed: 570, rotateStart: 0 }] },
+
+Mars1: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 260, rotateStart: 0 },
+    {axisAngle: 18.0, speed: 260, rotateStart: 0 }]},
+
+Mars2: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 730, rotateStart: 0 },
+    {axisAngle: 18.0, speed: 730, rotateStart: 0 }]},
+
+Mars3: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 760, rotateStart: 0 },
+    {axisAngle: 18.0, speed: 760, rotateStart: 0 }]},
+
+Mars4: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 780, rotateStart: 0 },
+    {axisAngle: 18.0, speed: 780, rotateStart: 0 }] },
+
+Jupiter: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 4380, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
+    {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
+
+Saturn: {
+  sunDist: 8,
+    model: "Model4",
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 10940, rotateStart: 0 },
+    {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
+    {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
+
 Model5Mercury1: { 
   model: "Model5",
   alpha:110,
@@ -131,97 +223,7 @@ MoonCompare: {
     {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
 
 
-Mercury1: { 
-  sunDist: 8,
-  model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-  ]},
 
-Mercury2: { 
-  sunDist: 8,
-  model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 110, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, rotateStart: 0 }
-]},
-
-Venus1: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
-    {axisAngle: 45.0, speed: 570, rotateStart: 0 }]},
- 
-Venus2: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 570, rotateStart: 0 },
-    {axisAngle: 80.0, speed: 570, rotateStart: 0 }] },
-
-Mars1: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 260, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 260, rotateStart: 0 }]},
- 
-Mars2: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 730, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 730, rotateStart: 0 }]},
- 
-Mars3: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 760, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 760, rotateStart: 0 }]},
-
-Mars4: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 730, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 780, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 780, rotateStart: 0 }] },
-
-Jupiter: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 4380, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
-
-Saturn: {
-  sunDist: 8,
-    model: "Model4",
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 10940, rotateStart: 0 },
-    {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
-    {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 
 MoonMeton: { 
   sunDist: 8,

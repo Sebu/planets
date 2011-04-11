@@ -16,9 +16,9 @@
 </div>
 
 <div class="container" id="infoContainer">
-    <div>angle planet/sun <span id="sunAngle">0</span></div>
-    <div>angle planet/ecliptic <span id="eclipticAngle">0</span></div>
-    <div>speed planet/ecliptic <span id="eclipticSpeed">0</span></div>
+    <div>angle planet/sun <span style='float:right;' id="sunAngle">0</span></div>
+    <div>angle planet/ecliptic <span style='float:right; 'id="eclipticAngle">0</span></div>
+    <div>speed planet/ecliptic <span style='float:right;' id="eclipticSpeed">0</span></div>
     <div id="moonInfoContainer" style="display:none">
         <div>zodiacal month</div>
         <div id="metonZodicalMonths">0</div>
@@ -55,17 +55,30 @@
 <script type="text/javascript">
 
 function update() {
-    starsAngle = calcAngle(posSyl(model.name+"S0npole"),posSyl(model.name+"S1npole"), posSyl(model.name+"Earth"));
-    eclipticAngle = calcAngle(posSyl(model.name+"S1npole"), posSyl(model.name+"Planet"), posSyl(model.name+"Earth"))-90;
+    earthPos = posSyl(model.name+"Earth");
+    polePos = posSyl(model.name+"S1npole");
+    upVec = earthPos.subtract(polePos);
+    planetOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Planet")).subtract(earthPos);
+    sunOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Sun")).subtract(earthPos);
+    sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+    equinoxOnPlane = posSyl(model.name+"S0").subtract(earthPos);
 
-    planetOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Planet"));
-    sunOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Sun"));
 
-    sunAngle = calcAngle(planetOnPlane, sunOnPlane, posSyl(model.name+"Earth"));
+
+
+    sunAngle = calcAngle(planetOnPlane, sunOnPlane);
+
+    // hackery hack
+    if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
+        sunAngle = -sunAngle;
+
+    lastAngle = eclipticAngle;
+    eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
+    eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(sunAngle.toFixed());
     $("#eclipticAngle").html(eclipticAngle.toFixed());
-    $("#eclipticSpeed").html(starsAngle.toFixed());
+    $("#eclipticSpeed").html(eclipticSpeed.toFixed());
 
     model.update();
     //labels

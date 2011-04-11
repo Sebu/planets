@@ -28,10 +28,10 @@ var BasePlanetModel = function() {
 
     this.posAngle = 10.0;
     this.betaRotate = 0;
-    
+
     this.showCurve0 = true;
     this.showCurve1 = true;
-    
+
     this.setShowCurve0 = function(state) { this.showCurve0=state; }
     this.setShowCurve1 = function(state) { this.showCurve1=state;  }
     this.setShowStars = function(state) { this.stars.setEnabled(state); }
@@ -60,14 +60,14 @@ var BasePlanetModel = function() {
         this.root.addNode(this.light);
 
         this.root.addNode(this.debug = SceneJS.translate({id: "debug"},
-          SceneJS.scale({y:0.01}, SceneJS.sphere({radius: 0.2}) ) ));
+                SceneJS.scale({y:0.01}, SceneJS.sphere({radius: 0.2}) ) ));
 
         this.root.addNode(this.earthPlane =  SceneJS.material({
             baseColor:  { r: 0.5, g: 0.5, b: 1.0 },
             specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
             emit: 0.0, specular: 0.0, shine: 3.0},
 
-                // DIRECTION MARKERS 
+            // DIRECTION MARKERS
                 SceneJS.translate({id: "North", x:-4.5,y:0.2}),
                 SceneJS.translate({id: "South", x:4.5,y:0.2}),
                 SceneJS.translate({id: "East", z:-4.5,y:0.2}),
@@ -117,8 +117,8 @@ var BasePlanetModel = function() {
         }, new SceneJS.cloud({count:50, scale:20.0})));
 
         this["showSphere0"] = function(state) {
-          this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
-        } 
+            this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
+        }
 
 //        this.sphere[0].curve.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
 //                this.systemSun[1] = new Spherical({ scale: 9, axisAngle: 0.5, speed: 0.0 },
@@ -152,8 +152,8 @@ var BasePlanetModel = function() {
 
         //TODO: better merge
         for(i in this.sphere)
-          $.extend(true, this.sphere[i], this.currentPlanet.sphere[i]);
-        
+            $.extend(true, this.sphere[i], this.currentPlanet.sphere[i]);
+
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         if(this.sphere[3]) this.sphere[3].setArcBeta(this.currentPlanet.betaRotate);
@@ -178,15 +178,15 @@ var BasePlanetModel = function() {
     }
     this.running=true;
     this.pause = function() {
-      this.running=!this.running;
-      
+        this.running=!this.running;
+
     }
     this.update = function() {
-        
-        if(this.running)   
-          for (i in model.updateList) {
-              model.updateList[i].update(-(365.0/this.fps)/this.speed);
-          }
+
+        if(this.running)
+            for (i in model.updateList) {
+                model.updateList[i].update((365.0/this.fps)/this.speed);
+            }
         this.time++;
         this.render();
     }
@@ -207,7 +207,7 @@ var BasePlanetModel = function() {
         sunPos = getNodePos(this.name+"Sun");
         this.light.setPos(sunPos);
         if (this.sun.getEnabled() &&
-            distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
+                distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
             this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
         else
             this.planet.setShade(model.currentPlanet.color);
@@ -241,19 +241,24 @@ var BasePlanetModel = function() {
             pos.y = 0.5;
             pos.z = 0.5;
 
-            this.lookAt.dir = $V([0,0,1]);
-            this.lookAt.up = $V([0,1,0]);
-            this.lookAt.right = $V([1,0,0]);
-            this.lookAt.update();
+//            this.lookAt.dir = $V([0,0,1]);
+//            this.lookAt.up = $V([0,1,0]);
+//            this.lookAt.right = $V([1,0,0]);
 
         }
-
         //  if(node=="earth") earth.setEnabled(false);
+
         if (node == "Planet") {
             this.planet.setEnabled(false);
         }
 
+        this.pitch=0;
+        this.lookAt.dir = $V([0,0,1]);
+        this.lookAt.up = $V([0,1,0]);
+        this.lookAt.right = $V([1,0,0]);
         this.lookAt.setEye(pos);
+//        this.lookAt.update();
+
         this.lookAt.update();
     }
 

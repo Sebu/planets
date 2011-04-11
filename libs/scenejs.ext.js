@@ -612,7 +612,11 @@ posSyl = function(node) {
 PI_SCALE = 180.0/Math.PI;
 
 
-calcAngle = function(node1, node2, center) {
+calcAngle = function(pos1, pos2) {
+	  return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+}
+
+calcAngleRel = function(node1, node2, center) {
 	 	pos1 = center.subtract( node1 ); 
 	 	pos2 = center.subtract( node2 );
 	  return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;

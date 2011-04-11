@@ -76,10 +76,10 @@ DONE
 - UIHelper BASICS
 - user: change FOV
 - pause/start button
+- speed stars/ecliptic -> speed planet/ecliptic
+- negative angles
 
 TODO
-- negative angles
-- speed stars/ecliptic -> speed planet/ecliptic
 
 NEXT
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection
