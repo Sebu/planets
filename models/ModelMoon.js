@@ -91,8 +91,6 @@ ModelMoon = function(params) {
 
     this.setCurrentMoonModel("Mendell");
 
-    //this.setCurrentMoonModel("Mendell");
-    //this.updateMoon();
 
     this.updateMoon = function() {
         this.draco = this.getDraconiticDaysPerMonth();

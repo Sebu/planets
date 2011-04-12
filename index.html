@@ -59,6 +59,9 @@
 
 
 var days = 0;
+var perpAngle=0;
+var eclipticAngle2 = 0;
+
 function update() {
     earthPos = posSyl(model.name+"Earth");
     polePos = posSyl(model.name+"S1npole");
@@ -83,14 +86,19 @@ function update() {
     if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
         sunAngle = -sunAngle;
 
-    lastAngle = eclipticAngle;
-    eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
-    if (calcAngle(planetOnPlane, equinoxOnPlanePerp)<90)
-       eclipticAngle = -eclipticAngle;
-
     
+    lastAngle = eclipticAngle2;
+    lastPerp = perpAngle;
+    eclipticAngle2 = eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
+    perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
+    if (perpAngle<=90)
+      eclipticAngle2 = 360-eclipticAngle;
+    if (perpAngle>90 && lastPerp<90)
+      tmp = eclipticAngle2 - (lastAngle-360); 
+    else tmp = eclipticAngle2 - lastAngle;
+  
+    eclipticSpeed = tmp*model.fps*(model.speed/model.systemSun[0].getSpeed());
 
-    eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps*(model.speed/model.systemSun[0].getSpeed());
     latitude = calcAngle(upVec,planetPos)-90;
 
     days += (model.systemSun[0].getSpeed()/model.speed)/model.fps;
