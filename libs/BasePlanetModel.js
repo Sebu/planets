@@ -68,10 +68,10 @@ var BasePlanetModel = function() {
             emit: 0.0, specular: 0.0, shine: 3.0},
 
             // DIRECTION MARKERS
-                SceneJS.translate({id: "North", x:-4.5,y:0.2}),
-                SceneJS.translate({id: "South", x:4.5,y:0.2}),
-                SceneJS.translate({id: "East", z:-4.5,y:0.2}),
-                SceneJS.translate({id: "West", z:4.5,y:0.2}),
+                SceneJS.translate({id: "North", x:4.5,y:0.2}),
+                SceneJS.translate({id: "South", x:-4.5,y:0.2}),
+                SceneJS.translate({id: "East", z:4.5,y:0.2}),
+                SceneJS.translate({id: "West", z:-4.5,y:0.2}),
                 SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0}))
                 )
                 );
@@ -185,7 +185,7 @@ var BasePlanetModel = function() {
 
         if(this.running)
             for (i in model.updateList) {
-                model.updateList[i].update(-(365.0/this.fps)/this.speed);
+                model.updateList[i].update((365.0/this.fps)/this.speed);
             }
         this.time++;
         this.render();
@@ -290,13 +290,13 @@ var BasePlanetModel = function() {
 
         for (var i = start + 1; i < this.sphere.length; i++) {
             oldRotate[i] = this.sphere[i].getRotateAngle();
-            this.sphere[i].update(20.0);
+            this.sphere[i].update(-20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
         var maxSegments = 100-Math.round(20/step);
         for (var j = 0; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                this.sphere[i].update(-10.0 / step);
+                this.sphere[i].update(10.0 / step);
             }
             pos = getNodePos(node);
             curvePos.push(pos);

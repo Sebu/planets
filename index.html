@@ -68,13 +68,12 @@ function update() {
 
     sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
-
+    // hackery hack
     if (model.sun.getEnabled() && sunAngle<=15)
             model.planet.setShade({r: 0.4, g: 0.4, b:0.4});
         else
             model.planet.setShade(model.currentPlanet.color);
 
-    // hackery hack
     if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
         sunAngle = -sunAngle;
 
