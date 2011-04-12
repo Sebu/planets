@@ -111,7 +111,7 @@ function update() {
         UI.label(getNodePosCanvas(model.name+"S0"),"Equinox");
     }
     UI.label(getNodePosCanvas(model.name+"Planet"),"Planet");
-    UI.label(getNodePosCanvas(model.name+"Sun"),"Sun");
+    if(model.sun.getEnabled()) UI.label(getNodePosCanvas(model.name+"Sun"),"Sun");
 
 
 }
