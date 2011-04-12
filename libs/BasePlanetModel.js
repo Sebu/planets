@@ -98,7 +98,10 @@ var BasePlanetModel = function() {
 
         }
         this.sphere[this.sphere.length - 1].anchor.addNode(this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet",  color:colors["Planet"] }));
-        this.sphere[1].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
+
+
+//        this.sphere[1].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
+
         for (i in this.sphere) {
             this["setSpeed" + i] = new Function("value", "this.sphere[" + i + "].setSpeed(value);");
             this["setAxisAngle" + i] = new Function("value", "this.sphere[" + i + "].setAxisAngle(value);");
@@ -121,14 +124,15 @@ var BasePlanetModel = function() {
             this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
         }
 
-//        this.sphere[0].curve.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
-//                this.systemSun[1] = new Spherical({ scale: 9, axisAngle: 0.5, speed: 0.0 },
-//                        this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] })
-//                        )
-//                )
-//                );
-//
-//        this.updateList[this.sphere.length] = this.systemSun[0];
+        this.sphere[0].curve.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}},
+                        this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] })
+                        )
+                );
+
+        this["setSunSpeed"] = new Function("value", "this.systemSun[0].setSpeed(value);");
+        this["getSunSpeed"] = new Function("return this.systemSun[0].getSpeed();");
+
+        this.updateList[this.sphere.length] = this.systemSun[0];
 //        this.updateList[this.sphere.length+1] = this.systemSun[1];
 
         this.root.setEnabled(false);
@@ -161,7 +165,7 @@ var BasePlanetModel = function() {
 
         this.sphere[0].setVisuals(["arc1","arc2"], false);
 
-//        this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+        this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 //        this.systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
     }
@@ -207,11 +211,6 @@ var BasePlanetModel = function() {
         //TODO: on model change -> events?
         sunPos = getNodePos(this.name+"Sun");
         this.light.setPos(sunPos);
-//        if (this.sun.getEnabled() &&
-//                distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
-//            this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
-//        else
-//            this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
     }
@@ -222,7 +221,7 @@ var BasePlanetModel = function() {
             this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
         }
 
-//        this.systemSun[0].setRotateAngle(0);
+        this.systemSun[0].setRotateAngle(0);
 //        this.systemSun[1].setRotateAngle(0);
 
     }
