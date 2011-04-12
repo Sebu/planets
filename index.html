@@ -68,17 +68,25 @@ function update() {
 
     sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
+
+    if (model.sun.getEnabled() && sunAngle<=15)
+            model.planet.setShade({r: 0.4, g: 0.4, b:0.4});
+        else
+            model.planet.setShade(model.currentPlanet.color);
+
     // hackery hack
     if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
         sunAngle = -sunAngle;
 
     lastAngle = eclipticAngle;
     eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
-    eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps;
+    eclipticSpeed = (lastAngle - eclipticAngle)*model.fps;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(sunAngle.toFixed());
     $("#eclipticAngle").html(eclipticAngle.toFixed());
     $("#eclipticSpeed").html(eclipticSpeed.toFixed());
+
+
 
     model.update();
     //labels

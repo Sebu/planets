@@ -371,11 +371,15 @@ Spherical.prototype._init = function(params) {
                                                     )
                                             ),
                                 // northpole
-                                    this.visuals["npole"] = SceneJS.translate({id:"" + params.inner_id +"npole",x: 0.0, y: params.scale, z: 0.0  },
+                                    this.visuals["npole"] = SceneJS.material({
+                                baseColor:      color, // {r: 1.0, g:1.0, b:1.0},
+                                specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+                                emit: 1.0, specular: 0.0, shine: 1.0
+                            },SceneJS.translate({id:"" + params.inner_id +"npole",x: 0.0, y: params.scale, z: 0.0  },
                                             SceneJS.scale({x: 0.1, y: 0.1, z: 0.1 },
                                                     SceneJS.sphere()
                                                     )
-                                            ),
+                                            )),
                                 // southhpole
                                     this.visuals["spole"] = SceneJS.translate({id:"" + params.inner_id +"spole", x: 0.0, y: -params.scale, z: 0.0  },
                                             SceneJS.scale({x: 0.1, y: 0.1, z: 0.1 },

@@ -185,7 +185,7 @@ var BasePlanetModel = function() {
 
         if(this.running)
             for (i in model.updateList) {
-                model.updateList[i].update((365.0/this.fps)/this.speed);
+                model.updateList[i].update(-(365.0/this.fps)/this.speed);
             }
         this.time++;
         this.render();
@@ -206,11 +206,11 @@ var BasePlanetModel = function() {
         //TODO: on model change -> events?
         sunPos = getNodePos(this.name+"Sun");
         this.light.setPos(sunPos);
-        if (this.sun.getEnabled() &&
-                distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
-            this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
-        else
-            this.planet.setShade(model.currentPlanet.color);
+//        if (this.sun.getEnabled() &&
+//                distance(sunPos, getNodePos(this.name+"Planet")) < 2.0)
+//            this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
+//        else
+//            this.planet.setShade(model.currentPlanet.color);
 
         this.scene.render();
     }
@@ -290,13 +290,13 @@ var BasePlanetModel = function() {
 
         for (var i = start + 1; i < this.sphere.length; i++) {
             oldRotate[i] = this.sphere[i].getRotateAngle();
-            this.sphere[i].update(-20.0);
+            this.sphere[i].update(20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
         var maxSegments = 100-Math.round(20/step);
         for (var j = 0; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                this.sphere[i].update(10.0 / step);
+                this.sphere[i].update(-10.0 / step);
             }
             pos = getNodePos(node);
             curvePos.push(pos);
