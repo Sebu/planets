@@ -228,7 +228,7 @@ var BasePlanetModel = function() {
     }
 
     this.changeView = function(node) {
-        if (node == "Free") pos = { x: 0.0, y: 0.0, z: -15 };
+        if (node == "Free") pos = { x: 0.0, y: 0.0, z: -19 };
         else pos = getNodePos(this.name+node);
 
         this.earth.setEnabled(true);

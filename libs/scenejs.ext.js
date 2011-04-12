@@ -3,12 +3,12 @@ var Renderer = function(params) {
     this.domElement = $("<canvas tabindex=1 id='glCanvas'><p>This example requires a browser that supports the<a href='http://www.w3.org/html/wg/html5/'>HTML5</a>&lt;canvas&gt; and <a href='http://www.khronos.org/webgl/WebGL'>WebGL</a>features.</p></canvas>");
 
 
-    this._fov = 90;
+    this._fov = 58;
 
     this.init = function () {
     this.scene = SceneJS.scene({ canvasId: "glCanvas" });
     this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -13 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+    this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
     this.camera = new Camera();
 
 //    this.camera.setOptics({fovy:90});
