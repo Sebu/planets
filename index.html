@@ -17,8 +17,9 @@
 
 <div class="container" id="infoContainer">
     <div>angle planet/sun <span style='float:right;' id="sunAngle">0</span></div>
-    <div>angle planet/ecliptic <span style='float:right; 'id="eclipticAngle">0</span></div>
-    <div>speed planet/ecliptic <span style='float:right;' id="eclipticSpeed">0</span></div>
+    <div>longitude <span style='float:right; 'id="eclipticAngle">0</span></div>
+    <div>longitude speed <span style='float:right;' id="eclipticSpeed">0</span></div>
+    <div>latitude<span style='float:right;' id="latitude">0</span></div>
     <div id="moonInfoContainer" style="display:none">
         <div>zodiacal month</div>
         <div id="metonZodicalMonths">0</div>
@@ -59,6 +60,7 @@ function update() {
     polePos = posSyl(model.name+"S1npole");
     upVec = earthPos.subtract(polePos);
     planetOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Planet")).subtract(earthPos);
+    planetPos = posSyl(model.name+"Planet").subtract(earthPos);
     sunOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Sun")).subtract(earthPos);
     sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
     equinoxOnPlane = posSyl(model.name+"S0").subtract(earthPos);
@@ -79,12 +81,13 @@ function update() {
 
     lastAngle = eclipticAngle;
     eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
-    eclipticSpeed = (lastAngle - eclipticAngle)*model.fps;
+    eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps;
+    latitude = calcAngle(upVec,planetPos)-90;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(sunAngle.toFixed());
     $("#eclipticAngle").html(eclipticAngle.toFixed());
     $("#eclipticSpeed").html(eclipticSpeed.toFixed());
-
+    $("#latitude").html(latitude.toFixed());
 
 
     model.update();
