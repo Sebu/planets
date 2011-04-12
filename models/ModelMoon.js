@@ -15,6 +15,9 @@ ModelMoon = function(params) {
 
     
 //    this.sun.setEnabled(false);
+    this.setSpeed0 = function(speed) {
+        this.sphere[0].setSpeed(-speed);
+    }
 
     this.metonYear = 0;
     this.setMetonYear = function(val) {
