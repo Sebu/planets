@@ -88,7 +88,6 @@ var BasePlanetModel = function() {
 
         this.root.addNode(this.sphere[0] = new Spherical({inner_id: this.name+"S0", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S0"]}));
 
-
         this.updateList = [];
         this.updateList[0] = this.sphere[0];
 
@@ -109,6 +108,8 @@ var BasePlanetModel = function() {
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
             this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
         }
+
+        this.sphere[0].visuals["npole"].setBaseColor({r:1.0,g:1.0,b:1.0});
 
         this.sphere[1].addNode(this.stars =  SceneJS.material({
             baseColor:      { r: 1.0, g: 1.0, b: 1.0 },

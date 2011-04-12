@@ -320,6 +320,7 @@ Circle.prototype._render = function(traversalContext) {
 
 Spherical.prototype._init = function(params) {
 
+    this.inner_id = params.inner_id;
     tmpNodes = this.removeNodes();
     color = params.color || { r: 0.5, g: 0.5, b: 0.5};
     this.visuals = [];
@@ -413,8 +414,8 @@ Spherical.prototype._init = function(params) {
 
 };
 
-Spherical.prototype.getPlane = function(name) {
-  return Plane.create(Vector.Zero(3), posSyl(name+"S1npole").toUnitVector());
+Spherical.prototype.getPlane = function() {
+  return Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
 }
 
 Spherical.prototype.setVisuals = function(vis, state) {

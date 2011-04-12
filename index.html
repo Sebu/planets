@@ -59,9 +59,9 @@ function update() {
     earthPos = posSyl(model.name+"Earth");
     polePos = posSyl(model.name+"S1npole");
     upVec = earthPos.subtract(polePos);
-    planetOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Planet")).subtract(earthPos);
+    planetOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Planet")).subtract(earthPos);
     planetPos = posSyl(model.name+"Planet").subtract(earthPos);
-    sunOnPlane = model.sphere[1].getPlane(model.name).pointClosestTo(posSyl(model.name+"Sun")).subtract(earthPos);
+    sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Sun")).subtract(earthPos);
     sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
     equinoxOnPlane = posSyl(model.name+"S0").subtract(earthPos);
 
@@ -84,10 +84,10 @@ function update() {
     eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps;
     latitude = calcAngle(upVec,planetPos)-90;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
-    $("#sunAngle").html(sunAngle.toFixed());
-    $("#eclipticAngle").html(eclipticAngle.toFixed());
-    $("#eclipticSpeed").html(eclipticSpeed.toFixed());
-    $("#latitude").html(latitude.toFixed());
+    $("#sunAngle").html(Math.round(sunAngle));
+    $("#eclipticAngle").html(Math.round(eclipticAngle));
+    $("#eclipticSpeed").html(Math.round(eclipticSpeed));
+    $("#latitude").html(Math.round(latitude));
 
 
     model.update();
