@@ -58,7 +58,7 @@
 <script type="text/javascript">
 
 
-var count = 0;
+var days = 0;
 function update() {
     earthPos = posSyl(model.name+"Earth");
     polePos = posSyl(model.name+"S1npole");
@@ -88,8 +88,7 @@ function update() {
     eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps*(model.speed/model.systemSun[0].getSpeed());
     latitude = calcAngle(upVec,planetPos)-90;
 
-    count +=1;
-    days = (model.systemSun[0].getSpeed()/model.speed)*count/model.fps;
+    days += (model.systemSun[0].getSpeed()/model.speed)/model.fps;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(Math.round(sunAngle));
     $("#eclipticAngle").html(Math.round(eclipticAngle));
