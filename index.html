@@ -67,9 +67,9 @@ function update() {
     planetPos = posSyl(model.name+"Planet").subtract(earthPos);
     sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(model.name+"Sun")).subtract(earthPos);
     sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+
     equinoxOnPlane = posSyl(model.name+"S0").subtract(earthPos);
-
-
+    equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
 
 
     sunAngle = calcAngle(planetOnPlane, sunOnPlane);
@@ -85,6 +85,11 @@ function update() {
 
     lastAngle = eclipticAngle;
     eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
+    if (calcAngle(planetOnPlane, equinoxOnPlanePerp)<90)
+       eclipticAngle = -eclipticAngle;
+
+    
+
     eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps*(model.speed/model.systemSun[0].getSpeed());
     latitude = calcAngle(upVec,planetPos)-90;
 

@@ -14,7 +14,7 @@ ModelMoon = function(params) {
 
 
     
-    this.sun.setEnabled(false);
+//    this.sun.setEnabled(false);
 
     this.metonYear = 0;
     this.setMetonYear = function(val) {
