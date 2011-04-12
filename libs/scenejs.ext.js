@@ -52,6 +52,10 @@ var Renderer = function(params) {
 
     // TODO: move all of them outside
     this.pitch = 0;
+
+//    var maxRad = -(160.0/180.0) * Math.PI;
+//    var minRad = (160.0/180.0) * Math.PI;
+
     this.mouseMove = function(event) {
         if (this.dragging) {
             pitch = (event.clientY - this.lastY) * 0.005;
@@ -63,10 +67,14 @@ var Renderer = function(params) {
                 model.lookAt.rotateUp(yaw);
             }
 
-            if(model.currentPos=="Earth") {
-              if(this.pitch+pitch>0.4)  pitch = 0;
-              else if(this.pitch+pitch<-1.9)  pitch = 0;
-            }
+
+            
+//            if(model.currentPos=="Earth") {
+//              if(this.pitch+pitch>maxRad)  pitch = 0;
+//              else if(this.pitch+pitch<-minRad)  pitch = 0;
+//            }
+
+
             this.pitch += pitch;
   		      this.lookAt.rotateRight(pitch);
 
@@ -429,6 +437,7 @@ Spherical.prototype.setAxisAngle = function(angle) {
     this.axis.setAngle(this.axisAngle);
     this.arcangle21.setAngle(angle);
     this.arcangle22.setAngle(angle);
+
 };
 
 Spherical.prototype.getAxisAngle = function() {

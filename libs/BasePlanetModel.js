@@ -68,10 +68,10 @@ var BasePlanetModel = function() {
             emit: 0.0, specular: 0.0, shine: 3.0},
 
             // DIRECTION MARKERS
-                SceneJS.translate({id: "North", x:4.5,y:0.2}),
-                SceneJS.translate({id: "South", x:-4.5,y:0.2}),
-                SceneJS.translate({id: "East", z:4.5,y:0.2}),
-                SceneJS.translate({id: "West", z:-4.5,y:0.2}),
+                SceneJS.translate({id: "North", x:-4.5,y:0.2}),
+                SceneJS.translate({id: "South", x:4.5,y:0.2}),
+                SceneJS.translate({id: "East", z:-4.5,y:0.2}),
+                SceneJS.translate({id: "West", z:4.5,y:0.2}),
                 SceneJS.scale({y:0.01},SceneJS.sphere({radius: 9.0}))
                 )
                 );
