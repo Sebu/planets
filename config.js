@@ -192,37 +192,6 @@ YavetzTest: {
     {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 95 },
   ]},
 
-SimpleTest: { 
-  model: "ModelSimple",
-  sphere: [
-    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
-  ] },
-HippoTest: {
-  model: "ModelHippo",
-  sphere: [
-    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
-  ] },
-
-MoonCompare: { 
-  sunDist: 8,
-  model: "ModelMoonCompare",
-  metonYear: 19,
-  metonSynodicMonths: 235,
-  metonDays:6940,
-  metonDraconiticMonths: 242,
-  sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
-    {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
-
-
 
 
 MoonMeton: { 
@@ -273,7 +242,37 @@ Sun: {
     {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 0.5,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0, rotateStart: 0 }] }
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }] },
+
+MoonCompare: { 
+  sunDist: 8,
+  model: "ModelMoonCompare",
+  metonYear: 19,
+  metonSynodicMonths: 235,
+  metonDays:6940,
+  metonDraconiticMonths: 242,
+  sphere: [
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 0, rotateStart: 0 },
+    {axisAngle: 5.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
+
+SimpleTest: { 
+  model: "ModelSimple",
+  sphere: [
+    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
+  ] },
+HippoTest: {
+  model: "ModelHippo",
+  sphere: [
+    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
+  ] },
 
 };
 
