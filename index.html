@@ -81,7 +81,7 @@ function update() {
 
     lastAngle = eclipticAngle;
     eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
-    eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps;
+    eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps*(model.speed/model.systemSun[0].getSpeed());
     latitude = calcAngle(upVec,planetPos)-90;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(Math.round(sunAngle));
