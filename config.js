@@ -100,7 +100,7 @@ Jupiter: {
     model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 4380, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 4380, speedmax: 5000, rotateStart: 0 },
     {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
     {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 
@@ -109,7 +109,7 @@ Saturn: {
     model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 10940, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 10940, speedmax: 12000, rotateStart: 0 },
     {axisAngle: 90.0,  speed: 390, rotateStart: 0 },
     {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 

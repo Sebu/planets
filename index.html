@@ -86,7 +86,7 @@ function update() {
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(Math.round(sunAngle));
     $("#eclipticAngle").html(Math.round(eclipticAngle));
-    $("#eclipticSpeed").html(Math.round(eclipticSpeed));
+    $("#eclipticSpeed").html(eclipticSpeed.toFixed(2));
     $("#latitude").html(Math.round(latitude));
 
 
@@ -307,7 +307,7 @@ function setCurrentPlanet(node) {
         UI.slider({model:"model", id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
         UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
         UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
-        UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+        UI.slider({model:"model", id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
         UI.slider({model:"model", id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
         UI.slider({model:"model", id:"SunSpeed",  max:1100, text:"S 2 Sun"}).appendTo("#speed");
         UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
@@ -325,7 +325,7 @@ function setCurrentPlanet(node) {
         UI.slider({model:"model", id: "AxisAngle4", max: 360, step:0.05, text: "S 4-5 (unknown)"}).appendTo("#angle");
         UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
         UI.slider({model:"model", id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
-        UI.slider({model:"model", id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+        UI.slider({model:"model", id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
         UI.slider({model:"model", id: "Alpha", max:1100}).appendTo("#speed");
         UI.slider({model:"model", id: "Beta", max:1100}).appendTo("#speed");
         UI.slider({model:"model", id: "Gamma", max:1100}).appendTo("#speed");
