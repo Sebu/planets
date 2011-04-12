@@ -16,6 +16,7 @@ var BasePlanetModel = function() {
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
     this.pitch=0;
+    this.days = 0;
     this.speed = 0;
     this.fps = 30.0;
     this.setSpeed = function(val) {
@@ -188,10 +189,12 @@ var BasePlanetModel = function() {
     }
     this.update = function() {
 
-        if(this.running)
+        if(this.running) {
+            this.days += (this.systemSun[0].getSpeed()/this.speed)/this.fps;
             for (i in model.updateList) {
                 model.updateList[i].update((365.0/this.fps)/this.speed);
             }
+        }
         this.time++;
         this.render();
     }

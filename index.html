@@ -58,7 +58,6 @@
 <script type="text/javascript">
 
 
-var days = 0;
 var perpAngle=0;
 var eclipticAngle2 = 0;
 
@@ -91,23 +90,22 @@ function update() {
     lastPerp = perpAngle;
     eclipticAngle2 = eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
     perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
+
     if (perpAngle<=90)
-      eclipticAngle2 = 360-eclipticAngle;
+      eclipticAngle2 = 360-eclipticAngle2;
     if (perpAngle>90 && lastPerp<90)
-      tmp = eclipticAngle2 - (lastAngle-360); 
-    else tmp = eclipticAngle2 - lastAngle;
+      lastAngle  -=360; 
   
-    eclipticSpeed = tmp*model.fps*(model.speed/model.systemSun[0].getSpeed());
+    eclipticSpeed = (eclipticAngle2 - lastAngle)*model.fps*(model.speed/model.systemSun[0].getSpeed());
 
     latitude = calcAngle(upVec,planetPos)-90;
 
-    days += (model.systemSun[0].getSpeed()/model.speed)/model.fps;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(Math.round(sunAngle));
     $("#eclipticAngle").html(Math.round(eclipticAngle));
     $("#eclipticSpeed").html(eclipticSpeed.toFixed(2));
     $("#latitude").html(Math.round(latitude));
-    $("#days").html(Math.round(days));
+    $("#days").html(Math.round(model.days));
 
 
     model.update();
