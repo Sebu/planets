@@ -3,7 +3,7 @@ var Renderer = function(params) {
     this.domElement = $("<canvas tabindex=1 id='glCanvas'><p>This example requires a browser that supports the<a href='http://www.w3.org/html/wg/html5/'>HTML5</a>&lt;canvas&gt; and <a href='http://www.khronos.org/webgl/WebGL'>WebGL</a>features.</p></canvas>");
 
 
-    this._fov = 58;
+    this._fov = 70;
 
     this.init = function () {
     this.scene = SceneJS.scene({ canvasId: "glCanvas" });

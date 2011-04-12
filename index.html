@@ -20,6 +20,8 @@
     <div>longitude <span style='float:right; 'id="eclipticAngle">0</span></div>
     <div>longitude speed <span style='float:right;' id="eclipticSpeed">0</span></div>
     <div>latitude<span style='float:right;' id="latitude">0</span></div>
+    <div>days<span style='float:right;' id="days">0</span></div>
+
     <div id="moonInfoContainer" style="display:none">
         <div>zodiacal month</div>
         <div id="metonZodicalMonths">0</div>
@@ -55,6 +57,8 @@
 <script type="text/javascript" src="models/ModelMoonCompare.js"></script>
 <script type="text/javascript">
 
+
+var count = 0;
 function update() {
     earthPos = posSyl(model.name+"Earth");
     polePos = posSyl(model.name+"S1npole");
@@ -83,11 +87,15 @@ function update() {
     eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
     eclipticSpeed = -(lastAngle - eclipticAngle)*model.fps*(model.speed/model.systemSun[0].getSpeed());
     latitude = calcAngle(upVec,planetPos)-90;
+
+    count +=1;
+    days = (model.systemSun[0].getSpeed()/model.speed)*count/model.fps;
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     $("#sunAngle").html(Math.round(sunAngle));
     $("#eclipticAngle").html(Math.round(eclipticAngle));
     $("#eclipticSpeed").html(eclipticSpeed.toFixed(2));
     $("#latitude").html(Math.round(latitude));
+    $("#days").html(Math.round(days));
 
 
     model.update();
