@@ -17,6 +17,9 @@ Model4 = function(params) {
         //Spherical.prototype.setAxisAngle.call(this, 90 - angle);
     }
 
+    this.setSpeed0 = function(speed) {
+        this.sphere[0].setSpeed(-speed);
+    }
 
     this.setAxisAngle2 = function(angle) {
     		this.sphere[2].setAxisAngle(angle);
