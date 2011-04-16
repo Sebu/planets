@@ -5,16 +5,9 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/planets.css">
 </head>
-
-<div class="container" id="uiContainer">
-
-</div>
-
+<div class="container" id="uiContainer"></div>
 <div id="mainBox" tabindex=1></div>
-
-<div class="container" id="legendContainer">
-</div>
-
+<div class="container" id="legendContainer"></div>
 <div class="container" id="infoContainer">
     <div>angle planet/sun <span style='float:right;' id="sunAngle">0</span></div>
     <div>longitude <span style='float:right; 'id="eclipticAngle">0</span></div>
@@ -39,9 +32,8 @@
 
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script>
 <script type="text/javascript" src="libs/sylvester.js"></script>
-<script type="text/javascript" src="libs/scenejs.min.js"></script>
-<script type="text/javascript" src="libs/scenejs-query-node-pos.js"></script>
-<script type="text/javascript" src="libs/scenejs.ext.js"></script>
+<script type="text/javascript" src="libs/Three.js"></script>
+<script type="text/javascript" src="libs/three.ext.js"></script>
 
 
 <script type="text/javascript" src="libs/BasePlanetModel.js"></script>
@@ -61,7 +53,6 @@
 function update() {
 
 
-//    model.debug.setXYZ(sylToScene(planetOnPlane));
     model.update();
     $("#sunAngle").html(Math.round(model.sunAngle));
     $("#eclipticAngle").html(Math.round(model.eclipticAngle));
@@ -91,19 +82,11 @@ function update() {
 // setup site
 $(document).ready(function() {
 
-//        $("#uiContainer").hover(function() {
-//            $("#uiContainer,#legendContainer").fadeTo(300,1.0);
-//        }, function() {
-//            $("#uiContainer,#legendContainer").fadeTo(300,0.5);
-//        });
-//
-//        $("#uiContainer,#legendContainer").fadeTo(0,0.5);
-
-    //	$(".view").hide();
     renderer = new Renderer();
-    $("#mainBox").append(renderer.domElement);
     renderer.init();
-    
+    $("#mainBox").innerHTML = "";
+    $("#mainBox").append(renderer.domElement);
+
     models = {}; //new Object;
     models["Model4"] = new Model4({renderer: renderer});
     models["ModelMoonCompare"] =  new ModelMoonCompare({renderer: renderer});
@@ -137,20 +120,13 @@ $(document).ready(function() {
 
 
     $("#vis").hide();
-//        $("#uiContainer").prepend("<div title='look at' ><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div>");
-//        $("#uiContainer").prepend("<div title='position'><img src='textures/origin.png'><select  id='viewPos' class='view' style='position: relative;top:-6px;' onchange='model.currentPos = this.options[this.selectedIndex].value; model.changeView(model.currentPos);'></select></div>");
-//        UI.optionsFromHash("#viewPos,#lookAt", model.viewPoints);
-
-//        $("#lookAt option[value='Earth']").attr('selected', true);
-
-
 
     // SETUP START
     // start models
     setCurrentPlanet("Mercury1");
 
     // TODO: fix/move to renderer
-    canvas = document.getElementById("glCanvas");
+    canvas = renderer.domElement;
     canvas.addEventListener('mousedown', function(e) {
         renderer.mouseDown(e);
     }, true);
@@ -351,8 +327,8 @@ function setCurrentPlanet(node) {
     $("#capvis,#caprotateStart, #pauseButton").click();
     $("#moon input, #angle  input, #speed  input").change();
     $("#AxisAngle0 input").change();
+    renderer.resize();
 
-//        $("#rotateStart,#vis").hide();
 }
 
 </script>

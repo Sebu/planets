@@ -441,7 +441,7 @@ window.render = function() {
 	sunPos = getNodePos("sun");
 	light.setPos(sunPos);
   if(currentPlanet.type!="sun" && 
-  	distance(sunPos,getNodePos("planet")) < 2.0) 
+  	//distance(sunPos,getNodePos("planet")) < 2.0)
     planet.setShade({r: 0.2, g: 0.2, b:0.2});
   else 
     planet.setShade(currentPlanet.color);

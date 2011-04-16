@@ -16,7 +16,7 @@
 
 <script type="text/javascript" src="../three.js/build/Three.js"></script>
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script> 
-<script type="text/javascript" src="libs/planetsviz2.js"></script>
+<script type="text/javascript" src="libs/three.ext.js"></script>
 <script type="text/javascript" src="config.js"></script>
   
 <script type="text/javascript"> 
@@ -111,8 +111,9 @@ function mouseWheel_firefox(event) {
 
 // base structure
 
-var scene = scene = new THREE.Scene(); 
+var scene = new THREE.Scene();
 var renderer = new THREE.CanvasRenderer();
+renderer.sortObjects = false;
 renderer.setSize( window.innerWidth, window.innerHeight);
 $("#canvas").append( renderer.domElement );
 renderer.domElement.addEventListener('mousedown', mouseDown, true);
@@ -123,46 +124,34 @@ renderer.domElement.addEventListener('mousewheel', mouseWheel, true);
 renderer.domElement.addEventListener('DOMMouseScroll', mouseWheel_firefox, true);
 
 var camera = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-camera.position.z = 30;
-var light = Sunlight();
-
+camera.position.z = 17;
+root = new THREE.Object3D();
+//scene.addObject(root);
 earth = new Planet({dist: 0.0, scale: 0.2, id: "earth"});
-console.log(earth);
-scene.addObject( earth.mesh );
+//console.log(earth);
+root.addChild( earth.mesh );
 
 
-system[0] = new Spherical({scale: 9, axisAngle: 33.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}});
+system[0] = new Spherical({scale: 9, axisAngle: 133.0, speed: 0.0, color: {r:0.7, g: 0.7, b: 0.5}});
+//system[0].overdraw = true;
+root.addChild( system[0].visuals["arc1"] );
 
-scene.addObject( system[0].visuals["arc1"] );
-							
-			
-							
-							
+scene.addObject(root);
 
 
-resize = function() {
-	renderer.domElement.width = $(window).width();	
-	renderer.domElement.height = $(window).height();
-	renderer.setSize( renderer.domElement.width, renderer.domElement.height);
-	camera.setAspect(45, renderer.domElement.width/renderer.domElement.height, 1, 10000);
-}
-
-				
 
 
-console.log(scene);
-				
+
+
 window.render = function() {
-	
+  console.log(scene);
   renderer.render( scene, camera );
-    
+
 };
 
 
-setInterval("window.render()", 33);  
+setInterval("window.render()", 33);
 
-window.onresize=resize;
-resize();
 
 
 </script>

@@ -57,14 +57,15 @@
 				camera = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
 				camera.position.z = 500;
 
+
 				scene = new THREE.Scene();
 
-				mesh = new THREE.Mesh( new Plane( 300, 300, 3, 3 ),  new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
+				mesh = new THREE.Mesh( new THREE.Plane( 300, 300, 3, 3 ),  new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
 				mesh.position.y = - 250;
 				mesh.rotation.x = - 90 * Math.PI / 180;
 				scene.addObject(mesh);
 
-				mesh = new THREE.Mesh( new Sphere( 200, 20, 20 ),  new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
+				mesh = new THREE.Mesh( new THREE.Sphere( 200, 20, 20 ),  new THREE.MeshBasicMaterial( { color: 0xe0e0e0 } ) );
 				mesh.overdraw = true;
 				scene.addObject(mesh);
 
