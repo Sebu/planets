@@ -174,7 +174,7 @@ var Renderer = function(params) {
 
     this.init = function () {
 
-        this.renderer = new THREE.WebGLRenderer({antialias: true});
+        this.renderer = new THREE.CanvasRenderer({antialias: true});
         this.renderer.sortObjects = false;
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -306,6 +306,15 @@ Translate = function(params) {
 Translate.prototype = new THREE.Object3D;
 Translate.prototype.constructor = Translate;
 
+sphereGeo = [
+
+                [ new THREE.Sphere( 1, 32, 16 ), 0 ],
+                [ new THREE.Sphere( 1, 16, 8 ), 10 ],
+                [ new THREE.Sphere( 1, 8, 4 ), 20 ]
+
+];
+
+
 
 Planet = function(params) {
     THREE.Object3D.call( this );
@@ -317,11 +326,23 @@ Planet = function(params) {
     this.color = params.color || { r: 2.2, g: 2.2, b: 2.9 };  var emit = params.emit || 0.0;
     dist = params.dist;
 
+    this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
+
+
+    this.mesh = new THREE.LOD();
+
+    for (i = 0; i < sphereGeo.length; i++ ) {
+        				mesh = new THREE.Mesh( sphereGeo[ i ][ 0 ], this.material );
+                        mesh.scale.set( params.scale, params.scale, params.scale );
+        				mesh.updateMatrix();
+						mesh.matrixAutoUpdate = false;
+                        mesh.overdraw = true;
+						this.mesh.add( mesh, sphereGeo[ i ][ 1 ] );
+    }
 //    new THREE.MeshBasicMaterial( { color: this.color } )
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
-    this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
-    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
-    this.mesh.overdraw = true;
+//    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
+//    this.mesh.overdraw = true;
     this.mesh.position.y = dist;
     this.addNode(this.mesh);
 

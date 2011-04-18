@@ -5,9 +5,16 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/planets.css">
 </head>
-<div class="container" id="uiContainer"></div>
+
+<div class="container" id="uiContainer">
+
+</div>
+
 <div id="mainBox" tabindex=1></div>
-<div class="container" id="legendContainer"></div>
+
+<div class="container" id="legendContainer">
+</div>
+
 <div class="container" id="infoContainer">
     <div>angle planet/sun <span style='float:right;' id="sunAngle">0</span></div>
     <div>longitude <span style='float:right; 'id="eclipticAngle">0</span></div>
@@ -53,6 +60,7 @@
 function update() {
 
 
+//    model.debug.setXYZ(sylToScene(planetOnPlane));
     model.update();
     $("#sunAngle").html(Math.round(model.sunAngle));
     $("#eclipticAngle").html(Math.round(model.eclipticAngle));
@@ -82,8 +90,19 @@ function update() {
 // setup site
 $(document).ready(function() {
 
+//        $("#uiContainer").hover(function() {
+//            $("#uiContainer,#legendContainer").fadeTo(300,1.0);
+//        }, function() {
+//            $("#uiContainer,#legendContainer").fadeTo(300,0.5);
+//        });
+//
+//        $("#uiContainer,#legendContainer").fadeTo(0,0.5);
+
+    //	$(".view").hide();
     renderer = new Renderer();
+    $("#mainBox").append(renderer.domElement);
     renderer.init();
+
     $("#mainBox").innerHTML = "";
     $("#mainBox").append(renderer.domElement);
 
@@ -120,6 +139,13 @@ $(document).ready(function() {
 
 
     $("#vis").hide();
+//        $("#uiContainer").prepend("<div title='look at' ><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div>");
+//        $("#uiContainer").prepend("<div title='position'><img src='textures/origin.png'><select  id='viewPos' class='view' style='position: relative;top:-6px;' onchange='model.currentPos = this.options[this.selectedIndex].value; model.changeView(model.currentPos);'></select></div>");
+//        UI.optionsFromHash("#viewPos,#lookAt", model.viewPoints);
+
+//        $("#lookAt option[value='Earth']").attr('selected', true);
+
+
 
     // SETUP START
     // start models
@@ -228,7 +254,7 @@ function setCurrentPlanet(node) {
 
         });
 //            $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
-//            $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });            
+//            $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });
 
         $("#MetonYear > input").change();
 
@@ -327,8 +353,8 @@ function setCurrentPlanet(node) {
     $("#capvis,#caprotateStart, #pauseButton").click();
     $("#moon input, #angle  input, #speed  input").change();
     $("#AxisAngle0 input").change();
-    renderer.resize();
 
+//        $("#rotateStart,#vis").hide();
 }
 
 </script>
