@@ -80,25 +80,6 @@ ModelMoonCompare = function(params) {
         return this.metonDays / this.metonDraconiticMonths;
     }
 
-    this.setCurrentMoonModels = function(node1, node2) {
-        var currentModel1 = moonModels[node1];
-        var currentModel2 = moonModels[node2];
-        this.moonSpeed1 = currentModel1.speed1;
-        this.moonSpeed2 = currentModel1.speed2;
-        this.moonSpeed3 = currentModel2.speed1;
-        this.moonSpeed4 = currentModel2.speed2;
-    }
-
-    this.setCurrentMoonModels("Mendell", "SchFixed");
-
-    this.setCurrentPlanet = function(node) {
-        ModelMoonCompare.prototype.setCurrentPlanet.call(this,node);
-        this.setMetonYear(this.currentPlanet.metonYear);
-        this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
-        this.setMetonDays(this.currentPlanet.metonDays);
-        this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
-    }
-
     this.updateMoon = function() {
         this.draco = this.getDraconiticDaysPerMonth();
         this.zodic = this.getZodicalDaysPerMonth();
@@ -108,6 +89,28 @@ ModelMoonCompare = function(params) {
         this.sphere[4].setSpeed(this.moonSpeed4(this.draco, this.zodic));
 
     }
+
+    this.setCurrentMoonModels = function(node1, node2) {
+        var currentModel1 = moonModels[node1];
+        var currentModel2 = moonModels[node2];
+        this.moonSpeed1 = currentModel1.speed1;
+        this.moonSpeed2 = currentModel1.speed2;
+        this.moonSpeed3 = currentModel2.speed1;
+        this.moonSpeed4 = currentModel2.speed2;
+        this.updateMoon();
+    }
+
+    this.setCurrentMoonModels("Schiparelli", "SchFixed");
+
+    this.setCurrentPlanet = function(node) {
+        ModelMoonCompare.prototype.setCurrentPlanet.call(this,node);
+        this.setMetonYear(this.currentPlanet.metonYear);
+        this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
+        this.setMetonDays(this.currentPlanet.metonDays);
+        this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
+    }
+
+
 
     this.reset = function () {
         ModelMoonCompare.prototype.reset.call(this);

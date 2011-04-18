@@ -174,7 +174,7 @@ var Renderer = function(params) {
 
     this.init = function () {
 
-        this.renderer = new THREE.CanvasRenderer({antialias: true});
+        this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.sortObjects = false;
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -241,9 +241,9 @@ var Renderer = function(params) {
 
             yaw = (event.clientX - this.lastX) * -0.005;
             if (model.currentPos == "Earth") {
-                model.lookAt.rotateY(yaw);
+                this.lookAt.rotateY(yaw);
             } else {
-                model.lookAt.rotateUp(yaw);
+                this.lookAt.rotateUp(yaw);
             }
 
 
@@ -264,10 +264,10 @@ var Renderer = function(params) {
 
     this.keyboard = function(e) {
         switch (e.keyCode) {
-            case 119: model.lookAt.translateNew(0, 0, 0.6);  break;
-            case 115: model.lookAt.translateNew(0, 0, -0.6);  break;
-            case 97:  model.lookAt.translateNew(0.6, 0, 0);  break;
-            case 100: model.lookAt.translateNew(-0.6, 0, 0);  break;
+            case 119: this.lookAt.translateNew(0, 0, 0.6);  break;
+            case 115: this.lookAt.translateNew(0, 0, -0.6);  break;
+            case 97:  this.lookAt.translateNew(0.6, 0, 0);  break;
+            case 100: this.lookAt.translateNew(-0.6, 0, 0);  break;
             default: return false;
         }
     }

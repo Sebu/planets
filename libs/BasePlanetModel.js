@@ -277,7 +277,7 @@ var BasePlanetModel = function() {
             this.earthPlane.setEnabled(true);
             this.earth.setEnabled(false);
             pos.y = 0.5;
-            pos.z = 0.5;
+            pos.z = 0.0;
 
 //            this.lookAt.dir = $V([0,0,1]);
 //            this.lookAt.up = $V([0,1,0]);

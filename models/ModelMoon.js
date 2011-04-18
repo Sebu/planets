@@ -76,10 +76,12 @@ ModelMoon = function(params) {
         return this.metonDays / this.metonDraconiticMonths;
     }
 
-    this.setCurrentMoonModel = function(node) {
-        var currentModel = moonModels[node];
+    this.setCurrentMoonModel = function(name) {
+        console.log(name);
+        var currentModel = moonModels[name];
         this.moonSpeed1 = currentModel.speed1;
         this.moonSpeed2 = currentModel.speed2;
+        this.updateMoon();
     }
     this.setCurrentPlanet = function(node) {
         ModelMoon.prototype.setCurrentPlanet.call(this,node);
@@ -89,15 +91,17 @@ ModelMoon = function(params) {
         this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
     }
 
-    this.setCurrentMoonModel("Mendell");
-
-
     this.updateMoon = function() {
         this.draco = this.getDraconiticDaysPerMonth();
         this.zodic = this.getZodicalDaysPerMonth();
         this.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
         this.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
     }
+    
+    this.setCurrentMoonModel("Mendell");
+
+
+
 
 };
 
