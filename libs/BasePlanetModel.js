@@ -49,8 +49,8 @@ var BasePlanetModel = function() {
     this.showCurve0 = true;
     this.showCurve1 = true;
 
-    this.setShowCurve0 = function(state) { this.showCurve0=state; }
-    this.setShowCurve1 = function(state) { this.showCurve1=state;  }
+    this.setShowCurve0 = function(state) { this.curves[0].setEnabled(state); }
+    this.setShowCurve1 = function(state) { this.curves[1].setEnabled(state); }
     this.setShowStars = function(state) { this.stars.setEnabled(state); }
 
     // SETUP
@@ -74,21 +74,13 @@ var BasePlanetModel = function() {
         this.root.addNode(this.light);
 
 
+        // DIRECTION MARKERS
+        this.root.addNode( new Translate({id: "North", x:-4.5,y:0.2}) );
+        this.root.addNode( new Translate({id: "South", x:4.5,y:0.2}) );
+        this.root.addNode( new Translate({id: "East", z:-4.5,y:0.2}) );
+        this.root.addNode( new Translate({id: "West", z:4.5,y:0.2}) );
 
-
-        this.root.addNode(this.earthPlane =  new Material({
-            baseColor:  { r: 0.5, g: 0.5, b: 1.0 },
-            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-            emit: 0.0, specular: 0.0, shine: 3.0},
-
-            // DIRECTION MARKERS
-                new Translate({id: "North", x:-4.5,y:0.2}),
-                new Translate({id: "South", x:4.5,y:0.2}),
-                new Translate({id: "East", z:-4.5,y:0.2}),
-                new Translate({id: "West", z:4.5,y:0.2}),
-                new Scale({y:0.01}, new Sphere({radius: 9.0}))
-                )
-                );
+        this.root.addNode(this.earthPlane = new Disc({radius: 9.0}) );
         
         this.earthPlane.setEnabled(false);
 
@@ -127,12 +119,12 @@ var BasePlanetModel = function() {
 
         this.sphere[0].visuals["npole"].setBaseColor({r:1.0,g:1.0,b:1.0});
 
-        this.sphere[1].addNode(this.stars =  new Material({
+        this.sphere[1].addNode(this.starsNode =  new Material({
             baseColor:      { r: 1.0, g: 1.0, b: 1.0 },
             specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
             emit: 1.0, specular: 0.0, shine: 1.0
         }));
-        this.stars.addNode( new Cloud({count:50, scale:20.0}) );
+        this.starsNode.addNode( this.stars = new Cloud({count:50}) );
         
         this["showSphere0"] = function(state) {
             this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
@@ -176,23 +168,17 @@ var BasePlanetModel = function() {
         this.sphere[0].setVisuals(["arc1","arc2"], false);
 
         this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
-//        this.systemSun[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
     }
 
 
-//    this.removeCurve = function(node) {
-//        if (this.curves[node])
-//            this.curves[node]._destroy();
-//    }
-
     this.addCurve = function(node, anchor, curvePos, color) {
         if(!this.curves[node]) {
-            this.curves[node]= new Curve({pos: curvePos});
+            this.curves[node]= new Curve({pos: curvePos, color: color});
             anchor.setBaseColor(color);
             anchor.addNode(this.curves[node]);
         } else {
-            this.curves[node].setPos(curvePos);
+            if(this.curves[0].getEnabled()) this.curves[node].setPos(curvePos);
         }
     }
 
@@ -275,7 +261,6 @@ var BasePlanetModel = function() {
         }
 
         this.systemSun[0].setRotateAngle(0);
-//        this.systemSun[1].setRotateAngle(0);
 
     }
 
@@ -299,7 +284,6 @@ var BasePlanetModel = function() {
 //            this.lookAt.right = $V([1,0,0]);
 
         }
-//        if(node=="earth") earth.setEnabled(false);
 
         if (node == "Planet") {
             this.planet.setEnabled(false);
@@ -315,14 +299,14 @@ var BasePlanetModel = function() {
 
 
     // TODO: deprecated
-    this.visMode = function(sys, state) {
-        if (sys == "stars") {
-            this.stars.setEnabled(state.checked);
-            return;
-        }
+//    this.visMode = function(sys, state) {
+//        if (sys == "stars") {
+//            this.stars.setEnabled(state.checked);
+//            return;
+//        }
 
-        this.sphere[sys].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state.checked);
-    }
+//        this.sphere[sys].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state.checked);
+//    }
 
 
     this.calcCurve = function(start, node) {
@@ -349,7 +333,6 @@ var BasePlanetModel = function() {
             for (var i = start + 1; i < this.sphere.length; i++) {
                 this.sphere[i].updateMovement(10.0 / step);
             }
-//            this.root.update( undefined, false, this.camera );
             pos = getNodePos(node);
             curvePos.push(pos);
         }

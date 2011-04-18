@@ -78,21 +78,21 @@ DONE
 - pause/start button
 - speed stars/ecliptic -> speed planet/ecliptic
 - negative angles
-
-TODO
-
-NEXT
 - project planet onto ecliptic -> angle between this projection and s1/s2 intersection
 - show latitude/longitude
-- dist: 9*|sun-moon|
+- renderer extract with better connection to canvas element
+- show box with lat. etc.
+
+TODO
 - compare moon models
   - (show diff in latitude)
   - color mendell red / schfixed blue
+
+NEXT
+- dist: 9*|sun-moon|
 - only show last or first spheres of a model
-- renderer extract with better connection to canvas element
 - keyframe animation?DDDDd
 - email yavetz sphere 3-4
-- show box with lat. etc.
 - update hippopede only on demand
 - variable slider max ( depended on model )
 - moon speed functions days per year

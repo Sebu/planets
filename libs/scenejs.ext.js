@@ -132,6 +132,16 @@ Globe = SceneJS.createNodeType("globe");
 Circle = SceneJS.createNodeType("circle", "geometry");
 Curve = SceneJS.createNodeType("curve", "geometry");
 Cloud = SceneJS.createNodeType("cloud", "geometry");
+Disc = SceneJS.createNodeType("disc");
+
+Disc.prototype._init = function(params) {
+  this.addNode( new Material({
+           baseColor:  { r: 0.5, g: 0.5, b: 1.0 },
+           specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+            emit: 0.0, specular: 0.0, shine: 3.0},
+           new Scale({y:0.01}, SceneJS.sphere({radius: params.radius})))
+  );
+}
 
 
 Planet.prototype._init = function(params) {

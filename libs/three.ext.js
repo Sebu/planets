@@ -24,7 +24,6 @@ THREE.Object3D.prototype.currentPos = function() {
 }
 
 Node = THREE.Object3D;
-Translate = THREE.Object3D;
 Scale = THREE.Object3D;
 Sphere = THREE.Object3D;
 
@@ -32,6 +31,10 @@ Material = function(params) { return new THREE.Object3D() };
 
 degToRad = function(deg) {
     return (deg/180)*Math.PI;
+}
+
+rgbToHex = function(color) {
+ return ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
 }
 
 THREE.Camera.prototype.setAspect = function(fov, aspect, near, far) {
@@ -171,7 +174,7 @@ var Renderer = function(params) {
 
     this.init = function () {
 
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.sortObjects = false;
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -278,6 +281,32 @@ var Renderer = function(params) {
 }
 
 
+Disc = function(params) {
+  THREE.Object3D.call(this);
+  this.mesh = new THREE.Mesh( new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: 0x8888FF, shading: THREE.FlatShading}) );
+  this.scale.y = 0.01;
+  this.mesh.overdraw = true;
+  this.addNode(this.mesh);
+}
+
+Disc.prototype = new THREE.Object3D;
+Disc.prototype.constructor = Disc;
+
+Disc.prototype.setEnabled = function(state) { this.mesh.visible = state; }
+
+
+Translate = function(params) {
+  THREE.Object3D.call( this );
+  this.position.x = params.x || 0.0;
+  this.position.y = params.y || 0.0;
+  this.position.z = params.z || 0.0;
+  nodePool[params.id] = this;
+}
+
+Translate.prototype = new THREE.Object3D;
+Translate.prototype.constructor = Translate;
+
+
 Planet = function(params) {
     THREE.Object3D.call( this );
 
@@ -286,18 +315,17 @@ Planet = function(params) {
     this.beta = params.betaRotate || 0.0;
     this._scale = params.scale;
     this.color = params.color || { r: 2.2, g: 2.2, b: 2.9 };  var emit = params.emit || 0.0;
-    this.color = ~~ ( this.color.r * 255 ) << 16 ^ ~~ ( this.color.g * 255 ) << 8 ^ ~~ ( this.color.b * 255 );
     dist = params.dist;
 
 //    new THREE.MeshBasicMaterial( { color: this.color } )
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
-    this.material =  new THREE.MeshLambertMaterial( { color: 0x888888, shading: THREE.FlatShading });
-    this.mesh = new THREE.Mesh(new THREE.Sphere( 1, 10, 10 ), this.material);
-    this.rotation.x = degToRad(this.beta);
+    this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
+    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
     this.mesh.overdraw = true;
     this.mesh.position.y = dist;
-    this.mesh.scale = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.addNode(this.mesh);
+
+    this.rotation.x = degToRad(this.beta);
 
     nodePool[params.inner_id] = this.mesh;
 
@@ -306,6 +334,7 @@ Planet = function(params) {
 Planet.prototype = new THREE.Object3D;
 Planet.prototype.constructor = Planet;
 
+Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; }
 
 Planet.prototype.setBeta = function(angle) {
     this.beta = angle;
@@ -314,7 +343,7 @@ Planet.prototype.setBeta = function(angle) {
 
 
 Planet.prototype.setShade = function(color) {
-//    this.material.ambient(color);
+    this.material.color.setHex(rgbToHex(color));
 }
 
 Planet.prototype.setDist = function(dist) {
@@ -330,6 +359,9 @@ CurveMesh = function(params) {
         this.vertices = [];
         for (var i = 0; i < this.curvePos.length; i++) {
             this.vertices.push( new THREE.Vertex( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) ) );
+            color = new THREE.Color( 0xFFFFFF );
+            color.setHSV( 1.0, 0.0, 0.3 + 0.7*(i / this.curvePos.length) );
+            this.colors.push( color );
         }
         this.__dirtyVertices = true;
     };
@@ -348,16 +380,19 @@ Curve  = function(params) {
     };
 
     this.geo = new CurveMesh(params);
-    this.mesh = new THREE.Line( this.geo, new THREE.LineBasicMaterial( { color: 0xFFFFFF  } ));
+    material = new THREE.LineBasicMaterial( { color: rgbToHex(params.color)  } );     
+    material.vertexColors = true;
+    this.mesh = new THREE.Line( this.geo, material);
     this.addNode(this.mesh);
 
 };
 
 
-
-
 Curve.prototype = new THREE.Object3D;
 Curve.prototype.constructor = Curve;
+
+Curve.prototype.setEnabled = function(state) { this.mesh.visible = state; }
+
 
 Circle = function(params) {
     THREE.Geometry.call( this );
@@ -375,14 +410,12 @@ Circle.prototype.constructor = Circle;
 Circle.prototype.gen = function() {
     this.vertices = [];
 
-    var slices = Math.abs(Math.round(this.angle/5));
-    var arc = (this.angle / 180.0) * Math.PI;
-    var x=0,y=0,z=0;
+    var slices = 50;// Math.abs(Math.round(this.angle/5));
     var arc = (this.angle / 180.0) * Math.PI;
     var beta = (this.beta / 180) * Math.PI;
     var cosPhi = Math.cos(beta);
     var sinPhi = Math.sin(beta);
-    var x = 0,y = 0,z = 0.0;
+    var x = 0,y = 0,z = cosPhi;
     for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
         var theta = sliceNum * arc / slices;
         var sinTheta = Math.sin(theta);
@@ -390,7 +423,6 @@ Circle.prototype.gen = function() {
 
         x = sinTheta * sinPhi;
         y = cosTheta * sinPhi;
-        z = cosPhi; //0.2; //sinTheta;
 
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
     }
@@ -408,34 +440,48 @@ Circle.prototype.setBeta = function(angle) {
     this.gen();
 }
 
+PointCloud = function(params) {
+    THREE.Geometry.call( this );
+
+    this.gen = function(params) {
+      var x = 0,y = 0,z = 0;
+      for (var sliceNum = 0; sliceNum < params.count; sliceNum++) {
+        x = (Math.random() - 0.5);
+        y = (Math.random() - 0.5);
+        z = (Math.random() - 0.5);
+        norm = Math.sqrt(x * x + y * y + z * z) / 10.0;
+        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
+      }
+    };
+
+    this.gen(params);
+}
+
+PointCloud.prototype = new THREE.Geometry;
+PointCloud.prototype.constructor = PointCloud;
 
 Cloud = function(params) {
-    this._count = params.count;
+    THREE.Object3D.call( this );
+    geo = new PointCloud(params);
 
-    this.geo = new  THREE.Geometry();
-    var x = 0,y = 0,z = 0;
-    for (var sliceNum = 0; sliceNum < this._count; sliceNum++) {
-        x = (Math.random() - 0.5); //*params.scale;
-        y = (Math.random() - 0.5); //*params.scale;
-        z = (Math.random() - 0.5); //*params.scale;
-        norm = Math.sqrt(x * x + y * y + z * z) / 10.0;
-        this.geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
-    }
 
-    this.mesh = new THREE.ParticleSystem(this.geo, new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false}));
+    this.mesh = new THREE.ParticleSystem(geo, new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false}));
+//    this.mesh = new THREE.Line(geo, new THREE.LineBasicMaterial());
+
     this.addNode(this.mesh);
 };
 
 Cloud.prototype = new THREE.Object3D;
 Cloud.prototype.constructor = Cloud;
+Cloud.prototype.setEnabled = function(state) { this.mesh.visible = state; }
 
 Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
 
     this.inner_id = params.inner_id;
-//    tmpNodes = this.removeNodes();
+
     color = params.color || { r: 0.5, g: 0.5, b: 0.5};
-    color = ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
+    color = rgbToHex(color);
     this.visuals = [];
 
     this.axisAngle = params.axisAngle || 0.0;
@@ -449,10 +495,10 @@ Spherical = function Spherical(params) {
     this.anchor = new Node();
     this.rotate.addNode(this.anchor);
     this.curve = new Node();
-    this.rotate.addNode(this.curve);
+    this.anchor.addNode(this.curve);
 
 
-    this.material = new THREE.LineBasicMaterial( {  color: color });
+    this.material = new THREE.LineBasicMaterial( {  color: color } );
     materialArc = this.material;
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
@@ -476,13 +522,13 @@ Spherical = function Spherical(params) {
     this.visuals["markerarc"].rotation.y = Math.PI/2;
     this.anchor.addNode(this.visuals["markerarc"]);
 
-    geometryBall = new THREE.Sphere( 1, 10, 10 );
+    geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+    geometryBall.overdraw = true;
     materialBall = new THREE.MeshBasicMaterial( { color: color } );
 
     this.visuals["markerball"] =  new THREE.Mesh(geometryBall, materialBall);
     this.visuals["npole"] = new THREE.Mesh(geometryBall, materialBall);
     this.visuals["spole"] = new THREE.Mesh(geometryBall, materialBall);
-    this.visuals["markerball"].scale = this.visuals["npole"].scale = this.visuals["spole"].scale  = new THREE.Vector3(0.1, 0.1, 0.1 );
     this.visuals["markerball"].position.z = params.scale;
     this.visuals["npole"].position.y = params.scale;
     this.visuals["spole"].position.y = -params.scale;
@@ -494,7 +540,7 @@ Spherical = function Spherical(params) {
     nodePool[this.inner_id+"spole"] = this.visuals["spole"];
 
     this.arcangle11 = new Circle({ angle : 40 });
-    this.visuals["rotationarc"] = new THREE.Line( this.arcangle11, new THREE.LineBasicMaterial( { linewidth:6, color: color  } ));
+    this.visuals["rotationarc"] = new THREE.Line( this.arcangle11, new THREE.LineBasicMaterial( { linewidth:6, opacity: 0.8, color: color  } ));
     this.visuals["rotationarc"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals["rotationarc"].rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals["rotationarc"]);
@@ -607,19 +653,19 @@ getNodePos = function(name) {
 }
 
 getNodePosCanvas = function(name) {
-//    return {x:300,y:300,z:1.0};
     node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
-    pos = node.currentPos();
-
-    projScreenMat = new THREE.Matrix4();
-    projScreenMat.multiply( renderer.camera.projectionMatrix, renderer.camera.matrixWorldInverse );
-    projScreenMat.multiplyVector3( pos );
-    console.log(pos);
-
     canvas = this.renderer.domElement;
 
-    pos = {x: (pos.x+1) * canvas.width/2, y: (-pos.y+1) * canvas.height/2, z: pos.z };
+    posTmp = node.currentPos();
+
+    renderer.camera.matrixWorldInverse.multiplyVector3( posTmp );
+    zTmp = -posTmp.z;
+
+    renderer.camera.projectionMatrix.multiplyVector3( posTmp );
+    pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
+
+
     if (pos.x<0 || pos.x>canvas.width-50) pos.z = -1.0;
     if (pos.y<0 || pos.y>canvas.height-20) pos.z = -1.0;
 
