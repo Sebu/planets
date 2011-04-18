@@ -87,11 +87,11 @@ var BasePlanetModel = function() {
         this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], inner_id: this.name+"Earth"})
         this.root.addNode(this.earth);
 
-//        this.root.addNode(this.curve = new Material({
-//            baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
-//            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-//            emit: 1.0, specular: 0.0, shine: 1.0
-//        }));
+        this.root.addNode(this.curve = new Material({
+            baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
+            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
+            emit: 1.0, specular: 0.0, shine: 1.0
+        }));
 
         this.sphere[0] = new Spherical({inner_id: this.name+"S0", scale: 9, axisAngle: 33.0, speed: 0.0, color: colors["S0"]})
         this.root.addNode(this.sphere[0]);
@@ -328,7 +328,7 @@ var BasePlanetModel = function() {
             this.sphere[i].updateMovement(-20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
-        var maxSegments = 100-Math.round(20/step);
+        var maxSegments = 100;//-Math.round(20/step);
         for (var j = 0; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
                 this.sphere[i].updateMovement(10.0 / step);
