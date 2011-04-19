@@ -230,28 +230,28 @@ var BasePlanetModel = function() {
             for (i in model.updateList) {
                 model.updateList[i].updateMovement((365.0/this.fps)/this.speed);
             }
+
+
+
+
+            //TODO: on model change -> events?
+            sunPos = getNodePos(this.name+"Sun");
+            this.light.setPos(sunPos);
         }
         this.time++;
-        this.render();
+        this.draw();
     }
 
 
-    this.render = function() {
-
-        if (this.currentPos != "Free") {
-            if (this.currentLookAt != "Free")
-                this.lookAt.setTarget(getNodePos(this.name+this.currentLookAt));
-        } else {
-            if (this.currentLookAt != "Free")
-                this.lookAt.rotateTarget(getNodePos(this.name+this.currentLookAt));
-        }
-
-
-        //TODO: on model change -> events?
-        sunPos = getNodePos(this.name+"Sun");
-        this.light.setPos(sunPos);
-
-        this.renderer.render();
+    this.draw = function() {
+            if (this.currentPos != "Free") {
+                if (this.currentLookAt != "Free")
+                    this.lookAt.setTarget(getNodePos(this.name+this.currentLookAt));
+            } else {
+                if (this.currentLookAt != "Free")
+                    this.lookAt.rotateTarget(getNodePos(this.name+this.currentLookAt));
+            }
+        this.renderer.draw();
     }
 
     this.reset = function () {
