@@ -431,7 +431,7 @@ Circle.prototype.constructor = Circle;
 Circle.prototype.gen = function() {
     this.vertices = [];
 
-    var slices = 50;// Math.abs(Math.round(this.angle/5));
+    var slices = 50;//Math.abs(Math.round(this.angle/5));
     var arc = (this.angle / 180.0) * Math.PI;
     var beta = (this.beta / 180) * Math.PI;
     var cosPhi = Math.cos(beta);
@@ -447,6 +447,7 @@ Circle.prototype.gen = function() {
 
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
     }
+    this.__webglLineCount = slices;
     this.__dirtyVertices = true;
 
 }
