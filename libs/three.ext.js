@@ -1,4 +1,28 @@
 
+var Ori = Ori || {};
+
+Ori.App = function() {
+  this.components = [];
+};
+
+Ori.App.prototype = {
+
+  init : function() {},
+
+
+  run : function() {
+    time = 0;
+    this.update(time);
+    this.draw(time);
+
+//    for(i=0; i< this.components.length; i++) {
+//      component = components[i];
+//      if(component.enabled) component.update(time);      
+//      if(component.enabled && component.drawable) component.draw(time);      
+//    }
+  }
+
+};
 
 nodePool = {};
 
@@ -218,6 +242,7 @@ var App = function(params) {
         this.camera.setAspect(this._fov, canvas.width/canvas.height, 0.1, 500);
         this.renderer.setSize( window.innerWidth, window.innerHeight);
     }
+
     this.mouseDown = function (event) {
         this.lastX = event.clientX;
         this.lastY = event.clientY;

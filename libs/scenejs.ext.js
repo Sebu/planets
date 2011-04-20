@@ -37,7 +37,7 @@ var Renderer = function(params) {
         this.currentScene.setEnabled(true);
     }
 
-    this.render = function() {
+    this.draw = function() {
         this.scene.render();
     }
 
