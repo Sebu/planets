@@ -107,7 +107,7 @@ $(document).ready(function() {
 
     if(renderer.type) {
         $("#mainBox").innerHTML = "";
-        $("#mainBox").append(renderer.domElement);
+        $("#mainBox").append(renderer.canvas);
     }
 
     models = {}; //new Object;
@@ -156,7 +156,7 @@ $(document).ready(function() {
     setCurrentPlanet("Mercury1");
 
     // TODO: fix/move to renderer
-    canvas = renderer.domElement;
+    canvas = renderer.canvas;
     canvas.addEventListener('mousedown', function(e) {
         renderer.mouseDown(e);
     }, true);

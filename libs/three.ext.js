@@ -199,19 +199,18 @@ var App = function(params) {
     this.init = function () {
 
         if(Modernizr.webgl) {
-            this.renderer = new THREE.WebGLRenderer({antialias: true});
+            this.graphics = new THREE.WebGLRenderer({antialias: true});
             this.type = "webgl";
         }
         else if(Modernizr.canvas) {
-          this.renderer = new THREE.CanvasRenderer({antialias: true});
+          this.graphics = new THREE.CanvasRenderer({antialias: true});
           this.type = "canvas";
         }
-        this.renderer.autoClear = false;
+        this.graphics.autoClear = false;
+        this.graphics.sortObjects = false;
+        this.graphics.setSize(window.innerWidth, window.innerHeight);
 
-        this.renderer.sortObjects = false;
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-        this.domElement = this.renderer.domElement;
+        this.canvas = this.graphics.domElement;
         this.camera = new THREE.Camera( this._fov, window.innerWidth / window.innerHeight, 0.1, 10000 );
         this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
         this.lookAt = this.camera;
@@ -227,13 +226,23 @@ var App = function(params) {
     }
 
     this.setCurrentScene = function(scene) {
+
+        //this.currentScene.enabled = false;
         this.currentScene = scene;
+        this.currentScene.enabled = true;
+        this.components = [];
+        this.components.push(this.currentScene);
     }
 
 
     this.draw = function() {
-        this.renderer.clear();
-        this.renderer.render( this.currentScene, this.camera );
+        this.graphics.clear();
+        for(i in this.components) {
+            component = this.components[i];
+            if(component.enabled) this.graphics.render( component, this.camera );
+
+        }
+
     }
     this.setFov = function(angle) {
         this._fov = angle;
@@ -246,11 +255,10 @@ var App = function(params) {
     }
 
     this.resize = function() {
-        canvas = this.renderer.domElement;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        this.camera.setAspect(this._fov, canvas.width/canvas.height, 0.1, 500);
-        this.renderer.setSize( window.innerWidth, window.innerHeight);
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.camera.setAspect(this._fov, this.canvas.width/this.canvas.height, 0.1, 500);
+        this.graphics.setSize( this.canvas.width, this.canvas.height);
     }
 
     this.mouseDown = function (event) {
@@ -679,7 +687,7 @@ getNodePos = function(name) {
 getNodePosCanvas = function(name) {
     node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
-    canvas = this.renderer.domElement;
+    canvas = this.canvas;
 
     posTmp = node.currentPos();
 
