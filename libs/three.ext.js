@@ -206,6 +206,7 @@ var App = function(params) {
           this.renderer = new THREE.CanvasRenderer({antialias: true});
           this.type = "canvas";
         }
+        this.renderer.autoClear = false;
 
         this.renderer.sortObjects = false;
         this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -231,6 +232,7 @@ var App = function(params) {
 
 
     this.draw = function() {
+        this.renderer.clear();
         this.renderer.render( this.currentScene, this.camera );
     }
     this.setFov = function(angle) {
