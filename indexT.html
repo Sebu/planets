@@ -10,7 +10,8 @@
 
 </div>
 
-<div id="mainBox" tabindex=1></div>
+<div id="mainBox" tabindex=1>
+</div>
 
 <div class="container" id="legendContainer">
 </div>
@@ -39,6 +40,7 @@
 
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script>
 <script type="text/javascript" src="libs/sylvester.js"></script>
+<script type="text/javascript" src="libs/modernizr-1.7.min.js"></script>
 <script type="text/javascript" src="libs/Three.js"></script>
 <script type="text/javascript" src="libs/three.ext.js"></script>
 
@@ -103,8 +105,10 @@ $(document).ready(function() {
     $("#mainBox").append(renderer.domElement);
     renderer.init();
 
-    $("#mainBox").innerHTML = "";
-    $("#mainBox").append(renderer.domElement);
+    if(renderer.type) {
+        $("#mainBox").innerHTML = "";
+        $("#mainBox").append(renderer.domElement);
+    }
 
     models = {}; //new Object;
     models["Model4"] = new Model4({renderer: renderer});

@@ -198,7 +198,15 @@ var App = function(params) {
 
     this.init = function () {
 
-        this.renderer = new THREE.WebGLRenderer({antialias: true});
+        if(Modernizr.webgl) {
+            this.renderer = new THREE.WebGLRenderer({antialias: true});
+            this.type = "webgl";
+        }
+        else if(Modernizr.canvas) {
+          this.renderer = new THREE.CanvasRenderer({antialias: true});
+          this.type = "canvas";
+        }
+
         this.renderer.sortObjects = false;
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
