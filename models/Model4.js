@@ -1,11 +1,3 @@
-/**
- * Created by IntelliJ IDEA.
- * User: seb
- * Date: 12.02.2011
- * Time: 13:17:19
- * To change this template use File | Settings | File Templates.
- */
-
 
 Model4 = function(params) {
     params.name = "Model4";
@@ -21,16 +13,6 @@ Model4 = function(params) {
         this.sphere[0].setSpeed(-speed);
     }
 
-    this.setAxisAngle2 = function(angle) {
-    		this.sphere[2].setAxisAngle(angle);
-//            		this.updateHippo();
-    }
-    
-    this.setAxisAngle3 = function(angle) {
-    		this.sphere[3].setAxisAngle(angle);    
-//            		this.updateHippo();
-    }
-    
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
         this.sphere[3].setSpeed(-speed);

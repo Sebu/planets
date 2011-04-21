@@ -99,7 +99,7 @@ var BasePlanetModel = function() {
         this.updateList[0] = this.sphere[0];
 
         for (var i = 1; i < this.sphere.length; i++) {
-            tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9+i*0.02, axisAngle: 33.0, speed: 0.0, color: colors["S" + i + ""]});
+            tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9-i*0.02, axisAngle: 33.0, speed: 0.0, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
             this.updateList.push(tmp);
 

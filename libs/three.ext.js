@@ -1,28 +1,5 @@
 
-var Ori = Ori || {};
 
-Ori.App = function() {
-  this.components = [];
-};
-
-Ori.App.prototype = {
-
-  init : function() {},
-
-
-  run : function() {
-    time = 0;
-    this.update(time);
-    this.draw(time);
-
-//    for(i=0; i< this.components.length; i++) {
-//      component = components[i];
-//      if(component.enabled) component.update(time);      
-//      if(component.enabled && component.drawable) component.draw(time);      
-//    }
-  }
-
-};
 
 nodePool = {};
 
@@ -184,58 +161,28 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 }
 
 
-var InputSystem = function() {
-    window.addEventListener('keypress', this.keypress.bind(this), false);
-};
-
-InputSystem.prototype.constructor = InputSystem;
-
-InputSystem.prototype.keypress = function(e) {
-//  console.log(e); 
-};
-
-inputSystem = new InputSystem();
-
-var Renderer = function() {
-        if(Modernizr.webgl) {
-            this.graphics = new THREE.WebGLRenderer({antialias: true});
-            this.graphics.type = "webgl";
-        }
-        else if(Modernizr.canvas) {
-          this.graphics = new THREE.CanvasRenderer({antialias: true});
-          this.graphics.type = "canvas";
-        }
-        this.graphics.autoClear = false;
-        this.graphics.sortObjects = false;
-
-
-        return this.graphics;
-}
-
-
-Renderer.prototype.constructor = Renderer;
 
 var App = function(params) {
 
     this._fov = 70;
     this.currentScene = null;
     this.scenes = [];
+    this.lastX = 0;
+    this.lastY = 0;
+    this.pitch = 0;
+        
+    this.graphics = new Ori.Renderer();
+    this.graphics.setSize(window.innerWidth, window.innerHeight);
 
-    this.init = function () {
+    // TODO : shorten
+    this.camera = new THREE.Camera( this._fov, window.innerWidth / window.innerHeight, 0.1, 10000 );
+    this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+    this.camera.rotateY(Math.PI+0.1);
 
-        this.graphics = new Renderer();
-        this.graphics.setSize(window.innerWidth, window.innerHeight);
-        this.canvas = this.graphics.domElement;
-
-        this.camera = new THREE.Camera( this._fov, window.innerWidth / window.innerHeight, 0.1, 10000 );
-        this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
-//        this.camera = this.camera;
-        this.camera.rotateY(Math.PI+0.1);
-
-    }
 
     this.newScene = function() {
         scene = new THREE.Scene();
+//        scene.fog = new THREE.Fog(0x353535, 15.0, 20.0 );
         scene.addLight(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
@@ -250,11 +197,35 @@ var App = function(params) {
         this.components.push(this.currentScene);
     }
 
-    this.update = function() {  
-      
+    this.update = function() {
+
+//        if(inputSystem.keymap[65]) this.camera.translateNew(0, 0, -0.6);
+//        if(inputSystem.keymap[68]) this.camera.translateNew(0, 0, -0.6);
+        if(Ori.input.keymap[83]) this.camera.translateNew(0, 0, -0.6);
+        if(Ori.input.keymap[87]) this.camera.translateNew(0, 0, 0.6);
+
+        if(Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
+        if (Ori.input.mouse.b1) {
+            pitch = (Ori.input.mouse.y - this.lastY) * 0.005;
+
+            yaw = (Ori.input.mouse.x - this.lastX) * -0.005;
+            if (model.currentPos == "Earth") {
+                this.camera.rotateY(yaw);
+            } else {
+                this.camera.rotateUp(yaw);
+            }
+
+            this.pitch += pitch;
+            this.camera.rotateRight(pitch);
+            
+            this.lastX = Ori.input.mouse.x;
+            this.lastY = Ori.input.mouse.y;
+        }        
+        Ori.input.update();
     }
 
 
+    // general
     this.draw = function() {
         this.graphics.clear();
         for(i in this.components) {
@@ -262,7 +233,6 @@ var App = function(params) {
             if(component.enabled) this.graphics.render( component, this.camera );
 
         }
-
     }
 
     this.setFov = function(angle) {
@@ -282,66 +252,6 @@ var App = function(params) {
         this.graphics.setSize(width, height);
     }
 
-    this.mouseDown = function (event) {
-        this.lastX = event.clientX;
-        this.lastY = event.clientY;
-        this.dragging = true;
-    }
-
-    this.mouseUp = function() {
-        this.dragging = false;
-
-    }
-
-    // TODO: move all of them outside
-    this.pitch = 0;
-
-//    var maxRad = -(160.0/180.0) * Math.PI;
-//    var minRad = (160.0/180.0) * Math.PI;
-
-    this.mouseMove = function(event) {
-        if (this.dragging) {
-            pitch = (event.clientY - this.lastY) * 0.005;
-
-            yaw = (event.clientX - this.lastX) * -0.005;
-            if (model.currentPos == "Earth") {
-                this.camera.rotateY(yaw);
-            } else {
-                this.camera.rotateUp(yaw);
-            }
-
-
-
-//            if(model.currentPos=="Earth") {
-//              if(this.pitch+pitch>maxRad)  pitch = 0;
-//              else if(this.pitch+pitch<-minRad)  pitch = 0;
-//            }
-
-
-            this.pitch += pitch;
-            this.camera.rotateRight(pitch);
-
-            this.lastX = event.clientX;
-            this.lastY = event.clientY;
-        }
-    }
-
-    this.keyboard = function(e) {
-        switch (e.keyCode) {
-            case 119: this.camera.translateNew(0, 0, 0.6);  break;
-            case 115: this.camera.translateNew(0, 0, -0.6);  break;
-            case 97:  this.camera.translateNew(0.6, 0, 0);  break;
-            case 100: this.camera.translateNew(-0.6, 0, 0);  break;
-            default: return false;
-        }
-    }
-
-    this.mouseWheel = function(event) {
-        model.camera.translateNew(0.0, 0.0, event.wheelDelta / 120);
-    }
-    this.mouseWheel_firefox = function(event) {
-        model.camera.translateNew(0.0, 0.0, event.detail);
-    }
 }
 
 
@@ -593,7 +503,7 @@ Spherical = function Spherical(params) {
     nodePool[this.inner_id+"spole"] = this.visuals["spole"];
 
     this.progressArc = new Circle({ angle : 40 });
-    this.visuals["rotationarc"] = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, opacity: 0.8, color: color  } ));
+    this.visuals["rotationarc"] = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color  } ));
     this.visuals["rotationarc"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals["rotationarc"].rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals["rotationarc"]);
@@ -708,7 +618,7 @@ getNodePos = function(name) {
 getNodePosCanvas = function(name) {
     node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
-    canvas = this.canvas;
+    canvas = app.graphics.domElement;
 
     posTmp = node.currentPos();
 

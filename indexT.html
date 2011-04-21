@@ -42,6 +42,7 @@
 <script type="text/javascript" src="libs/sylvester.js"></script>
 <script type="text/javascript" src="libs/modernizr-1.7.min.js"></script>
 <script type="text/javascript" src="libs/Three.js"></script>
+<script type="text/javascript" src="libs/origami.js"></script>
 <script type="text/javascript" src="libs/three.ext.js"></script>
 
 
@@ -62,9 +63,8 @@
 function update() {
 
 
-//    model.debug.setXYZ(sylToScene(planetOnPlane));
+    app.update();
     model.update();
-//    renderer.update();
 //    renderer.draw();
     $("#sunAngle").html(Math.round(model.sunAngle));
     $("#eclipticAngle").html(Math.round(model.eclipticAngle));
@@ -94,21 +94,11 @@ function update() {
 // setup site
 $(document).ready(function() {
 
-//        $("#uiContainer").hover(function() {
-//            $("#uiContainer,#legendContainer").fadeTo(300,1.0);
-//        }, function() {
-//            $("#uiContainer,#legendContainer").fadeTo(300,0.5);
-//        });
-//
-//        $("#uiContainer,#legendContainer").fadeTo(0,0.5);
-
-    //	$(".view").hide();
     app = new App();
-    app.init();
 
     if(app.graphics.type) {
         $("#mainBox").innerHTML = "";
-        $("#mainBox").append(app.canvas);
+        $("#mainBox").append(app.graphics.domElement);
     }
 
     models = {}; //new Object;
@@ -138,50 +128,17 @@ $(document).ready(function() {
     $("#uiContainer").append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
     UI.optionsFromHash("#moonModel", moonModels);
 
-
-
     $("#uiContainer").append("<div id='parameters'></div>");
-
-
     $("#vis").hide();
-//        $("#uiContainer").prepend("<div title='look at' ><img src='textures/lookat.png'><select  id='lookAt' class='view' onchange='model.currentLookAt = this.options[this.selectedIndex].value;'></select></div>");
-//        $("#uiContainer").prepend("<div title='position'><img src='textures/origin.png'><select  id='viewPos' class='view' style='position: relative;top:-6px;' onchange='model.currentPos = this.options[this.selectedIndex].value; model.changeView(model.currentPos);'></select></div>");
-//        UI.optionsFromHash("#viewPos,#lookAt", model.viewPoints);
-
-//        $("#lookAt option[value='Earth']").attr('selected', true);
-
-
 
     // SETUP START
     // start models
     setCurrentPlanet("Mercury1");
 
-    // TODO: fix/move to renderer
-    canvas = app.canvas;
-    $("canvas").attr("tabindex",0);
+    window.onresize = app.resize.bind(app);
 
-    canvas.addEventListener('mousedown', function(e) {
-        app.mouseDown(e);
-    }, true);
-    canvas.addEventListener('mousemove', function(e) {
-        app.mouseMove(e);
-    }, true);
-    canvas.addEventListener('mouseup', function(e) {
-        app.mouseUp(e);
-    }, true);
-    canvas.addEventListener('keypress', function(e) {
-        app.keyboard(e);
-    }, true);
-    canvas.addEventListener('mousewheel', function(e) {
-        app.mouseWheel(e);
-    }, true);
-    canvas.addEventListener('DOMMouseScroll', function(e) {
-        app.mouseWheel_firefox(e);
-    }, true);
-
-    window.onresize = new Function("app.resize();");
+    // TODO: app.run();
     setInterval("update()", 33);
-    app.resize();
 
 
 })

@@ -1,12 +1,3 @@
-/**
- * Created by IntelliJ IDEA.
- * User: seb
- * Date: 13.02.2011
- * Time: 02:10:46
- * To change this template use File | Settings | File Templates.
- */
-
-
 
 Model5 = function(params) {
     params.name = "Model5";
