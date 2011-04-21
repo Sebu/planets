@@ -67,7 +67,6 @@ var BasePlanetModel = function() {
 
         this.light = Sunlight();
 
-        this.lookAt = params.renderer.lookAt;
         this.camera = params.renderer.camera;
         this.renderer = params.renderer;
         this.root = this.renderer.newScene();
@@ -246,10 +245,10 @@ var BasePlanetModel = function() {
     this.draw = function() {
             if (this.currentPos != "Free") {
                 if (this.currentLookAt != "Free")
-                    this.lookAt.setTarget(getNodePos(this.name+this.currentLookAt));
+                    this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
             } else {
                 if (this.currentLookAt != "Free")
-                    this.lookAt.rotateTarget(getNodePos(this.name+this.currentLookAt));
+                    this.camera.rotateTarget(getNodePos(this.name+this.currentLookAt));
             }
         this.renderer.draw();
     }
@@ -279,10 +278,6 @@ var BasePlanetModel = function() {
             pos.y = 0.5;
             pos.z = 0.0;
 
-//            this.lookAt.dir = $V([0,0,1]);
-//            this.lookAt.up = $V([0,1,0]);
-//            this.lookAt.right = $V([1,0,0]);
-
         }
 
         if (node == "Planet") {
@@ -290,11 +285,11 @@ var BasePlanetModel = function() {
         }
 
         this.pitch=0;
-        this.lookAt.right = $V([1,0,0]);
-        this.lookAt.upVec = $V([0,1,0]);
-        this.lookAt.dir = $V([0,0,1]);
-        this.lookAt.setEye(pos);
-        this.lookAt.updateNew();
+        this.camera.right = $V([1,0,0]);
+        this.camera.upVec = $V([0,1,0]);
+        this.camera.dir = $V([0,0,1]);
+        this.camera.setEye(pos);
+        this.camera.updateNew();
     }
 
 

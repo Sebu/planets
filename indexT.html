@@ -64,6 +64,8 @@ function update() {
 
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     model.update();
+//    renderer.update();
+//    renderer.draw();
     $("#sunAngle").html(Math.round(model.sunAngle));
     $("#eclipticAngle").html(Math.round(model.eclipticAngle));
     $("#eclipticSpeed").html(model.eclipticSpeed.toFixed(2));
@@ -101,24 +103,23 @@ $(document).ready(function() {
 //        $("#uiContainer,#legendContainer").fadeTo(0,0.5);
 
     //	$(".view").hide();
-    renderer = new App();
-    $("#mainBox").append(renderer.domElement);
-    renderer.init();
+    app = new App();
+    app.init();
 
-    if(renderer.type) {
+    if(app.graphics.type) {
         $("#mainBox").innerHTML = "";
-        $("#mainBox").append(renderer.canvas);
+        $("#mainBox").append(app.canvas);
     }
 
     models = {}; //new Object;
-    models["Model4"] = new Model4({renderer: renderer});
-    models["ModelMoonCompare"] =  new ModelMoonCompare({renderer: renderer});
-    models["ModelSun"] =  new ModelSun({renderer: renderer});
-    models["ModelSimple"] = new ModelSimple({renderer: renderer});
-    models["ModelHippo"] = new ModelHippo({renderer: renderer});
-    models["ModelYavetz"] = new ModelYavetz({renderer: renderer});
-    models["Model5"] = new Model5({renderer: renderer});
-    models["ModelMoon"] =  new ModelMoon({renderer: renderer});
+    models["Model4"] = new Model4({renderer: app});
+    models["ModelMoonCompare"] =  new ModelMoonCompare({renderer: app});
+    models["ModelSun"] =  new ModelSun({renderer: app});
+    models["ModelSimple"] = new ModelSimple({renderer: app});
+    models["ModelHippo"] = new ModelHippo({renderer: app});
+    models["ModelYavetz"] = new ModelYavetz({renderer: app});
+    models["Model5"] = new Model5({renderer: app});
+    models["ModelMoon"] =  new ModelMoon({renderer: app});
 
     model = models["Model4"];
 
@@ -156,28 +157,31 @@ $(document).ready(function() {
     setCurrentPlanet("Mercury1");
 
     // TODO: fix/move to renderer
-    canvas = renderer.canvas;
+    canvas = app.canvas;
+    $("canvas").attr("tabindex",0);
+
     canvas.addEventListener('mousedown', function(e) {
-        renderer.mouseDown(e);
+        app.mouseDown(e);
     }, true);
     canvas.addEventListener('mousemove', function(e) {
-        renderer.mouseMove(e);
+        app.mouseMove(e);
     }, true);
     canvas.addEventListener('mouseup', function(e) {
-        renderer.mouseUp(e);
+        app.mouseUp(e);
     }, true);
     canvas.addEventListener('keypress', function(e) {
-        renderer.keyboard(e);
+        app.keyboard(e);
     }, true);
     canvas.addEventListener('mousewheel', function(e) {
-        renderer.mouseWheel(e);
+        app.mouseWheel(e);
     }, true);
     canvas.addEventListener('DOMMouseScroll', function(e) {
-        renderer.mouseWheel_firefox(e);
+        app.mouseWheel_firefox(e);
     }, true);
-    window.onresize = new Function("renderer.resize();");
+
+    window.onresize = new Function("app.resize();");
     setInterval("update()", 33);
-    renderer.resize();
+    app.resize();
 
 
 })
@@ -188,7 +192,7 @@ function setCurrentPlanet(node) {
 
     // switch model
     model = models[planetPresets[node].model];
-    renderer.setCurrentScene(model.root);
+    app.setCurrentScene(model.root);
     model.setCurrentPlanet(planetPresets[node]);
     model.reset();
 
@@ -208,7 +212,7 @@ function setCurrentPlanet(node) {
 
     UI.slider({model:"model", id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#parameters");
 
-    UI.slider({model:"renderer", id: "Fov", max: 160, step:1, text: "field of view"}).appendTo("#parameters");
+    UI.slider({model:"app", id: "Fov", max: 160, step:1, text: "field of view"}).appendTo("#parameters");
 
     UI.slider({model:"model", id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#parameters");
 

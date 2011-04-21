@@ -184,37 +184,53 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 }
 
 
+var InputSystem = function() {
+    window.addEventListener('keypress', this.keypress.bind(this), false);
+};
+
+InputSystem.prototype.constructor = InputSystem;
+
+InputSystem.prototype.keypress = function(e) {
+//  console.log(e); 
+};
+
+inputSystem = new InputSystem();
+
+var Renderer = function() {
+        if(Modernizr.webgl) {
+            this.graphics = new THREE.WebGLRenderer({antialias: true});
+            this.graphics.type = "webgl";
+        }
+        else if(Modernizr.canvas) {
+          this.graphics = new THREE.CanvasRenderer({antialias: true});
+          this.graphics.type = "canvas";
+        }
+        this.graphics.autoClear = false;
+        this.graphics.sortObjects = false;
 
 
+        return this.graphics;
+}
 
 
+Renderer.prototype.constructor = Renderer;
 
 var App = function(params) {
 
     this._fov = 70;
-
     this.currentScene = null;
     this.scenes = [];
 
     this.init = function () {
 
-        if(Modernizr.webgl) {
-            this.graphics = new THREE.WebGLRenderer({antialias: true});
-            this.type = "webgl";
-        }
-        else if(Modernizr.canvas) {
-          this.graphics = new THREE.CanvasRenderer({antialias: true});
-          this.type = "canvas";
-        }
-        this.graphics.autoClear = false;
-        this.graphics.sortObjects = false;
+        this.graphics = new Renderer();
         this.graphics.setSize(window.innerWidth, window.innerHeight);
-
         this.canvas = this.graphics.domElement;
+
         this.camera = new THREE.Camera( this._fov, window.innerWidth / window.innerHeight, 0.1, 10000 );
         this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
-        this.lookAt = this.camera;
-        this.lookAt.rotateY(Math.PI+0.1);
+//        this.camera = this.camera;
+        this.camera.rotateY(Math.PI+0.1);
 
     }
 
@@ -234,6 +250,10 @@ var App = function(params) {
         this.components.push(this.currentScene);
     }
 
+    this.update = function() {  
+      
+    }
+
 
     this.draw = function() {
         this.graphics.clear();
@@ -244,6 +264,7 @@ var App = function(params) {
         }
 
     }
+
     this.setFov = function(angle) {
         this._fov = angle;
         this.resize();
@@ -255,10 +276,10 @@ var App = function(params) {
     }
 
     this.resize = function() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.camera.setAspect(this._fov, this.canvas.width/this.canvas.height, 0.1, 500);
-        this.graphics.setSize( this.canvas.width, this.canvas.height);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        this.camera.setAspect(this._fov, width/height, 0.1, 500);
+        this.graphics.setSize(width, height);
     }
 
     this.mouseDown = function (event) {
@@ -284,9 +305,9 @@ var App = function(params) {
 
             yaw = (event.clientX - this.lastX) * -0.005;
             if (model.currentPos == "Earth") {
-                this.lookAt.rotateY(yaw);
+                this.camera.rotateY(yaw);
             } else {
-                this.lookAt.rotateUp(yaw);
+                this.camera.rotateUp(yaw);
             }
 
 
@@ -298,7 +319,7 @@ var App = function(params) {
 
 
             this.pitch += pitch;
-            this.lookAt.rotateRight(pitch);
+            this.camera.rotateRight(pitch);
 
             this.lastX = event.clientX;
             this.lastY = event.clientY;
@@ -307,19 +328,19 @@ var App = function(params) {
 
     this.keyboard = function(e) {
         switch (e.keyCode) {
-            case 119: this.lookAt.translateNew(0, 0, 0.6);  break;
-            case 115: this.lookAt.translateNew(0, 0, -0.6);  break;
-            case 97:  this.lookAt.translateNew(0.6, 0, 0);  break;
-            case 100: this.lookAt.translateNew(-0.6, 0, 0);  break;
+            case 119: this.camera.translateNew(0, 0, 0.6);  break;
+            case 115: this.camera.translateNew(0, 0, -0.6);  break;
+            case 97:  this.camera.translateNew(0.6, 0, 0);  break;
+            case 100: this.camera.translateNew(-0.6, 0, 0);  break;
             default: return false;
         }
     }
 
     this.mouseWheel = function(event) {
-        model.lookAt.translateNew(0.0, 0.0, event.wheelDelta / 120);
+        model.camera.translateNew(0.0, 0.0, event.wheelDelta / 120);
     }
     this.mouseWheel_firefox = function(event) {
-        model.lookAt.translateNew(0.0, 0.0, event.detail);
+        model.camera.translateNew(0.0, 0.0, event.detail);
     }
 }
 
@@ -691,10 +712,10 @@ getNodePosCanvas = function(name) {
 
     posTmp = node.currentPos();
 
-    renderer.camera.matrixWorldInverse.multiplyVector3( posTmp );
+    app.camera.matrixWorldInverse.multiplyVector3( posTmp );
     zTmp = -posTmp.z;
 
-    renderer.camera.projectionMatrix.multiplyVector3( posTmp );
+    app.camera.projectionMatrix.multiplyVector3( posTmp );
     pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
 
 
