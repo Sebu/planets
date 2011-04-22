@@ -2,7 +2,7 @@
 var Ori = Ori || {};
 
 
-Ori.Renderer = function() {
+Ori.Canvas = function() {
         if(Modernizr.webgl) {
             this.graphics = new THREE.WebGLRenderer({antialias: true});
             this.graphics.type = "webgl";
@@ -17,7 +17,7 @@ Ori.Renderer = function() {
         return this.graphics;
 }
 
-Ori.Renderer.prototype.constructor = Ori.Renderer;
+Ori.Canvas.prototype.constructor = Ori.Renderer;
 
 Ori.Input = function() {
     

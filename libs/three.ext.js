@@ -160,25 +160,44 @@ THREE.Camera.prototype.rotateUp = function(angle) {
     this.updateNew();
 }
 
+THREE.Camera.prototype.setFov = function(fov) {
+  this.fov = fov;
+  this.updateProjectionMatrix();
+}
 
+THREE.Camera.prototype.getFov = function() {
+  return this.fov;
+}
 
 var App = function(params) {
 
-    this._fov = 70;
-    this.currentScene = null;
-    this.scenes = [];
-    this.lastX = 0;
-    this.lastY = 0;
-    this.pitch = 0;
+    this.init = function(params) {
+      this.domRoot = params.domRoot;
+
+      //TODO: move to input and camera
+      this.lastX = 0;
+      this.lastY = 0;
+      this.pitch = 0;
+
+      this.currentScene = null;
+      this.scenes = [];
         
-    this.graphics = new Ori.Renderer();
-    this.graphics.setSize(window.innerWidth, window.innerHeight);
+      this.graphics = new Ori.Canvas();
+      this.graphics.setSize(window.innerWidth, window.innerHeight);
+    
+      if(this.graphics.type) {
+          this.domRoot.innerHTML = "";
+          this.domRoot.append(this.graphics.domElement);
+      }
 
-    // TODO : shorten
-    this.camera = new THREE.Camera( this._fov, window.innerWidth / window.innerHeight, 0.1, 10000 );
-    this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
-    this.camera.rotateY(Math.PI+0.1);
 
+      // TODO : shorten
+      this.camera = new THREE.Camera( 70, window.innerWidth / window.innerHeight, 0.1, 10000 );
+      this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+      this.camera.rotateY(Math.PI+0.1);
+    }
+
+    this.init(params);
 
     this.newScene = function() {
         scene = new THREE.Scene();
@@ -233,16 +252,6 @@ var App = function(params) {
             if(component.enabled) this.graphics.render( component, this.camera );
 
         }
-    }
-
-    this.setFov = function(angle) {
-        this._fov = angle;
-        this.resize();
-    }
-
-
-    this.getFov = function() {
-        return this._fov;
     }
 
     this.resize = function() {

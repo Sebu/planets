@@ -292,14 +292,15 @@ var UI = {
         var min = params.min || 0;
         var max = params.max || 100;
         var step = params.step || 1;
-        var value = params.value || window[model]["get"+id]();
-        var change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
+        var value = params.value ||  model["get"+id]();
+        var change = params.change || function()  { model["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
 
         ele =  $("<div title='" + tooltip + "' id='" + id + "'>" +
             "<div>" + text + "</div>" +
-            "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ value +"' class='slider'  onchange='"+change+"'/>" +
-            "<input type='text' min="+min+" max="+max+" step="+step+" value='" +value+ "' class='range' onchange='"+change+"'/>" +
+            "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ value +"' class='slider'/>" +
+            "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range'/>" +
             "</div>");
+        $("input",ele).bind("change",change);
         return ele;
     },
 
