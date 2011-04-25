@@ -340,7 +340,7 @@ function setCurrentPlanet(node) {
 
 //    fixRange();
 
-    $("#parameters").append("<input type='button' onclick='model.reset();  Ori.audio.data.currentTime = 0; Ori.audio.data.play();' value='reset'>");
+    $("#parameters").append("<input type='button' onclick='model.reset();' value='reset'>");
     $("#parameters").append("<input id='pauseButton' type='button' onclick='model.pause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
 
     model.pause();
