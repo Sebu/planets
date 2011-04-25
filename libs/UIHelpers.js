@@ -308,8 +308,11 @@ var UI = {
         var model = params.model;
         var id = params.id;
         var text = params.text || params.id;
+        var change = params.change || function()  { model["set"+id](this.checked); };
         
-        return $("<input type=checkbox name='visMode' checked='true' onClick='"+model+".set"+ id + "(this.checked)'>"+ text + "</input>");
+        ele = $("<input type=checkbox name='visMode' checked='true'>"+ text + "</input>").bind("click", change);
+                
+        return ele;
     }
 }
 

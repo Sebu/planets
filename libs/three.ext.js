@@ -175,9 +175,8 @@ var App = function(params) {
       this.domRoot = params.domRoot;
 
       //TODO: move to input and camera
-      this.lastX = 0;
-      this.lastY = 0;
-      this.pitch = 0;
+//      this.lastX = 0;
+//      this.lastY = 0;
 
       this.currentScene = null;
       this.scenes = [];
@@ -225,20 +224,21 @@ var App = function(params) {
 
         if(Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
         if (Ori.input.mouse.b1) {
-            pitch = (Ori.input.mouse.y - this.lastY) * 0.005;
+            x = Ori.input.mouse.x;
+            y = Ori.input.mouse.y;
+            pitch = (y - Ori.input.drag.y) * 0.005;
 
-            yaw = (Ori.input.mouse.x - this.lastX) * -0.005;
+            yaw = (x - Ori.input.drag.x) * -0.005;
             if (model.currentPos == "Earth") {
                 this.camera.rotateY(yaw);
             } else {
                 this.camera.rotateUp(yaw);
             }
 
-            this.pitch += pitch;
             this.camera.rotateRight(pitch);
             
-            this.lastX = Ori.input.mouse.x;
-            this.lastY = Ori.input.mouse.y;
+            Ori.input.drag.x = x;
+            Ori.input.drag.y = y;
         }        
         Ori.input.update();
     }
@@ -272,6 +272,7 @@ Disc = function(params) {
 
 Disc.prototype = new THREE.Mesh;
 Disc.prototype.constructor = Disc;
+
 
 
 Translate = function(params) {

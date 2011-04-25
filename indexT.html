@@ -7,33 +7,6 @@
 </head>
 <body>
 
-<div id="mainBox"></div>
-
-
-<div class="container" id="uiContainer"></div>
-<div class="container" id="legendContainer"></div>
-<div class="container" id="infoContainer">
-    <div>angle planet/sun <span style='float:right;' id="sunAngle">0</span></div>
-    <div>longitude <span style='float:right; 'id="eclipticAngle">0</span></div>
-    <div>longitude speed <span style='float:right;' id="eclipticSpeed">0</span></div>
-    <div>latitude<span style='float:right;' id="latitude">0</span></div>
-    <div>days<span style='float:right;' id="days">0</span></div>
-
-    <div id="moonInfoContainer" style="display:none">
-        <div>zodiacal month</div>
-        <div id="metonZodicalMonths">0</div>
-        <div>days per year</div>
-        <div id="metonDaysPerYear">0</div>
-        <div>days per synodic month</div>
-        <div id="synodicDaysPerMonth">0</div>
-        <div>days per zodical month</div>
-        <div id="zodicalDaysPerMonth">0</div>
-        <div>days per draconitic month</div>
-        <div id="draconiticDaysPerMonth">0</div>
-    </div>
-</div>
-
-
 <script type="text/javascript" src="libs/jquery.tools.min.js"></script>
 <script type="text/javascript" src="libs/sylvester.js"></script>
 <script type="text/javascript" src="libs/modernizr-1.7.min.js"></script>
@@ -53,6 +26,9 @@
 <script type="text/javascript" src="models/ModelYavetz.js"></script>
 <script type="text/javascript" src="models/ModelMoon.js"></script>
 <script type="text/javascript" src="models/ModelMoonCompare.js"></script>
+
+<div id="mainBox"></div>
+
 <script type="text/javascript">
 
 
@@ -105,22 +81,47 @@ $(document).ready(function() {
 
     model = models["Model4"];
 
-    $("#uiContainer").append("<span><select  title='current position' id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");
+    domRoot  = $("#mainBox");
+
+    $("<div class='container' id='infoContainer'>\
+      <div>angle planet/sun <span style='float:right;' id='sunAngle'>0</span></div>\
+      <div>longitude <span style='float:right; 'id='eclipticAngle'>0</span></div>\
+      <div>longitude speed <span style='float:right;' id='eclipticSpeed'>0</span></div>\
+      <div>latitude<span style='float:right;' id='latitude'>0</span></div>\
+      <div>days<span style='float:right;' id='days'>0</span></div>\
+      <div id='moonInfoContainer' style='display:none'>\
+          <div>zodiacal month</div>\
+          <div id='metonZodicalMonths'>0</div>\
+          <div>days per year</div>\
+          <div id='metonDaysPerYear'>0</div>\
+          <div>days per synodic month</div>\
+          <div id='synodicDaysPerMonth'>0</div>\
+          <div>days per zodical month</div>\
+          <div id='zodicalDaysPerMonth'>0</div>\
+          <div>days per draconitic month</div>\
+          <div id='draconiticDaysPerMonth'>0</div>\
+      </div>\
+  </div>").appendTo(domRoot);
+    uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(domRoot);
+    
+    legend = $("<div class='container' id='legendContainer'></div>").appendTo(domRoot);
+
+    uiBox.append("<span><select  title='current position' id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");
     UI.optionsFromHash("#viewPresets", model.viewPresets);
 
-    $("#uiContainer").append("<span><select title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
+    uiBox.append("<span><select title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
     UI.optionsFromHash("#longitudePresets", latitudePresets);
 
     $("#viewPresets option[value='World']").attr('selected', true);
 
 
-    $("#uiContainer").append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
+    uiBox.append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
     UI.optionsFromHash("#planetPreset", planetPresets);
 
-    $("#uiContainer").append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
+    uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
     UI.optionsFromHash("#moonModel", moonModels);
-
-    $("#uiContainer").append("<div id='parameters'></div>");
+    
+    uiBox.append("<div id='parameters'></div>");
     $("#vis").hide();
 
     // SETUP START
@@ -167,11 +168,11 @@ function setCurrentPlanet(node) {
 
     UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
     for(i in model.sphere) {
-        UI.checkbox({model:"model", id:"ShowSphere"+i, text:"S"+(Number(i)+1)}).appendTo("#vis");
+        UI.checkbox({model:model, id:"ShowSphere"+i, text:"S"+(Number(i)+1)}).appendTo("#vis");
     }
-    UI.checkbox({model:"model", id:"ShowCurve0", text:"path"}).appendTo("#vis");
-    UI.checkbox({model:"model", id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
-    UI.checkbox({model:"model", id:"ShowStars", text:"stars"}).appendTo("#vis");
+    UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
+    UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
+    UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
 
 

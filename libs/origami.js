@@ -48,6 +48,7 @@ Ori.Input.prototype = {
 
   mouseDown : function(e) {
     if(e.button == 0) this.mouse.b1 = true;
+    this.drag = {x: e.clientX, y: e.clientY};
   },
 
   mouseUp : function(e) {
@@ -71,6 +72,7 @@ Ori.Input.prototype = {
 
   update : function() {
     this.mouse.wheel = false;
+    this.drag = {x: this.mouse.x , y: this.mouse.y};
   }
 
 };
