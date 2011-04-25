@@ -245,12 +245,6 @@ function style(element, styles) {
 
 var UI = {
 
-    label : function(pos,text) {
-        if(pos.z<0) return;
-        $("body").append("<div id='"+text+"'; class='label' style='top:"+pos.y+"px;left:"+ pos.x+ "px;'>" +  text + "</div>");
-    },
-
-
     optionsFromHash : function(selector, hash) {
         for (i in hash)
             $(selector).append("<option value='" + i + "'>" + i + "</option>");
@@ -314,7 +308,25 @@ var UI = {
                 
         return ele;
     }
-}
+};
+
+UI.Label = function(params) {
+        this.ele = $("<div class='label'>" +  params.text + "</div>");
+        this.ele.appendTo("body");
+        this.setPosition(params.pos || {x:0, y:0, z:-1});
+};
+
+UI.Label.prototype.constructor = UI.Label;
+
+UI.Label.prototype.setPosition = function(pos) {
+  if(pos.z<0) { this.ele.hide(); return; }
+  this.ele.show();
+  this.pos = pos;
+  this.ele.css('left', pos.x);
+  this.ele.css('top', pos.y);
+};
+
+
 
 
 

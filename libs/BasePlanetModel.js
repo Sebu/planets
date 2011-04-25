@@ -234,7 +234,8 @@ var BasePlanetModel = function() {
 
 
             //TODO: on model change -> events?
-            sunPos = getNodePos(this.name+"Sun");
+            sunPos = this.sun.mesh.currentPos();
+//            sunPos = getNodePos(this.name+"Sun");
             this.light.setPos(sunPos);
         }
         this.time++;
@@ -292,16 +293,6 @@ var BasePlanetModel = function() {
         this.camera.updateNew();
     }
 
-
-    // TODO: deprecated
-//    this.visMode = function(sys, state) {
-//        if (sys == "stars") {
-//            this.stars.setEnabled(state.checked);
-//            return;
-//        }
-
-//        this.sphere[sys].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state.checked);
-//    }
 
 
     this.calcCurve = function(start, node) {

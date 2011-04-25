@@ -10,15 +10,15 @@ var Renderer = function(params) {
     this.init = function () {
         this.scene = SceneJS.scene({ canvasId: "glCanvas" });
         this.renderer = SceneJS.renderer({  id: "renderer" , clear: { depth : true, color : true },  clearColor: { r: 0.2, g : 0.2, b : 0.2 }, pointSize: 4 });
-        this.lookAt = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
-        this.camera = new Camera();
+        this.camera = SceneJS.lookAt({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+        this.camera2 = new Camera();
 
-        this.lookAt.addNode(this.camera);
+        this.camera.addNode(this.camera);
         this.renderer.addNode(this.lookAt);
         this.scene.addNode(this.renderer);
 
         // initial start rotation
-        this.lookAt.rotateY(Math.PI+0.1);
+        this.camera.rotateY(Math.PI+0.1);
 
 
     }
@@ -26,7 +26,7 @@ var Renderer = function(params) {
     this.newScene = function() {
         root = new Node();
         this.scenes.push(root);
-        this.camera.addNode(root);
+        this.camera2.addNode(root);
         return root;
     }
 
@@ -55,7 +55,7 @@ var Renderer = function(params) {
         canvas = document.getElementById("glCanvas");
         canvas.width = $(window).width();
         canvas.height = $(window).height();
-        this.camera.setOptics({ type: "perspective", fovy: this._fov, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
+        this.camera2.setOptics({ type: "perspective", fovy: this._fov, aspect : canvas.width / canvas.height, near : 0.10, far : 500.0});
         this.renderer._props.props.viewport = { x : 1, y : 1, width: canvas.width, height: canvas.height };
     }
     this.mouseDown = function (event) {
@@ -81,9 +81,9 @@ var Renderer = function(params) {
 
             yaw = (event.clientX - this.lastX) * -0.005;
             if (model.currentPos == "Earth") {
-                model.lookAt.rotateY(yaw);
+                model.camera.rotateY(yaw);
             } else {
-                model.lookAt.rotateUp(yaw);
+                model.camera.rotateUp(yaw);
             }
 
 
@@ -95,7 +95,7 @@ var Renderer = function(params) {
 
 
             this.pitch += pitch;
-            this.lookAt.rotateRight(pitch);
+            this.camera.rotateRight(pitch);
 
             this.lastX = event.clientX;
             this.lastY = event.clientY;
@@ -104,19 +104,19 @@ var Renderer = function(params) {
 
     this.keyboard = function(e) {
         switch (e.keyCode) {
-            case 119: model.lookAt.translate(0, 0, 0.6);  break;
-            case 115: model.lookAt.translate(0, 0, -0.6);  break;
-            case 97:  model.lookAt.translate(0.6, 0, 0);  break;
-            case 100: model.lookAt.translate(-0.6, 0, 0);  break;
+            case 119: model.camera.translate(0, 0, 0.6);  break;
+            case 115: model.camera.translate(0, 0, -0.6);  break;
+            case 97:  model.camera.translate(0.6, 0, 0);  break;
+            case 100: model.camera.translate(-0.6, 0, 0);  break;
             default: return false;
         }
     }
 
     this.mouseWheel = function(event) {
-        model.lookAt.translate(0.0, 0.0, event.wheelDelta / 120);
+        model.camera.translate(0.0, 0.0, event.wheelDelta / 120);
     }
     this.mouseWheel_firefox = function(event) {
-        model.lookAt.translate(0.0, 0.0, event.detail);
+        model.camera.translate(0.0, 0.0, event.detail);
     }
 }
 

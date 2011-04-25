@@ -44,20 +44,21 @@ function update() {
     $("#latitude").html(Math.round(model.latitude));
     $("#days").html(Math.round(model.days));
 
+
+    
     //labels
-    $("#Sun, #Planet, #North, #South, #East, #West, #Northpole, #Southpole, #Equinox").remove();
     if(model.currentPos=="Earth") {
-        UI.label(getNodePosCanvas("North"),"North");
-        UI.label(getNodePosCanvas("South"),"South");
-        UI.label(getNodePosCanvas("East"),"East");
-        UI.label(getNodePosCanvas("West"),"West");
+      northLabel.setPosition(getNodePosCanvas("North"));
+      southLabel.setPosition(getNodePosCanvas("South"));
+      eastLabel.setPosition(getNodePosCanvas("East"));
+      westLabel.setPosition(getNodePosCanvas("West"));  
     } else {
-        UI.label(getNodePosCanvas(model.name+"S0npole"),"Northpole");
-        UI.label(getNodePosCanvas(model.name+"S0spole"),"Southpole");
-        UI.label(getNodePosCanvas(model.name+"S0"),"Equinox");
+      equinoxLabel.setPosition(getNodePosCanvas(model.name+"S0"));
+      npoleLabel.setPosition(getNodePosCanvas(model.name+"S0npole"));
+      spoleLabel.setPosition(getNodePosCanvas(model.name+"S0spole"));
     }
-    UI.label(getNodePosCanvas(model.name+"Planet"),"Planet");
-    if(model.sun.getEnabled()) UI.label(getNodePosCanvas(model.name+"Sun"),"Sun");
+    planetLabel.setPosition(getNodePosCanvas(model.name+"Planet"));
+    if(model.sun.getEnabled()) sunLabel.setPosition(getNodePosCanvas(model.name+"Sun"));    
 
 
 }
@@ -81,8 +82,27 @@ $(document).ready(function() {
 
     model = models["Model4"];
 
+
+
+    planetLabel = new UI.Label({text: "Planet"});
+    sunLabel = new UI.Label({text: "Sun"});
+
+    equinoxLabel = new UI.Label({text: "Equinox"});
+    npoleLabel = new UI.Label({text: "North pole"});
+    spoleLabel = new UI.Label({text: "South pole"});
+    
+    northLabel = new UI.Label({text: "North"});
+    southLabel = new UI.Label({text: "South"});
+    eastLabel = new UI.Label({text: "East"});    
+    westLabel = new UI.Label({text: "West"});
+
+    
+    
+//    Ori.audio.data.play();
+
     domRoot  = $("#mainBox");
 
+    
     $("<div class='container' id='infoContainer'>\
       <div>angle planet/sun <span style='float:right;' id='sunAngle'>0</span></div>\
       <div>longitude <span style='float:right; 'id='eclipticAngle'>0</span></div>\
@@ -106,7 +126,7 @@ $(document).ready(function() {
     
     legend = $("<div class='container' id='legendContainer'></div>").appendTo(domRoot);
 
-    uiBox.append("<span><select  title='current position' id='viewPresets' onchange=' model.currentPos = model.viewPresets[this.value].from; model.changeView(model.currentPos); model.currentLookAt=model.viewPresets[this.value].at; '></select></span>");
+    uiBox.append("<span><select  title='current position' id='viewPresets' onchange='setView(model.viewPresets[this.value]);'></select></span>");
     UI.optionsFromHash("#viewPresets", model.viewPresets);
 
     uiBox.append("<span><select title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
@@ -136,7 +156,23 @@ $(document).ready(function() {
 
 })
 
+function setView(view) {
+  model.currentPos = view.from; 
+  model.currentLookAt = view.at;
 
+  if(model.currentPos=="Earth") {
+      equinoxLabel.setPosition({x:0, y:0, z:-1});
+      npoleLabel.setPosition({x:0, y:0, z:-1});
+      spoleLabel.setPosition({x:0, y:0, z:-1});
+  } else {
+      northLabel.setPosition({x:0, y:0, z:-1});
+      southLabel.setPosition({x:0, y:0, z:-1});
+      eastLabel.setPosition({x:0, y:0, z:-1});
+      westLabel.setPosition({x:0, y:0, z:-1});  
+  }
+     
+  model.changeView(model.currentPos); 
+}
 
 function setCurrentPlanet(node) {
 
@@ -295,7 +331,7 @@ function setCurrentPlanet(node) {
         UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
         UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
         UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-        UI.box({id:speed, text:"Sphere Period (days)"}).appendTo("#parameters");
+        UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
         UI.slider({model:model, id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
         UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
         UI.slider({model:model, id: "Speed2", max:1100, text:"S 3 (synodic)"}).appendTo("#speed");
@@ -304,7 +340,7 @@ function setCurrentPlanet(node) {
 
 //    fixRange();
 
-    $("#parameters").append("<input type='button' onclick='model.reset()' value='reset'>");
+    $("#parameters").append("<input type='button' onclick='model.reset();  Ori.audio.data.currentTime = 0; Ori.audio.data.play();' value='reset'>");
     $("#parameters").append("<input id='pauseButton' type='button' onclick='model.pause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
 
     model.pause();

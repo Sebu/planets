@@ -183,6 +183,7 @@ var App = function(params) {
         
       this.graphics = new Ori.Canvas();
       this.graphics.setSize(window.innerWidth, window.innerHeight);
+      Ori.input.trackMouseOn(this.graphics.domElement);
     
       if(this.graphics.type) {
           this.domRoot.innerHTML = "";
@@ -265,7 +266,7 @@ var App = function(params) {
 
 
 Disc = function(params) {
-  THREE.Mesh.call(this, new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: 0x8888FF, shading: THREE.FlatShading}) );
+  THREE.Mesh.call(this, new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: 0x4444FF, shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
 }
@@ -361,6 +362,7 @@ Curve  = function(params) {
     this.gen = function(pos) {
         this.curvePos = pos;
         this.geo.vertices = [];
+        this.geo.colors = [];
         for (var i = 0; i < this.curvePos.length; i++) {
             this.geo.vertices.push( new THREE.Vertex( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) ) );
             color = new THREE.Color( 0xFFFFFF );
@@ -606,9 +608,9 @@ Sunlight = function() {
     return new THREE.PointLight( 0xFFFFFF, 1, 0 );
 }
 
-sylToScene = function(pos) {
-    return {x: pos.elements[0], y: pos.elements[1], z: pos.elements[2]};
-}
+//sylToScene = function(pos) {
+//    return {x: pos.elements[0], y: pos.elements[1], z: pos.elements[2]};
+//}
 
 sceneToSyl = function(pos) {
     return Vector.create([pos.x, pos.y, pos.z]);
@@ -628,10 +630,10 @@ getNodePos = function(name) {
 getNodePosCanvas = function(name) {
     node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
-    canvas = app.graphics.domElement;
 
     posTmp = node.currentPos();
 
+    canvas = app.graphics.domElement;
     app.camera.matrixWorldInverse.multiplyVector3( posTmp );
     zTmp = -posTmp.z;
 
