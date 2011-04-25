@@ -203,7 +203,6 @@ var BasePlanetModel = function() {
             equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
-            // hackery hack
             if (this.sun.getEnabled() && this.sunAngle<=15)
                 this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
             else
@@ -231,12 +230,10 @@ var BasePlanetModel = function() {
             }
 
 
-
-
             //TODO: on model change -> events?
-            sunPos = this.sun.mesh.currentPos();
+//            sunPos = this.sun.mesh.currentPos();
 //            sunPos = getNodePos(this.name+"Sun");
-            this.light.setPos(sunPos);
+            this.light.setPos(this.sun.mesh.currentPos());
         }
         this.time++;
         this.draw();
@@ -314,10 +311,12 @@ var BasePlanetModel = function() {
             this.sphere[i].updateMovement(-20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
-        var maxSegments = 100;//-Math.round(20/step);
+        maxSegments = 100;//-Math.round(20/step);
         for (var j = 0; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                this.sphere[i].updateMovement(10.0 / step);
+                //this.sphere[i].updateMovement(10.0 / step);
+                this.sphere[i].rotateAngle += this.sphere[i].step * (10.0/ step);
+                this.sphere[i].anchor.rotation.y = degToRad(this.sphere[i].rotateAngle);
             }
             pos = getNodePos(node);
             curvePos.push(pos);

@@ -48,7 +48,7 @@ html, body {
 }
 
 .label {
-  z-index: 2;
+  z-index: 1;
   position: absolute;
   color: white;
   background-color: rgba(150,150,150,0.5);

@@ -38,11 +38,11 @@ function update() {
     app.update();
     model.update();
 //    renderer.draw();
-    $("#sunAngle").html(Math.round(model.sunAngle));
-    $("#eclipticAngle").html(Math.round(model.eclipticAngle));
-    $("#eclipticSpeed").html(model.eclipticSpeed.toFixed(2));
-    $("#latitude").html(Math.round(model.latitude));
-    $("#days").html(Math.round(model.days));
+    $("#sunAngle").text(Math.round(model.sunAngle));
+    $("#eclipticAngle").text(Math.round(model.eclipticAngle));
+    $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2));
+    $("#latitude").text(Math.round(model.latitude));
+    $("#days").text(Math.round(model.days));
 
 
     

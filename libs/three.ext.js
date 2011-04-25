@@ -79,9 +79,9 @@ THREE.Camera.prototype.setEye = function(pos) {
 
 THREE.Camera.prototype._init = function(params) {
 
-    this.right = Vector.create([1,0,0]);
+    this.right = Vector.create([1, 0, 0]);
     this.upVec = Vector.create([0, 1, 0]);
-    this.dir = Vector.create([0,0,1]);
+    this.dir = Vector.create(  [0, 0, 1]);
     this.setEye(params.eye);
 
     this.useTarget = false;
