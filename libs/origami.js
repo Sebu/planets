@@ -37,13 +37,12 @@ Ori.Audio.prototype = {
 
 Ori.audio = new Ori.Audio();
 
-
+Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68 };
  
 Ori.Input = function() {
     
-    this.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40 };
-    
     this.keymap = {};
+    this.binding = {};
     this.mouse = {x:0, y:0, z:0, wheel: false, b1: false, b2: false};
     window.addEventListener('keydown', this.keyDown.bind(this), false);
     window.addEventListener('keyup', this.keyUp.bind(this), false);
@@ -68,6 +67,14 @@ Ori.Input.prototype = {
 
   keyUp : function(e) {
     this.keymap[e.keyCode] = false;
+  },
+  
+  register : function(key, word) {
+    this.binding[word] = key;
+  },
+  
+  isDown : function(key) {
+    return this.keymap[ this.binding[key] ];
   },
 
   mouseDown : function(e) {

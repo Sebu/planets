@@ -38,8 +38,9 @@ rgbToHex = function(color) {
  return ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
 }
 
-THREE.Camera.prototype.setAspect = function(fov, aspect, near, far) {
-    this.projectionMatrix = THREE.Matrix4.makePerspective( fov, aspect, near, far );
+THREE.Camera.prototype.setAspect = function(aspect) {
+    this.aspect = aspect;
+    this.updateProjectionMatrix();
 };
 
 
@@ -77,7 +78,7 @@ THREE.Camera.prototype.setEye = function(pos) {
     this.position.set(pos.x, pos.y, pos.z);
 }
 
-THREE.Camera.prototype._init = function(params) {
+THREE.Camera.prototype.init = function(params) {
 
     this.right = Vector.create([1, 0, 0]);
     this.upVec = Vector.create([0, 1, 0]);
@@ -190,10 +191,14 @@ var App = function(params) {
           this.domRoot.append(this.graphics.domElement);
       }
 
-
+      Ori.input.register(Ori.KEY.A, "LEFT");
+      Ori.input.register(Ori.KEY.D, "RIGHT");
+      Ori.input.register(Ori.KEY.S, "DOWN");
+      Ori.input.register(Ori.KEY.W, "UP");
+      
       // TODO : shorten
       this.camera = new THREE.Camera( 70, window.innerWidth / window.innerHeight, 0.1, 10000 );
-      this.camera._init({ eye : { x: 0.0, y: 0.0, z: -17 }, look : { x:0.0, y:0.0, z: -24 }, up: { x:0.0, y: 1.0, z: 0.0 } });
+      this.camera.init({ eye : { x: 0.0, y: 0.0, z: -17 } });
       this.camera.rotateY(Math.PI+0.1);
     }
 
@@ -218,10 +223,10 @@ var App = function(params) {
 
     this.update = function() {
 
-//        if(inputSystem.keymap[65]) this.camera.translateNew(0, 0, -0.6);
-//        if(inputSystem.keymap[68]) this.camera.translateNew(0, 0, -0.6);
-        if(Ori.input.keymap[83]) this.camera.translateNew(0, 0, -0.6);
-        if(Ori.input.keymap[87]) this.camera.translateNew(0, 0, 0.6);
+        if(Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
+        if(Ori.input.isDown("RIGHT")) this.camera.translateNew(-0.6, 0, 0);
+        if(Ori.input.isDown("DOWN")) this.camera.translateNew(0, 0, -0.6);
+        if(Ori.input.isDown("UP")) this.camera.translateNew(0, 0, 0.6);
 
         if(Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
         if (Ori.input.mouse.b1) {
@@ -258,7 +263,7 @@ var App = function(params) {
     this.resize = function() {
         width = window.innerWidth;
         height = window.innerHeight;
-        this.camera.setAspect(this._fov, width/height, 0.1, 500);
+        this.camera.setAspect(width/height);
         this.graphics.setSize(width, height);
     }
 
