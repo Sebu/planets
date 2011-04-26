@@ -148,7 +148,7 @@ $(document).ready(function() {
     // start models
     setCurrentPlanet("Mercury1");
 
-    window.onresize = app.resize.bind(app);
+    window.onresize = function(e) { app.resize(e) };
 
     // TODO: app.run();
     setInterval("update()", 33);

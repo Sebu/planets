@@ -77,7 +77,6 @@ ModelMoon = function(params) {
     }
 
     this.setCurrentMoonModel = function(name) {
-        console.log(name);
         var currentModel = moonModels[name];
         this.moonSpeed1 = currentModel.speed1;
         this.moonSpeed2 = currentModel.speed2;

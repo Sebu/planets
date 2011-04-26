@@ -44,8 +44,8 @@ Ori.Input = function() {
     this.keymap = {};
     this.binding = {};
     this.mouse = {x:0, y:0, z:0, wheel: false, b1: false, b2: false};
-    window.addEventListener('keydown', this.keyDown.bind(this), false);
-    window.addEventListener('keyup', this.keyUp.bind(this), false);
+    window.addEventListener('keydown', this.keyDown, false);
+    window.addEventListener('keyup', this.keyUp, false);
 
 
 };
@@ -54,19 +54,21 @@ Ori.Input.prototype.constructor = Ori.Input;
 
 
 Ori.Input.prototype = {
+
   trackMouseOn : function(element) {
-    element.addEventListener('mousewheel', this.mouseWheel.bind(this), false);
-    element.addEventListener('DOMMouseScroll', this.mouseWheelFox.bind(this), false);
-    element.addEventListener('mousedown', this.mouseDown.bind(this), false);
-    element.addEventListener('mouseup', this.mouseUp.bind(this), false);
-    element.addEventListener('mousemove', this.mouseMove.bind(this), false);    
+    element.addEventListener('mousewheel', this.mouseWheel, false);
+    element.addEventListener('DOMMouseScroll', this.mouseWheelFox, false);
+    element.addEventListener('mousedown', this.mouseDown, false);
+    element.addEventListener('mouseup', this.mouseUp, false);
+    element.addEventListener('mousemove', this.mouseMove, false);    
   },
+  
   keyDown : function(e) {
-    this.keymap[e.keyCode] = true;
+    Ori.input.keymap[e.keyCode] = true;
   },
 
   keyUp : function(e) {
-    this.keymap[e.keyCode] = false;
+    Ori.input.keymap[e.keyCode] = false;
   },
   
   register : function(key, word) {
@@ -78,27 +80,27 @@ Ori.Input.prototype = {
   },
 
   mouseDown : function(e) {
-    if(e.button == 0) this.mouse.b1 = true;
-    this.drag = {x: e.clientX, y: e.clientY};
+    if(e.button == 0) Ori.input.mouse.b1 = true;
+    Ori.input.drag = {x: e.clientX, y: e.clientY};
   },
 
   mouseUp : function(e) {
-    if(e.button == 0) this.mouse.b1 = false;
+    if(e.button == 0) Ori.input.mouse.b1 = false;
   },
 
   mouseMove : function(e) {
-    this.mouse.x = e.clientX;
-    this.mouse.y = e.clientY;
+    Ori.input.mouse.x = e.clientX;
+    Ori.input.mouse.y = e.clientY;
   },
 
   mouseWheel : function(e) {
-    this.mouse.z = e.wheelDelta/120;
-    this.mouse.wheel = true;
+    Ori.input.mouse.z = e.wheelDelta/120;
+    Ori.input.mouse.wheel = true;
   },
 
   mouseWheelFox : function(e) {
-    this.mouse.z = e.detail;
-    this.mouse.wheel = true;
+    Ori.input.mouse.z = e.detail;
+    Ori.input.mouse.wheel = true;
   },
 
   update : function() {
