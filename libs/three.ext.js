@@ -516,9 +516,6 @@ Sunlight = function() {
     return new THREE.PointLight( 0xFFFFFF, 1, 0 );
 }
 
-//sylToScene = function(pos) {
-//    return {x: pos.elements[0], y: pos.elements[1], z: pos.elements[2]};
-//}
 
 sceneToSyl = function(pos) {
     return Vector.create([pos.x, pos.y, pos.z]);
@@ -541,7 +538,7 @@ getNodePosCanvas = function(name) {
 
     posTmp = node.currentPos();
 
-    canvas = app.graphics.domElement;
+    canvas = app.canvas.domElement;
     app.camera.matrixWorldInverse.multiplyVector3( posTmp );
     zTmp = -posTmp.z;
 

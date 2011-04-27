@@ -23,7 +23,6 @@ BasePlanetModel = function() {
     // model specific moon
     this.sunYear = 365.0;
 
-    this.time = 21;
 
     // CONTROLS this.lastX = 0;
     this.lastY = 0;
@@ -32,7 +31,7 @@ BasePlanetModel = function() {
     this.currentPlanet = {};
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
-    this.pitch=0;
+
     this.days = 0;
     this.lastAngle = 0;
     this.lastPerp = 0
@@ -255,20 +254,13 @@ BasePlanetModel.prototype = {
 //            sunPos = getNodePos(this.name+"Sun");
             this.light.setPos(this.sun.mesh.currentPos());
         }
-        this.time++;
-        this.draw();
-    },
-
-
-    draw : function() {
-            if (this.currentPos != "Free") {
-                if (this.currentLookAt != "Free")
-                    this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
-            } else {
-                if (this.currentLookAt != "Free")
-                    this.camera.rotateTarget(getNodePos(this.name+this.currentLookAt));
-            }
-        this.renderer.draw();
+        if (this.currentPos != "Free") {
+          if (this.currentLookAt != "Free")
+            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
+        } else {
+          if (this.currentLookAt != "Free")
+              this.camera.rotateTarget(getNodePos(this.name+this.currentLookAt));
+        }
     },
 
     reset : function () {
@@ -302,7 +294,6 @@ BasePlanetModel.prototype = {
             this.planet.setEnabled(false);
         }
 
-        this.pitch=0;
         this.camera.right = $V([1,0,0]);
         this.camera.upVec = $V([0,1,0]);
         this.camera.dir = $V([0,0,1]);
@@ -312,12 +303,16 @@ BasePlanetModel.prototype = {
 
 
 
-    calcCurve : function(start, node) {
+    calcCurve : function(params) {
         curvePos = [];
         oldAngle = [];
         oldRotate = [];
         step = 0;
-
+        start = params.depth;
+        node = params.node;
+        maxSegments = params.segments || 80; //-Math.round(20/step);
+        j = params.start || -20;
+      
         // save axis
         for (var i = 0; i <= start; i++) {
             oldAngle[i] = this.sphere[i].getAxisAngle();
@@ -328,17 +323,16 @@ BasePlanetModel.prototype = {
 
         for (var i = start + 1; i < this.sphere.length; i++) {
             oldRotate[i] = this.sphere[i].getRotateAngle();
-            this.sphere[i].updateMovement(-20.0);
             step += Math.abs(this.sphere[i].getStep());
         }
-        maxSegments = 100;//-Math.round(20/step);
-        for (var j = 0; j < maxSegments; j++) {
+        step = 10.0/step;
+        
+        for (; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                //this.sphere[i].updateMovement(10.0 / step);
-                this.sphere[i].rotateAngle += this.sphere[i].step * (10.0/ step);
-                this.sphere[i].anchor.rotation.y = degToRad(this.sphere[i].rotateAngle);
+                angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
+                this.sphere[i].anchor.rotation.y = degToRad(angle);
             }
-            pos = getNodePos(node);
+            pos = node.currentPos();
             curvePos.push(pos);
         }
         // restore axis

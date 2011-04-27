@@ -3,24 +3,22 @@ myApp = function(params) {
     this.init(params);
 };
 
-myApp.prototype = new Ori.App();
+myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
-myApp.prototype = {
-
-    init : function(params) {
+myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
 
         this.currentScene = null;
         this.scenes = [];
 
-        this.graphics = new Ori.Canvas();
-        this.graphics.setSize(window.innerWidth, window.innerHeight);
-        Ori.input.trackMouseOn(this.graphics.domElement);
+        this.canvas = new Ori.Canvas({});
+        this.canvas.setSize(window.innerWidth, window.innerHeight);
+        Ori.input.trackMouseOn(this.canvas.domElement);
 
-        if (this.graphics.type) {
+        if (this.canvas.type) {
             this.domRoot.innerHTML = "";
-            this.domRoot.append(this.graphics.domElement);
+            this.domRoot.append(this.canvas.domElement);
         }
 
         Ori.input.register(Ori.KEY.A, "LEFT");
@@ -108,26 +106,26 @@ myApp.prototype = {
 
         this.setCurrentPlanet("Mercury1");
 
-    },
+    };
 
 
-    newScene : function() {
+myApp.prototype.newScene = function() {
         scene = new THREE.Scene();
         scene.addLight(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
-    },
+    };
 
-    setCurrentScene : function(scene) {
+myApp.prototype.setCurrentScene = function(scene) {
 
         //this.currentScene.enabled = false;
         this.currentScene = scene;
         this.currentScene.enabled = true;
         this.components = [];
         this.components.push(this.currentScene);
-    },
+    };
 
-    update : function() {
+myApp.prototype.update = function() {
 
         if (Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
         if (Ori.input.isDown("RIGHT")) this.camera.translateNew(-0.6, 0, 0);
@@ -152,9 +150,8 @@ myApp.prototype = {
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }
-        Ori.input.update();
         model.update();
-//    renderer.draw();
+
         $("#sunAngle").text(Math.round(model.sunAngle));
         $("#eclipticAngle").text(Math.round(model.eclipticAngle));
         $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2));
@@ -175,27 +172,26 @@ myApp.prototype = {
         }
         planetLabel.setPosition(getNodePosCanvas(model.name + "Planet"));
         if (model.sun.getEnabled()) sunLabel.setPosition(getNodePosCanvas(model.name + "Sun"));
-    },
+    };
 
 
-    draw : function() {
-        this.graphics.clear();
+myApp.prototype.draw = function() {
+        this.canvas.clear();
         for (i in this.components) {
             component = this.components[i];
-            if (component.enabled) this.graphics.render(component, this.camera);
-
+            if (component.enabled) this.canvas.render(component, this.camera);
         }
-    },
+    };
 
-    resize : function() {
+myApp.prototype.resize = function() {
         width = window.innerWidth;
         height = window.innerHeight;
         this.camera.setAspect(width / height);
-        this.graphics.setSize(width, height);
-    },
+        this.canvas.setSize(width, height);
+    };
 
 
-    setView : function(view) {
+myApp.prototype.setView = function(view) {
         model.currentPos = view.from;
         model.currentLookAt = view.at;
 
@@ -211,9 +207,9 @@ myApp.prototype = {
         }
 
         model.changeView(model.currentPos);
-    },
+    };
 
-    setCurrentPlanet : function(node) {
+myApp.prototype.setCurrentPlanet = function(node) {
 
         // switch model
         model = models[planetPresets[node].model];
@@ -387,21 +383,16 @@ myApp.prototype = {
         $("#AxisAngle0 input").change();
 
 //        $("#rotateStart,#vis").hide();
-    }
-};
+    };
+
 
 
 // setup site
-$(document).ready(function() {
+//$(document).ready(function() {
 
     app = new myApp({domRoot: $("#mainBox")});
+    window.onresize = function(e) { app.resize(e) };
+    app.run();
 
-    window.onresize = function(e) {
-        app.resize(e)
-    };
+//});
 
-    // TODO: app.run();
-    setInterval("app.update()", 33);
-
-
-})

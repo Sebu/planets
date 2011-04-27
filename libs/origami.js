@@ -4,8 +4,8 @@ var Ori = Ori || {};
 /**
  * @constructor
  */
-Ori.Canvas = function() {
-        if(Modernizr.webgl) {
+Ori.Canvas = function(params) {
+        if(Modernizr.webgl && !params.canvas) {
             this.graphics = new THREE.WebGLRenderer({antialias: true});
             this.graphics.type = "webgl";
         }
@@ -112,7 +112,7 @@ Ori.Input.prototype = {
     Ori.input.mouse.wheel = true;
   },
 
-  update : function() {
+  reset : function() {
     this.mouse.wheel = false;
     this.drag = {x: this.mouse.x , y: this.mouse.y};
   }
@@ -126,16 +126,22 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
+  this.fps = 30;
 };
 
 Ori.App.prototype.constructor = Ori.App;
 
 Ori.App.prototype = {
 
+  mainLoop : function() {
+    this.update();
+    this.draw();
+    Ori.input.reset();
+  },
+  
   run : function() {
-    time = 0;
-    this.update(time);
-    this.draw(time);
+      self = this;
+      setInterval(function() { self.mainLoop(); }, 33);
 
 //    for(i=0; i< this.components.length; i++) {
 //      component = components[i];
