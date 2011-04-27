@@ -39,7 +39,7 @@ ModelYavetz = function(params) {
     }
 
     this.setCurrentPlanet = function(node) {
-      ModelYavetz.prototype.setCurrentPlanet.call(this,node);
+      BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
       this.setAlpha(this.currentPlanet.sphere[3].axisAngle);
       this.setBeta(this.currentPlanet.betaRotate);
     }
@@ -49,7 +49,7 @@ ModelYavetz = function(params) {
 //        this.removeCurve(1);
         if(this.showCurve0) this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
         if(this.showCurve1) this.addCurve(1, this.sphere[1].curve, this.calcCurve(1, this.name + "Planet"), colors["Hippo"]);
-        ModelYavetz.prototype.update.call(this);
+        BasePlanetModel.prototype.update.call(this);
     }
 };
 

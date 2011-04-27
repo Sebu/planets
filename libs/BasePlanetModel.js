@@ -14,7 +14,11 @@ calcAngleRel = function(node1, node2, center) {
     return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
 }
 
-var BasePlanetModel = function() {
+
+/**
+ * @constructor
+ */
+BasePlanetModel = function() {
 
     // model specific moon
     this.sunYear = 365.0;
@@ -35,12 +39,7 @@ var BasePlanetModel = function() {
     this.eclipticAngle2 = 0;
     this.speed = 0;
     this.fps = 30.0;
-    this.setSpeed = function(val) {
-        this.speed = val;
-    }
-    this.getSpeed = function() {
-        return this.speed;
-    }
+
     this.setSpeed(60);
 
     this.posAngle = 10.0;
@@ -49,14 +48,34 @@ var BasePlanetModel = function() {
     this.showCurve0 = true;
     this.showCurve1 = true;
 
-    this.setShowCurve0 = function(state) { this.curves[0].setEnabled(state); }
-    this.setShowCurve1 = function(state) { this.curves[1].setEnabled(state); }
-    this.setShowStars = function(state) { this.stars.setEnabled(state); }
+    this.running=true;
 
+
+    
+};
+
+BasePlanetModel.prototype.constructor = BasePlanetModel;
+
+BasePlanetModel.prototype = {
+
+
+    setShowCurve0 : function(state) { this.curves[0].setEnabled(state); },
+    setShowCurve1 : function(state) { this.curves[1].setEnabled(state); },
+    setShowStars : function(state) { this.stars.setEnabled(state); },
+
+
+    setSpeed : function(val) {
+        this.speed = val;
+    },
+    
+    getSpeed : function() {
+        return this.speed;
+    },
+    
     // SETUP
     // base structure
     // planet system
-    this.init = function(params) {
+    init : function(params) {
         this.name = params.name;
         this.curves = {};
         this.sphere = new Array(params.spheres);
@@ -138,9 +157,9 @@ var BasePlanetModel = function() {
 
         this.root.setEnabled(false);
 
-    }
+    },
 
-    this.setCurrentPlanet = function(node) {
+    setCurrentPlanet : function(node) {
 
         this.currentPlanet = {
             sunDist: 8,
@@ -150,8 +169,8 @@ var BasePlanetModel = function() {
                 {axisAngle: 38.0, speed: 0, rotateStart: 0 },
                 {axisAngle: 24.0,  speed: 365, rotateStart: 0 },
                 {axisAngle: 90.0, speed: 570, rotateStart: 0 },
-                {axisAngle: 18.0, speed: 0, rotateStart: 0 },
-            ],
+                {axisAngle: 18.0, speed: 0, rotateStart: 0 }
+            ]
         };
 
         $.extend(true, this.currentPlanet, node);
@@ -168,10 +187,10 @@ var BasePlanetModel = function() {
 
         this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
 
-    }
+    },
 
 
-    this.addCurve = function(node, anchor, curvePos, color) {
+    addCurve : function(node, anchor, curvePos, color) {
         if(!this.curves[node]) {
             this.curves[node]= new Curve({pos: curvePos, color: color});
             anchor.setBaseColor(color);
@@ -179,16 +198,17 @@ var BasePlanetModel = function() {
         } else {
             if(this.curves[0].getEnabled()) this.curves[node].setPos(curvePos);
         }
-    }
+    },
 
-    this.running=true;
-    this.pause = function() {
+
+
+    pause : function() {
         this.running=!this.running;
 
-    }
+    },
 
 
-    this.update = function() {
+    update : function() {
 
         if(this.running) {
             earthPos = posSyl(this.name+"Earth");
@@ -237,10 +257,10 @@ var BasePlanetModel = function() {
         }
         this.time++;
         this.draw();
-    }
+    },
 
 
-    this.draw = function() {
+    draw : function() {
             if (this.currentPos != "Free") {
                 if (this.currentLookAt != "Free")
                     this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
@@ -249,9 +269,9 @@ var BasePlanetModel = function() {
                     this.camera.rotateTarget(getNodePos(this.name+this.currentLookAt));
             }
         this.renderer.draw();
-    }
+    },
 
-    this.reset = function () {
+    reset : function () {
         if (this.sphere.length == 0) return;
         for (var i = 0; i < this.sphere.length; i++) {
             this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
@@ -259,9 +279,9 @@ var BasePlanetModel = function() {
 
         this.systemSun[0].setRotateAngle(0);
 
-    }
+    },
 
-    this.changeView = function(node) {
+    changeView : function(node) {
         if (node == "Free") pos = { x: 0.0, y: 0.0, z: -19 };
         else pos = getNodePos(this.name+node);
 
@@ -288,11 +308,11 @@ var BasePlanetModel = function() {
         this.camera.dir = $V([0,0,1]);
         this.camera.setEye(pos);
         this.camera.updateNew();
-    }
+    },
 
 
 
-    this.calcCurve = function(start, node) {
+    calcCurve : function(start, node) {
         curvePos = [];
         oldAngle = [];
         oldRotate = [];

@@ -103,7 +103,7 @@ ModelMoonCompare = function(params) {
     this.setCurrentMoonModels("Schiparelli", "SchFixed");
 
     this.setCurrentPlanet = function(node) {
-        ModelMoonCompare.prototype.setCurrentPlanet.call(this,node);
+        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
         this.setMetonYear(this.currentPlanet.metonYear);
         this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
         this.setMetonDays(this.currentPlanet.metonDays);
@@ -113,7 +113,7 @@ ModelMoonCompare = function(params) {
 
 
     this.reset = function () {
-        ModelMoonCompare.prototype.reset.call(this);
+        BasePlanetModel.prototype.reset.call(this);
         this.sphere[3].setRotateAngle(this.sphere[1].rotateStart);
         this.sphere[4].setRotateAngle(this.sphere[2].rotateStart);
     }

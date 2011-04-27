@@ -83,7 +83,7 @@ ModelMoon = function(params) {
         this.updateMoon();
     }
     this.setCurrentPlanet = function(node) {
-        ModelMoon.prototype.setCurrentPlanet.call(this,node);
+        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
         this.setMetonYear(this.currentPlanet.metonYear);
         this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
         this.setMetonDays(this.currentPlanet.metonDays);

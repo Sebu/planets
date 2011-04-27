@@ -25,7 +25,7 @@ Model4 = function(params) {
     this.update = function() {
         if(this.showCurve0) this.addCurve(0, this.sphere[0].curve, this.calcCurve(0, this.name + "Planet"), colors["Path"]);
         this.updateHippo();
-        Model4.prototype.update.call(this);
+        BasePlanetModel.prototype.update.call(this);
         
     }
 };

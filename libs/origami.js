@@ -1,7 +1,9 @@
 
 var Ori = Ori || {};
 
-
+/**
+ * @constructor
+ */
 Ori.Canvas = function() {
         if(Modernizr.webgl) {
             this.graphics = new THREE.WebGLRenderer({antialias: true});
@@ -19,12 +21,16 @@ Ori.Canvas = function() {
 
 Ori.Canvas.prototype.constructor = Ori.Renderer;
 
-
+/**
+ * @constructor
+ */
 Ori.Effect = function(data) {
   this.data = data;
 }
 
-
+/**
+ * @constructor
+ */
 Ori.Audio = function() {
 //  this.data = new Audio("file:///media/daten/music2/%5BThe%20Knoxsville%20Music%5D%20Of%202010/65%20All%20To%20All.mp3"); 
   this.data = new Audio("http://www.pacdv.com/sounds/interface_sound_effects/sound37.mp3"); 
@@ -38,7 +44,10 @@ Ori.Audio.prototype = {
 Ori.audio = new Ori.Audio();
 
 Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68 };
- 
+
+/**
+ * @constructor
+ */
 Ori.Input = function() {
     
     this.keymap = {};
@@ -113,17 +122,15 @@ Ori.Input.prototype = {
 Ori.input = new Ori.Input();
 
 
-
+/**
+ * @constructor
+ */
 Ori.App = function() {
-  this.components = [];
 };
 
 Ori.App.prototype.constructor = Ori.App;
 
 Ori.App.prototype = {
-
-  init : function() {},
-
 
   run : function() {
     time = 0;
