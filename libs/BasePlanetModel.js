@@ -150,8 +150,8 @@ var BasePlanetModel = function() {
                 {axisAngle: 38.0, speed: 0, rotateStart: 0 },
                 {axisAngle: 24.0,  speed: 365, rotateStart: 0 },
                 {axisAngle: 90.0, speed: 570, rotateStart: 0 },
-                {axisAngle: 18.0, speed: 0, rotateStart: 0 },
-            ],
+                {axisAngle: 18.0, speed: 0, rotateStart: 0 }
+            ]
         };
 
         $.extend(true, this.currentPlanet, node);
