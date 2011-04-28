@@ -208,12 +208,11 @@ sphereGeo = [
 Planet = function(params) {
     THREE.Object3D.call( this );
 
-    var emit = params.emit || 0.0;
+    //var emit = params.emit || 0.0;
     this.dist = params.dist || 0.0;
     this.beta = params.betaRotate || 0.0;
-    this._scale = params.scale;
-    this.color = params.color || { r: 2.2, g: 2.2, b: 2.9 };  var emit = params.emit || 0.0;
-    dist = params.dist;
+    this._scale = params.scale || 1.0;
+    this.color = params.color || { r: 0.5, g: 0.5, b: 0.5 };  
 
     this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
 
@@ -232,7 +231,7 @@ Planet = function(params) {
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
 //    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
 //    this.mesh.overdraw = true;
-    this.mesh.position.y = dist;
+    this.mesh.position.y = this.dist;
     this.addNode(this.mesh);
 
     this.rotation.x = degToRad(this.beta);
