@@ -83,9 +83,25 @@ html, body {
   right: 10px;
 }
 
-#legendContainer {
-  width: 60px;
+#playbackContainer {
+  z-index: 2;
+  position: absolute;
+  color: white;
+  background-color: rgba(150,150,150,0.2);
   bottom: 10px;
+  width: 100px;
+  height: 100px;
+  right: 50%;
+}
+
+#playback {
+  vertical-align: bottom;
+}
+
+#legendContainer {
+  float: right;
+  width: 60px;
+   bottom: 10px;
   right: 10px;
 }
 

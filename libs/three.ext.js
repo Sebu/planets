@@ -282,7 +282,7 @@ Curve  = function(params) {
     this.geo = new THREE.Geometry();
     this.setPos(params.pos);
 
-    material = new THREE.LineBasicMaterial( { color: rgbToHex(params.color)  } );     
+    material = new THREE.LineBasicMaterial( { linewidth:2, color: rgbToHex(params.color)  } );     
     material.vertexColors = true;
 
     THREE.Line.call(this, this.geo, material);

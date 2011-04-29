@@ -16,10 +16,7 @@ myApp.prototype.init = function(params) {
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
 
-        if (this.canvas.type) {
-            this.domRoot.innerHTML = "";
-            this.domRoot.append(this.canvas.domElement);
-        }
+        this.domRoot.append(this.canvas.domElement);
 
         Ori.input.register(Ori.KEY.A, "LEFT");
         Ori.input.register(Ori.KEY.D, "RIGHT");
@@ -28,7 +25,7 @@ myApp.prototype.init = function(params) {
 
         // TODO : shorten
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);
-        this.camera.init({ eye : { x: 0.0, y: 0.0, z: -17 } });
+        this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -17.0 } });
         this.camera.rotateY(Math.PI + 0.1);
 
 
@@ -84,7 +81,6 @@ myApp.prototype.init = function(params) {
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(domRoot);
 
-        legend = $("<div class='container' id='legendContainer'></div>").appendTo(domRoot);
 
         uiBox.append("<span><select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select></span>");
         UI.optionsFromHash("#viewPresets", model.viewPresets);
@@ -98,13 +94,26 @@ myApp.prototype.init = function(params) {
         uiBox.append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
         UI.optionsFromHash("#planetPreset", planetPresets);
 
+        legend = $("<div class='container' id='legendContainer'></div>").appendTo(domRoot);
+
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
+        uiBox.append("<div id='playback'></div>");
+
+//        $("<div id='playbackContainer'><div id='playback'></div></div>").appendTo(domRoot);
+
+//        $("#playbackContainer").hover(function() {
+//           $("#playback").slideToggle();
+//        });
+        
+//        $("#playback").slideToggle();
+
+        uiBox.append("<div id='view'></div>");
         uiBox.append("<div id='parameters'></div>");
         $("#vis").hide();
 
-        this.setCurrentPlanet("Mercury1");
+        this.setCurrentPlanet(planetPresets["Mercury1"]);
 
     };
 
@@ -209,35 +218,46 @@ myApp.prototype.setView = function(view) {
         model.changeView(model.currentPos);
     };
 
-myApp.prototype.setCurrentPlanet = function(node) {
+myApp.prototype.setCurrentPlanet = function(planet) {
 
         // switch model
-        model = models[planetPresets[node].model];
+        model = models[planet.model];
         this.setCurrentScene(model.root);
-        model.setCurrentPlanet(planetPresets[node]);
+        model.setCurrentPlanet(planet);
         model.reset();
 
         // build up ui
         $("#moonInfoContainer").fadeOut(500);
         $("#moonModel").fadeOut(500);
+
+
+        $("#playback > *").remove();
+        $("#view > *").remove();
         $("#parameters > *").remove();
+
         $("#legendContainer > *").remove();
 
         // create legend
-        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
+//        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
             var color = "rgb(" + colors["S" + i].r * 255 + "," + colors["S" + i].g * 255 + "," + colors["S" + i].b * 255 + ")";
-            $("<div style='float:left;font-weight:bold;color:" + color + "'>Sphere " + (Number(i) + 1) + " </div>").appendTo("#legendContainer");
+            $("<div style='float:left;font-weight:bold;color:" + color + "'> S" + (Number(i) + 1) + " </div>").appendTo("#legendContainer");
+            
         }
 
 
-        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#parameters");
 
-        UI.slider({model: this.camera, id: "Fov", max: 160, step:1, text: "field of view"}).appendTo("#parameters");
 
-        UI.slider({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#parameters");
+        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
 
-        UI.box({id:"vis", text:"Show"}).appendTo("#parameters");
+        UI.slider({model: this.camera, id: "Fov", max: 160, step:1, text: "field of view"}).appendTo("#view");
+
+
+        $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
+        $("#playback").append("<input id='pauseButton' type='button' onclick='model.pause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
+        UI.slider({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+
+        UI.box({id:"vis", text:"Show"}).appendTo("#view");
         for (i in model.sphere) {
             UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#vis");
         }
@@ -374,8 +394,7 @@ myApp.prototype.setCurrentPlanet = function(node) {
 
         fixRange();
 
-        $("#parameters").append("<input type='button' onclick='model.reset();' value='reset'>");
-        $("#parameters").append("<input id='pauseButton' type='button' onclick='model.pause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
+
 
         model.pause();
         $("#capvis,#caprotateStart, #pauseButton").click();
