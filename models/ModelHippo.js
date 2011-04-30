@@ -26,8 +26,7 @@ ModelHippo = function(params) {
     }
 
     this.update = function() {
-//        this.removeCurve(0);
-       if(this.showCurve0) this.addCurve(0, this.curve, this.calcCurve(-1, this.name + "Planet"), colors["Path"]);
+       this.addCurve(0, this.root, this.calcCurve({depth: -1, node: this.planet.mesh}), colors["Path"]);
        BasePlanetModel.prototype.update.call(this);
     }
 

@@ -1,4 +1,24 @@
 
+
+PI_SCALE = 180.0/Math.PI;
+
+degToRad = function(deg) {
+    return (deg/180)*Math.PI;
+}
+
+
+calcAngle = function(pos1, pos2) {
+    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+}
+
+calcAngleRel = function(node1, node2, center) {
+    var pos1 = center.subtract( node1 );
+    var pos2 = center.subtract( node2 );
+    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+}
+
+
+
 var Ori = Ori || {};
 
 /**
@@ -24,16 +44,11 @@ Ori.Canvas.prototype.constructor = Ori.Renderer;
 /**
  * @constructor
  */
-Ori.Effect = function(data) {
-  this.data = data;
-}
-
-/**
- * @constructor
- */
 Ori.Audio = function() {
 //  this.data = new Audio("file:///media/daten/music2/%5BThe%20Knoxsville%20Music%5D%20Of%202010/65%20All%20To%20All.mp3"); 
+  
   this.data = new Audio("http://www.pacdv.com/sounds/interface_sound_effects/sound37.mp3"); 
+  this.data.load();
 };
 
 Ori.Audio.prototype.constructor = Ori.Audio;
@@ -42,6 +57,18 @@ Ori.Audio.prototype = {
 };
 
 Ori.audio = new Ori.Audio();
+
+Ori.loadContent = function(uri) {
+  var ext = uri.split('.').pop();
+  switch (ext) {
+    case "mp3":
+      var content = new Audio(uri); 
+      content.load();
+      break;
+  }
+
+  return content;
+}
 
 Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68 };
 

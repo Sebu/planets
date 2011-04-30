@@ -25,14 +25,8 @@ THREE.Object3D.prototype.currentPos = function() {
 }
 
 Node = THREE.Object3D;
-Scale = THREE.Object3D;
-Sphere = THREE.Object3D;
 
-Material = function(params) { return new THREE.Object3D() };
 
-degToRad = function(deg) {
-    return (deg/180)*Math.PI;
-}
 
 rgbToHex = function(color) {
  return ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
@@ -422,7 +416,7 @@ Spherical = function Spherical(params) {
     nodePool[this.inner_id+"spole"] = this.visuals["spole"];
 
     this.progressArc = new Circle({ angle : 40 });
-    this.visuals["rotationarc"] = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color  } ));
+    this.visuals["rotationarc"] = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color } ));
     this.visuals["rotationarc"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals["rotationarc"].rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals["rotationarc"]);

@@ -1,18 +1,6 @@
 
 
 
-PI_SCALE = 180.0/Math.PI;
-
-
-calcAngle = function(pos1, pos2) {
-    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
-}
-
-calcAngleRel = function(node1, node2, center) {
-    pos1 = center.subtract( node1 );
-    pos2 = center.subtract( node2 );
-    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
-}
 
 
 /**
@@ -20,35 +8,22 @@ calcAngleRel = function(node1, node2, center) {
  */
 BasePlanetModel = function() {
 
-    // model specific moon
-    this.sunYear = 365.0;
-
-
-    // CONTROLS this.lastX = 0;
-    this.lastY = 0;
-    this.dragging = false;
 
     this.currentPlanet = {};
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
 
+
+    // model specific moon
+    this.sunYear = 365.0;
     this.days = 0;
     this.lastAngle = 0;
     this.lastPerp = 0
     this.eclipticAngle2 = 0;
-    this.speed = 0;
+
     this.fps = 30.0;
-
     this.setSpeed(60);
-
-    this.posAngle = 10.0;
-    this.betaRotate = 0;
-
-    this.showCurve0 = true;
-    this.showCurve1 = true;
-
     this.running=true;
-
 
     
 };
@@ -104,12 +79,6 @@ BasePlanetModel.prototype = {
         this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], inner_id: this.name+"Earth"})
         this.root.addNode(this.earth);
 
-        this.root.addNode(this.curve = new Material({
-            baseColor:      { r: 0.0, g: 0.0, b: 0.0 },
-            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-            emit: 1.0, specular: 0.0, shine: 1.0
-        }));
-
         this.sphere[0] = new Spherical({inner_id: this.name+"S0", scale: 9, axisAngle: 33.0, speed: 0.0, color: colors["S0"]})
         this.root.addNode(this.sphere[0]);
 
@@ -136,12 +105,7 @@ BasePlanetModel.prototype = {
 
         this.sphere[0].visuals["npole"].setBaseColor({r:1.0,g:1.0,b:1.0});
 
-        this.sphere[1].addNode(this.starsNode =  new Material({
-            baseColor:      { r: 1.0, g: 1.0, b: 1.0 },
-            specularColor:  { r: 0.0, g: 0.0, b: 0.0 },
-            emit: 1.0, specular: 0.0, shine: 1.0
-        }));
-        this.starsNode.addNode( this.stars = new Cloud({count:50}) );
+        this.sphere[1].addNode( this.stars = new Cloud({count:50}) );
         
         this["showSphere0"] = function(state) {
             this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
@@ -200,26 +164,27 @@ BasePlanetModel.prototype = {
     },
 
 
-
-    pause : function() {
+    setRunning : function(state) {
+        this.running=state;
+    },
+    tooglePause : function() {
         this.running=!this.running;
-
     },
 
 
     update : function() {
 
         if(this.running) {
-            earthPos = posSyl(this.name+"Earth");
-            polePos = posSyl(this.name+"S1npole");
-            upVec = earthPos.subtract(polePos);
-            planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
-            planetPos = posSyl(this.name+"Planet").subtract(earthPos);
-            sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
-            sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            var earthPos = posSyl(this.name+"Earth");
+            var polePos = posSyl(this.name+"S1npole");
+            var upVec = earthPos.subtract(polePos);
+            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
+            var planetPos = posSyl(this.name+"Planet").subtract(earthPos);
+            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
+            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
 
-            equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
-            equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            var equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
+            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
             if (this.sun.getEnabled() && this.sunAngle<=15)
@@ -274,8 +239,8 @@ BasePlanetModel.prototype = {
     },
 
     changeView : function(node) {
-        if (node == "Free") pos = { x: 0.0, y: 0.0, z: -19 };
-        else pos = getNodePos(this.name+node);
+        if (node == "Free") var pos = { x: 0.0, y: 0.0, z: -19 };
+        else var pos = getNodePos(this.name+node);
 
         this.earth.setEnabled(true);
         this.planet.setEnabled(true);
@@ -307,11 +272,11 @@ BasePlanetModel.prototype = {
         curvePos = [];
         oldAngle = [];
         oldRotate = [];
-        step = 0;
-        start = params.depth;
-        node = params.node;
-        maxSegments = params.segments || 80; //-Math.round(20/step);
-        j = params.start || -20;
+        var step = 0;
+        var start = params.depth;
+        var node = params.node;
+        var maxSegments = params.segments || 80; //-Math.round(20/step);
+        var j = params.start || -20;
       
         // save axis
         for (var i = 0; i <= start; i++) {
@@ -329,10 +294,10 @@ BasePlanetModel.prototype = {
         
         for (; j < maxSegments; j++) {
             for (var i = start + 1; i < this.sphere.length; i++) {
-                angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
+                var angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
                 this.sphere[i].anchor.rotation.y = degToRad(angle);
             }
-            pos = node.currentPos();
+            var pos = node.currentPos();
             curvePos.push(pos);
         }
         // restore axis

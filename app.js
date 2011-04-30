@@ -54,7 +54,9 @@ myApp.prototype.init = function(params) {
         eastLabel = new UI.Label({text: "East"});
         westLabel = new UI.Label({text: "West"});
 
-//    Ori.audio.data.play();
+        //"http://www.pacdv.com/sounds/interface_sound_effects/sound37.mp3"
+        var sound = Ori.loadContent("test.mp3");
+//        sound.play();
 
         domRoot = $("#mainBox");
 
@@ -91,7 +93,7 @@ myApp.prototype.init = function(params) {
         $("#viewPresets option[value='World']").attr('selected', true);
 
 
-        uiBox.append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
+        uiBox.append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(planetPresets[this.options[this.selectedIndex].value]);'>View</select></span>");
         UI.optionsFromHash("#planetPreset", planetPresets);
 
         legend = $("<div class='container' id='legendContainer'></div>").appendTo(domRoot);
@@ -119,7 +121,7 @@ myApp.prototype.init = function(params) {
 
 
 myApp.prototype.newScene = function() {
-        scene = new THREE.Scene();
+        var scene = new THREE.Scene();
         scene.addLight(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
@@ -169,6 +171,7 @@ myApp.prototype.update = function() {
 
 
         // Labels
+//*/
         if (model.currentPos == "Earth") {
             northLabel.setPosition(getNodePosCanvas("North"));
             southLabel.setPosition(getNodePosCanvas("South"));
@@ -181,6 +184,7 @@ myApp.prototype.update = function() {
         }
         planetLabel.setPosition(getNodePosCanvas(model.name + "Planet"));
         if (model.sun.getEnabled()) sunLabel.setPosition(getNodePosCanvas(model.name + "Sun"));
+//*/        
     };
 
 
@@ -193,8 +197,8 @@ myApp.prototype.draw = function() {
     };
 
 myApp.prototype.resize = function() {
-        width = window.innerWidth;
-        height = window.innerHeight;
+        var width = window.innerWidth;
+        var height = window.innerHeight;
         this.camera.setAspect(width / height);
         this.canvas.setSize(width, height);
     };
@@ -222,6 +226,8 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
         // switch model
         model = models[planet.model];
+        
+        
         this.setCurrentScene(model.root);
         model.setCurrentPlanet(planet);
         model.reset();
@@ -254,7 +260,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
 
         $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
-        $("#playback").append("<input id='pauseButton' type='button' onclick='model.pause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
+        $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
         UI.slider({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
@@ -396,7 +402,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
 
 
-        model.pause();
+        model.tooglePause();
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed  input").change();
         $("#AxisAngle0 input").change();
