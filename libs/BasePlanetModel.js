@@ -111,7 +111,7 @@ BasePlanetModel.prototype = {
             this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
         }
 
-        this.sphere[0].curve.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 24.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}}));
+        this.sphere[1].addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}}));
         this.systemSun[0].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this["setSunSpeed"] = new Function("value", "this.systemSun[0].setSpeed(value);");
         this["getSunSpeed"] = new Function("return this.systemSun[0].getSpeed();");

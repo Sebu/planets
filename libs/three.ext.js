@@ -375,14 +375,14 @@ Spherical = function Spherical(params) {
 
 
     this.material = new THREE.LineBasicMaterial( {  color: color } );
-    materialArc = this.material;
+    this.materialArc =  new THREE.LineBasicMaterial( {  color: color } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
-    this.visuals["arc1"] = this.arc1 = new THREE.Line(this.arcangle21, materialArc );
+    this.visuals["arc1"] = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
     this.visuals["arc1"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.addNode(this.visuals["arc1"]);
 
-    this.visuals["arc2"] = new THREE.Line(this.arcangle21, materialArc );
+    this.visuals["arc2"] = new THREE.Line(this.arcangle21, this.materialArc );
     this.visuals["arc2"].scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
     this.addNode(this.visuals["arc2"]);
 

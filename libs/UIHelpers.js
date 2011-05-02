@@ -278,6 +278,22 @@ var UI = {
         return ele;
     },
 
+    text : function(params) {
+        var model = params.model;
+        var id = params.id;
+        var tooltip = params.tip || "";
+        var text = params.text || params.id;
+        var min = params.min || 0;
+        var max = params.max || 100;
+        var step = params.step || 1;
+        var value = params.value ||  model["get"+id]();
+        var change = params.change || function()  { model["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
+
+        ele =  $( "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range'/>" );
+        $("input",ele).bind("change",change);
+        return ele;
+    },
+
     slider : function(params) {
         var model = params.model;
         var id = params.id;

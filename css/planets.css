@@ -38,7 +38,7 @@ html, body {
 	border:1px  #ddd;
     background: #333;
     color: white;
-	float:left;
+
 	font-size:12px;
 	margin:1;
 	padding:1;
@@ -77,6 +77,10 @@ html, body {
   left: 10px;
 }
 
+#view {
+  width: 100%;
+}
+
 #infoContainer {
   width: 150px;
   top: 10px;
@@ -95,8 +99,8 @@ html, body {
 }
 
 #playback {
-  vertical-align: bottom;
 }
+
 
 #legendContainer {
   float: right;

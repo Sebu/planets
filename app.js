@@ -84,11 +84,7 @@ myApp.prototype.init = function(params) {
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(domRoot);
 
 
-        uiBox.append("<span><select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select></span>");
-        UI.optionsFromHash("#viewPresets", model.viewPresets);
 
-        uiBox.append("<span><select title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();  '></select></span>");
-        UI.optionsFromHash("#longitudePresets", latitudePresets);
 
         $("#viewPresets option[value='World']").attr('selected', true);
 
@@ -101,7 +97,11 @@ myApp.prototype.init = function(params) {
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
-        uiBox.append("<div id='playback'></div>");
+
+
+        uiBox.append("<div id='view'></div>");
+
+
 
 //        $("<div id='playbackContainer'><div id='playback'></div></div>").appendTo(domRoot);
 
@@ -111,8 +111,11 @@ myApp.prototype.init = function(params) {
         
 //        $("#playback").slideToggle();
 
-        uiBox.append("<div id='view'></div>");
+
         uiBox.append("<div id='parameters'></div>");
+
+        uiBox.append("<div id='playback'></div>");
+
         $("#vis").hide();
 
         this.setCurrentPlanet(planetPresets["Mercury1"]);
@@ -251,17 +254,19 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             
         }
 
+        $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#view");
+        UI.optionsFromHash("#viewPresets", model.viewPresets);
 
+        $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();'></select>").appendTo("#view");
+        UI.optionsFromHash("#longitudePresets", latitudePresets);
+       UI.text({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
 
-
-        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
-
-        UI.slider({model: this.camera, id: "Fov", max: 160, step:1, text: "field of view"}).appendTo("#view");
+        UI.text({model: this.camera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#view");
 
 
         $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
         $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
-        UI.slider({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+        UI.text({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
         for (i in model.sphere) {
@@ -270,6 +275,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
         UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
+       
 
 
         if (model.name == "ModelMoon" || model.name == "ModelMoonCompare") {
@@ -336,6 +342,11 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            $("#AxisAngle1").hover(function (e) {
+              model.sphere[1].materialArc.linewidth = 10;
+            }, function (e) {
+              model.sphere[1].materialArc.linewidth = 1;});
+            
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
