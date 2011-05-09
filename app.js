@@ -1,34 +1,42 @@
+
+
+
+// see libs/origami.js for Ori namespace
 myApp = function(params) {
     Ori.App.call(this);
     this.init(params);
 };
-
 myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
+
 myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
-
         this.currentScene = null;
         this.scenes = [];
 
+        // create canvas (webgl if possible)
         this.canvas = new Ori.Canvas({});
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
 
+        // append to DOM
         this.domRoot.append(this.canvas.domElement);
 
+        // register input
         Ori.input.register(Ori.KEY.A, "LEFT");
         Ori.input.register(Ori.KEY.D, "RIGHT");
         Ori.input.register(Ori.KEY.S, "DOWN");
         Ori.input.register(Ori.KEY.W, "UP");
 
+        // setup camera
         // TODO : shorten
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -17.0 } });
         this.camera.rotateY(Math.PI + 0.1);
 
 
+        // create models
         models = {}; //new Object;
         models["Model4"] = new Model4({renderer: this});
         models["ModelMoonCompare"] = new ModelMoonCompare({renderer: this});
@@ -38,29 +46,25 @@ myApp.prototype.init = function(params) {
         models["ModelYavetz"] = new ModelYavetz({renderer: this});
         models["Model5"] = new Model5({renderer: this});
         models["ModelMoon"] = new ModelMoon({renderer: this});
-
+        // set start model
         model = models["Model4"];
 
 
+        // setup moving labels        
         planetLabel = new UI.Label({text: "Planet"});
         sunLabel = new UI.Label({text: "Sun"});
-
         equinoxLabel = new UI.Label({text: "Equinox"});
         npoleLabel = new UI.Label({text: "North pole"});
         spoleLabel = new UI.Label({text: "South pole"});
-
         northLabel = new UI.Label({text: "North"});
         southLabel = new UI.Label({text: "South"});
         eastLabel = new UI.Label({text: "East"});
         westLabel = new UI.Label({text: "West"});
 
-        //"http://www.pacdv.com/sounds/interface_sound_effects/sound37.mp3"
-        var sound = Ori.loadContent("test.mp3");
-//        sound.play();
-
-        domRoot = $("#mainBox");
 
 
+        // create some elements
+        // TODO: more segmentation
         $("<div class='container' id='infoContainer'>\
             <div>angle planet/sun <span style='float:right;' id='sunAngle'>0</span></div>\
             <div>longitude <span style='float:right; 'id='eclipticAngle'>0</span></div>\
@@ -79,50 +83,26 @@ myApp.prototype.init = function(params) {
             <div>days per draconitic month</div>\
             <div id='draconiticDaysPerMonth'>0</div>\
             </div>\
-            </div>").appendTo(domRoot);
+            </div>").appendTo(this.domRoot);
 
-        uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(domRoot);
-
-
-
-
+        uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
-
-
         uiBox.append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(planetPresets[this.options[this.selectedIndex].value]);'>View</select></span>");
         UI.optionsFromHash("#planetPreset", planetPresets);
-
-        legend = $("<div class='container' id='legendContainer'></div>").appendTo(domRoot);
-
+        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
-
-
         uiBox.append("<div id='view'></div>");
-
-
-
-//        $("<div id='playbackContainer'><div id='playback'></div></div>").appendTo(domRoot);
-
-//        $("#playbackContainer").hover(function() {
-//           $("#playback").slideToggle();
-//        });
-        
-//        $("#playback").slideToggle();
-
-
         uiBox.append("<div id='parameters'></div>");
-
         uiBox.append("<div id='playback'></div>");
-
         $("#vis").hide();
 
         this.setCurrentPlanet(planetPresets["Mercury1"]);
 
     };
 
-
+// get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
         scene.addLight(new THREE.AmbientLight(0xFFFFFF));
@@ -131,21 +111,22 @@ myApp.prototype.newScene = function() {
     };
 
 myApp.prototype.setCurrentScene = function(scene) {
-
-        //this.currentScene.enabled = false;
+//        this.currentScene.enabled = false;
         this.currentScene = scene;
         this.currentScene.enabled = true;
         this.components = [];
         this.components.push(this.currentScene);
     };
 
+
+// update loop
 myApp.prototype.update = function() {
 
+        // handle input     
         if (Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
         if (Ori.input.isDown("RIGHT")) this.camera.translateNew(-0.6, 0, 0);
         if (Ori.input.isDown("DOWN")) this.camera.translateNew(0, 0, -0.6);
         if (Ori.input.isDown("UP")) this.camera.translateNew(0, 0, 0.6);
-
         if (Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
         if (Ori.input.mouse.b1) {
             x = Ori.input.mouse.x;
@@ -164,8 +145,11 @@ myApp.prototype.update = function() {
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }
+        
+        // update model
         model.update();
 
+        // infoBox data
         $("#sunAngle").text(Math.round(model.sunAngle));
         $("#eclipticAngle").text(Math.round(model.eclipticAngle));
         $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2));
@@ -173,7 +157,7 @@ myApp.prototype.update = function() {
         $("#days").text(Math.round(model.days));
 
 
-        // Labels
+        // update Label position/visibility
 //*/
         if (model.currentPos == "Earth") {
             northLabel.setPosition(getNodePosCanvas("North"));
@@ -225,12 +209,12 @@ myApp.prototype.setView = function(view) {
         model.changeView(model.currentPos);
     };
 
+
+// change planet model and create the UI ELEMENTS + add to DOM
 myApp.prototype.setCurrentPlanet = function(planet) {
 
         // switch model
         model = models[planet.model];
-        
-        
         this.setCurrentScene(model.root);
         model.setCurrentPlanet(planet);
         model.reset();
@@ -239,11 +223,10 @@ myApp.prototype.setCurrentPlanet = function(planet) {
         $("#moonInfoContainer").fadeOut(500);
         $("#moonModel").fadeOut(500);
 
-
+        // clear old ui elements
         $("#playback > *").remove();
         $("#view > *").remove();
         $("#parameters > *").remove();
-
         $("#legendContainer > *").remove();
 
         // create legend
@@ -254,30 +237,32 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             
         }
 
+        // view div
         $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#view");
         UI.optionsFromHash("#viewPresets", model.viewPresets);
 
         $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();'></select>").appendTo("#view");
         UI.optionsFromHash("#longitudePresets", latitudePresets);
-       UI.text({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
-
-        UI.text({model: this.camera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#view");
-
-
-        $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
-        $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
-        UI.text({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
-
+        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
+        // view sub box box 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
+        UI.slider({model: this.camera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
         for (i in model.sphere) {
             UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#vis");
         }
         UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
-       
+
+        // playback div       
+        $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
+        $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
+        UI.slider({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 
+
+        // create the right sliders for each model
+        // TODO: tooltips and min/max values for each model and preset
         if (model.name == "ModelMoon" || model.name == "ModelMoonCompare") {
             UI.box({id:"moon", text:"Moon year month day cycle"}).appendTo("#parameters");
             UI.slider({model:model, id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
@@ -313,9 +298,6 @@ myApp.prototype.setCurrentPlanet = function(planet) {
                 $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });
 
             });
-//            $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
-//            $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });
-
             $("#MetonYear > input").change();
 
         } else if (model.name == "ModelYavetz") {
@@ -409,26 +391,23 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
         }
 
+        // fix range sliders in Firefox etc.
+        // TODO: don't use range input
         fixRange();
-
-
 
         model.tooglePause();
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed  input").change();
         $("#AxisAngle0 input").change();
 
-//        $("#rotateStart,#vis").hide();
     };
 
 
 
 // setup site
-//$(document).ready(function() {
+// TODO: maybe move to index.html
+app = new myApp({domRoot: $("#mainBox")});
+window.onresize = function(e) { app.resize(e) };
+app.run();
 
-    app = new myApp({domRoot: $("#mainBox")});
-    window.onresize = function(e) { app.resize(e) };
-    app.run();
-
-//});
 

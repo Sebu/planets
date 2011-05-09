@@ -2,7 +2,6 @@
 
 
 
-
 /**
  * @constructor
  */
@@ -12,7 +11,6 @@ BasePlanetModel = function() {
     this.currentPlanet = {};
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
-
 
     // model specific moon
     this.sunYear = 365.0;
@@ -175,16 +173,16 @@ BasePlanetModel.prototype = {
     update : function() {
 
         if(this.running) {
-            var earthPos = posSyl(this.name+"Earth");
-            var polePos = posSyl(this.name+"S1npole");
-            var upVec = earthPos.subtract(polePos);
-            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
-            var planetPos = posSyl(this.name+"Planet").subtract(earthPos);
-            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
-            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            earthPos = posSyl(this.name+"Earth");
+            polePos = posSyl(this.name+"S1npole");
+            upVec = earthPos.subtract(polePos);
+            planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
+            planetPos = posSyl(this.name+"Planet").subtract(earthPos);
+            sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
+            sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
 
-            var equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
-            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
+            equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
             if (this.sun.getEnabled() && this.sunAngle<=15)
@@ -230,17 +228,21 @@ BasePlanetModel.prototype = {
 
     reset : function () {
         if (this.sphere.length == 0) return;
-        for (var i = 0; i < this.sphere.length; i++) {
+        for (i = 0; i < this.sphere.length; i++) {
             this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
         }
 
         this.systemSun[0].setRotateAngle(0);
+        this.days = 0;
+        this.lastAngle = 0;
+        this.lastPerp = 0
+        this.eclipticAngle2 = 0;        
 
     },
 
     changeView : function(node) {
-        if (node == "Free") var pos = { x: 0.0, y: 0.0, z: -19 };
-        else var pos = getNodePos(this.name+node);
+        if (node == "Free") pos = { x: 0.0, y: 0.0, z: -19 };
+        else pos = getNodePos(this.name+node);
 
         this.earth.setEnabled(true);
         this.planet.setEnabled(true);
@@ -272,40 +274,40 @@ BasePlanetModel.prototype = {
         curvePos = [];
         oldAngle = [];
         oldRotate = [];
-        var step = 0;
-        var start = params.depth;
-        var node = params.node;
-        var maxSegments = params.segments || 80; //-Math.round(20/step);
-        var j = params.start || -20;
+        step = 0;
+        start = params.depth;
+        node = params.node;
+        maxSegments = params.segments || 80; //-Math.round(20/step);
+        j = params.start || -20;
       
         // save axis
-        for (var i = 0; i <= start; i++) {
+        for ( i = 0; i <= start; i++) {
             oldAngle[i] = this.sphere[i].getAxisAngle();
             oldRotate[i] = this.sphere[i].getRotateAngle();
             this.sphere[i].setAxisAngle(0.0);
             this.sphere[i].setRotateAngle(0.0);
         }
 
-        for (var i = start + 1; i < this.sphere.length; i++) {
+        for (i = start + 1; i < this.sphere.length; i++) {
             oldRotate[i] = this.sphere[i].getRotateAngle();
             step += Math.abs(this.sphere[i].getStep());
         }
         step = 10.0/step;
         
         for (; j < maxSegments; j++) {
-            for (var i = start + 1; i < this.sphere.length; i++) {
-                var angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
+            for (i = start + 1; i < this.sphere.length; i++) {
+                angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
                 this.sphere[i].anchor.rotation.y = degToRad(angle);
             }
-            var pos = node.currentPos();
+            pos = node.currentPos();
             curvePos.push(pos);
         }
         // restore axis
-        for (var i = 0; i <= start; i++)
+        for (i = 0; i <= start; i++)
             this.sphere[i].setAxisAngle(oldAngle[i]);
 
         // restore rotation
-        for (var i = 0; i < this.sphere.length; i++)
+        for (i = 0; i < this.sphere.length; i++)
             this.sphere[i].setRotateAngle(oldRotate[i]);
 
 

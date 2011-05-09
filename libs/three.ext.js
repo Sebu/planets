@@ -1,5 +1,22 @@
 
 
+PI_SCALE = 180.0/Math.PI;
+
+degToRad = function(deg) {
+    return (deg/180)*Math.PI;
+}
+
+
+calcAngle = function(pos1, pos2) {
+    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+}
+
+calcAngleRel = function(node1, node2, center) {
+    var pos1 = center.subtract( node1 );
+    var pos2 = center.subtract( node2 );
+    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+}
+
 
 nodePool = {};
 
@@ -210,21 +227,20 @@ Planet = function(params) {
 
     this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
 
+//    this.mesh = new THREE.LOD();
+//    for (i = 0; i < sphereGeo.length; i++ ) {
+//       mesh = new THREE.Mesh( sphereGeo[ i ][ 0 ], this.material );
+//       mesh.scale.set( params.scale, params.scale, params.scale );
+//       mesh.updateMatrix();
+//			 mesh.matrixAutoUpdate = false;
+//       mesh.overdraw = true;
+//			 this.mesh.add( mesh, sphereGeo[ i ][ 1 ] );
+//    }
 
-    this.mesh = new THREE.LOD();
-
-    for (i = 0; i < sphereGeo.length; i++ ) {
-        				mesh = new THREE.Mesh( sphereGeo[ i ][ 0 ], this.material );
-                        mesh.scale.set( params.scale, params.scale, params.scale );
-        				mesh.updateMatrix();
-						mesh.matrixAutoUpdate = false;
-                        mesh.overdraw = true;
-						this.mesh.add( mesh, sphereGeo[ i ][ 1 ] );
-    }
 //    new THREE.MeshBasicMaterial( { color: this.color } )
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
-//    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
-//    this.mesh.overdraw = true;
+    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
+    this.mesh.overdraw = true;
     this.mesh.position.y = this.dist;
     this.addNode(this.mesh);
 
