@@ -83,6 +83,13 @@ Ori.Input.prototype = {
     element.addEventListener('mousemove', this.mouseMove, false);    
   },
   
+  trackTouchOn : function(element) {
+    element.addEventListener("touchstart", this.handleTouch, true);
+    element.addEventListener("touchmove", this.handleTouch, true);
+    element.addEventListener("touchend", this.handleTouch, true);
+    element.addEventListener("touchcancel", this.handleTouch, true);   
+  },
+  
   keyDown : function(e) {
     Ori.input.keymap[e.keyCode] = true;
   },
@@ -126,6 +133,31 @@ Ori.Input.prototype = {
   reset : function() {
     this.mouse.wheel = false;
     this.drag = {x: this.mouse.x , y: this.mouse.y};
+  },
+  handleTouch : function(event) {
+    var touches = event.changedTouches,
+        first = touches[0],
+        type = "";
+         switch(event.type)
+    {
+        case "touchstart": type = "mousedown"; break;
+        case "touchmove":  type="mousemove"; break;        
+        case "touchend":   type="mouseup"; break;
+        default: return;
+    }
+
+             //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+    //           screenX, screenY, clientX, clientY, ctrlKey, 
+    //           altKey, shiftKey, metaKey, button, relatedTarget);
+    
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+                              first.screenX, first.screenY,
+                              first.clientX, first.clientY, false, 
+                              false, false, false, 0/*left*/, null);
+
+    first.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
   }
 
 };
