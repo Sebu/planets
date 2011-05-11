@@ -84,10 +84,10 @@ Ori.Input.prototype = {
   },
   
   trackTouchOn : function(element) {
-    element.addEventListener("touchstart", this.handleTouch, true);
-    element.addEventListener("touchmove", this.handleTouch, true);
-    element.addEventListener("touchend", this.handleTouch, true);
-    element.addEventListener("touchcancel", this.handleTouch, true);   
+    document.addEventListener("touchstart", this.handleTouch, true);
+    document.addEventListener("touchmove", this.handleTouch, true);
+    document.addEventListener("touchend", this.handleTouch, true);
+    document.addEventListener("touchcancel", this.handleTouch, true);   
   },
   
   keyDown : function(e) {

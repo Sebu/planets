@@ -20,7 +20,7 @@ myApp.prototype.init = function(params) {
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
-
+           
         // append to DOM
         this.domRoot.append(this.canvas.domElement);
 
