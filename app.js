@@ -396,6 +396,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
         // TODO: don't use range input
         fixRange();
 
+        // initial update of sliders/state
         model.tooglePause();
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed  input").change();

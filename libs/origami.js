@@ -176,15 +176,20 @@ Ori.App.prototype.constructor = Ori.App;
 
 Ori.App.prototype = {
 
-  mainLoop : function() {
+  loop : function() {
     this.update();
     this.draw();
     Ori.input.reset();
   },
   
   run : function() {
+  
       self = this;
-      setInterval(function() { self.mainLoop(); }, 33);
+      (function requestLoop() {
+        self.loop();
+        requestAnimFrame(requestLoop, this.canvas.domElement);
+      })();   
+//      setInterval(function() { self.mainLoop(); }, 33);
 
 //    for(i=0; i< this.components.length; i++) {
 //      component = components[i];
@@ -194,3 +199,14 @@ Ori.App.prototype = {
   }
 
 };
+
+window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       || 
+              window.webkitRequestAnimationFrame || 
+              window.mozRequestAnimationFrame    || 
+              window.oRequestAnimationFrame      || 
+              window.msRequestAnimationFrame     || 
+              function(/* function */ callback, /* DOMElement */ element){
+                window.setTimeout(callback, 1000 / 60);
+              };
+    })();
