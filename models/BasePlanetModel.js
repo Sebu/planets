@@ -19,7 +19,7 @@ BasePlanetModel = function() {
     this.lastPerp = 0
     this.eclipticAngle2 = 0;
 
-    this.fps = 30.0;
+//    this.fps = 30.0;
     this.setSpeed(60);
     this.running=true;
 
@@ -124,7 +124,7 @@ BasePlanetModel.prototype = {
 
         this.currentPlanet = {
             sunDist: 8,
-            color:colors["Planet"],
+            color: colors["Planet"],
             betaRotate: 90.0,
             sphere: [
                 {axisAngle: 38.0, speed: 0, rotateStart: 0 },
@@ -199,22 +199,22 @@ BasePlanetModel.prototype = {
             this.eclipticAngle2 = this.eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
             this.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
 
+            // dot product angle fix > 90
             if (this.perpAngle<=90)
                 this.eclipticAngle2 = 360-this.eclipticAngle2;
             if (this.perpAngle>90 && this.lastPerp<90)
                 this.lastAngle  -=360;
-            this.eclipticSpeed = (this.eclipticAngle2 - this.lastAngle)*this.fps*(this.speed/this.systemSun[0].getSpeed());
             this.latitude = calcAngle(upVec,planetPos)-90;
-            this.days += (this.systemSun[0].getSpeed()/this.speed)/this.fps;
 
+           
+            this.eclipticSpeed = (this.eclipticAngle2 - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
+            this.days += (this.systemSun[0].getSpeed()/this.speed)*time;
             for (i in model.updateList) {
-                model.updateList[i].updateMovement((365.0/this.fps)/this.speed);
+                model.updateList[i].updateMovement((365.0*time)/this.speed);
             }
 
 
             //TODO: on model change -> events?
-//            sunPos = this.sun.mesh.currentPos();
-//            sunPos = getNodePos(this.name+"Sun");
             this.light.setPos(this.sun.mesh.currentPos());
         }
         if (this.currentPos != "Free") {

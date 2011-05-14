@@ -237,7 +237,6 @@ Moon3: {
     
 Sun: { 
   model: "ModelSun",
-  color: {r:1.0,g:1.0,b:0.0},
   sphere: [
     {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
