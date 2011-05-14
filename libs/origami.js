@@ -218,7 +218,7 @@ Ori.App.prototype = {
       self = this;
       (function requestLoop() {
         self.loop();
-        requestAnimFrame(requestLoop, this.canvas.domElement);
+        requestAnimFrame(requestLoop); //, this.canvas.domElement);
       })();   
 //      setInterval(function() { self.mainLoop(); }, 33);
 
