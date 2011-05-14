@@ -170,7 +170,7 @@ BasePlanetModel.prototype = {
     },
 
 
-    update : function() {
+    update : function(time) {
 
         if(this.running) {
             earthPos = posSyl(this.name+"Earth");

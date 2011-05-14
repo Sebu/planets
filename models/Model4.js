@@ -22,10 +22,10 @@ Model4 = function(params) {
         this.addCurve(1, this.sphere[1].curve, this.calcCurve({depth: 1, node: this.planet.mesh}), colors["Hippo"]);
 		}
 		
-    this.update = function() {
+    this.update = function(time) {
         this.addCurve(0, this.sphere[0].curve, this.calcCurve({depth: 0, node: this.planet.mesh}), colors["Path"]);
         this.updateHippo();
-        BasePlanetModel.prototype.update.call(this);
+        BasePlanetModel.prototype.update.call(this, time);
         
     }
 };

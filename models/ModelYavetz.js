@@ -44,10 +44,10 @@ ModelYavetz = function(params) {
       this.setBeta(this.currentPlanet.betaRotate);
     }
 
-    this.update = function() {
+    this.update = function(time) {
         this.addCurve(0, this.sphere[0].curve, this.calcCurve({depth: 0, node: this.planet.mesh}), colors["Path"]);
         this.addCurve(1, this.sphere[1].curve, this.calcCurve({depth: 1, node: this.planet.mesh}), colors["Hippo"]);
-        BasePlanetModel.prototype.update.call(this);
+        BasePlanetModel.prototype.update.call(this, time);
     }
 };
 

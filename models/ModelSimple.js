@@ -21,9 +21,9 @@ ModelSimple = function(params) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
 
-    this.update = function() {
+    this.update = function(time) {
         this.addCurve(0, this.root, this.calcCurve({depth: -1, node: this.planet.mesh}), colors["Path"]);
-        BasePlanetModel.prototype.update.call(this);
+        BasePlanetModel.prototype.update.call(this, time);
     }
 
 };

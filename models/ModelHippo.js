@@ -25,9 +25,9 @@ ModelHippo = function(params) {
         this.sphere[1].setSpeed(-speed);
     }
 
-    this.update = function() {
+    this.update = function(time) {
        this.addCurve(0, this.root, this.calcCurve({depth: -1, node: this.planet.mesh}), colors["Path"]);
-       BasePlanetModel.prototype.update.call(this);
+       BasePlanetModel.prototype.update.call(this, time);
     }
 
 };

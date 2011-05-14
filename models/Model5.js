@@ -50,10 +50,10 @@ Model5 = function(params) {
         this.sphere[4].setStep(gamma);
     }
 
-    this.update = function() {
+    this.update = function(time) {
         this.addCurve(0, this.sphere[0].curve, this.calcCurve({depth: 0, node: this.planet.mesh}), colors["Path"]);
         //this.addCurve(1, this.sphere[3].curve, this.calcCurve(2, this.name + "Planet"), colors["Hippo"]);
-        BasePlanetModel.prototype.update.call(this);
+        BasePlanetModel.prototype.update.call(this, time);
     }
 
 

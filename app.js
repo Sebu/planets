@@ -50,6 +50,8 @@ myApp.prototype.init = function(params) {
         // set start model
         model = models["Model4"];
 
+        console.log(this.wurst);
+
 
         // setup moving labels        
         planetLabel = new UI.Label({text: "Planet"});
@@ -121,7 +123,7 @@ myApp.prototype.setCurrentScene = function(scene) {
 
 
 // update loop
-myApp.prototype.update = function() {
+myApp.prototype.update = function(time) {
 
         // handle input     
         if (Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
@@ -132,9 +134,9 @@ myApp.prototype.update = function() {
         if (Ori.input.mouse.b1) {
             x = Ori.input.mouse.x;
             y = Ori.input.mouse.y;
-            pitch = (y - Ori.input.drag.y) * 0.005;
+            pitch = (y - Ori.input.drag.y) * 0.2 * time;
 
-            yaw = (x - Ori.input.drag.x) * -0.005;
+            yaw = (x - Ori.input.drag.x) * -0.2 * time;
             if (model.currentPos == "Earth") {
                 this.camera.rotateY(yaw);
             } else {
@@ -148,7 +150,7 @@ myApp.prototype.update = function() {
         }
         
         // update model
-        model.update();
+        model.update(time);
 
         // infoBox data
         $("#sunAngle").text(Math.round(model.sunAngle));
@@ -176,7 +178,7 @@ myApp.prototype.update = function() {
     };
 
 
-myApp.prototype.draw = function() {
+myApp.prototype.draw = function(time) {
         this.canvas.clear();
         for (i in this.components) {
             component = this.components[i];

@@ -56,6 +56,31 @@ Ori.loadContent = function(uri) {
 
 Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68 };
 
+
+/**
+ * @constructor
+ */
+Ori.Timer = function() {
+  this.time = 0;
+  this.maxStep = 0.05;
+  this.lastTime = 0;
+   
+};
+
+Ori.Timer.prototype.constructor = Ori.Timer;
+
+Ori.Timer.prototype.tick = function() {
+  var currentTime = Date.now();
+  var deltaTmp = (currentTime - this.lastTime) / 1000;
+  this.lastTime = currentTime;
+
+  var delta = Math.min(deltaTmp, this.maxStep);
+  this.time += delta;
+  return delta;
+};
+
+
+
 /**
  * @constructor
  */
@@ -170,6 +195,7 @@ Ori.input = new Ori.Input();
  */
 Ori.App = function() {
   this.fps = 30;
+  this.timer = new Ori.Timer();
 };
 
 Ori.App.prototype.constructor = Ori.App;
@@ -177,9 +203,14 @@ Ori.App.prototype.constructor = Ori.App;
 Ori.App.prototype = {
 
   loop : function() {
-    this.update();
-    this.draw();
+    var time = this.timer.tick();
+    this.update(time);
+    this.draw(time);
     Ori.input.reset();
+  },
+  
+  get wurst() {
+    return "wurst";
   },
   
   run : function() {
