@@ -206,7 +206,6 @@ BasePlanetModel.prototype = {
                 this.lastAngle  -=360;
             this.latitude = calcAngle(upVec,planetPos)-90;
 
-           
             this.eclipticSpeed = (this.eclipticAngle2 - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
             this.days += (this.systemSun[0].getSpeed()/this.speed)*time;
             for (i in model.updateList) {

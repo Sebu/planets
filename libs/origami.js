@@ -194,7 +194,9 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
-  this.fps = 30;
+  this.fps = 60;
+  this.targetTime = 1/this.fps;
+  this.elapsedTime = 0;
   this.timer = new Ori.Timer();
 };
 
@@ -204,18 +206,19 @@ Ori.App.prototype = {
 
   loop : function() {
     var time = this.timer.tick();
-    this.update(time);
-    this.draw(time);
+    this.elapsedTime += time;
+    if(this.elapsedTime >= this.targetTime) {
+      this.update(this.elapsedTime);
+      this.draw(this.elapsedTime);
+      this.elapsedTime = 0;
+    }
     Ori.input.reset();
   },
   
-  get wurst() {
-    return "wurst";
-  },
-  
+ 
   run : function() {
   
-      self = this;
+      var self = this;
       (function requestLoop() {
         self.loop();
         requestAnimFrame(requestLoop); //, this.canvas.domElement);
