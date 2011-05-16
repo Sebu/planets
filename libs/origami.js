@@ -207,11 +207,11 @@ Ori.App.prototype = {
   loop : function() {
     var time = this.timer.tick();
     this.elapsedTime += time;
-    if(this.elapsedTime >= this.targetTime) {
-      this.update(this.elapsedTime);
-      this.draw(this.elapsedTime);
-      this.elapsedTime = 0;
-    }
+//    if(this.elapsedTime >= this.targetTime) {
+      this.update(time);
+      this.draw(time);
+//      this.elapsedTime = 0;
+//    }
     Ori.input.reset();
   },
   
