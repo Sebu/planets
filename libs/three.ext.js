@@ -37,7 +37,7 @@ THREE.Object3D.prototype.currentMatrixWorld = function() {
 }
 
 THREE.Object3D.prototype.currentPos = function() {
-    pos = this.currentMatrixWorld();
+    var pos = this.currentMatrixWorld();
     return {x: pos.n14, y: pos.n24, z: pos.n34};
 }
 
@@ -57,10 +57,10 @@ THREE.Camera.prototype.setAspect = function(aspect) {
 
 THREE.Camera.prototype.rotateTarget = function(target) {
 
-    dx = target.x - this._lookX;
-    dy = target.y - this._lookY;
-    dz = target.z - this._lookZ;
-    dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+    var dx = target.x - this._lookX;
+    var dy = target.y - this._lookY;
+    var dz = target.z - this._lookZ;
+    var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
     // move position
     this.position.x += dx;
@@ -133,7 +133,7 @@ THREE.Camera.prototype.translateNew = function(x, y, z) {
 }
 
 THREE.Camera.prototype.rotate = function(angle, axis) {
-    m = Matrix.Rotation(angle, axis);
+    var m = Matrix.Rotation(angle, axis);
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.up);
@@ -142,7 +142,7 @@ THREE.Camera.prototype.rotate = function(angle, axis) {
 
 
 THREE.Camera.prototype.rotateX = function(angle) {
-    m = Matrix.Rotation(angle, $V([1,0,0]));
+    var m = Matrix.Rotation(angle, $V([1,0,0]));
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.upVec);
@@ -150,7 +150,7 @@ THREE.Camera.prototype.rotateX = function(angle) {
 }
 
 THREE.Camera.prototype.rotateY = function(angle) {
-    m = Matrix.Rotation(angle, $V([0,1,0]));
+    var m = Matrix.Rotation(angle, $V([0,1,0]));
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.upVec);
@@ -159,14 +159,14 @@ THREE.Camera.prototype.rotateY = function(angle) {
 
 
 THREE.Camera.prototype.rotateRight = function(angle) {
-    m = Matrix.Rotation(angle, this.right);
+    var m = Matrix.Rotation(angle, this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.upVec);
     this.updateNew();
 }
 
 THREE.Camera.prototype.rotateUp = function(angle) {
-    m = Matrix.Rotation(angle, this.upVec);
+    var m = Matrix.Rotation(angle, this.upVec);
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.updateNew();
@@ -214,7 +214,7 @@ sphereGeo = [
 
 ];
 
-
+planetGeo = new THREE.Sphere( 1 , 10, 10 );
 
 Planet = function(params) {
     THREE.Object3D.call( this );
@@ -239,7 +239,9 @@ Planet = function(params) {
 
 //    new THREE.MeshBasicMaterial( { color: this.color } )
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
-    this.mesh = new THREE.Mesh(new THREE.Sphere( params.scale, 10, 10 ), this.material);
+    //params.scale
+    this.mesh = new THREE.Mesh(planetGeo, this.material);
+    this.mesh.scale.set( params.scale, params.scale, params.scale );
     this.mesh.overdraw = true;
     this.mesh.position.y = this.dist;
     this.addNode(this.mesh);
@@ -293,7 +295,7 @@ Curve  = function(params) {
     this.geo = new THREE.Geometry();
     this.setPos(params.pos);
 
-    material = new THREE.LineBasicMaterial( { linewidth:2, color: rgbToHex(params.color)  } );     
+    var material = new THREE.LineBasicMaterial( { linewidth:2, color: rgbToHex(params.color)  } );     
     material.vertexColors = true;
 
     THREE.Line.call(this, this.geo, material);
@@ -353,7 +355,7 @@ Circle.prototype.setBeta = function(angle) {
 }
 
 Cloud = function(params) {
-    geo = new THREE.Geometry();
+    var geo = new THREE.Geometry();
     var x = 0,y = 0,z = 0;
     for (var sliceNum = 0; sliceNum < params.count; sliceNum++) {
        x = (Math.random() - 0.5);
@@ -369,14 +371,15 @@ Cloud = function(params) {
 Cloud.prototype = new THREE.ParticleSystem;
 Cloud.prototype.constructor = Cloud;
 
-
+geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+equator = new Circle({ angle : 359.9 });
 
 Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
 
     this.inner_id = params.inner_id;
 
-    color = params.color || { r: 0.5, g: 0.5, b: 0.5};
+    var color = params.color || { r: 0.5, g: 0.5, b: 0.5};
     color = rgbToHex(color);
     this.visuals = [];
 
@@ -403,8 +406,8 @@ Spherical = function Spherical(params) {
     this.visuals["arc2"].scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
     this.addNode(this.visuals["arc2"]);
 
-    materialArc = new THREE.LineBasicMaterial( {  color: color });
-    this.visuals["equator"] = new THREE.Line(new Circle({ angle : 359.9 }), this.material );
+    var materialArc = new THREE.LineBasicMaterial( {  color: color });
+    this.visuals["equator"] = new THREE.Line(equator, this.material );
     this.visuals["equator"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals["equator"].rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals["equator"]);
@@ -415,10 +418,10 @@ Spherical = function Spherical(params) {
     this.visuals["markerarc"].rotation.y = Math.PI/2;
     this.anchor.addNode(this.visuals["markerarc"]);
 
-    geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+    //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
     
-    materialBall = new THREE.MeshBasicMaterial( { color: color } );
+    var materialBall = new THREE.MeshBasicMaterial( { color: color } );
 
     this.visuals["markerball"] =  new THREE.Mesh(geometryBall, materialBall);
     this.visuals["npole"] = new THREE.Mesh(geometryBall, materialBall);
@@ -449,7 +452,7 @@ Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
 
 Spherical.prototype.getPlane = function() {
-    plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
+    var plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
     return plane;
 }
 
@@ -537,21 +540,21 @@ posSyl = function(node) {
 }
 
 getNodePos = function(name) {
-    node = nodePool[name];
+    var node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
     return node.currentPos();
 
 }
 
 getNodePosCanvas = function(name) {
-    node = nodePool[name];
+    var node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
 
-    posTmp = node.currentPos();
+    var posTmp = node.currentPos();
 
-    canvas = app.canvas.domElement;
+    var canvas = app.canvas.domElement;
     app.camera.matrixWorldInverse.multiplyVector3( posTmp );
-    zTmp = -posTmp.z;
+    var zTmp = -posTmp.z;
 
     app.camera.projectionMatrix.multiplyVector3( posTmp );
     pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
