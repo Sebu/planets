@@ -15,10 +15,14 @@ ModelMoonCompare = function(params) {
 
     s20 = this.sphere[3] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
     s21 = this.sphere[4] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
+    this.planet2 = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet2",  color:colors["Planet"]});
+    this.planet2.setBeta(90.0);
+    
     this.updateList.push(s20);    
     this.updateList.push(s21);    
     this.sphere[0].anchor.addNode(s20);
     this.sphere[3].anchor.addNode(s21);
+    this.sphere[4].anchor.addNode(this.planet2);
 
 
     

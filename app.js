@@ -50,8 +50,6 @@ myApp.prototype.init = function(params) {
         // set start model
         model = models["Model4"];
 
-        console.log(this.wurst);
-
 
         // setup moving labels        
         planetLabel = new UI.Label({text: "Planet"});
@@ -174,6 +172,7 @@ myApp.prototype.update = function(time) {
         }
         planetLabel.setPosition(getNodePosCanvas(model.name + "Planet"));
         if (model.sun.getEnabled()) sunLabel.setPosition(getNodePosCanvas(model.name + "Sun"));
+
 //*/        
     };
 
@@ -221,6 +220,8 @@ myApp.prototype.setCurrentPlanet = function(planet) {
         this.setCurrentScene(model.root);
         model.setCurrentPlanet(planet);
         model.reset();
+        
+        if(!model.sun.getEnabled()) sunLabel.setPosition({x:0, y:0, z:-1});
 
         // build up ui
         $("#moonInfoContainer").fadeOut(500);

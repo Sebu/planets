@@ -82,13 +82,14 @@ DONE
 - show latitude/longitude
 - renderer extract with better connection to canvas element
 - show box with lat. etc.
+- northpole white
+- sun label fix
+- color mendell red / schfixed blue
 
 TODO
-- northpole white
-- sun model fix
 - compare moon models
+
   - (show diff in latitude)
-  - color mendell red / schfixed blue
 
 NEXT
 - update hippopede only on demand

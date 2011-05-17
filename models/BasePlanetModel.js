@@ -100,8 +100,9 @@ BasePlanetModel.prototype = {
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
             this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
         }
-
-        this.sphere[0].visuals["npole"].setBaseColor({r:1.0,g:1.0,b:1.0});
+        
+        //TODO: hack white north pole
+        this.sphere[0].visuals["npole"].materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 
         this.sphere[1].addNode( this.stars = new Cloud({count:50}) );
         
@@ -214,7 +215,7 @@ BasePlanetModel.prototype = {
 
 
             //TODO: on model change -> events?
-            this.light.setPos(this.sun.mesh.currentPos());
+            if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         if (this.currentPos != "Free") {
           if (this.currentLookAt != "Free")

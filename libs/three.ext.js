@@ -254,6 +254,7 @@ Planet.prototype = new THREE.Object3D;
 Planet.prototype.constructor = Planet;
 
 Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; }
+Planet.prototype.getEnabled = function() { return this.mesh.visible; }
 
 Planet.prototype.setBeta = function(angle) {
     this.beta = angle;
@@ -416,6 +417,7 @@ Spherical = function Spherical(params) {
 
     geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
+    
     materialBall = new THREE.MeshBasicMaterial( { color: color } );
 
     this.visuals["markerball"] =  new THREE.Mesh(geometryBall, materialBall);
