@@ -283,8 +283,8 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:model, id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
-//            UI.slider({model:model, id:"Speed1", min: -600, max:600, text:"S 2 (zodiacal)"}).appendTo("#speed");
-//            UI.slider({model:model, id:"Speed2", min: -600, max:600, text:"S 3 (synodic)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed1", min: -6000, max:6000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2", min: -6000, max:6000, text:"S 3 (synodic)"}).appendTo("#speed");
             UI.slider({model:model, id:"SunSpeed",  max:1100, text:"S 2 Sun"}).appendTo("#speed");
 
 
