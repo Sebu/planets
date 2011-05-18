@@ -220,6 +220,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
         this.setCurrentScene(model.root);
         model.setCurrentPlanet(planet);
         model.reset();
+        this.setView({from: "Free",at:"Earth"});
         
         if(!model.sun.getEnabled()) sunLabel.setPosition({x:0, y:0, z:-1});
 

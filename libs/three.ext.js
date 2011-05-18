@@ -214,7 +214,7 @@ sphereGeo = [
 
 ];
 
-planetGeo = new THREE.Sphere( 1 , 10, 10 );
+planetGeo = new THREE.Sphere( 1 , 32, 16 );
 
 Planet = function(params) {
     THREE.Object3D.call( this );
