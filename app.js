@@ -73,7 +73,7 @@ myApp.prototype.init = function(params) {
             <div>latitude<span style='float:right;' id='latitude'>0</span></div>\
             <div>days<span style='float:right;' id='days'>0</span></div>\
             <div id='moonInfoContainer' style='display:none'>\
-            <div>zodiacal month</div>\
+            <div>zodiacal months</div>\
             <div id='metonZodicalMonths'>0</div>\
             <div>days per year</div>\
             <div id='metonDaysPerYear'>0</div>\
@@ -296,9 +296,9 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
                 $("#metonZodicalMonths").html(model.getMetonZodicalMonths().toFixed());
                 $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed(2));
-                $("#synodicDaysPerMonth").html(model.getSynodicDaysPerMonth().toFixed());
-                $("#zodicalDaysPerMonth").html(model.getZodicalDaysPerMonth().toFixed());
-                $("#draconiticDaysPerMonth").html(model.getDraconiticDaysPerMonth().toFixed());
+                $("#synodicDaysPerMonth").html(model.getSynodicDaysPerMonth().toFixed(3));
+                $("#zodicalDaysPerMonth").html(model.getZodicalDaysPerMonth().toFixed(3));
+                $("#draconiticDaysPerMonth").html(model.getDraconiticDaysPerMonth().toFixed(3));
                 $("#Speed1 > input").attr({"value": model.moonSpeed1(model.draco, model.zodic) });
                 $("#Speed2 > input").attr({"value": model.moonSpeed2(model.draco, model.zodic) });
 
