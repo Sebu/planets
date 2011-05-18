@@ -139,7 +139,7 @@ ModelMoonCompare = function(params) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
     
-    this.setCurrentMoonModels("Schiparelli", "SchFixed");
+    this.setCurrentMoonModels("Mendell", "SchFixed");
 };
 
 ModelMoonCompare.prototype = new BasePlanetModel;
