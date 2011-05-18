@@ -63,39 +63,37 @@ ModelMoonCompare = function(params) {
     this.metonDraconiticMonths = 0;
     this.setMetonDraconiticMonths = function(val) {
         this.metonDraconiticMonths = Number(val);
+        this.updateMoon();
     }
     this.getMetonDraconiticMonths = function() {
         return this.metonDraconiticMonths;
     }
 
     this.getMetonZodicalMonths = function() {
-        return this.metonYear + this.metonSynodicMonths;
+        return this.getMetonYear() + this.getMetonSynodicMonths();
     }
     this.getMetonDaysPerYear = function() {
-        return this.metonDays / this.metonYear;
+        return this.getMetonDays() / this.getMetonYear();
     }
     this.getSynodicDaysPerMonth = function() {
-        return this.metonDays / this.getMetonSynodicMonths();
+        return this.getMetonDays() / this.getMetonSynodicMonths();
     }
     this.getZodicalDaysPerMonth = function() {
-        return this.metonDays / this.getMetonZodicalMonths();
+        return this.getMetonDays() / this.getMetonZodicalMonths();
     }
 
     this.getDraconiticDaysPerMonth = function() {
-        return (this.getMetonSynodicMonths() *  this.getSynodicDaysPerMonth() ) / this.getMetonDraconiticMonths();
+        return this.getMetonDays() / this.getMetonDraconiticMonths();
     }
-
-//    this.getDraconiticDaysPerMonth = function() {
-//        return this.metonDays / this.getMetonDraconiticMonths();
-//    }
-
+    
     this.updateMoon = function() {
-        this.draco = this.getDraconiticDaysPerMonth();
-        this.zodic = this.getZodicalDaysPerMonth();
-        this.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
-        this.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
-        this.sphere[3].setSpeed(this.moonSpeed3(this.draco, this.zodic));
-        this.sphere[4].setSpeed(this.moonSpeed4(this.draco, this.zodic));
+        var draco = 360.0/this.getDraconiticDaysPerMonth();
+        var zodic = 360.0/this.getZodicalDaysPerMonth();
+                
+        this.sphere[1].setStep(this.moonSpeed1(draco, zodic));
+        this.sphere[2].setStep(this.moonSpeed2(draco, zodic));
+        this.sphere[3].setStep(this.moonSpeed3(draco, zodic));
+        this.sphere[4].setStep(this.moonSpeed4(draco, zodic));
 
     }
 
@@ -109,7 +107,7 @@ ModelMoonCompare = function(params) {
         this.updateMoon();
     }
 
-    this.setCurrentMoonModels("Schiparelli", "SchFixed");
+
 
     this.setCurrentPlanet = function(node) {
         BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
@@ -140,6 +138,8 @@ ModelMoonCompare = function(params) {
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
+    
+    this.setCurrentMoonModels("Mendell", "SchFixed");
 };
 
 ModelMoonCompare.prototype = new BasePlanetModel;

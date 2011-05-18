@@ -197,6 +197,7 @@ YavetzTest: {
 MoonMeton: { 
   sunDist: 8,
   model: "ModelMoon",
+  label: "Moon",
   metonYear: 19,
   metonSynodicMonths: 235,
   metonDays:6940,
@@ -210,6 +211,7 @@ MoonMeton: {
 MoonCallippus: { 
   sunDist: 8,
   model: "ModelMoon",
+  label: "Moon",  
   metonYear: 76,
   metonSynodicMonths: 940,
   metonDays:27759,
@@ -223,6 +225,7 @@ MoonCallippus: {
 Moon3: {
   sunDist: 8,
   model: "ModelMoon",
+  label: "Moon",
   metonYear: 8,
   metonSynodicMonths: 99,
   metonDays:2922,
@@ -237,6 +240,8 @@ Moon3: {
     
 Sun: { 
   model: "ModelSun",
+  label: "Sun",
+//  color: colors["Sun"],
   sphere: [
     {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -247,6 +252,7 @@ MoonCompare: {
   sunDist: 8,
   model: "ModelMoonCompare",
   metonYear: 19,
+  label: "Moon",  
   metonSynodicMonths: 235,
   metonDays:6940,
   metonDraconiticMonths: 242,

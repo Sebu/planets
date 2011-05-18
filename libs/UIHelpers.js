@@ -334,6 +334,12 @@ UI.Label = function(params) {
 
 UI.Label.prototype.constructor = UI.Label;
 
+
+UI.Label.prototype.setText = function(text) {
+  console.log(this.ele);
+  this.ele[0].innerHTML = text;
+};
+
 UI.Label.prototype.setPosition = function(pos) {
   if(pos.z<0) { this.ele.hide(); return; }
   this.ele.show();

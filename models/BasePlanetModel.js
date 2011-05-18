@@ -19,7 +19,6 @@ BasePlanetModel = function() {
     this.lastPerp = 0
     this.eclipticAngle2 = 0;
 
-//    this.fps = 30.0;
     this.setSpeed(60);
     this.running=true;
 
@@ -127,6 +126,7 @@ BasePlanetModel.prototype = {
             sunDist: 8,
             color: colors["Planet"],
             betaRotate: 90.0,
+            label: "Planet",
             sphere: [
                 {axisAngle: 38.0, speed: 0, rotateStart: 0 },
                 {axisAngle: 24.0,  speed: 365, rotateStart: 0 },
@@ -143,11 +143,14 @@ BasePlanetModel.prototype = {
 
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
+        this.planet.setShade(this.currentPlanet.color);
         if(this.sphere[3]) this.sphere[3].setArcBeta(this.currentPlanet.betaRotate);
 
         this.sphere[0].setVisuals(["arc1","arc2"], false);
 
         this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+        
+        this.reset();
 
     },
 
