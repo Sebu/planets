@@ -276,11 +276,28 @@ HippoTest: {
 };
 
 
-//var moonModels = {
-// Mendell: { speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
-// Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -(d-z); } },
-// SchFixed: { speed1: function(d,z)  {return -(d-z); }, speed2: function(d,z) { return d; } }
-//};
+var moonModels = {
+ Mendell: { speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
+ Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return Math.abs(d-z); } },
+ SchFixed: { speed1: function(d,z)  {return Math.abs(d-z); }, speed2: function(d,z) { return d; } }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //var moonModels = {
 //    Mendell: { speed1: function(d,z)  {return -(d+z); }, speed2: function(d,z) { return d; } },
@@ -288,11 +305,11 @@ HippoTest: {
 //    SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } }
 //};
 
-var moonModels = {
-    Mendell: { speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
-    Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -360*(d-z); } },
-    SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } }
-};
+//var moonModels = {
+//    Mendell: { speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
+//    Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -360*(d-z); } },
+//    SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } }
+//};
 
 var latitudePresets = {
   Athens: 38,

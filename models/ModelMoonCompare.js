@@ -75,14 +75,19 @@ ModelMoonCompare = function(params) {
         return this.metonDays / this.metonYear;
     }
     this.getSynodicDaysPerMonth = function() {
-        return this.metonDays / this.metonSynodicMonths;
+        return this.metonDays / this.getMetonSynodicMonths();
     }
     this.getZodicalDaysPerMonth = function() {
         return this.metonDays / this.getMetonZodicalMonths();
     }
+
     this.getDraconiticDaysPerMonth = function() {
-        return this.metonDays / this.metonDraconiticMonths;
+        return (this.getMetonSynodicMonths() *  this.getSynodicDaysPerMonth() ) / this.getMetonDraconiticMonths();
     }
+
+//    this.getDraconiticDaysPerMonth = function() {
+//        return this.metonDays / this.getMetonDraconiticMonths();
+//    }
 
     this.updateMoon = function() {
         this.draco = this.getDraconiticDaysPerMonth();

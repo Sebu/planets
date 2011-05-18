@@ -55,26 +55,32 @@ ModelMoon = function(params) {
     this.metonDraconiticMonths = 0;
     this.setMetonDraconiticMonths = function(val) {
         this.metonDraconiticMonths = Number(val);
+        this.updateMoon();
     }
     this.getMetonDraconiticMonths = function() {
         return this.metonDraconiticMonths;
     }
 
     this.getMetonZodicalMonths = function() {
-        return this.metonYear + this.metonSynodicMonths;
+        return this.getMetonYear() + this.getMetonSynodicMonths();
     }
     this.getMetonDaysPerYear = function() {
-        return this.metonDays / this.metonYear;
+        return this.getMetonDays() / this.getMetonYear();
     }
     this.getSynodicDaysPerMonth = function() {
-        return this.metonDays / this.metonSynodicMonths;
+        return this.getMetonDays() / this.getMetonSynodicMonths();
     }
     this.getZodicalDaysPerMonth = function() {
-        return this.metonDays / this.getMetonZodicalMonths();
+        return this.getMetonDays() / this.getMetonZodicalMonths();
     }
+
     this.getDraconiticDaysPerMonth = function() {
-        return this.metonDays / this.metonDraconiticMonths;
+        return (this.getMetonSynodicMonths() *  this.getSynodicDaysPerMonth() ) / this.getMetonDraconiticMonths();
     }
+
+//    this.getDraconiticDaysPerMonth = function() {
+//        return this.metonDays / this.metonDraconiticMonths;
+//    }
 
     this.setCurrentMoonModel = function(name) {
         var currentModel = moonModels[name];
@@ -91,14 +97,16 @@ ModelMoon = function(params) {
     }
 
     this.updateMoon = function() {
-        this.draco = this.getDraconiticDaysPerMonth();
-        this.zodic = this.getZodicalDaysPerMonth();
-        this.sphere[1].setSpeed(this.moonSpeed1(this.draco, this.zodic));
-        this.sphere[2].setSpeed(this.moonSpeed2(this.draco, this.zodic));
+        var draco = this.getDraconiticDaysPerMonth();
+        var zodic = this.getZodicalDaysPerMonth();
+        var speed1 = this.moonSpeed1(draco, zodic);
+        var speed2 = this.moonSpeed2(draco, zodic);
+        console.log(speed1 + " " + speed2);
+        this.sphere[1].setSpeed(speed1); 
+        this.sphere[2].setSpeed(speed2); 
     }
     
     this.setCurrentMoonModel("Mendell");
-
 
 
 
