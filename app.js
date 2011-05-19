@@ -128,6 +128,8 @@ myApp.prototype.update = function(time) {
         if (Ori.input.isDown("RIGHT")) this.camera.translateNew(-0.6, 0, 0);
         if (Ori.input.isDown("DOWN")) this.camera.translateNew(0, 0, -0.6);
         if (Ori.input.isDown("UP")) this.camera.translateNew(0, 0, 0.6);
+        
+        
         if (Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
         if (Ori.input.mouse.b1) {
             x = Ori.input.mouse.x;

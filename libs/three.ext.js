@@ -371,8 +371,8 @@ Cloud = function(params) {
 Cloud.prototype = new THREE.ParticleSystem;
 Cloud.prototype.constructor = Cloud;
 
-geometryBall = new THREE.Sphere( 0.1, 10, 10 );
-equator = new Circle({ angle : 359.9 });
+var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+var equator = new Circle({ angle : 359.9 });
 
 Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
@@ -457,7 +457,7 @@ Spherical.prototype.getPlane = function() {
 }
 
 Spherical.prototype.setVisuals = function(vis, state) {
-    for (i in vis) {
+    for (var i in vis) {
         this.visuals[vis[i]].setEnabled(state);
     }
 
