@@ -234,6 +234,23 @@ Ori.App.prototype = {
 
 };
 
+Storage.prototype.setJson = function(key, value)
+{
+  this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getJson = function(key)
+{  
+  try
+  {
+    return JSON.parse(this.getItem(key));
+  }
+  catch(e)
+  {
+    return this.getItem(key);
+  }
+};
+
 window.requestAnimFrame = (function(){
       return  window.requestAnimationFrame       || 
               window.webkitRequestAnimationFrame || 
