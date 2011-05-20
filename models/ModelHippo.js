@@ -1,13 +1,10 @@
+
+
 /**
- * Created by IntelliJ IDEA.
- * User: seb
- * Date: 13.02.2011
- * Time: 02:10:06
- * To change this template use File | Settings | File Templates.
+ * @constructor
  */
-
-
 ModelHippo = function(params) {
+	BasePlanetModel.call(this);
     params.name = "ModelHippo";
     params.spheres = 2;
     this.init(params);

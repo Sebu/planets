@@ -1,5 +1,9 @@
 
+/**
+ * @constructor
+ */
 Model4 = function(params) {
+	BasePlanetModel.call(this);
     params.name = "Model4";
     params.spheres = 4;
     this.init(params);

@@ -1,13 +1,9 @@
+
 /**
- * Created by IntelliJ IDEA.
- * User: seb
- * Date: 13.02.2011
- * Time: 02:10:16
- * To change this template use File | Settings | File Templates.
+ * @constructor
  */
-
-
 ModelYavetz = function(params) {
+	BasePlanetModel.call(this);
     params.name = "ModelYavetz";
     params.spheres = 4;
     this.init(params);

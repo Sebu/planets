@@ -1,11 +1,10 @@
 
 
-PI_SCALE = 180.0/Math.PI;
+const PI_SCALE = 180.0/Math.PI;
 
 degToRad = function(deg) {
-    return (deg/180)*Math.PI;
+    return deg/PI_SCALE;
 }
-
 
 calcAngle = function(pos1, pos2) {
     return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
@@ -17,18 +16,19 @@ calcAngleRel = function(node1, node2, center) {
     return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
 }
 
-
-nodePool = {};
-
-THREE.Object3D.prototype.addNode = function(node) { this.addChild(node) };
-THREE.Object3D.prototype.setBaseColor = function(params) { };
-THREE.Object3D.prototype.setPos = function(pos) {
-    this.position.set(pos.x, pos.y, pos.z);
+rgbToHex = function(color) {
+	 return ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
 }
 
+// extend THREE.Object3D 
+Node = THREE.Object3D;
+THREE.Object3D.prototype.addNode = function(node) { this.addChild(node); };
+//THREE.Object3D.prototype.setBaseColor = function(params) { };
+THREE.Object3D.prototype.setPos = function(pos) { this.position.set(pos.x, pos.y, pos.z); }
 THREE.Object3D.prototype.setEnabled = function(state) { this.visible = state; };
 THREE.Object3D.prototype.getEnabled = function() { return this.visible; };
 
+// fast update of current world matrix
 THREE.Object3D.prototype.currentMatrixWorld = function() {
     this.matrixAutoUpdate && this.updateMatrix();
     if(!this.parent) return this.matrix;
@@ -36,25 +36,31 @@ THREE.Object3D.prototype.currentMatrixWorld = function() {
     return this.matrixWorld;
 }
 
+// determine current position in world space
 THREE.Object3D.prototype.currentPos = function() {
     var pos = this.currentMatrixWorld();
     return {x: pos.n14, y: pos.n24, z: pos.n34};
 }
 
-Node = THREE.Object3D;
 
 
 
-rgbToHex = function(color) {
- return ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
-}
 
+
+// extend THREE.Camera with:
+// aspect ratio setter
 THREE.Camera.prototype.setAspect = function(aspect) {
     this.aspect = aspect;
     this.updateProjectionMatrix();
 };
+// FOV getter & setter
+THREE.Camera.prototype.getFov = function() { return this.fov; };
+THREE.Camera.prototype.setFov = function(fov) {
+	  this.fov = fov;
+	  this.updateProjectionMatrix();
+};
 
-
+// rotation around lookAt
 THREE.Camera.prototype.rotateTarget = function(target) {
 
     var dx = target.x - this._lookX;
@@ -71,6 +77,7 @@ THREE.Camera.prototype.rotateTarget = function(target) {
     this.updateNew();
 }
 
+// lookAt
 THREE.Camera.prototype.setTarget = function(target) {
 
     this.dir.elements[0] = target.x - this.position.x;
@@ -87,8 +94,9 @@ THREE.Camera.prototype.setTarget = function(target) {
 
 THREE.Camera.prototype.setEye = function(pos) {
     this.position.set(pos.x, pos.y, pos.z);
-}
+};
 
+// addition of up/right/dir vector
 THREE.Camera.prototype.init = function(params) {
 
     this.right = Vector.create([1, 0, 0]);
@@ -103,8 +111,6 @@ THREE.Camera.prototype.init = function(params) {
 
 
 THREE.Camera.prototype.updateMatrix = function() {
-
-
     this.matrix.set(
             -this.right.elements[0], this.upVec.elements[0], -this.dir.elements[0], this.position.x,
             -this.right.elements[1], this.upVec.elements[1], -this.dir.elements[1], this.position.y,
@@ -112,7 +118,6 @@ THREE.Camera.prototype.updateMatrix = function() {
             0, 0, 0, 1);
 
    this.matrixWorldNeedsUpdate = true;
-
 }
 
 THREE.Camera.prototype.updateNew = function() {
@@ -172,29 +177,21 @@ THREE.Camera.prototype.rotateUp = function(angle) {
     this.updateNew();
 }
 
-THREE.Camera.prototype.setFov = function(fov) {
-  this.fov = fov;
-  this.updateProjectionMatrix();
-}
-
-THREE.Camera.prototype.getFov = function() {
-  return this.fov;
-}
 
 
 
 
+// disc of planet surface 
 Disc = function(params) {
   THREE.Mesh.call(this, new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: 0x4444FF, shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
 }
-
 Disc.prototype = new THREE.Mesh;
 Disc.prototype.constructor = Disc;
 
 
-
+// translation node (used for compass labels)
 Translate = function(params) {
   THREE.Object3D.call( this );
   this.position.x = params.x || 0.0;
@@ -202,10 +199,12 @@ Translate = function(params) {
   this.position.z = params.z || 0.0;
   nodePool[params.id] = this;
 }
-
 Translate.prototype = new THREE.Object3D;
 Translate.prototype.constructor = Translate;
 
+/* sphere LOD
+* @deprecated
+*/
 sphereGeo = [
 
                 [ new THREE.Sphere( 1, 32, 16 ), 0 ],
@@ -216,6 +215,11 @@ sphereGeo = [
 
 planetGeo = new THREE.Sphere( 1 , 32, 16 );
 
+
+/*
+ * @constructor
+ * provide dist(tance) from center, scale, color, and beta rotation
+ */
 Planet = function(params) {
     THREE.Object3D.call( this );
 
@@ -263,7 +267,6 @@ Planet.prototype.setBeta = function(angle) {
     this.rotation.x = degToRad(this.beta);
 };
 
-
 Planet.prototype.setShade = function(color) {
     this.material.color.setHex(rgbToHex(color));
 }
@@ -273,6 +276,11 @@ Planet.prototype.setDist = function(dist) {
     this.mesh.position.y = this.dist;
 };
 
+
+/*
+ * @constructor
+ * 
+ */
 Curve  = function(params) {
 
     this.setPos = function(pos) {
@@ -305,7 +313,9 @@ Curve.prototype = new THREE.Line;
 Curve.prototype.constructor = Curve;
 
 
-
+/*
+ * @constructor
+ */
 Circle = function(params) {
     THREE.Geometry.call( this );
 
@@ -313,7 +323,6 @@ Circle = function(params) {
     this.setBeta(params.betaRotate || 90);
 
 };
-
 
 Circle.prototype = new THREE.Geometry;
 Circle.prototype.constructor = Circle;
@@ -354,6 +363,13 @@ Circle.prototype.setBeta = function(angle) {
     this.gen();
 }
 
+
+
+
+/*
+ * @constructor
+ * point cloude
+ */
 Cloud = function(params) {
     var geo = new THREE.Geometry();
     var x = 0,y = 0,z = 0;
@@ -371,9 +387,15 @@ Cloud = function(params) {
 Cloud.prototype = new THREE.ParticleSystem;
 Cloud.prototype.constructor = Cloud;
 
+
+
 var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
+/*
+ * @constructor
+ * the cosmological spheres
+ */
 Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
 
@@ -526,6 +548,7 @@ Spherical.prototype.updateMovement = function(step) {
 };
 
 
+
 Sunlight = function() {
     return new THREE.PointLight( 0xFFFFFF, 1, 0 );
 }
@@ -539,6 +562,10 @@ posSyl = function(node) {
     return sceneToSyl(getNodePos(node));
 }
 
+// store key/values of 3D nodes (planet,sun,poles etc.)
+nodePool = {};
+
+// locate a specific node in world space
 getNodePos = function(name) {
     var node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
@@ -546,6 +573,7 @@ getNodePos = function(name) {
 
 }
 
+// locate a specific node on canvas (preseve z value of projection)
 getNodePosCanvas = function(name) {
     var node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
@@ -559,7 +587,7 @@ getNodePosCanvas = function(name) {
     app.camera.projectionMatrix.multiplyVector3( posTmp );
     pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
 
-
+    //if node is outside of canvas shift pos to z=-1 
     if (pos.x<0 || pos.x>canvas.width-50) pos.z = -1.0;
     if (pos.y<0 || pos.y>canvas.height-20) pos.z = -1.0;
 

@@ -252,6 +252,7 @@ function style(element, styles) {
 var UI = {
 
     optionsFromHash : function(selector, hash) {
+        $(selector).children().remove();
         for (i in hash)
             $(selector).append("<option value='" + i + "'>" + i + "</option>");
     },

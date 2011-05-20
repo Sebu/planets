@@ -1,13 +1,10 @@
+
+
 /**
- * Created by IntelliJ IDEA.
- * User: seb
- * Date: 12.02.2011
- * Time: 20:10:55
- * To change this template use File | Settings | File Templates.
+ * @constructor
  */
-
-
 ModelMoonCompare = function(params) {
+	BasePlanetModel.call(this);	
     params.name = "ModelMoonCompare";
     params.spheres = 3;
     this.init(params);

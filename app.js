@@ -15,7 +15,7 @@ myApp.prototype.init = function(params) {
         this.currentScene = null;
         this.scenes = [];
 
-        // create canvas (webgl if possible)
+        // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({});
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
@@ -88,8 +88,14 @@ myApp.prototype.init = function(params) {
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
-        uiBox.append("<span>Presets<select title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(planetPresets[this.options[this.selectedIndex].value]);'>View</select></span>");
+        uiBox.append("<span><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(planetPresets[this.options[this.selectedIndex].value]);'>View</select></span>");
+        var vault = localStorage.getJson("customPresets") || {};
+        $.extend(true, planetPresets, vault);
         UI.optionsFromHash("#planetPreset", planetPresets);
+        
+        uiBox.append("<input type='button' onclick='app.addPreset();' value='+'>");
+        uiBox.append("<input type='button' onclick='app.removePreset();' value='-'>");
+        
         legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
@@ -102,6 +108,24 @@ myApp.prototype.init = function(params) {
         this.setCurrentPlanet(planetPresets["Mercury1"]);
 
     };
+
+
+myApp.prototype.addPreset = function() {
+    var vault = localStorage.getJson("customPresets") || {};
+    var store = { model: model.name, writeable: true, sphere: [] };
+    for(var i in model.sphere) {
+      store.sphere[i] = { axisAngle: model.sphere[i].getAxisAngle(), speed: model.sphere[i].getSpeed(), rotateStart: model.sphere[i].getRotateStart()  };
+    }
+    var text = prompt('Please enter a name for the preset.',model.name + '1');
+    if(text && (!vault[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
+      vault[text] = store;
+      localStorage.setJson("customPresets", vault);
+      $.extend(true, planetPresets, vault);
+      UI.optionsFromHash("#planetPreset", planetPresets);
+    }
+    console.log(planetPresets);
+     
+};
 
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
@@ -132,11 +156,11 @@ myApp.prototype.update = function(time) {
         
         if (Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
         if (Ori.input.mouse.b1) {
-            x = Ori.input.mouse.x;
-            y = Ori.input.mouse.y;
-            pitch = (y - Ori.input.drag.y) * 0.2 * time;
+            var x = Ori.input.mouse.x;
+            var y = Ori.input.mouse.y;
+            var pitch = (y - Ori.input.drag.y) * 0.2 * time;
 
-            yaw = (x - Ori.input.drag.x) * -0.2 * time;
+            var yaw = (x - Ori.input.drag.x) * -0.2 * time;
             if (model.currentPos == "Earth") {
                 this.camera.rotateY(yaw);
             } else {

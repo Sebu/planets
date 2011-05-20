@@ -1,13 +1,9 @@
+
 /**
- * Created by IntelliJ IDEA.
- * User: seb
- * Date: 12.02.2011
- * Time: 20:12:56
- * To change this template use File | Settings | File Templates.
+ * @constructor
  */
-
-
 ModelSun = function(params) {
+	BasePlanetModel.call(this);
     params.name = "ModelSun";
     params.spheres = 4;
     this.init(params);

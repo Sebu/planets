@@ -21,8 +21,7 @@ var colors = {
 
 var planetPresets = { 
 
-    Mercury1: {
-  sunDist: 8,
+Mercury1: {
   model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -32,7 +31,6 @@ var planetPresets = {
   ]},
 
 Mercury2: {
-  sunDist: 8,
   model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -42,8 +40,7 @@ Mercury2: {
 ]},
 
 Venus1: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -51,8 +48,7 @@ Venus1: {
     {axisAngle: 45.0, speed: 570, rotateStart: 0 }]},
 
 Venus2: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -60,8 +56,7 @@ Venus2: {
     {axisAngle: 80.0, speed: 570, rotateStart: 0 }] },
 
 Mars1: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -69,8 +64,7 @@ Mars1: {
     {axisAngle: 18.0, speed: 260, rotateStart: 0 }]},
 
 Mars2: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -78,8 +72,7 @@ Mars2: {
     {axisAngle: 18.0, speed: 730, rotateStart: 0 }]},
 
 Mars3: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -87,8 +80,7 @@ Mars3: {
     {axisAngle: 18.0, speed: 760, rotateStart: 0 }]},
 
 Mars4: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -96,8 +88,7 @@ Mars4: {
     {axisAngle: 18.0, speed: 780, rotateStart: 0 }] },
 
 Jupiter: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 4380, speedmax: 5000, rotateStart: 0 },
@@ -105,8 +96,7 @@ Jupiter: {
     {axisAngle: 18.0, speed: 390, rotateStart: 0 }] },
 
 Saturn: {
-  sunDist: 8,
-    model: "Model4",
+  model: "Model4",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 10940, speedmax: 12000, rotateStart: 0 },
@@ -182,7 +172,6 @@ Model5Venus: {
 
 
 YavetzTest: { 
-  sunDist: 8,
   model: "ModelYavetz",
   betaRotate: 30.0,
   sphere: [
@@ -195,7 +184,6 @@ YavetzTest: {
 
 
 MoonMeton: { 
-  sunDist: 8,
   model: "ModelMoon",
   label: "Moon",
   metonYear: 19,
@@ -209,7 +197,6 @@ MoonMeton: {
     {axisAngle: 0.0, speed: 0,   rotateStart: 0 }]},
 
 MoonCallippus: { 
-  sunDist: 8,
   model: "ModelMoon",
   label: "Moon",  
   metonYear: 76,
@@ -223,7 +210,6 @@ MoonCallippus: {
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }]},
       
 Moon3: {
-  sunDist: 8,
   model: "ModelMoon",
   label: "Moon",
   metonYear: 8,
@@ -249,7 +235,6 @@ Sun: {
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }] },
 
 MoonCompare: { 
-  sunDist: 8,
   model: "ModelMoonCompare",
   metonYear: 19,
   label: "Moon",  
@@ -277,7 +262,7 @@ HippoTest: {
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
-  ] },
+  ] }
 
 };
 
