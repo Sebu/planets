@@ -127,6 +127,16 @@ myApp.prototype.addPreset = function() {
      
 };
 
+myApp.prototype.removePreset = function() {
+  var text = "bla";
+  if(!planetPresets[text] || !planetPresets[text].writeable) return;
+  var vault = localStorage.getJson("customPresets") || {};
+  delete planetPresets[text];
+  delete vault[text];
+  UI.optionsFromHash("#planetPreset", planetPresets);   
+};
+
+
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
