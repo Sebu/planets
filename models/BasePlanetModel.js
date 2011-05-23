@@ -67,10 +67,10 @@ BasePlanetModel.prototype = {
 
 
         // DIRECTION MARKERS
-        this.root.addNode( new Translate({id: "North", x:-4.5,y:0.2}) );
-        this.root.addNode( new Translate({id: "South", x:4.5,y:0.2}) );
-        this.root.addNode( new Translate({id: "East", z:-4.5,y:0.2}) );
-        this.root.addNode( new Translate({id: "West", z:4.5,y:0.2}) );
+        this.root.addNode( this.north = new Translate({id: "North", x:-4.5,y:0.2}) );
+        this.root.addNode( this.south = new Translate({id: "South", x:4.5,y:0.2}) );
+        this.root.addNode( this.east = new Translate({id: "East", z:-4.5,y:0.2}) );
+        this.root.addNode( this.west = new Translate({id: "West", z:4.5,y:0.2}) );
 
         // planet surface for earth view
         this.root.addNode(this.earthPlane = new Disc({radius: 9.0}) );

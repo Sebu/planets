@@ -42,8 +42,21 @@ THREE.Object3D.prototype.currentPos = function() {
     return {x: pos.n14, y: pos.n24, z: pos.n34};
 }
 
+THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
+    var posTmp = this.currentPos();
 
+    camera.matrixWorldInverse.multiplyVector3( posTmp );
+    var zTmp = -posTmp.z;
+    camera.projectionMatrix.multiplyVector3( posTmp );
+    
+    pos = {x: (posTmp.x+1) * canvas.domElement.width/2, y: (-posTmp.y+1) * canvas.domElement.height/2, z: zTmp };
 
+    //if node is outside of canvas shift pos to z=-1 
+    if (pos.x<0 || pos.x>canvas.domElement.width-50) pos.z = -1.0;
+    if (pos.y<0 || pos.y>canvas.domElement.height-20) pos.z = -1.0;
+
+    return pos;
+}
 
 
 
@@ -197,7 +210,7 @@ Translate = function(params) {
   this.position.x = params.x || 0.0;
   this.position.y = params.y || 0.0;
   this.position.z = params.z || 0.0;
-  nodePool[params.id] = this;
+//  nodePool[params.id] = this;
 }
 Translate.prototype = new THREE.Object3D;
 Translate.prototype.constructor = Translate;
