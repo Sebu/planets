@@ -302,15 +302,16 @@ var UI = {
     },
 
     slider : function(params) {
-        var model = params.model;
+        var instance = params.model;
         var id = params.id;
         var tooltip = params.tip || "";
         var text = params.text || params.id;
         var min = params.min || 0;
         var max = params.max || 100;
         var step = params.step || 1;
-        var value = params.value ||  model["get"+id]();
-        var change = params.change || function()  { model["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
+        var value = params.value ||  instance["get"+id]();
+        console.log(instance.valueOf());
+        var change = params.change || function()  { instance["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
 
         ele =  $("<div title='" + tooltip + "' id='" + id + "'>" +
             "<div>" + text + "</div>" +

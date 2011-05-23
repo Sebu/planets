@@ -106,13 +106,13 @@ BasePlanetModel.prototype = {
         }
         
         //TODO: hack white north pole
-        this.sphere[0].visuals["npole"].materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
+        this.sphere[0].visuals.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 
         // add stars
         this.sphere[1].addNode( this.stars = new Cloud({count:50}) );
         
         //TODO: deprecated?
-        this["showSphere0"] = function(state) {
+        this.showSphere0 = function(state) {
             this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
         }
 
@@ -121,8 +121,9 @@ BasePlanetModel.prototype = {
         this.systemSun[0].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.systemSun[0];
         // shortcuts for the sun
-        this["setSunSpeed"] = new Function("value", "this.systemSun[0].setSpeed(value);");
-        this["getSunSpeed"] = new Function("return this.systemSun[0].getSpeed();");
+
+        this.setSunSpeed = function(value) { this.systemSun[0].setSpeed(value); };
+        this.getSunSpeed = function() { this.systemSun[0].getSpeed(); };
 
         // hide everything
         this.root.setEnabled(false);

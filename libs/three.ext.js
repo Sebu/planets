@@ -420,49 +420,49 @@ Spherical = function Spherical(params) {
     this.materialArc =  new THREE.LineBasicMaterial( {  color: color } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
-    this.visuals["arc1"] = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
-    this.visuals["arc1"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.addNode(this.visuals["arc1"]);
+    this.visuals.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
+    this.visuals.arc1.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
+    this.addNode(this.visuals.arc1);
 
-    this.visuals["arc2"] = new THREE.Line(this.arcangle21, this.materialArc );
-    this.visuals["arc2"].scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
-    this.addNode(this.visuals["arc2"]);
+    this.visuals.arc2 = new THREE.Line(this.arcangle21, this.materialArc );
+    this.visuals.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
+    this.addNode(this.visuals.arc2);
 
     var materialArc = new THREE.LineBasicMaterial( {  color: color });
-    this.visuals["equator"] = new THREE.Line(equator, this.material );
-    this.visuals["equator"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.visuals["equator"].rotation.x = Math.PI/2;
-    this.anchor.addNode(this.visuals["equator"]);
+    this.visuals.equator = new THREE.Line(equator, this.material );
+    this.visuals.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
+    this.visuals.equator.rotation.x = Math.PI/2;
+    this.anchor.addNode(this.visuals.equator);
 
     this.markerArc = new Circle({ angle : 90 });
-    this.visuals["markerarc"] = new THREE.Line(this.markerArc, this.material );
-    this.visuals["markerarc"].scale  = new THREE.Vector3( -params.scale, params.scale, params.scale );
-    this.visuals["markerarc"].rotation.y = Math.PI/2;
-    this.anchor.addNode(this.visuals["markerarc"]);
+    this.visuals.markerarc = new THREE.Line(this.markerArc, this.material );
+    this.visuals.markerarc.scale  = new THREE.Vector3( -params.scale, params.scale, params.scale );
+    this.visuals.markerarc.rotation.y = Math.PI/2;
+    this.anchor.addNode(this.visuals.markerarc);
 
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
     
     var materialBall = new THREE.MeshBasicMaterial( { color: color } );
 
-    this.visuals["markerball"] =  new THREE.Mesh(geometryBall, materialBall);
-    this.visuals["npole"] = new THREE.Mesh(geometryBall, materialBall);
-    this.visuals["spole"] = new THREE.Mesh(geometryBall, materialBall);
-    this.visuals["markerball"].position.z = params.scale;
-    this.visuals["npole"].position.y = params.scale;
-    this.visuals["spole"].position.y = -params.scale;
-    this.anchor.addNode(this.visuals["markerball"]);
-    this.anchor.addNode(this.visuals["npole"]);
-    this.anchor.addNode(this.visuals["spole"]);
-    nodePool[this.inner_id] = this.visuals["markerball"];
-    nodePool[this.inner_id+"npole"] = this.visuals["npole"];
-    nodePool[this.inner_id+"spole"] = this.visuals["spole"];
+    this.visuals.markerball =  new THREE.Mesh(geometryBall, materialBall);
+    this.visuals.npole = new THREE.Mesh(geometryBall, materialBall);
+    this.visuals.spole = new THREE.Mesh(geometryBall, materialBall);
+    this.visuals.markerball.position.z = params.scale;
+    this.visuals.npole.position.y = params.scale;
+    this.visuals.spole.position.y = -params.scale;
+    this.anchor.addNode(this.visuals.markerball);
+    this.anchor.addNode(this.visuals.npole);
+    this.anchor.addNode(this.visuals.spole);
+    nodePool[this.inner_id] = this.visuals.markerball;
+    nodePool[this.inner_id+"npole"] = this.visuals.npole;
+    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
-    this.visuals["rotationarc"] = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color } ));
-    this.visuals["rotationarc"].scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.visuals["rotationarc"].rotation.x = Math.PI/2;
-    this.anchor.addNode(this.visuals["rotationarc"]);
+    this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color } ));
+    this.visuals.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
+    this.visuals.rotationarc.rotation.x = Math.PI/2;
+    this.anchor.addNode(this.visuals.rotationarc);
 
     this.setAxisAngle(this.axisAngle);
     this.setRotateAngle(this.rotateAngle);
