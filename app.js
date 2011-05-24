@@ -88,7 +88,7 @@ myApp.prototype.init = function(params) {
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
-        uiBox.append("<span><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(planetPresets[this.options[this.selectedIndex].value]);'>View</select></span>");
+        uiBox.append("<span><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
         $.extend(true, planetPresets, vault);
         UI.optionsFromHash("#planetPreset", planetPresets);
@@ -105,7 +105,7 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
         $("#vis").hide();
 
-        this.setCurrentPlanet(planetPresets["Mercury1"]);
+        this.setCurrentPlanet("Mercury1");
 
     };
 
@@ -122,18 +122,24 @@ myApp.prototype.addPreset = function() {
       localStorage.setJson("customPresets", vault);
       $.extend(true, planetPresets, vault);
       UI.optionsFromHash("#planetPreset", planetPresets);
+      this.setCurrentPlanet(text); 
     }
     console.log(planetPresets);
+
      
 };
 
 myApp.prototype.removePreset = function() {
-  var text = "bla";
-  if(!planetPresets[text] || !planetPresets[text].writeable) return;
+  var text = this.currentPreset;
+  if(!planetPresets[text] || !planetPresets[text].writeable) { 
+    alert('Preset "' + text + '" is locked.'); return;
+  }
   var vault = localStorage.getJson("customPresets") || {};
   delete planetPresets[text];
   delete vault[text];
-  UI.optionsFromHash("#planetPreset", planetPresets);   
+  localStorage.setJson("customPresets", vault);
+  UI.optionsFromHash("#planetPreset", planetPresets);
+  this.setCurrentPlanet("Mercury1");   
 };
 
 
@@ -249,9 +255,11 @@ myApp.prototype.setView = function(view) {
 
 
 // change planet model and create the UI ELEMENTS + add to DOM
-myApp.prototype.setCurrentPlanet = function(planet) {
+myApp.prototype.setCurrentPlanet = function(preset) {
 
         // switch model
+        this.currentPreset = preset;
+        var planet = planetPresets[preset];
         model = models[planet.model];
         this.setCurrentScene(model.root);
         model.setCurrentPlanet(planet);
@@ -306,7 +314,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
         // create the right sliders for each model
         // TODO: tooltips and min/max values for each model and preset
-        if (model.name == "ModelMoon" || model.name == "ModelMoonCompare") {
+        if (model instanceof ModelMoon || model instanceof ModelMoonCompare) {
             UI.box({id:"moon", text:"Moon year month day cycle"}).appendTo("#parameters");
             UI.slider({model:model, id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
             UI.slider({model:model, id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
@@ -328,7 +336,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
 
             $("#moon input").change();
 
-            $("#moonInfoContainer,#moonModel").fadeIn(500);
+            if(model instanceof ModelMoon) $("#moonInfoContainer,#moonModel").fadeIn(500);
 
             // moon sliders setup
             // onchange of a moon parameter -> update model
@@ -345,7 +353,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             });
             $("#MetonYear > input").change();
 
-        } else if (model.name == "ModelYavetz") {
+        } else if (model instanceof ModelYavetz) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -365,7 +373,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
 
-        } else if (model.name == "Model4") {
+        } else if (model instanceof Model4) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -387,7 +395,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
-        } else if (model.name == "Model5") {
+        } else if (model instanceof Model5) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -408,7 +416,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 5"}).appendTo("#rotateStart");
 
-        } else if (model.name == "ModelSimple") {
+        } else if (model instanceof ModelSimple) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -416,7 +424,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             UI.slider({model:model, id:"Speed0",  max:1100, text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
 
-        } else if (model.name == "ModelHippo") {
+        } else if (model instanceof ModelHippo) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -424,7 +432,7 @@ myApp.prototype.setCurrentPlanet = function(planet) {
             UI.slider({model:model, id:"Speed0",  max:1100, text:"S 1,2"}).appendTo("#speed");
 
 
-        } else if (model.name == "ModelSun") {
+        } else if (model instanceof  ModelSun) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");

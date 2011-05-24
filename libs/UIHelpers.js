@@ -310,7 +310,7 @@ var UI = {
         var max = params.max || 100;
         var step = params.step || 1;
         var value = params.value ||  instance["get"+id]();
-        console.log(instance.valueOf());
+//        console.log(instance.valueOf());
         var change = params.change || function()  { instance["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
 
         ele =  $("<div title='" + tooltip + "' id='" + id + "'>" +

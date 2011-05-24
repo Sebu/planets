@@ -181,15 +181,22 @@ BasePlanetModel.prototype = {
 
         if(this.running) {
         	
-            var earthPos = posSyl(this.name+"Earth");
-            var polePos = posSyl(this.name+"S1npole");
+            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); //posSyl(this.name+"Earth");
+            var polePos = sceneToSyl(this.sphere[1].visuals.npole.currentPos()); // posSyl(this.name+"S1npole");
             var upVec = earthPos.subtract(polePos);
-            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
-            var planetPos = posSyl(this.name+"Planet").subtract(earthPos);
-            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
+//            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
+            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
+//            var planetPos = posSyl(this.name+"Planet").subtract(earthPos);
+            var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(earthPos);
+
+//            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
+            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
             var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
 
-            var equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
+
+//            var equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
+            var equinoxOnPlane = sceneToSyl(this.sphere[0].visuals.markerball.currentPos()).subtract(earthPos);
+
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
