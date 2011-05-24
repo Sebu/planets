@@ -41,8 +41,8 @@ ModelYavetz = function(params) {
     }
 
     this.update = function(time) {
-        this.addCurve(0, this.sphere[0].curve, this.calcCurve({depth: 0, node: this.planet.mesh}), colors["Path"]);
-        this.addCurve(1, this.sphere[1].curve, this.calcCurve({depth: 1, node: this.planet.mesh}), colors["Hippo"]);
+        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
+        this.addCurve({index: 1, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Hippo"]});
         BasePlanetModel.prototype.update.call(this, time);
     }
 };

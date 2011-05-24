@@ -13,7 +13,7 @@ BasePlanetModel = function() {
     this.currentLookAt = "Earth";
 
     // model specific moon
-    this.sunYear = 365.0;
+//    this.sunYear = 365.0;
     this.days = 0;
     this.lastAngle = 0;
     this.lastPerp = 0;
@@ -94,6 +94,7 @@ BasePlanetModel.prototype = {
         }
         this.sphere[this.sphere.length - 1].anchor.addNode(this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet",  color:colors["Planet"] }));
 
+        // TODO: remove them, use model.sphere[x] etc.
         // create some shortcuts
         for (i in this.sphere) {
             this["setSpeed" + i] = new Function("value", "this.sphere[" + i + "].setSpeed(value);");
@@ -234,11 +235,13 @@ BasePlanetModel.prototype = {
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         if (this.currentPos != "Free") {
-          if (this.currentLookAt != "Free")
+          if (this.currentLookAt != "Free") {
+            console.log("wuyr");
             this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
+            }
         } else {
           if (this.currentLookAt != "Free")
-              this.camera.rotateTarget(getNodePos(this.name+this.currentLookAt));
+              this.camera.rotateTarget({x: 0, y: 0, z: 0}); //getNodePos({this.name+this.currentLookAt));
         }
     },
 
@@ -287,13 +290,12 @@ BasePlanetModel.prototype = {
 
 
     // update or create&add a curve (hippopede or path) to an anchor node 
-    addCurve : function(node, anchor, curvePos, color) {
-        if(!this.curves[node]) {
-            this.curves[node]= new Curve({pos: curvePos, color: color});
-//            anchor.setBaseColor(color);
-            anchor.addNode(this.curves[node]);
+    addCurve : function(params) {
+        if(!this.curves[params.index]) {
+            this.curves[params.index] = new Curve({pos: this.calcCurve({start: params.start, node: params.node}), color: params.color});
+            params.anchor.addNode(this.curves[params.index]);
         } else {
-            if(this.curves[0].getEnabled()) this.curves[node].setPos(curvePos);
+            if(this.curves[params.index].getEnabled()) this.curves[params.index].setPos( this.calcCurve({start: params.start, node: params.node}) );
         }
     },
     
@@ -302,7 +304,7 @@ BasePlanetModel.prototype = {
         oldAngle = [];
         oldRotate = [];
         var step = 0;
-        var start = params.depth;
+        var start = params.start;
         var node = params.node;
         var maxSegments = params.segments || 80; //-Math.round(20/step);
         var j = params.start || -20;

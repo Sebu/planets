@@ -19,7 +19,7 @@ ModelSimple = function(params) {
     }
 
     this.update = function(time) {
-        this.addCurve(0, this.root, this.calcCurve({depth: -1, node: this.planet.mesh}), colors["Path"]);
+        this.addCurve({index: 0, anchor: this.root, start: -1, node: this.planet.mesh, color: colors["Path"]});
         BasePlanetModel.prototype.update.call(this, time);
     }
 

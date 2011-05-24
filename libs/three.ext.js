@@ -210,8 +210,8 @@ Translate = function(params) {
   this.position.x = params.x || 0.0;
   this.position.y = params.y || 0.0;
   this.position.z = params.z || 0.0;
-//  nodePool[params.id] = this;
 }
+
 Translate.prototype = new THREE.Object3D;
 Translate.prototype.constructor = Translate;
 
@@ -265,7 +265,7 @@ Planet = function(params) {
 
     this.rotation.x = degToRad(this.beta);
 
-    nodePool[params.inner_id] = this.mesh;
+//    nodePool[params.inner_id] = this.mesh;
 
 };
 
@@ -425,8 +425,8 @@ Spherical = function Spherical(params) {
 
     this.anchor = new Node();
     this.addNode(this.anchor);
-    this.curve = new Node();
-    this.anchor.addNode(this.curve);
+//    this.curve = new Node();
+//    this.anchor.addNode(this.curve);
 
 
     this.material = new THREE.LineBasicMaterial( {  color: color } );
@@ -467,9 +467,9 @@ Spherical = function Spherical(params) {
     this.anchor.addNode(this.visuals.markerball);
     this.anchor.addNode(this.visuals.npole);
     this.anchor.addNode(this.visuals.spole);
-    nodePool[this.inner_id] = this.visuals.markerball;
-    nodePool[this.inner_id+"npole"] = this.visuals.npole;
-    nodePool[this.inner_id+"spole"] = this.visuals.spole;
+//    nodePool[this.inner_id] = this.visuals.markerball;
+//    nodePool[this.inner_id+"npole"] = this.visuals.npole;
+//    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
     this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color } ));
@@ -487,7 +487,9 @@ Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
 
 Spherical.prototype.getPlane = function() {
-    var plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
+
+//    var plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
+    var plane = Plane.create(Vector.Zero(3), sceneToSyl(this.visuals.npole.currentPos()).toUnitVector());
     return plane;
 }
 
@@ -571,38 +573,37 @@ sceneToSyl = function(pos) {
     return Vector.create([pos.x, pos.y, pos.z]);
 }
 
-posSyl = function(node) {
-    return sceneToSyl(getNodePos(node));
-}
+//posSyl = function(node) {
+//    return sceneToSyl(getNodePos(node));
+//}
 
 // store key/values of 3D nodes (planet,sun,poles etc.)
-nodePool = {};
+//nodePool = {};
 
 // locate a specific node in world space
-getNodePos = function(name) {
-    var node = nodePool[name];
-    if(!node) return {x:0,y:0,z:0};
-    return node.currentPos();
-
-}
+//getNodePos = function(name) {
+//    var node = nodePool[name];
+//    if(!node) return {x:0,y:0,z:0};
+//    return node.currentPos();
+//}
 
 // locate a specific node on canvas (preseve z value of projection)
-getNodePosCanvas = function(name) {
-    var node = nodePool[name];
-    if(!node) return {x:0,y:0,z:0};
-
-    var posTmp = node.currentPos();
-
-    var canvas = app.canvas.domElement;
-    app.camera.matrixWorldInverse.multiplyVector3( posTmp );
-    var zTmp = -posTmp.z;
-
-    app.camera.projectionMatrix.multiplyVector3( posTmp );
-    pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
+//getNodePosCanvas = function(name) {
+//    var node = nodePool[name];
+//    if(!node) return {x:0,y:0,z:0};
+//
+//    var posTmp = node.currentPos();
+//
+//    var canvas = app.canvas.domElement;
+//    app.camera.matrixWorldInverse.multiplyVector3( posTmp );
+//    var zTmp = -posTmp.z;
+//
+//    app.camera.projectionMatrix.multiplyVector3( posTmp );
+//    pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
 
     //if node is outside of canvas shift pos to z=-1 
-    if (pos.x<0 || pos.x>canvas.width-50) pos.z = -1.0;
-    if (pos.y<0 || pos.y>canvas.height-20) pos.z = -1.0;
+//    if (pos.x<0 || pos.x>canvas.width-50) pos.z = -1.0;
+//    if (pos.y<0 || pos.y>canvas.height-20) pos.z = -1.0;
 
-    return pos;
-}
+//  return pos;
+//}

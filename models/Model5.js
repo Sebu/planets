@@ -55,8 +55,7 @@ Model5 = function(params) {
     }
 
     this.update = function(time) {
-        this.addCurve(0, this.sphere[0].curve, this.calcCurve({depth: 0, node: this.planet.mesh}), colors["Path"]);
-        //this.addCurve(1, this.sphere[3].curve, this.calcCurve(2, this.name + "Planet"), colors["Hippo"]);
+        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
         BasePlanetModel.prototype.update.call(this, time);
     }
 
