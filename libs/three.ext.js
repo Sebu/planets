@@ -265,7 +265,7 @@ Planet = function(params) {
 
     this.rotation.x = degToRad(this.beta);
 
-//    nodePool[params.inner_id] = this.mesh;
+    nodePool[params.inner_id] = this.mesh;
 
 };
 
@@ -579,14 +579,14 @@ sceneToSyl = function(pos) {
 //}
 
 // store key/values of 3D nodes (planet,sun,poles etc.)
-//nodePool = {};
+nodePool = {};
 
 // locate a specific node in world space
-//getNodePos = function(name) {
-//    var node = nodePool[name];
-//    if(!node) return {x:0,y:0,z:0};
-//    return node.currentPos();
-//}
+getNodePos = function(name) {
+    var node = nodePool[name];
+    if(!node) return {x:0,y:0,z:0};
+    return node.currentPos();
+}
 
 // locate a specific node on canvas (preseve z value of projection)
 //getNodePosCanvas = function(name) {

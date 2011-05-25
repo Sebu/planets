@@ -193,10 +193,10 @@ myApp.prototype.update = function(time) {
         model.update(time);
 
         // infoBox data
-        $("#sunAngle").text(Math.round(model.sunAngle));
-        $("#eclipticAngle").text(Math.round(model.eclipticAngle));
+        $("#sunAngle").text( model.sunAngle.toFixed(1) );
+        $("#eclipticAngle").text( model.eclipticAngle.toFixed(1) );
         $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2));
-        $("#latitude").text(Math.round(model.latitude));
+        $("#latitude").text( model.latitude.toFixed(1) );
         $("#days").text(Math.round(model.days));
 
 
@@ -308,7 +308,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         // playback div       
         $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
         $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
-        UI.slider({model: model, id: "Speed", min:0.001, max:2000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+        UI.slider({model: model, id: "Speed", min:0.001, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 
 
