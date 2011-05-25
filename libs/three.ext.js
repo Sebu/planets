@@ -381,11 +381,12 @@ Circle.prototype.setBeta = function(angle) {
 
 /*
  * @constructor
- * point cloude
+ * point cloud
  */
 Cloud = function(params) {
     var geo = new THREE.Geometry();
     var x = 0,y = 0,z = 0;
+    geo.vertices.push( new THREE.Vertex( new THREE.Vector3( 0.0, 10.0, 0.0 ) ) );
     for (var sliceNum = 0; sliceNum < params.count; sliceNum++) {
        x = (Math.random() - 0.5);
        y = (Math.random() - 0.5);

@@ -110,7 +110,7 @@ BasePlanetModel.prototype = {
         this.sphere[0].visuals.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 
         // add stars
-        this.sphere[1].addNode( this.stars = new Cloud({count:50}) );
+        this.sphere[0].anchor.addNode( this.stars = new Cloud({count:50}) );
         
         //TODO: deprecated?
         this.showSphere0 = function(state) {
