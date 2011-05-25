@@ -434,9 +434,15 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         } else if (model instanceof ModelHippo) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "S 2 ecliptic"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 3"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 4"}).appendTo("#angle");
+
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"Speed0",  max:1100, text:"S 1,2"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed0",  max:1100, text:"S 2"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 3"}).appendTo("#speed");
+            this.camera.rotateX(Math.PI);
+
 
 
         } else if (model instanceof  ModelSun) {

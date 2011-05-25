@@ -6,7 +6,7 @@
 ModelHippo = function(params) {
 	BasePlanetModel.call(this);
     params.name = "ModelHippo";
-    params.spheres = 2;
+    params.spheres = 3;
     this.init(params);
 
     this.sun.setEnabled(false);
@@ -15,11 +15,14 @@ ModelHippo = function(params) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
 
-
-
     this.setSpeed0 = function(speed) {
-        this.sphere[0].setSpeed(speed);
-        this.sphere[1].setSpeed(-speed);
+        this.sphere[0].setSpeed(-speed);
+    }
+
+
+    this.setSpeed1 = function(speed) {
+        this.sphere[1].setSpeed(speed);
+        this.sphere[2].setSpeed(-speed);
     }
 
     this.update = function(time) {

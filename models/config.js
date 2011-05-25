@@ -255,12 +255,12 @@ SimpleTest: {
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
-HippoTest: {
+HippopedeIntroduction: {
   model: "ModelHippo",
   sphere: [
-    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
-    {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 100, rotateStart: 0 },
+    {axisAngle: 20.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] }
 
