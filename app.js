@@ -164,10 +164,12 @@ myApp.prototype.setCurrentScene = function(scene) {
 myApp.prototype.update = function(time) {
 
         // handle input     
-        if (Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
-        if (Ori.input.isDown("RIGHT")) this.camera.translateNew(-0.6, 0, 0);
-        if (Ori.input.isDown("DOWN")) this.camera.translateNew(0, 0, -0.6);
-        if (Ori.input.isDown("UP")) this.camera.translateNew(0, 0, 0.6);
+        if (model.currentPos != "Earth") {
+          if (Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
+          if (Ori.input.isDown("RIGHT")) this.camera.translateNew(-0.6, 0, 0);
+          if (Ori.input.isDown("DOWN")) this.camera.translateNew(0, 0, -0.6);
+          if (Ori.input.isDown("UP")) this.camera.translateNew(0, 0, 0.6);
+        }
         
         
         if (Ori.input.mouse.wheel) this.camera.translateNew(0.0, 0.0, Ori.input.mouse.z);
