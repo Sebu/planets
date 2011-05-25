@@ -335,6 +335,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 //           UI.slider({model:model, id:"Speed2", min: -6000, max:6000, text:"S 3 (synodic)"}).appendTo("#speed");
             UI.slider({model:model, id:"SunSpeed",  max:1100, text:"S 2 Sun"}).appendTo("#speed");
 
+            UI.box({id: "rotateStart", text: "Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1"}).appendTo("#rotateStart");
+           UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2"}).appendTo("#rotateStart");
+           UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3"}).appendTo("#rotateStart");
 
             $("#moon input").change();
 
@@ -368,7 +372,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
-            UI.box("rotateStart", "Rotation Start (degrees)").appendTo("#parameters");
+            UI.box({id:"rotateStart", text: "Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");

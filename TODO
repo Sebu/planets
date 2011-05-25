@@ -87,15 +87,16 @@ DONE
 - color mendell red / schfixed blue
 - fix moon 12/13 deg? paper?
 - save presets (local storage?)
+- star at north pole 
 
 TODO
-- star at north pole 
+- center the labels
 - webdesigners: 
-  animation speed, 
-- compare moon models
-  - (show diff in latitude)
+  animation speed, latitude presets,
 
 NEXT
+- compare moon models
+  - (show diff in latitude)
 - update hippopede only on demand
 - only show last or first spheres of a model
 - variable slider max ( depended on model )
