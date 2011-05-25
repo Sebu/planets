@@ -118,14 +118,14 @@ BasePlanetModel.prototype = {
         }
 
         // add Sun and sun spheres
-        this.sphere[1].addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 365.0, color: {r:0.2, g:0.2, b:1.0}}));
+        this.sphere[1].addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
         this.systemSun[0].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.systemSun[0];
         // shortcuts for the sun
 
         this.setSunSpeed = function(value) { this.systemSun[0].setSpeed(value); };
-        this.getSunSpeed = function() { this.systemSun[0].getSpeed(); };
-
+        this.getSunSpeed = function() { return this.systemSun[0].getSpeed(); };
+  
         // hide everything
         this.root.setEnabled(false);
 
@@ -156,6 +156,7 @@ BasePlanetModel.prototype = {
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
+        this.setSunSpeed(365);
         if(this.sphere[3]) this.sphere[3].setArcBeta(this.currentPlanet.betaRotate);
 
         // hide arcs of outer sphere
