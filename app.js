@@ -34,7 +34,6 @@ myApp.prototype.init = function(params) {
         // TODO : shorten
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -17.0 } });
-        this.camera.rotateY(Math.PI + 0.1);
 
 
         // create models
@@ -281,6 +280,9 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         $("#view > *").remove();
         $("#parameters > *").remove();
         $("#legendContainer > *").remove();
+        
+        this.camera.rotateY(Math.PI + 0.1);
+
 
         // create legend
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
@@ -441,7 +443,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:model, id:"Speed0",  max:1100, text:"S 2"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 3"}).appendTo("#speed");
-            this.camera.rotateX(Math.PI);
+
 
 
 
