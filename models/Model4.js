@@ -6,22 +6,21 @@ Model4 = function(params) {
 	BasePlanetModel.call(this);
     params.name = "Model4";
     params.spheres = 4;
+    this.speed0Factor = 100;    
     this.init(params);
 
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
-        //Spherical.prototype.setAxisAngle.call(this, 90 - angle);
     }
 
     this.setSpeed0 = function(speed) {
         if (this.sphere[0].getSpeed()==0 && speed == 1) {
-          this.setSpeed(this.getSpeed()*10);
+          this.setSpeed(this.getSpeed()*this.speed0Factor);
 
         } else if(this.sphere[0].getSpeed()!=0 && speed == 0) {
-          this.setSpeed(this.getSpeed()/10);
+          this.setSpeed(this.getSpeed()/this.speed0Factor);
         }
         this.sphere[0].setSpeed(-speed);
-
     }
 
     this.setSpeed2 = function(speed) {

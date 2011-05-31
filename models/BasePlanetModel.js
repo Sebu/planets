@@ -19,7 +19,7 @@ BasePlanetModel = function() {
     this.lastPerp = 0;
     this.eclipticAngle2 = 0;
 
-    this.setSpeed(600);
+    this.setSpeed(60);
     this.running=true;
 
     
