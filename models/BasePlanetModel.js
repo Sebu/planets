@@ -109,7 +109,7 @@ BasePlanetModel.prototype = {
 
         }
         
-        // TODO: hacky
+        // TODO: hacky all over
         this.setSpeed0 = function(speed) {
           if (this.sphere[0].getSpeed()==0 && speed == 1) {
             this.setSpeed(this.getSpeed()*this.speed0Factor);
