@@ -14,7 +14,14 @@ Model4 = function(params) {
     }
 
     this.setSpeed0 = function(speed) {
+        if (this.sphere[0].getSpeed()==0 && speed == 1) {
+          this.setSpeed(this.getSpeed()*10);
+
+        } else if(this.sphere[0].getSpeed()!=0 && speed == 0) {
+          this.setSpeed(this.getSpeed()/10);
+        }
         this.sphere[0].setSpeed(-speed);
+
     }
 
     this.setSpeed2 = function(speed) {

@@ -6,7 +6,7 @@
 ModelHippo = function(params) {
 	BasePlanetModel.call(this);
     params.name = "ModelHippo";
-    params.spheres = 3;
+    params.spheres = 4;
     this.init(params);
 
     this.sun.setEnabled(false);
@@ -20,9 +20,9 @@ ModelHippo = function(params) {
     }
 
 
-    this.setSpeed1 = function(speed) {
-        this.sphere[1].setSpeed(speed);
-        this.sphere[2].setSpeed(-speed);
+    this.setSpeed2 = function(speed) {
+        this.sphere[2].setSpeed(speed);
+        this.sphere[3].setSpeed(-speed);
     }
 
     this.update = function(time) {
