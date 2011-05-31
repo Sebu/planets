@@ -8,10 +8,6 @@ Model5 = function(params) {
     params.spheres = 5;
     this.init(params);
 
-    this.setSpeed0 = function(speed) {
-        this.sphere[0].setSpeed(-speed);
-    }
-
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }

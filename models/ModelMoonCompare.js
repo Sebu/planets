@@ -24,11 +24,6 @@ ModelMoonCompare = function(params) {
 
 
     
-//    this.sun.setEnabled(false);
-
-    this.setSpeed0 = function(speed) {
-        this.sphere[0].setSpeed(-speed);
-    }
 
     this.metonYear = 0;
     this.setMetonYear = function(val) {
@@ -140,7 +135,6 @@ ModelMoonCompare = function(params) {
     }
 
     this.setAxisAngle2 = function(angle) {
-        console.log(angle);
         if(this.showPhase) this.sphere[2].setAxisAngle(angle); 
         else this.sphere[2].setAxisAngle(-angle);
         this.sphere[4].setAxisAngle(angle);

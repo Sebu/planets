@@ -91,11 +91,13 @@ DONE
 - mirror start of north pole 
 - presets (view stars: false)
 - daily only 0 and 1 (switch and adjust speed)
+- moon compare phase difference ( on/off switch )
+- daily on/off button
 
 TODO
 - hippo intro -> 4 spheres with hidden sphere 1
-- daily 0/1 button
-- moon compare phase difference ( on/off switch )
+- moonCompare 2x info box stu
+
 - webdesigners: 
   animation speed, latitude presets, center direction labels
 

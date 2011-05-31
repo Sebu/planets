@@ -11,6 +11,7 @@ BasePlanetModel = function() {
     this.currentPlanet = {};
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
+    this.speed0Factor = 100;
 
     // model specific moon
 //    this.sunYear = 365.0;
@@ -108,6 +109,17 @@ BasePlanetModel.prototype = {
 
         }
         
+        // TODO: hacky
+        this.setSpeed0 = function(speed) {
+          if (this.sphere[0].getSpeed()==0 && speed == 1) {
+            this.setSpeed(this.getSpeed()*this.speed0Factor);
+  
+          } else if(this.sphere[0].getSpeed()!=0 && speed == 0) {
+            this.setSpeed(this.getSpeed()/this.speed0Factor);
+          }
+          this.sphere[0].setSpeed(-speed);
+        }
+
         //TODO: hack white north pole
         this.sphere[0].visuals.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 

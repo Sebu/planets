@@ -10,11 +10,6 @@ ModelMoon = function(params) {
 
 
     
-//    this.sun.setEnabled(false);
-    this.setSpeed0 = function(speed) {
-        this.sphere[0].setSpeed(-speed);
-    }
-
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
         //Spherical.prototype.setAxisAngle.call(this, 90 - angle);

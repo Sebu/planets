@@ -15,10 +15,6 @@ ModelHippo = function(params) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
 
-    this.setSpeed0 = function(speed) {
-        this.sphere[0].setSpeed(-speed);
-    }
-
 
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
