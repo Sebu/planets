@@ -256,7 +256,7 @@ SimpleTest: {
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
 HippopedeIntroduction: {
-  model: "ModelHippo",
+  model: "Model4",
   showStars: false,
   showSun: false,
   sphere: [
