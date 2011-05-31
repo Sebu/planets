@@ -296,6 +296,9 @@ Planet.prototype.setDist = function(dist) {
  */
 Curve  = function(params) {
 
+    console.log(params.trails);
+    this.trails = (params.trails==undefined) ? true : false;
+
     this.setPos = function(pos) {
         this.gen(pos);
     };
@@ -306,9 +309,11 @@ Curve  = function(params) {
         this.geo.colors = [];
         for (var i = 0; i < this.curvePos.length; i++) {
             this.geo.vertices.push( new THREE.Vertex( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) ) );
-            color = new THREE.Color( 0xFFFFFF );
-            color.setHSV( 1.0, 0.0, 0.3 + 0.7*(i / this.curvePos.length) );
-            this.geo.colors.push( color );
+            if(this.trails) {
+              var color = new THREE.Color( 0xFFFFFF );
+              color.setHSV( 1.0, 0.0, 0.3 + 0.7*(i / this.curvePos.length) );
+              this.geo.colors.push( color );
+            }
         }
         this.geo.__dirtyVertices = true;
     };
@@ -317,7 +322,7 @@ Curve  = function(params) {
     this.setPos(params.pos);
 
     var material = new THREE.LineBasicMaterial( { linewidth:2, color: rgbToHex(params.color)  } );     
-    material.vertexColors = true;
+    if(this.trails) material.vertexColors = true;
 
     THREE.Line.call(this, this.geo, material);
 };

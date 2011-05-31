@@ -199,34 +199,33 @@ BasePlanetModel.prototype = {
 
 
     // update movement and parameters
+    // TODO: comments!!!!
     update : function(time) {
 
         if(this.running) {
         	
-            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); //posSyl(this.name+"Earth");
-            var polePos = sceneToSyl(this.sphere[1].visuals.npole.currentPos()); // posSyl(this.name+"S1npole");
+            var earthPos = sceneToSyl(this.earth.mesh.currentPos());
+            var polePos = sceneToSyl(this.sphere[1].visuals.npole.currentPos());
             var upVec = earthPos.subtract(polePos);
-//            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Planet")).subtract(earthPos);
             var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
-//            var planetPos = posSyl(this.name+"Planet").subtract(earthPos);
             var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(earthPos);
 
-//            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(posSyl(this.name+"Sun")).subtract(earthPos);
             var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
             var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
 
-
-//            var equinoxOnPlane = posSyl(this.name+"S0").subtract(earthPos);
             var equinoxOnPlane = sceneToSyl(this.sphere[0].visuals.markerball.currentPos()).subtract(earthPos);
 
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
+
+            // shade planet if sun is in a 15deg region
             if (this.sun.getEnabled() && this.sunAngle<=15)
-                this.planet.setShade({r: 0.4, g: 0.4, b:0.4});
+                this.planet.setShade({r: 0.4, g: 0.4, b: 0.4});
             else
                 this.planet.setShade(this.currentPlanet.color);
 
+            // dot product angle fix > 90
             if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
                 this.sunAngle = -this.sunAngle;
 
@@ -244,25 +243,28 @@ BasePlanetModel.prototype = {
             this.latitude = calcAngle(upVec,planetPos)-90;
 
             this.eclipticSpeed = (this.eclipticAngle2 - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
+
+
+
+            // OTHER
+            // days determined by sun speed
             this.days += (this.systemSun[0].getSpeed()/this.speed)*time;
             
             // update movement of all spheres
             for (i in model.updateList) {
                 model.updateList[i].updateMovement((365.0*time)/this.speed);
             }
-
-
             //TODO: on model change -> events?
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
+
         if (this.currentPos != "Free") {
           if (this.currentLookAt != "Free") {
-            console.log("wuyr");
             this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
             }
         } else {
           if (this.currentLookAt != "Free")
-              this.camera.rotateTarget({x: 0, y: 0, z: 0}); //getNodePos({this.name+this.currentLookAt));
+              this.camera.rotateTarget({x: 0, y: 0, z: 0});
         }
     },
 
@@ -313,7 +315,7 @@ BasePlanetModel.prototype = {
     // update or create&add a curve (hippopede or path) to an anchor node 
     addCurve : function(params) {
         if(!this.curves[params.index]) {
-            this.curves[params.index] = new Curve({pos: this.calcCurve({start: params.start, node: params.node}), color: params.color});
+            this.curves[params.index] = new Curve({trails: params.trails, pos: this.calcCurve({start: params.start, node: params.node}), color: params.color});
             params.anchor.addNode(this.curves[params.index]);
         } else {
             if(this.curves[params.index].getEnabled()) this.curves[params.index].setPos( this.calcCurve({start: params.start, node: params.node}) );

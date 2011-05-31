@@ -209,12 +209,12 @@ myApp.prototype.update = function(time) {
             eastLabel.setPosition(model.east.getPosCanvas(this.camera, this.canvas));
             westLabel.setPosition(model.west.getPosCanvas(this.camera, this.canvas));
         } else {
-            equinoxLabel.setPosition(model.sphere[0].visuals.markerball.getPosCanvas(this.camera, this.canvas)); //getNodePosCanvas(model.name + "S0"));
-            npoleLabel.setPosition(model.sphere[0].visuals.npole.getPosCanvas(this.camera, this.canvas)); //getNodePosCanvas(model.name + "S0npole"));
-            spoleLabel.setPosition(model.sphere[0].visuals.spole.getPosCanvas(this.camera, this.canvas)); //getNodePosCanvas(model.name + "S0spole"));
+            equinoxLabel.setPosition(model.sphere[0].visuals.markerball.getPosCanvas(this.camera, this.canvas)); 
+            npoleLabel.setPosition(model.sphere[0].visuals.npole.getPosCanvas(this.camera, this.canvas)); 
+            spoleLabel.setPosition(model.sphere[0].visuals.spole.getPosCanvas(this.camera, this.canvas)); 
         }
-        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.camera, this.canvas)); //getNodePosCanvas(model.name + "Planet"));
-        if (model.sun.getEnabled()) sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.camera, this.canvas)); //getNodePosCanvas(model.name + "Sun"));
+        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.camera, this.canvas));
+        if (model.sun.getEnabled()) sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.camera, this.canvas)); 
 
 //*/        
     };
