@@ -118,6 +118,8 @@ ModelMoonCompare = function(params) {
 
     this.reset = function () {
         BasePlanetModel.prototype.reset.call(this);
+        this.sphere[1].setRotateAngle(this.sphere[1].rotateStart);
+        this.sphere[2].setRotateAngle(this.sphere[2].rotateStart);
         this.sphere[3].setRotateAngle(this.sphere[1].rotateStart);
         this.sphere[4].setRotateAngle(this.sphere[2].rotateStart);
     }

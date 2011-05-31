@@ -256,19 +256,21 @@ SimpleTest: {
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
 HippopedeIntroduction: {
-  model: "ModelHippo",
+  model: "Model4",
+  showStars: false,
+  showSun: false,
   sphere: [
-    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 90.0, speed: 100, rotateStart: 0 },
-    {axisAngle: 20.0,  speed: 0, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0, visible: false },
+    {axisAngle: 24.0,  speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 }
   ] }
 
 };
 
 
 var moonModels = {
- Mendell: { speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
+ Mendell: { phase: 10, speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
  Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return Math.abs(d-z); } },
  SchFixed: { speed1: function(d,z)  {return Math.abs(d-z); }, speed2: function(d,z) { return d; } }
 };

@@ -89,11 +89,13 @@ DONE
 - save presets (local storage?)
 - star at north pole 
 - mirror start of north pole 
+- presets (view stars: false)
+
 
 TODO
-- presets (view stars: false)
 - hippo intro -> 4 spheres with hidden sphere 1
-- moon compare phase difference ( on/off switch)
+- moon compare phase difference ( on/off switch )
+
 - center the labels
 - webdesigners: 
   animation speed, latitude presets,

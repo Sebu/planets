@@ -303,7 +303,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
         UI.slider({model: this.camera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
         for (i in model.sphere) {
-            UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#vis");
+            if(model["getShowSphere" + i])
+              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#vis");
         }
         UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");

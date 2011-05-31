@@ -31,11 +31,11 @@ BasePlanetModel.prototype = {
 
 
     setShowCurve0 : function(state) { this.curves[0].setEnabled(state); },
-    getShowCurve0 : function() { this.curves[0].getEnabled(); },
+    getShowCurve0 : function() { if(!this.curves[0]) return true; return this.curves[0].getEnabled(); },
     setShowCurve1 : function(state) { this.curves[1].setEnabled(state); },
-    getShowCurve1 : function() { this.curves[1].getEnabled(); },
+    getShowCurve1 : function() { if(!this.curves[1]) return true; return this.curves[1].getEnabled(); },
     setShowStars : function(state) { this.stars.setEnabled(state); },
-    getShowStars : function() { this.stars.getEnabled(); },
+    getShowStars : function() { return this.stars.getEnabled(); },
 
 
     setSpeed : function(val) {
@@ -104,6 +104,8 @@ BasePlanetModel.prototype = {
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
             this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
+            this["getShowSphere" + i] = function() { return true; };
+
         }
         
         //TODO: hack white north pole
@@ -139,24 +141,30 @@ BasePlanetModel.prototype = {
             color: colors["Planet"],
             betaRotate: 90.0,
             label: "Planet",
+            showStars: true,
+            showSun: true,
             sphere: [
-                {axisAngle: 38.0, speed: 0, rotateStart: 0 },
-                {axisAngle: 24.0,  speed: 365, rotateStart: 0 },
-                {axisAngle: 90.0, speed: 570, rotateStart: 0 },
-                {axisAngle: 18.0, speed: 0, rotateStart: 0 }
+                {axisAngle: 38.0, speed: 0, rotateStart: 0, visible: true },
+                {axisAngle: 24.0,  speed: 365, rotateStart: 0, visible: true },
+                {axisAngle: 90.0, speed: 570, rotateStart: 0, visible: true },
+                {axisAngle: 18.0, speed: 0, rotateStart: 0, visible: true }
             ]
         };
         // extend default settings  
         $.extend(true, this.currentPlanet, node);
         
         //TODO: better merge
-        for(var i in this.sphere)
+        for(var i in this.sphere) {
             $.extend(true, this.sphere[i], this.currentPlanet.sphere[i]);
+            if(this.currentPlanet.sphere[i]) this.sphere[i].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], this.currentPlanet.sphere[i].visible);
+        }
         
+        this.setShowStars(this.currentPlanet.showStars);
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
         this.setSunSpeed(365);
+        this.sun.setEnabled(this.currentPlanet.showSun);
         if(this.sphere[3]) this.sphere[3].setArcBeta(this.currentPlanet.betaRotate);
 
         // hide arcs of outer sphere

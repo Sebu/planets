@@ -326,9 +326,9 @@ var UI = {
         var model = params.model;
         var id = params.id;
         var text = params.text || params.id;
+        var value = model["get"+id]() ? "checked" : "";;
         var change = params.change || function()  { model["set"+id](this.checked); };
-        
-        ele = $("<input type=checkbox name='visMode' checked='true'>"+ text + "</input>").bind("click", change);
+        ele = $("<input type=checkbox name='visMode' " + value +">"+ text + "</input>").bind("click", change);
                 
         return ele;
     }
