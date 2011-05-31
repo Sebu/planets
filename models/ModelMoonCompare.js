@@ -130,7 +130,8 @@ ModelMoonCompare = function(params) {
     }
 
     this.setAxisAngle2 = function(angle) {
-        this.sphere[2].setAxisAngle(angle); 
+        console.log(angle);
+        this.sphere[2].setAxisAngle(-angle); 
         this.sphere[4].setAxisAngle(angle);
     }
 

@@ -270,9 +270,9 @@ HippopedeIntroduction: {
 
 
 var moonModels = {
- Mendell: { phase: 10, speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
- Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return Math.abs(d-z); } },
- SchFixed: { speed1: function(d,z)  {return Math.abs(d-z); }, speed2: function(d,z) { return d; } }
+ Mendell: { phase: true, speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
+ Schiparelli: { phase: false, speed1: function(d,z)  {return d; }, speed2: function(d,z) { return Math.abs(d-z); } },
+ SchFixed: { phase: false, speed1: function(d,z)  {return Math.abs(d-z); }, speed2: function(d,z) { return d; } }
 };
 
 
