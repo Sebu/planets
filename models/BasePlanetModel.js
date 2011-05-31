@@ -113,10 +113,10 @@ BasePlanetModel.prototype = {
         this.setSpeed0 = function(speed) {
           if (this.sphere[0].getSpeed()==0 && speed == 1) {
             this.setSpeed(this.getSpeed()*this.speed0Factor);
-  
           } else if(this.sphere[0].getSpeed()!=0 && speed == 0) {
             this.setSpeed(this.getSpeed()/this.speed0Factor);
           }
+          $("#Speed > input").attr("value",Number(this.getSpeed()));
           this.sphere[0].setSpeed(-speed);
         }
 
