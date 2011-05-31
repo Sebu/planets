@@ -7,6 +7,7 @@ ModelMoonCompare = function(params) {
 	BasePlanetModel.call(this);	
     params.name = "ModelMoonCompare";
     params.spheres = 3;
+    this.showPhase = false;
     this.init(params);
 
 
@@ -124,6 +125,15 @@ ModelMoonCompare = function(params) {
         this.sphere[4].setRotateAngle(this.sphere[2].rotateStart);
     }
 
+    this.setShowPhase = function(state) {  
+      this.showPhase = state;
+      this.setAxisAngle2(5);
+    }
+
+    this.getShowPhase = function() {
+      return this.showPhase;
+    } 
+
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(angle); 
         this.sphere[3].setAxisAngle(angle);
@@ -131,7 +141,8 @@ ModelMoonCompare = function(params) {
 
     this.setAxisAngle2 = function(angle) {
         console.log(angle);
-        this.sphere[2].setAxisAngle(-angle); 
+        if(this.showPhase) this.sphere[2].setAxisAngle(angle); 
+        else this.sphere[2].setAxisAngle(-angle);
         this.sphere[4].setAxisAngle(angle);
     }
 

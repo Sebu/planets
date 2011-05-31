@@ -300,7 +300,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         UI.optionsFromHash("#longitudePresets", latitudePresets);
         UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
         // view sub box box 
-        UI.box({id:"vis", text:"Show"}).appendTo("#view");
+        UI.box({id:"vis", text:"View"}).appendTo("#view");
         UI.slider({model: this.camera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
         for (i in model.sphere) {
             if(model["getShowSphere" + i])
@@ -344,6 +344,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3"}).appendTo("#rotateStart");
 
             $("#moon input").change();
+
+            if(model instanceof ModelMoonCompare) UI.checkbox({model:model, id:"ShowPhase"}).appendTo("#vis");
 
             if(model instanceof ModelMoon) $("#moonInfoContainer,#moonModel").fadeIn(500);
 
