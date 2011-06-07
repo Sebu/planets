@@ -94,9 +94,18 @@ DONE
 - moon compare phase difference ( on/off switch )
 - daily on/off button
 - hippo intro -> 4 spheres with hidden sphere 1
+- moonCompare 2x info box stu
+
+- eudoxos
+- sun, moon, moon compare
+- kallippos
+- yavetz
+- simple, hippo
 
 TODO
-- moonCompare 2x info box stu
+- fix ecliptic speed
+- aristotel
+- ptolomy
 - bug: moving the model zooms out
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch

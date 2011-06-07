@@ -18,7 +18,7 @@ BasePlanetModel = function() {
     this.days = 0;
     this.lastAngle = 0;
     this.lastPerp = 0;
-    this.eclipticAngle2 = 0;
+    this.eclipticAngle = 0;
 
     this.setSpeed(60);
     this.running=true;
@@ -159,7 +159,10 @@ BasePlanetModel.prototype = {
                 {axisAngle: 38.0, speed: 0, rotateStart: 0, visible: true },
                 {axisAngle: 24.0,  speed: 365, rotateStart: 0, visible: true },
                 {axisAngle: 90.0, speed: 570, rotateStart: 0, visible: true },
-                {axisAngle: 18.0, speed: 0, rotateStart: 0, visible: true }
+                {axisAngle: 18.0, speed: 0, rotateStart: 0, visible: true },
+                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
+                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
+                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
             ]
         };
         // extend default settings  
@@ -230,20 +233,19 @@ BasePlanetModel.prototype = {
                 this.sunAngle = -this.sunAngle;
 
 
-            this.lastAngle = this.eclipticAngle2;
+            this.lastAngle = this.eclipticAngle;
             this.lastPerp = this.perpAngle;
-            this.eclipticAngle2 = this.eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
+            this.eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
             this.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
 
             // HACK: dot product angle fix > 90
             if (this.perpAngle<=90)
-                this.eclipticAngle2 = 360-this.eclipticAngle2;
+                this.eclipticAngle = 360-this.eclipticAngle;
             if (this.perpAngle>90 && this.lastPerp<90)
                 this.lastAngle  -=360;
             this.latitude = calcAngle(upVec,planetPos)-90;
 
-            this.eclipticSpeed = (this.eclipticAngle2 - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
-
+            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
 
 
             // OTHER
@@ -278,7 +280,7 @@ BasePlanetModel.prototype = {
         this.days = 0;
         this.lastAngle = 0;
         this.lastPerp = 0
-        this.eclipticAngle2 = 0;        
+        this.eclipticAngle = 0;        
 
     },
 

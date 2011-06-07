@@ -11,6 +11,7 @@ ModelMoonCompare = function(params) {
     this.init(params);
 
 
+
     var s20 = this.sphere[3] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
     var s21 = this.sphere[4] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
     this.planet2 = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet2",  color:colors["Planet"]});
@@ -22,7 +23,9 @@ ModelMoonCompare = function(params) {
     this.sphere[3].anchor.addNode(s21);
     this.sphere[4].anchor.addNode(this.planet2);
 
-
+    this.lastAngle2 = 0;
+    this.lastPerp2 = 0;
+    this.eclipticAngle2 = 0;
     
 
     this.metonYear = 0;
@@ -143,7 +146,105 @@ ModelMoonCompare = function(params) {
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
-    
+
+    this.update = function(time) {
+
+        if(this.running) {
+        	
+            var earthPos = sceneToSyl(this.earth.mesh.currentPos());
+
+            var polePos = sceneToSyl(this.sphere[1].visuals.npole.currentPos());
+            var polePos2 = sceneToSyl(this.sphere[3].visuals.npole.currentPos());
+
+            var upVec = earthPos.subtract(polePos);
+            var upVec2 = earthPos.subtract(polePos2);
+
+            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
+            var planetOnPlane2 = this.sphere[3].getPlane().pointClosestTo(sceneToSyl(this.planet2.mesh.currentPos())).subtract(earthPos);
+
+            var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(earthPos);
+            var planetPos2 = sceneToSyl(this.planet2.mesh.currentPos()).subtract(earthPos);
+
+            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
+            var sunOnPlane2 = model.sphere[3].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
+
+            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            var sunOnPlanePerp2 = sunOnPlane2.rotate(Math.PI/2, Line.create(earthPos,upVec2));
+
+            var equinoxOnPlane = sceneToSyl(this.sphere[0].visuals.markerball.currentPos()).subtract(earthPos);
+            var equinoxOnPlane2 = sceneToSyl(this.sphere[0].visuals.markerball.currentPos()).subtract(earthPos);
+
+            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            var equinoxOnPlanePerp2 = equinoxOnPlane2.rotate(Math.PI/2, Line.create(earthPos,upVec2));
+
+            this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
+            this.sunAngle2 = calcAngle(planetOnPlane2, sunOnPlane);
+
+
+            // shade planet if sun is in a 15deg region
+            if (this.sun.getEnabled() && this.sunAngle<=15)
+                this.planet.setShade({r: 0.4, g: 0.4, b: 0.4});
+            else
+                this.planet.setShade(this.currentPlanet.color);
+
+            // dot product angle fix > 90
+            if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
+                this.sunAngle = -this.sunAngle;
+            if (calcAngle(planetOnPlane2, sunOnPlanePerp)<90)
+                this.sunAngle2 = -this.sunAngle2;
+
+            this.lastAngle = this.eclipticAngle;
+            this.lastAngle2 = this.eclipticAngle2;
+
+            this.lastPerp = this.perpAngle;
+            this.lastPerp2 = this.perpAngle2;
+
+            this.eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
+            this.eclipticAngle2 = calcAngle(planetOnPlane2, equinoxOnPlane2);
+
+            this.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
+            this.perpAngle2 = calcAngle(planetOnPlane2, equinoxOnPlanePerp2);
+
+
+            // HACK: dot product angle fix > 90
+            if (this.perpAngle<=90)
+                this.eclipticAngle = 360-this.eclipticAngle;
+            if (this.perpAngle>90 && this.lastPerp<90)
+                this.lastAngle  -=360;
+            this.latitude = calcAngle(upVec,planetPos)-90;
+
+            if (this.perpAngle2<=90)
+                this.eclipticAngle2 = 360-this.eclipticAngle2;
+            if (this.perpAngle2>90 && this.lastPerp2<90)
+                this.lastAngle2  -=360;
+            this.latitude2 = calcAngle(upVec2,planetPos2)-90;
+
+
+            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
+            this.eclipticSpeed2 = (this.eclipticAngle2 - this.lastAngle2)/time*(this.speed/this.systemSun[0].getSpeed());
+
+            // OTHER
+            // days determined by sun speed
+            this.days += (this.systemSun[0].getSpeed()/this.speed)*time;
+            
+            // update movement of all spheres
+            for (i in model.updateList) {
+                model.updateList[i].updateMovement((365.0*time)/this.speed);
+            }
+            //TODO: on model change -> events?
+            if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
+        }
+
+        if (this.currentPos != "Free") {
+          if (this.currentLookAt != "Free") {
+            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
+            }
+        } else {
+          if (this.currentLookAt != "Free")
+              this.camera.rotateTarget({x: 0, y: 0, z: 0});
+        }
+    };    
+
     this.setCurrentMoonModels("Mendell", "SchFixed");
 };
 

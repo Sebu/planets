@@ -45,6 +45,8 @@ myApp.prototype.init = function(params) {
 
         // setup moving labels        
         planetLabel = new UI.Label({text: "Planet"});
+        planetLabel2 = new UI.Label({text: "Moon"});
+
         sunLabel = new UI.Label({text: "Sun"});
         equinoxLabel = new UI.Label({text: "Vernal Equinox"});
         npoleLabel = new UI.Label({text: "North pole"});
@@ -64,6 +66,13 @@ myApp.prototype.init = function(params) {
             <div>longitude speed <span style='float:right;' id='eclipticSpeed'>0</span></div>\
             <div>latitude<span style='float:right;' id='latitude'>0</span></div>\
             <div>days<span style='float:right;' id='days'>0</span></div>\
+            <div id='infoContainer2' style='display:none'>\
+            <div>angle planet/sun <span style='float:right;' id='sunAngle2'>0</span></div>\
+            <div>longitude <span style='float:right; 'id='eclipticAngle2'>0</span></div>\
+            <div>longitude speed <span style='float:right;' id='eclipticSpeed2'>0</span></div>\
+            <div>latitude<span style='float:right;' id='latitude2'>0</span></div>\
+            <div>days<span style='float:right;' id='days2'>0</span></div>\
+            </div>\
             <div id='moonInfoContainer' style='display:none'>\
             <div>zodiacal months</div>\
             <div id='metonZodicalMonths'>0</div>\
@@ -189,9 +198,20 @@ myApp.prototype.update = function(time) {
         // infoBox data
         $("#sunAngle").text( model.sunAngle.toFixed(1) );
         $("#eclipticAngle").text( model.eclipticAngle.toFixed(1) );
-        $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2));
+        $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2) );
         $("#latitude").text( model.latitude.toFixed(1) );
         $("#days").text(Math.round(model.days));
+
+        if(model instanceof ModelMoonCompare) {
+          // infoBox data
+          $("#sunAngle2").text( model.sunAngle2.toFixed(1) );
+          $("#eclipticAngle2").text( model.eclipticAngle2.toFixed(1) );
+          $("#eclipticSpeed2").text(model.eclipticSpeed2.toFixed(2));
+          $("#latitude2").text( model.latitude2.toFixed(1) );
+          $("#days2").text(Math.round(model.days));
+
+          planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.camera, this.canvas));
+        }
 
 
         // update Label position/visibility
@@ -206,6 +226,7 @@ myApp.prototype.update = function(time) {
             npoleLabel.setPosition(model.sphere[0].visuals.npole.getPosCanvas(this.camera, this.canvas)); 
             spoleLabel.setPosition(model.sphere[0].visuals.spole.getPosCanvas(this.camera, this.canvas)); 
         }
+
         planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.camera, this.canvas));
         if (model.sun.getEnabled()) sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.camera, this.canvas)); 
 
@@ -276,6 +297,9 @@ myApp.prototype.getModel = function(name) {
       case "ModelMoon":
         models[name] = new ModelMoon({renderer: this});
         break;
+      case "ModelAristotel":
+        models[name] = new ModelAristotel({renderer: this});
+        break;
       default:
       break;
       };
@@ -303,6 +327,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
         // build up ui
         $("#moonInfoContainer").fadeOut(500);
+        $("#infoContainer2").fadeOut(500);
+
         $("#moonModel").fadeOut(500);
 
         // clear old ui elements
@@ -377,7 +403,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
             $("#moon input").change();
 
-            if(model instanceof ModelMoonCompare) UI.checkbox({model:model, id:"ShowPhase", text:"separated moons"}).appendTo("#vis");
+            if(model instanceof ModelMoonCompare) {
+              UI.checkbox({model:model, id:"ShowPhase", text:"separated moons"}).appendTo("#vis");
+              $("#infoContainer2").fadeIn(500);
+            }
 
             if(model instanceof ModelMoon) $("#moonInfoContainer,#moonModel").fadeIn(500);
 
@@ -426,6 +455,29 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             //   model.sphere[1].materialArc.linewidth = 10;
             //}, function (e) {
             //  model.sphere[1].materialArc.linewidth = 1;});
+            
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
+//            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+
+            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.slider({model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
+
+            UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+
+        } else if (model instanceof ModelAristotel) {
+
+            console.log("bla");
+
+            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
