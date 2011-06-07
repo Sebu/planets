@@ -1,6 +1,6 @@
 
 
-const PI_SCALE = 180.0/Math.PI;
+PI_SCALE = 180.0/Math.PI;
 
 degToRad = function(deg) {
     return deg/PI_SCALE;
@@ -296,7 +296,6 @@ Planet.prototype.setDist = function(dist) {
  */
 Curve  = function(params) {
 
-    console.log(params.trails);
     this.trails = (params.trails==undefined) ? true : false;
 
     this.setPos = function(pos) {
@@ -427,7 +426,7 @@ Spherical = function Spherical(params) {
     this.axisAngle = params.axisAngle || 0.0;
     this.rotateAngle = params.rotateStart || 0.0;
     this.rotateStart = params.rotateStart || 0.0;
-    this.speed = params.speed;
+    this.speed = params.speed || 0.0;
 
     this.anchor = new Node();
     this.addNode(this.anchor);

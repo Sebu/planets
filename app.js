@@ -38,16 +38,9 @@ myApp.prototype.init = function(params) {
 
         // create models
         models = {}; //new Object;
-        models["Model4"] = new Model4({renderer: this});
-        models["ModelMoonCompare"] = new ModelMoonCompare({renderer: this});
-        models["ModelSun"] = new ModelSun({renderer: this});
-        models["ModelSimple"] = new ModelSimple({renderer: this});
-        models["ModelHippo"] = new ModelHippo({renderer: this});
-        models["ModelYavetz"] = new ModelYavetz({renderer: this});
-        models["Model5"] = new Model5({renderer: this});
-        models["ModelMoon"] = new ModelMoon({renderer: this});
         // set start model
-        model = models["Model4"];
+        console.log(this.getModel("Model4"));
+        model = this.getModel("Model4");
 
 
         // setup moving labels        
@@ -255,13 +248,50 @@ myApp.prototype.setView = function(view) {
     };
 
 
+myApp.prototype.getModel = function(name) {
+  var mod = models[name];
+  if(!mod) {
+      switch(name) {
+        case "Model4":
+        models[name] = new Model4({renderer: this});
+        break;
+      case "ModelMoonCompare":
+        models[name] = new ModelMoonCompare({renderer: this});
+        break;
+     case "ModelSun":
+        models[name] = new ModelSun({renderer: this});
+        break;
+      case "ModelSimple":
+        models[name] = new ModelSimple({renderer: this});
+        break;
+      case "ModelHippo":
+        models["ModelHippo"] = new ModelHippo({renderer: this});
+        break;
+      case "ModelYavetz":
+        models["ModelYavetz"] = new ModelYavetz({renderer: this});
+        break;
+      case "Model5":
+        models[name] = new Model5({renderer: this});
+        break;
+      case "ModelMoon":
+        models[name] = new ModelMoon({renderer: this});
+        break;
+      default:
+      break;
+      };
+
+    mod = models[name];
+  };
+  return mod;
+};
+
 // change planet model and create the UI ELEMENTS + add to DOM
 myApp.prototype.setCurrentPlanet = function(preset) {
 
         // switch model
         this.currentPreset = preset;
         var planet = planetPresets[preset];
-        model = models[planet.model];
+        model = this.getModel(planet.model);
         this.setCurrentScene(model.root);
         model.setCurrentPlanet(planet);
         planetLabel.setText(model.currentPlanet.label);
@@ -392,10 +422,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            $("#AxisAngle1").hover(function (e) {
-              model.sphere[1].materialArc.linewidth = 10;
-            }, function (e) {
-              model.sphere[1].materialArc.linewidth = 1;});
+            //$("#AxisAngle1").hover(function (e) {
+            //   model.sphere[1].materialArc.linewidth = 10;
+            //}, function (e) {
+            //  model.sphere[1].materialArc.linewidth = 1;});
             
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
