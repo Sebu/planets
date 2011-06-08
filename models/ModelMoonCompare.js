@@ -220,12 +220,15 @@ ModelMoonCompare = function(params) {
             this.latitude2 = calcAngle(upVec2,planetPos2)-90;
 
 
-            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
-            this.eclipticSpeed2 = (this.eclipticAngle2 - this.lastAngle2)/time*(this.speed/this.systemSun[0].getSpeed());
+            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
+            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)*dayDelta;
+            this.eclipticSpeed2 = (this.eclipticAngle2 - this.lastAngle2)*dayDelta;
+
+            //time*(this.speed/this.systemSun[0].getSpeed());
 
             // OTHER
             // days determined by sun speed
-            this.days += (this.systemSun[0].getSpeed()/this.speed)*time;
+            this.days += dayDelta;
             
             // update movement of all spheres
             for (i in model.updateList) {

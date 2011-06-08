@@ -242,15 +242,17 @@ BasePlanetModel.prototype = {
             if (this.perpAngle<=90)
                 this.eclipticAngle = 360-this.eclipticAngle;
             if (this.perpAngle>90 && this.lastPerp<90)
-                this.lastAngle  -=360;
+                this.lastAngle -= 360;
             this.latitude = calcAngle(upVec,planetPos)-90;
 
-            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)/time*(this.speed/this.systemSun[0].getSpeed());
+            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
+            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)*dayDelta;
 
+            //time*(this.speed/this.systemSun[0].getSpeed());
 
             // OTHER
             // days determined by sun speed
-            this.days += (this.systemSun[0].getSpeed()/this.speed)*time;
+            this.days += dayDelta;
             
             // update movement of all spheres
             for (i in model.updateList) {
