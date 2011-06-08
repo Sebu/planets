@@ -192,7 +192,8 @@ MoonMeton: {
   metonYear: 19,
   metonSynodicMonths: 235,
   metonDays:6940,
-  metonDraconiticMonths: 242,
+  sarosDraconiticMonths: 242,
+  sarosSynodicMonths: 223,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
@@ -205,7 +206,8 @@ MoonCallippus: {
   metonYear: 76,
   metonSynodicMonths: 940,
   metonDays:27759,
-  metonDraconiticMonths: 242,
+  sarosDraconiticMonths: 242,
+  sarosSynodicMonths: 223,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
@@ -218,7 +220,8 @@ Moon3: {
   metonYear: 8,
   metonSynodicMonths: 99,
   metonDays:2922,
-  metonDraconiticMonths: 242, 
+  sarosDraconiticMonths: 242, 
+  sarosSynodicMonths: 223,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
@@ -243,7 +246,8 @@ MoonCompare: {
   label: "Moon",  
   metonSynodicMonths: 235,
   metonDays:6940,
-  metonDraconiticMonths: 242,
+  sarosDraconiticMonths: 242,
+  sarosSynodicMonths: 223,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 0, rotateStart: 0 },
@@ -272,13 +276,13 @@ HippopedeIntroduction: {
 Aristotel: {
   model: "ModelAristotel",
   sphere: [
-    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 90.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0,  speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
   ]}
 };
 

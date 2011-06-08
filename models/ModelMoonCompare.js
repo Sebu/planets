@@ -56,13 +56,22 @@ ModelMoonCompare = function(params) {
         return this.metonDays;
     }
 
-    this.metonDraconiticMonths = 0;
-    this.setMetonDraconiticMonths = function(val) {
-        this.metonDraconiticMonths = Number(val);
+    this.sarosDraconiticMonths = 0;
+    this.setSarosDraconiticMonths = function(val) {
+        this.sarosDraconiticMonths = Number(val);
         this.updateMoon();
     }
-    this.getMetonDraconiticMonths = function() {
-        return this.metonDraconiticMonths;
+    this.getSarosDraconiticMonths = function() {
+        return this.sarosDraconiticMonths;
+    }
+
+    this.sarosSynodicMonths = 0;
+    this.setSarosSynodicMonths = function(val) {
+        this.sarosSynodicMonths = Number(val);
+        this.updateMoon();
+    }
+    this.getSarosSynodicMonths = function() {
+        return this.sarosSynodicMonths;
     }
 
     this.getMetonZodicalMonths = function() {
@@ -79,7 +88,8 @@ ModelMoonCompare = function(params) {
     }
 
     this.getDraconiticDaysPerMonth = function() {
-        return this.getMetonDays() / this.getMetonDraconiticMonths();
+        return this.getSynodicDaysPerMonth()*(this.getSarosSynodicMonths() / this.getSarosDraconiticMonths());
+//        return this.getMetonDays() / this.getSarosDraconiticMonths();
     }
     
     this.updateMoon = function() {
@@ -110,7 +120,8 @@ ModelMoonCompare = function(params) {
         this.setMetonYear(this.currentPlanet.metonYear);
         this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
         this.setMetonDays(this.currentPlanet.metonDays);
-        this.setMetonDraconiticMonths(this.currentPlanet.metonDraconiticMonths);
+        this.setSarosDraconiticMonths(this.currentPlanet.sarosDraconiticMonths);
+        this.setSarosSynodicMonths(this.currentPlanet.sarosSynodicMonths);
     }
 
 
