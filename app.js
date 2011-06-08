@@ -413,11 +413,12 @@ myApp.prototype.setCurrentPlanet = function(preset) {
               $("#infoContainer2").fadeIn(500);
             }
 
-            if(model instanceof ModelMoon) $("#moonInfoContainer,#moonModel").fadeIn(500);
+//            if(model instanceof ModelMoon) 
+                $("#moonInfoContainer,#moonModel").fadeIn(500);
 
             // moon sliders setup
             // onchange of a moon parameter -> update model
-            $("#MetonYear > input,#MetonSynodicMonths > input,#MetonDraconiticMonths > input,#MetonDays > input").change(function() {
+            $("#MetonYear > input,#MetonSynodicMonths > input,#SarosDraconiticMonths > input, #SarosSynodicMonths > input,#MetonDays > input").change(function() {
 
                 $("#metonZodicalMonths").html(model.getMetonZodicalMonths().toFixed());
                 $("#metonDaysPerYear").html(model.getMetonDaysPerYear().toFixed(2));
