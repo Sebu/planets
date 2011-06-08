@@ -196,7 +196,8 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 
 // disc of planet surface 
 Disc = function(params) {
-  THREE.Mesh.call(this, new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: 0x4444FF, shading: THREE.FlatShading}) );
+  var color = params.color || colors["Earth"];
+  THREE.Mesh.call(this, new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: rgbToHex(color), shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
 }

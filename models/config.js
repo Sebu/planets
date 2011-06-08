@@ -7,7 +7,8 @@ var posAngle = 10;
 // TODO: curve0,1,etc.
 var colors = {
     Earth:      {r: 0.0, g:0.0, b:1.0},
-    Planet:     {r: 1.0, g:1.0, b:1.0},
+//  Earth:     {r: 0.96, g: 201/255, b: 204/255},
+  Planet:     {r: 1.0, g:1.0, b:1.0},
 	Sun: 		{r:1.0,g:1.0,b:0.0},
 	S0: 		{r:1.0, g: 0.0, b: 1.0},
 	S1:			{r:0.4, g:0.4, b:1.0},
