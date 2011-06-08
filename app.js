@@ -254,6 +254,9 @@ myApp.prototype.setView = function(view) {
         model.currentPos = view.from;
         model.currentLookAt = view.at;
 
+        planetLabel.setPosition({x:0, y:0, z:-1});
+        planetLabel2.setPosition({x:0, y:0, z:-1});
+
         if (model.currentPos == "Earth") {
             equinoxLabel.setPosition({x:0, y:0, z:-1});
             npoleLabel.setPosition({x:0, y:0, z:-1});
@@ -378,11 +381,11 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         if (model instanceof ModelMoon || model instanceof ModelMoonCompare) {
             UI.box({id:"moon", text:"Moon year month day cycle"}).appendTo("#parameters");
             UI.slider({model:model, id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
-            UI.slider({model:model, id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
             UI.slider({model:model, id:"MetonDays", "max":30000, text:"days"}).appendTo("#moon");
 
             UI.box({id:"moon2", text:"Eclipse period"}).appendTo("#parameters");
             UI.slider({model:model, id:"MetonDraconiticMonths", "max":1000, text:"Draconitic months"}).appendTo("#moon2");
+            UI.slider({model:model, id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon2");
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");

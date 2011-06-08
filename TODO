@@ -95,6 +95,7 @@ DONE
 - daily on/off button
 - hippo intro -> 4 spheres with hidden sphere 1
 - moonCompare 2x info box stu
+- fix ecliptic speed
 
 - eudoxos
 - sun, moon, moon compare
@@ -103,9 +104,9 @@ DONE
 - simple, hippo
 
 TODO
-- fix ecliptic speed
 - aristotel
 - ptolomy
+
 - bug: moving the model zooms out
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch
@@ -119,7 +120,7 @@ NEXT
 - variable slider max ( depended on model )
 
 - dist: 9*|sun-moon|
-- keyframe animation?DDDDd
+- keyframe animation?
 - email yavetz sphere 3-4
 - moon speed functions days per year
 - menu with s2 start values (deprecated)

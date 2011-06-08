@@ -24,8 +24,9 @@ ModelAristotel = function(params) {
     }
 
     this.setAxisAngle3 = function(angle) {
-      this.sphere[4].setAxisAngle(angle);
-      this.sphere[5].setAxisAngle(0);
+      this.sphere[3].setAxisAngle(angle);
+      this.sphere[4].setAxisAngle(0);
+      this.sphere[5].setAxisAngle(-angle);
     }
 
 
