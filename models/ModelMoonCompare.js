@@ -95,8 +95,6 @@ ModelMoonCompare = function(params) {
     this.updateMoon = function() {
         var draco = 360.0/this.getDraconiticDaysPerMonth();
         var zodic = 360.0/this.getZodicalDaysPerMonth();
-        console.log(draco);
-        console.log(zodic);
                  
         this.sphere[1].setStep(this.moonSpeed1(draco, zodic));
         this.sphere[2].setStep(this.moonSpeed2(draco, zodic));
