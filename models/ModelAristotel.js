@@ -5,28 +5,50 @@
 ModelAristotel = function(params) {
 	BasePlanetModel.call(this);
     params.name = "Model4";
-    params.spheres = 7;
+    params.spheres = 4;
     
     this.init(params);
 
+    // add unwinding spheres
+    var s4 = this.sphere[4] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
+    var s5 = this.sphere[5] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
+    var s6 = this.sphere[6] = new Spherical({ scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    
+    this.updateList.push(s4);
+    this.updateList.push(s5);    
+    this.updateList.push(s6);    
+        
+    this.sphere[3].anchor.addNode(s4);
+    this.sphere[4].anchor.addNode(s5);
+    this.sphere[5].anchor.addNode(s6);
+    
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }
 
+    // ecliptic
     this.setAxisAngle1 = function(angle) {
-      this.sphere[1].setAxisAngle(angle);
-      this.sphere[6].setAxisAngle(angle);
+      var angle1 = this.sphere[1].getAxisAngle();
+      var diff = angle - angle1;
+      this.sphere[1].setAxisAngle(angle1 + diff);
     }
 
     this.setAxisAngle2 = function(angle) {
-      this.sphere[2].setAxisAngle(angle);
-      this.sphere[5].setAxisAngle(angle);
+      var angle2 = this.sphere[2].getAxisAngle();
+      var angle6 = this.sphere[6].getAxisAngle();
+      var diff = angle - angle2;
+      this.sphere[2].setAxisAngle(angle2 + diff);
+      this.sphere[6].setAxisAngle(angle6 - diff);
+
     }
 
     this.setAxisAngle3 = function(angle) {
-      this.sphere[3].setAxisAngle(angle);
+      var angle3 = this.sphere[3].getAxisAngle();
+      var angle5 = this.sphere[5].getAxisAngle();
+      var diff = angle - angle3;
+      this.sphere[3].setAxisAngle(angle3 + diff);
       this.sphere[4].setAxisAngle(0);
-      this.sphere[5].setAxisAngle(-angle);
+      this.sphere[5].setAxisAngle(angle5 - diff);
     }
 
 

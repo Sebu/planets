@@ -6,6 +6,10 @@ degToRad = function(deg) {
     return deg/PI_SCALE;
 }
 
+RadToDeg = function(rad) {
+    return rad*PI_SCALE;
+}
+
 calcAngle = function(pos1, pos2) {
     return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
 }

@@ -14,10 +14,9 @@ var colors = {
 	S1:			{r:0.4, g:0.4, b:1.0},
 	S2: 		{r: 0.0, g: 1.0, b: 0.0},
 	S3: 		{r: 1.0, g: 0.0, b: 0.0},
-	S4: 		{r: 0.0, g: 1.0, b: 1.0},
-	S5: 		{r: 1.0, g: 0.3, b: 0.0},
-	S6: 		{r: 0.0, g: 1.3, b: 0.0},
-	S7:			{r:0.4, g:0.7, b:1.0},
+  S4: 		{r: 1.0, g: 0.0, b: 0.0},
+  S5: 		{r: 0.0, g: 1.0, b: 0.0},
+	S6:			{r:0.4, g:0.4, b:1.0},
 	Path: 	{r: 1.0, g: 1.0, b: 1.0},
 	Hippo: 	{r: 0.4, g: 0.4, b: 1.0}
 	
@@ -234,10 +233,11 @@ Moon3: {
 Sun: { 
   model: "ModelSun",
   label: "Sun",
-//  color: colors["Sun"],
+  showSun: false,
+  sunYears: 99,  
   sphere: [
-    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 369, rotateStart: 0 },
     {axisAngle: 0.5,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }] },
 
@@ -258,7 +258,7 @@ MoonCompare: {
 SimpleTest: { 
   model: "ModelSimple",
   sphere: [
-    {axisAngle: 38.0, speed: 30, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
