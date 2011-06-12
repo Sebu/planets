@@ -80,16 +80,21 @@ THREE.Camera.prototype.setFov = function(fov) {
 // rotation around lookAt
 THREE.Camera.prototype.rotateTarget = function(target) {
 
-    var dx = target.x - this._lookX;
-    var dy = target.y - this._lookY;
-    var dz = target.z - this._lookZ;
+
+    var dx = target.x - this.position.x; //this._lookX;
+    var dy = target.y - this.position.y; //this._lookY;
+    var dz = target.z - this.position.z; //this._lookZ;
     var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
+    this.position.x = target.x + this.dir.elements[0] * -dist;
+    this.position.y = target.y + this.dir.elements[1] * -dist;
+    this.position.z = target.z + this.dir.elements[2] * -dist;
+    
     // move position
-    this.position.x += dx;
-    this.position.y += dy;
-    this.position.z += dz;
-    this.translateNew(0.0, 0.0, -dist);
+//    this.position.x += dx;
+//    this.position.y += dy;
+//    this.position.z += dz;
+//    this.translateNew(0.0, 0.0, -dist);
 
     this.updateNew();
 }
@@ -97,6 +102,7 @@ THREE.Camera.prototype.rotateTarget = function(target) {
 // lookAt
 THREE.Camera.prototype.setTarget = function(target) {
 
+    
     this.dir.elements[0] = target.x - this.position.x;
     this.dir.elements[1] = target.y - this.position.y;
     this.dir.elements[2] = target.z - this.position.Z;
@@ -122,7 +128,7 @@ THREE.Camera.prototype.init = function(params) {
     this.setEye(params.eye);
 
     this.useTarget = false;
-    this.updateNew();
+//    this.updateNew();
 
 };
 
@@ -138,9 +144,9 @@ THREE.Camera.prototype.updateMatrix = function() {
 }
 
 THREE.Camera.prototype.updateNew = function() {
-    this._lookX  = this.position.x + this.dir.elements[0];
-    this._lookY = this.position.y + this.dir.elements[1];
-    this._lookZ = this.position.z + this.dir.elements[2];
+//    this._lookX  = this.position.x + this.dir.elements[0];
+//    this._lookY = this.position.y + this.dir.elements[1];
+//    this._lookZ = this.position.z + this.dir.elements[2];
     this.update();
 }
 

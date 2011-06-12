@@ -264,11 +264,12 @@ BasePlanetModel.prototype = {
 
         if (this.currentPos != "Free") {
           if (this.currentLookAt != "Free") {
-            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
+//            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
             }
         } else {
-          if (this.currentLookAt != "Free")
-              this.camera.rotateTarget({x: 0, y: 0, z: 0});
+          if (this.currentLookAt != "Free") {
+             this.camera.rotateTarget({x: 0, y: 0, z: 0});
+            }
         }
     },
 

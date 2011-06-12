@@ -178,7 +178,6 @@ myApp.prototype.update = function(time) {
             var x = Ori.input.mouse.x;
             var y = Ori.input.mouse.y;
             var pitch = (y - Ori.input.drag.y) * 0.2 * time;
-
             var yaw = (x - Ori.input.drag.x) * -0.2 * time;
             if (model.currentPos == "Earth") {
                 this.camera.rotateY(yaw);

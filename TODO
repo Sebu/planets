@@ -96,6 +96,7 @@ DONE
 - hippo intro -> 4 spheres with hidden sphere 1
 - moonCompare 2x info box stu
 - fix ecliptic speed
+- bug: moving the model zooms out
 
 - eudoxos
 - sun, moon, moon compare
@@ -105,7 +106,6 @@ DONE
 - aristotel
 
 TODO
-- bug: moving the model zooms out
 
 - look more into ptolomy
 - webdesigners: 
