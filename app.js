@@ -67,23 +67,21 @@ myApp.prototype.init = function(params) {
             <div>latitude<span style='float:right;' id='latitude'>0</span></div>\
             <div>days<span style='float:right;' id='days'>0</span></div>\
             <div id='infoContainer2' style='display:none'>\
-            <div>angle planet/sun <span style='float:right;' id='sunAngle2'>0</span></div>\
-            <div>longitude <span style='float:right; 'id='eclipticAngle2'>0</span></div>\
-            <div>longitude speed <span style='float:right;' id='eclipticSpeed2'>0</span></div>\
-            <div>latitude<span style='float:right;' id='latitude2'>0</span></div>\
-            <div>days<span style='float:right;' id='days2'>0</span></div>\
+              <div>angle planet/sun <span style='float:right;' id='sunAngle2'>0</span></div>\
+              <div>longitude <span style='float:right; 'id='eclipticAngle2'>0</span></div>\
+              <div>longitude speed <span style='float:right;' id='eclipticSpeed2'>0</span></div>\
+              <div>latitude<span style='float:right;' id='latitude2'>0</span></div>\
+              <div>days<span style='float:right;' id='days2'>0</span></div>\
+              </div>\
+              <div id='sunInfoContainer' style='display:none'>\
+              <div>days per year<span style='float:right;' id='sunDaysPerYear'>0</span></div>\
             </div>\
             <div id='moonInfoContainer' style='display:none'>\
-            <div>zodiacal months</div>\
-            <div id='metonZodicalMonths'>0</div>\
-            <div>days per year</div>\
-            <div id='metonDaysPerYear'>0</div>\
-            <div>days per synodic month</div>\
-            <div id='synodicDaysPerMonth'>0</div>\
-            <div>days per zodical month</div>\
-            <div id='zodicalDaysPerMonth'>0</div>\
-            <div>days per draconitic month</div>\
-            <div id='draconiticDaysPerMonth'>0</div>\
+              <div>zodiacal months<span style='float:right;' id='metonZodicalMonths'>0</span></div>\
+              <div>days/year<span style='float:right;' id='metonDaysPerYear'>0</span></div>\
+              <div>days/synodic month<span style='float:right;' id='synodicDaysPerMonth'>0</span></div>\
+              <div>days/zodical month<span style='float:right;' id='zodicalDaysPerMonth'>0</span></div>\
+              <div>days/draconitic month<span style='float:right;' id='draconiticDaysPerMonth'>0</span></div>\
             </div>\
             </div>").appendTo(this.domRoot);
 
@@ -329,6 +327,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
         // build up ui
         $("#moonInfoContainer").fadeOut(500);
+        $("#sunInfoContainer").fadeOut(500);
         $("#infoContainer2").fadeOut(500);
 
         $("#moonModel").fadeOut(500);
@@ -412,8 +411,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
               $("#infoContainer2").fadeIn(500);
             }
 
-//            if(model instanceof ModelMoon) 
-                $("#moonInfoContainer,#moonModel").fadeIn(500);
+            $("#moonInfoContainer,#moonModel").fadeIn(500);
 
             // moon sliders setup
             // onchange of a moon parameter -> update model
@@ -557,7 +555,13 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic)"}).appendTo("#speed");
+            
+            $("#sunInfoContainer").fadeIn(500);
 
+
+            $("#Speed1 > input, #SunYears > input").change(function() {
+              $("#sunDaysPerYear").html(model.getDaysPerYear());
+            });
         }
 
         // fix range sliders in Firefox etc.

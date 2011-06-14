@@ -21,11 +21,16 @@ ModelSun = function(params) {
         this.sunYears = speed;
         //this.sunSpeed = (360.0 * this.sphere[1].getSpeed()) / (365.25 - this.sphere[1].getSpeed());
         //console.log(this.sunSpeed);
-//        console.log(1.0/(speed) + (this.getSpeed1()/1.0));
+        
         model.sphere[2].setSpeed(this.sunYears*365);
     }
     this.getSunYears = function() {
       return this.sunYears;
+    }
+    
+    
+    this.getDaysPerYear = function() {
+       return  frac((1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed());
     }
     
     this.setCurrentPlanet = function(node) {

@@ -277,7 +277,7 @@ HippopedeIntroduction: {
 Aristotel: {
   model: "ModelAristotel",
   sphere: [
-    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0,  speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },

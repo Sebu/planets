@@ -22,6 +22,8 @@ ModelAristotel = function(params) {
     this.sphere[4].anchor.addNode(s5);
     this.sphere[5].anchor.addNode(s6);
     
+//    this.sphere[5].anchor.addNode( this.stars2 = new Cloud({count:50}) );
+    
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
     }

@@ -1,5 +1,65 @@
 
 
+
+function frac(num) {
+
+  console.log(num);
+  var d = 0.0;
+  var tmp = num.toString();
+  var idx = tmp.indexOf(".");
+
+  if (idx >= 0) d = Number("0" + tmp.substring(idx,tmp.length));
+  
+  var numerators = [0, 1];
+  var denominators = [1, 0];
+
+  var maxNumerator = getMaxNumerator(d);
+  var d2 = d;
+  var calcD, prevCalcD = NaN;
+  for (var i = 2; i < 1000; i++)  {
+    var L2 = Math.floor(d2);
+    numerators[i] = L2 * numerators[i-1] + numerators[i-2];
+    denominators[i] = L2 * denominators[i-1] + denominators[i-2];
+    var string = tmp.substring(0, idx) + " " + numerators[i-1] + "/" + denominators[i-1]+ "";
+    if (Math.abs(numerators[i]) > maxNumerator) return string;
+    calcD = numerators[i] / denominators[i];
+    if (calcD == prevCalcD) return string;
+    if (calcD == d) return string;
+
+    prevCalcD = calcD;
+
+    d2 = 1/(d2-L2);
+  }
+}
+
+function getMaxNumerator(f)
+{
+   var f2 = null;
+   var ixe = f.toString().indexOf("E");
+   if (ixe==-1) ixe = f.toString().indexOf("e");
+   if (ixe == -1) f2 = f.toString();
+   else f2 = f.toString().substring(0, ixe);
+
+   var digits = null;
+   var ix = f2.toString().indexOf(".");
+   if (ix==-1) digits = f2;
+   else if (ix==0) digits = f2.substring(1, f2.length);
+   else if (ix < f2.length) digits = f2.substring(0, ix) + f2.substring(ix + 1, f2.length);
+
+   var L = digits;
+
+   var numDigits = L.toString().length;
+   var L2 = f;
+   var numIntDigits = L2.toString().length;
+   if (L2 == 0) numIntDigits = 0;
+   var numDigitsPastDecimal = numDigits - numIntDigits;
+
+   for (var i=numDigitsPastDecimal; i>0 && L%2==0; i--) L/=2;
+   for (var i=numDigitsPastDecimal; i>0 && L%5==0; i--) L/=5;
+
+   return L;
+}
+
 PI_SCALE = 180.0/Math.PI;
 
 degToRad = function(deg) {
@@ -207,7 +267,9 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 // disc of planet surface 
 Disc = function(params) {
   var color = params.color || colors["Earth"];
-  THREE.Mesh.call(this, new THREE.Sphere(params.radius,20,30), new THREE.MeshLambertMaterial({color: rgbToHex(color), shading: THREE.FlatShading}) );
+  THREE.Mesh.call(  this, 
+                    new THREE.SphereGeometry(params.radius,20,30), 
+                    new THREE.MeshLambertMaterial({color: rgbToHex(color), shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
 }
@@ -231,13 +293,13 @@ Translate.prototype.constructor = Translate;
 */
 sphereGeo = [
 
-                [ new THREE.Sphere( 1, 32, 16 ), 0 ],
-                [ new THREE.Sphere( 1, 16, 8 ), 10 ],
-                [ new THREE.Sphere( 1, 8, 4 ), 20 ]
+                [ new THREE.SphereGeometry( 1, 32, 16 ), 0 ],
+                [ new THREE.SphereGeometry( 1, 16, 8 ), 10 ],
+                [ new THREE.SphereGeometry( 1, 8, 4 ), 20 ]
 
 ];
 
-planetGeo = new THREE.Sphere( 1 , 32, 16 );
+planetGeo = new THREE.SphereGeometry( 1 , 32, 16 );
 
 
 /*
@@ -418,7 +480,7 @@ Cloud.prototype.constructor = Cloud;
 
 
 
-var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
 /*
