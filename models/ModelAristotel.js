@@ -88,6 +88,21 @@ ModelAristotle = function(params) {
       this.sphere[4].setRotateStart(-start);
     }
 
+    this.setCurrentPlanet = function(node) {
+        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
+        this.sphere[1].setAxisAngle(0);
+        this.sphere[2].setAxisAngle(0);       
+        this.sphere[3].setAxisAngle(0);
+        this.setAxisAngle1(this.currentPlanet.sphere[1].axisAngle);
+        this.setAxisAngle2(this.currentPlanet.sphere[2].axisAngle);
+        this.setAxisAngle3(this.currentPlanet.sphere[3].axisAngle);
+
+        this.sphere[1].setSpeed(0);
+        this.sphere[2].setSpeed(0);
+        this.setSpeed1(this.currentPlanet.sphere[1].speed);
+        this.setSpeed2(this.currentPlanet.sphere[2].speed);
+    }
+
     this.update = function(time) {
 //        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
 //        this.addCurve({index: 1, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Hippo"]});

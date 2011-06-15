@@ -280,10 +280,10 @@ Aristotle: {
   model: "ModelAristotle",
   showSun: false,
   sphere: [
-    {axisAngle: 38.0, speed: 1, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 90.0, speed: 580, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 45.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 45.0, speed: -580, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
