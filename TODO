@@ -109,11 +109,16 @@ DONE
   - s8 rotate like s1
 
 TODO
-- longitude/latitude speed
+- longitude/latitude speed in  more accurate 
+- longitude speed deg per day not per animation speed
+- mean longitude (6 digits)
 - fix: load presets through setters
-- aritotle
+- aristotle
+  - s4-s8 reverse labels, hippo,path,stars off
+  - disable/enable poles of connected spheres P2,7 etc.
   - (thick) line between winder and unwinder
   - click/mouseover highlight
+
 - look more into ptolomy
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch

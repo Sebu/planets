@@ -279,6 +279,8 @@ HippopedeIntroduction: {
 Aristotle: {
   model: "ModelAristotle",
   showSun: false,
+  showHippo: false,
+  showPath: false,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },

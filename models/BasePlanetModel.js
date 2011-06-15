@@ -14,7 +14,6 @@ BasePlanetModel = function() {
     this.speed0Factor = 100;
 
     // model specific moon
-//    this.sunYear = 365.0;
     this.days = 0;
     this.lastAngle = 0;
     this.lastPerp = 0;
@@ -31,9 +30,9 @@ BasePlanetModel.prototype.constructor = BasePlanetModel;
 BasePlanetModel.prototype = {
 
 
-    setShowCurve0 : function(state) { this.curves[0].setEnabled(state); },
+    setShowCurve0 : function(state) { if(this.curves[0]) this.curves[0].setEnabled(state); },
     getShowCurve0 : function() { if(!this.curves[0]) return true; return this.curves[0].getEnabled(); },
-    setShowCurve1 : function(state) { this.curves[1].setEnabled(state); },
+    setShowCurve1 : function(state) { if(this.curves[1]) this.curves[1].setEnabled(state); },
     getShowCurve1 : function() { if(!this.curves[1]) return true; return this.curves[1].getEnabled(); },
     setShowStars : function(state) { this.stars.setEnabled(state); },
     getShowStars : function() { return this.stars.getEnabled(); },
@@ -154,6 +153,8 @@ BasePlanetModel.prototype = {
             betaRotate: 90.0,
             label: "Planet",
             showStars: true,
+            showHippo: true,
+            showPath: true,
             showSun: true,
             sphere: [
                 {axisAngle: 38.0, speed: 0, rotateStart: 0, visible: true },
@@ -176,6 +177,8 @@ BasePlanetModel.prototype = {
         }
         
         this.setShowStars(this.currentPlanet.showStars);
+        this.setShowCurve0(this.currentPlanet.showHippo);
+        this.setShowCurve1(this.currentPlanet.showPath);
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);

@@ -195,7 +195,7 @@ myApp.prototype.update = function(time) {
         // infoBox data
         $("#sunAngle").text( model.sunAngle.toFixed(1) );
         $("#eclipticAngle").text( model.eclipticAngle.toFixed(1) );
-        $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(2) );
+        $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(5) );
         $("#latitude").text( model.latitude.toFixed(1) );
         $("#days").text(Math.round(model.days));
 
