@@ -71,6 +71,25 @@ ModelAristotle = function(params) {
         this.sphere[5].setSpeed(-speed);
     }
 
+   this.setShowSphere4 = function(state) {
+      this.sphere[4].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere4 = function() { return true; };
+
+   this.setShowSphere5 = function(state) {
+      this.sphere[5].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere5 = function() { return true; };
+
+   this.setShowSphere6 = function(state) {
+      this.sphere[6].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere6 = function() { return true; };
+
+   this.setShowSphere7 = function(state) {
+      this.sphere[7].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere7 = function() { return true; };
 
     this.setRotateStart1 = function(start) {
       this.sphere[1].setRotateStart(start);

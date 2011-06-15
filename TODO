@@ -109,8 +109,9 @@ DONE
   - s8 rotate like s1
 
 TODO
+- fix: load presets through setters
 - aritotle
-  - thick line between winder and unwinder
+  - (thick) line between winder and unwinder
   - click/mouseover highlight
 - look more into ptolomy
 - webdesigners: 
