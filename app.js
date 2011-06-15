@@ -563,8 +563,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
             UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal) in days"}).appendTo("#speed");
+            UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
             
             $("#sunInfoContainer").fadeIn(500);
 

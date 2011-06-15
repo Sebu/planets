@@ -109,6 +109,7 @@ DONE
   - s8 rotate like s1
 
 TODO
+- longitude/latitude speed
 - fix: load presets through setters
 - aritotle
   - (thick) line between winder and unwinder
