@@ -300,6 +300,9 @@ myApp.prototype.getModel = function(name) {
       case "ModelAristotel":
         models[name] = new ModelAristotel({renderer: this});
         break;
+      case "ModelPtolemy":
+        models[name] = new ModelPtolemy({renderer: this});
+        break;        
       default:
       break;
       };
@@ -531,6 +534,16 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
 
+       } else if (model instanceof ModelPtolemy) {
+
+            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
+//            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+
+            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            
         } else if (model instanceof ModelHippo) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");

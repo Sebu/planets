@@ -4,7 +4,7 @@
  */
 ModelAristotel = function(params) {
 	BasePlanetModel.call(this);
-    params.name = "Model4";
+    params.name = "ModelAristotel";
     params.spheres = 4;
     
     this.init(params);
@@ -31,8 +31,10 @@ ModelAristotel = function(params) {
     // ecliptic
     this.setAxisAngle1 = function(angle) {
       var angle1 = this.sphere[1].getAxisAngle();
+//      var angle6 = this.sphere[6].getAxisAngle();
       var diff = angle - angle1;
       this.sphere[1].setAxisAngle(angle1 + diff);
+//      this.sphere[6].setAxisAngle(angle6 - diff);
     }
 
     this.setAxisAngle2 = function(angle) {

@@ -263,6 +263,7 @@ SimpleTest: {
     {axisAngle: 0.0,  speed: 0, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
+  
 HippopedeIntroduction: {
   model: "ModelHippo",
   showStars: false,
@@ -284,7 +285,14 @@ Aristotel: {
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
-  ]}
+  ]},
+  
+Ptolemy: { 
+  model: "ModelPtolemy",
+  sphere: [
+    {axisAngle: 0.0, speed: 1, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 110, rotateStart: 0 }
+  ] }
 };
 
 
