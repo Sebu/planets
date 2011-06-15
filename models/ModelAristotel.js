@@ -2,25 +2,28 @@
 /**
  * @constructor
  */
-ModelAristotel = function(params) {
+ModelAristotle = function(params) {
 	BasePlanetModel.call(this);
-    params.name = "ModelAristotel";
+    params.name = "ModelAristotle";
     params.spheres = 4;
     
     this.init(params);
 
     // add unwinding spheres
     var s4 = this.sphere[4] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
-    var s5 = this.sphere[5] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
-    var s6 = this.sphere[6] = new Spherical({ scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    var s5 = this.sphere[5] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
+    var s6 = this.sphere[6] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    var s7 = this.sphere[7] = new Spherical({ scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S0"]});
     
     this.updateList.push(s4);
     this.updateList.push(s5);    
     this.updateList.push(s6);    
+    this.updateList.push(s7);  
         
     this.sphere[3].anchor.addNode(s4);
     this.sphere[4].anchor.addNode(s5);
     this.sphere[5].anchor.addNode(s6);
+    this.sphere[6].anchor.addNode(s7);
     
 //    this.sphere[5].anchor.addNode( this.stars2 = new Cloud({count:50}) );
     
@@ -31,10 +34,10 @@ ModelAristotel = function(params) {
     // ecliptic
     this.setAxisAngle1 = function(angle) {
       var angle1 = this.sphere[1].getAxisAngle();
-//      var angle6 = this.sphere[6].getAxisAngle();
+      var angle7 = this.sphere[7].getAxisAngle();
       var diff = angle - angle1;
       this.sphere[1].setAxisAngle(angle1 + diff);
-//      this.sphere[6].setAxisAngle(angle6 - diff);
+      this.sphere[7].setAxisAngle(angle7 - diff);
     }
 
     this.setAxisAngle2 = function(angle) {
@@ -77,6 +80,6 @@ ModelAristotel = function(params) {
     }
 };
 
-ModelAristotel.prototype = new BasePlanetModel;
-ModelAristotel.prototype.constructor = ModelAristotel;
+ModelAristotle.prototype = new BasePlanetModel;
+ModelAristotle.prototype.constructor = ModelAristotle;
 

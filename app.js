@@ -297,8 +297,8 @@ myApp.prototype.getModel = function(name) {
       case "ModelMoon":
         models[name] = new ModelMoon({renderer: this});
         break;
-      case "ModelAristotel":
-        models[name] = new ModelAristotel({renderer: this});
+      case "ModelAristotle":
+        models[name] = new ModelAristotle({renderer: this});
         break;
       case "ModelPtolemy":
         models[name] = new ModelPtolemy({renderer: this});
@@ -478,9 +478,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
-        } else if (model instanceof ModelAristotel) {
-
-            console.log("bla");
+        } else if (model instanceof ModelAristotle) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -493,7 +491,6 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
             UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
-            UI.slider({model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");

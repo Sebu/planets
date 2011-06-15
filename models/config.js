@@ -17,6 +17,7 @@ var colors = {
   S4: 		{r: 1.0, g: 0.0, b: 0.0},
   S5: 		{r: 0.0, g: 1.0, b: 0.0},
 	S6:			{r:0.4, g:0.4, b:1.0},
+	S7:			{r:1.0, g: 0.0, b: 1.0},
 	Path: 	{r: 1.0, g: 1.0, b: 1.0},
 	Hippo: 	{r: 0.4, g: 0.4, b: 1.0}
 	
@@ -275,8 +276,9 @@ HippopedeIntroduction: {
     {axisAngle: 30.0, speed: 110, speedmax: 1000, rotateStart: 0 }
   ] },
 
-Aristotel: {
-  model: "ModelAristotel",
+Aristotle: {
+  model: "ModelAristotle",
+  showSun: false,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0,  speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -285,6 +287,7 @@ Aristotel: {
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 }
   ]},
   
 Ptolemy: { 

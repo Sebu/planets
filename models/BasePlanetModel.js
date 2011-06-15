@@ -163,6 +163,7 @@ BasePlanetModel.prototype = {
                 {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
                 {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
                 {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
+                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true }
             ]
         };
         // extend default settings  
