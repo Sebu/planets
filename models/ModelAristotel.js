@@ -72,6 +72,22 @@ ModelAristotle = function(params) {
     }
 
 
+    this.setRotateStart1 = function(start) {
+      this.sphere[1].setRotateStart(start);
+      this.sphere[6].setRotateStart(-start);
+    }
+
+    this.setRotateStart2 = function(start) {
+      this.sphere[2].setRotateStart(start);
+      this.sphere[5].setRotateStart(-start);
+    }
+
+
+    this.setRotateStart3 = function(start) {
+      this.sphere[3].setRotateStart(start);
+      this.sphere[4].setRotateStart(-start);
+    }
+
     this.update = function(time) {
 //        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
 //        this.addCurve({index: 1, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Hippo"]});
