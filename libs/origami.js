@@ -194,7 +194,7 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
-  this.fps = 60;
+  this.fps = 30;
   this.targetTime = 1/this.fps;
   this.elapsedTime = 0;
   this.timer = new Ori.Timer();

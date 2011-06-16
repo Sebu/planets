@@ -23,9 +23,9 @@ ModelMoonCompare = function(params) {
     this.sphere[3].anchor.addNode(s21);
     this.sphere[4].anchor.addNode(this.planet2);
 
-    this.lastAngle2 = 0;
+    this.lastLongitude2 = 0;
     this.lastPerp2 = 0;
-    this.eclipticAngle2 = 0;
+    this.longitude2 = 0;
     
 
     this.metonYear = 0;
@@ -204,14 +204,14 @@ ModelMoonCompare = function(params) {
             if (calcAngle(planetOnPlane2, sunOnPlanePerp)<90)
                 this.sunAngle2 = -this.sunAngle2;
 
-            this.lastAngle = this.eclipticAngle;
-            this.lastAngle2 = this.eclipticAngle2;
+            this.lastLongitude = this.longitude;
+            this.lastLongitude2 = this.longitude2;
 
             this.lastPerp = this.perpAngle;
             this.lastPerp2 = this.perpAngle2;
 
-            this.eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
-            this.eclipticAngle2 = calcAngle(planetOnPlane2, equinoxOnPlane2);
+            this.longitude = calcAngle(planetOnPlane, equinoxOnPlane);
+            this.longitude2 = calcAngle(planetOnPlane2, equinoxOnPlane2);
 
             this.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
             this.perpAngle2 = calcAngle(planetOnPlane2, equinoxOnPlanePerp2);
@@ -219,21 +219,21 @@ ModelMoonCompare = function(params) {
 
             // HACK: dot product angle fix > 90
             if (this.perpAngle<=90)
-                this.eclipticAngle = 360-this.eclipticAngle;
+                this.longitude = 360-this.longitude;
             if (this.perpAngle>90 && this.lastPerp<90)
-                this.lastAngle  -=360;
+                this.lastLongitude  -=360;
             this.latitude = calcAngle(upVec,planetPos)-90;
 
             if (this.perpAngle2<=90)
-                this.eclipticAngle2 = 360-this.eclipticAngle2;
+                this.longitude2 = 360-this.longitude2;
             if (this.perpAngle2>90 && this.lastPerp2<90)
-                this.lastAngle2  -=360;
+                this.lastLongitude2  -=360;
             this.latitude2 = calcAngle(upVec2,planetPos2)-90;
 
 
             var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
-            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)*dayDelta;
-            this.eclipticSpeed2 = (this.eclipticAngle2 - this.lastAngle2)*dayDelta;
+            this.longitudeSpeed = (this.longitude - this.lastLongitude)/dayDelta;
+            this.longitudeSpeed2 = (this.longitude2 - this.lastLongitude2)/dayDelta;
 
             //time*(this.speed/this.systemSun[0].getSpeed());
 

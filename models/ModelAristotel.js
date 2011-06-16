@@ -25,7 +25,27 @@ ModelAristotle = function(params) {
     this.sphere[5].anchor.addNode(s6);
     this.sphere[6].anchor.addNode(s7);
     
-//    this.sphere[5].anchor.addNode( this.stars2 = new Cloud({count:50}) );
+    
+ 
+//    this.sphere[7].anchor.addNode( this.stars2 = new Cloud({count:50}) );
+
+
+          
+    this.createJoint = function(params) {
+      var mat = new THREE.LineBasicMaterial( { linewidth: params.linewidth, color: rgbToHex(params.color) } );
+      params.to.visuals.njoint = new THREE.Line( aLine, mat );
+      params.to.visuals.sjoint = new THREE.Line( aLine, mat );
+      params.to.visuals.njoint.scale.y = params.from.scaleFactor-params.to.scaleFactor;
+      params.to.visuals.njoint.position.y = params.to.scaleFactor;
+      params.to.visuals.sjoint.scale.y = -(params.from.scaleFactor-params.to.scaleFactor);
+      params.to.visuals.sjoint.position.y = -params.to.scaleFactor;    
+      params.to.anchor.addNode(params.to.visuals.njoint);
+      params.to.anchor.addNode(params.to.visuals.sjoint);    
+    }
+
+   this.createJoint({from: this.sphere[3], to: this.sphere[4], color: colors["S3"], linewidth:4 }); 
+   this.createJoint({from: this.sphere[2], to: this.sphere[5], color: colors["S2"], linewidth:3 }); 
+   this.createJoint({from: this.sphere[1], to: this.sphere[6], color: colors["S1"], linewidth:2 }); 
     
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
@@ -72,22 +92,22 @@ ModelAristotle = function(params) {
     }
 
    this.setShowSphere4 = function(state) {
-      this.sphere[4].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[4].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere4 = function() { return true; };
 
    this.setShowSphere5 = function(state) {
-      this.sphere[5].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[5].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere5 = function() { return true; };
 
    this.setShowSphere6 = function(state) {
-      this.sphere[6].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[6].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere6 = function() { return true; };
 
    this.setShowSphere7 = function(state) {
-      this.sphere[7].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[7].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere7 = function() { return true; };
 
@@ -123,8 +143,8 @@ ModelAristotle = function(params) {
     }
 
     this.update = function(time) {
-//        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
-//        this.addCurve({index: 1, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Hippo"]});
+        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
+        this.addCurve({index: 1, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Hippo"]});
         BasePlanetModel.prototype.update.call(this, time);
         
     }

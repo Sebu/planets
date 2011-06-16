@@ -61,15 +61,15 @@ myApp.prototype.init = function(params) {
         // create some elements
         // TODO: more segmentation
         $("<div class='container' id='infoContainer'>\
-            <div>angle planet/sun <span style='float:right;' id='sunAngle'>0</span></div>\
-            <div>longitude <span style='float:right; 'id='eclipticAngle'>0</span></div>\
-            <div>longitude speed <span style='float:right;' id='eclipticSpeed'>0</span></div>\
+            <div>angle planet/sun<span style='float:right;' id='sunAngle'>0</span></div>\
+            <div>longitude<span style='float:right; 'id='longitude'>0</span></div>\
+            <div>longitude speed <span style='float:right;' id='longitudeSpeed'>0</span></div>\
             <div>latitude<span style='float:right;' id='latitude'>0</span></div>\
             <div>days<span style='float:right;' id='days'>0</span></div>\
             <div id='infoContainer2' style='display:none'>\
-              <div>angle planet/sun <span style='float:right;' id='sunAngle2'>0</span></div>\
-              <div>longitude <span style='float:right; 'id='eclipticAngle2'>0</span></div>\
-              <div>longitude speed <span style='float:right;' id='eclipticSpeed2'>0</span></div>\
+              <div>angle planet/sun<span style='float:right;' id='sunAngle2'>0</span></div>\
+              <div>longitude<span style='float:right; 'id='longitude2'>0</span></div>\
+              <div>longitude speed <span style='float:right;' id='longitudeSpeed2'>0</span></div>\
               <div>latitude<span style='float:right;' id='latitude2'>0</span></div>\
               <div>days<span style='float:right;' id='days2'>0</span></div>\
               </div>\
@@ -193,17 +193,24 @@ myApp.prototype.update = function(time) {
         model.update(time);
 
         // infoBox data
-        $("#sunAngle").text( model.sunAngle.toFixed(1) );
-        $("#eclipticAngle").text( model.eclipticAngle.toFixed(1) );
-        $("#eclipticSpeed").text(model.eclipticSpeed.toFixed(5) );
-        $("#latitude").text( model.latitude.toFixed(1) );
+        if(model.sun.getEnabled()) $("#sunAngle").text( model.sunAngle.toFixed(1) );
         $("#days").text(Math.round(model.days));
+        if(model instanceof ModelSun) {
+          $("#longitude").text( model.longitude.toFixed(1) );
+          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(3) );
+          $("#latitude").text( model.latitude.toFixed(3) );
+        } else {
+          $("#longitude").text( model.longitude.toFixed(1) );
+          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(2) );
+          $("#latitude").text( model.latitude.toFixed(1) );
+        }
+
 
         if(model instanceof ModelMoonCompare) {
           // infoBox data
           $("#sunAngle2").text( model.sunAngle2.toFixed(1) );
-          $("#eclipticAngle2").text( model.eclipticAngle2.toFixed(1) );
-          $("#eclipticSpeed2").text(model.eclipticSpeed2.toFixed(2));
+          $("#longitude2").text( model.longitude2.toFixed(1) );
+          $("#longitudeSpeed2").text(model.longitudeSpeed2.toFixed(2));
           $("#latitude2").text( model.latitude2.toFixed(1) );
           $("#days2").text(Math.round(model.days));
 
@@ -532,14 +539,17 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
 
        } else if (model instanceof ModelPtolemy) {
+           this.camera.rotateY((Math.PI*3)/2 - 0.1);
 
-            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
+            UI.slider({model:model, id: "Radius0", max: 10, step:0.05, text: "Deferent"}).appendTo("#radius");
+            UI.slider({model:model, id: "Radius1", max: 10, step:0.05, text: "Epicycle"}).appendTo("#radius");
+            UI.slider({model:model, id: "Equant", max: 10, step:0.05, text: "Equant"}).appendTo("#radius");
+
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-//            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed0", max:1100, text:"Deferent"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed1",  max:1100, text:"Epicycle"}).appendTo("#speed");
             
         } else if (model instanceof ModelHippo) {
 

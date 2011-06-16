@@ -281,6 +281,7 @@ Aristotle: {
   showSun: false,
   showHippo: false,
   showPath: false,
+  showStars: false,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
@@ -294,9 +295,11 @@ Aristotle: {
   
 Ptolemy: { 
   model: "ModelPtolemy",
+  showStars: false,
+  showHippo: false,
   sphere: [
-    {axisAngle: 0.0, speed: 1, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 110, rotateStart: 0 }
+    {axisAngle: 0.0, speed: 90, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 100, rotateStart: 0 }
   ] }
 };
 

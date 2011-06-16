@@ -64,8 +64,8 @@ function update() {
 //    model.debug.setXYZ(sylToScene(planetOnPlane));
     model.update();
     $("#sunAngle").html(Math.round(model.sunAngle));
-    $("#eclipticAngle").html(Math.round(model.eclipticAngle));
-    $("#eclipticSpeed").html(model.eclipticSpeed.toFixed(2));
+    $("#eclipticAngle").html(Math.round(model.longitude));
+    $("#eclipticSpeed").html(model.longitudeSpeed.toFixed(2));
     $("#latitude").html(Math.round(model.latitude));
     $("#days").html(Math.round(model.days));
 

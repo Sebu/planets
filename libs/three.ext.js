@@ -3,7 +3,6 @@
 
 function frac(num) {
 
-  console.log(num);
   var d = 0.0;
   var tmp = num.toString();
   var idx = tmp.indexOf(".");
@@ -141,21 +140,15 @@ THREE.Camera.prototype.setFov = function(fov) {
 THREE.Camera.prototype.rotateTarget = function(target) {
 
 
-    var dx = target.x - this.position.x; //this._lookX;
-    var dy = target.y - this.position.y; //this._lookY;
-    var dz = target.z - this.position.z; //this._lookZ;
+    var dx = target.x - this.position.x;
+    var dy = target.y - this.position.y;
+    var dz = target.z - this.position.z;
     var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
     this.position.x = target.x + this.dir.elements[0] * -dist;
     this.position.y = target.y + this.dir.elements[1] * -dist;
     this.position.z = target.z + this.dir.elements[2] * -dist;
     
-    // move position
-//    this.position.x += dx;
-//    this.position.y += dy;
-//    this.position.z += dz;
-//    this.translateNew(0.0, 0.0, -dist);
-
     this.updateNew();
 }
 
@@ -483,6 +476,11 @@ Cloud.prototype.constructor = Cloud;
 var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
+
+var aLine = new THREE.Geometry();
+aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
+aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
+    
 /*
  * @constructor
  * the cosmological spheres
@@ -492,6 +490,8 @@ Spherical = function Spherical(params) {
 
     this.inner_id = params.inner_id;
 
+    this.scaleFactor = params.scale;
+    
     var color = params.color || { r: 0.5, g: 0.5, b: 0.5};
     color = rgbToHex(color);
     this.visuals = [];
@@ -503,9 +503,6 @@ Spherical = function Spherical(params) {
 
     this.anchor = new Node();
     this.addNode(this.anchor);
-//    this.curve = new Node();
-//    this.anchor.addNode(this.curve);
-
 
     this.material = new THREE.LineBasicMaterial( {  color: color } );
     this.materialArc =  new THREE.LineBasicMaterial( {  color: color } );
@@ -596,7 +593,18 @@ Spherical.prototype.getRotateStart = function() {
     return this.rotateStart;
 };
 
+Spherical.prototype.setScale = function(value) {
+  this.scaleFactor = value;
+  this.visuals.arc1.scale  = new THREE.Vector3( value, value, value );
+  this.visuals.arc2.scale  = new THREE.Vector3( -value, -value, -value );
+  this.visuals.equator.scale  = new THREE.Vector3( value, value, value );
+  this.visuals.markerarc.scale  = new THREE.Vector3( -value, value, value );
+  this.visuals.markerball.position.z = value;
+  this.visuals.npole.position.y = value;
+  this.visuals.spole.position.y = -value;
+  this.visuals.rotationarc.scale  = new THREE.Vector3( value, value, value);
 
+};
 Spherical.prototype.setSpeed = function(speed) {
     this.speed = speed;
     this.step = (this.speed != 0) ? (360.0 / this.speed) : 0.0;

@@ -97,9 +97,13 @@ DONE
 - moonCompare 2x info box stu
 - fix ecliptic speed
 - bug: moving the model zooms out
+- longitude speed deg per day not per animation speed
+
 
 - eudoxos
-- sun, moon, moon compare
+- sun
+  - longitude/latitude speed in  more accurate 
+- moon, moon compare
 - kallippos
 - yavetz
 - simple, hippo
@@ -107,19 +111,19 @@ DONE
   - remove sun
   - rotation start for unwinders
   - s8 rotate like s1
-
+  - (thick) line between winder and unwinder
+- ptolemy
+  
 TODO
-- longitude/latitude speed in  more accurate 
-- longitude speed deg per day not per animation speed
-- mean longitude (6 digits)
-- fix: load presets through setters
 - aristotle
   - s4-s8 reverse labels, hippo,path,stars off
   - disable/enable poles of connected spheres P2,7 etc.
-  - (thick) line between winder and unwinder
   - click/mouseover highlight
-
-- look more into ptolomy
+- ptolemy
+- sun
+  - real days passed :)
+- mean longitude (6 digits)
+- fix: load presets through setters
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch
 

@@ -8,6 +8,10 @@
 BasePlanetModel = function() {
 
 
+    this.showCurve = [];
+    this.showCurve[0] = true;
+    this.showCurve[1] = true;
+    
     this.currentPlanet = {};
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
@@ -15,9 +19,10 @@ BasePlanetModel = function() {
 
     // model specific moon
     this.days = 0;
-    this.lastAngle = 0;
+    this.lastLongitude = 0;
+    this.longitudeSpeed = 0;
     this.lastPerp = 0;
-    this.eclipticAngle = 0;
+    this.longitude = 0;
 
     this.setSpeed(60);
     this.running=true;
@@ -30,10 +35,10 @@ BasePlanetModel.prototype.constructor = BasePlanetModel;
 BasePlanetModel.prototype = {
 
 
-    setShowCurve0 : function(state) { if(this.curves[0]) this.curves[0].setEnabled(state); },
-    getShowCurve0 : function() { if(!this.curves[0]) return true; return this.curves[0].getEnabled(); },
-    setShowCurve1 : function(state) { if(this.curves[1]) this.curves[1].setEnabled(state); },
-    getShowCurve1 : function() { if(!this.curves[1]) return true; return this.curves[1].getEnabled(); },
+    setShowCurve0 : function(state) { this.showCurve[0] = state; if(this.curves[0]) this.curves[0].setEnabled(state); },
+    getShowCurve0 : function() { if(!this.curves[0]) return this.showCurve[0]; },
+    setShowCurve1 : function(state) { this.showCurve[1] = state; if(this.curves[1]) this.curves[1].setEnabled(state); },
+    getShowCurve1 : function() { return this.showCurve[1]; },
     setShowStars : function(state) { this.stars.setEnabled(state); },
     getShowStars : function() { return this.stars.getEnabled(); },
 
@@ -125,7 +130,7 @@ BasePlanetModel.prototype = {
         // add stars
         this.sphere[0].anchor.addNode( this.stars = new Cloud({count:50}) );
         
-        //TODO: deprecated?
+        //TODO: deprecated? / override
         this.showSphere0 = function(state) {
             this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
         }
@@ -177,8 +182,8 @@ BasePlanetModel.prototype = {
         }
         
         this.setShowStars(this.currentPlanet.showStars);
-        this.setShowCurve0(this.currentPlanet.showHippo);
-        this.setShowCurve1(this.currentPlanet.showPath);
+        this.setShowCurve0(this.currentPlanet.showPath);
+        this.setShowCurve1(this.currentPlanet.showHippo);
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
@@ -237,20 +242,23 @@ BasePlanetModel.prototype = {
                 this.sunAngle = -this.sunAngle;
 
 
-            this.lastAngle = this.eclipticAngle;
+            this.lastLongitude = this.longitude;
             this.lastPerp = this.perpAngle;
-            this.eclipticAngle = calcAngle(planetOnPlane, equinoxOnPlane);
+            this.longitude = calcAngle(planetOnPlane, equinoxOnPlane);
             this.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
 
             // HACK: dot product angle fix > 90
             if (this.perpAngle<=90)
-                this.eclipticAngle = 360-this.eclipticAngle;
+                this.longitude = 360-this.longitude;
             if (this.perpAngle>90 && this.lastPerp<90)
-                this.lastAngle -= 360;
+                this.lastLongitude -= 360;
             this.latitude = calcAngle(upVec,planetPos)-90;
 
+            // days passed
             var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
-            this.eclipticSpeed = (this.eclipticAngle - this.lastAngle)*dayDelta;
+            
+            // latitude speed in deg per day
+            this.longitudeSpeed = (this.longitude - this.lastLongitude)/dayDelta;
 
             //time*(this.speed/this.systemSun[0].getSpeed());
 
@@ -285,9 +293,9 @@ BasePlanetModel.prototype = {
         }
         this.systemSun[0].setRotateAngle(0);
         this.days = 0;
-        this.lastAngle = 0;
+        this.lastLongitude = 0;
         this.lastPerp = 0
-        this.eclipticAngle = 0;        
+        this.longitude = 0;
 
     },
 
@@ -323,11 +331,12 @@ BasePlanetModel.prototype = {
 
     // update or create&add a curve (hippopede or path) to an anchor node 
     addCurve : function(params) {
+        if(!this.showCurve[params.index]) return;
         if(!this.curves[params.index]) {
             this.curves[params.index] = new Curve({trails: params.trails, pos: this.calcCurve({start: params.start, node: params.node}), color: params.color});
             params.anchor.addNode(this.curves[params.index]);
         } else {
-            if(this.curves[params.index].getEnabled()) this.curves[params.index].setPos( this.calcCurve({start: params.start, node: params.node}) );
+            this.curves[params.index].setPos( this.calcCurve({start: params.start, node: params.node}) );
         }
     },
     
@@ -357,10 +366,15 @@ BasePlanetModel.prototype = {
         step = 10.0/step;
         
         // calculate positions of curve points
+        for (i = start + 1; i < this.sphere.length; i++) {
+          this.sphere[i].updateMovement(j*step);
+        }
+            
         for (; j < maxSegments; j++) {
             for (i = start + 1; i < this.sphere.length; i++) {
-                angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
-                this.sphere[i].anchor.rotation.y = degToRad(angle);
+                this.sphere[i].updateMovement(step);
+//                angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
+//                this.sphere[i].anchor.rotation.y = degToRad(angle);
             }
             var pos = node.currentPos();
             curvePos.push(pos);
