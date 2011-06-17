@@ -112,19 +112,23 @@ DONE
   - rotation start for unwinders
   - s8 rotate like s1
   - (thick) line between winder and unwinder
+  - s4-s8 reverse labels, hippo,path,stars off
 - ptolemy
   
 TODO
-
-- info box values (show full in tooltip)
+- reset position (tween)
+- info container values (show full in tooltip)
 - aristotle
-  - s4-s8 reverse labels, hippo,path,stars off
   - disable/enable poles of connected spheres P2,7 etc.
+  - arc start and end points
   - click/mouseover highlight
 - ptolemy
+  - derefent radius 60
+  - remove arc1/2, markerarc,
+  - add equant line etc.
 - sun
   - real days passed :)
-- mean longitude (6 digits)
+  - mean longitude (6 digits)
 - fix: load presets through setters
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch
