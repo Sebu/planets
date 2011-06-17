@@ -108,13 +108,14 @@ BasePlanetModel.prototype = {
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
-            this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
+            this["setShowSphere" + i] = new Function("state", "console.log(state); this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
             this["getShowSphere" + i] = function() { return true; };
 
         }
         
         // TODO: hacky all over
         this.setSpeed0 = function(speed) {
+          console.log(speed);
           if (this.sphere[0].getSpeed()==0 && speed == 1) {
             this.setSpeed(this.getSpeed()*this.speed0Factor);
           } else if(this.sphere[0].getSpeed()!=0 && speed == 0) {

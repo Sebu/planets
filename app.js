@@ -197,7 +197,7 @@ myApp.prototype.update = function(time) {
         $("#days").text(Math.round(model.days));
         if(model instanceof ModelSun) {
           $("#longitude").text( model.longitude.toFixed(1) );
-          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(3) );
+          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(6) );
           $("#latitude").text( model.latitude.toFixed(3) );
         } else {
           $("#longitude").text( model.longitude.toFixed(1) );
@@ -368,10 +368,12 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
         // view sub box box 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
+
         UI.slider({model: this.camera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
+        $("<div id='visSpheres'></div>").appendTo("#vis");
         for (i in model.sphere) {
             if(model["getShowSphere" + i])
-              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#vis");
+              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#visSpheres");
         }
         UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
@@ -486,6 +488,17 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
         } else if (model instanceof ModelAristotle) {
+
+            $("#visSpheres > *").remove();
+            UI.checkbox({model:model, id:"ShowSphere0", text:"S1"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere1", text:"S2"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere2", text:"S3"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere3", text:"S4"}).appendTo("#visSpheres");
+            $("<div id='visSpheres2'></div>").appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere7", text:"S8"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere6", text:"S7"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere5", text:"S6"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere4", text:"S5"}).appendTo("#visSpheres2");
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");

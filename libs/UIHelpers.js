@@ -328,9 +328,12 @@ var UI = {
         var text = params.text || params.id;
         var value = model["get"+id]() ? "checked" : "";;
         var change = params.change || function()  { model["set"+id](this.checked); };
-        ele = $("<input type=checkbox name='visMode' " + value +">"+ text + "</input>").bind("click", change);
+        var tmp  = $("<span></span>");
+        var ele = $("<input type=checkbox name='visMode' " + value +">" + text + "</input>");
+        tmp.append(ele);
+        ele.bind("click", change);
                 
-        return ele;
+        return tmp;
     }
 };
 
