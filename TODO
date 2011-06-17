@@ -115,6 +115,8 @@ DONE
 - ptolemy
   
 TODO
+
+- info box values (show full in tooltip)
 - aristotle
   - s4-s8 reverse labels, hippo,path,stars off
   - disable/enable poles of connected spheres P2,7 etc.

@@ -197,7 +197,7 @@ myApp.prototype.update = function(time) {
         $("#days").text(Math.round(model.days));
         if(model instanceof ModelSun) {
           $("#longitude").text( model.longitude.toFixed(1) );
-          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(6) );
+          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
           $("#latitude").text( model.latitude.toFixed(3) );
         } else {
           $("#longitude").text( model.longitude.toFixed(1) );
@@ -382,7 +382,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         // playback div       
         $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
         $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
-        UI.slider({model: model, id: "Speed", min:0.001, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+        UI.slider({model: model, id: "Speed", min:0.1, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 
 
