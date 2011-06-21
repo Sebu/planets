@@ -121,10 +121,10 @@ DONE
   - derefent radius 60
   - remove arc1/2, markerarc,
   - add equant line etc.
+  - sexagisimal converter
   
 TODO
 - ptolemy
-  - sexagisimal converter
 - sun
   - real days passed :)
 - aristotle

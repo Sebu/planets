@@ -84,7 +84,12 @@ myApp.prototype.init = function(params) {
               <div>days/zodical month<span class='wert' id='zodicalDaysPerMonth'>0</span></div>\
               <div>days/draconitic month<span class='wert' id='draconiticDaysPerMonth'>0</span></div>\
             </div>\
+            <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
+            <div class='sexa' id='sexaResult'>0</div>\
             </div>").appendTo(this.domRoot);
+
+            $("#sexaInput > input").bind("change", function() 
+              { $("#sexaResult").text(sexagesimal(this.value)); });
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
@@ -349,7 +354,11 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             $("#sunInfoContainer").fadeIn(500);
             $("#meanLongitudeBox").fadeIn(500);
         }      
-        
+
+        $(".sexa").fadeOut(500);
+        if(model instanceof ModelPtolemy) 
+            $(".sexa").fadeIn(500);
+
         $("#sunAngleBox").fadeOut(500);
         if (model.sun.getEnabled()) $("#sunAngleBox").fadeIn(500);
         

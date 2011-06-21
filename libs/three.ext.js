@@ -22,9 +22,41 @@ function decToSex(num, prec) {
  
 };
 
-alert(decToSex(1.11111, 9));
 
 
+function sexagesimal(number) {
+  if(number.toString().indexOf(";")==-1)
+    return decToBase(number,60);
+  else 
+    return baseToDec(number,60);
+}
+
+function baseToDec(number, base) {
+        console.log(number);
+        if (base < 2 || base > 64) {
+            return "#base should be between 2 and 64#";
+        }
+
+        number = number.toString().split(';');
+        var result = Number(number[0]);
+ 
+
+        var negative = '';
+        if (result < 0) {
+            negative = '-';
+        }
+        result = Math.abs(result);
+
+        var fraction = number[1].split(',');
+        
+        if (fraction) {
+          for(var i=0;i<fraction.length;i++) {
+            console.log(result);
+            result += Number(fraction[i]/base)/(Math.pow(60,i));
+          }
+        }
+        return negative + result;
+    };
    
 function decToBase(number, base) {
 
@@ -42,22 +74,21 @@ function decToBase(number, base) {
         var fraction = number[1];
         var result = '';
 
-        do {
-            result = String(integer % base) + ";" + result;
-            integer = parseInt(integer / base, 10);
-        } while (integer > 0);
+        result = integer + ";";
+//        do {
+//            result = String(integer % base) + ";" + result;
+//            integer = parseInt(integer / base, 10);
+//        } while (integer > 0);
 
         if (fraction) {
             var decimalPlaces = fraction.toString().length;
-            result += '';
             fraction = parseFloat('.' + fraction);
 
             var x = 0;
             do {
                 x++;
                 var res = (fraction * base).toString().split('.');
-                console.log((fraction * base) + " " + res);
-                result = result + "," + res[0];
+                result +=  res[0] + ",";
 
                 if (res[1]) {
                     fraction = parseFloat('.' + res[1]);
@@ -71,7 +102,8 @@ function decToBase(number, base) {
     };
 
 
-alert(decToBase(1.1111, 60));
+//alert(sexagesimal("-200;30"));
+//alert(baseToDec(decToBase(-221.75, 60),60));
 
 
 function frac(num) {
