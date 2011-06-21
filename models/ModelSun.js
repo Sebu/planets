@@ -19,16 +19,15 @@ ModelSun = function(params) {
     this.sunYears = 0;
     this.setSunYears = function(speed) {
         this.sunYears = speed;
-        //this.sunSpeed = (360.0 * this.sphere[1].getSpeed()) / (365.25 - this.sphere[1].getSpeed());
-        //console.log(this.sunSpeed);
-        
         model.sphere[2].setSpeed(this.sunYears*365);
     }
     this.getSunYears = function() {
       return this.sunYears;
     }
     
-    
+    this.getMeanLongitude = function() {
+      return (this.sphere[1].getRotateAngle() + this.sphere[2].getRotateAngle());
+    }
     this.getDaysPerYear = function() {
        return  frac((1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed());
     }

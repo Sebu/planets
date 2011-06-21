@@ -26,7 +26,18 @@ ModelMoonCompare = function(params) {
     this.lastLongitude2 = 0;
     this.lastPerp2 = 0;
     this.longitude2 = 0;
-    
+
+
+   this.setShowSphere3 = function(state) {
+      this.sphere[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere3 = function() { return true; };
+       
+   this.setShowSphere4 = function(state) {
+      this.sphere[4].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere4 = function() { return true; };
+
 
     this.metonYear = 0;
     this.setMetonYear = function(val) {

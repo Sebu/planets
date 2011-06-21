@@ -61,27 +61,28 @@ myApp.prototype.init = function(params) {
         // create some elements
         // TODO: more segmentation
         $("<div class='container' id='infoContainer'>\
-            <div>angle planet/sun<span style='float:right;' id='sunAngle'>0</span></div>\
-            <div>longitude<span style='float:right; 'id='longitude'>0</span></div>\
-            <div>longitude speed <span style='float:right;' id='longitudeSpeed'>0</span></div>\
-            <div>latitude<span style='float:right;' id='latitude'>0</span></div>\
-            <div>days<span style='float:right;' id='days'>0</span></div>\
+            <div id='sunAngleBox'>angle planet/sun<span class='wert' id='sunAngle'>0</span></div>\
+            <div>longitude<span class='wert' id='longitude'>0</span></div>\
+            <div>longitude speed <span class='wert' id='longitudeSpeed'>0</span></div>\
+            <div id='meanLongitudeBox'>mean longitude<span class='wert' 'id='meanLongitude'>0</span></div>\
+            <div>latitude<span class='wert' id='latitude'>0</span></div>\
+            <div>days<span class='wert' id='days'>0</span></div>\
             <div id='infoContainer2' style='display:none'>\
-              <div>angle planet/sun<span style='float:right;' id='sunAngle2'>0</span></div>\
-              <div>longitude<span style='float:right; 'id='longitude2'>0</span></div>\
-              <div>longitude speed <span style='float:right;' id='longitudeSpeed2'>0</span></div>\
-              <div>latitude<span style='float:right;' id='latitude2'>0</span></div>\
-              <div>days<span style='float:right;' id='days2'>0</span></div>\
+              <div>angle planet/sun<span class='wert' id='sunAngle2'>0</span></div>\
+              <div>longitude<span class='wert' id='longitude2'>0</span></div>\
+              <div>longitude speed <span class='wert' id='longitudeSpeed2'>0</span></div>\
+              <div>latitude<span class='wert' id='latitude2'>0</span></div>\
+              <div>days<span class='wert' id='days2'>0</span></div>\
               </div>\
               <div id='sunInfoContainer' style='display:none'>\
-              <div>days per year<span style='float:right;' id='sunDaysPerYear'>0</span></div>\
+              <div>days per year<span class='wert' id='sunDaysPerYear'>0</span></div>\
             </div>\
             <div id='moonInfoContainer' style='display:none'>\
-              <div>zodiacal months<span style='float:right;' id='metonZodicalMonths'>0</span></div>\
-              <div>days/year<span style='float:right;' id='metonDaysPerYear'>0</span></div>\
-              <div>days/synodic month<span style='float:right;' id='synodicDaysPerMonth'>0</span></div>\
-              <div>days/zodical month<span style='float:right;' id='zodicalDaysPerMonth'>0</span></div>\
-              <div>days/draconitic month<span style='float:right;' id='draconiticDaysPerMonth'>0</span></div>\
+              <div>zodiacal months<span class='wert' id='metonZodicalMonths'>0</span></div>\
+              <div>days/year<span class='wert' id='metonDaysPerYear'>0</span></div>\
+              <div>days/synodic month<span class='wert' id='synodicDaysPerMonth'>0</span></div>\
+              <div>days/zodical month<span class='wert' id='zodicalDaysPerMonth'>0</span></div>\
+              <div>days/draconitic month<span class='wert' id='draconiticDaysPerMonth'>0</span></div>\
             </div>\
             </div>").appendTo(this.domRoot);
 
@@ -193,11 +194,13 @@ myApp.prototype.update = function(time) {
         model.update(time);
 
         // infoBox data
+        if(model.running) {
         if(model.sun.getEnabled()) $("#sunAngle").text( model.sunAngle.toFixed(1) );
         $("#days").text(Math.round(model.days));
         if(model instanceof ModelSun) {
           $("#longitude").text( model.longitude.toFixed(1) );
           $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
+          $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
           $("#latitude").text( model.latitude.toFixed(3) );
         } else {
           $("#longitude").text( model.longitude.toFixed(1) );
@@ -216,6 +219,8 @@ myApp.prototype.update = function(time) {
 
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.camera, this.canvas));
         }
+        }
+
 
 
         // update Label position/visibility
@@ -338,6 +343,16 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         // build up ui
         $("#moonInfoContainer").fadeOut(500);
         $("#sunInfoContainer").fadeOut(500);
+
+        $("#meanLongitudeBox").fadeOut(500);
+        if(model instanceof ModelSun)  {
+            $("#sunInfoContainer").fadeIn(500);
+            $("#meanLongitudeBox").fadeIn(500);
+        }      
+        
+        $("#sunAngleBox").fadeOut(500);
+        if (model.sun.getEnabled()) $("#sunAngleBox").fadeIn(500);
+        
         $("#infoContainer2").fadeOut(500);
 
         $("#moonModel").fadeOut(500);
@@ -487,6 +502,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
+           
         } else if (model instanceof ModelAristotle) {
 
             $("#visSpheres > *").remove();
@@ -494,6 +510,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.checkbox({model:model, id:"ShowSphere1", text:"S2"}).appendTo("#visSpheres");
             UI.checkbox({model:model, id:"ShowSphere2", text:"S3"}).appendTo("#visSpheres");
             UI.checkbox({model:model, id:"ShowSphere3", text:"S4"}).appendTo("#visSpheres");
+            $("<div id='visSpheres1'></div>").appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere16", text:"P2,7"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere25", text:"P3,6"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere34", text:"P4,5"}).appendTo("#visSpheres1");
             $("<div id='visSpheres2'></div>").appendTo("#visSpheres");
             UI.checkbox({model:model, id:"ShowSphere7", text:"S8"}).appendTo("#visSpheres2");
             UI.checkbox({model:model, id:"ShowSphere6", text:"S7"}).appendTo("#visSpheres2");
@@ -540,6 +560,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 5"}).appendTo("#rotateStart");
+            
+            
 
         } else if (model instanceof ModelSimple) {
 
@@ -555,9 +577,9 @@ myApp.prototype.setCurrentPlanet = function(preset) {
            this.camera.rotateY((Math.PI*3)/2 - 0.1);
 
             UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
-            UI.slider({model:model, id: "Radius0", max: 10, step:0.05, text: "Deferent"}).appendTo("#radius");
-            UI.slider({model:model, id: "Radius1", max: 10, step:0.05, text: "Epicycle"}).appendTo("#radius");
-            UI.slider({model:model, id: "Equant", max: 10, step:0.05, text: "Equant"}).appendTo("#radius");
+            UI.slider({model:model, id: "Radius0", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
+            UI.slider({model:model, id: "Radius1", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
+            UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.slider({model:model, id:"Speed0", max:1100, text:"Deferent"}).appendTo("#speed");
@@ -579,6 +601,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
         } else if (model instanceof  ModelSun) {
 
+
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
@@ -589,9 +612,6 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal) in days"}).appendTo("#speed");
             UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
             
-            $("#sunInfoContainer").fadeIn(500);
-
-
             $("#Speed1 > input, #SunYears > input").change(function() {
               $("#sunDaysPerYear").html(model.getDaysPerYear());
             });

@@ -1,5 +1,78 @@
 
 
+function decToSex(num, prec) {
+  tmp2 = Math.round(num*Math.pow(60,prec))/Math.pow(60,prec);
+  tmp = Math.floor(tmp2);
+  outstr = tmp.toString() + ";";
+  tmp = num - tmp;
+  cnt = 0;
+  while(tmp > 0 && cnt < prec) {
+    console.log(tmp + " " + tmp2);
+    tmp = tmp * 60;
+    tmp2 = Math.floor(tmp);
+
+
+    tmp = tmp - tmp2;
+    if(cnt++ > 0)
+      outstr = outstr + "," + tmp2.toString();
+    else
+      outstr = outstr + tmp2.toString();
+  };
+  return outstr;
+ 
+};
+
+alert(decToSex(1.11111, 9));
+
+
+   
+function decToBase(number, base) {
+
+        if (base < 2 || base > 64) {
+            return "#base should be between 2 and 64#";
+        }
+
+        var negative = '';
+        if (number < 0) {
+            negative = '-';
+        }
+
+        number = number.toString().split('.');
+        var integer = Math.abs(number[0]);
+        var fraction = number[1];
+        var result = '';
+
+        do {
+            result = String(integer % base) + ";" + result;
+            integer = parseInt(integer / base, 10);
+        } while (integer > 0);
+
+        if (fraction) {
+            var decimalPlaces = fraction.toString().length;
+            result += '';
+            fraction = parseFloat('.' + fraction);
+
+            var x = 0;
+            do {
+                x++;
+                var res = (fraction * base).toString().split('.');
+                console.log((fraction * base) + " " + res);
+                result = result + "," + res[0];
+
+                if (res[1]) {
+                    fraction = parseFloat('.' + res[1]);
+                }
+                else {
+                    break;
+                }
+            } while (x < decimalPlaces);
+        }
+        return negative + result;
+    };
+
+
+alert(decToBase(1.1111, 60));
+
 
 function frac(num) {
 
@@ -58,6 +131,9 @@ function getMaxNumerator(f)
 
    return L;
 }
+
+
+
 
 PI_SCALE = 180.0/Math.PI;
 
@@ -476,6 +552,9 @@ Cloud.prototype.constructor = Cloud;
 var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
+var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
+var cone = new THREE.CylinderGeometry( 4, 0.0001, 0.1, 0.4);
+//THREE.LatheGeometry([new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 )]);
 
 var aLine = new THREE.Geometry();
 aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
@@ -493,7 +572,7 @@ Spherical = function Spherical(params) {
     this.scaleFactor = params.scale;
     
     var color = params.color || { r: 0.5, g: 0.5, b: 0.5};
-    color = rgbToHex(color);
+//    color = rgbToHex(color);
     this.visuals = [];
 
     this.axisAngle = params.axisAngle || 0.0;
@@ -504,8 +583,8 @@ Spherical = function Spherical(params) {
     this.anchor = new Node();
     this.addNode(this.anchor);
 
-    this.material = new THREE.LineBasicMaterial( {  color: color } );
-    this.materialArc =  new THREE.LineBasicMaterial( {  color: color } );
+    this.material = new THREE.LineBasicMaterial( {  color: rgbToHex(color) } );
+    this.materialArc =  new THREE.LineBasicMaterial( {  color: rgbToHex(color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
     this.visuals.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
@@ -516,7 +595,7 @@ Spherical = function Spherical(params) {
     this.visuals.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
     this.addNode(this.visuals.arc2);
 
-    var materialArc = new THREE.LineBasicMaterial( {  color: color });
+    var materialArc = new THREE.LineBasicMaterial( {  color: rgbToHex(color) });
     this.visuals.equator = new THREE.Line(equator, this.material );
     this.visuals.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals.equator.rotation.x = Math.PI/2;
@@ -531,15 +610,27 @@ Spherical = function Spherical(params) {
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
     
-    var materialBall = new THREE.MeshBasicMaterial( { color: color } );
-
-    this.visuals.markerball =  new THREE.Mesh(geometryBall, materialBall);
+    var materialBall = new THREE.MeshBasicMaterial( { color: rgbToHex(color) } );
+   
+    var materialCone = new THREE.MeshBasicMaterial( { color: rgbToHex(color) } );
+    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
+    
+    
+    this.visuals.markerball =  new THREE.Mesh(cone, materialCone);
+    this.visuals.markerend =  new THREE.Mesh(markerend, materialCone);
+    this.visuals.markerball.position.z = params.scale;
+//    this.visuals.markerball.position.x = -0.2;
+    this.visuals.markerball.rotation.y = -Math.PI/2;  
+    this.visuals.markerend.position.z = params.scale;
+    this.visuals.markerend.rotation.y = -Math.PI/2; 
+    
     this.visuals.npole = new THREE.Mesh(geometryBall, materialBall);
     this.visuals.spole = new THREE.Mesh(geometryBall, materialBall);
-    this.visuals.markerball.position.z = params.scale;
     this.visuals.npole.position.y = params.scale;
     this.visuals.spole.position.y = -params.scale;
     this.anchor.addNode(this.visuals.markerball);
+    this.addNode(this.visuals.markerend);
+
     this.anchor.addNode(this.visuals.npole);
     this.anchor.addNode(this.visuals.spole);
 //    nodePool[this.inner_id] = this.visuals.markerball;
@@ -547,7 +638,7 @@ Spherical = function Spherical(params) {
 //    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
-    this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: color } ));
+    this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(color) } ));
     this.visuals.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals.rotationarc.rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals.rotationarc);
@@ -625,11 +716,23 @@ Spherical.prototype.getStep = function(step) {
 
 Spherical.prototype.setArcBeta = function(angle) {
     this.markerArc.setAngle(180-angle);
-    this.progressArc .setBeta(angle);
+    this.progressArc.setBeta(angle);
 };
 
 Spherical.prototype.setArcAngle = function(angle) {
-    this.progressArc.setAngle(-angle);
+
+    
+    if(angle > 0) {
+     this.visuals.markerball.scale.z = 1.0;  
+//     this.visuals.markerball.position.x = -0.2;
+    }
+    else {
+     this.visuals.markerball.scale.z = -1.0;  
+//     this.visuals.markerball.position.x = 0.2;
+     }
+    
+    // update progress angle
+    if(this.visuals.rotationarc.getEnabled()) this.progressArc.setAngle(-angle);
 };
 
 Spherical.prototype.setRotateAngle = function(angle) {

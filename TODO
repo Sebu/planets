@@ -98,11 +98,13 @@ DONE
 - fix ecliptic speed
 - bug: moving the model zooms out
 - longitude speed deg per day not per animation speed
+- arc start and end points  
 
 
 - eudoxos
 - sun
   - longitude/latitude speed in  more accurate 
+  - mean longitude (6 digits)  
 - moon, moon compare
 - kallippos
 - yavetz
@@ -113,23 +115,23 @@ DONE
   - s8 rotate like s1
   - (thick) line between winder and unwinder
   - s4-s8 reverse labels, hippo,path,stars off
-- ptolemy
-  
-TODO
-- reset position (tween)
-- info container values (show full in tooltip)
-- aristotle
   - disable/enable poles of connected spheres P2,7 etc.
-  - arc start and end points
-  - click/mouseover highlight
+
 - ptolemy
   - derefent radius 60
   - remove arc1/2, markerarc,
   - add equant line etc.
+  
+TODO
+- ptolemy
+  - sexagisimal converter
 - sun
   - real days passed :)
-  - mean longitude (6 digits)
+- aristotle
+  - click/mouseover highlight
 - fix: load presets through setters
+- reset position (tween)
+- info container values (show full in tooltip)
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch
 

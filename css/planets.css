@@ -70,6 +70,13 @@ html, body {
   padding: 4px;
   
 }
+
+.wert {
+  float: right;
+  -webkit-user-select:auto;
+  -moz-user-select:auto;  
+}
+
 #uiContainer {
   overflow-y:auto;
   width: 180px;

@@ -91,23 +91,41 @@ ModelAristotle = function(params) {
         this.sphere[5].setSpeed(-speed);
     }
 
+   this.setShowSphere25 = function(state) {
+      this.sphere[2].setVisuals(["npole","spole"], state);
+      this.sphere[5].setVisuals(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere25 = function() { return false; };
+
+   this.setShowSphere16 = function(state) {
+      this.sphere[1].setVisuals(["npole","spole"], state);
+      this.sphere[6].setVisuals(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere16 = function() { return false; };
+   
+   this.setShowSphere34 = function(state) {
+      this.sphere[3].setVisuals(["npole","spole"], state);
+      this.sphere[4].setVisuals(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere34 = function() { return false; };      
+   
    this.setShowSphere4 = function(state) {
-      this.sphere[4].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[4].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere4 = function() { return true; };
 
    this.setShowSphere5 = function(state) {
-      this.sphere[5].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[5].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere5 = function() { return true; };
 
    this.setShowSphere6 = function(state) {
-      this.sphere[6].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[6].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere6 = function() { return true; };
 
    this.setShowSphere7 = function(state) {
-      this.sphere[7].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[7].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere7 = function() { return true; };
 

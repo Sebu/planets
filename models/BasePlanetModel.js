@@ -108,7 +108,7 @@ BasePlanetModel.prototype = {
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
-            this["setShowSphere" + i] = new Function("state", "console.log(state); this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\"], state);");
+            this["setShowSphere" + i] = new Function("state", "console.log(state); this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"], state);");
             this["getShowSphere" + i] = function() { return true; };
 
         }
@@ -133,7 +133,7 @@ BasePlanetModel.prototype = {
         
         //TODO: deprecated? / override
         this.showSphere0 = function(state) {
-            this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"], state);
+            this.sphere[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball","markerend"], state);
         }
 
         // add Sun and sun spheres
@@ -179,7 +179,7 @@ BasePlanetModel.prototype = {
         //TODO: better merge
         for(var i in this.sphere) {
             $.extend(true, this.sphere[i], this.currentPlanet.sphere[i]);
-            if(this.currentPlanet.sphere[i]) this.sphere[i].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], this.currentPlanet.sphere[i].visible);
+            if(this.currentPlanet.sphere[i]) this["setShowSphere"+i](this.currentPlanet.sphere[i].visible);
         }
         
         this.setShowStars(this.currentPlanet.showStars);
@@ -196,7 +196,7 @@ BasePlanetModel.prototype = {
         this.sphere[0].setVisuals(["arc1","arc2"], false);
 
         // hide sun sphere
-        this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], false);
+        this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
         // reset everything
         this.reset();
@@ -216,6 +216,10 @@ BasePlanetModel.prototype = {
     update : function(time) {
 
         if(this.running) {
+            // update movement of all spheres
+            for (i in model.updateList) {
+                model.updateList[i].updateMovement((365.0*time)/this.speed);
+            }        
         	
             var earthPos = sceneToSyl(this.earth.mesh.currentPos());
             var polePos = sceneToSyl(this.sphere[1].visuals.npole.currentPos());
@@ -267,10 +271,7 @@ BasePlanetModel.prototype = {
             // days determined by sun speed
             this.days += dayDelta;
             
-            // update movement of all spheres
-            for (i in model.updateList) {
-                model.updateList[i].updateMovement((365.0*time)/this.speed);
-            }
+
             //TODO: on model change -> events?
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
