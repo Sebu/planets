@@ -644,8 +644,8 @@ Spherical = function Spherical(params) {
     
     var materialBall = new THREE.MeshBasicMaterial( { color: rgbToHex(color) } );
    
-    var materialCone = new THREE.MeshBasicMaterial( { color: rgbToHex(color) } );
-    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
+    var materialCone = new THREE.MeshBasicMaterial( { color: "0xFFFFFF" } );
+//    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
     
     
     this.visuals.markerball =  new THREE.Mesh(cone, materialCone);
