@@ -38,7 +38,7 @@ ModelSun = function(params) {
     }
 
     this.getDaysPerYear = function() {
-       return  frac(this.getDaysPerYear);
+       return  frac(this.getDaysPerYearTrue());
     }
     
     this.setCurrentPlanet = function(node) {
