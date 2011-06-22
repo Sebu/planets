@@ -77,6 +77,9 @@ myApp.prototype.init = function(params) {
               <div id='sunInfoContainer' style='display:none'>\
               <div>days per year<span class='wert' id='sunDaysPerYear'>0</span></div>\
             </div>\
+            <div id='ptolemyInfoContainer' style='display:none'>\
+              <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
+            </div>\
             <div id='moonInfoContainer' style='display:none'>\
               <div>zodiacal months<span class='wert' id='metonZodicalMonths'>0</span></div>\
               <div>days/year<span class='wert' id='metonDaysPerYear'>0</span></div>\
@@ -212,7 +215,9 @@ myApp.prototype.update = function(time) {
           $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(2) );
           $("#latitude").text( model.latitude.toFixed(1) );
         }
-
+        if(model instanceof ModelPtolemy) {
+          $("#deferentLongitude").text( model.sphere[0].getRotateAngle().toFixed(1) );          
+        }
 
         if(model instanceof ModelMoonCompare) {
           // infoBox data
@@ -363,6 +368,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         if (model.sun.getEnabled()) $("#sunAngleBox").fadeIn(500);
         
         $("#infoContainer2").fadeOut(500);
+
+        $("#ptolemyInfoContainer").fadeOut(500);
 
         $("#moonModel").fadeOut(500);
 
@@ -594,6 +601,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed0", max:1100, text:"Deferent"}).appendTo("#speed");
 
             UI.slider({model:model, id:"Speed1",  max:1100, text:"Epicycle"}).appendTo("#speed");
+    
+            $("#ptolemyInfoContainer").fadeIn(500);
             
         } else if (model instanceof ModelHippo) {
 

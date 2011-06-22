@@ -116,7 +116,6 @@ DONE
   - (thick) line between winder and unwinder
   - s4-s8 reverse labels, hippo,path,stars off
   - disable/enable poles of connected spheres P2,7 etc.
-
 - ptolemy
   - derefent radius 60
   - remove arc1/2, markerarc,
