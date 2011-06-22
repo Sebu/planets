@@ -77,9 +77,6 @@ myApp.prototype.init = function(params) {
               <div id='sunInfoContainer' style='display:none'>\
               <div>days per year<span class='wert' id='sunDaysPerYear'>0</span></div>\
             </div>\
-            <div id='ptolemyInfoContainer' style='display:none'>\
-              <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
-            </div>\
             <div id='moonInfoContainer' style='display:none'>\
               <div>zodiacal months<span class='wert' id='metonZodicalMonths'>0</span></div>\
               <div>days/year<span class='wert' id='metonDaysPerYear'>0</span></div>\
@@ -87,8 +84,11 @@ myApp.prototype.init = function(params) {
               <div>days/zodical month<span class='wert' id='zodicalDaysPerMonth'>0</span></div>\
               <div>days/draconitic month<span class='wert' id='draconiticDaysPerMonth'>0</span></div>\
             </div>\
-            <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
-            <div class='sexa' id='sexaResult'>0</div>\
+            <div id='ptolemyInfoContainer' style='display:none'>\
+              <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
+              <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
+              <div class='sexa' id='sexaResult'>0</div>\
+            </div>\
             </div>").appendTo(this.domRoot);
 
             $("#sexaInput > input").bind("change", function() 
@@ -360,16 +360,17 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             $("#meanLongitudeBox").fadeIn(500);
         }      
 
-        $(".sexa").fadeOut(500);
+//        $(".sexa").fadeOut(500);
+        $("#ptolemyInfoContainer").fadeOut(500);
         if(model instanceof ModelPtolemy) 
-            $(".sexa").fadeIn(500);
+            $("#ptolemyInfoContainer").fadeIn(500);
+//            $(".sexa").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);
         if (model.sun.getEnabled()) $("#sunAngleBox").fadeIn(500);
         
         $("#infoContainer2").fadeOut(500);
 
-        $("#ptolemyInfoContainer").fadeOut(500);
 
         $("#moonModel").fadeOut(500);
 
@@ -602,7 +603,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
             UI.slider({model:model, id:"Speed1",  max:1100, text:"Epicycle"}).appendTo("#speed");
     
-            $("#ptolemyInfoContainer").fadeIn(500);
+
             
         } else if (model instanceof ModelHippo) {
 
