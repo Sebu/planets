@@ -64,7 +64,7 @@ myApp.prototype.init = function(params) {
             <div id='sunAngleBox'>angle planet/sun<span class='wert' id='sunAngle'>0</span></div>\
             <div>longitude<span class='wert' id='longitude'>0</span></div>\
             <div>longitude speed <span class='wert' id='longitudeSpeed'>0</span></div>\
-            <div id='meanLongitudeBox'>mean longitude<span class='wert' 'id='meanLongitude'>0</span></div>\
+            <div id='meanLongitudeBox'>mean longitude<span class='wert' id='meanLongitude'>0</span></div>\
             <div>latitude<span class='wert' id='latitude'>0</span></div>\
             <div>days<span class='wert' id='days'>0</span></div>\
             <div id='infoContainer2' style='display:none'>\
@@ -216,7 +216,7 @@ myApp.prototype.update = function(time) {
           $("#latitude").text( model.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy) {
-          $("#deferentLongitude").text( model.sphere[0].getRotateAngle().toFixed(1) );          
+          $("#deferentLongitude").text( (model.sphere[0].getRotateAngle() % 360.0).toFixed(2) );          
         }
 
         if(model instanceof ModelMoonCompare) {
