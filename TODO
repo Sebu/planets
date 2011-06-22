@@ -128,6 +128,7 @@ TODO
   equation of time(h) 360/lengthyear(long-meanlong) 24
   - real days passed :)
 - aristotle
+  - stop motion of sphere
   - click/mouseover highlight
 - fix: load presets through setters
 - reset position (tween)

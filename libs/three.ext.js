@@ -1,5 +1,11 @@
 
 
+//Array.prototype.remove=function(s){
+//for(i=0;i if(s==this[i]) this.splice(i, 1);
+//}
+//}
+
+
 function decToSex(num, prec) {
   tmp2 = Math.round(num*Math.pow(60,prec))/Math.pow(60,prec);
   tmp = Math.floor(tmp2);

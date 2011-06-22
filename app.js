@@ -211,7 +211,7 @@ myApp.prototype.update = function(time) {
         if(model instanceof ModelSun) {
           $("#longitude").text( model.longitude.toFixed(6) );
           $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
-          $("#equationOfTime").text( model.getEquationOfTime().toFixed(3) );
+          $("#equationOfTime").text( model.getEquationOfTime().toFixed(8) );
           $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
           $("#latitude").text( model.latitude.toFixed(3) );
         } else {
@@ -532,9 +532,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.checkbox({model:model, id:"ShowSphere2", text:"S3"}).appendTo("#visSpheres");
             UI.checkbox({model:model, id:"ShowSphere3", text:"S4"}).appendTo("#visSpheres");
             $("<div id='visSpheres1'></div>").appendTo("#visSpheres");
-            UI.checkbox({model:model, id:"ShowSphere16", text:"P2,7"}).appendTo("#visSpheres1");
-            UI.checkbox({model:model, id:"ShowSphere25", text:"P3,6"}).appendTo("#visSpheres1");
-            UI.checkbox({model:model, id:"ShowSphere34", text:"P4,5"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere07", text:"P18"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere16", text:"P27"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere25", text:"P36"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere34", text:"P45"}).appendTo("#visSpheres1");
             $("<div id='visSpheres2'></div>").appendTo("#visSpheres");
             UI.checkbox({model:model, id:"ShowSphere7", text:"S8"}).appendTo("#visSpheres2");
             UI.checkbox({model:model, id:"ShowSphere6", text:"S7"}).appendTo("#visSpheres2");
@@ -550,6 +551,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
             UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
 
+            UI.checkbox({model:model, id:"Speed1Toggle", text:"S2"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 

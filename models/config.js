@@ -315,18 +315,6 @@ var moonModels = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 //var moonModels = {
 //    Mendell: { speed1: function(d,z)  {return -(d+z); }, speed2: function(d,z) { return d; } },
 //    Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -360*(d-z); } },

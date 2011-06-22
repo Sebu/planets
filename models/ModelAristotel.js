@@ -42,10 +42,10 @@ ModelAristotle = function(params) {
       params.to.anchor.addNode(params.to.visuals.njoint);
       params.to.anchor.addNode(params.to.visuals.sjoint);    
     }
-
    this.createJoint({from: this.sphere[3], to: this.sphere[4], color: colors["S3"], linewidth:4 }); 
    this.createJoint({from: this.sphere[2], to: this.sphere[5], color: colors["S2"], linewidth:3 }); 
    this.createJoint({from: this.sphere[1], to: this.sphere[6], color: colors["S1"], linewidth:2 }); 
+   this.createJoint({from: this.sphere[0], to: this.sphere[7], color: colors["S0"], linewidth:1 }); 
     
     this.setAxisAngle0 = function(angle) {
         this.sphere[0].setAxisAngle(90 - angle);
@@ -69,6 +69,15 @@ ModelAristotle = function(params) {
 
     }
 
+    this.setSpeed1Toggle = function(state) {
+//      this.speed1Toggle = state;
+//      this.updateList.remove(this.sphere[1]);
+    }
+
+    this.getSpeed1Toggle = function() { 
+      return this.speed1Toggle;
+    }
+
     this.setAxisAngle3 = function(angle) {
       var angle3 = this.sphere[3].getAxisAngle();
       var angle5 = this.sphere[5].getAxisAngle();
@@ -90,6 +99,12 @@ ModelAristotle = function(params) {
         this.sphere[4].setSpeed(speed);
         this.sphere[5].setSpeed(-speed);
     }
+
+   this.setShowSphere07 = function(state) {
+      this.sphere[0].setVisuals(["npole","spole"], state);
+      this.sphere[7].setVisuals(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere07 = function() { return false; };
 
    this.setShowSphere25 = function(state) {
       this.sphere[2].setVisuals(["npole","spole"], state);
