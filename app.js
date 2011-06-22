@@ -65,7 +65,7 @@ myApp.prototype.init = function(params) {
             <div>longitude<span class='wert' id='longitude'>0</span></div>\
             <div id='meanLongitudeBox' style='display:none'>\
               <div>mean longitude<span class='wert' id='meanLongitude'>0</span></div>\
-              <div>equation of time<span class='wert' id='equationOfTime'>0</span></div>\
+              <div>equation of time (hrs)<span class='wert' id='equationOfTime'>0</span></div>\
             </div>\
             <div>longitude speed <span class='wert' id='longitudeSpeed'>0</span></div>\
             <div>latitude<span class='wert' id='latitude'>0</span></div>\
