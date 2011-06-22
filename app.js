@@ -209,8 +209,8 @@ myApp.prototype.update = function(time) {
         if(model.sun.getEnabled()) $("#sunAngle").text( model.sunAngle.toFixed(1) );
         $("#days").text(Math.round(model.days));
         if(model instanceof ModelSun) {
-          $("#longitude").text( model.longitude.toFixed(3) );
-          $("#meanLongitude").text( model.getMeanLongitude().toFixed(3) );
+          $("#longitude").text( model.longitude.toFixed(6) );
+          $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
           $("#equationOfTime").text( model.getEquationOfTime().toFixed(3) );
           $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
           $("#latitude").text( model.latitude.toFixed(3) );
