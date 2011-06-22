@@ -26,10 +26,18 @@ ModelSun = function(params) {
     }
     
     this.getMeanLongitude = function() {
-      return (this.sphere[1].getRotateAngle() + this.sphere[2].getRotateAngle());
+      return (this.sphere[1].getRotateAngle() + this.sphere[2].getRotateAngle())%360.0;
     }
+    this.getEquationOfTime = function() {  
+      return  360.0 / ((this.longitude-this.getMeanLongitude())*this.getDaysPerYearTrue()* 24);
+    }
+
+    this.getDaysPerYearTrue = function() {
+       return  (1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed();
+    }
+
     this.getDaysPerYear = function() {
-       return  frac((1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed());
+       return  frac(this.getDaysPerYear);
     }
     
     this.setCurrentPlanet = function(node) {

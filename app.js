@@ -63,8 +63,11 @@ myApp.prototype.init = function(params) {
         $("<div class='container' id='infoContainer'>\
             <div id='sunAngleBox'>angle planet/sun<span class='wert' id='sunAngle'>0</span></div>\
             <div>longitude<span class='wert' id='longitude'>0</span></div>\
+            <div id='meanLongitudeBox' style='display:none'>\
+              <div>mean longitude<span class='wert' id='meanLongitude'>0</span></div>\
+              <div>equation of time<span class='wert' id='equationOfTime'>0</span></div>\
+            </div>\
             <div>longitude speed <span class='wert' id='longitudeSpeed'>0</span></div>\
-            <div id='meanLongitudeBox'>mean longitude<span class='wert' id='meanLongitude'>0</span></div>\
             <div>latitude<span class='wert' id='latitude'>0</span></div>\
             <div>days<span class='wert' id='days'>0</span></div>\
             <div id='infoContainer2' style='display:none'>\
@@ -206,9 +209,10 @@ myApp.prototype.update = function(time) {
         if(model.sun.getEnabled()) $("#sunAngle").text( model.sunAngle.toFixed(1) );
         $("#days").text(Math.round(model.days));
         if(model instanceof ModelSun) {
-          $("#longitude").text( model.longitude.toFixed(1) );
+          $("#longitude").text( model.longitude.toFixed(3) );
+          $("#meanLongitude").text( model.getMeanLongitude().toFixed(3) );
+          $("#equationOfTime").text( model.getEquationOfTime().toFixed(3) );
           $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
-          $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
           $("#latitude").text( model.latitude.toFixed(3) );
         } else {
           $("#longitude").text( model.longitude.toFixed(1) );
