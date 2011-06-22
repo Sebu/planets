@@ -211,7 +211,7 @@ myApp.prototype.update = function(time) {
         if(model instanceof ModelSun) {
           $("#longitude").text( model.longitude.toFixed(6) );
           $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
-          $("#equationOfTime").text( model.getEquationOfTime().toFixed(8) );
+          $("#equationOfTime").text( model.getEquationOfTime().toFixed(6) );
           $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
           $("#latitude").text( model.latitude.toFixed(3) );
         } else {
