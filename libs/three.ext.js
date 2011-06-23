@@ -1,12 +1,199 @@
 
 
-//Array.prototype.remove=function(s){
-//for(i=0;i if(s==this[i]) this.splice(i, 1);
-//}
-//}
+var Utils = Utils || {};
+
+Utils.GREGORIAN_EPOCH = 1721425.5;
+Utils.JULIAN_EPOCH = 1721423.5;
+
+function mod(a, b)
+{
+    return a - (b * Math.floor(a / b));
+}
+
+function jwday(j)
+{
+    return mod(Math.floor((j + 1.5)), 7);
+}
+
+function weekday_before(weekday, jd)
+{
+    return jd - jwday(jd - weekday);
+}
+
+function search_weekday(weekday, jd, direction, offset)
+{
+    return weekday_before(weekday, jd + (direction * offset));
+}
+
+function next_weekday(weekday, jd)
+{
+    return search_weekday(weekday, jd, 1, 7);
+}
+
+function previous_weekday(weekday, jd)
+{
+    return search_weekday(weekday, jd, -1, 1);
+}
+
+function n_weeks(weekday, jd, nthweek)
+{
+    var j = 7 * nthweek;
+
+    if (nthweek > 0) {
+        j += previous_weekday(weekday, jd);
+    } else {
+        j += next_weekday(weekday, jd);
+    }
+    return j;
+}
+
+Utils.dateToString = function(date) {
+  return "" + date[1] + " / " + date[2] + " / " + date[0] + "";
+}
+Utils.leapJulian = function(year) {
+    return mod(year, 4) == ((year > 0) ? 0 : 3);
+}
+
+Utils.leapGregorian = function(year) {
+    return ((year % 4) == 0) &&
+            (!(((year % 100) == 0) && ((year % 400) != 0)));
+}
+
+Utils.isoToJulian = function(year, week, day) {
+    return day + n_weeks(0, Utils.gregorianToJd(year - 1, 12, 28), week);
+}
+
+Utils.jdToIso = function(jd) {
+    var year, week, day;
+
+    year = Utils.jdToGregorian(jd - 3)[0];
+    if (jd >= Utils.isoToJulian(year + 1, 1, 1)) {
+        year++;
+    }
+    week = Math.floor((jd - Utils.isoToJulian(year, 1, 1)) / 7) + 1;
+    day = jwday(jd);
+    if (day == 0) {
+        day = 7;
+    }
+    return new Array(year, week, day);
+}
+
+Utils.jdToEgyptian = function(jd) {
+    var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
+        yindex, dyindex, year, yearday, leapadj;
+
+    wjd = Math.floor(jd - 0.5) + 0.5;
+    depoch = wjd - Utils.GREGORIAN_EPOCH;
+    quadricent = Math.floor(depoch / 146097);
+    dqc = mod(depoch, 146097);
+    cent = Math.floor(dqc / 36524);
+    dcent = mod(dqc, 36524);
+    quad = Math.floor(dcent / 1461);
+    dquad = mod(dcent, 1461);
+    yindex = Math.floor(dquad / 365);
+    year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
+    if (!((cent == 4) || (yindex == 4))) {
+        year++;
+    }
+    yearday = wjd - Utils.gregorianToJd(year, 1, 1);
+    leapadj = ((wjd < Utils.gregorianToJd(year, 3, 1)) ? 0
+                                                  :
+                  (Utils.leapGregorian(year) ? 1 : 2)
+              );
+    month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
+    day = (wjd - Utils.gregorianToJd(year, month, 1)) + 1;
+
+    return new Array(year, month, day);
+}
+
+Utils.gregorianToJd =function(year, month, day) {
+    return (Utils.GREGORIAN_EPOCH - 1) +
+           (365 * (year - 1)) +
+           Math.floor((year - 1) / 4) +
+           (-Math.floor((year - 1) / 100)) +
+           Math.floor((year - 1) / 400) +
+           Math.floor((((367 * month) - 362) / 12) +
+           ((month <= 2) ? 0 :
+                               (Utils.leapGregorian(year) ? -1 : -2)
+           ) +
+           day);
+}
+
+Utils.jdToGregorian = function(jd) {
+    var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
+        yindex, dyindex, year, yearday, leapadj;
+
+    wjd = Math.floor(jd - 0.5) + 0.5;
+    depoch = wjd - Utils.GREGORIAN_EPOCH;
+    quadricent = Math.floor(depoch / 146097);
+    dqc = mod(depoch, 146097);
+    cent = Math.floor(dqc / 36524);
+    dcent = mod(dqc, 36524);
+    quad = Math.floor(dcent / 1461);
+    dquad = mod(dcent, 1461);
+    yindex = Math.floor(dquad / 365);
+    year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
+    if (!((cent == 4) || (yindex == 4))) {
+        year++;
+    }
+    yearday = wjd - Utils.gregorianToJd(year, 1, 1);
+    leapadj = ((wjd < Utils.gregorianToJd(year, 3, 1)) ? 0
+                                                  :
+                  (Utils.leapGregorian(year) ? 1 : 2)
+              );
+    month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
+    day = (wjd - Utils.gregorianToJd(year, month, 1)) + 1;
+
+    return new Array(year, month, day);
+}
+
+Utils.jdToJulian = function(td) {
+    var z, a, alpha, b, c, d, e, year, month, day;
+
+    td += 0.5;
+    z = Math.floor(td);
+
+    a = z;
+    b = a + 1524;
+    c = Math.floor((b - 122.1) / 365.25);
+    d = Math.floor(365.25 * c);
+    e = Math.floor((b - d) / 30.6001);
+
+    month = Math.floor((e < 14) ? (e - 1) : (e - 13));
+    year = Math.floor((month > 2) ? (c - 4716) : (c - 4715));
+    day = b - d - Math.floor(30.6001 * e);
+
+    /*  If year is less than 1, subtract one to convert from
+        a zero based date system to the common era system in
+        which the year -1 (1 B.C.E) is followed by year 1 (1 C.E.).  */
+
+    if (year < 1) {
+        year--;
+    }
+
+    return new Array(year, month, day);
+}
+
+Utils.julianToJd = function(year, month, day) {
+
+    /* Adjust negative common era years to the zero-based notation we use.  */
+    if (year < 1) {
+        year++;
+    }
+
+    /* Algorithm as given in Meeus, Astronomical Algorithms, Chapter 7, page 61 */
+    if (month <= 2) {
+        year--;
+        month += 12;
+    }
+
+    return ((Math.floor((365.25 * (year + 4716))) +
+            Math.floor((30.6001 * (month + 1))) +
+            day) - 1524.5);
+}
 
 
-function decToSex(num, prec) {
+Utils.decToSex = function(num, prec) {
   tmp2 = Math.round(num*Math.pow(60,prec))/Math.pow(60,prec);
   tmp = Math.floor(tmp2);
   outstr = tmp.toString() + ";";
@@ -30,14 +217,14 @@ function decToSex(num, prec) {
 
 
 
-function sexagesimal(number) {
+Utils.sexagesimal = function(number) {
   if(number.toString().indexOf(";")==-1)
-    return decToBase(number,60);
+    return Utils.decToBase(number,60);
   else 
-    return baseToDec(number,60);
+    return Utils.baseToDec(number,60);
 }
 
-function baseToDec(number, base) {
+Utils.baseToDec = function(number, base) {
         console.log(number);
         if (base < 2 || base > 64) {
             return "#base should be between 2 and 64#";
@@ -64,7 +251,7 @@ function baseToDec(number, base) {
         return negative + result;
     };
    
-function decToBase(number, base) {
+Utils.decToBase = function(number, base) {
 
         if (base < 2 || base > 64) {
             return "#base should be between 2 and 64#";
@@ -112,7 +299,7 @@ function decToBase(number, base) {
 //alert(baseToDec(decToBase(-221.75, 60),60));
 
 
-function frac(num) {
+Utils.frac = function(num) {
 
   var d = 0.0;
   var tmp = num.toString();
@@ -123,7 +310,7 @@ function frac(num) {
   var numerators = [0, 1];
   var denominators = [1, 0];
 
-  var maxNumerator = getMaxNumerator(d);
+  var maxNumerator =  Utils.getMaxNumerator(d);
   var d2 = d;
   var calcD, prevCalcD = NaN;
   for (var i = 2; i < 1000; i++)  {
@@ -142,7 +329,7 @@ function frac(num) {
   }
 }
 
-function getMaxNumerator(f)
+Utils.getMaxNumerator = function(f)
 {
    var f2 = null;
    var ixe = f.toString().indexOf("E");
@@ -676,7 +863,7 @@ Spherical = function Spherical(params) {
 //    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
-    this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(color) } ));
+    this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:4, color: rgbToHex(color) } ));
     this.visuals.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals.rotationarc.rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals.rotationarc);

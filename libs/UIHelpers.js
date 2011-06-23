@@ -308,18 +308,29 @@ var UI = {
         var text = params.text || params.id;
         var min = params.min || 0;
         var max = params.max || 100;
+        var toggle = params.toggle || false;
         var step = params.step || 1;
         var value = params.value ||  instance["get"+id]();
 //        console.log(instance.valueOf());
         var change = params.change || function()  { instance["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
 
-        ele =  $("<div title='" + tooltip + "' id='" + id + "'>" +
-            "<div>" + text + "</div>" +
+        if(toggle)
+          tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
+        else
+          tmp =  $("<div>" + text + "</div>");
+        ele = $("<div title='" + tooltip + "' id='" + id + "'>" +
             "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ value +"' class='slider'/>" +
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range'/>" +
             "</div>");
+        tmp.append(ele);
         $("input",ele).bind("change",change);
-        return ele;
+        if(toggle) $(":checkbox",tmp).bind("click", function() 
+          { 
+            $("#" + id + " > input").attr('disabled', !this.checked);
+            if(!this.checked) instance["set"+id](0);
+            else instance["set"+id]( $("#" + id + " > .slider").val() );  
+          } );
+        return tmp;
     },
 
     checkbox : function(params) {
@@ -329,7 +340,7 @@ var UI = {
         var value = model["get"+id]() ? "checked" : "";;
         var change = params.change || function()  { model["set"+id](this.checked); };
         var tmp  = $("<span></span>");
-        var ele = $("<input type=checkbox name='visMode' " + value +">" + text + "</input>");
+        var ele = $("<input type=checkbox " + value +">" + text + "</input>");
         tmp.append(ele);
         ele.bind("click", change);
                 

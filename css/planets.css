@@ -26,18 +26,25 @@ html, body {
 }
 
 .slider { 
-	height:10px;
+background: #333;
+	height:12px;
 	position:relative; 
 	width:130px;
 	top: 4px;
 	float:left; 
 }
 
+
+.slider[disabled] {
+  color: gray;
+  background: #333;
+}
+
 /* the input field */
 .range {
 	border:1px  #ddd;
-    background: #333;
-    color: white;
+  background: #333;
+  color: white;
 
 	font-size:12px;
 	margin:1;
@@ -47,7 +54,28 @@ html, body {
 	border-radius:2px;
 }
 
+.range[disabled] {
+  background: #222;
+  color: gray;
+}
 
+/* drag handle */
+.handle { 
+    background:#fff url(../../../img/gradient/h30.png) repeat-x 0 0; 
+    height:8px;
+    width:8px;
+    top:-1px;
+    position:absolute; 
+    display:block; 
+    margin-top:1px;
+    border:1px solid #000;
+    cursor:move;
+    -moz-box-shadow:0 0 6px #000;
+    -webkit-box-shadow:0 0 6px #000;
+    -moz-border-radius:14px;
+    -webkit-border-radius:14px; 
+
+}
 
 .label {
   z-index: 1;

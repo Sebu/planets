@@ -30,17 +30,14 @@ ModelSun = function(params) {
 //      return (this.longitudeSpeed*this.days)%360.0;
     }
     this.getEquationOfTime = function() {  
-      return ( ( ( this.longitude-this.getMeanLongitude() ) * 360.0 ) /  this.getDaysPerYearTrue() )  * 24;
-    }
-
-    this.getDaysPerYearTrue = function() {
-       return  (1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed();
+      return ( ( ( this.longitude-this.getMeanLongitude() ) * 360.0 ) /  this.getDaysPerYear() )  * 24;
     }
 
     this.getDaysPerYear = function() {
-       return  frac(this.getDaysPerYearTrue());
+       return  (1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed();
     }
-    
+
+   
     this.setCurrentPlanet = function(node) {
         BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
         this.setSunYears(this.currentPlanet.sunYears);

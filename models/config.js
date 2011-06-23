@@ -27,6 +27,7 @@ var planetPresets = {
 
 Mercury1: {
   model: "Model4",
+  label: "Mercury",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0,  speed: 365, speedmax: 1000, rotateStart: 0 },
@@ -36,6 +37,7 @@ Mercury1: {
 
 Mercury2: {
   model: "Model4",
+  label: "Mercury",    
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -45,6 +47,7 @@ Mercury2: {
 
 Venus1: {
   model: "Model4",
+  label: "Mercury",    
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -61,6 +64,7 @@ Venus2: {
 
 Mars1: {
   model: "Model4",
+  label: "Mars",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -292,14 +296,32 @@ Aristotle: {
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 }
   ]},
-  
-Ptolemy: { 
+
+PtolemySun: { 
   model: "ModelPtolemy",
+  label: "Sun", 
   showStars: false,
   showHippo: false,
+  showSun: false,
+  derefentRadius: 60.0,
+  epicycleRadius: 39.5,
+  equant: 2.5,
   sphere: [
-    {axisAngle: 0.0, speed: 90, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 100, rotateStart: 0 }
+    {axisAngle: 0.0, speed: 365.2466666, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 365.2466666, rotateStart: 0 }
+  ] },
+    
+PtolemyMars: { 
+  model: "ModelPtolemy",
+  label: "Mars",
+  showStars: false,
+  showHippo: false,
+  derefentRadius: 60.0,
+  epicycleRadius: 39.5,
+  equant: 6.0,
+  sphere: [
+    {axisAngle: 0.0, speed: 365, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 0.0, speed: 327.21666666, rotateStart: 0 }
   ] }
 };
 

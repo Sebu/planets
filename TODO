@@ -105,6 +105,8 @@ DONE
 - sun
   - longitude/latitude speed in  more accurate 
   - mean longitude (6 digits)  
+  (equation of time(h) 360) /lengthyear(long-meanlong) 24
+
 - moon, moon compare
 - kallippos
 - yavetz
@@ -116,6 +118,8 @@ DONE
   - (thick) line between winder and unwinder
   - s4-s8 reverse labels, hippo,path,stars off
   - disable/enable poles of connected spheres P2,7 etc.
+  - stop motion of sphere
+
 - ptolemy
   - derefent radius 60
   - remove arc1/2, markerarc,
@@ -124,11 +128,11 @@ DONE
   
 TODO
 - ptolemy
+  - remove labels
+  - egyptian date
 - sun
-  (equation of time(h) 360) /lengthyear(long-meanlong) 24
   - real days passed :)
 - aristotle
-  - stop motion of sphere
   - click/mouseover highlight
 - fix: load presets through setters
 - reset position (tween)

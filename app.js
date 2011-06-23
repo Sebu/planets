@@ -89,13 +89,14 @@ myApp.prototype.init = function(params) {
             </div>\
             <div id='ptolemyInfoContainer' style='display:none'>\
               <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
+              <div>gregorian date<span class='wert' id='gregorianDate'>0</span></div>\
               <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
               <div class='sexa' id='sexaResult'>0</div>\
             </div>\
             </div>").appendTo(this.domRoot);
 
             $("#sexaInput > input").bind("change", function() 
-              { $("#sexaResult").text(sexagesimal(this.value)); });
+              { $("#sexaResult").text(Utils.sexagesimal(this.value)); });
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
@@ -220,7 +221,9 @@ myApp.prototype.update = function(time) {
           $("#latitude").text( model.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy) {
-          $("#deferentLongitude").text( (model.sphere[0].getRotateAngle() % 360.0).toFixed(2) );          
+          $("#deferentLongitude").text( (model.sphere[0].getRotateAngle() % 360.0).toFixed(2) );
+                         
+          $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                              
         }
 
         if(model instanceof ModelMoonCompare) {
@@ -245,9 +248,12 @@ myApp.prototype.update = function(time) {
             eastLabel.setPosition(model.east.getPosCanvas(this.camera, this.canvas));
             westLabel.setPosition(model.west.getPosCanvas(this.camera, this.canvas));
         } else {
-            equinoxLabel.setPosition(model.sphere[0].visuals.markerball.getPosCanvas(this.camera, this.canvas)); 
-            npoleLabel.setPosition(model.sphere[0].visuals.npole.getPosCanvas(this.camera, this.canvas)); 
-            spoleLabel.setPosition(model.sphere[0].visuals.spole.getPosCanvas(this.camera, this.canvas)); 
+            if(model.sphere[0].visuals.markerball.getEnabled())
+              equinoxLabel.setPosition(model.sphere[0].visuals.markerball.getPosCanvas(this.camera, this.canvas)); 
+            if(model.sphere[0].visuals.npole.getEnabled())  
+              npoleLabel.setPosition(model.sphere[0].visuals.npole.getPosCanvas(this.camera, this.canvas)); 
+            if(model.sphere[0].visuals.spole.getEnabled())  
+              spoleLabel.setPosition(model.sphere[0].visuals.spole.getPosCanvas(this.camera, this.canvas)); 
         }
 
         planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.camera, this.canvas));
@@ -280,16 +286,16 @@ myApp.prototype.setView = function(view) {
         planetLabel.setPosition({x:0, y:0, z:-1});
         planetLabel2.setPosition({x:0, y:0, z:-1});
 
-        if (model.currentPos == "Earth") {
+//        if (model.currentPos == "Earth") {
             equinoxLabel.setPosition({x:0, y:0, z:-1});
             npoleLabel.setPosition({x:0, y:0, z:-1});
             spoleLabel.setPosition({x:0, y:0, z:-1});
-        } else {
+//        } else {
             northLabel.setPosition({x:0, y:0, z:-1});
             southLabel.setPosition({x:0, y:0, z:-1});
             eastLabel.setPosition({x:0, y:0, z:-1});
             westLabel.setPosition({x:0, y:0, z:-1});
-        }
+//        }
 
         model.changeView(model.currentPos);
     };
@@ -364,11 +370,9 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             $("#meanLongitudeBox").fadeIn(500);
         }      
 
-//        $(".sexa").fadeOut(500);
         $("#ptolemyInfoContainer").fadeOut(500);
         if(model instanceof ModelPtolemy) 
             $("#ptolemyInfoContainer").fadeIn(500);
-//            $(".sexa").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);
         if (model.sun.getEnabled()) $("#sunAngleBox").fadeIn(500);
@@ -418,7 +422,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         // playback div       
         $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
         $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
-        UI.slider({model: model, id: "Speed", min:0.1, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+        UI.slider({model: model, id: "Speed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 
 
@@ -548,12 +552,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-//            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.checkbox({model:model, id:"Speed1Toggle", text:"S2"}).appendTo("#speed");
-            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");           
+            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)", toggle: true}).appendTo("#speed");
+            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)", toggle: true}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
@@ -600,8 +602,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
            this.camera.rotateY((Math.PI*3)/2 - 0.1);
 
             UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
-            UI.slider({model:model, id: "Radius0", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
-            UI.slider({model:model, id: "Radius1", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
+            UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
+            UI.slider({model:model, id: "RadiusE", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
             UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
@@ -638,13 +640,14 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
             
             $("#Speed1 > input, #SunYears > input").change(function() {
-              $("#sunDaysPerYear").html(model.getDaysPerYear());
+              $("#sunDaysPerYear").html(Utils.frac(model.getDaysPerYear()));
             });
         }
 
         // fix range sliders in Firefox etc.
         // TODO: don't use range input
-        fixRange();
+//        $(":range").rangeinput();
+//        fixRange();
 
         // initial update of sliders/state
         model.tooglePause();

@@ -13,6 +13,9 @@ ModelPtolemy = function(params) {
     
     this.sphere[0].realAngle = 0;
 
+    this.JULIAN_EPOCH = 0.0831088;
+    this.PTOLEMY_EPOCH = 1448637.91689121;
+
 
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S1"] }); 
@@ -55,27 +58,24 @@ ModelPtolemy = function(params) {
       this.anchor.rotation.y = realAngle;
     };
 
-    this.setRadius0 = function(value) {
+    this.setRadiusD = function(value) {
       this.sphere[0].radius = value;
       this.sphere[0].setScale(value*this.factor);
       this.sphere[0].visuals.npole.position.y = 0.0;      
       this.sphere[1].anchor.position.z = value*this.factor;
 
     };
-    this.getRadius0 = function() { return this.sphere[0].radius; }
+    this.getRadiusD = function() { return this.sphere[0].radius; }
 
   
         
-    this.setRadius1 = function(value) {
+    this.setRadiusE = function(value) {
       this.radius1 = value;
       this.sphere[1].setScale(value*this.factor);
       this.planet.setDist(value*this.factor);
     };
-    this.getRadius1 = function() { return this.radius1; }
+    this.getRadiusE = function() { return this.radius1; }
 
-    this.setEquant(6.0);
-    this.setRadius0(60.0); 
-    this.setRadius1(33.00);    
     
     this.setSpeed0 = function(speed) {
       this.sphere[0].setSpeed(speed);
@@ -101,10 +101,14 @@ ModelPtolemy = function(params) {
         
         
         BasePlanetModel.prototype.update.call(this, time);
+        this.date = this.PTOLEMY_EPOCH + this.days;
     }
     
     this.reset = function () {
         BasePlanetModel.prototype.reset.call(this);
+        this.setEquant(this.currentPlanet.equant);
+        this.setRadiusD(this.currentPlanet.derefentRadius); 
+        this.setRadiusE(this.currentPlanet.epicycleRadius);   
     }    
 
 };
