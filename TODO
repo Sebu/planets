@@ -125,11 +125,11 @@ DONE
   - remove arc1/2, markerarc,
   - add equant line etc.
   - sexagisimal converter
+  - egyptian date
   
 TODO
 - ptolemy
   - remove labels
-  - egyptian date
 - sun
   - real days passed :)
 - aristotle

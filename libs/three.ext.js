@@ -47,9 +47,18 @@ function n_weeks(weekday, jd, nthweek)
     return j;
 }
 
+Utils.EgyptNames = ["Toth", "Phaophi", "Athyr", "Choiak", "Tybi", "Mechir", "Phamenoth", "Pharmouthi"            
+, "Pachon", "Payni", "Epiphi", "Mesore", "Epagomenal"];  
+
+Utils.dateToStringEgypt = function(date) {
+  return "" + Utils.EgyptNames[date[1]-1] + " / " + date[2] + " / " + date[0] + "";
+}
+
+
 Utils.dateToString = function(date) {
   return "" + date[1] + " / " + date[2] + " / " + date[0] + "";
 }
+
 Utils.leapJulian = function(year) {
     return mod(year, 4) == ((year > 0) ? 0 : 3);
 }
@@ -79,31 +88,18 @@ Utils.jdToIso = function(jd) {
 }
 
 Utils.jdToEgyptian = function(jd) {
-    var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
-        yindex, dyindex, year, yearday, leapadj;
+    var z, a, b, year, month, day;
 
-    wjd = Math.floor(jd - 0.5) + 0.5;
-    depoch = wjd - Utils.GREGORIAN_EPOCH;
-    quadricent = Math.floor(depoch / 146097);
-    dqc = mod(depoch, 146097);
-    cent = Math.floor(dqc / 36524);
-    dcent = mod(dqc, 36524);
-    quad = Math.floor(dcent / 1461);
-    dquad = mod(dcent, 1461);
-    yindex = Math.floor(dquad / 365);
-    year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
-    if (!((cent == 4) || (yindex == 4))) {
-        year++;
-    }
-    yearday = wjd - Utils.gregorianToJd(year, 1, 1);
-    leapadj = ((wjd < Utils.gregorianToJd(year, 3, 1)) ? 0
-                                                  :
-                  (Utils.leapGregorian(year) ? 1 : 2)
-              );
-    month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
-    day = (wjd - Utils.gregorianToJd(year, month, 1)) + 1;
+//    jd += 0.5;
+    z = Math.floor(jd) - 1448638;
 
-    return new Array(year, month, day);
+    year = Math.floor(z / 365);
+    a = Math.floor(365 * year);
+    month = Math.floor((z - a) / 30);
+    b = Math.floor(30 * month);
+    day = (z - a - b);
+
+    return new Array(year+1, month+1, day+1);
 }
 
 Utils.gregorianToJd =function(year, month, day) {

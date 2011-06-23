@@ -90,6 +90,7 @@ myApp.prototype.init = function(params) {
             <div id='ptolemyInfoContainer' style='display:none'>\
               <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
               <div>gregorian date<span class='wert' id='gregorianDate'>0</span></div>\
+              <div>egyptian date<span class='wert' id='egyptianDate'>0</span></div>\
               <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
               <div class='sexa' id='sexaResult'>0</div>\
             </div>\
@@ -222,7 +223,7 @@ myApp.prototype.update = function(time) {
         }
         if(model instanceof ModelPtolemy) {
           $("#deferentLongitude").text( (model.sphere[0].getRotateAngle() % 360.0).toFixed(2) );
-                         
+          $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                              
         }
 
