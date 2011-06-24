@@ -51,11 +51,12 @@ Utils.EgyptNames = ["Toth", "Phaophi", "Athyr", "Choiak", "Tybi", "Mechir", "Pha
 , "Pachon", "Payni", "Epiphi", "Mesore", "Epagomenal"];  
 
 Utils.dateToStringEgypt = function(date) {
-  return "" + Utils.EgyptNames[date[1]-1] + " / " + date[2] + " / " + date[0] + "";
+  return "" + date[2] + " " + Utils.EgyptNames[date[1]-1] + "  " + date[0] + "";
 }
 
 
 Utils.dateToString = function(date) {
+  if (date[0]<1) date[0] += 1;
   return "" + date[1] + " / " + date[2] + " / " + date[0] + "";
 }
 
