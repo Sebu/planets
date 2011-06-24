@@ -16,7 +16,7 @@ ModelPtolemy = function(params) {
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
 
-    this.sphere[0].setScale(1.0);
+    this.sphere[0].setScale(3.0);
 
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S2"] }); 
@@ -36,8 +36,8 @@ ModelPtolemy = function(params) {
     this.setShowSphere1(false);
     this.setShowSphere2(false);
 
-    this.setShowSphere0 = function(state) { this.sphere[0].setVisuals(["equator"], state) };    
-    this.setShowSphere1 = function(state) { this.sphere[1].setVisuals(["npole","equator"], state) };
+//    this.setShowSphere0 = function(state) { this.sphere[0].setVisuals(["npole","equator"], state) };    
+    this.setShowSphere1 = function(state) { this.sphere[1].setVisuals(["equator"], state) };
     this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator"], state) };
     
     
