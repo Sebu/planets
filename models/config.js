@@ -308,7 +308,7 @@ PtolemySun: {
   equant: 2.5,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 30 },
     {axisAngle: 0.0, speed: 365.2466666, rotateStart: 0 }
   ] },
     
@@ -336,8 +336,6 @@ var moonModels = {
 
 
 
-
-
 //var moonModels = {
 //    Mendell: { speed1: function(d,z)  {return -(d+z); }, speed2: function(d,z) { return d; } },
 //    Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -360*(d-z); } },
@@ -352,6 +350,7 @@ var moonModels = {
 
 var latitudePresets = {
   Athens: 38,
+  Alexandria: 30.97,
   Cnidus: 36.66,
   Heliopolis: 30,
   Cyzicus: 40.23,  

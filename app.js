@@ -406,7 +406,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
         $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();'></select>").appendTo("#view");
         UI.optionsFromHash("#longitudePresets", latitudePresets);
-        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.05, text: "view latitude", tip: "change latitude"}).appendTo("#view");
+        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#view");
         // view sub box box 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
 

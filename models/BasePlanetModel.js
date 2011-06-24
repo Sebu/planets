@@ -78,7 +78,8 @@ BasePlanetModel.prototype = {
         this.root.addNode( this.west = new Translate({id: "West", z:4.5,y:0.2}) );
 
         // planet surface for earth view
-        this.root.addNode(this.earthPlane = new Disc({radius: 9.0, color: {r: 0.992, g: 0.906, b: 0.796}}) );
+// {r: 0.992, g: 0.906, b: 0.796}
+        this.root.addNode(this.earthPlane = new Disc({radius: 9.0, color: colors["Earth"]}) );
         this.earthPlane.setEnabled(false);
 
         
