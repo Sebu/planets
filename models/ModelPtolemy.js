@@ -16,7 +16,7 @@ ModelPtolemy = function(params) {
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
 
-
+    this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );
 
     var material = new THREE.LineBasicMaterial( {  color: "0xFFEEFF" });
     this.equator = new THREE.Line(equator, material );
