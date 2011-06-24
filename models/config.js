@@ -307,6 +307,7 @@ PtolemySun: {
   epicycleRadius: 39.5,
   equant: 2.5,
   sphere: [
+    {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 365.2466666, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 365.2466666, rotateStart: 0 }
   ] },

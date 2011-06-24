@@ -608,9 +608,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"Speed0", max:1100, text:"Deferent"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed1", max:1100, text:"Deferent"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"Epicycle"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:1100, text:"Epicycle"}).appendTo("#speed");
     
 
             
