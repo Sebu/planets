@@ -726,6 +726,7 @@ Circle.prototype.gen = function() {
         y = cosTheta * sinPhi;
 
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
+
     }
 //    this.__webglLineCount = slices;
     this.__dirtyVertices = true;
@@ -775,7 +776,7 @@ var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
 var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
-var cone = new THREE.CylinderGeometry( 4, 0.0001, 0.1, 0.4);
+var cone = new THREE.CylinderGeometry( 4, 0.0001, 0.15, 0.4);
 //THREE.LatheGeometry([new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 )]);
 
 var aLine = new THREE.Geometry();
