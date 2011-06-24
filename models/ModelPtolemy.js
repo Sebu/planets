@@ -114,9 +114,11 @@ ModelPtolemy = function(params) {
         this.epicycleRadius[1] = this.sphere[2].visuals.markerball.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
           
+        this.deferentRadius[0] = this.sphere[1].anchor.currentPos();
         this.deferentRadius[1] = this.sphere[1].visuals.markerball.currentPos();
         this.deferentRadiusLine.setPos(this.deferentRadius);
-        
+
+        this.equantPlanet[0] = this.sphere[1].anchor.currentPos();;        
         this.equantPlanet[1] = this.planet.mesh.currentPos();;
         this.equantPlanetLine.setPos(this.equantPlanet);
         
