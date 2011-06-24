@@ -554,10 +554,11 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");           
-            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)", toggle: true}).appendTo("#speed");
-            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)", toggle: true}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed0Fix", text:"S 1 (daily)"}).appendTo("#speed");           
+            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
+            UI.checkbox({model:model, id: "S3Toggle", max:1100, text:"S 4"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 5"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 6"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S6Toggle", max:1100, text:"S 7"}).appendTo("#speed");
