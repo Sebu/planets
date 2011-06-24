@@ -423,7 +423,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         // playback div       
         $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
         $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
-        UI.slider({model: model, id: "Speed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 
 
@@ -557,6 +557,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");           
             UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)", toggle: true}).appendTo("#speed");
             UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)", toggle: true}).appendTo("#speed");
+
+            UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 6"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S6Toggle", max:1100, text:"S 7"}).appendTo("#speed");
+
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");

@@ -130,13 +130,12 @@ DONE
 TODO
 - better labels
 - ptolemy
-
   - sun
     - deferent + epicylce model checkbox overlay models
 - sun
   - real days passed :)
 - aristotle
-  - disable motion of s4 etc.
+  - disable motion of s4,5 etc.
   - click/mouseover highlight
 - fix: load presets through setters
 - reset position (tween)

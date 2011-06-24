@@ -24,7 +24,7 @@ BasePlanetModel = function() {
     this.lastPerp = 0;
     this.longitude = 0;
 
-    this.setSpeed(60);
+    this.setAnimSpeed(60);
     this.running=true;
 
     
@@ -43,11 +43,11 @@ BasePlanetModel.prototype = {
     getShowStars : function() { return this.stars.getEnabled(); },
 
 
-    setSpeed : function(val) {
+    setAnimSpeed : function(val) {
         this.speed = val;
     },
     
-    getSpeed : function() {
+    getAnimSpeed : function() {
         return this.speed;
     },
     

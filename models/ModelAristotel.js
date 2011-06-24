@@ -24,7 +24,10 @@ ModelAristotle = function(params) {
     this.sphere[4].anchor.addNode(s5);
     this.sphere[5].anchor.addNode(s6);
     this.sphere[6].anchor.addNode(s7);
-    
+
+    this.s4Toggle = true;
+    this.s5Toggle = true;    
+    this.s6Toggle = true;
     
  
 //    this.sphere[7].anchor.addNode( this.stars2 = new Cloud({count:50}) );
@@ -69,14 +72,6 @@ ModelAristotle = function(params) {
 
     }
 
-    this.setSpeed1Toggle = function(state) {
-//      this.speed1Toggle = state;
-//      this.updateList.remove(this.sphere[1]);
-    }
-
-    this.getSpeed1Toggle = function() { 
-      return this.speed1Toggle;
-    }
 
     this.setAxisAngle3 = function(angle) {
       var angle3 = this.sphere[3].getAxisAngle();
@@ -88,16 +83,46 @@ ModelAristotle = function(params) {
     }
 
 
+    this.setS5Toggle = function(state) { 
+      this.s5Toggle = state;
+      if(!state) this.sphere[5].setSpeed(0);
+      else {
+        this.sphere[5].setSpeed(-this.sphere[2].getSpeed());
+        this.sphere[5].setRotateAngle(-this.sphere[2].getRotateAngle());
+      }
+      
+    }
+
+    this.getS5Toggle = function(state) { 
+      return this.s5Toggle;
+    }
+
+    this.setS6Toggle = function(state) { 
+      this.s6Toggle = state;
+      if(!state) this.sphere[6].setSpeed(0);
+      else {
+        this.sphere[6].setSpeed(-this.sphere[1].getSpeed());
+        this.sphere[6].setRotateAngle(-this.sphere[1].getRotateAngle());
+      }
+      
+    }
+
+    this.getS6Toggle = function(state) { 
+      return this.s6Toggle;
+    }
+
+
+
     this.setSpeed1 = function(speed) {
       this.sphere[1].setSpeed(speed);
-      this.sphere[6].setSpeed(-speed);
+      if(this.s6Toggle) this.sphere[6].setSpeed(-speed);
     }
 
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
         this.sphere[3].setSpeed(-speed);
         this.sphere[4].setSpeed(speed);
-        this.sphere[5].setSpeed(-speed);
+        if(this.s5Toggle) this.sphere[5].setSpeed(-speed);
     }
 
    this.setShowSphere07 = function(state) {

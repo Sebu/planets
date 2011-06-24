@@ -30,6 +30,11 @@ ModelPtolemy = function(params) {
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
     }
 
+
+    this.apsidal = [ {x: 0,y: 0,z: -40}, {x: 0, y: 0,z: 40} ];
+    this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S0"] }); 
+    this.root.addNode(this.apsidalLine);
+
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S2"] }); 
     this.root.addNode(this.epicycleRadiusLine);
