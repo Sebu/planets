@@ -321,7 +321,7 @@ PtolemyMars: {
   epicycleRadius: 39.5,
   equant: 6.0,
   sphere: [
-    {axisAngle: 0.0, speed: 365, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 327.21666666, rotateStart: 0 }
   ] }
 };

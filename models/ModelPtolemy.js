@@ -16,7 +16,19 @@ ModelPtolemy = function(params) {
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
 
-    this.sphere[0].setScale(3.0);
+
+
+    var material = new THREE.LineBasicMaterial( {  color: "0xFFEEFF" });
+    this.equator = new THREE.Line(equator, material );
+    this.equator.scale  = new THREE.Vector3( 9,9,9 );
+    this.equator.rotation.x = Math.PI/2;
+    this.sphere[1].anchor.addNode(this.equator);
+
+    this.updateBlob = function() {
+      var scale = (this.sphere[1].radius+this.radius1)*this.factor;
+      this.sphere[0].setScale(scale); 
+      this.equator.scale  = new THREE.Vector3( scale, scale, scale );
+    }
 
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S2"] }); 
@@ -68,6 +80,7 @@ ModelPtolemy = function(params) {
 //      this.sphere[0].visuals.npole.position.y = 0.0;      
 //      this.sphere[1].anchor.position.z = value*this.factor;
       this.sphere[2].anchor.position.z = value*this.factor;
+      this.updateBlob();
 
     };
     this.getRadiusD = function() { return this.sphere[1].radius; }
@@ -78,6 +91,7 @@ ModelPtolemy = function(params) {
       this.radius1 = value;
       this.sphere[2].setScale(value*this.factor);
       this.planet.setDist(value*this.factor);
+      this.updateBlob();
     };
     this.getRadiusE = function() { return this.radius1; }
 
