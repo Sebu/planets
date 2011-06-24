@@ -602,6 +602,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
        } else if (model instanceof ModelPtolemy) {
            this.camera.rotateY((Math.PI*3)/2 - 0.1);
 
+            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
