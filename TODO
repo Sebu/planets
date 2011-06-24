@@ -128,14 +128,17 @@ DONE
   - egyptian date
   
 TODO
-- better labels
+- fix/better labels
 - ptolemy
+  - start from certain date
   - sun
+    - epicycle + equant same? 
     - deferent + epicylce model checkbox overlay models
 - sun
   - real days passed :)
 - aristotle
-  - disable motion of s4,5 etc.
+  - start: show only dayly etc.
+  - fix disable motion of s4,5 etc.
   - click/mouseover highlight
 - fix: load presets through setters
 - reset position (tween)

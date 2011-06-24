@@ -18,7 +18,7 @@ ModelPtolemy = function(params) {
 
     this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );
 
-    var material = new THREE.LineBasicMaterial( {  color: "0xFFEEFF" });
+    var material = new THREE.LineBasicMaterial( {  color: "0xFFAAFF" });
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
