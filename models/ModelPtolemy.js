@@ -107,8 +107,8 @@ ModelPtolemy = function(params) {
     }
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.root, start: -1, node: this.planet.mesh, color: colors["Path"]});
-  
+//        this.addCurve({index: 0, anchor: this.root, start: -1, node: this.planet.mesh, color: colors["Path"]});
+          this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
 
         this.epicycleRadius[0] = this.sphere[1].visuals.markerball.currentPos();
         this.epicycleRadius[1] = this.sphere[2].visuals.markerball.currentPos();
