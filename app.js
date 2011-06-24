@@ -558,8 +558,10 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)", toggle: true}).appendTo("#speed");
             UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)", toggle: true}).appendTo("#speed");
 
+            UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 5"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 6"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S6Toggle", max:1100, text:"S 7"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S7Toggle", max:1100, text:"S 8"}).appendTo("#speed");
 
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");

@@ -28,6 +28,7 @@ ModelAristotle = function(params) {
     this.s4Toggle = true;
     this.s5Toggle = true;    
     this.s6Toggle = true;
+    this.s7Toggle = true;
     
  
 //    this.sphere[7].anchor.addNode( this.stars2 = new Cloud({count:50}) );
@@ -83,6 +84,20 @@ ModelAristotle = function(params) {
     }
 
 
+    this.setS4Toggle = function(state) { 
+      this.s4Toggle = state;
+      if(!state) this.sphere[4].setSpeed(0);
+      else {
+        this.sphere[4].setSpeed(-this.sphere[3].getSpeed());
+        this.sphere[4].setRotateAngle(-this.sphere[3].getRotateAngle());
+      }
+      
+    }
+
+    this.getS4Toggle = function() { 
+      return this.s5Toggle;
+    }
+
     this.setS5Toggle = function(state) { 
       this.s5Toggle = state;
       if(!state) this.sphere[5].setSpeed(0);
@@ -93,7 +108,7 @@ ModelAristotle = function(params) {
       
     }
 
-    this.getS5Toggle = function(state) { 
+    this.getS5Toggle = function() { 
       return this.s5Toggle;
     }
 
@@ -107,11 +122,29 @@ ModelAristotle = function(params) {
       
     }
 
-    this.getS6Toggle = function(state) { 
+    this.getS6Toggle = function() { 
       return this.s6Toggle;
     }
 
+    this.setS7Toggle = function(state) { 
+      this.s7Toggle = state;
+      if(!state) this.sphere[7].setSpeed(0);
+      else {
+        this.sphere[7].setSpeed(-this.sphere[0].getSpeed());
+        this.sphere[7].setRotateAngle(-this.sphere[0].getRotateAngle());
+      }
+      
+    }
 
+    this.getS7Toggle = function() { 
+      return this.s7Toggle;
+    }
+
+
+    this.setSpeed0 = function(speed) {
+      BasePlanetModel.prototype.setSpeed0.call(this,speed);
+      if(this.s7Toggle) this.sphere[7].setSpeed(-speed);
+    }
 
     this.setSpeed1 = function(speed) {
       this.sphere[1].setSpeed(speed);
@@ -121,7 +154,7 @@ ModelAristotle = function(params) {
     this.setSpeed2 = function(speed) {
         this.sphere[2].setSpeed(speed);
         this.sphere[3].setSpeed(-speed);
-        this.sphere[4].setSpeed(speed);
+        if(this.s4Toggle) this.sphere[4].setSpeed(speed);
         if(this.s5Toggle) this.sphere[5].setSpeed(-speed);
     }
 
