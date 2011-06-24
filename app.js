@@ -558,6 +558,8 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
+            UI.checkbox({model:model, id: "S1Toggle", max:1100, text:"S 2"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S2Toggle", max:1100, text:"S 3"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S3Toggle", max:1100, text:"S 4"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 5"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 6"}).appendTo("#speed");

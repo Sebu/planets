@@ -26,6 +26,8 @@ ModelAristotle = function(params) {
     this.sphere[6].anchor.addNode(s7);
 
 
+    this.s1Toggle = true;    
+    this.s2Toggle = true;
     this.s3Toggle = true;
     this.s4Toggle = true;
     this.s5Toggle = true;    
@@ -86,11 +88,35 @@ ModelAristotle = function(params) {
     }
 
 
-
-
-    this.getS3Toggle = function() { 
-      return this.s3Toggle;
+    this.setS1Toggle = function(state) { 
+      this.s1Toggle = state;
+      if(!state) this.sphere[1].setSpeed(0);
+      else {
+        this.sphere[1].setSpeed(-this.sphere[4].getSpeed());
+        this.sphere[1].setRotateAngle(-this.sphere[4].getRotateAngle());
+      }
+      
     }
+
+    this.getS1Toggle = function() { 
+      return this.s1Toggle;
+    }
+
+
+    this.setS2Toggle = function(state) { 
+      this.s2Toggle = state;
+      if(!state) this.sphere[2].setSpeed(0);
+      else {
+        this.sphere[2].setSpeed(-this.sphere[3].getSpeed());
+        this.sphere[2].setRotateAngle(-this.sphere[3].getRotateAngle());
+      }
+      
+    }
+
+    this.getS2Toggle = function() { 
+      return this.s2Toggle;
+    }
+
 
     this.setS3Toggle = function(state) { 
       this.s3Toggle = state;
