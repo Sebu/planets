@@ -10,14 +10,14 @@ var colors = {
 //  Earth:     {r: 0.96, g: 201/255, b: 204/255},
   Planet:     {r: 1.0, g:1.0, b:1.0},
 	Sun: 		{r:1.0,g:1.0,b:0.0},
-	S0: 		{r:1.0, g: 0.0, b: 1.0},
-	S1:			{r:0.4, g:0.4, b:1.0},
-	S2: 		{r: 0.0, g: 1.0, b: 0.0},
-	S3: 		{r: 1.0, g: 0.0, b: 0.0},
-  S4: 		{r: 1.0, g: 0.0, b: 0.0},
-  S5: 		{r: 0.0, g: 1.0, b: 0.0},
-	S6:			{r:0.4, g:0.4, b:1.0},
-	S7:			{r:1.0, g: 0.0, b: 1.0},
+	S1: 		{r:1.0, g: 0.0, b: 1.0},
+	S2:			{r:0.4, g:0.4, b:1.0},
+	S3: 		{r: 0.0, g: 1.0, b: 0.0},
+	S4: 		{r: 1.0, g: 0.0, b: 0.0},
+  S5: 		{r: 1.0, g: 0.0, b: 0.0},
+  S6: 		{r: 0.0, g: 1.0, b: 0.0},
+	S7:			{r:0.4, g:0.4, b:1.0},
+	S8:			{r:1.0, g: 0.0, b: 1.0},
 	Path: 	{r: 1.0, g: 1.0, b: 1.0},
 	Hippo: 	{r: 0.4, g: 0.4, b: 1.0}
 	
@@ -304,12 +304,12 @@ PtolemySun: {
   showHippo: false,
   showSun: false,
   derefentRadius: 60.0,
-  epicycleRadius: 10.0,
+  epicycleRadius: 2.5,
   equant: 2.5,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330.75 },
-    {axisAngle: 0.0, speed: 365.2466666, rotateStart: 0 }
+    {axisAngle: 0.0, speed: -365.2466666, rotateStart: 0 }
   ] },
     
 PtolemyMars: { 

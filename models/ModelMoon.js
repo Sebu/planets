@@ -10,8 +10,8 @@ ModelMoon = function(params) {
 
 
     
-    this.setAxisAngle0 = function(angle) {
-        this.sphere[0].setAxisAngle(90 - angle);
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
         //Spherical.prototype.setAxisAngle.call(this, 90 - angle);
     }
 
@@ -83,8 +83,8 @@ ModelMoon = function(params) {
     this.updateMoon = function() {
         var draco = 360.0/this.getDraconiticDaysPerMonth();
         var zodic = 360.0/this.getZodicalDaysPerMonth();
-        this.sphere[1].setStep(this.moonSpeed1(draco, zodic));
-        this.sphere[2].setStep(this.moonSpeed2(draco, zodic));        
+        this.sphere[2].setStep(this.moonSpeed1(draco, zodic));
+        this.sphere[3].setStep(this.moonSpeed2(draco, zodic));        
     }
     
     this.setCurrentMoonModel = function(name) {

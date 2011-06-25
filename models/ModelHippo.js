@@ -11,18 +11,18 @@ ModelHippo = function(params) {
 
     this.sun.setEnabled(false);
     
-    this.setAxisAngle0 = function(angle) {
-        this.sphere[0].setAxisAngle(90 - angle);
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
     }
 
 
-    this.setSpeed2 = function(speed) {
-        this.sphere[2].setSpeed(speed);
-        this.sphere[3].setSpeed(-speed);
+    this.setSpeed3 = function(speed) {
+        this.sphere[3].setSpeed(speed);
+        this.sphere[4].setSpeed(-speed);
     }
 
     this.update = function(time) {
-       this.addCurve({index: 0, anchor: this.root, start: -1, node: this.planet.mesh, color: colors["Path"], trails: false});
+       this.addCurve({index: 0, anchor: this.root, start: 0, node: this.planet.mesh, color: colors["Path"], trails: false});
        BasePlanetModel.prototype.update.call(this, time);
     }
 

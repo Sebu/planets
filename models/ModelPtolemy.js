@@ -11,7 +11,7 @@ ModelPtolemy = function(params) {
 
     this.factor = 1.0/10.0;
     
-    this.sphere[0].realAngle = 0;
+    this.sphere[1].realAngle = 0;
 
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
@@ -22,11 +22,11 @@ ModelPtolemy = function(params) {
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
-    this.sphere[1].anchor.addNode(this.equator);
+    this.sphere[2].anchor.addNode(this.equator);
 
     this.updateBlob = function() {
-      var scale = (this.sphere[1].radius+this.radius1)*this.factor;
-      this.sphere[0].setScale(scale); 
+      var scale = (this.sphere[2].radius+this.radius1)*this.factor;
+      this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
     }
 
@@ -36,7 +36,7 @@ ModelPtolemy = function(params) {
 //    this.root.addNode(this.apsidalLine);
 
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S2"] }); 
+    this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S3"] }); 
     this.root.addNode(this.epicycleRadiusLine);
     
     this.deferentRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
@@ -49,30 +49,30 @@ ModelPtolemy = function(params) {
     this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
     this.root.addNode(this.equantPlanetLine);
     
-    this.setShowSphere0(false);
     this.setShowSphere1(false);
     this.setShowSphere2(false);
+    this.setShowSphere3(false);
 
 //    this.setShowSphere0 = function(state) { this.sphere[0].setVisuals(["npole","equator"], state) };    
-    this.setShowSphere1 = function(state) { this.sphere[1].setVisuals(["equator"], state) };
     this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator"], state) };
+    this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
     
     
     this.setEquant = function(value) {
-      this.sphere[1].equant = value;
+      this.sphere[2].equant = value;
 //      this.earth.setDist(value*this.factor);
-      this.sphere[1].anchor.position.z = value*this.factor;
+      this.sphere[2].anchor.position.z = value*this.factor;
       this.equantPlanet[0] = {x: 0,y: 0, z: 0};
     };
-    this.getEquant = function() { return this.sphere[1].equant; }
+    this.getEquant = function() { return this.sphere[2].equant; }
     
-    this.sphere[1].updateMovement = function(step) {
+    this.sphere[2].updateMovement = function(step) {
       this.rotateAngle += this.step * step;
       
       this.setRotateAngle(this.rotateAngle);
     };
   
-    this.sphere[1].setRotateAngle = function(angle) {
+    this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle; 
       var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
       this.setArcAngle(realAngle*PI_SCALE);
@@ -80,21 +80,21 @@ ModelPtolemy = function(params) {
     };
 
     this.setRadiusD = function(value) {
-      this.sphere[1].radius = value;
-      this.sphere[1].setScale(value*this.factor);
+      this.sphere[2].radius = value;
+      this.sphere[2].setScale(value*this.factor);
 //      this.sphere[0].visuals.npole.position.y = 0.0;      
 //      this.sphere[1].anchor.position.z = value*this.factor;
-      this.sphere[2].anchor.position.z = value*this.factor;
+      this.sphere[3].anchor.position.z = value*this.factor;
       this.updateBlob();
 
     };
-    this.getRadiusD = function() { return this.sphere[1].radius; }
+    this.getRadiusD = function() { return this.sphere[2].radius; }
 
   
         
     this.setRadiusE = function(value) {
       this.radius1 = value;
-      this.sphere[2].setScale(value*this.factor);
+      this.sphere[3].setScale(value*this.factor);
       this.planet.setDist(value*this.factor);
       this.updateBlob();
     };
@@ -102,22 +102,22 @@ ModelPtolemy = function(params) {
 
     
     
-    this.setAxisAngle0 = function(angle) {
-        this.sphere[0].setAxisAngle(90 - angle);
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
     }
 
     this.update = function(time) {
-          this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
+          this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
-        this.epicycleRadius[0] = this.sphere[1].visuals.markerball.currentPos();
-        this.epicycleRadius[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
+        this.epicycleRadius[1] = this.sphere[3].visuals.markerball.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
           
-        this.deferentRadius[0] = this.sphere[1].anchor.currentPos();
-        this.deferentRadius[1] = this.sphere[1].visuals.markerball.currentPos();
+        this.deferentRadius[0] = this.sphere[2].anchor.currentPos();
+        this.deferentRadius[1] = this.sphere[2].visuals.markerball.currentPos();
         this.deferentRadiusLine.setPos(this.deferentRadius);
 
-        this.equantPlanet[0] = this.sphere[1].anchor.currentPos();;        
+        this.equantPlanet[0] = this.sphere[2].anchor.currentPos();;        
         this.equantPlanet[1] = this.planet.mesh.currentPos();;
         this.equantPlanetLine.setPos(this.equantPlanet);
         

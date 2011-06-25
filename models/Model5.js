@@ -8,8 +8,8 @@ Model5 = function(params) {
     params.spheres = 5;
     this.init(params);
 
-    this.setAxisAngle0 = function(angle) {
-        this.sphere[0].setAxisAngle(90 - angle);
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
     }
 
     this.alpha=0;
@@ -45,13 +45,13 @@ Model5 = function(params) {
         var alpha = (this.alpha!=0) ? 360/this.alpha : 0;
         var beta = (this.beta!=0) ? 360/this.beta : 0;
         var gamma = (this.gamma!=0) ? 360/this.gamma : 0;
-        this.sphere[2].setStep(alpha);
-        this.sphere[3].setStep(-beta);
-        this.sphere[4].setStep(gamma);
+        this.sphere[3].setStep(alpha);
+        this.sphere[4].setStep(-beta);
+        this.sphere[5].setStep(gamma);
     }
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[0].anchor, start: 0, node: this.planet.mesh, color: colors["Path"]});
+        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         BasePlanetModel.prototype.update.call(this, time);
     }
 

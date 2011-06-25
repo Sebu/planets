@@ -12,31 +12,31 @@ ModelMoonCompare = function(params) {
 
 
 
-    var s20 = this.sphere[3] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
-    var s21 = this.sphere[4] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
+    var s20 = this.sphere[4] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
+    var s21 = this.sphere[5] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S4"]});
     this.planet2 = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet2",  color:colors["Planet"]});
     this.planet2.setBeta(90.0);
     
     this.updateList.push(s20);    
     this.updateList.push(s21);    
-    this.sphere[0].anchor.addNode(s20);
-    this.sphere[3].anchor.addNode(s21);
-    this.sphere[4].anchor.addNode(this.planet2);
+    this.sphere[1].anchor.addNode(s20);
+    this.sphere[4].anchor.addNode(s21);
+    this.sphere[5].anchor.addNode(this.planet2);
 
     this.lastLongitude2 = 0;
     this.lastPerp2 = 0;
     this.longitude2 = 0;
 
 
-   this.setShowSphere3 = function(state) {
-      this.sphere[3].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
-    }
-   this.getShowSphere3 = function() { return true; };
-       
    this.setShowSphere4 = function(state) {
       this.sphere[4].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere4 = function() { return true; };
+       
+   this.setShowSphere5 = function(state) {
+      this.sphere[5].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+    }
+   this.getShowSphere5 = function() { return true; };
 
 
     this.metonYear = 0;
@@ -107,18 +107,21 @@ ModelMoonCompare = function(params) {
         var draco = 360.0/this.getDraconiticDaysPerMonth();
         var zodic = 360.0/this.getZodicalDaysPerMonth();
                  
-        this.sphere[1].setStep(this.moonSpeed1(draco, zodic));
-        this.sphere[2].setStep(this.moonSpeed2(draco, zodic));
-        this.sphere[3].setStep(this.moonSpeed3(draco, zodic));
-        this.sphere[4].setStep(this.moonSpeed4(draco, zodic));
+        this.sphere[2].setStep(this.moonSpeed1(draco, zodic));
+        this.sphere[3].setStep(this.moonSpeed2(draco, zodic));
+        
+        this.sphere[4].setStep(this.moonSpeed3(draco, zodic));
+        this.sphere[5].setStep(this.moonSpeed4(draco, zodic));
 
     }
 
     this.setCurrentMoonModels = function(node1, node2) {
         var currentModel1 = moonModels[node1];
-        var currentModel2 = moonModels[node2];
+        
         this.moonSpeed1 = currentModel1.speed1;
         this.moonSpeed2 = currentModel1.speed2;
+        
+        var currentModel2 = moonModels[node2];
         this.moonSpeed3 = currentModel2.speed1;
         this.moonSpeed4 = currentModel2.speed2;
         this.updateMoon();
@@ -139,34 +142,35 @@ ModelMoonCompare = function(params) {
 
     this.reset = function () {
         BasePlanetModel.prototype.reset.call(this);
-        this.sphere[1].setRotateAngle(this.sphere[1].rotateStart);
         this.sphere[2].setRotateAngle(this.sphere[2].rotateStart);
-        this.sphere[3].setRotateAngle(this.sphere[1].rotateStart);
+        this.sphere[3].setRotateAngle(this.sphere[3].rotateStart);
+        
         this.sphere[4].setRotateAngle(this.sphere[2].rotateStart);
+        this.sphere[5].setRotateAngle(this.sphere[3].rotateStart);
     }
 
     this.setShowPhase = function(state) {  
       this.showPhase = state;
-      this.setAxisAngle2(5);
+      this.setAxisAngle3(5);
     }
 
     this.getShowPhase = function() {
       return this.showPhase;
     } 
 
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(angle); 
-        this.sphere[3].setAxisAngle(angle);
-    }
-
     this.setAxisAngle2 = function(angle) {
-        if(this.showPhase) this.sphere[2].setAxisAngle(angle); 
-        else this.sphere[2].setAxisAngle(-angle);
+        this.sphere[2].setAxisAngle(angle); 
         this.sphere[4].setAxisAngle(angle);
     }
 
-    this.setAxisAngle0 = function(angle) {
-        this.sphere[0].setAxisAngle(90 - angle);
+    this.setAxisAngle3 = function(angle) {
+        if(this.showPhase) this.sphere[3].setAxisAngle(angle); 
+        else this.sphere[3].setAxisAngle(-angle);
+        this.sphere[5].setAxisAngle(angle);
+    }
+
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
     }
 
     this.update = function(time) {
@@ -175,26 +179,26 @@ ModelMoonCompare = function(params) {
         	
             var earthPos = sceneToSyl(this.earth.mesh.currentPos());
 
-            var polePos = sceneToSyl(this.sphere[1].visuals.npole.currentPos());
-            var polePos2 = sceneToSyl(this.sphere[3].visuals.npole.currentPos());
+            var polePos = sceneToSyl(this.sphere[2].visuals.npole.currentPos());
+            var polePos2 = sceneToSyl(this.sphere[4].visuals.npole.currentPos());
 
             var upVec = earthPos.subtract(polePos);
             var upVec2 = earthPos.subtract(polePos2);
 
-            var planetOnPlane = this.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
-            var planetOnPlane2 = this.sphere[3].getPlane().pointClosestTo(sceneToSyl(this.planet2.mesh.currentPos())).subtract(earthPos);
+            var planetOnPlane = this.sphere[2].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
+            var planetOnPlane2 = this.sphere[4].getPlane().pointClosestTo(sceneToSyl(this.planet2.mesh.currentPos())).subtract(earthPos);
 
             var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(earthPos);
             var planetPos2 = sceneToSyl(this.planet2.mesh.currentPos()).subtract(earthPos);
 
-            var sunOnPlane = model.sphere[1].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
-            var sunOnPlane2 = model.sphere[3].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
+            var sunOnPlane = model.sphere[2].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
+            var sunOnPlane2 = model.sphere[4].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
 
             var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             var sunOnPlanePerp2 = sunOnPlane2.rotate(Math.PI/2, Line.create(earthPos,upVec2));
 
-            var equinoxOnPlane = sceneToSyl(this.sphere[0].visuals.markerball.currentPos()).subtract(earthPos);
-            var equinoxOnPlane2 = sceneToSyl(this.sphere[0].visuals.markerball.currentPos()).subtract(earthPos);
+            var equinoxOnPlane = sceneToSyl(this.sphere[1].visuals.markerball.currentPos()).subtract(earthPos);
+            var equinoxOnPlane2 = sceneToSyl(this.sphere[1].visuals.markerball.currentPos()).subtract(earthPos);
 
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
             var equinoxOnPlanePerp2 = equinoxOnPlane2.rotate(Math.PI/2, Line.create(earthPos,upVec2));

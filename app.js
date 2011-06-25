@@ -222,7 +222,7 @@ myApp.prototype.update = function(time) {
           $("#latitude").text( model.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy) {
-          $("#deferentLongitude").text( (model.sphere[0].getRotateAngle() % 360.0).toFixed(2) );
+          $("#deferentLongitude").text( (model.sphere[2].getRotateAngle() % 360.0).toFixed(2) );
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                              
         }
@@ -249,12 +249,12 @@ myApp.prototype.update = function(time) {
             eastLabel.setPosition(model.east.getPosCanvas(this.camera, this.canvas));
             westLabel.setPosition(model.west.getPosCanvas(this.camera, this.canvas));
         } else {
-            if(model.sphere[0].visuals.markerball.getEnabled())
-              equinoxLabel.setPosition(model.sphere[0].visuals.markerball.getPosCanvas(this.camera, this.canvas)); 
-            if(model.sphere[0].visuals.npole.getEnabled())  
-              npoleLabel.setPosition(model.sphere[0].visuals.npole.getPosCanvas(this.camera, this.canvas)); 
-            if(model.sphere[0].visuals.spole.getEnabled())  
-              spoleLabel.setPosition(model.sphere[0].visuals.spole.getPosCanvas(this.camera, this.canvas)); 
+            if(model.sphere[1].visuals.markerball.getEnabled())
+              equinoxLabel.setPosition(model.sphere[1].visuals.markerball.getPosCanvas(this.camera, this.canvas)); 
+            if(model.sphere[1].visuals.npole.getEnabled())  
+              npoleLabel.setPosition(model.sphere[1].visuals.npole.getPosCanvas(this.camera, this.canvas)); 
+            if(model.sphere[1].visuals.spole.getEnabled())  
+              spoleLabel.setPosition(model.sphere[1].visuals.spole.getPosCanvas(this.camera, this.canvas)); 
         }
 
         planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.camera, this.canvas));
@@ -396,7 +396,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
             var color = "rgb(" + colors["S" + i].r * 255 + "," + colors["S" + i].g * 255 + "," + colors["S" + i].b * 255 + ")";
-            $("<div style='float:left;font-weight:bold;color:" + color + "'> S" + (Number(i) + 1) + " </div>").appendTo("#legendContainer");
+            $("<div style='float:left;font-weight:bold;color:" + color + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }
 
@@ -404,9 +404,9 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#view");
         UI.optionsFromHash("#viewPresets", model.viewPresets);
 
-        $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle0 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle0 >input\").change();'></select>").appendTo("#view");
+        $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#view");
         UI.optionsFromHash("#longitudePresets", latitudePresets);
-        UI.slider({model:model, id: "AxisAngle0", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#view");
+        UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#view");
         // view sub box box 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
 
@@ -414,7 +414,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         $("<div id='visSpheres'></div>").appendTo("#vis");
         for (i in model.sphere) {
             if(model["getShowSphere" + i])
-              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i) + 1)}).appendTo("#visSpheres");
+              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i))}).appendTo("#visSpheres");
         }
         UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
@@ -441,21 +441,21 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
 //            UI.slider({model:model, id:"Speed1", min: -6000, max:6000, text:"S 2 (zodiacal)"}).appendTo("#speed");
 //           UI.slider({model:model, id:"Speed2", min: -6000, max:6000, text:"S 3 (synodic)"}).appendTo("#speed");
             UI.slider({model:model, id:"SunSpeed",  max:1100, text:"S 2 Sun"}).appendTo("#speed");
 
             UI.box({id: "rotateStart", text: "Rotation Start (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1"}).appendTo("#rotateStart");
-           UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2"}).appendTo("#rotateStart");
-           UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1"}).appendTo("#rotateStart");
+           UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2"}).appendTo("#rotateStart");
+           UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3"}).appendTo("#rotateStart");
 
             $("#moon input").change();
 
@@ -506,135 +506,135 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         } else if (model instanceof Model4) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             //$("#AxisAngle1").hover(function (e) {
             //   model.sphere[1].materialArc.linewidth = 10;
             //}, function (e) {
             //  model.sphere[1].materialArc.linewidth = 1;});
             
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
             UI.slider({model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
            
         } else if (model instanceof ModelAristotle) {
 
             $("#visSpheres > *").remove();
-            UI.checkbox({model:model, id:"ShowSphere0", text:"S1"}).appendTo("#visSpheres");
-            UI.checkbox({model:model, id:"ShowSphere1", text:"S2"}).appendTo("#visSpheres");
-            UI.checkbox({model:model, id:"ShowSphere2", text:"S3"}).appendTo("#visSpheres");
-            UI.checkbox({model:model, id:"ShowSphere3", text:"S4"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere1", text:"S1"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere2", text:"S2"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere3", text:"S3"}).appendTo("#visSpheres");
+            UI.checkbox({model:model, id:"ShowSphere4", text:"S4"}).appendTo("#visSpheres");
             $("<div id='visSpheres1'></div>").appendTo("#visSpheres");
-            UI.checkbox({model:model, id:"ShowSphere07", text:"P18"}).appendTo("#visSpheres1");
-            UI.checkbox({model:model, id:"ShowSphere16", text:"P27"}).appendTo("#visSpheres1");
-            UI.checkbox({model:model, id:"ShowSphere25", text:"P36"}).appendTo("#visSpheres1");
-            UI.checkbox({model:model, id:"ShowSphere34", text:"P45"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere18", text:"P18"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere27", text:"P27"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere36", text:"P36"}).appendTo("#visSpheres1");
+            UI.checkbox({model:model, id:"ShowSphere45", text:"P45"}).appendTo("#visSpheres1");
             $("<div id='visSpheres2'></div>").appendTo("#visSpheres");
-            UI.checkbox({model:model, id:"ShowSphere7", text:"S8"}).appendTo("#visSpheres2");
-            UI.checkbox({model:model, id:"ShowSphere6", text:"S7"}).appendTo("#visSpheres2");
-            UI.checkbox({model:model, id:"ShowSphere5", text:"S6"}).appendTo("#visSpheres2");
-            UI.checkbox({model:model, id:"ShowSphere4", text:"S5"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere8", text:"S8"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere7", text:"S7"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere6", text:"S6"}).appendTo("#visSpheres2");
+            UI.checkbox({model:model, id:"ShowSphere5", text:"S5"}).appendTo("#visSpheres2");
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 
-            UI.checkbox({model:model, id:"Speed0Fix", text:"S 1 (daily)"}).appendTo("#speed");           
-            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1Fix", text:"S 1 (daily)"}).appendTo("#speed");           
+            UI.slider({model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
-            UI.checkbox({model:model, id: "S1Toggle", max:1100, text:"S 2"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S2Toggle", max:1100, text:"S 3"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S3Toggle", max:1100, text:"S 4"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 5"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 6"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S6Toggle", max:1100, text:"S 7"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S7Toggle", max:1100, text:"S 8"}).appendTo("#speed");
-
+///*
+            UI.checkbox({model:model, id: "S2Toggle", max:1100, text:"S 2"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S3Toggle", max:1100, text:"S 3"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 4"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 5"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S6Toggle", max:1100, text:"S 6"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S7Toggle", max:1100, text:"S 7"}).appendTo("#speed");
+            UI.checkbox({model:model, id: "S8Toggle", max:1100, text:"S 8"}).appendTo("#speed");
+//*/
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
         } else if (model instanceof Model5) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 4-5 (unknown)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle5", max: 360, step:0.05, text: "S 4-5 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Alpha", max:1100}).appendTo("#speed");
             UI.slider({model:model, id: "Beta", max:1100}).appendTo("#speed");
             UI.slider({model:model, id: "Gamma", max:1100}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 5"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart5", max: 360, step:0.05, text:"S 5"}).appendTo("#rotateStart");
             
             
 
         } else if (model instanceof ModelSimple) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
 
        } else if (model instanceof ModelPtolemy) {
            this.camera.rotateY((Math.PI*3)/2 - 0.1);
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
             UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
-            UI.slider({model:model, id:"Speed1", max:1100, text:"Deferent"}).appendTo("#speed");
-
-            UI.slider({model:model, id:"Speed2",  max:1100, text:"Epicycle"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed2", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2", max:1100, text:"Deferent"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed3",  min:-1100, max:1100, text:"Epicycle"}).appendTo("#speed");
     
 
             
         } else if (model instanceof ModelHippo) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 3"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 4"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 4"}).appendTo("#angle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2"}).appendTo("#speed");
-            UI.slider({model:model, id:"Speed2",  max:1100, text:"S 3"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed3",  max:1100, text:"S 3"}).appendTo("#speed");
 
 
 
@@ -643,13 +643,13 @@ myApp.prototype.setCurrentPlanet = function(preset) {
 
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal) in days"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal) in days"}).appendTo("#speed");
             UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
             
             $("#Speed1 > input, #SunYears > input").change(function() {
@@ -666,7 +666,7 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         model.tooglePause();
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed  input").change();
-        $("#AxisAngle0 input").change();
+        $("#AxisAngle1 input").change();
 
     };
 

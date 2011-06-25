@@ -10,8 +10,8 @@ ModelSun = function(params) {
 
     this.sun.setEnabled(false);
 
-    this.setAxisAngle0 = function(angle) {
-        this.sphere[0].setAxisAngle(90 - angle);
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
     }
     
     
@@ -19,14 +19,14 @@ ModelSun = function(params) {
     this.sunYears = 0;
     this.setSunYears = function(speed) {
         this.sunYears = speed;
-        model.sphere[2].setSpeed(this.sunYears*365);
+        model.sphere[3].setSpeed(this.sunYears*365);
     }
     this.getSunYears = function() {
       return this.sunYears;
     }
     
     this.getMeanLongitude = function() {
-      return (this.sphere[1].getRotateAngle() + this.sphere[2].getRotateAngle())%360.0;
+      return (this.sphere[2].getRotateAngle() + this.sphere[3].getRotateAngle())%360.0;
 //      return (this.longitudeSpeed*this.days)%360.0;
     }
     this.getEquationOfTime = function() {  
@@ -34,7 +34,7 @@ ModelSun = function(params) {
     }
 
     this.getDaysPerYear = function() {
-       return  (1.0 - (1.0/this.getSunYears())) * this.sphere[1].getSpeed();
+       return  (1.0 - (1.0/this.getSunYears())) * this.sphere[2].getSpeed();
     }
 
    
