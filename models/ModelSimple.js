@@ -7,10 +7,10 @@ ModelSimple = function(params) {
 	BasePlanetModel.call(this);	
     params.name = "ModelSimple";
     params.spheres = 2;
-    this.init(params);
+    this.genSpheres(params);
 
-    this.sun.setEnabled(false);
-    
+
+       
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(90 - angle);
     }

@@ -6,7 +6,7 @@ ModelMoon = function(params) {
 	BasePlanetModel.call(this);	
     params.name = "ModelMoon";
     params.spheres = 3;
-    this.init(params);
+    this.genSpheres(params);
 
 
     
@@ -93,8 +93,8 @@ ModelMoon = function(params) {
         this.moonSpeed2 = currentModel.speed2;
         this.updateMoon();
     }
-    this.setCurrentPlanet = function(node) {
-        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
+    this.loadPreset = function(node) {
+        BasePlanetModel.prototype.loadPreset.call(this,node);
         this.setMetonYear(this.currentPlanet.metonYear);
         this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
         this.setMetonDays(this.currentPlanet.metonDays);

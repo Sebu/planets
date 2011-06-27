@@ -54,7 +54,7 @@ BasePlanetModel.prototype = {
     // SETUP
     // base structure
     // planet system
-    init : function(params) {
+    genSpheres : function(params) {
         this.name = params.name;
         this.curves = {};
         this.sphere = new Array(params.spheres);
@@ -128,6 +128,7 @@ BasePlanetModel.prototype = {
           this.sphere[1].setSpeed(-speed);
         }
 
+   
         //TODO: hack white north pole
         this.sphere[1].visuals.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 
@@ -153,7 +154,7 @@ BasePlanetModel.prototype = {
 
     },
 
-    setCurrentPlanet : function(node) {
+    loadPreset : function(node) {
 
     	// default planet settings
         this.currentPlanet = {
@@ -292,14 +293,13 @@ BasePlanetModel.prototype = {
 
     // reset movement of spheres and parameters 
     reset : function () {
-        if (this.sphere.length == 0) return;
         for (var i in this.sphere) {
             this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
         }
         this.systemSun[0].setRotateAngle(0);
         this.days = 0;
         this.lastLongitude = 0;
-        this.lastPerp = 0
+        this.lastPerp = 0;
         this.longitude = 0;
 
     },
@@ -312,7 +312,6 @@ BasePlanetModel.prototype = {
         this.earth.setEnabled(true);
         this.planet.setEnabled(true);
         this.earthPlane.setEnabled(false);
-
 
         if (node == "Earth") {
             this.earthPlane.setEnabled(true);

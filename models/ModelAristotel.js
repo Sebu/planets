@@ -7,7 +7,7 @@ ModelAristotle = function(params) {
     params.name = "ModelAristotle";
     params.spheres = 4;
     
-    this.init(params);
+    this.genSpheres(params);
 
     // add unwinding spheres
     var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]});
@@ -26,16 +26,6 @@ ModelAristotle = function(params) {
     this.sphere[7].anchor.addNode(s8);
 
 
-    this.s2Toggle = true;    
-    this.s3Toggle = true;
-    this.s4Toggle = true;
-    this.s5Toggle = true;
-    this.s6Toggle = true;    
-    this.s7Toggle = true;
-    this.s8Toggle = true;
-    
- 
-//    this.sphere[7].anchor.addNode( this.stars2 = new Cloud({count:50}) );
 
 
           
@@ -88,111 +78,10 @@ ModelAristotle = function(params) {
     }
 
 
-    this.setS2Toggle = function(state) { 
-      this.s2Toggle = state;
-      if(!state) this.sphere[2].setSpeed(0);
-      else {
-        this.sphere[2].setSpeed(-this.sphere[5].getSpeed());
-        this.sphere[2].setRotateAngle(-this.sphere[5].getRotateAngle());
-      }
-      
-    }
-
-    this.getS2Toggle = function() { 
-      return this.s2Toggle;
-    }
-
-
-    this.setS3Toggle = function(state) { 
-      this.s3Toggle = state;
-      if(!state) this.sphere[3].setSpeed(0);
-      else {
-        this.sphere[3].setSpeed(-this.sphere[4].getSpeed());
-        this.sphere[3].setRotateAngle(-this.sphere[4].getRotateAngle());
-      }
-      
-    }
-
-    this.getS3Toggle = function() { 
-      return this.s3Toggle;
-    }
-
-
-    this.setS4Toggle = function(state) { 
-      this.s4Toggle = state;
-      if(!state) this.sphere[4].setSpeed(0);
-      else {
-        this.sphere[4].setSpeed(-this.sphere[4].getSpeed());
-        this.sphere[4].setRotateAngle(-this.sphere[4].getRotateAngle());
-      }
-      
-    }
-
-    this.getS4Toggle = function() { 
-      return this.s4Toggle;
-    }
-
-    this.setS5Toggle = function(state) { 
-      this.s5Toggle = state;
-      if(!state) this.sphere[5].setSpeed(0);
-      else {
-        this.sphere[5].setSpeed(-this.sphere[4].getSpeed());
-        this.sphere[5].setRotateAngle(-this.sphere[4].getRotateAngle());
-      }
-      
-    }
-
-    this.getS5Toggle = function() { 
-      return this.s5Toggle;
-    }
-
-    this.setS6Toggle = function(state) { 
-      this.s6Toggle = state;
-      if(!state) this.sphere[6].setSpeed(0);
-      else {
-        this.sphere[6].setSpeed(-this.sphere[3].getSpeed());
-        this.sphere[6].setRotateAngle(-this.sphere[3].getRotateAngle());
-      }
-      
-    }
-
-    this.getS6Toggle = function() { 
-      return this.s6Toggle;
-    }
-
-    this.setS7Toggle = function(state) { 
-      this.s7Toggle = state;
-      if(!state) this.sphere[7].setSpeed(0);
-      else {
-        this.sphere[7].setSpeed(-this.sphere[2].getSpeed());
-        this.sphere[7].setRotateAngle(-this.sphere[2].getRotateAngle());
-      }
-      
-    }
-
-
-    this.getS7Toggle = function() { 
-      return this.s7Toggle;
-    }    
-
-    this.setS8Toggle = function(state) { 
-      this.s8Toggle = state;
-      if(!state) this.sphere[8].setSpeed(0);
-      else {
-        this.sphere[8].setSpeed(-this.sphere[1].getSpeed());
-        this.sphere[8].setRotateAngle(-this.sphere[1].getRotateAngle());
-      }
-      
-    }
-    this.getS8Toggle = function() { 
-      return this.s8Toggle;
-    }
-
-
 
     this.setSpeed1Fix = function(speed) {
       this.setSpeed1(speed);
-      if(this.s8Toggle) this.sphere[8].setSpeed(-this.sphere[1].getSpeed());
+      this.sphere[8].setSpeed(-this.sphere[1].getSpeed());
     }
 
     this.getSpeed1Fix = function() {
@@ -201,14 +90,14 @@ ModelAristotle = function(params) {
 
     this.setSpeed2 = function(speed) {
       this.sphere[2].setSpeed(speed);
-      if(this.s7Toggle) this.sphere[7].setSpeed(-speed);
+      this.sphere[7].setSpeed(-speed);
     }
 
     this.setSpeed3 = function(speed) {
         this.sphere[3].setSpeed(speed);
         this.sphere[4].setSpeed(-speed);
-        if(this.s5Toggle) this.sphere[5].setSpeed(speed);
-        if(this.s6Toggle) this.sphere[6].setSpeed(-speed);
+        this.sphere[5].setSpeed(speed);
+        this.sphere[6].setSpeed(-speed);
     }
 
    this.setShowSphere18 = function(state) {
@@ -238,17 +127,17 @@ ModelAristotle = function(params) {
    this.setShowSphere5 = function(state) {
       this.sphere[5].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
-   this.getShowSphere5 = function() { return true; };
+   this.getShowSphere5 = function() { return false; };
 
    this.setShowSphere6 = function(state) {
       this.sphere[6].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
-   this.getShowSphere6 = function() { return true; };
+   this.getShowSphere6 = function() { return false; };
 
    this.setShowSphere7 = function(state) {
       this.sphere[7].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
-   this.getShowSphere7 = function() { return true; };
+   this.getShowSphere7 = function() { return false; };
 
    this.setShowSphere8 = function(state) {
       this.sphere[8].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
@@ -265,14 +154,13 @@ ModelAristotle = function(params) {
       this.sphere[6].setRotateStart(-start);
     }
 
-
     this.setRotateStart4 = function(start) {
       this.sphere[4].setRotateStart(start);
       this.sphere[5].setRotateStart(-start);
     }
 
-    this.setCurrentPlanet = function(node) {
-        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
+    this.loadPreset = function(node) {
+        BasePlanetModel.prototype.loadPreset.call(this,node);
         this.sphere[2].setAxisAngle(0);
         this.sphere[3].setAxisAngle(0);       
         this.sphere[4].setAxisAngle(0);
@@ -285,7 +173,15 @@ ModelAristotle = function(params) {
         this.setSpeed2(this.currentPlanet.sphere[1].speed);
         this.setSpeed3(this.currentPlanet.sphere[2].speed);
     }
-
+    this.reset = function() {
+        BasePlanetModel.prototype.reset.call(this);
+        this.setShowSphere2(false);
+        this.setShowSphere3(false);   
+        this.setShowSphere4(false);
+        this.setShowSphere5(false);   
+        this.setShowSphere6(false);
+        this.setShowSphere7(false);   
+    }
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, node: this.planet.mesh, color: colors["Hippo"]});

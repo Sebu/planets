@@ -262,6 +262,7 @@ MoonCompare: {
 
 SimpleTest: { 
   model: "ModelSimple",
+  showSun: false,  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },

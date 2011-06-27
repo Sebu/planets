@@ -7,9 +7,9 @@ ModelPtolemy = function(params) {
 	BasePlanetModel.call(this);	
     params.name = "ModelPtolemy";
     params.spheres = 3;
-    this.init(params);
+    this.genSpheres(params);
 
-    this.factor = 1.0/10.0;
+    this.factor = 1.0/5.0;
     
     this.sphere[1].realAngle = 0;
 

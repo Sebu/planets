@@ -7,7 +7,7 @@ Model4 = function(params) {
     params.name = "Model4";
     params.spheres = 4;
     
-    this.init(params);
+    this.genSpheres(params);
 
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(90 - angle);

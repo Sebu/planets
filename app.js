@@ -101,7 +101,7 @@ myApp.prototype.init = function(params) {
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
-        uiBox.append("<span><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.setCurrentPlanet(this.options[this.selectedIndex].value);'>View</select></span>");
+        uiBox.append("<span><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
         $.extend(true, planetPresets, vault);
         UI.optionsFromHash("#planetPreset", planetPresets);
@@ -118,7 +118,7 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
         $("#vis").hide();
 
-        this.setCurrentPlanet("Mercury1");
+        this.loadPreset("Mercury1");
 
     };
 
@@ -135,7 +135,7 @@ myApp.prototype.addPreset = function() {
       localStorage.setJson("customPresets", vault);
       $.extend(true, planetPresets, vault);
       UI.optionsFromHash("#planetPreset", planetPresets);
-      this.setCurrentPlanet(text); 
+      this.loadPreset(text); 
     }
     console.log(planetPresets);
 
@@ -152,7 +152,7 @@ myApp.prototype.removePreset = function() {
   delete vault[text];
   localStorage.setJson("customPresets", vault);
   UI.optionsFromHash("#planetPreset", planetPresets);
-  this.setCurrentPlanet("Mercury1");   
+  this.loadPreset("Mercury1");   
 };
 
 
@@ -346,14 +346,14 @@ myApp.prototype.getModel = function(name) {
 };
 
 // change planet model and create the UI ELEMENTS + add to DOM
-myApp.prototype.setCurrentPlanet = function(preset) {
+myApp.prototype.loadPreset = function(preset) {
 
         // switch model
         this.currentPreset = preset;
         var planet = planetPresets[preset];
         model = this.getModel(planet.model);
         this.setCurrentScene(model.root);
-        model.setCurrentPlanet(planet);
+        model.loadPreset(planet);
         planetLabel.setText(model.currentPlanet.label);
         //model.reset();
         
@@ -484,23 +484,23 @@ myApp.prototype.setCurrentPlanet = function(preset) {
         } else if (model instanceof ModelYavetz) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({model:model, id: "Alpha", max: 360, step:0.05}).appendTo("#angle");
             UI.slider({model:model, id: "Beta", max: 360, step:0.05}).appendTo("#angle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed0", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed1",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:model, id: "Speed2", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text: "Rotation Start (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id:"RotateStart0", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
-            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
+            UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
 
         } else if (model instanceof Model4) {
@@ -558,12 +558,19 @@ myApp.prototype.setCurrentPlanet = function(preset) {
             UI.slider({model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
-///*
+            UI.checkbox({model:model.sphere[2], id: "Moving", max:1100, text:"S 2"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[3], id: "Moving", max:1100, text:"S 3"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[4], id: "Moving", max:1100, text:"S 4"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[5], id: "Moving", max:1100, text:"S 5"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[6], id: "Moving", max:1100, text:"S 6"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[7], id: "Moving", max:1100, text:"S 7"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[8], id: "Moving", max:1100, text:"S 8"}).appendTo("#speed");
+/*
             UI.checkbox({model:model, id: "S2Toggle", max:1100, text:"S 2"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S3Toggle", max:1100, text:"S 3"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 4"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 5"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S6Toggle", max:1100, text:"S 6"}).appendTo("#speed");
+            UI.checkbox({model:model.sphere[6], id: "Moving", max:1100, text:"S 6"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S7Toggle", max:1100, text:"S 7"}).appendTo("#speed");
             UI.checkbox({model:model, id: "S8Toggle", max:1100, text:"S 8"}).appendTo("#speed");
 //*/

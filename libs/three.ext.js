@@ -792,6 +792,7 @@ Spherical = function Spherical(params) {
 
     this.inner_id = params.inner_id;
 
+    this.moving = true;
     this.scaleFactor = params.scale;
     
     var color = params.color || { r: 0.5, g: 0.5, b: 0.5};
@@ -874,6 +875,16 @@ Spherical = function Spherical(params) {
 
 Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
+
+
+Spherical.prototype.setMoving = function(state) {
+  return this.moving = state;
+}
+
+
+Spherical.prototype.getMoving = function() {
+  return this.moving;
+}
 
 Spherical.prototype.getPlane = function() {
 
@@ -971,7 +982,7 @@ Spherical.prototype.getRotateAngle = function(angle) {
 
 Spherical.prototype.updateMovement = function(step) {
     this.rotateAngle += this.step * step;
-    this.setRotateAngle(this.rotateAngle);
+    if(this.moving) this.setRotateAngle(this.rotateAngle);
 };
 
 

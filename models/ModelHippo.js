@@ -7,7 +7,7 @@ ModelHippo = function(params) {
 	BasePlanetModel.call(this);
     params.name = "ModelHippo";
     params.spheres = 4;
-    this.init(params);
+    this.genSpheres(params);
 
     this.sun.setEnabled(false);
     

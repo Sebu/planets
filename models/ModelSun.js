@@ -6,7 +6,7 @@ ModelSun = function(params) {
 	BasePlanetModel.call(this);
     params.name = "ModelSun";
     params.spheres = 3;
-    this.init(params);
+    this.genSpheres(params);
 
     this.sun.setEnabled(false);
 
@@ -38,8 +38,8 @@ ModelSun = function(params) {
     }
 
    
-    this.setCurrentPlanet = function(node) {
-        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
+    this.loadPreset = function(node) {
+        BasePlanetModel.prototype.loadPreset.call(this,node);
         this.setSunYears(this.currentPlanet.sunYears);
     }
 

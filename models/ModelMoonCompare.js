@@ -8,7 +8,7 @@ ModelMoonCompare = function(params) {
     params.name = "ModelMoonCompare";
     params.spheres = 3;
     this.showPhase = false;
-    this.init(params);
+    this.genSpheres(params);
 
 
 
@@ -129,8 +129,8 @@ ModelMoonCompare = function(params) {
 
 
 
-    this.setCurrentPlanet = function(node) {
-        BasePlanetModel.prototype.setCurrentPlanet.call(this,node);
+    this.loadPreset = function(node) {
+        BasePlanetModel.prototype.loadPreset.call(this,node);
         this.setMetonYear(this.currentPlanet.metonYear);
         this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
         this.setMetonDays(this.currentPlanet.metonDays);
