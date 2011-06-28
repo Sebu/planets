@@ -700,6 +700,7 @@ Curve.prototype.constructor = Curve;
 Circle = function(params) {
     THREE.Geometry.call( this );
 
+    
     this.setAngle(params.angle);
     this.setBeta(params.betaRotate || 90);
 
@@ -789,6 +790,8 @@ aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
  */
 Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
+    
+    this.offsetRotateAngle = 0.0;
 
     this.inner_id = params.inner_id;
 
@@ -804,8 +807,11 @@ Spherical = function Spherical(params) {
     this.rotateStart = params.rotateStart || 0.0;
     this.speed = params.speed || 0.0;
 
+    this.pivot = new Node();
+    this.addNode(this.pivot);
+    
     this.anchor = new Node();
-    this.addNode(this.anchor);
+    this.pivot.addNode(this.anchor);
 
     this.material = new THREE.LineBasicMaterial( {  color: rgbToHex(color) } );
     this.materialArc =  new THREE.LineBasicMaterial( {  color: rgbToHex(color) } );
@@ -867,9 +873,12 @@ Spherical = function Spherical(params) {
     this.visuals.rotationarc.rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals.rotationarc);
 
+
+    
     this.setAxisAngle(this.axisAngle);
     this.setRotateAngle(this.rotateAngle);
     this.setSpeed(this.speed);
+//    this.setOffsetRotateAngle(45);
 
 };
 
@@ -889,7 +898,10 @@ Spherical.prototype.getMoving = function() {
 Spherical.prototype.getPlane = function() {
 
 //    var plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
-    var plane = Plane.create(Vector.Zero(3), sceneToSyl(this.visuals.npole.currentPos()).toUnitVector());
+    var center = sceneToSyl(this.anchor.currentPos());
+    var polePos = sceneToSyl(this.visuals.npole.currentPos());
+    var upVec = center.subtract(polePos);
+    var plane = Plane.create(center, upVec.toUnitVector());
     return plane;
 }
 
@@ -925,6 +937,7 @@ Spherical.prototype.setScale = function(value) {
   this.visuals.equator.scale  = new THREE.Vector3( value, value, value );
   this.visuals.markerarc.scale  = new THREE.Vector3( -value, value, value );
   this.visuals.markerball.position.z = value;
+  this.visuals.markerend.position.z = value;
   this.visuals.npole.position.y = value;
   this.visuals.spole.position.y = -value;
   this.visuals.rotationarc.scale  = new THREE.Vector3( value, value, value);
@@ -943,7 +956,7 @@ Spherical.prototype.setStep = function(step) {
     this.step = step;
 };
 
-Spherical.prototype.getStep = function(step) {
+Spherical.prototype.getStep = function() {
     return this.step;
 };
 
@@ -975,10 +988,18 @@ Spherical.prototype.setRotateAngle = function(angle) {
     this.anchor.rotation.y = degToRad(this.rotateAngle);
 };
 
-Spherical.prototype.getRotateAngle = function(angle) {
+Spherical.prototype.getRotateAngle = function() {
     return this.rotateAngle;
 };
 
+Spherical.prototype.setOffsetRotateAngle = function(angle) {
+    this.offsetRotateAngle = angle;
+    this.pivot.rotation.y = degToRad(this.offsetRotateAngle);
+};
+
+Spherical.prototype.getOffsetRotateAngle = function() {
+    return this.offsetRotateAngle;
+};
 
 Spherical.prototype.updateMovement = function(step) {
     this.rotateAngle += this.step * step;
@@ -996,9 +1017,6 @@ sceneToSyl = function(pos) {
     return Vector.create([pos.x, pos.y, pos.z]);
 }
 
-//posSyl = function(node) {
-//    return sceneToSyl(getNodePos(node));
-//}
 
 // store key/values of 3D nodes (planet,sun,poles etc.)
 nodePool = {};
@@ -1010,23 +1028,4 @@ getNodePos = function(name) {
     return node.currentPos();
 }
 
-// locate a specific node on canvas (preseve z value of projection)
-//getNodePosCanvas = function(name) {
-//    var node = nodePool[name];
-//    if(!node) return {x:0,y:0,z:0};
-//
-//    var posTmp = node.currentPos();
-//
-//    var canvas = app.canvas.domElement;
-//    app.camera.matrixWorldInverse.multiplyVector3( posTmp );
-//    var zTmp = -posTmp.z;
-//
-//    app.camera.projectionMatrix.multiplyVector3( posTmp );
-//    pos = {x: (posTmp.x+1) * canvas.width/2, y: (-posTmp.y+1) * canvas.height/2, z: zTmp };
 
-    //if node is outside of canvas shift pos to z=-1 
-//    if (pos.x<0 || pos.x>canvas.width-50) pos.z = -1.0;
-//    if (pos.y<0 || pos.y>canvas.height-20) pos.z = -1.0;
-
-//  return pos;
-//}

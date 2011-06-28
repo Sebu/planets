@@ -426,7 +426,6 @@ myApp.prototype.loadPreset = function(preset) {
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 
-
         // create the right sliders for each model
         // TODO: tooltips and min/max values for each model and preset
         if (model instanceof ModelMoon || model instanceof ModelMoonCompare) {
@@ -481,7 +480,7 @@ myApp.prototype.loadPreset = function(preset) {
             });
             $("#MetonYear > input").change();
 
-        } else if (model instanceof ModelYavetz) {
+        } else if (model.ui == "ModelYavetz") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -503,7 +502,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
 
-        } else if (model instanceof Model4) {
+        } else if (model.ui == "Model4") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -529,7 +528,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
            
-        } else if (model instanceof ModelAristotle) {
+        } else if (model.ui == "ModelAristotle") {
 
             $("#visSpheres > *").remove();
             UI.checkbox({model:model, id:"ShowSphere1", text:"S1"}).appendTo("#visSpheres");
@@ -581,7 +580,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
-        } else if (model instanceof Model5) {
+        } else if (model.ui == "Model5") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -606,7 +605,7 @@ myApp.prototype.loadPreset = function(preset) {
             
             
 
-        } else if (model instanceof ModelSimple) {
+        } else if (model.ui == "ModelSimple") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -616,24 +615,39 @@ myApp.prototype.loadPreset = function(preset) {
 
             UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
 
-       } else if (model instanceof ModelPtolemy) {
+       } else if (model.ui == "ModelPtolemy") {
            this.camera.rotateY((Math.PI*3)/2 - 0.1);
 
+//*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({model:model, id: "ApsidalAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
             UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
             UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-            UI.checkbox({model:model, id:"Speed2", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed2", max:1100, text:"Deferent"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed3",  min:-1100, max:1100, text:"Epicycle"}).appendTo("#speed");
-    
-
             
-        } else if (model instanceof ModelHippo) {
+       } else if (model.ui == "ModelPtolemySun") {
+           this.camera.rotateY((Math.PI*3)/2 - 0.1);            
+   
+//*
+            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.box({id:"apsidal", text:"Apsidal"}).appendTo("#parameters");
+            UI.slider({model:model, id: "ApsidalAngle", max: 100, step:0.05, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Kosmos to deferent"}).appendTo("#apsidal");
+
+            UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"Start"}).appendTo("#deferent");
+//            UI.slider({model:model, id:"Speed2", max:1100, text:"Rotation"}).appendTo("#deferent");
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
+//*/            
+        } else if (model.ui == "ModelHippo") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3"}).appendTo("#angle");

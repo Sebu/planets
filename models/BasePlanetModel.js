@@ -141,7 +141,7 @@ BasePlanetModel.prototype = {
         }
 
         // add Sun and sun spheres
-        this.sphere[2].addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
+        this.sphere[2].pivot.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
         this.systemSun[0].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.systemSun[0];
         // shortcuts for the sun
@@ -179,6 +179,8 @@ BasePlanetModel.prototype = {
         };
         // extend default settings  
         $.extend(true, this.currentPlanet, node);
+        
+        this.ui = this.currentPlanet.ui;
         
         //TODO: better merge
         for(var i in this.sphere) {
@@ -225,7 +227,7 @@ BasePlanetModel.prototype = {
                 model.updateList[i].updateMovement((365.0*time)/this.speed);
             }        
         	
-            var earthPos = sceneToSyl(this.earth.mesh.currentPos());
+            var earthPos = sceneToSyl(this.sphere[2].anchor.currentPos()); //this.earth.mesh.currentPos());
             var polePos = sceneToSyl(this.sphere[2].visuals.npole.currentPos());
             var upVec = earthPos.subtract(polePos);
             var planetOnPlane = this.sphere[2].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
@@ -352,7 +354,7 @@ BasePlanetModel.prototype = {
         var start = params.start;
         var node = params.node;
         var maxSegments = params.segments || 80; //-Math.round(20/step);
-        var j = params.start || -20;
+        var j =  -10;
       
         // save axis and rotation
         for ( i = 1; i <= start; i++) {

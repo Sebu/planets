@@ -27,6 +27,7 @@ var planetPresets = {
 
 Mercury1: {
   model: "Model4",
+  ui: "Model4",
   label: "Mercury",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -37,6 +38,7 @@ Mercury1: {
 
 Mercury2: {
   model: "Model4",
+  ui: "Model4",  
   label: "Mercury",    
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -47,6 +49,7 @@ Mercury2: {
 
 Venus1: {
   model: "Model4",
+  ui: "Model4",  
   label: "Mercury",    
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -56,6 +59,7 @@ Venus1: {
 
 Venus2: {
   model: "Model4",
+  ui: "Model4",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -64,6 +68,7 @@ Venus2: {
 
 Mars1: {
   model: "Model4",
+  ui: "Model4",  
   label: "Mars",
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -73,6 +78,7 @@ Mars1: {
 
 Mars2: {
   model: "Model4",
+  ui: "Model4",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -81,6 +87,7 @@ Mars2: {
 
 Mars3: {
   model: "Model4",
+  ui: "Model4",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -89,6 +96,7 @@ Mars3: {
 
 Mars4: {
   model: "Model4",
+  ui: "Model4",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -97,6 +105,7 @@ Mars4: {
 
 Jupiter: {
   model: "Model4",
+  ui: "Model4",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 4380, speedmax: 5000, rotateStart: 0 },
@@ -105,6 +114,7 @@ Jupiter: {
 
 Saturn: {
   model: "Model4",
+  ui: "Model4",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 10940, speedmax: 12000, rotateStart: 0 },
@@ -113,6 +123,7 @@ Saturn: {
 
 Model5Mercury1: { 
   model: "Model5",
+  ui: "Model5",
   alpha:110,
   beta:36.6667,
   gamma:55,
@@ -126,6 +137,7 @@ Model5Mercury1: {
 
 Model5Mars1: { 
   model: "Model5",
+  ui: "Model5",
   alpha:780,
   beta:260,
   gamma:390,
@@ -139,6 +151,7 @@ Model5Mars1: {
 
 Model5Mars2: { 
   model: "Model5",
+  ui: "Model5",  
   alpha:780,
   beta:260,
   gamma:390,
@@ -152,6 +165,7 @@ Model5Mars2: {
 
 Model5Mars3: { 
   model: "Model5",
+  ui: "Model5",  
   alpha:780,
   beta:390,
   gamma:780,
@@ -165,6 +179,7 @@ Model5Mars3: {
 
 Model5Venus: { 
   model: "Model5",
+  ui: "Model5",  
   alpha:570,
   beta:95,
   gamma:114,
@@ -181,6 +196,7 @@ Model5Venus: {
 
 YavetzTest: { 
   model: "ModelYavetz",
+  ui: "ModelYavetz",  
   betaRotate: 30.0,
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -193,6 +209,7 @@ YavetzTest: {
 
 MoonMeton: { 
   model: "ModelMoon",
+  ui: "ModelMoon",    
   label: "Moon",
   metonYear: 19,
   metonSynodicMonths: 235,
@@ -207,6 +224,7 @@ MoonMeton: {
 
 MoonCallippus: { 
   model: "ModelMoon",
+  ui: "ModelMoon",     
   label: "Moon",  
   metonYear: 76,
   metonSynodicMonths: 940,
@@ -221,6 +239,7 @@ MoonCallippus: {
       
 Moon3: {
   model: "ModelMoon",
+  ui: "ModelMoon",   
   label: "Moon",
   metonYear: 8,
   metonSynodicMonths: 99,
@@ -237,6 +256,7 @@ Moon3: {
     
 Sun: { 
   model: "ModelSun",
+  ui: "ModelSun",     
   label: "Sun",
   showSun: false,
   sunYears: 99,  
@@ -248,6 +268,7 @@ Sun: {
 
 MoonCompare: { 
   model: "ModelMoonCompare",
+  ui: "ModelMoonCompare",     
   metonYear: 19,
   label: "Moon",  
   metonSynodicMonths: 235,
@@ -262,6 +283,7 @@ MoonCompare: {
 
 SimpleTest: { 
   model: "ModelSimple",
+  ui: "ModelSimple",  
   showSun: false,  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
@@ -272,6 +294,7 @@ SimpleTest: {
   
 HippopedeIntroduction: {
   model: "ModelHippo",
+  ui: "ModelHippo",
   showStars: false,
   showSun: false,
   sphere: [
@@ -283,6 +306,7 @@ HippopedeIntroduction: {
 
 Aristotle: {
   model: "ModelAristotle",
+  ui: "ModelAristotle",  
   showSun: false,
   showHippo: false,
   showPath: false,
@@ -300,26 +324,31 @@ Aristotle: {
 
 PtolemySun: { 
   model: "ModelPtolemy",
+  ui: "ModelPtolemySun",
   label: "Sun", 
   showStars: false,
   showHippo: false,
   showSun: false,
   derefentRadius: 60.0,
   epicycleRadius: 2.5,
+  apsidalAngle: 0.0,
   equant: 2.5,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330.75 },
-    {axisAngle: 0.0, speed: -365.2466666, rotateStart: 0 }
+    {axisAngle: 0.0, speed: -365.2466666, rotateStart: -330.75 }
   ] },
     
 PtolemyMars: { 
   model: "ModelPtolemy",
+  ui: "ModelPtolemy",
   label: "Mars",
   showStars: false,
   showHippo: false,
+  sunDist: 7,
   derefentRadius: 60.0,
   epicycleRadius: 39.5,
+  apsidalAngle: 106.5,
   equant: 6.0,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
@@ -336,19 +365,6 @@ var moonModels = {
 };
 
 
-
-
-//var moonModels = {
-//    Mendell: { speed1: function(d,z)  {return -(d+z); }, speed2: function(d,z) { return d; } },
-//    Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -360*(d-z); } },
-//    SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } }
-//};
-
-//var moonModels = {
-//    Mendell: { speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
-//    Schiparelli: { speed1: function(d,z)  {return d; }, speed2: function(d,z) { return -360*(d-z); } },
-//    SchFixed: { speed1: function(d,z)  {return -360*(d-z); }, speed2: function(d,z) { return d; } }
-//};
 
 var latitudePresets = {
   Athens: 38,

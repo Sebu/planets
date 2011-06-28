@@ -119,6 +119,8 @@ DONE
   - s4-s8 reverse labels, hippo,path,stars off
   - disable/enable poles of connected spheres P2,7 etc.
   - stop motion of sphere
+  - start: show only dayly etc.
+  
 
 - ptolemy
   - derefent radius 60
@@ -126,7 +128,6 @@ DONE
   - add equant line etc.
   - sexagisimal converter
   - egyptian date
-  
 TODO
 - fix/better labels
 - ptolemy
@@ -137,7 +138,7 @@ TODO
 - sun
   - real days passed :)
 - aristotle
-  - start: show only dayly etc.
+
   - click/mouseover highlight
 - fix: load presets through setters
 - reset position (tween)
