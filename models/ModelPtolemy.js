@@ -8,8 +8,7 @@ ModelPtolemy = function(params) {
     params.name = "ModelPtolemy";
     params.spheres = 3;
     this.genSpheres(params);
-
-    this.factor = 1.0/10.0;
+    this.factor = 1.0/7.0;
     
     this.sphere[1].realAngle = 0;
 
@@ -55,7 +54,7 @@ ModelPtolemy = function(params) {
     this.setShowSphere2(false);
     this.setShowSphere3(false);
 
-    this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2"], state) };    
+    this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc"], state) };    
     this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
     
@@ -66,11 +65,15 @@ ModelPtolemy = function(params) {
     this.getApsidalAngle = function() {
       return this.sphere[2].getOffsetRotateAngle();
     }
+
+    this.updateAspidalMovement = function(time) { 
+//      this.sphere[2].setOffsetRotateAngle(value);
+    }
     
     this.setEquant = function(value) {
       this.sphere[2].equant = value;
-      this.equantPoint.position.z = value*this.factor*2;
-      this.sphere[2].anchor.position.z = value*this.factor;
+      this.equantPoint.position.z = this.sphere[2].equant*this.factor*2;
+      this.sphere[2].anchor.position.z = this.sphere[2].equant*this.factor;
       this.equantPlanet[0] = {x: 0,y: 0, z: 0};
     };
     this.getEquant = function() { return this.sphere[2].equant; }
@@ -118,9 +121,6 @@ ModelPtolemy = function(params) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
 
-//        this.epicycleRadius[0] = this.sphere[2].visuals.npole.currentPos();
-//        this.epicycleRadius[1] = this.sphere[2].anchor.currentPos();
-
         this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
         this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].visuals.markerball.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
@@ -140,10 +140,10 @@ ModelPtolemy = function(params) {
     
     this.reset = function () {
         BasePlanetModel.prototype.reset.call(this);
-        this.setEquant(this.currentPlanet.equant);
-        this.setRadiusD(this.currentPlanet.derefentRadius); 
-        this.setRadiusE(this.currentPlanet.epicycleRadius); 
-        this.setApsidalAngle(this.currentPlanet.apsidalAngle);   
+        this.setEquant( Utils.toDec(this.currentPlanet.equant));
+        this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
+        this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
+        this.setApsidalAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
 
     }    
 

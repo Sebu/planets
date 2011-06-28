@@ -282,6 +282,7 @@ BasePlanetModel.prototype = {
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
 
+
         if (this.currentPos != "Free") {
           if (this.currentLookAt != "Free") {
 //            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
@@ -292,6 +293,19 @@ BasePlanetModel.prototype = {
             }
         }
     },
+
+     setDays : function(days) {
+        this.days = days;
+        var time = days/this.systemSun[0].getSpeed();
+        for (i in model.updateList) {
+           model.updateList[i].updateMovement((365.0*time));
+        }   
+     },
+
+     getDays : function() {
+         return this.days;
+     },
+
 
     // reset movement of spheres and parameters 
     reset : function () {

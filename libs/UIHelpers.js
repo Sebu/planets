@@ -312,7 +312,7 @@ var UI = {
         var step = params.step || 1;
         var value = params.value ||  instance["get"+id]();
 //        console.log(instance.valueOf());
-        var change = params.change || function()  { instance["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
+        var change = params.change || function()  { instance["set"+id](Number(Utils.toDec(this.value))); $("#" + id + " > input").attr("value",Number(Utils.toDec(this.value))); };
 
         if(toggle)
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");

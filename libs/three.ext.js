@@ -214,6 +214,13 @@ Utils.decToSex = function(num, prec) {
 
 
 
+Utils.toDec = function(number) {
+  if(number.toString().indexOf(";")==-1)
+    return number;
+  else 
+    return Utils.baseToDec(number,60);
+}
+
 Utils.sexagesimal = function(number) {
   if(number.toString().indexOf(";")==-1)
     return Utils.decToBase(number,60);

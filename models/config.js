@@ -332,11 +332,28 @@ PtolemySun: {
   derefentRadius: 60.0,
   epicycleRadius: 2.5,
   apsidalAngle: 0.0,
-  equant: 2.5,
+  equant: 0,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330.75 },
     {axisAngle: 0.0, speed: -365.2466666, rotateStart: -330.75 }
+  ] },
+
+PtolemySun2: { 
+  model: "ModelPtolemy",
+  ui: "ModelPtolemySun",
+  label: "Sun", 
+  showStars: false,
+  showHippo: false,
+  showSun: false,
+  derefentRadius: 60.0,
+  epicycleRadius: 0,
+  apsidalAngle: 0.0,
+  equant: 2.5,
+  sphere: [
+    {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330.75 },
+    {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
     
 PtolemyMars: { 
@@ -348,12 +365,12 @@ PtolemyMars: {
   sunDist: 7,
   derefentRadius: 60.0,
   epicycleRadius: 39.5,
-  apsidalAngle: 106.5,
+  apsidalAngle: 106.6,
   equant: 6.0,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 327.21666666, rotateStart: 0 }
+    {axisAngle: 0.0, speed: 327.2166, rotateStart: 0 }
   ] }
 };
 

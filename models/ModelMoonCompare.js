@@ -177,6 +177,11 @@ ModelMoonCompare = function(params) {
 
         if(this.running) {
         	
+            // update movement of all spheres
+            for (i in model.updateList) {
+                model.updateList[i].updateMovement((365.0*time)/this.speed);
+            }
+
             var earthPos = sceneToSyl(this.earth.mesh.currentPos());
 
             var polePos = sceneToSyl(this.sphere[2].visuals.npole.currentPos());
@@ -256,10 +261,7 @@ ModelMoonCompare = function(params) {
             // days determined by sun speed
             this.days += dayDelta;
             
-            // update movement of all spheres
-            for (i in model.updateList) {
-                model.updateList[i].updateMovement((365.0*time)/this.speed);
-            }
+
             //TODO: on model change -> events?
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }

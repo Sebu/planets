@@ -209,7 +209,7 @@ myApp.prototype.update = function(time) {
         // infoBox data
         if(model.running) {
         if(model.sun.getEnabled()) $("#sunAngle").text( model.sunAngle.toFixed(1) );
-        $("#days").text(Math.round(model.days));
+        $("#days").text(Math.round( model.getDays() ));
         if(model instanceof ModelSun) {
           $("#longitude").text( model.longitude.toFixed(6) );
           $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
@@ -233,7 +233,7 @@ myApp.prototype.update = function(time) {
           $("#longitude2").text( model.longitude2.toFixed(1) );
           $("#longitudeSpeed2").text(model.longitudeSpeed2.toFixed(2));
           $("#latitude2").text( model.latitude2.toFixed(1) );
-          $("#days2").text(Math.round(model.days));
+          $("#days2").text(Math.round( model.getDays() ));
 
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.camera, this.canvas));
         }
@@ -638,13 +638,14 @@ myApp.prototype.loadPreset = function(preset) {
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.box({id:"apsidal", text:"Apsidal"}).appendTo("#parameters");
-            UI.slider({model:model, id: "ApsidalAngle", max: 100, step:0.05, text: "Angle"}).appendTo("#apsidal");
-            UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Kosmos to deferent"}).appendTo("#apsidal");
+            UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
+            UI.slider({model:model, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
+            UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "speed"}).appendTo("#apsidal");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
-            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"Start"}).appendTo("#deferent");
-//            UI.slider({model:model, id:"Speed2", max:1100, text:"Rotation"}).appendTo("#deferent");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
+            UI.slider({model:model, id:"Speed2", max:1100, text:"speed"}).appendTo("#deferent");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
 //*/            
         } else if (model.ui == "ModelHippo") {
@@ -674,7 +675,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
             
             $("#Speed1 > input, #SunYears > input").change(function() {
-              $("#sunDaysPerYear").html(Utils.frac(model.getDaysPerYear()));
+              $("#sunDaysPerYear").html(Utils.frac( model.getDaysPerYear() ));
             });
         }
 
