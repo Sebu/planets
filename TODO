@@ -135,13 +135,14 @@ TODO
     - start from inital date
     - move to certain date
     - date presets 
-  - apsidal speed
-  - sun start value
-  - lines
-    - earth to vernal to vernal equinox
+  - apsidal speed/movement 1deg per 100years
+  - lines (disable them)
+    - earth to vernal equinox
     - earth to planet
-    - equant 
+    - equant/planet/center to epicycle center
   - sun
+    - start rotation
+    - overlap models
     - epicycle + equant same? 
     - deferent + epicylce model checkbox overlay models
 - sun

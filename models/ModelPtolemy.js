@@ -13,6 +13,7 @@ ModelPtolemy = function(params) {
     this.sphere[1].realAngle = 0;
 
 
+
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
 
@@ -79,8 +80,19 @@ ModelPtolemy = function(params) {
       return this.sphere[2].getOffsetRotateAngle();
     }
 
-    this.updateAspidalMovement = function(time) { 
-//      this.sphere[2].setOffsetRotateAngle(value);
+    this.setApsidalSpeed = function(value) {
+      this.apsidalSpeed = value;
+      var realSpeed = (this.value != 0) ? (365.25*100)/value : 0.0;
+      this.apsidalStep = (realSpeed != 0) ? (360.0 / realSpeed) : 0.0;
+    }
+      
+    this.getApsidalSpeed = function() {
+      return this.apsidalSpeed;
+    }
+
+    this.updateApsidalMovement = function(step) { 
+      this.setApsidalAngle( this.getApsidalAngle() + (this.apsidalStep * step) );
+
     }
     
     this.setEquant = function(value) {
@@ -133,6 +145,8 @@ ModelPtolemy = function(params) {
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
+        BasePlanetModel.prototype.update.call(this, time);
+        this.updateApsidalMovement((365.0*time)/this.speed);
 
         this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
         this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].visuals.markerball.currentPos();
@@ -159,12 +173,14 @@ ModelPtolemy = function(params) {
         this.earthToVernalLine.setPos(this.earthToVernal);        
 
         
-        BasePlanetModel.prototype.update.call(this, time);
+
+
         this.date = this.PTOLEMY_EPOCH + this.days;
     }
     
     this.reset = function () {
         BasePlanetModel.prototype.reset.call(this);
+        this.setApsidalSpeed(0);
         this.setEquant( Utils.toDec(this.currentPlanet.equant));
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 

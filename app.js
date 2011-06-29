@@ -632,7 +632,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
             UI.slider({model:model, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-//            UI.slider({model:model, id: "ApsidalSpeed", max: 100, step:0.05, text: "speed"}).appendTo("#apsidal");
+            UI.slider({model:model, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
