@@ -637,6 +637,8 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
             UI.slider({model:model, id:"Speed2", max:1100, text:"speed"}).appendTo("#deferent");
+            UI.slider({model:model, id:"Speed3", min: -1100, max:1100, text:"speed"}).appendTo("#deferent");
+
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
             $("#apsidal input, #deferent input").change();
 //*/            
