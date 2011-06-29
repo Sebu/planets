@@ -617,6 +617,8 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
             UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
+            UI.slider({model:model, id: "ApsidalSpeed", max: 100, step:0.05, text: "apsidal deg. per century"}).appendTo("#radius");
+
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed2", max:1100, text:"Deferent"}).appendTo("#speed");
