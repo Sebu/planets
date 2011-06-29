@@ -136,6 +136,10 @@ DONE
 
 TODO
 - fix/better labels
+- more view presets/tweening
+  - reset position (tween)
+- aristotle
+ - s8 not an unwinder
 - ptolemy
   - data
     - start from inital date
@@ -149,10 +153,9 @@ TODO
 - sun
   - real days passed :)
 - aristotle
-
   - click/mouseover highlight
 - fix: load presets through setters
-- reset position (tween)
+
 - info container values (show full in tooltip)
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch

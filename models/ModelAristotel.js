@@ -139,6 +139,10 @@ ModelAristotle = function(params) {
     }
    this.getShowSphere7 = function() { return false; };
 
+  this.getShowSphere2 = function() { return false; };
+  this.getShowSphere3 = function() { return false; };
+  this.getShowSphere4 = function() { return false; };
+
    this.setShowSphere8 = function(state) {
       this.sphere[8].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
@@ -182,6 +186,7 @@ ModelAristotle = function(params) {
         this.setShowSphere6(false);
         this.setShowSphere7(false);   
     }
+
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, node: this.planet.mesh, color: colors["Hippo"]});
