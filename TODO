@@ -131,7 +131,16 @@ DONE
 TODO
 - fix/better labels
 - ptolemy
-  - start from certain date
+  - data
+    - start from inital date
+    - move to certain date
+    - date presets 
+  - apsidal speed
+  - sun start value
+  - lines
+    - earth to vernal to vernal equinox
+    - earth to planet
+    - equant 
   - sun
     - epicycle + equant same? 
     - deferent + epicylce model checkbox overlay models

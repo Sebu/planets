@@ -44,6 +44,19 @@ ModelPtolemy = function(params) {
     this.root.addNode(this.deferentRadiusLine);
 
 
+    this.earthToDeferent = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
+    this.earthToDeferentLine = new Curve({trails: false, pos: this.earthToDeferent, color: {r:0.6,g:0.6,b:1.0} }); 
+    this.root.addNode(this.earthToDeferentLine);
+
+
+    this.earthToPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
+    this.earthToPlanetLine = new Curve({trails: false, pos: this.earthToPlanet, color: {r:1.0,g:1.0,b:1.0} }); 
+    this.root.addNode(this.earthToPlanetLine);
+
+    this.earthToVernal = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
+    this.earthToVernalLine = new Curve({trails: false, pos: this.earthToVernal, color: colors["S1"] }); 
+    this.root.addNode(this.earthToVernalLine);
+
     
     this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
@@ -130,9 +143,21 @@ ModelPtolemy = function(params) {
         this.deferentRadiusLine.setPos(this.deferentRadius);
 
         this.equantPlanet[0] = this.equantPoint.currentPos();        
-        this.equantPlanet[1] = this.planet.mesh.currentPos();
+        this.equantPlanet[1] = this.sphere[2].visuals.markerball.currentPos();
         this.equantPlanetLine.setPos(this.equantPlanet);
-        
+
+        this.earthToDeferent[0] = this.earth.mesh.currentPos();     
+        this.earthToDeferent[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.earthToDeferentLine.setPos(this.earthToDeferent);
+
+        this.earthToPlanet[0] = this.earth.mesh.currentPos();     
+        this.earthToPlanet[1] = this.planet.mesh.currentPos();
+        this.earthToPlanetLine.setPos(this.earthToPlanet);
+
+        this.earthToVernal[0] = this.earth.mesh.currentPos();        
+        this.earthToVernal[1] = this.sphere[1].visuals.markerball.currentPos();
+        this.earthToVernalLine.setPos(this.earthToVernal);        
+
         
         BasePlanetModel.prototype.update.call(this, time);
         this.date = this.PTOLEMY_EPOCH + this.days;
