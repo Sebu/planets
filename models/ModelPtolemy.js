@@ -82,8 +82,7 @@ ModelPtolemy = function(params) {
 
     this.setApsidalSpeed = function(value) {
       this.apsidalSpeed = value;
-      var realSpeed = (this.value != 0) ? (365.25*100)/value : 0.0;
-      this.apsidalStep = (realSpeed != 0) ? (360.0 / realSpeed) : 0.0;
+      this.apsidalStep = (value != 0) ? 360/((365.25*100)/value) : 0.0;
     }
       
     this.getApsidalSpeed = function() {
@@ -92,7 +91,6 @@ ModelPtolemy = function(params) {
 
     this.updateApsidalMovement = function(step) { 
       this.setApsidalAngle( this.getApsidalAngle() + (this.apsidalStep * step) );
-
     }
     
     this.setEquant = function(value) {

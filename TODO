@@ -128,6 +128,12 @@ DONE
   - add equant line etc.
   - sexagisimal converter
   - egyptian date
+  - lines (disable them)
+    - earth to vernal equinox
+    - earth to planet
+    - equant/planet/center to epicycle center
+  - apsidal speed/movement 1deg per 100years
+
 TODO
 - fix/better labels
 - ptolemy
@@ -135,11 +141,6 @@ TODO
     - start from inital date
     - move to certain date
     - date presets 
-  - apsidal speed/movement 1deg per 100years
-  - lines (disable them)
-    - earth to vernal equinox
-    - earth to planet
-    - equant/planet/center to epicycle center
   - sun
     - start rotation
     - overlap models
