@@ -362,7 +362,7 @@ PtolemyMars: {
   label: "Mars",
   showStars: false,
   showHippo: false,
-  sunDist: 7,
+  sunDist: 1.7,
   derefentRadius: 60.0,
   epicycleRadius: 39.5,
   apsidalAngle: 106.6,
