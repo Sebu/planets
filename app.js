@@ -91,13 +91,14 @@ myApp.prototype.init = function(params) {
               <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
               <div>gregorian date<span class='wert' id='gregorianDate'>0</span></div>\
               <div>egyptian date<span class='wert' id='egyptianDate'>0</span></div>\
-              <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
-              <div class='sexa wert' id='sexaResult'>0</div>\
             </div>\
             </div>").appendTo(this.domRoot);
 
-            $("#sexaInput > input").bind("change", function() 
-              { $("#sexaResult").text(Utils.sexagesimal(this.value)); });
+
+//              <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
+//              <div class='sexa wert' id='sexaResult'>0</div>\
+//            $("#sexaInput > input").bind("change", function() 
+//              { $("#sexaResult").text(Utils.sexagesimal(this.value)); });
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
@@ -165,7 +166,6 @@ myApp.prototype.newScene = function() {
     };
 
 myApp.prototype.setCurrentScene = function(scene) {
-//        this.currentScene.enabled = false;
         this.currentScene = scene;
         this.currentScene.enabled = true;
         this.components = [];
@@ -240,7 +240,7 @@ myApp.prototype.update = function(time) {
         }
 
 
-
+        //TODO: model.ui specific
         // update Label position/visibility
 //*/
         if (model.currentPos == "Earth") {
@@ -287,21 +287,18 @@ myApp.prototype.setView = function(view) {
         planetLabel.setPosition({x:0, y:0, z:-1});
         planetLabel2.setPosition({x:0, y:0, z:-1});
 
-//        if (model.currentPos == "Earth") {
-            equinoxLabel.setPosition({x:0, y:0, z:-1});
-            npoleLabel.setPosition({x:0, y:0, z:-1});
-            spoleLabel.setPosition({x:0, y:0, z:-1});
-//        } else {
-            northLabel.setPosition({x:0, y:0, z:-1});
-            southLabel.setPosition({x:0, y:0, z:-1});
-            eastLabel.setPosition({x:0, y:0, z:-1});
-            westLabel.setPosition({x:0, y:0, z:-1});
-//        }
+        equinoxLabel.setPosition({x:0, y:0, z:-1});
+        npoleLabel.setPosition({x:0, y:0, z:-1});
+        spoleLabel.setPosition({x:0, y:0, z:-1});
+        northLabel.setPosition({x:0, y:0, z:-1});
+        southLabel.setPosition({x:0, y:0, z:-1});
+        eastLabel.setPosition({x:0, y:0, z:-1});
+        westLabel.setPosition({x:0, y:0, z:-1});
 
         model.changeView(model.currentPos);
     };
 
-
+//TODO: shorten like eval(name + "()");
 myApp.prototype.getModel = function(name) {
   var mod = models[name];
   if(!mod) {
@@ -345,6 +342,8 @@ myApp.prototype.getModel = function(name) {
   return mod;
 };
 
+
+//TODO: move to ui specific stuff
 // change planet model and create the UI ELEMENTS + add to DOM
 myApp.prototype.loadPreset = function(preset) {
 
@@ -564,15 +563,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.checkbox({model:model.sphere[6], id: "Moving", max:1100, text:"S 6"}).appendTo("#speed");
             UI.checkbox({model:model.sphere[7], id: "Moving", max:1100, text:"S 7"}).appendTo("#speed");
             UI.checkbox({model:model.sphere[8], id: "Moving", max:1100, text:"S 8"}).appendTo("#speed");
-/*
-            UI.checkbox({model:model, id: "S2Toggle", max:1100, text:"S 2"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S3Toggle", max:1100, text:"S 3"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S4Toggle", max:1100, text:"S 4"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S5Toggle", max:1100, text:"S 5"}).appendTo("#speed");
-            UI.checkbox({model:model.sphere[6], id: "Moving", max:1100, text:"S 6"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S7Toggle", max:1100, text:"S 7"}).appendTo("#speed");
-            UI.checkbox({model:model, id: "S8Toggle", max:1100, text:"S 8"}).appendTo("#speed");
-//*/
+
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
@@ -610,7 +601,6 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-//            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
             UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
@@ -633,6 +623,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed3",  min:-1100, max:1100, text:"Epicycle"}).appendTo("#speed");
             
        } else if (model.ui == "ModelPtolemySun") {
+
            this.camera.rotateY((Math.PI*3)/2 - 0.1);            
    
 //*
@@ -641,12 +632,13 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
             UI.slider({model:model, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-            UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "speed"}).appendTo("#apsidal");
+//            UI.slider({model:model, id: "ApsidalSpeed", max: 100, step:0.05, text: "speed"}).appendTo("#apsidal");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
             UI.slider({model:model, id:"Speed2", max:1100, text:"speed"}).appendTo("#deferent");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
+            $("#apsidal input, #deferent input").change();
 //*/            
         } else if (model.ui == "ModelHippo") {
 

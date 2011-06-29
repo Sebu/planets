@@ -124,7 +124,7 @@ BasePlanetModel.prototype = {
           } else if(this.sphere[1].getSpeed()!=0 && speed == 0) {
             this.setAnimSpeed(this.getAnimSpeed()/this.speed0Factor);
           }
-          $("#Speed > input").attr("value",Number(this.getAnimSpeed()));
+          $("#AnimSpeed > input").attr("value",Number(this.getAnimSpeed()));
           this.sphere[1].setSpeed(-speed);
         }
 

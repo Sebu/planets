@@ -55,7 +55,7 @@ ModelPtolemy = function(params) {
     this.setShowSphere3(false);
 
     this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc"], state) };    
-    this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator"], state) };
+    this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator","rotationarc"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
     
     this.setApsidalAngle = function(value) {
