@@ -307,7 +307,11 @@ BasePlanetModel.prototype = {
      },
 
     addDays : function(days) {
-      this.setDays(this.getDays()+days);
+      this.days += days;
+      var time = days/this.systemSun[0].getSpeed();
+        for (i in model.updateList) {
+           model.updateList[i].updateMovement((365.0*time));
+        }
     },
     
     // reset movement of spheres and parameters 

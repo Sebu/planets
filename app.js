@@ -25,10 +25,10 @@ myApp.prototype.init = function(params) {
         this.domRoot.append(this.canvas.domElement);
 
         // register input
-        Ori.input.register(Ori.KEY.A, "LEFT");
-        Ori.input.register(Ori.KEY.D, "RIGHT");
-        Ori.input.register(Ori.KEY.S, "DOWN");
-        Ori.input.register(Ori.KEY.W, "UP");
+        Ori.input.register(Ori.KEY.LEFT, "LEFT");
+        Ori.input.register(Ori.KEY.RIGT, "RIGHT");
+        Ori.input.register(Ori.KEY.DOWN, "DOWN");
+        Ori.input.register(Ori.KEY.UP, "UP");
 
         // setup camera
         // TODO : shorten
@@ -623,7 +623,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed2", max:1100, text:"Deferent"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed3",  min:-1100, max:1100, text:"Epicycle"}).appendTo("#speed");
-            
+
        } else if (model.ui == "ModelPtolemySun") {
 
            this.camera.rotateY((Math.PI*3)/2 - 0.1);            
@@ -642,6 +642,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed3", min: -1100, max:1100, text:"speed"}).appendTo("#deferent");
 
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
+            UI.text({model:model, id:"Date"}).appendTo("#playback");
             $("#apsidal input, #deferent input").change();
 //*/            
         } else if (model.ui == "ModelHippo") {

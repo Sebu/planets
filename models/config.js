@@ -320,23 +320,8 @@ Aristotle: {
     {axisAngle: 0.0, speed: 0, speedmax: 1000, rotateStart: 0 }
   ]},
 
-PtolemySun: { 
-  model: "ModelPtolemy",
-  ui: "ModelPtolemySun",
-  label: "Sun", 
-  showStars: false,
-  showHippo: false,
-  derefentRadius: 60.0,
-  epicycleRadius: 2.5,
-  apsidalAngle: 0.0,
-  equant: 0,
-  sphere: [
-    {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330.75 },
-    {axisAngle: 0.0, speed: -365.2466666, rotateStart: 0 }
-  ] },
 
-PtolemySun2: { 
+PtolemySun: { 
   model: "ModelPtolemy",
   ui: "ModelPtolemySun",
   label: "Sun", 
@@ -348,7 +333,7 @@ PtolemySun2: {
   equant: 2.5,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330.75 },
+    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 0.0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
     

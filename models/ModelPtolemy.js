@@ -13,6 +13,19 @@ ModelPtolemy = function(params) {
     this.sphere[1].realAngle = 0;
 
 
+    this.realSunS = [];
+    var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: colors["S2"]});
+    var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S3"]});
+  
+    this.realSun = new Planet({ dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Planet"]});
+    this.realSun.setBeta(90.0);
+  
+    this.updateList.push(realSunS1);
+    this.updateList.push(realSunS2);    
+        
+    this.sphere[1].anchor.addNode(realSunS1);
+    realSunS1.anchor.addNode(realSunS2);
+    realSunS2.anchor.addNode(this.realSun);
 
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
@@ -65,6 +78,8 @@ ModelPtolemy = function(params) {
     this.setShowSphere2(false);
     this.setShowSphere3(false);
 
+
+
     this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc"], state) };    
     this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator","rotationarc"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
@@ -76,6 +91,9 @@ ModelPtolemy = function(params) {
       this.sphere[2].equant = value;
       this.equantPoint.position.z = this.sphere[2].equant*this.factor*2;
       this.sphere[2].anchor.position.z = this.sphere[2].equant*this.factor;
+
+      this.realSunS[2].setScale(this.sphere[2].equant*this.factor);
+      this.realSun.setDist(this.sphere[2].equant*this.factor);
     };
     this.getEquant = function() { return this.sphere[2].equant; }
     
@@ -85,7 +103,13 @@ ModelPtolemy = function(params) {
       this.setRotateAngle(this.rotateAngle);
     };
 
-
+///*
+    this.setSpeed2 = function(speed) {
+      this.sphere[2].setSpeed(speed);
+      this.realSunS[1].setSpeed(speed);
+      this.realSunS[2].setSpeed(-speed);
+    }
+//*/
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle; 
       var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
@@ -102,8 +126,12 @@ ModelPtolemy = function(params) {
     
     this.setRadiusD = function(value) {
       this.sphere[2].radius = value;
+
       this.sphere[2].setScale(value*this.factor);
       this.sphere[3].anchor.position.z = value*this.factor;
+
+      this.realSunS[1].setScale(value*this.factor);
+      this.realSunS[2].anchor.position.z = value*this.factor;
       this.updateBlob();
 
     };
@@ -120,15 +148,32 @@ ModelPtolemy = function(params) {
     this.getRadiusE = function() { return this.radius1; }
 
     
-    
+
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(90 - angle);
+    }
+
+    this.setAxisAngle2 = function(angle) {
+        this.sphere[2].setAxisAngle(angle);
+        this.realSunS[1].setAxisAngle(angle);
+    }
+
+    this.setDate = function(value) {
+      var date = Number(value);
+      if(date)
+        this.addDays(date);
+      
+    }
+    this.getDate = function() {
+      return "";
     }
 
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
+
+        this.systemSun[0].anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;        
         this.sphere[2].updateOffsetRotateMovement((365.0*time)/this.speed);
 
         this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
@@ -168,6 +213,9 @@ ModelPtolemy = function(params) {
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateSpeed(0);
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
+
+        this.realSunS[1].setRotateAngle( this.getRotateStart2() );
+        this.realSunS[2].setRotateAngle( 180.0 );
 
     }    
 

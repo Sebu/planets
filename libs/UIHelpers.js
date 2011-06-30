@@ -294,10 +294,10 @@ var UI = {
         var max = params.max || 100;
         var step = params.step || 1;
         var value = params.value ||  model["get"+id]();
-        var change = params.change || function()  { model["set"+id](Number(this.value)); $("#" + id + " > input").attr("value",Number(this.value)); };
+        var change = params.change || function()  { model["set"+id](Number(this.value)); };
 
-        ele =  $( "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range'/>" );
-        $("input",ele).bind("change",change);
+        ele =  $( "<input type='text' value='" + value + "' class='text'/>" );
+        $(ele).bind("change",change);
         return ele;
     },
 
@@ -332,6 +332,8 @@ var UI = {
           } );
         return tmp;
     },
+
+
 
     checkbox : function(params) {
         var model = params.model;

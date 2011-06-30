@@ -59,6 +59,20 @@ background: #333;
   color: gray;
 }
 
+
+.text {
+	border:1px  #ddd;
+  background: #333;
+  color: white;
+
+	font-size:12px;
+	margin:1;
+	padding:1;
+	text-align:center;
+	width:140px;
+	border-radius:2px;
+}
+
 /* drag handle */
 .handle { 
     background:#fff url(../../../img/gradient/h30.png) repeat-x 0 0; 
