@@ -133,7 +133,9 @@ DONE
     - earth to planet
     - equant/planet/center to epicycle center
   - apsidal speed/movement 1deg per 100years
-
+  - sun
+    - start rotation
+    
 TODO
 - fix/better labels
 - more view presets/tweening
@@ -146,7 +148,6 @@ TODO
     - move to certain date
     - date presets 
   - sun
-    - start rotation
     - overlap models
     - epicycle + equant same? 
     - deferent + epicylce model checkbox overlay models

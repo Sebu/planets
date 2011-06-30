@@ -611,13 +611,13 @@ myApp.prototype.loadPreset = function(preset) {
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.slider({model:model, id: "ApsidalAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
+            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
             UI.box({id:"radius", text:"Radius"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Deferent"}).appendTo("#radius");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.05, text: "Epicycle"}).appendTo("#radius");
             UI.slider({model:model, id: "Equant", max: 100, step:0.05, text: "Equant"}).appendTo("#radius");
 
-            UI.slider({model:model, id: "ApsidalSpeed", max: 100, step:0.05, text: "apsidal deg. per century"}).appendTo("#radius");
+            UI.slider({model:model.sphere[2], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "apsidal deg. per century"}).appendTo("#radius");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
@@ -632,9 +632,9 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
-            UI.slider({model:model, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-            UI.slider({model:model, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+            UI.slider({model:model.sphere[2], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");

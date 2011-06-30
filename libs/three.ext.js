@@ -667,7 +667,7 @@ Planet.prototype.setDist = function(dist) {
  */
 Curve  = function(params) {
 
-    this.trails = (params.trails==undefined) ? true : false;
+    this.trails = (params.trails==undefined) ? true : params.trails;
 
     this.setPos = function(pos) {
         this.gen(pos);
@@ -681,7 +681,7 @@ Curve  = function(params) {
             this.geo.vertices.push( new THREE.Vertex( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) ) );
             if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
-              color.setHSV( 1.0, 0.0, 0.3 + 0.7*(i / this.curvePos.length) );
+              color.setHSV( 1.0, 0.0, 0.5 + 0.5 * (i / this.curvePos.length) );
               this.geo.colors.push( color );
             }
         }
@@ -707,6 +707,7 @@ Curve.prototype.constructor = Curve;
 Circle = function(params) {
     THREE.Geometry.call( this );
 
+    this.trails = true;//(params.trails==undefined) ? false : params.trails;
     
     this.setAngle(params.angle);
     this.setBeta(params.betaRotate || 90);
@@ -718,6 +719,7 @@ Circle.prototype.constructor = Circle;
 
 Circle.prototype.gen = function() {
     this.vertices = [];
+    this.colors = [];
 
     var slices = 50;//Math.abs(Math.round(this.angle/5));
     var arc = (this.angle / 180.0) * Math.PI;
@@ -734,6 +736,11 @@ Circle.prototype.gen = function() {
         y = cosTheta * sinPhi;
 
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
+        if(this.trails) {
+              var color = new THREE.Color( 0xFFFFFF );
+              color.setHSV( 0.5, 0.0, 1.0 - 0.9 * (sliceNum / slices) );
+              this.colors.push( color );
+        }
 
     }
 //    this.__webglLineCount = slices;
@@ -875,7 +882,9 @@ Spherical = function Spherical(params) {
 //    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
-    this.visuals.rotationarc = new THREE.Line( this.progressArc, new THREE.LineBasicMaterial( { linewidth:4, color: rgbToHex(color) } ));
+    var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(color) } );
+    progressMat.vertexColors = true;
+    this.visuals.rotationarc = new THREE.Line( this.progressArc, progressMat );
     this.visuals.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals.rotationarc.rotation.x = Math.PI/2;
     this.anchor.addNode(this.visuals.rotationarc);
@@ -999,6 +1008,11 @@ Spherical.prototype.getRotateAngle = function() {
     return this.rotateAngle;
 };
 
+Spherical.prototype.updateMovement = function(step) {
+    this.rotateAngle += this.step * step;
+    if(this.moving) this.setRotateAngle(this.rotateAngle);
+};
+
 Spherical.prototype.setOffsetRotateAngle = function(angle) {
     this.offsetRotateAngle = angle;
     this.pivot.rotation.y = degToRad(this.offsetRotateAngle);
@@ -1008,12 +1022,19 @@ Spherical.prototype.getOffsetRotateAngle = function() {
     return this.offsetRotateAngle;
 };
 
-Spherical.prototype.updateMovement = function(step) {
-    this.rotateAngle += this.step * step;
-    if(this.moving) this.setRotateAngle(this.rotateAngle);
+Spherical.prototype.setOffsetRotateSpeed = function(value) {
+      this.offsetRotateSpeed = value;
+      this.offsetRotateStep = (value != 0) ? 360/((365.25*100)/value) : 0.0;
+};
+      
+Spherical.prototype.getOffsetRotateSpeed = function() {
+      return this.offsetRotateSpeed;
 };
 
-
+Spherical.prototype.updateOffsetRotateMovement = function(step) { 
+      this.setOffsetRotateAngle( this.getOffsetRotateAngle() + (this.offsetRotateStep * step) );
+};
+    
 
 Sunlight = function() {
     return new THREE.PointLight( 0xFFFFFF, 1, 0 );

@@ -108,7 +108,7 @@ background: #333;
 }
 
 #uiContainer {
-  overflow-y:auto;
+  overflow-y: auto;
   width: 180px;
   top: 10px;
   left: 10px;

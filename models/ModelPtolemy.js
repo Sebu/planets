@@ -17,6 +17,8 @@ ModelPtolemy = function(params) {
     this.JULIAN_EPOCH = 0.0831088;
     this.PTOLEMY_EPOCH = 1448637.91689121;
 
+    this.startDate = this.PTOLEMY_EPOCH;
+ 
     this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
     this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
 
@@ -25,12 +27,6 @@ ModelPtolemy = function(params) {
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
     this.sphere[2].anchor.addNode(this.equator);
-
-    this.updateBlob = function() {
-      var scale = (this.sphere[2].radius+this.radius1)*this.factor;
-      this.sphere[1].setScale(scale); 
-      this.equator.scale  = new THREE.Vector3( scale, scale, scale );
-    }
 
 
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
@@ -63,7 +59,7 @@ ModelPtolemy = function(params) {
     this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
     this.root.addNode(this.equantPlanetLine);
-    this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );
+
     
     this.setShowSphere1(false);
     this.setShowSphere2(false);
@@ -73,32 +69,13 @@ ModelPtolemy = function(params) {
     this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator","rotationarc"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
     
-    this.setApsidalAngle = function(value) {
-      this.sphere[2].setOffsetRotateAngle(value);
-    }
-      
-    this.getApsidalAngle = function() {
-      return this.sphere[2].getOffsetRotateAngle();
-    }
 
-    this.setApsidalSpeed = function(value) {
-      this.apsidalSpeed = value;
-      this.apsidalStep = (value != 0) ? 360/((365.25*100)/value) : 0.0;
-    }
-      
-    this.getApsidalSpeed = function() {
-      return this.apsidalSpeed;
-    }
 
-    this.updateApsidalMovement = function(step) { 
-      this.setApsidalAngle( this.getApsidalAngle() + (this.apsidalStep * step) );
-    }
-    
+    this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );    
     this.setEquant = function(value) {
       this.sphere[2].equant = value;
       this.equantPoint.position.z = this.sphere[2].equant*this.factor*2;
       this.sphere[2].anchor.position.z = this.sphere[2].equant*this.factor;
-      this.equantPlanet[0] = {x: 0,y: 0, z: 0};
     };
     this.getEquant = function() { return this.sphere[2].equant; }
     
@@ -116,6 +93,13 @@ ModelPtolemy = function(params) {
       this.anchor.rotation.y = realAngle;
     };
 
+
+    this.updateBlob = function() {
+      var scale = (this.sphere[2].radius+this.radius1)*this.factor;
+      this.sphere[1].setScale(scale); 
+      this.equator.scale  = new THREE.Vector3( scale, scale, scale );
+    }
+    
     this.setRadiusD = function(value) {
       this.sphere[2].radius = value;
       this.sphere[2].setScale(value*this.factor);
@@ -145,7 +129,7 @@ ModelPtolemy = function(params) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
-        this.updateApsidalMovement((365.0*time)/this.speed);
+        this.sphere[2].updateOffsetRotateMovement((365.0*time)/this.speed);
 
         this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
         this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].visuals.markerball.currentPos();
@@ -174,16 +158,16 @@ ModelPtolemy = function(params) {
         
 
 
-        this.date = this.PTOLEMY_EPOCH + this.days;
+        this.date = this.startDate + this.days;
     }
     
     this.reset = function () {
         BasePlanetModel.prototype.reset.call(this);
-        this.setApsidalSpeed(0);
         this.setEquant( Utils.toDec(this.currentPlanet.equant));
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
-        this.setApsidalAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
+        this.sphere[2].setOffsetRotateSpeed(0);
+        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
 
     }    
 

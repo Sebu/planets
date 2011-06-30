@@ -306,7 +306,10 @@ BasePlanetModel.prototype = {
          return this.days;
      },
 
-
+    addDays : function(days) {
+      this.setDays(this.getDays()+days);
+    },
+    
     // reset movement of spheres and parameters 
     reset : function () {
         for (var i in this.sphere) {
