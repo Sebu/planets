@@ -140,13 +140,14 @@ DONE
     - deferent + epicylce model checkbox overlay models
     
 TODO
-- longitude dot product error ( jump from 359.1 -> 0.9 )
+- gone: longitude dot product error ( jump from 359.1 -> 0.9 )
+  - but find better ref point for up vector 
 - fix/better labels
 - more view presets/tweening
   - reset position (tween)
 - aristotle
 - ptolemy
-  - sun max dist
+  - calculate sun max dist
   - data
     - start from inital date
     - move to certain date

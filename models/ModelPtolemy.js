@@ -90,6 +90,7 @@ ModelPtolemy = function(params) {
     this.realSunS[2].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
     this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );    
+
     this.setEquant = function(value) {
       this.sphere[2].equant = value;
       this.equantPoint.position.z = this.sphere[2].equant*this.factor*2;
@@ -206,8 +207,8 @@ ModelPtolemy = function(params) {
 
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    
-        this.realSunS[1].setRotateAngle( 0 );
-        this.realSunS[2].setRotateAngle( 0 );
+        this.realSunS[1].setRotateAngle( 274.25 );
+        this.realSunS[2].setRotateAngle( (360-274.25) );
         this.realSunS[1].setScale(1.7);
         this.realSunS[2].anchor.position.z = 1.7;
         this.realSunS[2].setScale(0);
