@@ -613,6 +613,9 @@ Planet = function(params) {
     this._scale = params.scale || 1.0;
     this.color = params.color || { r: 0.5, g: 0.5, b: 0.5 };  
 
+
+    this.reset();
+
     this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
 
 //    this.mesh = new THREE.LOD();
@@ -658,6 +661,16 @@ Planet.prototype.setShade = function(color) {
 Planet.prototype.setDist = function(dist) {
     this.dist = dist;
     this.mesh.position.y = this.dist;
+};
+
+Planet.prototype.reset = function() {
+    this.sunAngle = 0;
+    this.latitude = 0;
+    this.longitude = 0;
+    this.lastLongitude = 0;
+    this.longitudeSpeed = 0;
+    this.lastPerp = 0;
+
 };
 
 

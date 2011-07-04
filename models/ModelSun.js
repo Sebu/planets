@@ -30,7 +30,7 @@ ModelSun = function(params) {
 //      return (this.longitudeSpeed*this.days)%360.0;
     }
     this.getEquationOfTime = function() {  
-      return ( ( ( this.longitude-this.getMeanLongitude() ) * 360.0 ) /  this.getDaysPerYear() )  * 24;
+      return ( ( ( this.planet.longitude-this.getMeanLongitude() ) * 360.0 ) /  this.getDaysPerYear() )  * 24;
     }
 
     this.getDaysPerYear = function() {

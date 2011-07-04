@@ -208,31 +208,32 @@ myApp.prototype.update = function(time) {
 
         // infoBox data
         if(model.running) {
-        if(model.sun.getEnabled()) $("#sunAngle").text( model.sunAngle.toFixed(1) );
+        if(model.sun.getEnabled()) $("#sunAngle").text( model.planet.sunAngle.toFixed(1) );
         $("#days").text(Math.round( model.getDays() ));
         if(model instanceof ModelSun) {
-          $("#longitude").text( model.longitude.toFixed(6) );
+          $("#longitude").text( model.planet.longitude.toFixed(6) );
           $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
           $("#equationOfTime").text( model.getEquationOfTime().toFixed(6) );
-          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(11) );
-          $("#latitude").text( model.latitude.toFixed(3) );
+          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(11) );
+          $("#latitude").text( model.planet.latitude.toFixed(3) );
         } else {
-          $("#longitude").text( model.longitude.toFixed(1) );
-          $("#longitudeSpeed").text(model.longitudeSpeed.toFixed(2) );
-          $("#latitude").text( model.latitude.toFixed(1) );
+          $("#longitude").text( model.planet.longitude.toFixed(1) );
+          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
+          $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
-        if(model instanceof ModelPtolemy) {
+        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
           $("#deferentLongitude").text( (model.sphere[2].getRotateAngle() % 360.0).toFixed(2) );
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
-          $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                              
+          $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
+          planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.camera, this.canvas));   
         }
 
         if(model instanceof ModelMoonCompare) {
           // infoBox data
-          $("#sunAngle2").text( model.sunAngle2.toFixed(1) );
-          $("#longitude2").text( model.longitude2.toFixed(1) );
-          $("#longitudeSpeed2").text(model.longitudeSpeed2.toFixed(2));
-          $("#latitude2").text( model.latitude2.toFixed(1) );
+          $("#sunAngle2").text( model.planet2.sunAngle.toFixed(1) );
+          $("#longitude2").text( model.planet2.longitude.toFixed(1) );
+          $("#longitudeSpeed2").text(model.planet2.longitudeSpeed.toFixed(2));
+          $("#latitude2").text( model.planet2.latitude.toFixed(1) );
           $("#days2").text(Math.round( model.getDays() ));
 
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.camera, this.canvas));
@@ -333,6 +334,9 @@ myApp.prototype.getModel = function(name) {
       case "ModelPtolemy":
         models[name] = new ModelPtolemy({renderer: this});
         break;        
+      case "ModelPtolemySun":
+        models[name] = new ModelPtolemySun({renderer: this});
+        break;  
       default:
       break;
       };
@@ -354,6 +358,7 @@ myApp.prototype.loadPreset = function(preset) {
         this.setCurrentScene(model.root);
         model.loadPreset(planet);
         planetLabel.setText(model.currentPlanet.label);
+        planetLabel2.setText("moon");
         //model.reset();
         
         this.setView({from: "Free",at:"Earth"});
@@ -371,7 +376,7 @@ myApp.prototype.loadPreset = function(preset) {
         }      
 
         $("#ptolemyInfoContainer").fadeOut(500);
-        if(model instanceof ModelPtolemy) 
+        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) 
             $("#ptolemyInfoContainer").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);
@@ -607,6 +612,7 @@ myApp.prototype.loadPreset = function(preset) {
 
        } else if (model.ui == "ModelPtolemy") {
            this.camera.rotateY((Math.PI*3)/2 - 0.1);
+           planetLabel2.setText("sun");       
 
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
@@ -626,7 +632,8 @@ myApp.prototype.loadPreset = function(preset) {
 
        } else if (model.ui == "ModelPtolemySun") {
 
-           this.camera.rotateY((Math.PI*3)/2 - 0.1);            
+           this.camera.rotateY((Math.PI*3)/2 - 0.1);     
+           planetLabel2.setText("sun");       
    
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");

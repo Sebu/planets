@@ -120,7 +120,7 @@ DONE
   - disable/enable poles of connected spheres P2,7 etc.
   - stop motion of sphere
   - start: show only dayly etc.
-  
+  - s8 not an unwinder
 
 - ptolemy
   - derefent radius 60
@@ -135,22 +135,21 @@ DONE
   - apsidal speed/movement 1deg per 100years
   - sun
     - start rotation
+    - overlap models
+    - epicycle + equant same? 
+    - deferent + epicylce model checkbox overlay models
     
 TODO
 - fix/better labels
 - more view presets/tweening
   - reset position (tween)
 - aristotle
- - s8 not an unwinder
 - ptolemy
   - data
     - start from inital date
     - move to certain date
     - date presets 
   - sun
-    - overlap models
-    - epicycle + equant same? 
-    - deferent + epicylce model checkbox overlay models
 - sun
   - real days passed :)
 - aristotle

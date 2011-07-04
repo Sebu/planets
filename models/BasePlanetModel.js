@@ -19,10 +19,6 @@ BasePlanetModel = function() {
 
     // model specific moon
     this.days = 0;
-    this.lastLongitude = 0;
-    this.longitudeSpeed = 0;
-    this.lastPerp = 0;
-    this.longitude = 0;
 
     this.setAnimSpeed(60);
     this.running=true;
@@ -217,6 +213,54 @@ BasePlanetModel.prototype = {
     },
 
 
+    updatePlanetMetadata : function(planet, dayRef, epiRef, time) {
+            var earthPos = sceneToSyl(epiRef.anchor.currentPos()); //this.earth.mesh.currentPos());
+            var polePos = sceneToSyl(epiRef.visuals.npole.currentPos());
+            var upVec = earthPos.subtract(polePos);
+            var planetOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(earthPos);
+            var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(earthPos);
+
+            var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(earthPos);
+
+            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+
+
+
+            var sunOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
+            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            planet.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
+
+            // shade planet if sun is in a 15deg region
+            if (this.sun.getEnabled() && this.sunAngle<=15)
+                planet.setShade({r: 0.4, g: 0.4, b: 0.4});
+            else
+                planet.setShade(this.currentPlanet.color);
+
+            // dot product angle fix > 90
+            if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
+                planet.sunAngle = -planet.sunAngle;
+
+
+            planet.lastLongitude = planet.longitude;
+            planet.lastPerp = planet.perpAngle;
+            planet.longitude = calcAngle(planetOnPlane, equinoxOnPlane);
+            planet.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
+
+            // HACK: dot product angle fix > 90
+            if (planet.perpAngle<=90)
+                planet.longitude = 360-planet.longitude;
+            if (planet.perpAngle>90 && planet.lastPerp<90)
+                planet.lastLongitude -= 360;
+            planet.latitude = calcAngle(upVec,planetPos)-90;
+
+            // days passed
+            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
+            
+            // latitude speed in deg per day
+            planet.longitudeSpeed = (planet.longitude - planet.lastLongitude)/dayDelta;
+    },
+
+
     // update movement and parameters
     // TODO: comments!!!!
     update : function(time) {
@@ -227,56 +271,13 @@ BasePlanetModel.prototype = {
                 model.updateList[i].updateMovement((365.0*time)/this.speed);
             }        
         	
-            var earthPos = sceneToSyl(this.sphere[2].anchor.currentPos()); //this.earth.mesh.currentPos());
-            var polePos = sceneToSyl(this.sphere[2].visuals.npole.currentPos());
-            var upVec = earthPos.subtract(polePos);
-            var planetOnPlane = this.sphere[2].getPlane().pointClosestTo(sceneToSyl(this.planet.mesh.currentPos())).subtract(earthPos);
-            var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(earthPos);
-
-            var sunOnPlane = model.sphere[2].getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
-            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
-
-            var equinoxOnPlane = sceneToSyl(this.sphere[1].visuals.markerball.currentPos()).subtract(earthPos);
-
-            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
-            this.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
-
-
-            // shade planet if sun is in a 15deg region
-            if (this.sun.getEnabled() && this.sunAngle<=15)
-                this.planet.setShade({r: 0.4, g: 0.4, b: 0.4});
-            else
-                this.planet.setShade(this.currentPlanet.color);
-
-            // dot product angle fix > 90
-            if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)
-                this.sunAngle = -this.sunAngle;
-
-
-            this.lastLongitude = this.longitude;
-            this.lastPerp = this.perpAngle;
-            this.longitude = calcAngle(planetOnPlane, equinoxOnPlane);
-            this.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
-
-            // HACK: dot product angle fix > 90
-            if (this.perpAngle<=90)
-                this.longitude = 360-this.longitude;
-            if (this.perpAngle>90 && this.lastPerp<90)
-                this.lastLongitude -= 360;
-            this.latitude = calcAngle(upVec,planetPos)-90;
-
-            // days passed
-            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
-            
-            // latitude speed in deg per day
-            this.longitudeSpeed = (this.longitude - this.lastLongitude)/dayDelta;
-
+            this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2], time);
             //time*(this.speed/this.systemSun[0].getSpeed());
 
+            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
             // OTHER
             // days determined by sun speed
             this.days += dayDelta;
-            
 
             //TODO: on model change -> events?
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
@@ -294,13 +295,6 @@ BasePlanetModel.prototype = {
         }
     },
 
-     setDays : function(days) {
-        this.days = days;
-        var time = days/this.systemSun[0].getSpeed();
-        for (i in model.updateList) {
-           model.updateList[i].updateMovement((365.0*time));
-        }   
-     },
 
      getDays : function() {
          return this.days;
@@ -313,6 +307,11 @@ BasePlanetModel.prototype = {
            model.updateList[i].updateMovement((365.0*time));
         }
     },
+
+     setDays : function(days) {
+        this.reset();
+        this.addDays(days);
+     },
     
     // reset movement of spheres and parameters 
     reset : function () {
@@ -321,10 +320,7 @@ BasePlanetModel.prototype = {
         }
         this.systemSun[0].setRotateAngle(0);
         this.days = 0;
-        this.lastLongitude = 0;
-        this.lastPerp = 0;
-        this.longitude = 0;
-
+        this.planet.reset();
     },
 
     

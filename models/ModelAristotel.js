@@ -81,7 +81,7 @@ ModelAristotle = function(params) {
 
     this.setSpeed1Fix = function(speed) {
       this.setSpeed1(speed);
-      this.sphere[8].setSpeed(-this.sphere[1].getSpeed());
+      this.sphere[8].setSpeed(this.sphere[1].getSpeed());
     }
 
     this.getSpeed1Fix = function() {
