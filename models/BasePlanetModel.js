@@ -213,6 +213,28 @@ BasePlanetModel.prototype = {
     },
 
 
+    setDate : function(value) {
+      
+      var date = Number(value);
+      if(date)
+        this.addDays(date);
+      else {  
+        var date = value.toString().split(".");
+        if(date.length!=3) return;
+        console.log(date);
+        var realDays = Utils.gregorianToJd(date[2], date[1], date[0]);
+        console.log(realDays);
+        var days = realDays - this.startDate;
+        this.setDays(days);  
+        console.log(days);//.toString().split("/"));
+      }
+      
+    },
+
+    getDate : function() {
+      return "";
+    },
+
     updatePlanetMetadata : function(planet, dayRef, epiRef, time) {
             var earthPos = sceneToSyl(epiRef.anchor.currentPos()); //this.earth.mesh.currentPos());
             var polePos = sceneToSyl(epiRef.visuals.npole.currentPos());

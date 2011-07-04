@@ -177,24 +177,6 @@ ModelPtolemySun = function(params) {
         this.realSunS[1].setAxisAngle(angle);
     }
 
-    this.setDate = function(value) {
-      var date = Number(value);
-      if(date)
-        this.addDays(date);
-      else {  
-        var date = value.toString().split(".");
-        console.log(date);
-        var realDays = Utils.gregorianToJd(date[2], date[1], date[0]);
-        console.log(realDays);
-        var days = realDays - this.startDate;
-        this.setDays(days);  
-        console.log(days);//.toString().split("/"));
-      }
-      
-    }
-    this.getDate = function() {
-      return "";
-    }
 
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});

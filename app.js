@@ -630,6 +630,8 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed2", max:1100, text:"Deferent"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed3",  min:-1100, max:1100, text:"Epicycle"}).appendTo("#speed");
 
+            UI.text({model:model, id:"Date"}).appendTo("#playback");
+
        } else if (model.ui == "ModelPtolemySun") {
 
            $("<div id='visSuns'></div>").appendTo("#visSpheres");
