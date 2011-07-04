@@ -341,11 +341,11 @@ PtolemySun: {
   showHippo: false,
   derefentRadius: 60.0,
   epicycleRadius: 0,
-  apsidalAngle: 0.0,
+  apsidalAngle: 330.0,
   equant: 2.5,
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 330 },
+    {axisAngle: 24.0, speed: 365.2466666, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 0.0, speed: 0, rotateStart: 0 }
   ] },
     

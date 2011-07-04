@@ -69,9 +69,9 @@ ModelPtolemySun = function(params) {
     this.root.addNode(this.earthToVernalLine);
 
     
-    this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
-    this.root.addNode(this.equantPlanetLine);
+//    this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
+//    this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
+//    this.root.addNode(this.equantPlanetLine);
 
     
     this.setShowSphere1(false);
@@ -129,13 +129,15 @@ ModelPtolemySun = function(params) {
       this.realSunS[2].setSpeed(-speed);
     }
 //*/
+
+/*
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle; 
       var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
       this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
     };
-
+//*/
 
     this.updateBlob = function() {
       var scale = (this.sphere[2].radius+this.radius1)*this.factor;
@@ -179,7 +181,7 @@ ModelPtolemySun = function(params) {
 
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+//        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
         this.sphere[2].updateOffsetRotateMovement((365.0*time)/this.speed);
@@ -197,9 +199,9 @@ ModelPtolemySun = function(params) {
         this.deferentRadius[1] = this.sphere[2].visuals.markerball.currentPos();
         this.deferentRadiusLine.setPos(this.deferentRadius);
 
-        this.equantPlanet[0] = this.equantPoint.currentPos();        
-        this.equantPlanet[1] = this.sphere[2].visuals.markerball.currentPos();
-        this.equantPlanetLine.setPos(this.equantPlanet);
+//        this.equantPlanet[0] = this.equantPoint.currentPos();        
+//        this.equantPlanet[1] = this.sphere[2].visuals.markerball.currentPos();
+//        this.equantPlanetLine.setPos(this.equantPlanet);
 
         this.earthToDeferent[0] = this.earth.mesh.currentPos();     
         this.earthToDeferent[1] = this.sphere[2].visuals.markerball.currentPos();
@@ -225,7 +227,9 @@ ModelPtolemySun = function(params) {
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateSpeed(0);
-        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
+        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );
+        this.realSunS[1].setOffsetRotateSpeed(0);
+        this.realSunS[1].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );      
 
         this.realSunS[1].setRotateAngle( this.getRotateStart2() );
         this.realSunS[2].setRotateAngle( (360-this.getRotateStart2()) );
