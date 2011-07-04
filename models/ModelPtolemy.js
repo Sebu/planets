@@ -204,8 +204,10 @@ ModelPtolemy = function(params) {
         this.sphere[2].setOffsetRotateSpeed(0);
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
 
-        this.realSunS[1].setRotateAngle( 330.75 );
-        this.realSunS[2].setRotateAngle( (360-330.75) );
+        this.realSunS[1].setOffsetRotateSpeed(0);
+        this.realSunS[1].setOffsetRotateAngle( 56.5 );    
+        this.realSunS[1].setRotateAngle( 0 );
+        this.realSunS[2].setRotateAngle( 0 );
         this.realSunS[1].setScale(1.7);
         this.realSunS[2].anchor.position.z = 1.7;
         this.realSunS[2].setScale(0);

@@ -10,6 +10,8 @@ Utils.daysToTime = function(days) {
   var hours = Math.floor(rest/(1/24));
   var rest = rest - hours*(1/24);
   var minutes = Math.floor( rest/(1/1440) );
+  if(hours < 10) hours = "0" + hours;
+  if(minutes < 10) minutes = "0" + minutes;
   return "" + fullDays + "d " + hours + "h " + minutes + "m";
   
   

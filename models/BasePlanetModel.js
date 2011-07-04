@@ -190,7 +190,7 @@ BasePlanetModel.prototype = {
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
-        this.setSunSpeed(365);
+        this.setSunSpeed(365 + 1/4 - 1/300);
         this.sun.setEnabled(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 
@@ -221,8 +221,8 @@ BasePlanetModel.prototype = {
       else {  
         var date = value.toString().split(".");
         if(date.length!=3) return;
-        console.log(date);
-        var realDays = Utils.gregorianToJd(date[2], date[1], date[0]);
+        console.log("" + date[2] + " " + date[1] + " " + date[0]+ "");
+        var realDays = Utils.gregorianToJd(Number(date[2]), Number(date[1]), Number(date[0]));
         console.log(realDays);
         var days = realDays - this.startDate;
         this.setDays(days);  
@@ -246,7 +246,6 @@ BasePlanetModel.prototype = {
             var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(earthPos);
 
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
-
 
 
             var sunOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
