@@ -50,7 +50,7 @@ Mercury2: {
 Venus1: {
   model: "Model4",
   ui: "Model4",  
-  label: "Mercury",    
+  label: "Venus",    
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -60,6 +60,7 @@ Venus1: {
 Venus2: {
   model: "Model4",
   ui: "Model4",  
+  label: "Venus",    
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, rotateStart: 0 },
@@ -79,6 +80,7 @@ Mars1: {
 Mars2: {
   model: "Model4",
   ui: "Model4",  
+  label: "Mars",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -88,6 +90,7 @@ Mars2: {
 Mars3: {
   model: "Model4",
   ui: "Model4",  
+  label: "Mars",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -97,6 +100,7 @@ Mars3: {
 Mars4: {
   model: "Model4",
   ui: "Model4",  
+  label: "Mars",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 730, rotateStart: 0 },
@@ -106,6 +110,7 @@ Mars4: {
 Jupiter: {
   model: "Model4",
   ui: "Model4",  
+  label: "Jupiter",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 4380, speedmax: 5000, rotateStart: 0 },
@@ -115,6 +120,7 @@ Jupiter: {
 Saturn: {
   model: "Model4",
   ui: "Model4",  
+  label: "Saturn",  
   sphere: [
     {axisAngle: 38.0, speed: 0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 10940, speedmax: 12000, rotateStart: 0 },
@@ -124,6 +130,7 @@ Saturn: {
 Model5Mercury1: { 
   model: "Model5",
   ui: "Model5",
+  label: "Mercury",  
   alpha:110,
   beta:36.6667,
   gamma:55,
@@ -138,6 +145,7 @@ Model5Mercury1: {
 Model5Mars1: { 
   model: "Model5",
   ui: "Model5",
+  label: "Mars",  
   alpha:780,
   beta:260,
   gamma:390,
@@ -152,6 +160,7 @@ Model5Mars1: {
 Model5Mars2: { 
   model: "Model5",
   ui: "Model5",  
+  label: "Mars",  
   alpha:780,
   beta:260,
   gamma:390,
@@ -166,6 +175,7 @@ Model5Mars2: {
 Model5Mars3: { 
   model: "Model5",
   ui: "Model5",  
+  label: "Mars",
   alpha:780,
   beta:390,
   gamma:780,
@@ -180,6 +190,7 @@ Model5Mars3: {
 Model5Venus: { 
   model: "Model5",
   ui: "Model5",  
+  label: "Venus",
   alpha:570,
   beta:95,
   gamma:114,

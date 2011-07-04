@@ -632,6 +632,10 @@ myApp.prototype.loadPreset = function(preset) {
 
        } else if (model.ui == "ModelPtolemySun") {
 
+           $("<div id='visSuns'></div>").appendTo("#visSpheres");
+           UI.checkbox({model:model, id:"ShowSun1", text:"Sun1"}).appendTo("#visSuns");
+           UI.checkbox({model:model, id:"ShowSun2", text:"Sun2"}).appendTo("#visSuns");
+           
            this.camera.rotateY((Math.PI*3)/2 - 0.1);     
            planetLabel2.setText("sun");       
    
