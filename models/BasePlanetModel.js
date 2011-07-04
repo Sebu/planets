@@ -220,8 +220,14 @@ BasePlanetModel.prototype = {
         this.addDays(date);
       else {  
         var date = value.toString().split(".");
+        if(date.length!=3) { 
+          date = value.toString().split("/"); 
+          var tmp = date[0];
+          date[0] = date[1];
+          date[1] = tmp;
+        }
         if(date.length!=3) return;
-        console.log("" + date[2] + " " + date[1] + " " + date[0]+ "");
+       
         var realDays = Utils.gregorianToJd(Number(date[2]), Number(date[1]), Number(date[0]));
         console.log(realDays);
         var days = realDays - this.startDate;

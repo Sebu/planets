@@ -4,6 +4,7 @@ var Utils = Utils || {};
 
 
 
+
 Utils.daysToTime = function(days) {
   var fullDays = Math.floor(days);
   var rest = days - fullDays;
@@ -722,7 +723,8 @@ Curve  = function(params) {
     this.geo = new THREE.Geometry();
     this.setPos(params.pos);
 
-    var material = new THREE.LineBasicMaterial( { linewidth:2, color: rgbToHex(params.color)  } );     
+    var width = params.linewidth || 2;
+    var material = new THREE.LineBasicMaterial( { linewidth: width, color: rgbToHex(params.color)  } );     
     if(this.trails) material.vertexColors = true;
 
     THREE.Line.call(this, this.geo, material);

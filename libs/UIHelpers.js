@@ -294,10 +294,10 @@ var UI = {
         var max = params.max || 100;
         var step = params.step || 1;
         var value = params.value ||  model["get"+id]();
-        var change = params.change || function()  { model["set"+id](this.value); };
+        var change = params.change || function(e)  { if(e.keyCode == 13) model["set"+id](this.value); };
 
         ele =  $( "<input type='text' value='" + value + "' class='text'/>" );
-        $(ele).bind("change",change);
+        $(ele).bind("keyup",change);
         return ele;
     },
 

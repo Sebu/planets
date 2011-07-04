@@ -56,7 +56,7 @@ ModelPtolemy = function(params) {
 
 
     this.earthToDeferent = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.earthToDeferentLine = new Curve({trails: false, pos: this.earthToDeferent, color: {r:0.6,g:0.6,b:1.0} }); 
+    this.earthToDeferentLine = new Curve({trails: false, linewdith:1, pos: this.earthToDeferent, color: {r:0.6,g:0.6,b:1.0} }); 
     this.root.addNode(this.earthToDeferentLine);
 
 
