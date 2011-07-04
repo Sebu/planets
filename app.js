@@ -210,6 +210,7 @@ myApp.prototype.update = function(time) {
         if(model.running) {
         if(model.sun.getEnabled()) $("#sunAngle").text( model.planet.sunAngle.toFixed(1) );
         $("#days").text( Utils.daysToTime(model.getDays()) );
+
         if(model instanceof ModelSun) {
           $("#longitude").text( model.planet.longitude.toFixed(6) );
           $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
@@ -222,7 +223,7 @@ myApp.prototype.update = function(time) {
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
-          $("#deferentLongitude").text( (model.sphere[2].getRotateAngle() % 360.0).toFixed(2) );
+          $("#deferentLongitude").text( ((model.sphere[2].getRotateAngle() + model.sphere[2].getOffsetRotateAngle()) % 360.0).toFixed(2) );
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.camera, this.canvas));   

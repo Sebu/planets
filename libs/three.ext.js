@@ -628,6 +628,8 @@ Planet = function(params) {
     this.color = params.color || { r: 0.5, g: 0.5, b: 0.5 };  
 
 
+    this.addNode( this.npole = new Translate({y:1.0}) ); 
+
     this.reset();
 
     this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });

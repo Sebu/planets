@@ -140,6 +140,7 @@ DONE
     - deferent + epicylce model checkbox overlay models
     
 TODO
+- longitude dot product error ( jump from 359.1 -> 0.9 )
 - fix/better labels
 - more view presets/tweening
   - reset position (tween)
