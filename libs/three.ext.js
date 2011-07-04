@@ -2,6 +2,20 @@
 
 var Utils = Utils || {};
 
+
+
+Utils.daysToTime = function(days) {
+  var fullDays = Math.floor(days);
+  var rest = days - fullDays;
+  var hours = Math.floor(rest/(1/24));
+  var rest = rest - hours*(1/24);
+  var minutes = Math.floor( rest/(1/1440) );
+  return "" + fullDays + "d " + hours + "h " + minutes + "m";
+  
+  
+
+}
+
 Utils.GREGORIAN_EPOCH = 1721425.5;
 Utils.JULIAN_EPOCH = 1721423.5;
 

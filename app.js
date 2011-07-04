@@ -209,7 +209,7 @@ myApp.prototype.update = function(time) {
         // infoBox data
         if(model.running) {
         if(model.sun.getEnabled()) $("#sunAngle").text( model.planet.sunAngle.toFixed(1) );
-        $("#days").text(Math.round( model.getDays() ));
+        $("#days").text( Utils.daysToTime(model.getDays()) );
         if(model instanceof ModelSun) {
           $("#longitude").text( model.planet.longitude.toFixed(6) );
           $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
