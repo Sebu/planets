@@ -142,6 +142,8 @@ DONE
 TODO
 - gone: longitude dot product error ( jump from 359.1 -> 0.9 )
   - but find better ref point for up vector 
+- date fix (gregorian)
+- update info box on change!!
 - fix/better labels
 - more view presets/tweening
   - reset position (tween)

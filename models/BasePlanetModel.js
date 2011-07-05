@@ -190,7 +190,7 @@ BasePlanetModel.prototype = {
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
-        this.setSunSpeed(365 + 1/4 - 1/300);
+        this.setSunSpeed(365.2466666);
         this.sun.setEnabled(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 

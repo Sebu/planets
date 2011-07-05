@@ -32,7 +32,10 @@ myApp.prototype.init = function(params) {
 
         // setup camera
         // TODO : shorten
-        this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);
+        this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);				
+//this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2,  0.1, 10000 );
+
+
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -17.0 } });
 
 
