@@ -1,22 +1,67 @@
-html, body {
+html,body {
 	padding: 0px;
 	margin: 0px;
 	border: 0px;
 	overflow: hidden;
       width: 100%;
   height: 100%;
-  background-color: #353535;
-  color: #FFFFFF;
-  font-family: sans-serif;
+
+
   -webkit-user-select:none;
   -moz-user-select:none;
+  
+ font-family: sans-serif;
+# font-family: 'Josefin Sans', sans-serif;
+  text-shadow: 0 1px 0 black;
+  
+  color: #FFFFFF;
+#  background: #000000;
+#  background: #353535;
+#  background: #1B1917;
+#  background: #151515;
+
+}
+
+a { color: #FC0; cursor: pointer; }
+table { border-collapse: collapse; }
+td { padding: 0; vertical-align: top; }
+
+
+.button {
+    display: inline-block;
+    padding: 1px 10px;
+    border-radius: 4px;
+#    vertical-align: top;
+    background: -moz-linear-gradient(#4B4947, #32302D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+    background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
+    -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+    -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+    -webkit-box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
 }
 
 
+.button:active {
+#    padding: 2px 15px 0 15px;
+#    background: #272727;
+    background: #276787;
+    -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+    -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+}
+
+.button.disabled {
+    color: #111;
+    padding: 1px 15px;
+    text-shadow: 0 1px 0 #4B4947;
+    background: -moz-linear-gradient(#3B3937, #2B2927);
+    background: -webkit-gradient(linear, left top, left bottom, from(#3B3937), to(#2B2927));
+    -moz-box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;
+    -webkit-box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;
+}
 
 .caption { 
 	font-weight: bold;
-	font-size:12px;
+	font-size:14px;
 }
 
 
@@ -46,12 +91,15 @@ background: #333;
   background: #333;
   color: white;
 
-	font-size:12px;
+	font-size:14px;
 	margin:1;
 	padding:1;
 	text-align:center;
 	width:40px;
 	border-radius:2px;
+  background: #272727;
+  -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+  -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
 .range[disabled] {
@@ -65,12 +113,15 @@ background: #333;
   background: #333;
   color: white;
 
-	font-size:12px;
+	font-size:14px;
 	margin:1;
-	padding:1;
 	text-align:center;
 	width:140px;
-	border-radius:2px;
+	border-radius: 2px;
+  padding: 6px 15px 0 15px;
+  background: #272727;
+  -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+  -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
 /* drag handle */
@@ -96,10 +147,12 @@ background: #333;
   position: absolute;
   color: white;
   background-color: rgba(150,150,150,0.5);
+  background: -webkit-gradient(linear, left top, right top, from(rgba(150,150,150,0.8)), to(rgba(150,150,150,0.0)));  
+
 	font-weight: bold;
-	font-size:12px;
-    color: rgb(255,255,255);
-  border-radius: 10px;
+	font-size:14px;
+  color: rgb(255,255,255);
+  border-radius: 2px;
 
 }
 
@@ -108,11 +161,24 @@ background: #333;
   z-index: 2;
   position: absolute;
   color: white;
-  background-color: rgba(150,150,150,0.2);
+#  background-color: rgba(150,150,150,0.2);
+  background: -moz-linear-gradient(#4B4947, #32302D);
+  background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
   font-size: small;
   border-radius: 5px;
   padding: 4px;
-  
+}
+
+
+.boxContent {
+#  background-color: rgba(180,180,180,0.2);
+  background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
+  position: relative;
+  margin: 0;
+  width: 100%;
+  border-radius: 5px;
 }
 
 .wert {
@@ -135,7 +201,7 @@ background: #333;
 #infoContainer {
   width: 200px;
   top: 10px;
-  right: 10px;
+  right: 10px; 
 }
 
 #playbackContainer {
@@ -152,16 +218,23 @@ background: #333;
 #playback {
 }
 
+#playback .button {
+    float: left;
+    line-height: 27px;
+    margin: 7px 0 0 7px; 
+}
+
 
 #legendContainer {
   float: right;
-
-   bottom: 10px;
+  bottom: 10px;
   right: 10px;
 }
 
 #glCanvas {
  position: absolute; 
-
 }
+
+
+
 

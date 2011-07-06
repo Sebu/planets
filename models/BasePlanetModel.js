@@ -90,7 +90,7 @@ BasePlanetModel.prototype = {
         // additional spheres
         for (var i = 2; i <= params.spheres; i++) {
             console.log(i); 
-            tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9-i*0.02, color: colors["S" + i + ""]});
+            tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9-i*0.1, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
             this.updateList.push(tmp);
 
@@ -138,7 +138,7 @@ BasePlanetModel.prototype = {
 
         // add Sun and sun spheres
         this.sphere[2].pivot.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
-        this.systemSun[0].anchor.addNode(this.sun = new Planet({  betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
+        this.systemSun[0].anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.systemSun[0];
         // shortcuts for the sun
 

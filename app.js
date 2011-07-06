@@ -17,6 +17,7 @@ myApp.prototype.init = function(params) {
 
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({});
+        this.canvas.setClearColorHex( 0x1B1917 );
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
@@ -110,8 +111,8 @@ myApp.prototype.init = function(params) {
         $.extend(true, planetPresets, vault);
         UI.optionsFromHash("#planetPreset", planetPresets);
         
-        uiBox.append("<input type='button' onclick='app.addPreset();' value='+'>");
-        uiBox.append("<input type='button' onclick='app.removePreset();' value='-'>");
+        uiBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
+        uiBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
         legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
@@ -429,8 +430,8 @@ myApp.prototype.loadPreset = function(preset) {
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
         // playback div       
-        $("#playback").append("<input type='button' onclick='model.reset();' value='reset'>");
-        $("#playback").append("<input id='pauseButton' type='button' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>");
+        $("#playback").append("<div class='button' onclick='model.reset();' value='reset'>reset</div>");
+        $("#playback").append("<div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>pause</div>");
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 

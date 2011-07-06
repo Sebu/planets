@@ -637,6 +637,21 @@ Planet = function(params) {
 
     this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
 
+
+
+    var geo = new THREE.Geometry();
+    var x = 0,y = 0,z = 0;
+    geo.vertices.push( new THREE.Vertex( new THREE.Vector3( 0.0, 0.0, 0.0 ) ) );
+    
+    var mat = new THREE.ParticleBasicMaterial({
+            size: 2.3,
+            map: THREE.ImageUtils.loadTexture('textures/sun.png'),
+            blending: THREE.AdditiveBlending,
+            depthTest: false,              
+            transparent: true
+        });
+    this.meshGlow = new THREE.ParticleSystem(geo, mat);
+    this.setGlow(params.glow || false);
 //    this.mesh = new THREE.LOD();
 //    for (i = 0; i < sphereGeo.length; i++ ) {
 //       mesh = new THREE.Mesh( sphereGeo[ i ][ 0 ], this.material );
@@ -650,11 +665,14 @@ Planet = function(params) {
 //    new THREE.MeshBasicMaterial( { color: this.color } )
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
     //params.scale
+    
+    
     this.mesh = new THREE.Mesh(planetGeo, this.material);
     this.mesh.scale.set( params.scale, params.scale, params.scale );
     this.mesh.overdraw = true;
     this.mesh.position.y = this.dist;
     this.addNode(this.mesh);
+    this.addNode(this.meshGlow);
 
     this.rotation.x = degToRad(this.beta);
 
@@ -665,7 +683,7 @@ Planet = function(params) {
 Planet.prototype = new THREE.Object3D;
 Planet.prototype.constructor = Planet;
 
-Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; }
+Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; if(this.glow) this.meshGlow.visible = state; }
 Planet.prototype.getEnabled = function() { return this.mesh.visible; }
 
 Planet.prototype.setBeta = function(angle) {
@@ -680,6 +698,12 @@ Planet.prototype.setShade = function(color) {
 Planet.prototype.setDist = function(dist) {
     this.dist = dist;
     this.mesh.position.y = this.dist;
+    this.meshGlow.position.y = this.dist;
+};
+
+Planet.prototype.setGlow = function(state) {
+  this.glow = state;
+  this.meshGlow.visible = state;
 };
 
 Planet.prototype.reset = function() {
@@ -771,7 +795,7 @@ Circle.prototype.gen = function() {
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
         if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
-              color.setHSV( 0.5, 0.0, 1.0 - 0.9 * (sliceNum / slices) );
+              color.setHSV( 0.5, 0.0, 1.0 - 0.7 * (sliceNum / slices) );
               this.colors.push( color );
         }
 
@@ -812,7 +836,15 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 
-    THREE.ParticleSystem.call( this, geo, new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false}));
+//    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+    var mat = new THREE.ParticleBasicMaterial({
+            size: 1.0,
+            map: THREE.ImageUtils.loadTexture('textures/star.png'),
+            blending: THREE.AdditiveBlending,
+            depthTest: false,
+            transparent: true
+        });
+    THREE.ParticleSystem.call( this, geo, mat);
 };
 
 Cloud.prototype = new THREE.ParticleSystem;
@@ -915,7 +947,9 @@ Spherical = function Spherical(params) {
 //    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
-    var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(color) } );
+    var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(color),
+                opacity: 0.9
+                } );
     progressMat.vertexColors = true;
     this.visuals.rotationarc = new THREE.Line( this.progressArc, progressMat );
     this.visuals.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );

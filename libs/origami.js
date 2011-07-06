@@ -10,7 +10,7 @@ var Ori = Ori || {};
  */
 Ori.Canvas = function(params) {
         if(Modernizr.webgl && !params.canvas) {
-            this.graphics = new THREE.WebGLRenderer({antialias: true});
+            this.graphics = new THREE.WebGLRenderer({clearAlpha: 1, antialias: true});
             this.graphics.type = "webgl";
         }
         else if(Modernizr.canvas) {
