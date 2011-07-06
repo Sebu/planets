@@ -106,7 +106,7 @@ myApp.prototype.init = function(params) {
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
-        uiBox.append("<span><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
+        uiBox.append("<span ><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
         $.extend(true, planetPresets, vault);
         UI.optionsFromHash("#planetPreset", planetPresets);
@@ -430,8 +430,7 @@ myApp.prototype.loadPreset = function(preset) {
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
         // playback div       
-        $("#playback").append("<div class='button' onclick='model.reset();' value='reset'>reset</div>");
-        $("#playback").append("<div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>pause</div>");
+        $("#playback").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>pause</div></div>");
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
 

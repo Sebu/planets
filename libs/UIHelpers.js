@@ -312,18 +312,22 @@ var UI = {
         var step = params.step || 1;
         var value = params.value ||  instance["get"+id]();
 //        console.log(instance.valueOf());
-        var change = params.change || function()  { instance["set"+id](Number(Utils.toDec(this.value))); $("#" + id + " > input").attr("value",Number(Utils.toDec(this.value))); };
+        var change = params.change || function(event, ui)  { instance["set"+id](Number(Utils.toDec(ui.value))); $("#" + id + " > input").attr("value",Number(Utils.toDec(ui.value))); };
+
+        var change2 = params.change || function()  { instance["set"+id](Number(Utils.toDec(this.value))); $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value))); };
 
         if(toggle)
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
         else
           tmp =  $("<div>" + text + "</div>");
         ele = $("<div title='" + tooltip + "' id='" + id + "'>" +
-            "<input type='range' min="+min+" max="+max+" step="+step+"  value='"+ value +"' class='slider'/>" +
+            "<div class='slider'></div>" +
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range'/>" +
             "</div>");
         tmp.append(ele);
-        $("input",ele).bind("change",change);
+        $(".slider",ele).slider({animate: true, max: max, min: min, value: value});
+        $("input",ele).bind("change",change2);
+        $(".slider",ele).bind("slidechange",change);
         if(toggle) $(":checkbox",tmp).bind("click", function() 
           { 
             $("#" + id + " > input").attr('disabled', !this.checked);

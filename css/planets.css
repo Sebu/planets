@@ -2,17 +2,16 @@ html,body {
 	padding: 0px;
 	margin: 0px;
 	border: 0px;
-	overflow: hidden;
-      width: 100%;
+  width: 100%;
   height: 100%;
 
-
+  overflow: hidden;
   -webkit-user-select:none;
   -moz-user-select:none;
   
  font-family: sans-serif;
 # font-family: 'Josefin Sans', sans-serif;
-  text-shadow: 0 1px 0 black;
+#  text-shadow: 0 1px 0 black;
   
   color: #FFFFFF;
 #  background: #000000;
@@ -26,12 +25,31 @@ a { color: #FC0; cursor: pointer; }
 table { border-collapse: collapse; }
 td { padding: 0; vertical-align: top; }
 
+.ui-slider-handle {
+    cursor: default;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: -moz-linear-gradient(#4B4947, #32302D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+    -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+    -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+    margin: -6px;
+    border-radius: 6px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+}
+
+.ui-state-active {
+    background: -moz-linear-gradient(#6B6967, #42403D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#42403D));
+}
+
 
 .button {
     display: inline-block;
     padding: 1px 10px;
     border-radius: 4px;
-#    vertical-align: top;
     background: -moz-linear-gradient(#4B4947, #32302D);
     background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
     background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
@@ -43,8 +61,8 @@ td { padding: 0; vertical-align: top; }
 
 .button:active {
 #    padding: 2px 15px 0 15px;
-#    background: #272727;
-    background: #276787;
+    background: #272727;
+#    background: #276787;
     -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
     -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
@@ -59,9 +77,23 @@ td { padding: 0; vertical-align: top; }
     -webkit-box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;
 }
 
+select {
+  color: white;
+  border: 0;
+  padding: 1px 10px;
+  border-radius: 4px;
+  background: -moz-linear-gradient(#4B4947, #32302D);
+  background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+  background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
+}
+option  {
+   color: black;
+#  background: #111111;
+}
+
 .caption { 
 	font-weight: bold;
-	font-size:14px;
+	font-size:13px;
 }
 
 
@@ -70,15 +102,23 @@ td { padding: 0; vertical-align: top; }
   top: -1px;
 }
 
-.slider { 
-background: #333;
-	height:12px;
-	position:relative; 
-	width:130px;
-	top: 4px;
-	float:left; 
-}
 
+.slider { 
+    position: relative;
+    margin: 8px 0 0 0;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #555;
+	width:120px;
+}
+/*
+  background: #333;
+	height:12px;
+#	position:relative; 
+	width:120px;
+#	top: 4px;
+#	float:left; 
+}
+*/
 
 .slider[disabled] {
   color: gray;
@@ -90,8 +130,7 @@ background: #333;
 	border:1px  #ddd;
   background: #333;
   color: white;
-
-	font-size:14px;
+	font-size:12px;
 	margin:1;
 	padding:1;
 	text-align:center;
@@ -115,7 +154,7 @@ background: #333;
 
 	font-size:14px;
 	margin:1;
-	text-align:center;
+#	text-align:center;
 	width:140px;
 	border-radius: 2px;
   padding: 6px 15px 0 15px;
@@ -158,12 +197,18 @@ background: #333;
 
 
 .container {
+  text-overflow: ellipsis;
+  overflow: auto;
+  border: 0px;
   z-index: 2;
   position: absolute;
   color: white;
-#  background-color: rgba(150,150,150,0.2);
-  background: -moz-linear-gradient(#4B4947, #32302D);
-  background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+#  background-color: rgba(95, 93, 91, 0.5);
+#  background-color: rgba(70,78,75, 0.5);
+
+
+#  background: -moz-linear-gradient(#4B4947, #32302D);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(95, 93, 91, 0.5)), to(rgba(70,78,75, 0.5)));
   -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
   -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
   font-size: small;
@@ -174,11 +219,15 @@ background: #333;
 
 .boxContent {
 #  background-color: rgba(180,180,180,0.2);
-  background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
-  position: relative;
-  margin: 0;
+#  background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
+#  position: relative;
   width: 100%;
-  border-radius: 5px;
+#  border-radius: 5px;
+   background: #272727;
+   background-color: rgba(39,39,39, 0.5);
+
+   -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+   -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
 .wert {
@@ -188,7 +237,8 @@ background: #333;
 }
 
 #uiContainer {
-  overflow-y: auto;
+  overflow: auto;
+  padding: 0;
   width: 180px;
   top: 10px;
   left: 10px;
@@ -231,8 +281,9 @@ background: #333;
   right: 10px;
 }
 
-#glCanvas {
+canvas {
  position: absolute; 
+overflow: hidden;
 }
 
 
