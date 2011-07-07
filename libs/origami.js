@@ -10,11 +10,11 @@ var Ori = Ori || {};
  */
 Ori.Canvas = function(params) {
         if(Modernizr.webgl && !params.canvas) {
-            this.graphics = new THREE.WebGLRenderer({clearAlpha: 1, antialias: true});
+            this.graphics = new THREE.WebGLRenderer(params);
             this.graphics.type = "webgl";
         }
         else if(Modernizr.canvas) {
-          this.graphics = new THREE.CanvasRenderer({antialias: true});
+          this.graphics = new THREE.CanvasRenderer(params);
           this.graphics.type = "canvas";
         }
         this.graphics.autoClear = false;
@@ -151,7 +151,7 @@ Ori.Input.prototype = {
   },
 
   mouseWheelFox : function(e) {
-    Ori.input.mouse.z = e.detail;
+    Ori.input.mouse.z = -e.detail;
     Ori.input.mouse.wheel = true;
   },
 

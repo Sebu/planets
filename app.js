@@ -16,8 +16,9 @@ myApp.prototype.init = function(params) {
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({});
-        this.canvas.setClearColorHex( 0x1B1917 );
+        this.canvas = new Ori.Canvas({antialias: true});
+//        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
+//        this.canvas.setClearColorHex( 0x1B1917 );
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
@@ -37,7 +38,7 @@ myApp.prototype.init = function(params) {
 //this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2,  0.1, 10000 );
 
 
-        this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -17.0 } });
+        this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
 
 
         // create models
@@ -430,8 +431,9 @@ myApp.prototype.loadPreset = function(preset) {
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
         // playback div       
-        $("#playback").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>pause</div></div>");
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+
+        $("#playback").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { this.value=\"pause\";} else {this.value=\"start\";} ' title='pause animation'>pause</div></div>");
 
 
         // create the right sliders for each model
@@ -703,8 +705,21 @@ myApp.prototype.loadPreset = function(preset) {
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed  input").change();
         $("#AxisAngle1 input").change();
+        
+        
+        //*        
+        TWEEN.start();
+        this.viewPos = {x: 0, y: 0, z: -100};
+        var that = this;
+        var tween = new TWEEN.Tween(this.viewPos).to({z: -17}, 5000).onUpdate(function() {
+          that.camera.setEye(that.viewPos);
+          that.camera.updateNew();
+        }).easing( TWEEN.Easing.Quartic.EaseOut ).start();
+        //*/
+
 
     };
+    
 
 
 
