@@ -86,6 +86,7 @@ select {
   background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
   background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
 }
+
 option  {
    color: black;
 #  background: #111111;
@@ -108,7 +109,12 @@ option  {
     margin: 8px 0 0 0;
     border-top: 1px solid #222;
     border-bottom: 1px solid #555;
-	width:120px;
+	  width:120px;
+	  float:left; 
+}
+
+.ui-state-focus {
+    outline: none;
 }
 /*
   background: #333;
