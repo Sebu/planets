@@ -628,7 +628,7 @@ Planet = function(params) {
     this.dist = params.dist || 0.0;
     this.beta = params.betaRotate || 0.0;
     this._scale = params.scale || 1.0;
-    this.color = params.color || { r: 0.5, g: 0.5, b: 0.5 };  
+    this.color = params.color || { r: 1.0, g: 1.0, b: 1.0 };  
 
 
     this.addNode( this.npole = new Translate({y:1.0}) ); 
@@ -637,7 +637,7 @@ Planet = function(params) {
 
 // color: rgbToHex(this.color),
 //map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-    this.material =  new THREE.MeshLambertMaterial( {  map: params.map, shading: THREE.FlatShading });
+    this.material =  new THREE.MeshLambertMaterial( {  color: rgbToHex(this.color), map: params.map, shading: THREE.FlatShading });
 
 
 
@@ -840,7 +840,9 @@ Cloud = function(params) {
     }
 
 //    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-    var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  map: THREE.ImageUtils.loadTexture('textures/star.png'),  blending: THREE.AdditiveBlending, depthTest: false, transparent: true  });
+    var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  map: THREE.ImageUtils.loadTexture('textures/star.png'),  blending: THREE.AdditiveBlending, 
+//    depthTest: false, 
+    transparent: true  });
     THREE.ParticleSystem.call( this, geo, mat);
 };
 

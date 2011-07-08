@@ -39,10 +39,11 @@ myApp.prototype.init = function(params) {
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
       
         this.bgMusic = Ori.loadContent("song2.mp3");
+        this.bgMusic.loop = true;
         this.bgMusic.play();
         
 
-        this.skyCam = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
+        this.skyCam = new THREE.Camera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
         this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
         this.skyScene = new THREE.Scene();
 
@@ -175,7 +176,7 @@ myApp.prototype.removePreset = function() {
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
-        scene.addLight(new THREE.AmbientLight(0xFFFFFF));
+        scene.addLight(new THREE.AmbientLight(0x888888));
         this.scenes.push(scene);
         return scene;
     };
@@ -208,6 +209,7 @@ myApp.prototype.update = function(time) {
             var yaw = (x - Ori.input.drag.x) * -0.2 * time;
             if (model.currentPos == "Earth") {
                 this.camera.rotateY(yaw);
+                this.skyCam.rotateY(yaw);
             } else {
                 this.camera.rotateUp(yaw);
                 this.skyCam.rotateUp(yaw);
@@ -222,7 +224,7 @@ myApp.prototype.update = function(time) {
             Ori.input.drag.y = y;
             
             if (model.currentPos != "Earth") this.camera.rotateTarget({x: 0, y: 0, z: 0});
-            this.skyCam.rotateTarget({x: 0, y: 0, z: 0});
+            if (model.currentPos != "Earth") this.skyCam.rotateTarget({x: 0, y: 0, z: 0});
         }
         
         // update model
