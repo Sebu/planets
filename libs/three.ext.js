@@ -503,7 +503,7 @@ THREE.Camera.prototype.init = function(params) {
     this.setEye(params.eye);
 
     this.useTarget = false;
-//    this.updateNew();
+    this.updateNew();
 
 };
 
@@ -635,7 +635,9 @@ Planet = function(params) {
 
     this.reset();
 
-    this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color), shading: THREE.FlatShading });
+// color: rgbToHex(this.color),
+//map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+    this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color),  shading: THREE.FlatShading });
 
 
 

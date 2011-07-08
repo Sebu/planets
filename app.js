@@ -36,11 +36,20 @@ myApp.prototype.init = function(params) {
         // TODO : shorten
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);				
 //this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2,  0.1, 10000 );
-
-
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
+      
+        this.bgMusic = Ori.loadContent("song2.mp3");
+        this.bgMusic.play();
+        
 
+        this.skyCam = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
+        this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -120.0 } });
+        this.skyScene = new THREE.Scene();
 
+				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 200, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
+				mesh.flipSided = true;
+				this.skyScene.addObject( mesh );
+				
         // create models
         models = {}; //new Object;
         // set start model
@@ -124,6 +133,7 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
         $("#vis").hide();
 
+        uiBox.scroll(function() { console.log("blaa"); } );
         this.loadPreset("Mercury1");
 
     };
@@ -200,12 +210,19 @@ myApp.prototype.update = function(time) {
                 this.camera.rotateY(yaw);
             } else {
                 this.camera.rotateUp(yaw);
+                this.skyCam.rotateUp(yaw);
+
             }
 
             this.camera.rotateRight(pitch);
 
+            this.skyCam.rotateRight(pitch);
+            
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
+            
+            if (model.currentPos != "Earth") this.camera.rotateTarget({x: 0, y: 0, z: 0});
+            this.skyCam.rotateTarget({x: 0, y: 0, z: 0});
         }
         
         // update model
@@ -273,10 +290,13 @@ myApp.prototype.update = function(time) {
 
 myApp.prototype.draw = function(time) {
         this.canvas.clear();
+        this.canvas.render(this.skyScene, this.skyCam);
+        //*
         for (i in this.components) {
             component = this.components[i];
             if (component.enabled) this.canvas.render(component, this.camera);
         }
+        //*/
     };
 
 myApp.prototype.resize = function() {
@@ -302,7 +322,31 @@ myApp.prototype.setView = function(view) {
         eastLabel.setPosition({x:0, y:0, z:-1});
         westLabel.setPosition({x:0, y:0, z:-1});
 
-        model.changeView(model.currentPos);
+//        model.changeView(model.currentPos);
+        if (model.currentPos == "Free") var pos = { x: 0.0, y: 0.0, z: -17 };
+        else var pos = { x: 0.0, y: 0.0, z: 0.0 };
+
+        model.earth.setEnabled(true);
+        model.planet.setEnabled(true);
+        model.earthPlane.setEnabled(false);
+
+        if (model.currentPos == "Earth") {
+            model.earthPlane.setEnabled(true);
+            model.earth.setEnabled(false);
+            pos.y = 0.5;
+            pos.z = 0.0;
+
+        }
+
+        if (model.currentPos == "Planet") {
+            model.planet.setEnabled(false);
+        }
+
+        this.camera.right = $V([1,0,0]);
+        this.camera.upVec = $V([0,1,0]);
+        this.camera.dir = $V([0,0,1]);
+        this.camera.setEye(pos);
+        this.camera.updateNew();        
     };
 
 //TODO: shorten like eval(name + "()");
@@ -406,7 +450,7 @@ myApp.prototype.loadPreset = function(preset) {
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
             var color = "rgb(" + colors["S" + i].r * 255 + "," + colors["S" + i].g * 255 + "," + colors["S" + i].b * 255 + ")";
-            $("<div style='float:left;font-weight:bold;color:" + color + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
+            $("<div class='circle' style='color:" + color + "'>" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }
 
@@ -706,8 +750,9 @@ myApp.prototype.loadPreset = function(preset) {
         $("#moon input, #angle  input, #speed  input").change();
         $("#AxisAngle1 input").change();
         
-        
-        //*        
+                this.camera.rotateTarget({x: 0, y: 0, z: 0});
+
+        /*        
         TWEEN.start();
         this.viewPos = {x: 0, y: 0, z: -100};
         var that = this;

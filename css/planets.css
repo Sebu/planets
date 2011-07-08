@@ -10,7 +10,7 @@ html,body {
   
  font-family: sans-serif;
 # font-family: 'Josefin Sans', sans-serif;
-  font-family: 'Lekton', serif;
+#  font-family: 'Lekton', serif;
 #  text-shadow: 0 1px 0 black;
   
   color: #FFFFFF;
@@ -18,7 +18,7 @@ html,body {
 #  background: #353535;
   background: #1B1917;
 #  background: #151515;
-  background-image: url(../textures/starsmap.jpg);
+#  background-image: url(../textures/starsmap.jpg);
 }
 
 a { color: #FC0; cursor: pointer; }
@@ -45,6 +45,20 @@ td { padding: 0; vertical-align: top; }
     background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#42403D));
 }
 
+.circle {
+  display: block;
+  width: 40px;
+  height: 40px;
+  float:left;
+	text-align:center;
+	vertical-align:middle;
+	font-size: 12px;
+  font-weight:bold;
+  -moz-border-radius: 14px;
+  -webkit-border-radius: 14px;
+#  -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+  background:  -webkit-gradient(radial,45% 45%,5,60% 60%,40,from(yellow),color-stop(75%, green),to(rgba(255,255,255,0)));
+}
 
 .button {
     display: inline-block;
@@ -248,6 +262,17 @@ option  {
   width: 180px;
   top: 10px;
   left: 10px;
+#  opacity: 0.5;
+#  -webkit-transform-style: preserve-3d;
+#  -webkit-transform-origin: 0px 400px;
+#  -webkit-transform: perspective(800px) rotateY(20deg);
+  -webkit-transition-property: opacity; -webkit-transition-duration: 0.5s; 
+}
+
+
+#uiContainer:hover {
+#  opacity: 1.0;
+#  -webkit-transform: perspective(900px) rotateY(0deg);
 }
 
 #view {
@@ -259,6 +284,7 @@ option  {
   top: 10px;
   right: 10px; 
   font-size: 14px;
+#  -webkit-transform: perspective(500px) rotateY(-20deg);
 
 }
 

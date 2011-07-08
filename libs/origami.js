@@ -25,29 +25,13 @@ Ori.Canvas = function(params) {
 
 Ori.Canvas.prototype.constructor = Ori.Renderer;
 
-/**
- * @constructor
- */
-Ori.Audio = function() {
-//  this.data = new Audio("file:///media/daten/music2/%5BThe%20Knoxsville%20Music%5D%20Of%202010/65%20All%20To%20All.mp3"); 
-
-//  this.data = new Audio("http://www.pacdv.com/sounds/interface_sound_effects/sound37.mp3"); 
-//  this.data.load();
-};
-
-Ori.Audio.prototype.constructor = Ori.Audio;
-
-Ori.Audio.prototype = {
-};
-
-Ori.audio = new Ori.Audio();
 
 Ori.loadContent = function(uri) {
   var ext = uri.split('.').pop();
   switch (ext) {
     case "mp3":
       var content = new Audio(uri); 
-      content.load();
+      //content.load();
       break;
   }
 

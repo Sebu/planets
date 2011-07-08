@@ -313,7 +313,7 @@ BasePlanetModel.prototype = {
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
 
-
+/*
         if (this.currentPos != "Free") {
           if (this.currentLookAt != "Free") {
 //            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
@@ -323,6 +323,7 @@ BasePlanetModel.prototype = {
              this.camera.rotateTarget({x: 0, y: 0, z: 0});
             }
         }
+*/
     },
 
 
@@ -354,34 +355,6 @@ BasePlanetModel.prototype = {
     },
 
     
-    changeView : function(node) {
-        if (node == "Free") var pos = { x: 0.0, y: 0.0, z: -17 };
-        else var pos = getNodePos(this.name+node);
-
-        this.earth.setEnabled(true);
-        this.planet.setEnabled(true);
-        this.earthPlane.setEnabled(false);
-
-        if (node == "Earth") {
-            this.earthPlane.setEnabled(true);
-            this.earth.setEnabled(false);
-            pos.y = 0.5;
-            pos.z = 0.0;
-
-        }
-
-        if (node == "Planet") {
-            this.planet.setEnabled(false);
-        }
-
-        this.camera.right = $V([1,0,0]);
-        this.camera.upVec = $V([0,1,0]);
-        this.camera.dir = $V([0,0,1]);
-        this.camera.setEye(pos);
-        this.camera.updateNew();
-    },
-
-
     // update or create&add a curve (hippopede or path) to an anchor node 
     addCurve : function(params) {
         if(!this.showCurve[params.index]) return;
