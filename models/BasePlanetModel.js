@@ -79,11 +79,12 @@ BasePlanetModel.prototype = {
         this.earthPlane.setEnabled(false);
 
         
-        this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], inner_id: this.name+"Earth"})
-        this.root.addNode(this.earth);
-
         // first and outer sphere
         this.sphere[1] = new Spherical({inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
+        
+        this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, color: colors["Earth"], map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), inner_id: this.name+"Earth"})
+        this.sphere[1].addNode(this.earth);
+        
         this.root.addNode(this.sphere[1]);
         this.updateList[0] = this.sphere[1];
 
@@ -313,17 +314,6 @@ BasePlanetModel.prototype = {
             if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
 
-/*
-        if (this.currentPos != "Free") {
-          if (this.currentLookAt != "Free") {
-//            this.camera.setTarget(getNodePos(this.name+this.currentLookAt));
-            }
-        } else {
-          if (this.currentLookAt != "Free") {
-             this.camera.rotateTarget({x: 0, y: 0, z: 0});
-            }
-        }
-*/
     },
 
 
@@ -386,6 +376,7 @@ BasePlanetModel.prototype = {
 
         // approximate step width
         for (i = start + 1; i < this.sphere.length; i++) {
+            this.sphere[i].visUpdate = false;
             oldRotate[i] = this.sphere[i].getRotateAngle();
             step += Math.abs(this.sphere[i].getStep());
         }
@@ -411,8 +402,10 @@ BasePlanetModel.prototype = {
             this.sphere[i].setAxisAngle(oldAngle[i]);
 
         // restore rotation
-        for (var i = 1; i < this.sphere.length; i++)
+        for (var i = 1; i < this.sphere.length; i++) {
             this.sphere[i].setRotateAngle(oldRotate[i]);
+            this.sphere[i].visUpdate = true;
+        }
 
 
         return curvePos;

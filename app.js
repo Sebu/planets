@@ -43,10 +43,10 @@ myApp.prototype.init = function(params) {
         
 
         this.skyCam = new THREE.Camera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
-        this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -120.0 } });
+        this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
         this.skyScene = new THREE.Scene();
 
-				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 200, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
+				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );
 				
@@ -450,7 +450,7 @@ myApp.prototype.loadPreset = function(preset) {
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
             var color = "rgb(" + colors["S" + i].r * 255 + "," + colors["S" + i].g * 255 + "," + colors["S" + i].b * 255 + ")";
-            $("<div class='circle' style='color:" + color + "'>" + (Number(i)) + " </div>").appendTo("#legendContainer");
+            $("<div style='float:left; color:" + color + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }
 

@@ -637,7 +637,7 @@ Planet = function(params) {
 
 // color: rgbToHex(this.color),
 //map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-    this.material =  new THREE.MeshLambertMaterial( { color: rgbToHex(this.color),  shading: THREE.FlatShading });
+    this.material =  new THREE.MeshLambertMaterial( {  map: params.map, shading: THREE.FlatShading });
 
 
 
@@ -673,6 +673,7 @@ Planet = function(params) {
     this.mesh.scale.set( params.scale, params.scale, params.scale );
     this.mesh.overdraw = true;
     this.mesh.position.y = this.dist;
+    this.mesh.rotation.z = Math.PI;
     this.addNode(this.mesh);
     this.addNode(this.meshGlow);
 
@@ -867,6 +868,7 @@ Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
     
     this.offsetRotateAngle = 0.0;
+    this.visUpdate = true;
 
     this.inner_id = params.inner_id;
 
@@ -1063,7 +1065,7 @@ Spherical.prototype.setArcAngle = function(angle) {
 
 Spherical.prototype.setRotateAngle = function(angle) {
     this.rotateAngle = angle;
-    this.setArcAngle(angle);
+    if(this.visUpdate) this.setArcAngle(angle);
     this.anchor.rotation.y = degToRad(this.rotateAngle);
 };
 
