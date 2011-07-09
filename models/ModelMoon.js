@@ -3,8 +3,8 @@
  * @constructor
  */
 ModelMoon = function(params) {
-	BasePlanetModel.call(this);	
-    params.name = "ModelMoon";
+  	BasePlanetModel.call(this);	
+    params.name =  params.name || "ModelMoon";
     params.spheres = 3;
     this.genSpheres(params);
 

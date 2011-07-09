@@ -4,12 +4,9 @@
  * @constructor
  */
 ModelMoonCompare = function(params) {
-	BasePlanetModel.call(this);	
-    params.name = "ModelMoonCompare";
-    params.spheres = 3;
-    this.showPhase = false;
-    this.genSpheres(params);
+	  ModelMoon.call(this,params);	
 
+    this.showPhase = false;
 
 
     var s20 = this.sphere[4] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
@@ -35,73 +32,6 @@ ModelMoonCompare = function(params) {
    this.getShowSphere5 = function() { return true; };
 
 
-    this.metonYear = 0;
-    this.setMetonYear = function(val) {
-        this.metonYear = Number(val);
-        this.updateMoon();
-    }
-    this.getMetonYear = function() {
-        return this.metonYear;
-    }
-
-    this.metonSynodicMonths = 0;
-    this.setMetonSynodicMonths = function(val) {
-        this.metonSynodicMonths = Number(val);
-        this.updateMoon();
-    }
-    this.getMetonSynodicMonths = function() {
-        return this.metonSynodicMonths;
-        this.updateMoon();
-    }
-
-    this.metonDays = 0; // days per cycle
-    this.setMetonDays = function(val) {
-        this.metonDays = Number(val);
-        this.updateMoon();
-    }
-    this.getMetonDays = function() {
-        return this.metonDays;
-    }
-
-    this.sarosDraconiticMonths = 0;
-    this.setSarosDraconiticMonths = function(val) {
-        this.sarosDraconiticMonths = Number(val);
-        this.updateMoon();
-    }
-    this.getSarosDraconiticMonths = function() {
-        return this.sarosDraconiticMonths;
-    }
-
-    this.sarosSynodicMonths = 0;
-    this.setSarosSynodicMonths = function(val) {
-        this.sarosSynodicMonths = Number(val);
-        this.updateMoon();
-    }
-    this.getSarosSynodicMonths = function() {
-        return this.sarosSynodicMonths;
-    }
-
-    this.getMetonZodicalMonths = function() {
-        return this.getMetonYear() + this.getMetonSynodicMonths();
-    }
-    this.getMetonDaysPerYear = function() {
-        return this.getMetonDays() / this.getMetonYear();
-    }
-    this.getSynodicDaysPerMonth = function() {
-        return this.getMetonDays() / this.getMetonSynodicMonths();
-    }
-    this.getZodicalDaysPerMonth = function() {
-        return this.getMetonDays() / this.getMetonZodicalMonths();
-    }
-
-    this.getDraconiticDaysPerMonth = function() {
-        return this.getSynodicDaysPerMonth()*(this.getSarosSynodicMonths() / this.getSarosDraconiticMonths());
-//        return this.getMetonDays() / this.getSarosDraconiticMonths();
-    }
-
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
     
     this.updateMoon = function() {
         var draco = 360.0/this.getDraconiticDaysPerMonth();
@@ -125,17 +55,6 @@ ModelMoonCompare = function(params) {
         this.moonSpeed3 = currentModel2.speed1;
         this.moonSpeed4 = currentModel2.speed2;
         this.updateMoon();
-    }
-
-
-
-    this.loadPreset = function(node) {
-        BasePlanetModel.prototype.loadPreset.call(this,node);
-        this.setMetonYear(this.currentPlanet.metonYear);
-        this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
-        this.setMetonDays(this.currentPlanet.metonDays);
-        this.setSarosDraconiticMonths(this.currentPlanet.sarosDraconiticMonths);
-        this.setSarosSynodicMonths(this.currentPlanet.sarosSynodicMonths);
     }
 
 

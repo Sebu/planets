@@ -73,7 +73,7 @@ Utils.dateToStringEgypt = function(date) {
 
 
 Utils.dateToString = function(date) {
-  if (date[0]<1) date[0] += 1;
+//  if (date[0]<1) date[0] += 1;
   return "" + date[1] + " / " + date[2] + " / " + date[0] + "";
 }
 
@@ -627,17 +627,22 @@ Planet = function(params) {
     //var emit = params.emit || 0.0;
     this.dist = params.dist || 0.0;
     this.beta = params.betaRotate || 0.0;
-    this._scale = params.scale || 1.0;
-    this.color = params.color || { r: 1.0, g: 1.0, b: 1.0 };  
 
+    
+    this.gfx = new Object();
+    this.gfx.scale = params.scale || 1.0;
+    this.gfx.color = params.color || { r: 1.0, g: 1.0, b: 1.0 };  
+    this.gfx.glow = params.glow || false;
+    this.gfx.glowMap = 'textures/sun.png';
+    this.gfx.map = params.map;
 
     this.addNode( this.npole = new Translate({y:1.0}) ); 
-
     this.reset();
 
+    Ori.registerGfx(this);
 // color: rgbToHex(this.color),
 //map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-    this.material =  new THREE.MeshLambertMaterial( {  color: rgbToHex(this.color), map: params.map, shading: THREE.FlatShading });
+    this.material =  new THREE.MeshLambertMaterial( {  color: rgbToHex(this.gfx.color), map: this.gfx.map, shading: THREE.FlatShading });
 
 
 
@@ -647,13 +652,13 @@ Planet = function(params) {
     
     var mat = new THREE.ParticleBasicMaterial({
             size: 2.3,
-            map: THREE.ImageUtils.loadTexture('textures/sun.png'),
+            map: THREE.ImageUtils.loadTexture(this.gfx.glowMap),
             blending: THREE.AdditiveBlending,
             depthTest: false,              
             transparent: true
         });
     this.meshGlow = new THREE.ParticleSystem(geo, mat);
-    this.setGlow(params.glow || false);
+    this.setGlow(this.gfx.glow);
 //    this.mesh = new THREE.LOD();
 //    for (i = 0; i < sphereGeo.length; i++ ) {
 //       mesh = new THREE.Mesh( sphereGeo[ i ][ 0 ], this.material );
@@ -670,9 +675,9 @@ Planet = function(params) {
     
     
     this.mesh = new THREE.Mesh(planetGeo, this.material);
-    this.mesh.scale.set( params.scale, params.scale, params.scale );
+    this.mesh.scale.set( this.gfx.scale, this.gfx.scale, this.gfx.scale );
     this.mesh.overdraw = true;
-    this.mesh.position.y = this.dist;
+    this.setDist(this.dist);
     this.mesh.rotation.z = Math.PI;
     this.addNode(this.mesh);
     this.addNode(this.meshGlow);
@@ -705,9 +710,13 @@ Planet.prototype.setDist = function(dist) {
 };
 
 Planet.prototype.setGlow = function(state) {
-  this.glow = state;
+  this.gfx.glow = state;
   this.meshGlow.visible = state;
 };
+
+Planet.prototype.setQuality = function(profile) {
+  if(profile.textures) console.log("textures");
+}
 
 Planet.prototype.reset = function() {
     this.sunAngle = 0;
@@ -882,7 +891,8 @@ Spherical = function Spherical(params) {
     this.moving = true;
     this.scaleFactor = params.scale;
     
-    var color = params.color || { r: 0.5, g: 0.5, b: 0.5};
+    this.gfx = new Object();
+    this.gfx.color = params.color || { r: 0.5, g: 0.5, b: 0.5};
 //    color = rgbToHex(color);
     this.visuals = [];
 
@@ -897,8 +907,8 @@ Spherical = function Spherical(params) {
     this.anchor = new Node();
     this.pivot.addNode(this.anchor);
 
-    this.material = new THREE.LineBasicMaterial( {  color: rgbToHex(color) } );
-    this.materialArc =  new THREE.LineBasicMaterial( {  color: rgbToHex(color) } );
+    this.material = new THREE.LineBasicMaterial( {  color: rgbToHex(this.gfx.color) } );
+    this.materialArc =  new THREE.LineBasicMaterial( {  color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
     this.visuals.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
@@ -909,7 +919,7 @@ Spherical = function Spherical(params) {
     this.visuals.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
     this.addNode(this.visuals.arc2);
 
-    var materialArc = new THREE.LineBasicMaterial( {  color: rgbToHex(color) });
+    var materialArc = new THREE.LineBasicMaterial( {  color: rgbToHex(this.gfx.color) });
     this.visuals.equator = new THREE.Line(equator, this.material );
     this.visuals.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals.equator.rotation.x = Math.PI/2;
@@ -924,7 +934,7 @@ Spherical = function Spherical(params) {
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
     
-    var materialBall = new THREE.MeshBasicMaterial( { color: rgbToHex(color) } );
+    var materialBall = new THREE.MeshBasicMaterial( { color: rgbToHex(this.gfx.color) } );
    
     var materialCone = new THREE.MeshBasicMaterial( { color: "0xFFFFFF" } );
 //    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
@@ -952,7 +962,7 @@ Spherical = function Spherical(params) {
 //    nodePool[this.inner_id+"spole"] = this.visuals.spole;
 
     this.progressArc = new Circle({ angle : 40 });
-    var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(color),
+    var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(this.gfx.color),
                 opacity: 0.9
                 } );
     progressMat.vertexColors = true;

@@ -133,40 +133,41 @@ DONE
     - earth to planet
     - equant/planet/center to epicycle center
   - apsidal speed/movement 1deg per 100years
+  - data
+    - start from inital date
+    - move to certain date
   - sun
     - start rotation
     - overlap models
     - epicycle + equant same? 
     - deferent + epicylce model checkbox overlay models
-    
+  - gone: longitude dot product error ( jump from 359.1 -> 0.9 )
+    - but find better ref point for up vector     
+  - ModelMoonCompare -> ModelMoon
+  
 TODO
-- gone: longitude dot product error ( jump from 359.1 -> 0.9 )
-  - but find better ref point for up vector 
 - date fix (gregorian)
 - update info box on change!!
 - fix/better labels
 - more view presets/tweening
+  - use different cameras
   - reset position (tween)
 - aristotle
 - ptolemy
   - calculate sun max dist
   - data
-    - start from inital date
-    - move to certain date
     - date presets 
   - sun
-- sun
-  - real days passed :)
-- aristotle
-  - click/mouseover highlight
 - fix: load presets through setters
 
-- info container values (show full in tooltip)
-- webdesigners: 
-  animation speed, latitude presets, center direction labels, radio buttons switch
 
 
 NEXT
+- info container values (show full in tooltip)
+- webdesigners: 
+  animation speed, latitude presets, center direction labels, radio buttons switch
+- aristotle
+  - click/mouseover highlight
 - compare moon models
   - (show diff in latitude)
 - update hippopede only on demand

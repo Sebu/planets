@@ -16,9 +16,9 @@ myApp.prototype.init = function(params) {
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({antialias: true});
-//        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
-//        this.canvas.setClearColorHex( 0x1B1917 );
+//        this.canvas = new Ori.Canvas({antialias: true});
+        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
+        this.canvas.setClearColorHex( 0x1B1917 );
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
@@ -35,24 +35,22 @@ myApp.prototype.init = function(params) {
         // setup camera
         // TODO : shorten
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);				
-//this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2,  0.1, 10000 );
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
-      
+/*   
         this.bgMusic = Ori.loadContent("song2.mp3");
         this.bgMusic.loop = true;
         this.bgMusic.play();
-        
+//*/
 
         this.skyCam = new THREE.Camera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
         this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
         this.skyScene = new THREE.Scene();
 
-
+        // stats.js
         this.stats = new Stats();
-
         // Align top-left
         this.stats.domElement.style.position = 'absolute';
-        this.stats.domElement.style.right = '10px';
+        this.stats.domElement.style.left = '10px';
         this.stats.domElement.style.bottom = '50px';
         this.domRoot.append( this.stats.domElement );
 /*
@@ -64,7 +62,6 @@ myApp.prototype.init = function(params) {
         // create models
         models = {}; //new Object;
         // set start model
-        console.log(this.getModel("Model4"));
         model = this.getModel("Model4");
 
 
@@ -164,10 +161,9 @@ myApp.prototype.addPreset = function() {
       UI.optionsFromHash("#planetPreset", planetPresets);
       this.loadPreset(text); 
     }
-    console.log(planetPresets);
-
-     
 };
+
+
 
 myApp.prototype.removePreset = function() {
   var text = this.currentPreset;
@@ -260,7 +256,7 @@ myApp.prototype.update = function(time) {
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
           $("#deferentLongitude").text( ((model.sphere[2].getRotateAngle() + model.sphere[2].getOffsetRotateAngle()) % 360.0).toFixed(2) );
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
-          $("#gregorianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
+          $("#gregorianDate").text( Utils.dateToString(Utils.jdToGregorian(model.date)) );                           
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.camera, this.canvas));   
         }
 
@@ -463,7 +459,8 @@ myApp.prototype.loadPreset = function(preset) {
         // create legend
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
-            var color = "rgb(" + colors["S" + i].r * 255 + "," + colors["S" + i].g * 255 + "," + colors["S" + i].b * 255 + ")";
+            console.log(model.sphere[i].gfx.color);
+            var color = "rgb(" + model.sphere[i].gfx.color.r * 255 + "," + model.sphere[i].gfx.color.g * 255 + "," + model.sphere[i].gfx.color.b * 255 + ")";
             $("<div style='float:left; color:" + color + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }

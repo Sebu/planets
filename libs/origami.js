@@ -20,11 +20,31 @@ Ori.Canvas = function(params) {
         this.graphics.autoClear = false;
         this.graphics.sortObjects = false;
 
+
+       
         return this.graphics;
 }
 
+
+	
+	
 Ori.Canvas.prototype.constructor = Ori.Renderer;
 
+Ori.Q = { OFF : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
+
+Ori.GfxProfile = {
+  low: { 
+    resolution : 50,
+    particles : Ori.Q.LOW,
+    textures : Ori.Q.LOW,
+    geometry : Ori.Q.LOW,
+    }
+};
+Ori.gfxStore = [];
+Ori.registerGfx = function(node) {
+  Ori.gfxStore.push(node);
+  node.setQuality(Ori.GfxProfile.low);
+}
 
 Ori.loadContent = function(uri) {
   var ext = uri.split('.').pop();
@@ -178,8 +198,8 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
-  this.fps = 30;
-  this.targetTime = 1/this.fps;
+  this.tragetFps = 30;
+  this.targetTime = 1.0/this.targetFps;
   this.elapsedTime = 0;
   this.timer = new Ori.Timer();
 };

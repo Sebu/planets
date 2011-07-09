@@ -9,14 +9,20 @@ ModelPtolemySun = function(params) {
     params.spheres = 3;
     this.genSpheres(params);
     this.factor = 1.0/7.0;
-    
+
+
+    // mean sun / don't use    
+    this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
+
     this.sphere[1].realAngle = 0;
 
 
     this.realSunS = [];
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: colors["S2"]});
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S3"]});
-  
+
+
+    this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
     this.realSun = new Planet({ glow: true, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
     this.realSun.setBeta(90.0);
   
@@ -27,13 +33,9 @@ ModelPtolemySun = function(params) {
     realSunS1.anchor.addNode(realSunS2);
     realSunS2.anchor.addNode(this.realSun);
 
-    this.JULIAN_EPOCH = 0.0831088;
-    this.PTOLEMY_EPOCH = 1448637.91689121;
-
-    this.startDate = this.PTOLEMY_EPOCH;
+    this.startDate = DATES.PTOLEMY_EPOCH;
  
-    this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
-    this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
+
 
     var material = new THREE.LineBasicMaterial( {  color: "0xFFAAFF" });
     this.equator = new THREE.Line(equator, material );

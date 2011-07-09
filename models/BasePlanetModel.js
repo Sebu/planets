@@ -90,18 +90,16 @@ BasePlanetModel.prototype = {
 
         // additional spheres
         for (var i = 2; i <= params.spheres; i++) {
-            console.log(i); 
             tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9-i*0.1, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
             this.updateList.push(tmp);
-
         }
+        
         this.sphere[params.spheres].anchor.addNode(this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet",  color:colors["Planet"] }));
 
         // TODO: remove them, use model.sphere[x] etc.
         // create some shortcuts
         for (i in this.sphere) {
-            console.log(i);
             this["setSpeed" + i] = new Function("value", "this.sphere[" + i + "].setSpeed(value);");
             this["setAxisAngle" + i] = new Function("value", "this.sphere[" + i + "].setAxisAngle(value);");
             this["setRotateStart" + i] = new Function("value", "this.sphere[" + i + "].setRotateStart(value);");
@@ -194,7 +192,9 @@ BasePlanetModel.prototype = {
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
         this.setSunSpeed(365.2466666);
-        this.sun.setEnabled(this.currentPlanet.showSun);
+        this.sun.setEnabled(false);
+//        this.sun.setEnabled(this.currentPlanet.showSun);
+        this.sun.setGlow(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 
         // hide arcs of outer sphere
@@ -232,10 +232,8 @@ BasePlanetModel.prototype = {
         if(date.length!=3) return;
        
         var realDays = Utils.gregorianToJd(Number(date[2]), Number(date[1]), Number(date[0]));
-        console.log(realDays);
         var days = realDays - this.startDate;
         this.setDays(days);  
-        console.log(days);//.toString().split("/"));
       }
       
     },
@@ -246,9 +244,11 @@ BasePlanetModel.prototype = {
 
     updatePlanetMetadata : function(planet, dayRef, epiRef, time) {
             
+            //TODO: ecliptic latitude?
             var earthPos = sceneToSyl(this.earth.mesh.currentPos()); //epiRef.anchor.currentPos());
             var polePos = sceneToSyl(this.earth.npole.currentPos()); //epiRef.visuals.npole.currentPos());
             var upVec = earthPos.subtract(polePos);
+            
             var planetOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(earthPos);
             var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(earthPos);
 
@@ -364,6 +364,7 @@ BasePlanetModel.prototype = {
         oldRotate = [];
         var step = 0;
         var start = params.start;
+        var stop = params.stop || this.sphere.length;
         var node = params.node;
         var maxSegments = params.segments || 80; //-Math.round(20/step);
         var j =  -10;
@@ -377,7 +378,7 @@ BasePlanetModel.prototype = {
         }
 
         // approximate step width
-        for (i = start + 1; i < this.sphere.length; i++) {
+        for (i = start + 1; i < stop; i++) {
             this.sphere[i].visUpdate = false;
             oldRotate[i] = this.sphere[i].getRotateAngle();
             step += Math.abs(this.sphere[i].getStep());
@@ -385,15 +386,13 @@ BasePlanetModel.prototype = {
         step = 10.0/step;
         
         // calculate positions of curve points
-        for (i = start + 1; i < this.sphere.length; i++) {
+        for (i = start + 1; i < stop; i++) {
           this.sphere[i].updateMovement(j*step);
         }
             
         for (; j < maxSegments; j++) {
-            for (i = start + 1; i < this.sphere.length; i++) {
+            for (i = start + 1; i < stop; i++) {
                 this.sphere[i].updateMovement(step);
-//                angle = this.sphere[i].rotateAngle + j*(this.sphere[i].step * step);
-//                this.sphere[i].anchor.rotation.y = degToRad(angle);
             }
             var pos = node.currentPos();
             curvePos.push(pos);
@@ -404,7 +403,7 @@ BasePlanetModel.prototype = {
             this.sphere[i].setAxisAngle(oldAngle[i]);
 
         // restore rotation
-        for (var i = 1; i < this.sphere.length; i++) {
+        for (var i = 1; i < stop; i++) {
             this.sphere[i].setRotateAngle(oldRotate[i]);
             this.sphere[i].visUpdate = true;
         }

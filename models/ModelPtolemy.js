@@ -27,10 +27,8 @@ ModelPtolemy = function(params) {
     realSunS1.anchor.addNode(realSunS2);
     realSunS2.anchor.addNode(this.realSun);
 
-    this.JULIAN_EPOCH = 0.0831088;
-    this.PTOLEMY_EPOCH = 1448637.91689121;
 
-    this.startDate = this.PTOLEMY_EPOCH;
+    this.startDate = DATES.PTOLEMY_EPOCH;
  
     this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
     this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
