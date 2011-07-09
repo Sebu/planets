@@ -839,10 +839,15 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 
-//    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-    var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  map: THREE.ImageUtils.loadTexture('textures/star.png'),  blending: THREE.AdditiveBlending, 
-//    depthTest: false, 
-    transparent: true  });
+    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+/*
+    var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
+        map: THREE.ImageUtils.loadTexture('textures/star.png'),  
+        blending: THREE.AdditiveBlending, 
+  //    depthTest: false, 
+        transparent: true  });
+//*/
+
     THREE.ParticleSystem.call( this, geo, mat);
 };
 

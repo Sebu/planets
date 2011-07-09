@@ -47,10 +47,20 @@ myApp.prototype.init = function(params) {
         this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
         this.skyScene = new THREE.Scene();
 
+
+        this.stats = new Stats();
+
+        // Align top-left
+        this.stats.domElement.style.position = 'absolute';
+        this.stats.domElement.style.right = '10px';
+        this.stats.domElement.style.bottom = '50px';
+        this.domRoot.append( this.stats.domElement );
+/*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );
-				
+//*/	
+			
         // create models
         models = {}; //new Object;
         // set start model
@@ -192,6 +202,7 @@ myApp.prototype.setCurrentScene = function(scene) {
 // update loop
 myApp.prototype.update = function(time) {
 
+
         // handle input     
         if (model.currentPos != "Earth") {
           if (Ori.input.isDown("LEFT")) this.camera.translateNew(0.6, 0, 0);
@@ -298,6 +309,7 @@ myApp.prototype.draw = function(time) {
             component = this.components[i];
             if (component.enabled) this.canvas.render(component, this.camera);
         }
+        this.stats.update();
         //*/
     };
 

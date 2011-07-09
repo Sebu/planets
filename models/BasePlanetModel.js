@@ -153,8 +153,8 @@ BasePlanetModel.prototype = {
 
     loadPreset : function(node) {
 
-    	// default planet settings
-        this.currentPlanet = {
+    	 // default planet settings
+       this.currentPlanet = {
             sunDist: 8,
             color: colors["Planet"],
             betaRotate: 90.0,
@@ -182,7 +182,9 @@ BasePlanetModel.prototype = {
         //TODO: better merge
         for(var i in this.sphere) {
             $.extend(true, this.sphere[i], this.currentPlanet.sphere[i-1]);
+
             if(this.currentPlanet.sphere[i]) this["setShowSphere"+i](this.currentPlanet.sphere[i-1].visible);
+//            for(var b in this.currentPlanet.sphere[i]) { console.log(b); }
         }
         
         this.setShowStars(this.currentPlanet.showStars);
