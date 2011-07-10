@@ -137,6 +137,7 @@ DONE
     - start from inital date
     - move to certain date
   - sun
+    - calculate sun max dist
     - start rotation
     - overlap models
     - epicycle + equant same? 
@@ -154,7 +155,6 @@ TODO
   - reset position (tween)
 - aristotle
 - ptolemy
-  - calculate sun max dist
   - data
     - date presets 
   - sun

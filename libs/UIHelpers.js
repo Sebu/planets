@@ -77,7 +77,7 @@ var UI = {
             "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range' style='background:" + rgbToCSS(color) + "'/>" +
             "</div>");
         tmp.append(ele);
-        $(".slider",ele).slider({change: change, slide:change, animate: "fast", max: max, min: min, value: value});
+        $(".slider",ele).slider({change: change, slide:change, animate: "fast", max: max, min: min, step: step, value: value});
         $("input",ele).bind("change",change2);
 //        $(".slider",ele).bind("slidechange",change);
         if(toggle) $(":checkbox",tmp).bind("click", function() 

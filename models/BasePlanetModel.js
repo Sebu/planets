@@ -82,7 +82,7 @@ BasePlanetModel.prototype = {
         // first and outer sphere
         this.sphere[1] = new Spherical({inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
         
-        this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.4, emit:0.0, map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), inner_id: this.name+"Earth"})
+        this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.6, emit:0.0, map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
         
         this.root.addNode(this.sphere[1]);

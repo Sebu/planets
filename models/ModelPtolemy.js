@@ -8,7 +8,7 @@ ModelPtolemy = function(params) {
     params.name = "ModelPtolemy";
     params.spheres = 3;
     this.genSpheres(params);
-    this.factor = 1.0/7.0;
+    this.factor = 1.0/11.0;
     
     this.sphere[1].realAngle = 0;
 
@@ -130,17 +130,25 @@ ModelPtolemy = function(params) {
 
 
       this.updateBlob();
+      this.updateSunDist();
 
     };
     this.getRadiusD = function() { return this.sphere[2].radius; }
 
   
-        
+    this.updateSunDist = function() {
+      var dist = (this.sphere[2].radius-this.radius1-this.sphere[2].equant)*this.factor;  
+      this.realSunS[1].setScale(dist);
+      this.realSunS[2].anchor.position.z = dist;
+      this.sun.setDist(dist);
+
+    }        
     this.setRadiusE = function(value) {
       this.radius1 = value;
       this.sphere[3].setScale(value*this.factor);
       this.planet.setDist(value*this.factor);
       this.updateBlob();
+      this.updateSunDist();
     };
     this.getRadiusE = function() { return this.radius1; }
 
@@ -207,8 +215,7 @@ ModelPtolemy = function(params) {
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    
         this.realSunS[1].setRotateAngle( 274.25 );
         this.realSunS[2].setRotateAngle( (360-274.25) );
-        this.realSunS[1].setScale(1.7);
-        this.realSunS[2].anchor.position.z = 1.7;
+
         this.realSunS[2].setScale(0);
         this.realSun.setDist(0);
         this.realSunS[1].setSpeed(365);
