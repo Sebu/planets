@@ -144,9 +144,9 @@ DONE
   - gone: longitude dot product error ( jump from 359.1 -> 0.9 )
     - but find better ref point for up vector     
   - ModelMoonCompare -> ModelMoon
-  
+  - date fix (gregorian)  
+
 TODO
-- date fix (gregorian)
 - update info box on change!!
 - fix/better labels
 - more view presets/tweening

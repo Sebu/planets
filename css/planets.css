@@ -313,6 +313,7 @@ option  {
   float: right;
   bottom: 10px;
   right: 10px;
+  font-weight:bold;
 }
 
 canvas {

@@ -192,8 +192,8 @@ BasePlanetModel.prototype = {
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
         this.setSunSpeed(365.2466666);
-        this.sun.setEnabled(false);
-//        this.sun.setEnabled(this.currentPlanet.showSun);
+//        this.sun.setEnabled(false);
+        this.sun.setEnabled(this.currentPlanet.showSun);
         this.sun.setGlow(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 
@@ -304,7 +304,7 @@ BasePlanetModel.prototype = {
                 model.updateList[i].updateMovement((365.0*time)/this.speed);
             }        
         	
-            this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2], time);
+
             //time*(this.speed/this.systemSun[0].getSpeed());
 
             var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
@@ -312,10 +312,11 @@ BasePlanetModel.prototype = {
             // days determined by sun speed
             this.days += dayDelta;
 
-            //TODO: on model change -> events?
-            if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
-        }
 
+        }
+        //TODO: on model change -> events?
+        if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
+        this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2], time);
     },
 
 
@@ -351,10 +352,10 @@ BasePlanetModel.prototype = {
     addCurve : function(params) {
         if(!this.showCurve[params.index]) return;
         if(!this.curves[params.index]) {
-            this.curves[params.index] = new Curve({trails: params.trails, pos: this.calcCurve({start: params.start, node: params.node}), color: params.color});
+            this.curves[params.index] = new Curve({trails: params.trails, pos: this.calcCurve({start: params.start, stop: params.stop, node: params.node}), color: params.color});
             params.anchor.addNode(this.curves[params.index]);
         } else {
-            this.curves[params.index].setPos( this.calcCurve({start: params.start, node: params.node}) );
+            this.curves[params.index].setPos( this.calcCurve({start: params.start,  stop: params.stop, node: params.node}) );
         }
     },
     

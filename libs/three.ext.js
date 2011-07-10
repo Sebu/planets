@@ -405,6 +405,12 @@ rgbToHex = function(color) {
 	 return ~~ ( color.r * 255 ) << 16 ^ ~~ ( color.g * 255 ) << 8 ^ ~~ ( color.b * 255 );
 }
 
+rgbToCSS = function(color) {
+  var rgb = "rgb(" + Math.round(color.r * 255) + "," + Math.round(color.g * 255) + "," + Math.round(color.b * 255) + ")";
+  console.log(rgb);
+  return rgb;
+};
+
 // extend THREE.Object3D 
 Node = THREE.Object3D;
 THREE.Object3D.prototype.addNode = function(node) { this.addChild(node); };
@@ -711,7 +717,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = state;
+  this.meshGlow.visible = false;
 };
 
 Planet.prototype.setQuality = function(profile) {

@@ -92,9 +92,9 @@ ModelMoonCompare = function(params) {
 
     this.update = function(time) {
         BasePlanetModel.prototype.update.call(this, time);
-        if(this.running) {
+//        if(this.running) {
             this.updatePlanetMetadata(this.planet2,  this.sphere[1],this.sphere[4], time);
-        }
+//        }
     };    
 
     this.setCurrentMoonModels("Mendell", "SchFixed");

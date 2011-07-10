@@ -182,7 +182,7 @@ myApp.prototype.removePreset = function() {
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
-        scene.addLight(new THREE.AmbientLight(0x888888));
+        scene.addLight(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
     };
@@ -194,7 +194,39 @@ myApp.prototype.setCurrentScene = function(scene) {
         this.components.push(this.currentScene);
     };
 
+myApp.prototype.updateInfoBox = function() {
+        if(model.sun.getEnabled()) $("#sunAngle").text( model.planet.sunAngle.toFixed(1) );
+        $("#days").text( Utils.daysToTime(model.getDays()) );
 
+        if(model instanceof ModelSun) {
+          $("#longitude").text( model.planet.longitude.toFixed(6) );
+          $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
+          $("#equationOfTime").text( model.getEquationOfTime().toFixed(6) );
+          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(11) );
+          $("#latitude").text( model.planet.latitude.toFixed(3) );
+        } else {
+          $("#longitude").text( model.planet.longitude.toFixed(1) );
+          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
+          $("#latitude").text( model.planet.latitude.toFixed(1) );
+        }
+        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
+          $("#deferentLongitude").text( ((model.sphere[2].getRotateAngle() + model.sphere[2].getOffsetRotateAngle()) % 360.0).toFixed(2) );
+          $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
+          $("#gregorianDate").text( Utils.dateToString(Utils.jdToGregorian(model.date)) );                           
+          planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.camera, this.canvas));   
+        }
+
+        if(model instanceof ModelMoonCompare) {
+          // infoBox data
+          $("#sunAngle2").text( model.planet2.sunAngle.toFixed(1) );
+          $("#longitude2").text( model.planet2.longitude.toFixed(1) );
+          $("#longitudeSpeed2").text(model.planet2.longitudeSpeed.toFixed(2));
+          $("#latitude2").text( model.planet2.latitude.toFixed(1) );
+          $("#days2").text(Math.round( model.getDays() ));
+
+          planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.camera, this.canvas));
+        }
+}
 // update loop
 myApp.prototype.update = function(time) {
 
@@ -238,39 +270,9 @@ myApp.prototype.update = function(time) {
         model.update(time);
 
         // infoBox data
-        if(model.running) {
-        if(model.sun.getEnabled()) $("#sunAngle").text( model.planet.sunAngle.toFixed(1) );
-        $("#days").text( Utils.daysToTime(model.getDays()) );
-
-        if(model instanceof ModelSun) {
-          $("#longitude").text( model.planet.longitude.toFixed(6) );
-          $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
-          $("#equationOfTime").text( model.getEquationOfTime().toFixed(6) );
-          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(11) );
-          $("#latitude").text( model.planet.latitude.toFixed(3) );
-        } else {
-          $("#longitude").text( model.planet.longitude.toFixed(1) );
-          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
-          $("#latitude").text( model.planet.latitude.toFixed(1) );
-        }
-        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
-          $("#deferentLongitude").text( ((model.sphere[2].getRotateAngle() + model.sphere[2].getOffsetRotateAngle()) % 360.0).toFixed(2) );
-          $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
-          $("#gregorianDate").text( Utils.dateToString(Utils.jdToGregorian(model.date)) );                           
-          planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.camera, this.canvas));   
-        }
-
-        if(model instanceof ModelMoonCompare) {
-          // infoBox data
-          $("#sunAngle2").text( model.planet2.sunAngle.toFixed(1) );
-          $("#longitude2").text( model.planet2.longitude.toFixed(1) );
-          $("#longitudeSpeed2").text(model.planet2.longitudeSpeed.toFixed(2));
-          $("#latitude2").text( model.planet2.latitude.toFixed(1) );
-          $("#days2").text(Math.round( model.getDays() ));
-
-          planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.camera, this.canvas));
-        }
-        }
+//        if(model.running) {
+          this.updateInfoBox();
+//        }
 
 
         //TODO: model.ui specific
@@ -460,8 +462,7 @@ myApp.prototype.loadPreset = function(preset) {
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
             console.log(model.sphere[i].gfx.color);
-            var color = "rgb(" + model.sphere[i].gfx.color.r * 255 + "," + model.sphere[i].gfx.color.g * 255 + "," + model.sphere[i].gfx.color.b * 255 + ")";
-            $("<div style='float:left; color:" + color + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
+            $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }
 
@@ -570,20 +571,20 @@ myApp.prototype.loadPreset = function(preset) {
         } else if (model.ui == "Model4") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({color: model.sphere[2].gfx.color, model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             //$("#AxisAngle1").hover(function (e) {
             //   model.sphere[1].materialArc.linewidth = 10;
             //}, function (e) {
             //  model.sphere[1].materialArc.linewidth = 1;});
             
-            UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-            UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.slider({color: model.sphere[3].gfx.color, model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({color: model.sphere[4].gfx.color, model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
+            UI.checkbox({ model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.slider({color: model.sphere[2].gfx.color, model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({color: model.sphere[3].gfx.color, model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
             UI.slider({model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
@@ -750,10 +751,6 @@ myApp.prototype.loadPreset = function(preset) {
             });
         }
 
-        // fix range sliders in Firefox etc.
-        // TODO: don't use range input
-//        $(":range").rangeinput();
-//        fixRange();
 
         // initial update of sliders/state
         model.tooglePause();
