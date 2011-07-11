@@ -255,6 +255,10 @@ BasePlanetModel.prototype = {
             var earthPos = sceneToSyl(this.earth.mesh.currentPos()); //epiRef.anchor.currentPos());
             var polePos = sceneToSyl(this.earth.npole.currentPos()); //epiRef.visuals.npole.currentPos());
             var upVec = earthPos.subtract(polePos);
+
+            var epiPos = sceneToSyl(epiRef.currentPos()); //epiRef.visuals.npole.currentPos
+            var epiPolePos = sceneToSyl(epiRef.visuals.npole.currentPos()); //epiRef.visuals.npole.currentPos());
+            var epiUpVec = epiPos.subtract(epiPolePos);
             
             var planetOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(earthPos);
             var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(earthPos);
@@ -291,7 +295,7 @@ BasePlanetModel.prototype = {
                 planet.lastLongitude -= 360;
 //*/                
                 
-            planet.latitude = 90-calcAngle(upVec,planetPos);
+            planet.latitude = 90-calcAngle(epiUpVec,planetPos);
 
             // days passed
             var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;

@@ -29,8 +29,8 @@ myApp.prototype.init = function(params) {
 
         // register input
         Ori.input.register(Ori.KEY.LEFT, "LEFT");
-        Ori.input.register(Ori.KEY.RIGT, "RIGHT");
-        Ori.input.register(Ori.KEY.DOWN, "DOWN");
+//        Ori.input.register(Ori.KEY.RIGT, "RIGHT");
+//        Ori.input.register(Ori.KEY.DOWN, "DOWN");
         Ori.input.register(Ori.KEY.UP, "UP");
 
         // setup camera

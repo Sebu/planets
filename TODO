@@ -148,6 +148,7 @@ DONE
   - date fix (gregorian)  
 
 TODO
+- latitude ref point
 - update info box on change!!
 - fix/better labels
 - more view presets/tweening
