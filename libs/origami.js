@@ -93,8 +93,7 @@ Ori.Input = function() {
     this.keymap = {};
     this.binding = {};
     this.mouse = {x:0, y:0, z:0, wheel: false, b1: false, b2: false};
-    window.addEventListener('keydown', this.keyDown, false);
-    window.addEventListener('keyup', this.keyUp, false);
+
 
 
 };
@@ -104,6 +103,10 @@ Ori.Input.prototype.constructor = Ori.Input;
 
 Ori.Input.prototype = {
 
+  trackKeysOn : function(element) {
+    element.addEventListener('keydown', this.keyDown, false);
+    element.addEventListener('keyup', this.keyUp, false);
+  },
   trackMouseOn : function(element) {
     element.addEventListener('mousewheel', this.mouseWheel, false);
     element.addEventListener('DOMMouseScroll', this.mouseWheelFox, false);

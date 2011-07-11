@@ -148,6 +148,7 @@ DONE
   - date fix (gregorian)  
 
 TODO
+- better camera/movement/ortho view
 - latitude ref point
 - update info box on change!!
 - fix/better labels

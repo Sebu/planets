@@ -22,15 +22,16 @@ myApp.prototype.init = function(params) {
         
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
+        Ori.input.trackKeysOn(window);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
            
         // append to DOM
         this.domRoot.append(this.canvas.domElement);
 
         // register input
-        Ori.input.register(Ori.KEY.LEFT, "LEFT");
+//        Ori.input.register(Ori.KEY.LEFT, "LEFT");
 //        Ori.input.register(Ori.KEY.RIGT, "RIGHT");
-//        Ori.input.register(Ori.KEY.DOWN, "DOWN");
+        Ori.input.register(Ori.KEY.DOWN, "DOWN");
         Ori.input.register(Ori.KEY.UP, "UP");
 
         // setup camera
