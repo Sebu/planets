@@ -19,6 +19,7 @@ Utils.daysToTime = function(days) {
 
 }
 
+Utils.GREGORIAN_SWITCH = 2299160.5;
 Utils.GREGORIAN_EPOCH = 1721425.5;
 Utils.JULIAN_EPOCH = 1721423.5;
 
@@ -133,6 +134,20 @@ Utils.gregorianToJd =function(year, month, day) {
            day);
 }
 
+
+Utils.jdToMagic = function(jd) {
+  if(jd<=Utils.GREGORIAN_SWITCH) return Utils.jdToJulian(jd);
+  else return Utils.jdToGregorian(jd);
+}
+
+Utils.magicToJd = function(year, month, day) {
+  if(year>=1582 && month >=10 && day>4)
+    return Utils.gregorianToJd(year, month, day);
+  else
+    return Utils.julianToJd(year, month, day);
+}
+
+
 Utils.jdToGregorian = function(jd) {
     var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
         yindex, dyindex, year, yearday, leapadj;
@@ -181,9 +196,9 @@ Utils.jdToJulian = function(td) {
         a zero based date system to the common era system in
         which the year -1 (1 B.C.E) is followed by year 1 (1 C.E.).  */
 
-    if (year < 1) {
-        year--;
-    }
+//    if (year < 1) {
+//        year--;
+//    }
 
     return new Array(year, month, day);
 }
@@ -191,9 +206,9 @@ Utils.jdToJulian = function(td) {
 Utils.julianToJd = function(year, month, day) {
 
     /* Adjust negative common era years to the zero-based notation we use.  */
-    if (year < 1) {
-        year++;
-    }
+//    if (year < 1) {
+//        year++;
+//    }
 
     /* Algorithm as given in Meeus, Astronomical Algorithms, Chapter 7, page 61 */
     if (month <= 2) {
@@ -407,7 +422,7 @@ rgbToHex = function(color) {
 
 rgbToCSS = function(color) {
   var rgb = "rgb(" + Math.round(color.r * 255) + "," + Math.round(color.g * 255) + "," + Math.round(color.b * 255) + ")";
-  console.log(rgb);
+//  console.log(rgb);
   return rgb;
 };
 

@@ -236,8 +236,9 @@ BasePlanetModel.prototype = {
           date[1] = tmp;
         }
         if(date.length!=3) return;
-       
-        var realDays = Utils.gregorianToJd(Number(date[2]), Number(date[1]), Number(date[0]));
+        
+        
+        var realDays = Utils.magicToJd(Number(date[2]), Number(date[1]), Number(date[0]));
         var days = realDays - this.startDate;
         this.setDays(days);  
       }

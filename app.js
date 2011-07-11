@@ -213,7 +213,7 @@ myApp.prototype.updateInfoBox = function() {
         }
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
           $("#deferentLongitude").text( ((model.sphere[2].getRotateAngle() + model.sphere[2].getOffsetRotateAngle()) % 360.0).toFixed(2) );
-          $("#gregorianDate").text( Utils.dateToString(Utils.jdToGregorian(model.date)) );                           
+          $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
           $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.camera, this.canvas));   
