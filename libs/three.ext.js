@@ -662,7 +662,7 @@ Planet = function(params) {
 
     Ori.registerGfx(this);
 // color: rgbToHex(this.color),
-//map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+//   map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
     this.material =  new THREE.MeshLambertMaterial( {  
         color: rgbToHex(this.gfx.color),
         map: this.gfx.map,
@@ -735,7 +735,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = false;
+  this.meshGlow.visible = state;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -872,8 +872,8 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 
-    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-/*
+//    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+//*
     var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
         map: THREE.ImageUtils.loadTexture('textures/star.png'),  
         blending: THREE.AdditiveBlending, 

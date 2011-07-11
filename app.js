@@ -38,7 +38,7 @@ myApp.prototype.init = function(params) {
         // TODO : shorten
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);				
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
-/*   
+//*   
         this.bgMusic = Ori.loadContent("song2.mp3");
         this.bgMusic.loop = true;
         this.bgMusic.play();
@@ -55,7 +55,7 @@ myApp.prototype.init = function(params) {
         this.stats.domElement.style.right = '10px';
         this.stats.domElement.style.bottom = '80px';
         this.domRoot.append( this.stats.domElement );
-/*
+//*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );

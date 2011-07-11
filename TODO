@@ -148,6 +148,9 @@ DONE
   - date fix (gregorian)  
 
 TODO
+- "A Survey of the Almagest"
+  - start values and observation tests
+  - 59/85 values
 - better camera/movement/ortho view
 - latitude ref point is ecliptic (sun plane)
 - update info box on change!!

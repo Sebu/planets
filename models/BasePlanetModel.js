@@ -86,8 +86,8 @@ BasePlanetModel.prototype = {
             betaRotate:180.0,
             dist: 0.0, scale: 0.6,
             emit:0.0, 
-//            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-            color: colors["Earth"],
+            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+//            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
         

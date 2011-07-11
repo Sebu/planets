@@ -365,6 +365,7 @@ PtolemyMars: {
   epicycleRadius: 39.5,
   apsidalAngle: 106.6,
   equant: 6.0,
+//  mean
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 365, speedmax: 1000, rotateStart: 0 },
