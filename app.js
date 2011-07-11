@@ -465,7 +465,7 @@ myApp.prototype.loadPreset = function(preset) {
         // create legend
 //        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
-            console.log(model.sphere[i].gfx.color);
+//            console.log(model.sphere[i].gfx.color);
             $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }
@@ -697,6 +697,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"epicycle", text:"Epicycle"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
             UI.slider({model:model, id:"Speed3", max:1100, step:0.01, text:"Speed (days)"}).appendTo("#epicycle");
+            UI.slider({model:model, id:"AxisAngle3", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");

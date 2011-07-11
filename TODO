@@ -149,7 +149,7 @@ DONE
 
 TODO
 - better camera/movement/ortho view
-- latitude ref point
+- latitude ref point is ecliptic (sun plane)
 - update info box on change!!
 - fix/better labels
 - more view presets/tweening
