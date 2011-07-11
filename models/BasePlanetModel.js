@@ -82,7 +82,13 @@ BasePlanetModel.prototype = {
         // first and outer sphere
         this.sphere[1] = new Spherical({inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
         
-        this.earth = new Planet({betaRotate:180.0, dist: 0.0, scale: 0.6, emit:0.0, map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), inner_id: this.name+"Earth"})
+        this.earth = new Planet({
+            betaRotate:180.0,
+            dist: 0.0, scale: 0.6,
+            emit:0.0, 
+//            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+            color: colors["Earth"],
+            inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
         
         this.root.addNode(this.sphere[1]);
@@ -276,16 +282,16 @@ BasePlanetModel.prototype = {
             planet.lastPerp = planet.perpAngle;
             planet.longitude = calcAngle(planetOnPlane, equinoxOnPlane);
             planet.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
-
             // HACK: dot product angle fix > 90
-
 //*
             if (planet.perpAngle<=90)
                 planet.longitude = 360-planet.longitude;
             if (planet.perpAngle>90 && planet.lastPerp<90)
                 planet.lastLongitude -= 360;
-            planet.latitude = calcAngle(upVec,planetPos)-90;
-//*/
+//*/                
+                
+            planet.latitude = 90-calcAngle(upVec,planetPos);
+
             // days passed
             var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
             

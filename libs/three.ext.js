@@ -648,7 +648,10 @@ Planet = function(params) {
     Ori.registerGfx(this);
 // color: rgbToHex(this.color),
 //map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-    this.material =  new THREE.MeshLambertMaterial( {  color: rgbToHex(this.gfx.color), map: this.gfx.map, shading: THREE.FlatShading });
+    this.material =  new THREE.MeshLambertMaterial( {  
+        color: rgbToHex(this.gfx.color),
+        map: this.gfx.map,
+        shading: THREE.FlatShading });
 
 
 
