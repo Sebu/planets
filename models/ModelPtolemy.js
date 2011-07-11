@@ -170,6 +170,11 @@ ModelPtolemy = function(params) {
         BasePlanetModel.prototype.update.call(this, time);
         this.sphere[2].updateOffsetRotateMovement((365.0*time)/this.speed);
 
+        var epiPos = sceneToSyl(this.systemSun[0].currentPos());
+        var epiPolePos = sceneToSyl(this.systemSun[0].visuals.npole.currentPos()); 
+        var epiUpVec = epiPos.subtract(epiPolePos);
+        var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(epiPos);
+        this.planet.latitude = 90-calcAngle(epiUpVec,planetPos);
 
         // mean sun
         this.systemSun[0].anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;        
