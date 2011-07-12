@@ -363,13 +363,13 @@ PtolemyMars: {
   sunDist: 1.7,
   derefentRadius: 60.0,
   epicycleRadius: 39.5,
-  apsidalAngle: 106.6,
+  apsidalAngle: 106.66666666666667,
   equant: 6.0,
 //  mean
   sphere: [
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 24.0, speed: 365, speedmax: 1000, rotateStart: 0 },
-    {axisAngle: 0.0, speed: 327.2166, rotateStart: 0 }
+    {axisAngle: 24.0, speed: 686.944621, speedmax: 1000, rotateStart: -111.66666666666667},
+    {axisAngle: 0.0, speed: 779.937297, rotateStart: 327.21666666666664 }
   ] }
 };
 

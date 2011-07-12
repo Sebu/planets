@@ -168,7 +168,7 @@ ModelPtolemy = function(params) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
-        this.sphere[2].updateOffsetRotateMovement((365.0*time)/this.speed);
+        if(this.running) this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
 
         var epiPos = sceneToSyl(this.systemSun[0].currentPos());
         var epiPolePos = sceneToSyl(this.systemSun[0].visuals.npole.currentPos()); 
@@ -213,9 +213,9 @@ ModelPtolemy = function(params) {
         this.setEquant( Utils.toDec(this.currentPlanet.equant));
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
-        this.sphere[2].setOffsetRotateSpeed(0);
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
-
+        this.sphere[2].setOffsetRotateSpeed(1);
+        
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    
         this.realSunS[1].setRotateAngle( 274.25 );

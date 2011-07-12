@@ -36,9 +36,12 @@ myApp.prototype.init = function(params) {
 
         // setup camera
         // TODO : shorten
-        this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);				
+        this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);		
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
-//*   
+        
+//        var ortho = 70;
+//        this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
+/*   
         this.bgMusic = Ori.loadContent("song2.mp3");
         this.bgMusic.loop = true;
         this.bgMusic.play();
@@ -55,7 +58,7 @@ myApp.prototype.init = function(params) {
         this.stats.domElement.style.right = '10px';
         this.stats.domElement.style.bottom = '80px';
         this.domRoot.append( this.stats.domElement );
-//*
+/*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );
@@ -117,13 +120,15 @@ myApp.prototype.init = function(params) {
               <div>julian date<span class='wert' id='julianDate'>0</span></div>\
               <div>egyptian date<span class='wert' id='egyptianDate'>0</span></div>\
             </div>\
-            </div>").appendTo(this.domRoot);
+             <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
+              <div class='sexa wert' id='sexaResult'>0</div>\
+             </div>").appendTo(this.domRoot);
 
+//*
 
-//              <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
-//              <div class='sexa wert' id='sexaResult'>0</div>\
-//            $("#sexaInput > input").bind("change", function() 
-//              { $("#sexaResult").text(Utils.sexagesimal(this.value)); });
+            $("#sexaInput > input").bind("change", function() 
+              { $("#sexaResult").text(Utils.sexagesimal(this.value)); });
+//*/
 
         uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
@@ -692,11 +697,11 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
             UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Radius"}).appendTo("#deferent");
-            UI.slider({model:model, id:"Speed2", max:1100, step:0.05, text:"Speed (days)"}).appendTo("#deferent");
+            UI.slider({model:model, id:"Speed2", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#deferent");
 
             UI.box({id:"epicycle", text:"Epicycle"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
-            UI.slider({model:model, id:"Speed3", max:1100, step:0.01, text:"Speed (days)"}).appendTo("#epicycle");
+            UI.slider({model:model, id:"Speed3", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#epicycle");
             UI.slider({model:model, id:"AxisAngle3", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");

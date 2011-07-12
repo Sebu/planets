@@ -4,6 +4,10 @@ var Utils = Utils || {};
 
 
 
+function mod(a, b)
+{
+    return a - (b * Math.floor(a / b));
+}
 
 Utils.daysToTime = function(days) {
   var fullDays = Math.floor(days);
@@ -23,47 +27,10 @@ Utils.GREGORIAN_SWITCH = 2299160.5;
 Utils.GREGORIAN_EPOCH = 1721425.5;
 Utils.JULIAN_EPOCH = 1721423.5;
 
-function mod(a, b)
-{
-    return a - (b * Math.floor(a / b));
-}
 
-function jwday(j)
-{
-    return mod(Math.floor((j + 1.5)), 7);
-}
 
-function weekday_before(weekday, jd)
-{
-    return jd - jwday(jd - weekday);
-}
 
-function search_weekday(weekday, jd, direction, offset)
-{
-    return weekday_before(weekday, jd + (direction * offset));
-}
 
-function next_weekday(weekday, jd)
-{
-    return search_weekday(weekday, jd, 1, 7);
-}
-
-function previous_weekday(weekday, jd)
-{
-    return search_weekday(weekday, jd, -1, 1);
-}
-
-function n_weeks(weekday, jd, nthweek)
-{
-    var j = 7 * nthweek;
-
-    if (nthweek > 0) {
-        j += previous_weekday(weekday, jd);
-    } else {
-        j += next_weekday(weekday, jd);
-    }
-    return j;
-}
 
 Utils.EgyptNames = ["Toth", "Phaophi", "Athyr", "Choiak", "Tybi", "Mechir", "Phamenoth", "Pharmouthi"            
 , "Pachon", "Payni", "Epiphi", "Mesore", "Epagomenal"];  
@@ -85,25 +52,6 @@ Utils.leapJulian = function(year) {
 Utils.leapGregorian = function(year) {
     return ((year % 4) == 0) &&
             (!(((year % 100) == 0) && ((year % 400) != 0)));
-}
-
-Utils.isoToJulian = function(year, week, day) {
-    return day + n_weeks(0, Utils.gregorianToJd(year - 1, 12, 28), week);
-}
-
-Utils.jdToIso = function(jd) {
-    var year, week, day;
-
-    year = Utils.jdToGregorian(jd - 3)[0];
-    if (jd >= Utils.isoToJulian(year + 1, 1, 1)) {
-        year++;
-    }
-    week = Math.floor((jd - Utils.isoToJulian(year, 1, 1)) / 7) + 1;
-    day = jwday(jd);
-    if (day == 0) {
-        day = 7;
-    }
-    return new Array(year, week, day);
 }
 
 Utils.jdToEgyptian = function(jd) {
@@ -331,9 +279,6 @@ Utils.decToBase = function(number, base) {
     };
 
 
-//alert(sexagesimal("-200;30"));
-//alert(baseToDec(decToBase(-221.75, 60),60));
-
 
 Utils.frac = function(num) {
 
@@ -422,14 +367,12 @@ rgbToHex = function(color) {
 
 rgbToCSS = function(color) {
   var rgb = "rgb(" + Math.round(color.r * 255) + "," + Math.round(color.g * 255) + "," + Math.round(color.b * 255) + ")";
-//  console.log(rgb);
   return rgb;
 };
 
 // extend THREE.Object3D 
 Node = THREE.Object3D;
 THREE.Object3D.prototype.addNode = function(node) { this.addChild(node); };
-//THREE.Object3D.prototype.setBaseColor = function(params) { };
 THREE.Object3D.prototype.setPos = function(pos) { this.position.set(pos.x, pos.y, pos.z); }
 THREE.Object3D.prototype.setEnabled = function(state) { this.visible = state; };
 THREE.Object3D.prototype.getEnabled = function() { return this.visible; };
@@ -635,7 +578,7 @@ sphereGeo = [
 
 ];
 
-planetGeo = new THREE.SphereGeometry( 1 , 32, 16 );
+planetGeo = new THREE.SphereGeometry( 1 , 10, 6 );
 
 
 /*
@@ -657,7 +600,7 @@ Planet = function(params) {
     this.gfx.glowMap = 'textures/sun.png';
     this.gfx.map = params.map;
 
-    this.addNode( this.npole = new Translate({y:1.0}) ); 
+    this.addNode( this.npole = new Translate({y:-1.0}) ); 
     this.reset();
 
     Ori.registerGfx(this);
@@ -735,7 +678,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = state;
+  this.meshGlow.visible = false;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -872,8 +815,8 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 
-//    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-//*
+    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+/*
     var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
         map: THREE.ImageUtils.loadTexture('textures/star.png'),  
         blending: THREE.AdditiveBlending, 
@@ -931,8 +874,8 @@ Spherical = function Spherical(params) {
     this.anchor = new Node();
     this.pivot.addNode(this.anchor);
 
-    this.material = new THREE.LineBasicMaterial( {  color: rgbToHex(this.gfx.color) } );
-    this.materialArc =  new THREE.LineBasicMaterial( {  color: rgbToHex(this.gfx.color) } );
+    this.material = new THREE.LineBasicMaterial( { opacity: 0.8, color: rgbToHex(this.gfx.color) } );
+    this.materialArc =  new THREE.LineBasicMaterial( { opacity: 0.5,  color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
     this.visuals.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
@@ -943,7 +886,7 @@ Spherical = function Spherical(params) {
     this.visuals.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
     this.addNode(this.visuals.arc2);
 
-    var materialArc = new THREE.LineBasicMaterial( {  color: rgbToHex(this.gfx.color) });
+//    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
     this.visuals.equator = new THREE.Line(equator, this.material );
     this.visuals.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.visuals.equator.rotation.x = Math.PI/2;
@@ -958,9 +901,9 @@ Spherical = function Spherical(params) {
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
     
-    var materialBall = new THREE.MeshBasicMaterial( { color: rgbToHex(this.gfx.color) } );
+    var materialBall = new THREE.MeshBasicMaterial( { opacity: 0.5, color: rgbToHex(this.gfx.color) } );
    
-    var materialCone = new THREE.MeshBasicMaterial( { color: "0xFFFFFF" } );
+    var materialCone = new THREE.MeshBasicMaterial( { opacity: 0.5, color: "0xFFFFFF" } );
 //    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
     
     
@@ -1130,7 +1073,7 @@ Spherical.prototype.getOffsetRotateAngle = function() {
 
 Spherical.prototype.setOffsetRotateSpeed = function(value) {
       this.offsetRotateSpeed = value;
-      this.offsetRotateStep = (value != 0) ? 360/((365.25*100)/value) : 0.0;
+      this.offsetRotateStep = (value != 0) ? value/(365.25*100) : 0.0;
 };
       
 Spherical.prototype.getOffsetRotateSpeed = function() {
@@ -1138,6 +1081,7 @@ Spherical.prototype.getOffsetRotateSpeed = function() {
 };
 
 Spherical.prototype.updateOffsetRotateMovement = function(step) { 
+      console.log(this.offsetRotateStep);
       this.setOffsetRotateAngle( this.getOffsetRotateAngle() + (this.offsetRotateStep * step) );
 };
     

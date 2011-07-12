@@ -9,7 +9,7 @@ var Ori = Ori || {};
  * @constructor
  */
 Ori.Canvas = function(params) {
-        if(Modernizr.webgl && !params.canvas) {
+        if(Modernizr.webgl && !params.useCanvas) {
             this.graphics = new THREE.WebGLRenderer(params);
             this.graphics.type = "webgl";
         }
@@ -30,14 +30,16 @@ Ori.Canvas = function(params) {
 	
 Ori.Canvas.prototype.constructor = Ori.Renderer;
 
-Ori.Q = { OFF : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
+Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
 Ori.GfxProfile = {
   low: { 
-    resolution : 50,
+    resolution : 100,
     particles : Ori.Q.LOW,
     textures : Ori.Q.LOW,
     geometry : Ori.Q.LOW,
+    alpha : Ori.Q.NONE,
+    shading : Ori.Q.LOW,
     }
 };
 Ori.gfxStore = [];

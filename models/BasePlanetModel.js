@@ -86,8 +86,8 @@ BasePlanetModel.prototype = {
             betaRotate:180.0,
             dist: 0.0, scale: 0.6,
             emit:0.0, 
-            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-//            color: colors["Earth"],
+//            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
         
@@ -297,11 +297,10 @@ BasePlanetModel.prototype = {
                 
             planet.latitude = 90-calcAngle(epiUpVec,planetPos);
 
-            // days passed
-            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
+
             
             // latitude speed in deg per day
-            planet.longitudeSpeed = (planet.longitude - planet.lastLongitude)/dayDelta;
+            planet.longitudeSpeed = (planet.longitude - planet.lastLongitude)/this.dayDelta;
     },
 
 
@@ -310,23 +309,19 @@ BasePlanetModel.prototype = {
     update : function(time) {
 
         if(this.running) {
+            // days passed (speed indicates seconds for one solar year)
+            this.dayDelta = this.systemSun[0].getSpeed()*(time/this.speed);
+            this.days += this.dayDelta;
+
             // update movement of all spheres
             for (i in model.updateList) {
-                model.updateList[i].updateMovement((365.0*time)/this.speed);
+                model.updateList[i].updateMovement(this.dayDelta);
             }        
-        	
-
-            //time*(this.speed/this.systemSun[0].getSpeed());
-
-            var dayDelta = (this.systemSun[0].getSpeed()/this.speed)*time;
             // OTHER
             // days determined by sun speed
-            this.days += dayDelta;
-
-
+          if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
-        if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2], time);
     },
 
@@ -336,11 +331,12 @@ BasePlanetModel.prototype = {
      },
 
     addDays : function(days) {
-      this.days += days;
-      var time = days/this.systemSun[0].getSpeed();
+      this.dayDelta = days; ///this.systemSun[0].getSpeed();
+      this.days += this.dayDelta;
         for (i in model.updateList) {
-           model.updateList[i].updateMovement((365.0*time));
+           model.updateList[i].updateMovement(this.dayDelta);
         }
+      this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
     },
 
      setDays : function(days) {
