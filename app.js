@@ -55,9 +55,9 @@ myApp.prototype.init = function(params) {
         this.stats = new Stats();
         // Align top-left
         this.stats.domElement.style.position = 'absolute';
-        this.stats.domElement.style.right = '10px';
-        this.stats.domElement.style.bottom = '80px';
-        this.domRoot.append( this.stats.domElement );
+        this.stats.domElement.style.right = '20px';
+        this.stats.domElement.style.bottom = '10px';
+//        this.domRoot.append( this.stats.domElement );
 /*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;

@@ -249,7 +249,7 @@ BasePlanetModel.prototype = {
       return "";
     },
 
-    updatePlanetMetadata : function(planet, dayRef, epiRef, time) {
+    updatePlanetMetadata : function(planet, dayRef, epiRef) {
             
             //TODO: ecliptic latitude?
             var earthPos = sceneToSyl(this.earth.mesh.currentPos()); //epiRef.anchor.currentPos());
@@ -322,7 +322,7 @@ BasePlanetModel.prototype = {
           if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
-        this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2], time);
+        this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2]);
     },
 
 
@@ -337,6 +337,7 @@ BasePlanetModel.prototype = {
            model.updateList[i].updateMovement(this.dayDelta);
         }
       this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
+      this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2]);
     },
 
      setDays : function(days) {

@@ -370,9 +370,60 @@ PtolemyMars: {
     {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
     {axisAngle: 24.0, speed: 686.944621, speedmax: 1000, rotateStart: -111.66666666666667},
     {axisAngle: 0.0, speed: 779.937297, rotateStart: 327.21666666666664 }
+  ] },
+
+PtolemyMarsT: { 
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Mars",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  derefentRadius: 60.0,
+  epicycleRadius: 39.5,
+  apsidalAngle: 90,
+  equant: 6.0,
+//  mean
+  sphere: [
+    {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 686.944621, speedmax: 1000, rotateStart: 90},
+    {axisAngle: 0.0, speed: 779.937297, rotateStart: 0 }
+  ] },
+
+
+PtolemySaturn: { 
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Saturn",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  derefentRadius: 60.0,
+  epicycleRadius: 6.5,
+  apsidalAngle: 224.1666666,
+  equant: 3.416666666666,
+  sphere: [
+    {axisAngle: 0.0, speed: 0.0, speedmax: 1000, rotateStart: 0 },
+    {axisAngle: 24.0, speed: 10749.946, speedmax: 1000, rotateStart: 296.71666666666664},
+    {axisAngle: 0.0, speed: 378.092982, rotateStart: 34.033333333 }
   ] }
 };
 
+var TestPairs = {
+
+  PtolemyMars: {
+    d1: { date: [15, 10, 130], longitude: "81;0" },
+    d2: {  date: [21, 2, 135], longitude: "148;50" },
+    d3: {  date: [27, 5, 139], longitude: "242;34" }
+  },
+
+  PtolemySaturn: {
+    d1: { date: [26, 3, 127], longitude: "181;13" },
+    d2: {  date: [3, 6, 133], longitude: "249;40" },
+    d3: {  date: [8, 7, 136], longitude: "284;14" }
+  }
+
+};
 
 var moonModels = {
  Mendell: { phase: true, speed1: function(d,z)  {return (d+z); }, speed2: function(d,z) { return -d; } },
