@@ -110,11 +110,16 @@ ModelPtolemy = function(params) {
 //*/
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle; 
-      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
+      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((-this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
       this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
     };
 
+    this.setMeanLongitude = function(angle) {
+      this.meanLongitude = angle - this.sphere[2].getOffsetRotateAngle(); 
+      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((-this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
+//      this.anchor.rotation.y = realAngle;    
+    }
 
     this.updateBlob = function() {
       var scale = (this.sphere[2].radius+this.radius1)*this.factor;

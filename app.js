@@ -31,6 +31,7 @@ myApp.prototype.init = function(params) {
         // register input
 //        Ori.input.register(Ori.KEY.LEFT, "LEFT");
 //        Ori.input.register(Ori.KEY.RIGT, "RIGHT");
+
         Ori.input.register(Ori.KEY.DOWN, "DOWN");
         Ori.input.register(Ori.KEY.UP, "UP");
 
@@ -51,13 +52,18 @@ myApp.prototype.init = function(params) {
         this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
         this.skyScene = new THREE.Scene();
 
-        // stats.js
+
+        // DEBUG und stats.js
+        debugBox = $("<div class='container' id='debugContainer'>\
+                     <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
+                     <div class='sexa wert' id='sexaResult'>0</div>\
+                     </div>").appendTo(this.domRoot);        
         this.stats = new Stats();
-        // Align top-left
-        this.stats.domElement.style.position = 'absolute';
-        this.stats.domElement.style.right = '20px';
-        this.stats.domElement.style.bottom = '10px';
-//        this.domRoot.append( this.stats.domElement );
+        debugBox.append( this.stats.domElement );
+        Ori.input.register(Ori.KEY.RIGHT, "DEBUG");
+
+        
+
 /*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
@@ -120,8 +126,6 @@ myApp.prototype.init = function(params) {
               <div>julian date<span class='wert' id='julianDate'>0</span></div>\
               <div>egyptian date<span class='wert' id='egyptianDate'>0</span></div>\
             </div>\
-             <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
-              <div class='sexa wert' id='sexaResult'>0</div>\
              </div>").appendTo(this.domRoot);
 
 //*
@@ -130,7 +134,9 @@ myApp.prototype.init = function(params) {
               { $("#sexaResult").text(Utils.sexagesimal(this.value)); });
 //*/
 
-        uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
+
+        
+        var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         $("#viewPresets option[value='World']").attr('selected', true);
         uiBox.append("<span ><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
@@ -239,6 +245,7 @@ myApp.prototype.updateInfoBox = function() {
 // update loop
 myApp.prototype.update = function(time) {
 
+        if(Ori.input.isDown("DEBUG")) debugBox.toggle();
 
         // handle input     
         if (model.currentPos != "Earth") {

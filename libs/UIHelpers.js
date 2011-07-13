@@ -61,12 +61,16 @@ var UI = {
         var toggle = params.toggle || false;
         var step = params.step || 1;
         var color = {r:0.1, g:0.3, b:0.4};
-
+        //style='background:" + rgbToCSS(color) + "'
+        
+        
         var value = params.value ||  instance["get"+id]();
 //        console.log(instance.valueOf());
         var change = params.change || function(event, ui)  { instance["set"+id](Number(Utils.toDec(ui.value))); $("#" + id + " > input").attr("value",Number(Utils.toDec(ui.value))); };
 
         var change2 = params.change || function()  { instance["set"+id](Number(Utils.toDec(this.value))); $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value))); };
+
+
 
         if(toggle)
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
@@ -74,7 +78,7 @@ var UI = {
           tmp =  $("<div>" + text + "</div>");
         ele = $("<div title='" + tooltip + "' id='" + id + "'>" +
             "<div class='slider'></div>" +
-            "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "' class='range' style='background:" + rgbToCSS(color) + "'/>" +
+            "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");
         tmp.append(ele);
         $(".slider",ele).slider({change: change, slide:change, animate: "fast", max: max, min: min, step: step, value: value});
