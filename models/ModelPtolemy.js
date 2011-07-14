@@ -120,7 +120,7 @@ ModelPtolemy = function(params) {
 
     this.setMeanLongitude = function(angle) {
       this.meanLongitude = angle - this.sphere[2].getOffsetRotateAngle(); 
-      var realAngle = this.meanLongitude/PI_SCALE - Math.asin(((-this.sphere[2].equant)/this.sphere[2].radius) * Math.sin(this.meanLongitude/PI_SCALE));
+      var realAngle = this.meanLongitude/PI_SCALE - Math.asin(((-this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(this.meanLongitude/PI_SCALE));
       this.sphere[2].setRotateAngle(realAngle*PI_SCALE);
     }
 
