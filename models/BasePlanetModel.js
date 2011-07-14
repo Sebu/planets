@@ -168,14 +168,14 @@ BasePlanetModel.prototype = {
             showPath: true,
             showSun: true,
             sphere: [
-                {axisAngle: 38.0, speed: 0, rotateStart: 0, visible: true },
-                {axisAngle: 24.0,  speed: 365, rotateStart: 0, visible: true },
-                {axisAngle: 90.0, speed: 570, rotateStart: 0, visible: true },
-                {axisAngle: 18.0, speed: 0, rotateStart: 0, visible: true },
-                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
-                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
-                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true },
-                {axisAngle: 0.0, speed: 0, rotateStart: 0, visible: true }
+//                {AxisAngle: 38.0, Speed: 0, RotateStart: 0, ShowSphere: true },
+//                {AxisAngle: 24.0, Speed: 365, RotateStart: 0, ShowSphere: true },
+//                {AxisAngle: 90.0, Speed: 570, RotateStart: 0, ShowSphere: true },
+//                {AxisAngle: 18.0, Speed: 0, RotateStart: 0, ShowSphere: true },
+//                {AxisAngle: 0.0, Speed: 0, RotateStart: 0, Visible: true },
+//                {AxisAngle: 0.0, Speed: 0, RotateStart: 0, Visible: true },
+//                {AxisAngle: 0.0, Speed: 0, RotateStart: 0, Visible: true },
+//                {AxisAngle: 0.0, Speed: 0, RotateStart: 0, Visible: true }
             ]
         };
         // extend default settings  
@@ -184,10 +184,12 @@ BasePlanetModel.prototype = {
         this.ui = this.currentPlanet.ui;
         
         //TODO: better merge
-        for(var i in this.sphere) {
-            $.extend(true, this.sphere[i], this.currentPlanet.sphere[i-1]);
-
-            if(this.currentPlanet.sphere[i]) this["setShowSphere"+i](this.currentPlanet.sphere[i-1].visible);
+        for(var i in this.currentPlanet.sphere) {
+//            $.extend(true, this.sphere[i], this.currentPlanet.sphere[i-1]);
+            for(var j in this.currentPlanet.sphere[i]) {
+              this["set" + j + "" + (Number(i)+1)](this.currentPlanet.sphere[i][j]);
+            }
+//            if(this.currentPlanet.sphere[i]) this["setShowSphere"+i](this.currentPlanet.sphere[i-1].visible);
 //            for(var b in this.currentPlanet.sphere[i]) { console.log(b); }
         }
         

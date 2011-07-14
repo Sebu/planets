@@ -72,9 +72,9 @@ ModelPtolemy = function(params) {
     this.root.addNode(this.equantPlanetLine);
 
     
-    this.setShowSphere1(false);
-    this.setShowSphere2(false);
-    this.setShowSphere3(false);
+//    this.setShowSphere1(false);
+//    this.setShowSphere2(false);
+//    this.setShowSphere3(false);
 
     
 
@@ -110,7 +110,7 @@ ModelPtolemy = function(params) {
 //*/
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle; 
-      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((-this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
+      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
       this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
     };

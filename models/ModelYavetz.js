@@ -36,7 +36,7 @@ ModelYavetz = function(params) {
 
     this.loadPreset = function(node) {
       BasePlanetModel.prototype.loadPreset.call(this,node);
-      this.setAlpha(this.currentPlanet.sphere[3].axisAngle);
+      this.setAlpha(this.currentPlanet.sphere[3].AxisAngle);
       this.setBeta(this.currentPlanet.betaRotate);
     }
 
