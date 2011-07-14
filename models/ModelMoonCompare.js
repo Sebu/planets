@@ -93,7 +93,7 @@ ModelMoonCompare = function(params) {
     this.update = function(time) {
         BasePlanetModel.prototype.update.call(this, time);
 //        if(this.running) {
-            this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.systemSun[0], time);
+            this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.systemSun[0], this.sphere[2]);
 //        }
     };    
 

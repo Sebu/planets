@@ -252,7 +252,7 @@ BasePlanetModel.prototype = {
       return "";
     },
 
-    updatePlanetMetadata : function(planet, dayRef, ecliptic) {
+    updatePlanetMetadata : function(planet, dayRef, ecliptic, epi) {
             
             //TODO: ecliptic latitude?
 //            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); 
@@ -267,6 +267,7 @@ BasePlanetModel.prototype = {
             var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos);
 
             var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(eclipticPos);
+            var epiOnPlane = sceneToSyl(epi.visuals.markerball.currentPos()).subtract(eclipticPos);
 
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
 
@@ -297,6 +298,16 @@ BasePlanetModel.prototype = {
             if (planet.perpAngle>90 && planet.lastPerp<90)
                 planet.lastLongitude -= 360;
 //*/                
+
+
+            planet.deferentLast = planet.deferentLongitude;
+            planet.deferentLastPerp = planet.deferentPerp;
+            planet.deferentLongitude = calcAngle(epiOnPlane, equinoxOnPlane);
+            planet.deferentPerp = calcAngle(epiOnPlane, equinoxOnPlanePerp);
+            if (planet.deferentPerp<=90)
+                planet.deferentLongitude = 360-planet.deferentLongitude;
+            if (planet.deferentPerp>90 && planet.deferentLastPerp<90)
+                planet.deferentLast -= 360;
                 
             planet.latitude = calcAngle(eclipticUpVec, planetPos)-90;
 
@@ -325,7 +336,7 @@ BasePlanetModel.prototype = {
           if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
-        this.updatePlanetMetadata(this.planet,this.sphere[1],this.systemSun[0]);
+        this.updatePlanetMetadata(this.planet,this.sphere[1],this.systemSun[0], this.sphere[2]);
     },
 
 
@@ -340,7 +351,7 @@ BasePlanetModel.prototype = {
            model.updateList[i].updateMovement(this.dayDelta);
         }
       this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
-      this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2]);
+      this.updatePlanetMetadata(this.planet,this.sphere[1],this.systemSun[0], this.sphere[2]);
     },
 
      setDays : function(days) {

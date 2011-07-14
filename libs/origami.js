@@ -60,7 +60,7 @@ Ori.loadContent = function(uri) {
   return content;
 }
 
-Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68 };
+Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68, SCROLL: 145 };
 
 
 /**

@@ -40,9 +40,14 @@ myApp.prototype.init = function(params) {
         this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);		
         this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
         this.currentCamera = this.camera;
+
+
         
 //        var ortho = 70;
 //        this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
+
+
+
 /*   
         this.bgMusic = Ori.loadContent("song2.mp3");
         this.bgMusic.loop = true;
@@ -61,7 +66,7 @@ myApp.prototype.init = function(params) {
                      </div>").appendTo(this.domRoot);        
         this.stats = new Stats();
         debugBox.append( this.stats.domElement );
-        Ori.input.register(Ori.KEY.RIGHT, "DEBUG");
+        Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
 
         
 
@@ -76,6 +81,9 @@ myApp.prototype.init = function(params) {
         // set start model
         model = this.getModel("Model4");
 
+
+//        this.tbCamera = new THREE.TrackballCamera({fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far: 10000, target: model.root});
+//        this.currentCamera = this.tbCcamera;
 
         // setup moving labels        
         planetLabel = new UI.Label({text: "Planet"});
@@ -225,7 +233,7 @@ myApp.prototype.updateInfoBox = function() {
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
-          $("#deferentLongitude").text( ((model.sphere[2].getRotateAngle() + model.sphere[2].getOffsetRotateAngle()) % 360.0).toFixed(2) );
+          $("#deferentLongitude").text( model.planet.deferentLongitude.toFixed(2) );
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
           $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
