@@ -87,7 +87,11 @@ ModelPtolemySun = function(params) {
     this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator","rotationarc"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
     
-
+    this.setShowSphere1(true);
+    this.setShowSphere2(true);
+    this.setShowSphere3(true);
+    
+    
     this.realSunS[1].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
     this.realSunS[2].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 

@@ -25,8 +25,8 @@ ModelSun = function(params) {
     
     this.getMeanLongitude = function() {
       return (this.sphere[2].getRotateAngle() + this.sphere[3].getRotateAngle())%360.0;
-//      return (this.longitudeSpeed*this.days)%360.0;
     }
+    
     this.getEquationOfTime = function() {  
       return ( ( ( this.planet.longitude-this.getMeanLongitude() ) * 360.0 ) /  this.getDaysPerYear() )  * 24;
     }

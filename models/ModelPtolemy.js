@@ -72,16 +72,19 @@ ModelPtolemy = function(params) {
     this.root.addNode(this.equantPlanetLine);
 
     
-//    this.setShowSphere1(false);
-//    this.setShowSphere2(false);
-//    this.setShowSphere3(false);
-
-    
+    this.setShowSphere1(false);
+    this.setShowSphere2(false);
+    this.setShowSphere3(false);
 
 
     this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc"], state) };    
-    this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator","rotationarc"], state) };
+    this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
+
+
+    this.setShowSphere1(true);
+    this.setShowSphere2(true);
+    this.setShowSphere3(true);
     
 
     this.realSunS[1].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
@@ -214,7 +217,7 @@ ModelPtolemy = function(params) {
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
         this.sphere[2].setOffsetRotateSpeed(1);
-        this.setMeanLongitude(this.currentPlanet.MeanLongitude);
+        this.setMeanLongitude( Utils.toDec(this.currentPlanet.MeanLongitude) );
         
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);

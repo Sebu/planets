@@ -20,7 +20,7 @@ myApp.prototype.init = function(params) {
         for(var n in TestPairs) {
           this.loadPreset(n);
           var tests = TestPairs[n];
-          var ul = $("#mainBox").append("<ul></ul>");
+          var ul = $("#mainBox").append("<br>" + n + "<ul></ul>");
           for(var i in tests) { 
 
             model.setDate(tests[i].date);

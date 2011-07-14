@@ -336,7 +336,7 @@ PtolemySun: {
   derefentRadius: 60.0,
   epicycleRadius: 0,
   apsidalAngle: 56.5,
-  equant: 2.5,
+  equant: "2;30",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 365.2466666,  RotateStart: 274.25 },
@@ -350,37 +350,56 @@ PtolemyMars: {
   showStars: false,
   showHippo: false,
   sunDist: 1.7,
-  derefentRadius: 60.0,
-  epicycleRadius: 39.5,
-  MeanLongitude: 3.5,
-  apsidalAngle: 106.66666666666667,
-  equant: 6.0,
+  derefentRadius: "60;0",
+  epicycleRadius: "39;30",
+  MeanLongitude: "3;30",
+  apsidalAngle: "106;6",
+  equant: "6;0",
 //  mean
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 686.944621,  RotateStart: -114},
-    {AxisAngle: 0.0, Speed: 779.937297, RotateStart: 327.21666666666664 }
+    {AxisAngle: 24.0, Step: "0;31,26,36,53,51,33",  RotateStart: 0},
+    {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
   ] },
 
-PtolemyMarsT: { 
+
+PtolemyVenus: { 
   model: "ModelPtolemy",
   ui: "ModelPtolemy",
-  label: "Mars",
+  label: "Venus",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  derefentRadius: "60;0",
+  epicycleRadius: "43;10",
+  MeanLongitude: "330;45",
+  apsidalAngle: "46;10",
+  equant: "1;15",
+//  mean
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Step: "0;59,08,17,13,12,31", RotateStart: 0},
+    {AxisAngle: 0.0, Step: "0;36,59,25,53,11,28", RotateStart: "71;07" }
+  ] },
+  
+PtolemyJupiter: { 
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Jupiter",
   showStars: false,
   showHippo: false,
   sunDist: 1.7,
   derefentRadius: 60.0,
-  epicycleRadius: 39.5,
-  apsidalAngle: 106.66666666666667,
-  MeanLongitude: 3.5,
-  equant: 6.0,
+  epicycleRadius: "11;30",
+  apsidalAngle: "152;09",
+  MeanLongitude:  "184;41",
+  equant: "2;45",
   sphere: [
-    {AxisAngle: 0.0, Speed: 0.0, RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 686.944621,  RotateStart: 0},
-    {AxisAngle: 0.0, Speed: 779.937297, RotateStart: 327.21666666666664  }
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Step: "0;04,59,14,26,46,31",  RotateStart: 0},
+    {AxisAngle: 0.0, Step: "0;54,09,02,46,26,00", RotateStart: "146;04" }
   ] },
-
-
+  
 PtolemySaturn: { 
   model: "ModelPtolemy",
   ui: "ModelPtolemy",
@@ -389,33 +408,17 @@ PtolemySaturn: {
   showHippo: false,
   sunDist: 1.7,
   derefentRadius: 60.0,
-  epicycleRadius: 6.5,
-  apsidalAngle: 224.1666666,
-  MeanLongitude: 296.75,
-  equant: 3.416666666666,
+  epicycleRadius: "6;30",
+  apsidalAngle: "224;10",
+  MeanLongitude: "296;43",
+  equant: "3;25",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 10749.946,  RotateStart: 0},
-    {AxisAngle: 0.0, Speed: 378.092982, RotateStart: 32.033333333 }
-  ] },
-  
-  PtolemyJupiter: { 
-  model: "ModelPtolemy",
-  ui: "ModelPtolemy",
-  label: "Jupiter",
-  showStars: false,
-  showHippo: false,
-  sunDist: 1.7,
-  derefentRadius: 60.0,
-  epicycleRadius: 6.5,
-  apsidalAngle: 152.1666666,
-  MeanLongitude:  184.70,
-  equant: 2.75,
-  sphere: [
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 4331,  RotateStart: 0},
-    {AxisAngle: 0.0, Speed: 398.88, RotateStart: 146.0 }
+    {AxisAngle: 24.0, Step: "0;02,00,33,31,28,51",  RotateStart: 0},
+    {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
   ] }
+  
+
 };
 
 
@@ -440,16 +443,22 @@ var TestPairs = {
     d3: {  date: "27.5.139", longitude: "242;34" }
   },
 
-  PtolemySaturn: {
-    d1: { date: "26.3.127", longitude: "181;13" },
-    d2: {  date: "3.6.133", longitude: "249;40" },
-    d3: {  date: "8.7.136", longitude: "284;14" }
+  PtolemyVenus: {
+    d1: { date: "16.12.138", longitude: "216;30" }
   },
+  
   PtolemyJupiter: {
     d1: { date: "17.5.133", longitude: "233;11" },
     d2: {  date: "21.8.136", longitude: "337;54" },
     d3: {  date: "8.10.137", longitude: "14;23" }
-  }  
+  },
+  
+  PtolemySaturn: {
+    d1: { date: "26.3.127", longitude: "181;13" },
+    d2: {  date: "3.6.133", longitude: "249;40" },
+    d3: {  date: "8.7.136", longitude: "284;14" }
+  }
+
 
 };
 

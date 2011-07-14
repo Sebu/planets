@@ -107,6 +107,7 @@ BasePlanetModel.prototype = {
         // create some shortcuts
         for (i in this.sphere) {
             this["setSpeed" + i] = new Function("value", "this.sphere[" + i + "].setSpeed(value);");
+            this["setStep" + i] = new Function("value", "this.sphere[" + i + "].setStep(value);");
             this["setAxisAngle" + i] = new Function("value", "this.sphere[" + i + "].setAxisAngle(value);");
             this["setRotateStart" + i] = new Function("value", "this.sphere[" + i + "].setRotateStart(value);");
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
@@ -187,7 +188,7 @@ BasePlanetModel.prototype = {
         for(var i in this.currentPlanet.sphere) {
 //            $.extend(true, this.sphere[i], this.currentPlanet.sphere[i-1]);
             for(var j in this.currentPlanet.sphere[i]) {
-              this["set" + j + "" + (Number(i)+1)](this.currentPlanet.sphere[i][j]);
+              this["set" + j + "" + (Number(i)+1)]( Utils.toDec( this.currentPlanet.sphere[i][j]) );
             }
 //            if(this.currentPlanet.sphere[i]) this["setShowSphere"+i](this.currentPlanet.sphere[i-1].visible);
 //            for(var b in this.currentPlanet.sphere[i]) { console.log(b); }

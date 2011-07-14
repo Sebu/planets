@@ -58,7 +58,7 @@ Utils.jdToEgyptian = function(jd) {
     var z, a, b, year, month, day;
 
 //    jd += 0.5;
-    z = Math.floor(jd) - 1448638;
+    z = Math.floor(jd + 0.5) - 1448638;
 
     year = Math.floor(z / 365);
     a = Math.floor(365 * year);
@@ -196,9 +196,9 @@ Utils.decToSex = function(num, prec) {
 
 Utils.toDec = function(number) {
   if(number.toString().indexOf(";")==-1)
-    return number;
+    return Number(number);
   else 
-    return Utils.baseToDec(number,60);
+    return Number( Utils.baseToDec(number,60) );
 }
 
 Utils.sexagesimal = function(number) {
@@ -1019,6 +1019,7 @@ Spherical.prototype.getSpeed = function() {
 
 Spherical.prototype.setStep = function(step) {
     this.step = step;
+    this.speed = 360.0 / this.step;
 };
 
 Spherical.prototype.getStep = function() {

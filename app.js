@@ -475,10 +475,7 @@ myApp.prototype.loadPreset = function(preset) {
         this.currentCamera.rotateY(Math.PI + 0.1);
 
 
-        // create legend
-//        $("<div style='float:left;font-weight:bold;color:rgb(255,255,255)'>Path</div>").appendTo("#legendContainer");
         for (i in model.sphere) {
-//            console.log(model.sphere[i].gfx.color);
             $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
             
         }
