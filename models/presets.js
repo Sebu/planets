@@ -235,8 +235,7 @@ MoonMeton: {
   sphere: [
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0,   RotateStart: 0 }]},
+    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
 
 MoonCallippus: { 
   model: "ModelMoon",
@@ -250,8 +249,7 @@ MoonCallippus: {
   sphere: [
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0, RotateStart: 0 }]},
+    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
       
 Moon3: {
   model: "ModelMoon",
@@ -265,8 +263,7 @@ Moon3: {
   sphere: [
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0, RotateStart: 0 }]},
+    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
   
 
     
@@ -323,7 +320,7 @@ Aristotle: {
   showStars: false,
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0},
-    {AxisAngle: 24.0,  Speed: 365, RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 365, RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 580, RotateStart: 0 },
     {AxisAngle: 45.0, Speed: -580, RotateStart: 0 }
   ]},
@@ -355,6 +352,7 @@ PtolemyMars: {
   sunDist: 1.7,
   derefentRadius: 60.0,
   epicycleRadius: 39.5,
+  MeanLongitude: 3.5,
   apsidalAngle: 106.66666666666667,
   equant: 6.0,
 //  mean
@@ -374,12 +372,12 @@ PtolemyMarsT: {
   derefentRadius: 60.0,
   epicycleRadius: 39.5,
   apsidalAngle: 106.66666666666667,
+  MeanLongitude: 3.5,
   equant: 6.0,
-//  mean
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0, RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 686.944621,  RotateStart: -103.16666666666667},
-    {AxisAngle: 0.0, Speed: 779.937297, RotateStart: 315  }
+    {AxisAngle: 24.0, Speed: 686.944621,  RotateStart: 0},
+    {AxisAngle: 0.0, Speed: 779.937297, RotateStart: 327.21666666666664  }
   ] },
 
 
@@ -393,34 +391,66 @@ PtolemySaturn: {
   derefentRadius: 60.0,
   epicycleRadius: 6.5,
   apsidalAngle: 224.1666666,
+  MeanLongitude: 296.75,
   equant: 3.416666666666,
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 10749.946,  RotateStart: 296.71666666666664},
-    {AxisAngle: 0.0, Speed: 378.092982, RotateStart: 34.033333333 }
+    {AxisAngle: 24.0, Speed: 10749.946,  RotateStart: 0},
+    {AxisAngle: 0.0, Speed: 378.092982, RotateStart: 32.033333333 }
+  ] },
+  
+  PtolemyJupiter: { 
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Jupiter",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  derefentRadius: 60.0,
+  epicycleRadius: 6.5,
+  apsidalAngle: 152.1666666,
+  MeanLongitude:  184.70,
+  equant: 2.75,
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 4331,  RotateStart: 0},
+    {AxisAngle: 0.0, Speed: 398.88, RotateStart: 146.0 }
   ] }
 };
 
-var TestPairs = {
-
-  PtolemyMars: {
-    d1: { date: [15, 10, 130], longitude: "81;0" },
-    d2: {  date: [21, 2, 135], longitude: "148;50" },
-    d3: {  date: [27, 5, 139], longitude: "242;34" }
-  },
-
-  PtolemySaturn: {
-    d1: { date: [26, 3, 127], longitude: "181;13" },
-    d2: {  date: [3, 6, 133], longitude: "249;40" },
-    d3: {  date: [8, 7, 136], longitude: "284;14" }
-  }
-
-};
 
 var moonModels = {
  Mendell: { phase: true, Speed1: function(d,z)  {return (d+z); }, Speed2: function(d,z) { return -d; } },
  Schiparelli: { phase: false, Speed1: function(d,z)  {return d; }, Speed2: function(d,z) { return -Math.abs(d-z); } },
  SchFixed: { phase: false, Speed1: function(d,z)  {return -Math.abs(d-z); }, Speed2: function(d,z) { return d; } }
+};
+
+var TestPairs = {
+
+  PtolemySun: {
+    d1: { date: "9.2.139", longitude: "318;50" },
+    d2: { date: "26.9.139", longitude: "180" },
+    d3: { date: "22.3.140", longitude: "0" },
+    d4: { date: "25.6.140", longitude: "90" }
+  },
+  
+  PtolemyMars: {
+    d1: { date: "15.10.130", longitude: "81;0" },
+    d2: {  date: "21.2.135", longitude: "148;50" },
+    d3: {  date: "27.5.139", longitude: "242;34" }
+  },
+
+  PtolemySaturn: {
+    d1: { date: "26.3.127", longitude: "181;13" },
+    d2: {  date: "3.6.133", longitude: "249;40" },
+    d3: {  date: "8.7.136", longitude: "284;14" }
+  },
+  PtolemyJupiter: {
+    d1: { date: "17.5.133", longitude: "233;11" },
+    d2: {  date: "21.8.136", longitude: "337;54" },
+    d3: {  date: "8.10.137", longitude: "14;23" }
+  }  
+
 };
 
 

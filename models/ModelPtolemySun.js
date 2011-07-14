@@ -186,13 +186,7 @@ ModelPtolemySun = function(params) {
 //        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
-        this.sphere[2].updateOffsetRotateMovement((365.0*time)/this.speed);
-
-        var epiPos = sceneToSyl(this.systemSun[0].currentPos());
-        var epiPolePos = sceneToSyl(this.systemSun[0].visuals.npole.currentPos()); 
-        var epiUpVec = epiPos.subtract(epiPolePos);
-        var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(epiPos);
-        this.planet.latitude = calcAngle(epiUpVec,planetPos)-90;
+        this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
 
         // mean sun
         this.systemSun[0].anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;        
@@ -235,9 +229,11 @@ ModelPtolemySun = function(params) {
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateSpeed(0);
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );
-        this.realSunS[1].setOffsetRotateSpeed(0);
-        this.realSunS[1].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );      
 
+       
+        // sun stuff
+        this.realSunS[1].setOffsetRotateSpeed(0);
+        this.realSunS[1].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) ); 
         this.realSunS[1].setRotateAngle( this.getRotateStart2() );
         this.realSunS[2].setRotateAngle( (360-this.getRotateStart2()) );
 

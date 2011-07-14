@@ -48,12 +48,12 @@ ModelMoonCompare = function(params) {
     this.setCurrentMoonModels = function(node1, node2) {
         var currentModel1 = moonModels[node1];
         
-        this.moonSpeed1 = currentModel1.speed1;
-        this.moonSpeed2 = currentModel1.speed2;
+        this.moonSpeed1 = currentModel1.Speed1;
+        this.moonSpeed2 = currentModel1.Speed2;
         
         var currentModel2 = moonModels[node2];
-        this.moonSpeed3 = currentModel2.speed1;
-        this.moonSpeed4 = currentModel2.speed2;
+        this.moonSpeed3 = currentModel2.Speed1;
+        this.moonSpeed4 = currentModel2.Speed2;
         this.updateMoon();
     }
 
@@ -93,7 +93,7 @@ ModelMoonCompare = function(params) {
     this.update = function(time) {
         BasePlanetModel.prototype.update.call(this, time);
 //        if(this.running) {
-            this.updatePlanetMetadata(this.planet2,  this.sphere[1],this.sphere[4], time);
+            this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.systemSun[0], time);
 //        }
     };    
 

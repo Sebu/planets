@@ -251,27 +251,27 @@ BasePlanetModel.prototype = {
       return "";
     },
 
-    updatePlanetMetadata : function(planet, dayRef, epiRef) {
+    updatePlanetMetadata : function(planet, dayRef, ecliptic) {
             
             //TODO: ecliptic latitude?
-            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); //epiRef.anchor.currentPos());
-            var polePos = sceneToSyl(this.earth.npole.currentPos()); //epiRef.visuals.npole.currentPos());
-            var upVec = earthPos.subtract(polePos);
+//            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); 
+//            var polePos = sceneToSyl(this.earth.npole.currentPos()); 
+//            var upVec = earthPos.subtract(polePos);
 
-            var epiPos = sceneToSyl(epiRef.currentPos()); //epiRef.visuals.npole.currentPos
-            var epiPolePos = sceneToSyl(epiRef.visuals.npole.currentPos()); //epiRef.visuals.npole.currentPos());
-            var epiUpVec = epiPos.subtract(epiPolePos);
+            var eclipticPos = sceneToSyl(ecliptic.currentPos()); 
+            var eclipticPolePos = sceneToSyl(ecliptic.visuals.npole.currentPos());
+            var eclipticUpVec = eclipticPos.subtract(eclipticPolePos);
             
-            var planetOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(earthPos);
-            var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(earthPos);
+            var planetOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(eclipticPos);
+            var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos);
 
-            var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(earthPos);
+            var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(eclipticPos);
 
-            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
 
 
-            var sunOnPlane = epiRef.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(earthPos);
-            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(earthPos,upVec));
+            var sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(eclipticPos);
+            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(eclipticPos, eclipticUpVec));
             planet.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
             // shade planet if sun is in a 15deg region
@@ -297,7 +297,7 @@ BasePlanetModel.prototype = {
                 planet.lastLongitude -= 360;
 //*/                
                 
-            planet.latitude = 90-calcAngle(epiUpVec,planetPos);
+            planet.latitude = calcAngle(eclipticUpVec, planetPos)-90;
 
 
             
@@ -324,7 +324,7 @@ BasePlanetModel.prototype = {
           if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
-        this.updatePlanetMetadata(this.planet,this.sphere[1],this.sphere[2]);
+        this.updatePlanetMetadata(this.planet,this.sphere[1],this.systemSun[0]);
     },
 
 

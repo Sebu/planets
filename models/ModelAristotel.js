@@ -165,17 +165,17 @@ ModelAristotle = function(params) {
 
     this.loadPreset = function(node) {
         BasePlanetModel.prototype.loadPreset.call(this,node);
-        this.sphere[2].setAxisAngle(0);
-        this.sphere[3].setAxisAngle(0);       
-        this.sphere[4].setAxisAngle(0);
-        this.setAxisAngle2(this.currentPlanet.sphere[1].AxisAngle);
-        this.setAxisAngle3(this.currentPlanet.sphere[2].AxisAngle);
-        this.setAxisAngle4(this.currentPlanet.sphere[3].AxisAngle);
+//        this.sphere[2].setAxisAngle(0);
+//        this.sphere[3].setAxisAngle(0);       
+//        this.sphere[4].setAxisAngle(0);
+//        this.setAxisAngle2(this.currentPlanet.sphere[1].AxisAngle);
+//        this.setAxisAngle3(this.currentPlanet.sphere[2].AxisAngle);
+//        this.setAxisAngle4(this.currentPlanet.sphere[3].AxisAngle);
 
-        this.sphere[2].setSpeed(0);
-        this.sphere[2].setSpeed(0);
-        this.setSpeed2(this.currentPlanet.sphere[1].Speed);
-        this.setSpeed3(this.currentPlanet.sphere[2].Speed);
+//        this.sphere[2].setSpeed(0);
+//        this.sphere[2].setSpeed(0);
+//        this.setSpeed2(this.currentPlanet.sphere[1].Speed);
+//        this.setSpeed3(this.currentPlanet.sphere[2].Speed);
     }
     this.reset = function() {
         BasePlanetModel.prototype.reset.call(this);

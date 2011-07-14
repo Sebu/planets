@@ -117,8 +117,8 @@ ModelPtolemy = function(params) {
 
     this.setMeanLongitude = function(angle) {
       this.meanLongitude = angle - this.sphere[2].getOffsetRotateAngle(); 
-      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((-this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
-//      this.anchor.rotation.y = realAngle;    
+      var realAngle = this.meanLongitude/PI_SCALE - Math.asin(((-this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(this.meanLongitude/PI_SCALE));
+      this.sphere[2].setRotateAngle(realAngle*PI_SCALE);
     }
 
     this.updateBlob = function() {
@@ -175,12 +175,6 @@ ModelPtolemy = function(params) {
         BasePlanetModel.prototype.update.call(this, time);
         if(this.running) this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
 
-        var epiPos = sceneToSyl(this.systemSun[0].currentPos());
-        var epiPolePos = sceneToSyl(this.systemSun[0].visuals.npole.currentPos()); 
-        var epiUpVec = epiPos.subtract(epiPolePos);
-        var planetPos = sceneToSyl(this.planet.mesh.currentPos()).subtract(epiPos);
-        this.planet.latitude = calcAngle(epiUpVec,planetPos)-90;
-
         // mean sun
         this.systemSun[0].anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;        
 
@@ -220,7 +214,9 @@ ModelPtolemy = function(params) {
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
         this.sphere[2].setOffsetRotateSpeed(1);
+        this.setMeanLongitude(this.currentPlanet.MeanLongitude);
         
+        // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    
         this.realSunS[1].setRotateAngle( 274.25 );

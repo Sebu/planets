@@ -20,9 +20,14 @@ myApp.prototype.init = function(params) {
         for(var n in TestPairs) {
           this.loadPreset(n);
           var tests = TestPairs[n];
+          var ul = $("#mainBox").append("<ul></ul>");
           for(var i in tests) { 
-            model.setDate("" + tests[i].date[0] + "." +  tests[i].date[1] + "." + tests[i].date[2] + "");
-            $("#mainBox").append(" " + model.planet.longitude);
+
+            model.setDate(tests[i].date);
+            var longReal = Math.abs( model.planet.longitude-180 );
+            var longRef =  Math.abs( Number(Utils.toDec( tests[i].longitude )) - 180 );
+            console.log(model);
+            ul.append("<li>" + ( longReal - longRef)  + "</li>");
             
           }
         }
