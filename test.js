@@ -28,7 +28,7 @@ myApp.prototype.init = function(params) {
             var longRef =  Math.abs( Number(Utils.toDec( tests[i].longitude )) - 180 );
             var blaa = model.sphere[3].getRotateAngle();
             console.log(model);
-            ul.append("<li>" + ( longReal - longRef)  + " " +  blaa  + "</li>");
+            ul.append("<li>" + ( longReal - longRef)  + "</li>");
             
           }
         }
