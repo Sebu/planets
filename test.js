@@ -26,8 +26,9 @@ myApp.prototype.init = function(params) {
             model.setDate(tests[i].date);
             var longReal = Math.abs( model.planet.longitude-180 );
             var longRef =  Math.abs( Number(Utils.toDec( tests[i].longitude )) - 180 );
+            var blaa = model.sphere[3].getRotateAngle();
             console.log(model);
-            ul.append("<li>" + ( longReal - longRef)  + "</li>");
+            ul.append("<li>" + ( longReal - longRef)  + " " +  blaa  + "</li>");
             
           }
         }

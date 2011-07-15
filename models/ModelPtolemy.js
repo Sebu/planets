@@ -124,6 +124,18 @@ ModelPtolemy = function(params) {
       this.sphere[2].setRotateAngle(realAngle*PI_SCALE);
     }
 
+
+    this.sphere[3].setBobAngle = function(angle) {
+      var scale = 90/12;
+      this.bobAngle = (Math.abs(mod(angle, 360)-180)-90)/scale;
+      console.log(this.bobAngle);
+      this.anchor.rotation.x = degToRad(this.bobAngle);
+    };
+
+    this.sphere[3].getBobAngle = function() {
+      return this.bobAngle;
+    };
+
     this.updateBlob = function() {
       var scale = (this.sphere[2].radius+this.radius1)*this.factor;
       this.sphere[1].setScale(scale); 
@@ -176,6 +188,7 @@ ModelPtolemy = function(params) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
+        this.sphere[3].setBobAngle(this.sphere[2].getRotateAngle());
         if(this.running) this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
 
 
@@ -219,6 +232,7 @@ ModelPtolemy = function(params) {
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
         this.sphere[2].setOffsetRotateSpeed(1);
+        this.sphere[3].setBobAngle(0);
         this.setMeanLongitude( Utils.toDec(this.currentPlanet.MeanLongitude) );
         
         // sun stuff

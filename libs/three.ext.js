@@ -976,6 +976,9 @@ Spherical.prototype.setVisuals = function(vis, state) {
     }
 
 };
+
+
+
 Spherical.prototype.setAxisAngle = function(angle) {
     this.axisAngle = angle;
     this.rotation.z = degToRad(this.axisAngle);

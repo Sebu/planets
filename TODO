@@ -1,6 +1,6 @@
 S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 rotate z * rotate -S2/2 * rotate beta
 
-
+BRiOhgY9FB
 
 model.update -> dirty -> update -> render
 
