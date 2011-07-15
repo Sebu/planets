@@ -267,9 +267,14 @@ BasePlanetModel.prototype = {
             var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos);
 
             var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(eclipticPos);
-            var epiOnPlane = sceneToSyl(epi.visuals.markerball.currentPos()).subtract(eclipticPos);
-
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
+
+            var epiPos = sceneToSyl(epi.currentPos()); 
+            var epiOnPlane = sceneToSyl(epi.visuals.markerball.currentPos()).subtract(epiPos);
+
+            var equinoxOnEpiPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(epiPos);
+            var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));
+
 
 
             var sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(eclipticPos);
@@ -302,8 +307,8 @@ BasePlanetModel.prototype = {
 
             planet.deferentLast = planet.deferentLongitude;
             planet.deferentLastPerp = planet.deferentPerp;
-            planet.deferentLongitude = calcAngle(epiOnPlane, equinoxOnPlane);
-            planet.deferentPerp = calcAngle(epiOnPlane, equinoxOnPlanePerp);
+            planet.deferentLongitude = calcAngle(epiOnPlane, equinoxOnEpiPlane);
+            planet.deferentPerp = calcAngle(epiOnPlane, equinoxOnEpiPlanePerp);
             if (planet.deferentPerp<=90)
                 planet.deferentLongitude = 360-planet.deferentLongitude;
             if (planet.deferentPerp>90 && planet.deferentLastPerp<90)
