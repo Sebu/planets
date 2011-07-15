@@ -353,7 +353,7 @@ PtolemyMars: {
   derefentRadius: "60;0",
   epicycleRadius: "39;30",
   MeanLongitude: "3;30",
-  apsidalAngle: "106;6",
+  apsidalAngle: "106;40",
   equant: "6;0",
 //  mean
   sphere: [
