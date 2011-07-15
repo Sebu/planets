@@ -129,7 +129,6 @@ ModelPtolemy = function(params) {
     this.sphere[3].setBobAngle = function(angle) {
       var scale = 90/12;
       this.bobAngle = (Math.abs(mod(angle, 360)-180)-90)/scale;
-      console.log(this.bobAngle);
       this.anchor.rotation.x = degToRad(this.bobAngle);
     };
 
