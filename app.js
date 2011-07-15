@@ -130,6 +130,8 @@ myApp.prototype.init = function(params) {
               <div>days/draconitic month<span class='wert' id='draconiticDaysPerMonth'>0</span></div>\
             </div>\
             <div id='ptolemyInfoContainer' style='display:none'>\
+              <div>apsidal<span class='wert' id='apsidalLongitude'>0</span></div>\
+              <div>epicycle<span class='wert' id='epicycleLongitude'>0</span></div>\
               <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
               <div>gregorian date<span class='wert' id='gregorianDate'>0</span></div>\
               <div>julian date<span class='wert' id='julianDate'>0</span></div>\
@@ -233,6 +235,8 @@ myApp.prototype.updateInfoBox = function() {
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
+          $("#apsidalLongitude").text( model.sphere[2].getOffsetRotateAngle().toFixed(2) );
+          $("#epicycleLongitude").text( model.sphere[3].getRotateAngle().toFixed(2) );
           $("#deferentLongitude").text( model.planet.deferentLongitude.toFixed(2) );
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
           $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
