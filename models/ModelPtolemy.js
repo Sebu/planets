@@ -77,9 +77,9 @@ ModelPtolemy = function(params) {
     this.setShowSphere3(false);
 
 
-    this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc"], state) };    
-    this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator"], state) };
-    this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
+    this.setShowSphere0 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc"], state) };
+    this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator"], state) };
+    this.setShowSphere3 = function(state) { this.sphere[3].setGfx(["equator"], state) };
 
 
     this.setShowSphere1(true);
@@ -87,8 +87,8 @@ ModelPtolemy = function(params) {
     this.setShowSphere3(true);
     
 
-    this.realSunS[1].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
-    this.realSunS[2].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.realSunS[1].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.realSunS[2].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
     this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );    
 
@@ -112,17 +112,15 @@ ModelPtolemy = function(params) {
     }
 //*/
     this.sphere[2].setRotateAngle = function(angle) {
-      this.rotateAngle = angle; 
+      this.rotateAngle = mod(angle,360.0); 
       var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
       this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
     };
 
     this.setMeanLongitude = function(angle) {
-      var offset = this.sphere[2].getOffsetRotateAngle();
-      var realAngle = offset/PI_SCALE - Math.asin(((-this.sphere[2].equant)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
-      this.meanLongitude = angle - realAngle*PI_SCALE; 
-      var realAngle = this.meanLongitude/PI_SCALE - Math.asin(((-this.sphere[2].equant)/this.sphere[2].radius) * Math.sin(this.meanLongitude/PI_SCALE));
+      var offset = angle+(360-this.sphere[2].getOffsetRotateAngle());
+      var realAngle = offset/PI_SCALE + Math.asin(((this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
       this.sphere[2].setRotateAngle(realAngle*PI_SCALE);
     }
 
@@ -130,7 +128,7 @@ ModelPtolemy = function(params) {
     this.sphere[3].setBobAngle = function(angle) {
       var scale = 90/12;
       this.bobAngle = (Math.abs(mod(angle, 360)-180)-90)/scale;
-      this.anchor.rotation.x = degToRad(this.bobAngle);
+      this.anchor.rotation.x = 0;// degToRad(this.bobAngle);
     };
 
     this.sphere[3].getBobAngle = function() {
@@ -185,33 +183,49 @@ ModelPtolemy = function(params) {
     }
 
 
+
+    this.addDays = function(days) {
+      BasePlanetModel.prototype.addDays.call(this, days);
+      var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE);
+      this.sphere[3].anchor.rotation.y += adjustment;
+      this.sphere[2].updateOffsetRotateMovement(this.dayDelta);      
+      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
+    },
+    
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+//        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
 
         BasePlanetModel.prototype.update.call(this, time);
-        this.sphere[3].setBobAngle(this.sphere[2].getRotateAngle());
-        if(this.running) this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
+//        this.sphere[3].setBobAngle(this.sphere[2].getRotateAngle());
+        if(this.running) {
+          var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE);
+          this.sphere[3].anchor.rotation.y += adjustment;
+          this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
+        }
+        
+        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[2]);
+        
 
 
 
         // mean sun
-        this.systemSun[0].anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;        
+        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
 
         // lines
-        this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
-        this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].visuals.markerball.currentPos();
+        this.epicycleRadius[0] = this.sphere[2].gfx.markerball.currentPos();
+        this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].gfx.markerball.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
           
         this.deferentRadius[0] = this.sphere[2].anchor.currentPos();
-        this.deferentRadius[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.deferentRadius[1] = this.sphere[2].gfx.markerball.currentPos();
         this.deferentRadiusLine.setPos(this.deferentRadius);
 
         this.equantPlanet[0] = this.equantPoint.currentPos();        
-        this.equantPlanet[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.equantPlanet[1] = this.sphere[2].gfx.markerball.currentPos();
         this.equantPlanetLine.setPos(this.equantPlanet);
 
         this.earthToDeferent[0] = this.earth.mesh.currentPos();     
-        this.earthToDeferent[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.earthToDeferent[1] = this.sphere[2].gfx.markerball.currentPos();
         this.earthToDeferentLine.setPos(this.earthToDeferent);
 
         this.earthToPlanet[0] = this.earth.mesh.currentPos();     
@@ -219,7 +233,7 @@ ModelPtolemy = function(params) {
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
         this.earthToVernal[0] = this.earth.mesh.currentPos();        
-        this.earthToVernal[1] = this.sphere[1].visuals.markerball.currentPos();
+        this.earthToVernal[1] = this.sphere[1].gfx.markerball.currentPos();
         this.earthToVernalLine.setPos(this.earthToVernal);        
 
         

@@ -55,8 +55,7 @@ BasePlanetModel.prototype = {
         this.curves = {};
         this.sphere = new Array(params.spheres);
         this.updateList = [];
-        this.systemSun = [];
-        this.viewPoints = {"Free":0, "Earth":0, "Planet":0};
+//        this.viewPoints = {"Free":0, "Earth":0, "Planet":0};
         this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
 
         this.light = Sunlight();
@@ -113,7 +112,7 @@ BasePlanetModel.prototype = {
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
-            this["setShowSphere" + i] = new Function("state", "console.log(state); this.sphere[" + i + "].setVisuals([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"], state);");
+            this["setShowSphere" + i] = new Function("state", "console.log(state); this.sphere[" + i + "].setGfx([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"], state);");
             this["getShowSphere" + i] = function() { return true; };
 
         }
@@ -132,24 +131,24 @@ BasePlanetModel.prototype = {
 
    
         //TODO: hack white north pole
-        this.sphere[1].visuals.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
+        this.sphere[1].gfx.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 
         // add stars
         this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
         
         //TODO: deprecated? / override
         this.showSphere1 = function(state) {
-            this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball","markerend"], state);
+            this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc","markerball","markerend"], state);
         }
 
         // add Sun and sun spheres
-        this.sphere[2].pivot.addNode(this.systemSun[0] = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
-        this.systemSun[0].anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
-        this.updateList[this.sphere.length] = this.systemSun[0];
+        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
+        this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
+        this.updateList[this.sphere.length] = this.ecliptic;
         // shortcuts for the sun
 
-        this.setSunSpeed = function(value) { this.systemSun[0].setSpeed(value); };
-        this.getSunSpeed = function() { return this.systemSun[0].getSpeed(); };
+        this.setSunSpeed = function(value) { this.ecliptic.setSpeed(value); };
+        this.getSunSpeed = function() { return this.ecliptic.getSpeed(); };
   
         // hide everything
         this.root.setEnabled(false);
@@ -207,10 +206,10 @@ BasePlanetModel.prototype = {
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 
         // hide arcs of outer sphere
-        this.sphere[1].setVisuals(["arc1","arc2"], false);
+        this.sphere[1].setGfx(["arc1","arc2"], false);
 
         // hide sun sphere
-        this.systemSun[0].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+        this.ecliptic.setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
         // reset everything
         this.reset();
@@ -260,19 +259,19 @@ BasePlanetModel.prototype = {
 //            var upVec = earthPos.subtract(polePos);
 
             var eclipticPos = sceneToSyl(ecliptic.currentPos()); 
-            var eclipticPolePos = sceneToSyl(ecliptic.visuals.npole.currentPos());
+            var eclipticPolePos = sceneToSyl(ecliptic.gfx.npole.currentPos());
             var eclipticUpVec = eclipticPos.subtract(eclipticPolePos);
             
             var planetOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(eclipticPos);
             var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos);
 
-            var equinoxOnPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(eclipticPos);
+            var equinoxOnPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(eclipticPos);
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
 
             var epiPos = sceneToSyl(epi.currentPos()); 
-            var epiOnPlane = sceneToSyl(epi.visuals.markerball.currentPos()).subtract(epiPos);
+            var epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos);
 
-            var equinoxOnEpiPlane = sceneToSyl(dayRef.visuals.markerball.currentPos()).subtract(epiPos);
+            var equinoxOnEpiPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(epiPos);
             var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));
 
 
@@ -307,8 +306,8 @@ BasePlanetModel.prototype = {
 
             planet.deferentLast = planet.deferentLongitude;
             planet.deferentLastPerp = planet.deferentPerp;
-            planet.deferentLongitude = calcAngle(epiOnPlane, equinoxOnEpiPlane);
-            planet.deferentPerp = calcAngle(epiOnPlane, equinoxOnEpiPlanePerp);
+            planet.deferentLongitude = calcAngle(epiOnPlane, equinoxOnPlane);
+            planet.deferentPerp = calcAngle(epiOnPlane, equinoxOnPlanePerp);
             if (planet.deferentPerp<=90)
                 planet.deferentLongitude = 360-planet.deferentLongitude;
             if (planet.deferentPerp>90 && planet.deferentLastPerp<90)
@@ -329,7 +328,7 @@ BasePlanetModel.prototype = {
 
         if(this.running) {
             // days passed (speed indicates seconds for one solar year)
-            this.dayDelta = this.systemSun[0].getSpeed()*(time/this.speed);
+            this.dayDelta = this.ecliptic.getSpeed()*(time/this.speed);
             this.days += this.dayDelta;
 
             // update movement of all spheres
@@ -341,7 +340,7 @@ BasePlanetModel.prototype = {
           if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
-        this.updatePlanetMetadata(this.planet,this.sphere[1],this.systemSun[0], this.sphere[2]);
+        this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
     },
 
 
@@ -350,13 +349,12 @@ BasePlanetModel.prototype = {
      },
 
     addDays : function(days) {
-      this.dayDelta = days; ///this.systemSun[0].getSpeed();
+      this.dayDelta = days; ///this.ecliptic.getSpeed();
       this.days += this.dayDelta;
         for (i in model.updateList) {
            model.updateList[i].updateMovement(this.dayDelta);
         }
-      this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
-      this.updatePlanetMetadata(this.planet,this.sphere[1],this.systemSun[0], this.sphere[2]);
+      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
     },
 
      setDays : function(days) {
@@ -369,7 +367,7 @@ BasePlanetModel.prototype = {
         for (var i in this.sphere) {
             this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
         }
-        this.systemSun[0].setRotateAngle(0);
+        this.ecliptic.setRotateAngle(0);
         this.days = 0;
         this.planet.reset();
     },

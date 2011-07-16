@@ -31,14 +31,14 @@ ModelAristotle = function(params) {
           
     this.createJoint = function(params) {
       var mat = new THREE.LineBasicMaterial( { linewidth: params.linewidth, color: rgbToHex(params.color) } );
-      params.to.visuals.njoint = new THREE.Line( aLine, mat );
-      params.to.visuals.sjoint = new THREE.Line( aLine, mat );
-      params.to.visuals.njoint.scale.y = params.from.scaleFactor-params.to.scaleFactor;
-      params.to.visuals.njoint.position.y = params.to.scaleFactor;
-      params.to.visuals.sjoint.scale.y = -(params.from.scaleFactor-params.to.scaleFactor);
-      params.to.visuals.sjoint.position.y = -params.to.scaleFactor;    
-      params.to.anchor.addNode(params.to.visuals.njoint);
-      params.to.anchor.addNode(params.to.visuals.sjoint);    
+      params.to.gfx.njoint = new THREE.Line( aLine, mat );
+      params.to.gfx.sjoint = new THREE.Line( aLine, mat );
+      params.to.gfx.njoint.scale.y = params.from.gfx.scale-params.to.gfx.scale;
+      params.to.gfx.njoint.position.y = params.to.gfx.scale;
+      params.to.gfx.sjoint.scale.y = -(params.from.gfx.scale-params.to.gfx.scale);
+      params.to.gfx.sjoint.position.y = -params.to.gfx.scale;
+      params.to.anchor.addNode(params.to.gfx.njoint);
+      params.to.anchor.addNode(params.to.gfx.sjoint);
     }
    this.createJoint({from: this.sphere[4], to: this.sphere[5], color: colors["S4"], linewidth:4 }); 
    this.createJoint({from: this.sphere[3], to: this.sphere[6], color: colors["S3"], linewidth:3 }); 
@@ -101,41 +101,41 @@ ModelAristotle = function(params) {
     }
 
    this.setShowSphere18 = function(state) {
-      this.sphere[1].setVisuals(["npole","spole"], state);
-      this.sphere[8].setVisuals(["sjoint","njoint","npole","spole"], state);
+      this.sphere[1].setGfx(["npole","spole"], state);
+      this.sphere[8].setGfx(["sjoint","njoint","npole","spole"], state);
     }
    this.getShowSphere18 = function() { return false; };
 
    this.setShowSphere36 = function(state) {
-      this.sphere[3].setVisuals(["npole","spole"], state);
-      this.sphere[6].setVisuals(["sjoint","njoint","npole","spole"], state);
+      this.sphere[3].setGfx(["npole","spole"], state);
+      this.sphere[6].setGfx(["sjoint","njoint","npole","spole"], state);
     }
    this.getShowSphere36 = function() { return false; };
 
    this.setShowSphere27 = function(state) {
-      this.sphere[2].setVisuals(["npole","spole"], state);
-      this.sphere[7].setVisuals(["sjoint","njoint","npole","spole"], state);
+      this.sphere[2].setGfx(["npole","spole"], state);
+      this.sphere[7].setGfx(["sjoint","njoint","npole","spole"], state);
     }
    this.getShowSphere27 = function() { return false; };
    
    this.setShowSphere45 = function(state) {
-      this.sphere[4].setVisuals(["npole","spole"], state);
-      this.sphere[5].setVisuals(["sjoint","njoint","npole","spole"], state);
+      this.sphere[4].setGfx(["npole","spole"], state);
+      this.sphere[5].setGfx(["sjoint","njoint","npole","spole"], state);
     }
    this.getShowSphere45 = function() { return false; };      
    
    this.setShowSphere5 = function(state) {
-      this.sphere[5].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
+      this.sphere[5].setGfx(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere5 = function() { return false; };
 
    this.setShowSphere6 = function(state) {
-      this.sphere[6].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
+      this.sphere[6].setGfx(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere6 = function() { return false; };
 
    this.setShowSphere7 = function(state) {
-      this.sphere[7].setVisuals(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
+      this.sphere[7].setGfx(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere7 = function() { return false; };
 
@@ -144,7 +144,7 @@ ModelAristotle = function(params) {
   this.getShowSphere4 = function() { return false; };
 
    this.setShowSphere8 = function(state) {
-      this.sphere[8].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
+      this.sphere[8].setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
     }
    this.getShowSphere8 = function() { return true; };
 

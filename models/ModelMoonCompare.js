@@ -22,12 +22,12 @@ ModelMoonCompare = function(params) {
 
 
    this.setShowSphere4 = function(state) {
-      this.sphere[4].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[4].setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere4 = function() { return true; };
        
    this.setShowSphere5 = function(state) {
-      this.sphere[5].setVisuals(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
+      this.sphere[5].setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
     }
    this.getShowSphere5 = function() { return true; };
 
@@ -93,7 +93,7 @@ ModelMoonCompare = function(params) {
     this.update = function(time) {
         BasePlanetModel.prototype.update.call(this, time);
 //        if(this.running) {
-            this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.systemSun[0], this.sphere[2]);
+            this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.ecliptic, this.sphere[2]);
 //        }
     };    
 

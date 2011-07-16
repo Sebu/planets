@@ -856,12 +856,13 @@ Spherical = function Spherical(params) {
     this.inner_id = params.inner_id;
 
     this.moving = true;
-    this.scaleFactor = params.scale;
-    
+
     this.gfx = new Object();
+    this.gfx.scale = params.scale;
+
     this.gfx.color = params.color || { r: 0.5, g: 0.5, b: 0.5};
 //    color = rgbToHex(color);
-    this.visuals = [];
+//    this.gfx = [];
 
     this.axisAngle = params.axisAngle || 0.0;
     this.rotateAngle = params.rotateStart || 0.0;
@@ -878,25 +879,25 @@ Spherical = function Spherical(params) {
     this.materialArc =  new THREE.LineBasicMaterial( { opacity: 0.5,  color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
-    this.visuals.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
-    this.visuals.arc1.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.addNode(this.visuals.arc1);
+    this.gfx.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
+    this.gfx.arc1.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
+    this.addNode(this.gfx.arc1);
 
-    this.visuals.arc2 = new THREE.Line(this.arcangle21, this.materialArc );
-    this.visuals.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
-    this.addNode(this.visuals.arc2);
+    this.gfx.arc2 = new THREE.Line(this.arcangle21, this.materialArc );
+    this.gfx.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
+    this.addNode(this.gfx.arc2);
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
-    this.visuals.equator = new THREE.Line(equator, this.material );
-    this.visuals.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.visuals.equator.rotation.x = Math.PI/2;
-    this.anchor.addNode(this.visuals.equator);
+    this.gfx.equator = new THREE.Line(equator, this.material );
+    this.gfx.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
+    this.gfx.equator.rotation.x = Math.PI/2;
+    this.anchor.addNode(this.gfx.equator);
 
     this.markerArc = new Circle({ angle : 90 });
-    this.visuals.markerarc = new THREE.Line(this.markerArc, this.material );
-    this.visuals.markerarc.scale  = new THREE.Vector3( -params.scale, params.scale, params.scale );
-    this.visuals.markerarc.rotation.y = Math.PI/2;
-    this.anchor.addNode(this.visuals.markerarc);
+    this.gfx.markerarc = new THREE.Line(this.markerArc, this.material );
+    this.gfx.markerarc.scale  = new THREE.Vector3( -params.scale, params.scale, params.scale );
+    this.gfx.markerarc.rotation.y = Math.PI/2;
+    this.anchor.addNode(this.gfx.markerarc);
 
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
@@ -907,36 +908,36 @@ Spherical = function Spherical(params) {
 //    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
     
     
-    this.visuals.markerball =  new THREE.Mesh(cone, materialCone);
-    this.visuals.markerend =  new THREE.Mesh(markerend, materialCone);
-    this.visuals.markerball.position.z = params.scale;
-//    this.visuals.markerball.position.x = -0.2;
-    this.visuals.markerball.rotation.y = -Math.PI/2;  
-    this.visuals.markerend.position.z = params.scale;
-    this.visuals.markerend.rotation.y = -Math.PI/2; 
+    this.gfx.markerball =  new THREE.Mesh(cone, materialCone);
+    this.gfx.markerend =  new THREE.Mesh(markerend, materialCone);
+    this.gfx.markerball.position.z = params.scale;
+//    this.gfx.markerball.position.x = -0.2;
+    this.gfx.markerball.rotation.y = -Math.PI/2;
+    this.gfx.markerend.position.z = params.scale;
+    this.gfx.markerend.rotation.y = -Math.PI/2;
     
-    this.visuals.npole = new THREE.Mesh(geometryBall, materialBall);
-    this.visuals.spole = new THREE.Mesh(geometryBall, materialBall);
-    this.visuals.npole.position.y = params.scale;
-    this.visuals.spole.position.y = -params.scale;
-    this.anchor.addNode(this.visuals.markerball);
-    this.addNode(this.visuals.markerend);
+    this.gfx.npole = new THREE.Mesh(geometryBall, materialBall);
+    this.gfx.spole = new THREE.Mesh(geometryBall, materialBall);
+    this.gfx.npole.position.y = params.scale;
+    this.gfx.spole.position.y = -params.scale;
+    this.anchor.addNode(this.gfx.markerball);
+    this.addNode(this.gfx.markerend);
 
-    this.anchor.addNode(this.visuals.npole);
-    this.anchor.addNode(this.visuals.spole);
-//    nodePool[this.inner_id] = this.visuals.markerball;
-//    nodePool[this.inner_id+"npole"] = this.visuals.npole;
-//    nodePool[this.inner_id+"spole"] = this.visuals.spole;
+    this.anchor.addNode(this.gfx.npole);
+    this.anchor.addNode(this.gfx.spole);
+//    nodePool[this.inner_id] = this.gfx.markerball;
+//    nodePool[this.inner_id+"npole"] = this.gfx.npole;
+//    nodePool[this.inner_id+"spole"] = this.gfx.spole;
 
     this.progressArc = new Circle({ angle : 40 });
     var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(this.gfx.color),
                 opacity: 0.9
                 } );
     progressMat.vertexColors = true;
-    this.visuals.rotationarc = new THREE.Line( this.progressArc, progressMat );
-    this.visuals.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.visuals.rotationarc.rotation.x = Math.PI/2;
-    this.anchor.addNode(this.visuals.rotationarc);
+    this.gfx.rotationarc = new THREE.Line( this.progressArc, progressMat );
+    this.gfx.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
+    this.gfx.rotationarc.rotation.x = Math.PI/2;
+    this.anchor.addNode(this.gfx.rotationarc);
 
 
     
@@ -964,19 +965,18 @@ Spherical.prototype.getPlane = function() {
 
 //    var plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
     var center = sceneToSyl(this.anchor.currentPos());
-    var polePos = sceneToSyl(this.visuals.npole.currentPos());
+    var polePos = sceneToSyl(this.gfx.npole.currentPos());
     var upVec = center.subtract(polePos);
     var plane = Plane.create(center, upVec.toUnitVector());
     return plane;
 }
 
-Spherical.prototype.setVisuals = function(vis, state) {
+Spherical.prototype.setGfx = function(vis, state) {
     for (var i in vis) {
-        this.visuals[vis[i]].setEnabled(state);
+        this.gfx[vis[i]].setEnabled(state);
     }
 
 };
-
 
 
 Spherical.prototype.setAxisAngle = function(angle) {
@@ -999,16 +999,16 @@ Spherical.prototype.getRotateStart = function() {
 };
 
 Spherical.prototype.setScale = function(value) {
-  this.scaleFactor = value;
-  this.visuals.arc1.scale  = new THREE.Vector3( value, value, value );
-  this.visuals.arc2.scale  = new THREE.Vector3( -value, -value, -value );
-  this.visuals.equator.scale  = new THREE.Vector3( value, value, value );
-  this.visuals.markerarc.scale  = new THREE.Vector3( -value, value, value );
-  this.visuals.markerball.position.z = value;
-  this.visuals.markerend.position.z = value;
-  this.visuals.npole.position.y = value;
-  this.visuals.spole.position.y = -value;
-  this.visuals.rotationarc.scale  = new THREE.Vector3( value, value, value);
+  this.gfx.scale = value;
+  this.gfx.arc1.scale  = new THREE.Vector3( value, value, value );
+  this.gfx.arc2.scale  = new THREE.Vector3( -value, -value, -value );
+  this.gfx.equator.scale  = new THREE.Vector3( value, value, value );
+  this.gfx.markerarc.scale  = new THREE.Vector3( -value, value, value );
+  this.gfx.markerball.position.z = value;
+  this.gfx.markerend.position.z = value;
+  this.gfx.npole.position.y = value;
+  this.gfx.spole.position.y = -value;
+  this.gfx.rotationarc.scale  = new THREE.Vector3( value, value, value);
 
 };
 Spherical.prototype.setSpeed = function(speed) {
@@ -1039,16 +1039,16 @@ Spherical.prototype.setArcAngle = function(angle) {
 
     
     if(angle > 0) {
-     this.visuals.markerball.scale.z = 1.0;  
-//     this.visuals.markerball.position.x = -0.2;
+     this.gfx.markerball.scale.z = 1.0;
+//     this.gfx.markerball.position.x = -0.2;
     }
     else {
-     this.visuals.markerball.scale.z = -1.0;  
-//     this.visuals.markerball.position.x = 0.2;
+     this.gfx.markerball.scale.z = -1.0;
+//     this.gfx.markerball.position.x = 0.2;
      }
     
     // update progress angle
-    if(this.visuals.rotationarc.getEnabled()) this.progressArc.setAngle(-angle);
+    if(this.gfx.rotationarc.getEnabled()) this.progressArc.setAngle(-angle);
 };
 
 Spherical.prototype.setRotateAngle = function(angle) {
@@ -1085,7 +1085,6 @@ Spherical.prototype.getOffsetRotateSpeed = function() {
 };
 
 Spherical.prototype.updateOffsetRotateMovement = function(step) { 
-      console.log(this.offsetRotateStep);
       this.setOffsetRotateAngle( this.getOffsetRotateAngle() + (this.offsetRotateStep * step) );
 };
     

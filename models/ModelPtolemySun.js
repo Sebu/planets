@@ -83,29 +83,29 @@ ModelPtolemySun = function(params) {
     
 
 
-    this.setShowSphere0 = function(state) { this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc"], state) };    
-    this.setShowSphere2 = function(state) { this.sphere[2].setVisuals(["equator","rotationarc"], state) };
-    this.setShowSphere3 = function(state) { this.sphere[3].setVisuals(["equator"], state) };
+    this.setShowSphere0 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc"], state) };
+    this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator","rotationarc"], state) };
+    this.setShowSphere3 = function(state) { this.sphere[3].setGfx(["equator"], state) };
     
     this.setShowSphere1(true);
     this.setShowSphere2(true);
     this.setShowSphere3(true);
     
     
-    this.realSunS[1].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
-    this.realSunS[2].setVisuals(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.realSunS[1].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.realSunS[2].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
 
     this.setShowSun1 = function(state) { 
       this.planet.setEnabled(state); 
-      this.sphere[2].setVisuals(["equator","rotationarc"],state); 
-      this.sphere[3].setVisuals(["equator"],state); 
+      this.sphere[2].setGfx(["equator","rotationarc"],state);
+      this.sphere[3].setGfx(["equator"],state);
     };
         
     this.setShowSun2 = function(state) { 
       this.realSun.setEnabled(state); 
-      this.realSunS[1].setVisuals(["equator","rotationarc"],state); 
-      this.realSunS[2].setVisuals(["equator"],state); 
+      this.realSunS[1].setGfx(["equator","rotationarc"],state);
+      this.realSunS[2].setGfx(["equator"],state);
     };
 
     this.getShowSun1 = function(state) { return true; }    
@@ -193,23 +193,23 @@ ModelPtolemySun = function(params) {
         this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
 
         // mean sun
-        this.systemSun[0].anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;        
+        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
 
         // lines
-        this.epicycleRadius[0] = this.sphere[2].visuals.markerball.currentPos();
-        this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].visuals.markerball.currentPos();
+        this.epicycleRadius[0] = this.sphere[2].gfx.markerball.currentPos();
+        this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].gfx.markerball.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
           
         this.deferentRadius[0] = this.sphere[2].anchor.currentPos();
-        this.deferentRadius[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.deferentRadius[1] = this.sphere[2].gfx.markerball.currentPos();
         this.deferentRadiusLine.setPos(this.deferentRadius);
 
 //        this.equantPlanet[0] = this.equantPoint.currentPos();        
-//        this.equantPlanet[1] = this.sphere[2].visuals.markerball.currentPos();
+//        this.equantPlanet[1] = this.sphere[2].gfx.markerball.currentPos();
 //        this.equantPlanetLine.setPos(this.equantPlanet);
 
         this.earthToDeferent[0] = this.earth.mesh.currentPos();     
-        this.earthToDeferent[1] = this.sphere[2].visuals.markerball.currentPos();
+        this.earthToDeferent[1] = this.sphere[2].gfx.markerball.currentPos();
         this.earthToDeferentLine.setPos(this.earthToDeferent);
 
         this.earthToPlanet[0] = this.earth.mesh.currentPos();     
@@ -217,7 +217,7 @@ ModelPtolemySun = function(params) {
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
         this.earthToVernal[0] = this.earth.mesh.currentPos();        
-        this.earthToVernal[1] = this.sphere[1].visuals.markerball.currentPos();
+        this.earthToVernal[1] = this.sphere[1].gfx.markerball.currentPos();
         this.earthToVernalLine.setPos(this.earthToVernal);        
 
         

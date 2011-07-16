@@ -19,7 +19,6 @@ myApp.prototype.init = function(params) {
 //        this.canvas = new Ori.Canvas({antialias: true});
         this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
-        
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
         Ori.input.trackKeysOn(window);
@@ -313,12 +312,12 @@ myApp.prototype.update = function(time) {
             eastLabel.setPosition(model.east.getPosCanvas(this.currentCamera, this.canvas));
             westLabel.setPosition(model.west.getPosCanvas(this.currentCamera, this.canvas));
         } else {
-            if(model.sphere[1].visuals.markerball.getEnabled())
-              equinoxLabel.setPosition(model.sphere[1].visuals.markerball.getPosCanvas(this.currentCamera, this.canvas)); 
-            if(model.sphere[1].visuals.npole.getEnabled())  
-              npoleLabel.setPosition(model.sphere[1].visuals.npole.getPosCanvas(this.currentCamera, this.canvas)); 
-            if(model.sphere[1].visuals.spole.getEnabled())  
-              spoleLabel.setPosition(model.sphere[1].visuals.spole.getPosCanvas(this.currentCamera, this.canvas)); 
+            if(model.sphere[1].gfx.markerball.getEnabled())
+              equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
+            if(model.sphere[1].gfx.npole.getEnabled())
+              npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
+            if(model.sphere[1].gfx.spole.getEnabled())
+              spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
         }
 
         planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
@@ -714,11 +713,11 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
             UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Radius"}).appendTo("#deferent");
-            UI.slider({model:model, id:"Speed2", max:20100, step:0.0001, text:"Speed (days)"}).appendTo("#deferent");
+//            UI.slider({model:model, id:"Speed2", max:20100, step:0.0001, text:"Speed (days)"}).appendTo("#deferent");
 
             UI.box({id:"epicycle", text:"Epicycle"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
-            UI.slider({model:model, id:"Speed3", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#epicycle");
+//            UI.slider({model:model, id:"Speed3", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[3], id:"RotateAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
             UI.slider({model:model.sphere[3], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
