@@ -90,7 +90,7 @@ ModelPtolemy = function(params) {
     this.realSunS[1].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
     this.realSunS[2].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
-    this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );    
+    this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );    
 
     this.setEquant = function(value) {
       this.sphere[2].equant = value;
@@ -116,14 +116,13 @@ ModelPtolemy = function(params) {
       var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
 //      this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
-      console.log(realAngle);
+
     };
 
     this.setMeanLongitude = function(angle) {
-      var offset = angle+(360-this.sphere[2].getOffsetRotateAngle());
+      var offset = angle - this.sphere[2].getOffsetRotateAngle();
       var realAngle = offset/PI_SCALE - Math.asin(((-this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
-      this.sphere[2].setRotateAngle(realAngle*PI_SCALE);
-      console.log(realAngle*PI_SCALE);
+      this.sphere[2].setRotateAngle(offset);//realAngle*PI_SCALE);
     }
 
 
@@ -211,7 +210,7 @@ ModelPtolemy = function(params) {
 
 
         // mean sun
-//        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
+        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
 
         // lines
         this.epicycleRadius[0] = this.sphere[2].gfx.markerball.currentPos();
@@ -248,7 +247,7 @@ ModelPtolemy = function(params) {
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
-        this.sphere[2].setOffsetRotateSpeed(1);
+        this.sphere[2].setOffsetRotateSpeed(0);
         this.sphere[3].setBobAngle(0);
         this.setMeanLongitude( Utils.toDec(this.currentPlanet.MeanLongitude) );
         

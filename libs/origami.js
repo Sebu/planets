@@ -25,10 +25,11 @@ Ori.Canvas = function(params) {
         return this.graphics;
 }
 
+	
 
-	
-	
 Ori.Canvas.prototype.constructor = Ori.Renderer;
+
+Ori.CANVAS_ERROR = "bla";
 
 Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
@@ -39,7 +40,7 @@ Ori.GfxProfile = {
     textures : Ori.Q.LOW,
     geometry : Ori.Q.LOW,
     alpha : Ori.Q.NONE,
-    shading : Ori.Q.LOW,
+    shading : Ori.Q.LOW
     }
 };
 Ori.gfxStore = [];
@@ -203,7 +204,7 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
-  this.tragetFps = 30;
+  this.targetFps = 30;
   this.targetTime = 1.0/this.targetFps;
   this.elapsedTime = 0;
   this.timer = new Ori.Timer();

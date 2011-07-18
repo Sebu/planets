@@ -201,6 +201,11 @@ Utils.toDec = function(number) {
     return Number( Utils.baseToDec(number,60) );
 }
 
+Utils.toSexa = function(number) {
+  val = Utils.decToBase(number.toString(),60).split(",");
+  return val[0];
+}
+
 Utils.sexagesimal = function(number) {
   if(number.toString().indexOf(";")==-1)
     return Utils.decToBase(number,60);
@@ -578,7 +583,7 @@ sphereGeo = [
 
 ];
 
-planetGeo = new THREE.SphereGeometry( 1 , 10, 6 );
+planetGeo = new THREE.SphereGeometry( 1 , 32, 16 );
 
 
 /*

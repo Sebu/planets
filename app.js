@@ -9,7 +9,7 @@ myApp = function(params) {
 myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
-
+myApp.CANVAS_ERROR = $("<div id='canvasError'>Your browser does not seem to support <a href='http://en.wikipedia.org/wiki/Canvas_element'>Canvas</a> or <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>.<br/>Find out how to get it <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>here</a>.</div>");
 myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
@@ -19,13 +19,21 @@ myApp.prototype.init = function(params) {
 //        this.canvas = new Ori.Canvas({antialias: true});
         this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
+        
+                // append to DOM
+        if(this.canvas) {
+          this.domRoot.append(this.canvas.domElement);
+        } else {
+          this.domRoot.append(myApp.CANVAS_ERROR);
+          return 0;
+        }
+        
+
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
         Ori.input.trackKeysOn(window);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
            
-        // append to DOM
-        this.domRoot.append(this.canvas.domElement);
 
         // register input
 //        Ori.input.register(Ori.KEY.LEFT, "LEFT");
@@ -64,7 +72,7 @@ myApp.prototype.init = function(params) {
                      <div class='sexa wert' id='sexaResult'>0</div>\
                      </div>").appendTo(this.domRoot);        
         this.stats = new Stats();
-        debugBox.append( this.stats.domElement );
+        //debugBox.append( this.stats.domElement );
         Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
 
         
@@ -167,6 +175,18 @@ myApp.prototype.init = function(params) {
         $("#vis").hide();
 
         this.loadPreset("Mercury1");
+        //*        
+        TWEEN.start();
+        this.viewPos = {x: 0, y: 0, z: -50};
+        var that = this;
+        var tween = new TWEEN.Tween(this.viewPos).to({z: -17}, 2000).onUpdate(function() {
+          that.currentCamera.setEye(that.viewPos);
+          that.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
+        }).easing( TWEEN.Easing.Quartic.EaseOut ).start();
+        //*/
+        
+        $("#uiContainer, #infoContainer").hide();
+        $("#uiContainer, #infoContainer").fadeIn(1000);
 
     };
 
@@ -234,9 +254,10 @@ myApp.prototype.updateInfoBox = function() {
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
-          $("#apsidalLongitude").text( (model.sphere[2].getOffsetRotateAngle() % 360).toFixed(2) );
-          $("#epicycleLongitude").text( (model.sphere[3].getRotateAngle() % 360).toFixed(2) );
-          $("#deferentLongitude").text( model.planet.deferentLongitude.toFixed(3) );
+          $("#longitude").text( Utils.toSexa(mod(model.planet.longitude,360) ) );
+          $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) ) );
+          $("#epicycleLongitude").text( Utils.toSexa( mod(model.sphere[3].getRotateAngle(), 360) ) );
+          $("#deferentLongitude").text( Utils.toSexa(model.planet.deferentLongitude) );
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
           $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
@@ -794,15 +815,6 @@ myApp.prototype.loadPreset = function(preset) {
         
         this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
 
-        /*        
-        TWEEN.start();
-        this.viewPos = {x: 0, y: 0, z: -100};
-        var that = this;
-        var tween = new TWEEN.Tween(this.viewPos).to({z: -17}, 5000).onUpdate(function() {
-          that.camera.setEye(that.viewPos);
-          that.camera.updateNew();
-        }).easing( TWEEN.Easing.Quartic.EaseOut ).start();
-        //*/
 
 
     };
@@ -813,7 +825,9 @@ myApp.prototype.loadPreset = function(preset) {
 // setup site
 // TODO: maybe move to index.html
 app = new myApp({domRoot: $("#mainBox")});
-window.onresize = function(e) { app.resize(e) };
-app.run();
+if(app) {
+  window.onresize = function(e) { app.resize(e) };
+  app.run();
+}
 
 

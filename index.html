@@ -6,87 +6,13 @@
     <link rel="stylesheet" type="text/css" href="css/planets.css">
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans&v2' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'> 
-
 </head>
 <body>
-
-
 <div id="mainBox"></div>
-
-
-<!-- essential JS stuff -->
-<script type="text/javascript" src="vendor/modernizr-1.7.min.js"></script>
-<script type="text/javascript" src="vendor/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="vendor/jquery-ui-1.8.14.custom.min.js"></script>
-
-
-<!-- matrix/vector lib and 3d abstraction -->
-<script type="text/javascript" src="vendor/Tween.js"></script>
-<script type="text/javascript" src="vendor/sylvester.js"></script>
-<script type="text/javascript" src="vendor/Three.js"></script>
-<script type="text/javascript" src="vendor/Stats.js"></script>
-
-
-<!-- framework / some three.js modifications / simple UI elements -->
-<script type="text/javascript" src="libs/origami.js"></script> 
-<script type="text/javascript" src="libs/three.ext.js"></script>
-<script type="text/javascript" src="libs/UIHelpers.js"></script>
-
-
-<!-- <script type="text/javascript" src="planets.min.js"></script> -->
-
-<!-- planet model (all in one site for testing) -->
+<!-- CONFIG 
 <script type="text/javascript" src="models/presets.js"></script>
-<script type="text/javascript" src="models/BasePlanetModel.js"></script>  
-<script type="text/javascript" src="models/ModelSimple.js"></script>
-<script type="text/javascript" src="models/ModelHippo.js"></script>
-<script type="text/javascript" src="models/ModelSun.js"></script>
-<script type="text/javascript" src="models/Model4.js"></script>
-<script type="text/javascript" src="models/Model5.js"></script>
-<script type="text/javascript" src="models/ModelYavetz.js"></script>
-<script type="text/javascript" src="models/ModelMoon.js"></script>
-<script type="text/javascript" src="models/ModelMoonCompare.js"></script>
-<script type="text/javascript" src="models/ModelAristotel.js"></script>
-<script type="text/javascript" src="models/ModelPtolemy.js"></script>
-<script type="text/javascript" src="models/ModelPtolemySun.js"></script>
-
-<!-- the app -->
-<script type="text/javascript" src="app.js"/></script>
-
-
-
-
+<script type="text/javascript" src="planets.min.js"></script> 
+-->
 </body>
-<script>
-scripts = ["vendor/modernizr-1.7.min.js","vendor/jquery.tools.min.js","vendor/sylvester.js","vendor/Three.js","libs/origami.js","libs/three.ext.js","libs/UIHelpers.js","models/config.js","models/BasePlanetModel.js","models/ModelSimple.js","models/ModelHippo.js","models/ModelSun.js","models/Model4.js","models/Model5.js","models/ModelYavetz.js","models/ModelMoon.js","models/ModelMoonCompare.js","models/ModelAristotel.js","models/ModelPtolemy.js","models/ModelPtolemySun.js","app.js"];
-
-
-function loadScript(jsFile) {
-  var scriptElt = document.createElement('script');
-  scriptElt.type = 'text/javascript';
-  scriptElt.onload= function() { 
-    var ele = document.getElementById('prgs');
-    ele.value += 1;
-    console.log(ele.value);  
-    if(ele.value == scripts.length-1) {
-        console.log("remove");
-      document.getElementById('prgs').removeChild(ele);
-    }
-  }
-  scriptElt.src = jsFile;
-  document.getElementsByTagName('head')[0].appendChild(scriptElt);
-}
-
-
-function loadApp() {
-  var ele = document.getElementById('prgs');
-  ele.max = scripts.length-1;
-  for(i in scripts) {
-     loadScript(scripts[i]);
-  }
-}
-
-//loadApp();
-</script>
 </html>
 

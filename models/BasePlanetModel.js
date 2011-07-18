@@ -207,7 +207,7 @@ BasePlanetModel.prototype = {
 
         // hide arcs of outer sphere
         this.sphere[1].setGfx(["arc1","arc2"], false);
-
+        this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );
         // hide sun sphere
         this.ecliptic.setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
@@ -268,8 +268,8 @@ BasePlanetModel.prototype = {
             var equinoxOnPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(eclipticPos);
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
 
-//            var epiPos = sceneToSyl(epi.anchor.currentPos()); 
-            var epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(eclipticPos);
+            var epiPos = sceneToSyl(this.equantPoint.currentPos()); 
+            var epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos);
 
 //            var equinoxOnEpiPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(epiPos);
 //            var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));

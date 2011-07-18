@@ -1,0 +1,334 @@
+S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 rotate z * rotate -S2/2 * rotate beta
+
+BRiOhgY9FB
+
+<script>
+scripts = ["vendor/modernizr-1.7.min.js","vendor/jquery.tools.min.js","vendor/sylvester.js","vendor/Three.js","libs/origami.js","libs/three.ext.js","libs/UIHelpers.js","models/config.js","models/BasePlanetModel.js","models/ModelSimple.js","models/ModelHippo.js","models/ModelSun.js","models/Model4.js","models/Model5.js","models/ModelYavetz.js","models/ModelMoon.js","models/ModelMoonCompare.js","models/ModelAristotel.js","models/ModelPtolemy.js","models/ModelPtolemySun.js","app.js"];
+
+
+function loadScript(jsFile) {
+  var scriptElt = document.createElement('script');
+  scriptElt.type = 'text/javascript';
+  scriptElt.onload= function() { 
+    var ele = document.getElementById('prgs');
+    ele.value += 1;
+    console.log(ele.value);  
+    if(ele.value == scripts.length-1) {
+        console.log("remove");
+      document.getElementById('prgs').removeChild(ele);
+    }
+  }
+  scriptElt.src = jsFile;
+  document.getElementsByTagName('head')[0].appendChild(scriptElt);
+}
+
+
+function loadApp() {
+  var ele = document.getElementById('prgs');
+  ele.max = scripts.length-1;
+  for(i in scripts) {
+     loadScript(scripts[i]);
+  }
+}
+
+//loadApp();
+</script>
+
+model.update -> dirty -> update -> render
+
+DONE
+- sphere1: light color
+- different planet value from file
+- remove blue overlapped arc
+- rangeinput -> hit return
+- sun/moon
+- radius of sun (darken planets)
+- fix rotationArcs
+- move moon to normal planet models :)
+- memory leak :/ in curve code ( destroy geometry )
+- reset to defaults 
+- EMAIL new version
+- MOON: angle 3-4 disable
+- MOON: sun disable
+- color for path und hippopede 
+- MOON: show period and
+- yavetz model
+- only path and planet view
+- path approximation step
+- planet color
+- fix rotation start slider 3
+- sun model in list
+- hide/unhide triangle
+- view from earth with horizon (set latitude), earth plane east, west ,,, tropics
+- moon and sun same size
+- show/hide path 
+- stars on fixed dist
+- fix point size O_o
+- hide lines for s1,s2 etc.
+- arcball 
+- yavetz show lines
+- sun 2 sphere model ;)
+- earth view latitude plane
+- RECHNUNG :D Geld!!!!
+- in planet view rotate x and y not right up
+- generate menu
+- merge!!!
+- default view angle
+  - y  10
+- fix max angle for earth view 
+- view presets (world, earth)
+- yavetz markerarc on right circle
+- legend with colors of spheres
+- directions (earth plane east, west ,,, tropics)
+- fix path in simple model
+- speed represents one day of movement in seconds
+  - seconds in seconds 1 - 900.000.000  via years days minutes per second
+  - aka one synodic cycle per minute
+- observer latitude with presets ( athens 38, canidos 36.66 cyzicus 40.23, heliopolis 30)
+- more spheres
+  - only mars,venus,  mercury
+  - period sum to zero ( of sphere 3-5)
+  - sphere 5 like 3: alpha  4: -alpha + beta 5: -beta/beta
+- remove black sphere 0 
+- fix sun shade
+- fix triangle
+- labels
+- rotateStart s3 s4
+- fix rotate start
+- moon labels
+- fix moon start
+- fix view hippo and co.
+- box with angles ( pos.x dot :) )
+- simple hippo model with motion
+- earth view
+- global view labels : north/south pole, equinox (equator ecliptic intersection)
+- arc precission ( line segments )
+- tooltips for sliders
+- tooltip with description and default/reconmended values
+- UIHelper BASICS
+- user: change FOV
+- pause/start button
+- speed stars/ecliptic -> speed planet/ecliptic
+- negative angles
+- project planet onto ecliptic -> angle between this projection and s1/s2 intersection
+- show latitude/longitude
+- renderer extract with better connection to canvas element
+- show box with lat. etc.
+- northpole white
+- sun label fix
+- color mendell red / schfixed blue
+- fix moon 12/13 deg? paper?
+- save presets (local storage?)
+- star at north pole 
+- mirror start of north pole 
+- presets (view stars: false)
+- daily only 0 and 1 (switch and adjust speed)
+- moon compare phase difference ( on/off switch )
+- daily on/off button
+- hippo intro -> 4 spheres with hidden sphere 1
+- moonCompare 2x info box stu
+- fix ecliptic speed
+- bug: moving the model zooms out
+- longitude speed deg per day not per animation speed
+- arc start and end points  
+
+
+- eudoxos
+- sun
+  - longitude/latitude speed in  more accurate 
+  - mean longitude (6 digits)  
+  (equation of time(h) 360) /lengthyear(long-meanlong) 24
+
+- moon, moon compare
+- kallippos
+- yavetz
+- simple, hippo
+- aristotle
+  - remove sun
+  - rotation start for unwinders
+  - s8 rotate like s1
+  - (thick) line between winder and unwinder
+  - s4-s8 reverse labels, hippo,path,stars off
+  - disable/enable poles of connected spheres P2,7 etc.
+  - stop motion of sphere
+  - start: show only dayly etc.
+  - s8 not an unwinder
+
+- ptolemy
+  - derefent radius 60
+  - remove arc1/2, markerarc,
+  - add equant line etc.
+  - sexagisimal converter
+  - egyptian date
+  - lines (disable them)
+    - earth to vernal equinox
+    - earth to planet
+    - equant/planet/center to epicycle center
+  - apsidal speed/movement 1deg per 100years
+  - data
+    - start from inital date
+    - move to certain date
+  - sun
+    - calculate sun max dist
+    - start rotation
+    - overlap models
+    - epicycle + equant same? 
+    - deferent + epicylce model checkbox overlay models
+  - gone: longitude dot product error ( jump from 359.1 -> 0.9 )
+    - but find better ref point for up vector     
+  - ModelMoonCompare -> ModelMoon
+  - date fix (gregorian)  
+  - "A Survey of the Almagest"
+    - start values and observation tests
+    - 59/85 values
+    - angle epicycle/ apsidal line    
+    
+TODO
+
+- mean longitude
+- better camera/movement/ortho view
+- update info box on change!!
+- fix/better labels
+- more view presets/tweening
+  - use different cameras
+  - reset position (tween)
+- aristotle
+- ptolemy
+  - data
+    - date presets 
+  - sun
+- fix: load presets through setters
+
+
+
+NEXT
+- info container values (show full in tooltip)
+- webdesigners: 
+  animation speed, latitude presets, center direction labels, radio buttons switch
+- aristotle
+  - click/mouseover highlight
+- compare moon models
+  - (show diff in latitude)
+- update hippopede only on demand
+- only show last or first spheres of a model
+- variable slider max ( depended on model )
+
+- dist: 9*|sun-moon|
+- keyframe animation?
+- email yavetz sphere 3-4
+- moon speed functions days per year
+- menu with s2 start values (deprecated)
+
+auftrag:
+- use Three.js
+- more lambda :D
+
+MODEL
+ - update 
+ - setup
+ - 
+
+
+
+Titles:
+Sphere 1-2 (obliquity of ecliptic)
+Sphere 2-3 (right angle)
+Sphere 3-4 (unknown)
+
+
+Sphere Period (days)
+Sphere 1 (daily)
+Sphere 2 (zodiacal)
+Sphere 3, 4 (synodic)
+Sun (year)
+
+Rotation Start
+Sphere 1 (ascension, in degrees)
+Sphere 2 (longitude)
+Sphere 3, 4
+Sun (longitude)
+
+Direction of rotation of Sphere 3
+SN
+NS
+
+The start point for ascension and longitude should be a point where the equators of Sphere 1 and Sphere 2 intersect.  This will ultimately be in the middle of Aries.
+
+
+
+
+
+metonyear = 19
+metonsynodicmonths = 235
+metonzodialmonths = metonyear + metonsynodicmonths
+metondays = 6940
+metondaysperyear = metondays/metonyear
+calippusyear = 4 metonyear
+calippussynodicmonths = 4 metonsynodicmonths
+calippuszodialmonths = 4 metonzodialmonths
+calippusdays = 4 metondays - 1
+sarossynodic = 223
+sarosdraconitic = 242
+exeligmos = 3 sarossynodic
+
+
+Moon
+
+Schiaparelli/Simplicius
+Sphere 2 west/east draconitic
+Sphere 3 east/west draconitic-zodiacal
+
+Schiaparelli/Simplicius fixed
+east/west draconitic-zodiacal
+west/east dracontic
+
+Mendell
+west/east dracontic + zodiacal
+east/west draconitic
+
+default angle 5 degrees between Sphere 2 and Sphere 3
+
+Sun
+west/east 365
+west/east remainder of year
+angle 1/2 degree
+
+Different types of years/synodic cycles
+
+Metonic 19 years
+       235 synodic months
+Hence, 254 zodiacal months
+Days in cycle = 6940
+
+Oktaeteris
+       8 years
+       99 months
+Hence,
+       107 zodiacal months
+Unknown number of days
+Set default as 2922 days (365 1/4 days per year)
+
+Callippan (4 times Meton, but days adjusted to get 365 1/4 day year)
+76 years
+940 months
+Hence
+       1016 zodiacal months
+27759 days
+
+Inputs
+Years
+Synodic months
+days per cycle
+
+Display
+days per year
+days per synodic month (fraction)
+days per zodical month
+days per draconitic month
+
+for Sun (all they need see is the sun
+angle sphere 1 - 2 default
+sphere 2 pop in value here (the period must be > 1 year)
+sphere 3 value here will be days per year - sphere 2. (read period for sphere 2)
+
+
