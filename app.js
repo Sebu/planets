@@ -236,7 +236,7 @@ myApp.prototype.updateInfoBox = function() {
         if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
           $("#apsidalLongitude").text( (model.sphere[2].getOffsetRotateAngle() % 360).toFixed(2) );
           $("#epicycleLongitude").text( (model.sphere[3].getRotateAngle() % 360).toFixed(2) );
-          $("#deferentLongitude").text( model.planet.deferentLongitude.toFixed(2) );
+          $("#deferentLongitude").text( model.planet.deferentLongitude.toFixed(3) );
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
           $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
           $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          

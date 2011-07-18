@@ -106,22 +106,24 @@ ModelPtolemy = function(params) {
       this.setRotateAngle(this.rotateAngle);
     };
 
-///*
+/*
     this.setSpeed2 = function(speed) {
       this.sphere[2].setSpeed(speed);
     }
 //*/
     this.sphere[2].setRotateAngle = function(angle) {
-      this.rotateAngle = mod(angle,360.0); 
+      this.rotateAngle = angle; 
       var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
-      this.setArcAngle(realAngle*PI_SCALE);
+//      this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
+      console.log(realAngle);
     };
 
     this.setMeanLongitude = function(angle) {
       var offset = angle+(360-this.sphere[2].getOffsetRotateAngle());
-      var realAngle = offset/PI_SCALE + Math.asin(((this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
+      var realAngle = offset/PI_SCALE - Math.asin(((-this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
       this.sphere[2].setRotateAngle(realAngle*PI_SCALE);
+      console.log(realAngle*PI_SCALE);
     }
 
 
@@ -209,7 +211,7 @@ ModelPtolemy = function(params) {
 
 
         // mean sun
-        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
+//        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
 
         // lines
         this.epicycleRadius[0] = this.sphere[2].gfx.markerball.currentPos();

@@ -149,10 +149,10 @@ DONE
   - "A Survey of the Almagest"
     - start values and observation tests
     - 59/85 values
-    
+    - angle epicycle/ apsidal line    
     
 TODO
-- angle epicycle/ apsidal line
+
 - mean longitude
 - better camera/movement/ortho view
 - update info box on change!!

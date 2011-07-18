@@ -258,7 +258,7 @@ BasePlanetModel.prototype = {
 //            var polePos = sceneToSyl(this.earth.npole.currentPos()); 
 //            var upVec = earthPos.subtract(polePos);
 
-            var eclipticPos = sceneToSyl(ecliptic.currentPos()); 
+            var eclipticPos = sceneToSyl(ecliptic.anchor.currentPos()); 
             var eclipticPolePos = sceneToSyl(ecliptic.gfx.npole.currentPos());
             var eclipticUpVec = eclipticPos.subtract(eclipticPolePos);
             
@@ -268,11 +268,11 @@ BasePlanetModel.prototype = {
             var equinoxOnPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(eclipticPos);
             var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
 
-            var epiPos = sceneToSyl(epi.currentPos()); 
-            var epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos);
+//            var epiPos = sceneToSyl(epi.anchor.currentPos()); 
+            var epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(eclipticPos);
 
-            var equinoxOnEpiPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(epiPos);
-            var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));
+//            var equinoxOnEpiPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(epiPos);
+//            var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));
 
 
 
