@@ -263,8 +263,8 @@ ModelPtolemy = function(params) {
 
         this.realSunS[2].setScale(0);
         this.realSun.setDist(0);
-        this.realSunS[1].setSpeed(365);
-        this.realSunS[2].setSpeed(-365);
+        this.realSunS[1].setSpeed(365.2466666);
+        this.realSunS[2].setSpeed(-365.2466666);
     }    
 
 };
