@@ -12,8 +12,8 @@ var UI = {
         var text = params.text || params.id;
         return $("<div class='caption' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
-                "<span class='triangle'><img src='textures/open.png'></span>" +
-                "<span class='triangle' style='display:none' ><img src='textures/closed.png'></span>" +
+                "<span class='triangle arrow-down'></span>" +
+                "<span class='triangle arrow-right' style='display:none'></span>" +
                 text + "</div><div class='boxContent' id='" + id + "'></div>");
     },
 

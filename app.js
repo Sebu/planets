@@ -165,7 +165,7 @@ myApp.prototype.init = function(params) {
         presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
-        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
+        legend = $("<div id='legendContainer'></div>").appendTo(this.domRoot);
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
@@ -506,11 +506,13 @@ myApp.prototype.loadPreset = function(preset) {
         
         this.currentCamera.rotateY(Math.PI + 0.1);
 
-
+        
+        $("<div>+sebastian szczepanski<br>+henry mendell</div>").appendTo("#legendContainer");
+/*
         for (i in model.sphere) {
             $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
-            
         }
+//*/
 
         // view div
         $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#view");
