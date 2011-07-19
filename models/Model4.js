@@ -4,9 +4,9 @@
  */
 Model4 = function(params) {
 	BasePlanetModel.call(this);
-    params.name = "Model4";
-    params.spheres = 4;
-    
+	params.name = params.name || "Model4";
+  params.spheres = params.spheres || 4;
+   
     this.genSpheres(params);
 
     this.setAxisAngle1 = function(angle) {

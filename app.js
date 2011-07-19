@@ -158,7 +158,7 @@ myApp.prototype.init = function(params) {
         var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         var presetBox = $("<div></div>").appendTo(uiBox);
         $("#viewPresets option[value='World']").attr('selected', true);
-        presetBox.append("<span ><select style='width:110px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
+        presetBox.append("<span ><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
         $.extend(true, planetPresets, vault);
         UI.optionsFromHash("#planetPreset", planetPresets);
@@ -508,7 +508,7 @@ myApp.prototype.loadPreset = function(preset) {
         this.currentCamera.rotateY(Math.PI + 0.1);
 
         
-        $("<div>+sebastian szczepanski<br>+henry mendell</div>").appendTo("#legendContainer");
+        $("<div>+henry mendell<br>+sebastian szczepanski</div>").appendTo("#legendContainer");
 /*
         for (i in model.sphere) {
             $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");

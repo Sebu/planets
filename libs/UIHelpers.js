@@ -3,8 +3,10 @@ var UI = {
 
     optionsFromHash : function(selector, hash) {
         $(selector).children().remove();
-        for (i in hash)
-            $(selector).append("<option value='" + i + "'>" + i + "</option>");
+        for (i in hash) {
+            var caption = hash[i].caption || i;
+            $(selector).append("<option value='" + i + "'>" + caption + "</option>");
+        }
     },
 
     box : function(params) {

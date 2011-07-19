@@ -8,20 +8,20 @@ html,body {
   -webkit-user-select:none;
   -moz-user-select:none;
   
- font-family: sans-serif;
+ font-family: 'Droid Sans', sans-serif;
 # font-family: 'Josefin Sans', sans-serif;
 #  font-family: 'Lekton', serif;
-#  text-shadow: 0 1px 0 black;
 
   font-size:100%;
   line-height:1.125em;
   
   color: #FFFFFF;
-#  background: #000000;
-#  background: #353535;
   background: #1B1917;
-#  background: #151515;
-#  background-image: url(../textures/starsmap.jpg);
+  background: url(../textures/starsmap.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;  
+  background-size: cover;
 }
 
 a { color: #FC0; cursor: pointer; }
@@ -106,6 +106,7 @@ td { padding: 0; vertical-align: top; }
 }
 
 select {
+text-overflow: ellipsis;
   color: white;
   border: 0;
   padding: 1px 10px;
@@ -120,7 +121,6 @@ option  {
    background: #FFFFFF;
 }
 
-input[type="checkbox"] { background-color: red;}
 
 .caption { 
 	font-weight: bold;
@@ -337,6 +337,7 @@ select:focus,
 }
 
 #legendContainer {
+  text-align: right;
   position: absolute;
   font-family: "Droid Sans";
   font-size: 0.75em;
@@ -351,7 +352,7 @@ select:focus,
 #canvasError {
   text-align: center;
   font-size: 18px;
-  width: 475px;
+  width: 500px;
   margin: 15em auto 0;
   background-color: rgba(95, 93, 91, 0.5);   
   background: -o-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
@@ -376,7 +377,7 @@ select:focus,
 }
 
 .arrow-right {
-  margin: 0 3px;
+  margin: 0 4px;
   width: 0;
   height: 0;
   border-top: 8px solid transparent;

@@ -4,16 +4,9 @@
  * @constructor
  */
 ModelSimple = function(params) {
-	BasePlanetModel.call(this);	
     params.name = "ModelSimple";
     params.spheres = 2;
-    this.genSpheres(params);
-
-
-       
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
+  	Model4.call(this, params);	
 
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.root, start: 0, node: this.planet.mesh, color: colors["Path"]});

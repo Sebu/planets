@@ -31,6 +31,7 @@ var colors = {
 var planetPresets = { 
 
 Mercury1: {
+  caption: "Eudoxus Mercury 1",
   model: "Model4",
   ui: "Model4",
   label: "Mercury",  
@@ -53,6 +54,7 @@ Mercury2: {
 ]},
 
 Venus1: {
+  caption: "Eudoxus Venus 1",
   model: "Model4",
   ui: "Model4",  
   label: "Venus",    
@@ -63,6 +65,7 @@ Venus1: {
     {AxisAngle: 45.0, Speed: 570, RotateStart: 0 }]},
 
 Venus2: {
+  caption: "Eudoxus Venus 2",
   model: "Model4",
   ui: "Model4",  
   label: "Venus",    
@@ -268,6 +271,7 @@ Moon3: {
 
     
 Sun: { 
+  caption: "Sun Eudoxus",
   model: "ModelSun",
   ui: "ModelSun",     
   label: "Sun",
@@ -279,6 +283,7 @@ Sun: {
     {AxisAngle: 0.5,  Speed: 0, RotateStart: 0 }] },
 
 MoonCompare: { 
+  caption: "Moon comparision",
   model: "ModelMoonCompare",
   ui: "ModelMoonCompare",     
   metonYear: 19,
@@ -293,6 +298,7 @@ MoonCompare: {
     {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
 
 SimpleTest: { 
+  caption: "Eudoxus basics",
   model: "ModelSimple",
   ui: "ModelSimple",  
   showSun: false,  
@@ -300,12 +306,15 @@ SimpleTest: {
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 365, RotateStart: 0 }
   ] },
-  
+
+    
 HippopedeIntroduction: {
-  model: "ModelHippo",
+  caption: "Hippopede introduction",
+  model: "Model4",
   ui: "ModelHippo",
   showStars: false,
   showSun: false,
+  showPath: false,
   sphere: [
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0, ShowSphere: false },
     {AxisAngle: 24.0, Speed: 0,  RotateStart: 0 },
@@ -314,6 +323,7 @@ HippopedeIntroduction: {
   ] },
 
 Aristotle: {
+  caption: "Aristotle",
   model: "ModelAristotle",
   ui: "ModelAristotle",  
   showSun: false,
@@ -327,6 +337,7 @@ Aristotle: {
 
 
 PtolemySun: { 
+  caption: "Ptolemy Sun",
   model: "ModelPtolemySun",
   ui: "ModelPtolemySun",
   label: "Sun", 
@@ -344,6 +355,7 @@ PtolemySun: {
   ] },
     
 PtolemyMars: { 
+  caption: "Ptolemy Mars",
   model: "ModelPtolemy",
   ui: "ModelPtolemy",
   label: "Mars",
@@ -384,6 +396,7 @@ PtolemyVenus: {
 //*/
   
 PtolemyJupiter: { 
+  caption: "Ptolemy Jupiter",
   model: "ModelPtolemy",
   ui: "ModelPtolemy",
   label: "Jupiter",
@@ -402,6 +415,7 @@ PtolemyJupiter: {
   ] },
   
 PtolemySaturn: { 
+  caption: "Ptolemy Saturn",
   model: "ModelPtolemy",
   ui: "ModelPtolemy",
   label: "Saturn",

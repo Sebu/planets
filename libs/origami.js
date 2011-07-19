@@ -9,7 +9,7 @@ var Ori = Ori || {};
  * @constructor
  */
 Ori.Canvas = function(params) {
-        if(Modernizr.webgl && !params.useCanvas) {
+        if(Modernizr.webgl && !params.forceCanvas) {
             this.graphics = new THREE.WebGLRenderer(params);
             this.graphics.type = "webgl";
         }
