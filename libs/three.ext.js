@@ -270,7 +270,10 @@ Utils.decToBase = function(number, base) {
             do {
                 x++;
                 var res = (fraction * base).toString().split('.');
+                if(res[0] < 10) res[0] = "0" + res[0];
+
                 result +=  res[0] + ",";
+                
 
                 if (res[1]) {
                     fraction = parseFloat('.' + res[1]);

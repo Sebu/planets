@@ -75,7 +75,7 @@ var UI = {
         if(toggle)
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
         else
-          tmp =  $("<div>" + text + "</div>");
+          tmp =  $("<div class='sliderBox'>" + text + "</div>");
         ele = $("<div title='" + tooltip + "' id='" + id + "'>" +
             "<div class='slider'></div>" +
             "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +

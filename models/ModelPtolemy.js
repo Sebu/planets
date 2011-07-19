@@ -114,7 +114,6 @@ ModelPtolemy = function(params) {
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle;
       var tmp = this.rotateAngle - this.getOffsetRotateAngle(); 
-      console.log(this.getOffsetRotateAngle);
       var realAngle = tmp/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(tmp/PI_SCALE));
 //      this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
@@ -122,9 +121,7 @@ ModelPtolemy = function(params) {
     };
 
     this.setMeanLongitude = function(angle) {
-      var meanEccAnomaly = angle ;
-//      var realAngle = offset/PI_SCALE - Math.asin(((-this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
-      this.sphere[2].setRotateAngle(meanEccAnomaly);//realAngle*PI_SCALE);
+      this.sphere[2].setRotateAngle(angle);
     }
 
 
@@ -185,6 +182,7 @@ ModelPtolemy = function(params) {
         this.realSunS[1].setAxisAngle(angle);
     }
 
+    // TODO: rotate anchor.anchor? of2?
     this.adjustAnomaly = function() {
        var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE)-this.sphere[2].getOffsetRotateAngle()/PI_SCALE;
        this.sphere[3].anchor.rotation.y += adjustment;
