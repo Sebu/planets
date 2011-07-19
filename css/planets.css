@@ -142,6 +142,10 @@ input[type="checkbox"] { background-color: red;}
 	  float:left; 
 }
 
+.sliderBox {
+  padding: 0 0 0 8px;
+}
+
 .ui-state-focus {
     outline: none;
 }
@@ -272,9 +276,9 @@ select:focus,
 }
 
 #uiContainer {
-  overflow: auto;
+#  overflow: auto;
   padding: 0;
-  width: 180px;
+  width: 190px;
   top: 10px;
   left: 10px;
 #  opacity: 0.5;
@@ -356,6 +360,7 @@ select:focus,
   box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;  
   -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
   -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+
   border-radius: 5px;
   padding: 1em;
 }

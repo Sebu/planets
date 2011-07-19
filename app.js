@@ -10,13 +10,14 @@ myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
 myApp.CANVAS_ERROR = $("<div id='canvasError'>Your browser does not seem to support <a href='http://en.wikipedia.org/wiki/Canvas_element'>Canvas</a> or <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>.<br/>Find out how to get it <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>here</a>.</div>");
+
 myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-//        this.canvas = new Ori.Canvas({antialias: true});
+//        this.canvas = new Ori.Canvas({antialias: true})
         this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
         

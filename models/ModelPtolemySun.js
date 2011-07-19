@@ -11,9 +11,6 @@ ModelPtolemySun = function(params) {
     this.factor = 1.0/7.0;
 
 
-    // mean sun / don't use    
-    this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
-
     this.sphere[1].realAngle = 0;
 
 
@@ -22,7 +19,6 @@ ModelPtolemySun = function(params) {
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S3"]});
 
 
-    this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
     this.realSun = new Planet({ glow: true, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
     this.realSun.setBeta(90.0);
   
@@ -35,6 +31,9 @@ ModelPtolemySun = function(params) {
 
     this.startDate = DATES.PTOLEMY_EPOCH;
  
+    this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
+    this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
+
 
 
     var material = new THREE.LineBasicMaterial( {  color: "0xFFAAFF" });
@@ -81,10 +80,8 @@ ModelPtolemySun = function(params) {
     this.setShowSphere3(false);
 
     
-
-
     this.setShowSphere0 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc"], state) };
-    this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator","rotationarc"], state) };
+    this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setGfx(["equator"], state) };
     
     this.setShowSphere1(true);
@@ -128,6 +125,8 @@ ModelPtolemySun = function(params) {
       this.setRotateAngle(this.rotateAngle);
     };
 
+
+// SPECIFIC
 ///*
     this.setSpeed2 = function(speed) {
       this.sphere[2].setSpeed(speed);
@@ -136,14 +135,6 @@ ModelPtolemySun = function(params) {
     }
 //*/
 
-/*
-    this.sphere[2].setRotateAngle = function(angle) {
-      this.rotateAngle = angle; 
-      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
-      this.setArcAngle(realAngle*PI_SCALE);
-      this.anchor.rotation.y = realAngle;
-    };
-//*/
 
     this.updateBlob = function() {
       var scale = (this.sphere[2].radius+this.radius1)*this.factor;
@@ -221,8 +212,6 @@ ModelPtolemySun = function(params) {
         this.earthToVernalLine.setPos(this.earthToVernal);        
 
         
-
-
         this.date = this.startDate + this.days;
     }
     

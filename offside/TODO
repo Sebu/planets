@@ -184,8 +184,9 @@ DONE
     - angle epicycle/ apsidal line    
     
 TODO
-
-- mean longitude
+- merge simple+hippo into model4
+- merge ptolemy(sun) info ptolmey base model
+- ptolemy moon: 1a/b, 2, 3
 - better camera/movement/ortho view
 - update info box on change!!
 - fix/better labels

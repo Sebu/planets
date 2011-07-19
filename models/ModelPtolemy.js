@@ -106,23 +106,18 @@ ModelPtolemy = function(params) {
       this.setRotateAngle(this.rotateAngle);
     };
 
-/*
-    this.setSpeed2 = function(speed) {
-      this.sphere[2].setSpeed(speed);
-    }
-//*/
+
     this.sphere[2].setRotateAngle = function(angle) {
-      this.rotateAngle = angle; 
-      var realAngle = this.rotateAngle/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(this.rotateAngle/PI_SCALE));
+      this.rotateAngle = angle;
+      var tmp = this.rotateAngle - this.getOffsetRotateAngle(); 
+      var realAngle = tmp/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(tmp/PI_SCALE));
 //      this.setArcAngle(realAngle*PI_SCALE);
       this.anchor.rotation.y = realAngle;
 
     };
 
     this.setMeanLongitude = function(angle) {
-      var offset = angle - this.sphere[2].getOffsetRotateAngle();
-      var realAngle = offset/PI_SCALE - Math.asin(((-this.sphere[2].equant*2)/this.sphere[2].radius) * Math.sin(offset/PI_SCALE));
-      this.sphere[2].setRotateAngle(offset);//realAngle*PI_SCALE);
+      this.sphere[2].setRotateAngle(angle);
     }
 
 
@@ -183,25 +178,27 @@ ModelPtolemy = function(params) {
         this.realSunS[1].setAxisAngle(angle);
     }
 
+    // TODO: rotate anchor.anchor? of2?
+    this.adjustAnomaly = function() {
+       var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE)-this.sphere[2].getOffsetRotateAngle()/PI_SCALE;
+       this.sphere[3].anchor.rotation.y += adjustment;
+    }
 
 
     this.addDays = function(days) {
+      this.sphere[2].updateOffsetRotateMovement(days); 
       BasePlanetModel.prototype.addDays.call(this, days);
-      var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE);
-      this.sphere[3].anchor.rotation.y += adjustment;
-      this.sphere[2].updateOffsetRotateMovement(this.dayDelta);      
+      this.adjustAnomaly();
       this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
     },
     
     this.update = function(time) {
-//        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
-
+//       this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         BasePlanetModel.prototype.update.call(this, time);
 //        this.sphere[3].setBobAngle(this.sphere[2].getRotateAngle());
         if(this.running) {
-          var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE);
-          this.sphere[3].anchor.rotation.y += adjustment;
           this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
+          this.adjustAnomaly();
         }
         
         this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[2]);
@@ -247,10 +244,11 @@ ModelPtolemy = function(params) {
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
         this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
-        this.sphere[2].setOffsetRotateSpeed(0);
+        this.sphere[2].setOffsetRotateSpeed(1);
         this.sphere[3].setBobAngle(0);
         this.setMeanLongitude( Utils.toDec(this.currentPlanet.MeanLongitude) );
-        
+        this.adjustAnomaly();
+
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    
@@ -259,8 +257,8 @@ ModelPtolemy = function(params) {
 
         this.realSunS[2].setScale(0);
         this.realSun.setDist(0);
-        this.realSunS[1].setSpeed(365);
-        this.realSunS[2].setSpeed(-365);
+        this.realSunS[1].setSpeed(365.2466666);
+        this.realSunS[2].setSpeed(-365.2466666);
     }    
 
 };
