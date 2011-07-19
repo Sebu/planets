@@ -106,11 +106,7 @@ ModelPtolemy = function(params) {
       this.setRotateAngle(this.rotateAngle);
     };
 
-/*
-    this.setSpeed2 = function(speed) {
-      this.sphere[2].setSpeed(speed);
-    }
-//*/
+
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle;
       var tmp = this.rotateAngle - this.getOffsetRotateAngle(); 
