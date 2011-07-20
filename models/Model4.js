@@ -1,14 +1,5 @@
 
-/**
- * @constructor
- */
-Model4 = function(params) {
-	BasePlanetModel.call(this);
-	params.name = params.name || "Model4";
-  params.spheres = params.spheres || 4;
-   
-    this.genSpheres(params);
-
+Wurst = function() {
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(90 - angle);
     }
@@ -18,6 +9,19 @@ Model4 = function(params) {
         this.sphere[3].setSpeed(speed);
         this.sphere[4].setSpeed(-speed);
     }
+}
+/**
+ * @constructor
+ */
+Model4 = function(params) {
+	BasePlanetModel.call(this);
+	params.name = params.name || "Model4";
+  params.spheres = params.spheres || 4;
+   
+  this.genSpheres(params);
+  Wurst.call(this);
+
+
 
 
     this.update = function(time) {
