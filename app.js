@@ -186,7 +186,7 @@ myApp.prototype.init = function(params) {
         $("#vis").hide();
 
         this.loadPreset("Mercury1");
-        //*        
+/*        
         TWEEN.start();
         this.viewPos = {x: 0, y: 0, z: -50};
         var that = this;
@@ -194,11 +194,10 @@ myApp.prototype.init = function(params) {
           that.currentCamera.setEye(that.viewPos);
           that.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
         }).easing( TWEEN.Easing.Quartic.EaseOut ).start();
-        //*/
-        
         $("#uiContainer, #infoContainer").hide();
         $("#uiContainer, #infoContainer").fadeIn(1000);
-                
+//*/                
+
     };
 
 
@@ -459,6 +458,9 @@ myApp.prototype.getModel = function(name) {
       case "ModelPtolemySun":
         models[name] = new ModelPtolemySun({renderer: this});
         break;  
+      case "ModelPtolemyMoon2":
+        models[name] = new ModelPtolemyMoon2({renderer: this});
+        break;          
       default:
       break;
       };

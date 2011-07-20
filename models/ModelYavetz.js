@@ -3,11 +3,13 @@
  * @constructor
  */
 ModelYavetz = function(params) {
-	BasePlanetModel.call(this);
+	ModelBase.call(this);
     params.name = "ModelYavetz";
     params.spheres = 4;
     this.genSpheres(params);
 
+    BaseMixin.call(this);
+  
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(90 - angle);
     }
@@ -35,7 +37,7 @@ ModelYavetz = function(params) {
     }
 
     this.loadPreset = function(node) {
-      BasePlanetModel.prototype.loadPreset.call(this,node);
+      ModelBase.prototype.loadPreset.call(this,node);
       this.setAlpha(this.currentPlanet.sphere[3].AxisAngle);
       this.setBeta(this.currentPlanet.betaRotate);
     }
@@ -43,9 +45,9 @@ ModelYavetz = function(params) {
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, node: this.planet.mesh, color: colors["Hippo"]});
-        BasePlanetModel.prototype.update.call(this, time);
+        ModelBase.prototype.update.call(this, time);
     }
 };
 
-ModelYavetz.prototype = new BasePlanetModel;
+ModelYavetz.prototype = new ModelBase;
 ModelYavetz.prototype.constructor = ModelYavetz;

@@ -68,7 +68,7 @@ addCaption = function(id,text) {
 $(document).ready(function() {
 
 //	$(".view").hide();
-	model = new BasePlanetModel({spheres: 3});
+	model = new ModelBase({spheres: 3});
 
 	canvas = document.getElementById("glCanvas");
 	canvas.addEventListener('mousedown', function(e) { model.mouseDown(e); }, true);

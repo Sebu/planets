@@ -3,11 +3,13 @@
  * @constructor
  */
 Model5 = function(params) {
-	BasePlanetModel.call(this);
+	ModelBase.call(this);
     params.name = "Model5";
     params.spheres = 5;
     this.genSpheres(params);
 
+    BaseMixin.call(this);
+  
     this.setAxisAngle1 = function(angle) {
         this.sphere[1].setAxisAngle(90 - angle);
     }
@@ -35,7 +37,7 @@ Model5 = function(params) {
     }
 
     this.loadPreset = function(node) {
-      BasePlanetModel.prototype.loadPreset.call(this,node);
+      ModelBase.prototype.loadPreset.call(this,node);
       this.setAlpha(this.currentPlanet.alpha);
       this.setBeta(this.currentPlanet.beta);
       this.setGamma(this.currentPlanet.gamma);
@@ -52,11 +54,11 @@ Model5 = function(params) {
 
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
-        BasePlanetModel.prototype.update.call(this, time);
+        ModelBase.prototype.update.call(this, time);
     }
 
 
 };
 
-Model5.prototype = new BasePlanetModel;
+Model5.prototype = new ModelBase;
 Model5.prototype.constructor = Model5;

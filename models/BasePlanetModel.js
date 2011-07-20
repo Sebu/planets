@@ -1,11 +1,27 @@
 
 
 
+BaseMixin = function() {
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
+    }
+    
+        // TODO: hacky all over
+    this.setSpeed1 = function(speed) {
+          if (this.sphere[1].getSpeed()==0 && speed == 1) {
+            this.setAnimSpeed(this.getAnimSpeed()*this.speed0Factor);
+          } else if(this.sphere[1].getSpeed()!=0 && speed == 0) {
+            this.setAnimSpeed(this.getAnimSpeed()/this.speed0Factor);
+          }
+          $("#AnimSpeed > input").attr("value",Number(this.getAnimSpeed()));
+          this.sphere[1].setSpeed(-speed);
+    }
+}
 
 /**
  * @constructor
  */
-BasePlanetModel = function() {
+ModelBase = function() {
 
 
     this.showCurve = [];
@@ -26,9 +42,9 @@ BasePlanetModel = function() {
     
 };
 
-BasePlanetModel.prototype.constructor = BasePlanetModel;
+ModelBase.prototype.constructor = ModelBase;
 
-BasePlanetModel.prototype = {
+ModelBase.prototype = {
 
 
     setShowCurve0 : function(state) { this.showCurve[0] = state; if(this.curves[0]) this.curves[0].setEnabled(state); },
@@ -117,17 +133,6 @@ BasePlanetModel.prototype = {
 
         }
         
-        // TODO: hacky all over
-        this.setSpeed1 = function(speed) {
-//          console.log(speed);
-          if (this.sphere[1].getSpeed()==0 && speed == 1) {
-            this.setAnimSpeed(this.getAnimSpeed()*this.speed0Factor);
-          } else if(this.sphere[1].getSpeed()!=0 && speed == 0) {
-            this.setAnimSpeed(this.getAnimSpeed()/this.speed0Factor);
-          }
-          $("#AnimSpeed > input").attr("value",Number(this.getAnimSpeed()));
-          this.sphere[1].setSpeed(-speed);
-        }
 
    
         //TODO: hack white north pole

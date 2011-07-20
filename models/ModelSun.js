@@ -3,11 +3,13 @@
  * @constructor
  */
 ModelSun = function(params) {
-	BasePlanetModel.call(this);
+	ModelBase.call(this);
     params.name = "ModelSun";
     params.spheres = 3;
     this.genSpheres(params);
 
+    BaseMixin.call(this);
+    
     this.planet.setGlow(true);
 
     this.setAxisAngle1 = function(angle) {
@@ -37,11 +39,11 @@ ModelSun = function(params) {
 
    
     this.loadPreset = function(node) {
-        BasePlanetModel.prototype.loadPreset.call(this,node);
+        ModelBase.prototype.loadPreset.call(this,node);
         this.setSunYears(this.currentPlanet.sunYears);
     }
 
 };
 
-ModelSun.prototype = new BasePlanetModel;
+ModelSun.prototype = new ModelBase;
 ModelSun.prototype.constructor = ModelSun;

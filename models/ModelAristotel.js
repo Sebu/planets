@@ -3,11 +3,13 @@
  * @constructor
  */
 ModelAristotle = function(params) {
-	BasePlanetModel.call(this);
+	ModelBase.call(this);
     params.name = "ModelAristotle";
     params.spheres = 4;
     
     this.genSpheres(params);
+    
+    BaseMixin.call(this);
 
     // add unwinding spheres
     var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]});
@@ -164,7 +166,7 @@ ModelAristotle = function(params) {
     }
 
     this.loadPreset = function(node) {
-        BasePlanetModel.prototype.loadPreset.call(this,node);
+        ModelBase.prototype.loadPreset.call(this,node);
 //        this.sphere[2].setAxisAngle(0);
 //        this.sphere[3].setAxisAngle(0);       
 //        this.sphere[4].setAxisAngle(0);
@@ -178,7 +180,7 @@ ModelAristotle = function(params) {
 //        this.setSpeed3(this.currentPlanet.sphere[2].Speed);
     }
     this.reset = function() {
-        BasePlanetModel.prototype.reset.call(this);
+        ModelBase.prototype.reset.call(this);
         this.setShowSphere2(false);
         this.setShowSphere3(false);   
         this.setShowSphere4(false);
@@ -190,11 +192,11 @@ ModelAristotle = function(params) {
     this.update = function(time) {
         this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: colors["Path"]});
         this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: colors["Hippo"]});
-        BasePlanetModel.prototype.update.call(this, time);
+        ModelBase.prototype.update.call(this, time);
         
     }
 };
 
-ModelAristotle.prototype = new BasePlanetModel;
+ModelAristotle.prototype = new ModelBase;
 ModelAristotle.prototype.constructor = ModelAristotle;
 

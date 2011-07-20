@@ -60,7 +60,7 @@ ModelMoonCompare = function(params) {
 
 
     this.reset = function () {
-        BasePlanetModel.prototype.reset.call(this);
+        ModelBase.prototype.reset.call(this);
         this.sphere[2].setRotateAngle(this.sphere[2].rotateStart);
         this.sphere[3].setRotateAngle(this.sphere[3].rotateStart);
         
@@ -91,7 +91,7 @@ ModelMoonCompare = function(params) {
 
 
     this.update = function(time) {
-        BasePlanetModel.prototype.update.call(this, time);
+        ModelBase.prototype.update.call(this, time);
 //        if(this.running) {
             this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.ecliptic, this.sphere[2]);
 //        }
@@ -100,5 +100,5 @@ ModelMoonCompare = function(params) {
     this.setCurrentMoonModels("Mendell", "SchFixed");
 };
 
-ModelMoonCompare.prototype = new BasePlanetModel;
+ModelMoonCompare.prototype = new ModelBase;
 ModelMoonCompare.prototype.constructor = ModelMoonCompare;

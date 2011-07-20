@@ -1,19 +1,6 @@
 
-/**
- * @constructor
- */
-ModelMoon = function(params) {
-  	BasePlanetModel.call(this);	
-    params.name =  params.name || "ModelMoon";
-    params.spheres = 3;
-    this.genSpheres(params);
 
-
-    
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
-
+MoonMixin = function() {
     this.metonYear = 0;
     this.setMetonYear = function(val) {
         this.metonYear = Number(val);
@@ -60,7 +47,6 @@ ModelMoon = function(params) {
         return this.sarosSynodicMonths;
     }
 
-
     this.getMetonZodicalMonths = function() {
         return this.getMetonYear() + this.getMetonSynodicMonths();
     }
@@ -77,6 +63,19 @@ ModelMoon = function(params) {
     this.getDraconiticDaysPerMonth = function() {
         return this.getSynodicDaysPerMonth()*(this.getSarosSynodicMonths() / this.getSarosDraconiticMonths());
     }
+}
+
+/**
+ * @constructor
+ */
+ModelMoon = function(params) {
+  	ModelBase.call(this);
+    params.name =  params.name || "ModelMoon";
+    params.spheres = 3;
+    this.genSpheres(params);
+
+    MoonMixin.call(this);
+    BaseMixin.call(this);    
 
     this.updateMoon = function() {
         var draco = 360.0/this.getDraconiticDaysPerMonth();
@@ -94,7 +93,7 @@ ModelMoon = function(params) {
         this.updateMoon();
     }
     this.loadPreset = function(node) {
-        BasePlanetModel.prototype.loadPreset.call(this,node);
+        ModelBase.prototype.loadPreset.call(this,node);
         this.setMetonYear(this.currentPlanet.metonYear);
         this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
         this.setMetonDays(this.currentPlanet.metonDays);
@@ -111,5 +110,5 @@ ModelMoon = function(params) {
 
 };
 
-ModelMoon.prototype = new BasePlanetModel;
+ModelMoon.prototype = new ModelBase;
 ModelMoon.prototype.constructor = ModelMoon;
