@@ -4,7 +4,8 @@ var posAngle = 10;
 
 
 var DATES = {
-  PTOLEMY_EPOCH : 1448637.91689121,
+  PTOLEMY_EPOCH : 1448638,
+  PTOLEMY_EPOCH2 : 1448637.91689121,
 }
 
 // some basic colors
@@ -20,9 +21,6 @@ var colors = {
 	S3: 		{r: 0.0, g: 1.0, b: 0.0},
 	S4: 		{r: 1.0, g: 0.0, b: 0.0},
   S5: 		{r: 1.0, g: 1.0, b: 0.0},
-//  S6: 		{r: 0.0, g: 1.0, b: 0.0},
-//	S7:			{r:0.4, g:0.4, b:1.0},
-//	S8:			{r:1.0, g: 0.0, b: 1.0},
 	Path: 	{r: 1.0, g: 1.0, b: 1.0},
 	Hippo: 	{r: 0.4, g: 0.4, b: 1.0}
 	
@@ -43,6 +41,7 @@ Mercury1: {
   ]},
 
 Mercury2: {
+  caption: "Eudoxus Mercury 2",
   model: "Model4",
   ui: "Model4",  
   label: "Mercury",    
@@ -76,6 +75,7 @@ Venus2: {
     {AxisAngle: 80.0, Speed: 570, RotateStart: 0 }] },
 
 Mars1: {
+  caption: "Eudoxus Mars 1",
   model: "Model4",
   ui: "Model4",  
   label: "Mars",
@@ -86,6 +86,7 @@ Mars1: {
     {AxisAngle: 18.0, Speed: 260, RotateStart: 0 }]},
 
 Mars2: {
+  caption: "Eudoxus Mars 2",
   model: "Model4",
   ui: "Model4",  
   label: "Mars",  
@@ -96,6 +97,7 @@ Mars2: {
     {AxisAngle: 18.0, Speed: 730, RotateStart: 0 }]},
 
 Mars3: {
+  caption: "Eudoxus Mars 3",
   model: "Model4",
   ui: "Model4",  
   label: "Mars",  
@@ -106,6 +108,7 @@ Mars3: {
     {AxisAngle: 18.0, Speed: 760, RotateStart: 0 }]},
 
 Mars4: {
+  caption: "Eudoxus Mars 4",
   model: "Model4",
   ui: "Model4",  
   label: "Mars",  
@@ -116,6 +119,7 @@ Mars4: {
     {AxisAngle: 18.0, Speed: 780, RotateStart: 0 }] },
 
 Jupiter: {
+  caption: "Eudoxus Jupiter",
   model: "Model4",
   ui: "Model4",  
   label: "Jupiter",  
@@ -126,6 +130,7 @@ Jupiter: {
     {AxisAngle: 18.0, Speed: 390, RotateStart: 0 }] },
 
 Saturn: {
+  caption: "Eudoxus Saturn",
   model: "Model4",
   ui: "Model4",  
   label: "Saturn",  
@@ -136,6 +141,7 @@ Saturn: {
     {AxisAngle: 18.0, Speed: 390, RotateStart: 0 }] },
 
 Model5Mercury1: { 
+  caption: "Callippus Mercury 1",
   model: "Model5",
   ui: "Model5",
   label: "Mercury",  
@@ -151,6 +157,7 @@ Model5Mercury1: {
   ] },
 
 Model5Mars1: { 
+  caption: "Callippus Mars 1",
   model: "Model5",
   ui: "Model5",
   label: "Mars",  
@@ -166,6 +173,7 @@ Model5Mars1: {
   ] },
 
 Model5Mars2: { 
+  caption: "Callippus Mars 2",
   model: "Model5",
   ui: "Model5",  
   label: "Mars",  
@@ -181,6 +189,7 @@ Model5Mars2: {
   ] },
 
 Model5Mars3: { 
+  caption: "Callippus Mars 3",
   model: "Model5",
   ui: "Model5",  
   label: "Mars",
@@ -195,7 +204,8 @@ Model5Mars3: {
     {AxisAngle: -45.0, Speed: 0, RotateStart: 0 },
   ] },
 
-Model5Venus: { 
+Model5Venus: {
+  caption: "Callippus Venus", 
   model: "Model5",
   ui: "Model5",  
   label: "Venus",
@@ -214,6 +224,7 @@ Model5Venus: {
 
 
 YavetzTest: { 
+  caption: "Yavetz",
   model: "ModelYavetz",
   ui: "ModelYavetz",  
   betaRotate: 30.0,
@@ -226,7 +237,8 @@ YavetzTest: {
 
 
 
-MoonMeton: { 
+MoonMeton: {
+  caption : "Moon",
   model: "ModelMoon",
   ui: "ModelMoon",    
   label: "Moon",
@@ -241,6 +253,7 @@ MoonMeton: {
     {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
 
 MoonCallippus: { 
+  caption : "Callippus Moon",
   model: "ModelMoon",
   ui: "ModelMoon",     
   label: "Moon",  

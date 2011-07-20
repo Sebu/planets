@@ -10,9 +10,6 @@ Model5 = function(params) {
 
     BaseMixin.call(this);
   
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
 
     this.alpha=0;
     this.getAlpha = function() {return this.alpha; }

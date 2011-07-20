@@ -79,8 +79,8 @@ myApp.prototype.init = function(params) {
         Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
 
         
-
-//*
+// SKY SPHERE
+/*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );

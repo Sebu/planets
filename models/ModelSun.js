@@ -12,10 +12,6 @@ ModelSun = function(params) {
     
     this.planet.setGlow(true);
 
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
-    
     this.sunYears = 0;
     this.setSunYears = function(speed) {
         this.sunYears = speed;

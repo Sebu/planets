@@ -47,9 +47,6 @@ ModelAristotle = function(params) {
    this.createJoint({from: this.sphere[2], to: this.sphere[7], color: colors["S2"], linewidth:2 }); 
    this.createJoint({from: this.sphere[1], to: this.sphere[8], color: colors["S1"], linewidth:1 }); 
     
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
 
     // ecliptic
     this.setAxisAngle2 = function(angle) {
