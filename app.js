@@ -32,6 +32,8 @@ myApp.prototype.init = function(params) {
 
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         Ori.input.trackMouseOn(this.canvas.domElement);
+        
+
         Ori.input.trackKeysOn(window);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
            
@@ -78,7 +80,7 @@ myApp.prototype.init = function(params) {
 
         
 
-/*
+//*
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );
@@ -110,7 +112,7 @@ myApp.prototype.init = function(params) {
 
         // create some elements
         // TODO: more segmentation
-        $("<div class='container' id='infoContainer'>\
+        $("<div id='infoContainer'>\
             <div id='sunAngleBox'>angle planet/sun<span class='wert' id='sunAngle'>0</span></div>\
             <div>longitude<span class='wert' id='longitude'>0</span></div>\
             <div id='meanLongitudeBox' style='display:none'>\
@@ -145,8 +147,11 @@ myApp.prototype.init = function(params) {
               <div>julian date<span class='wert' id='julianDate'>0</span></div>\
               <div>egyptian date<span class='wert' id='egyptianDate'>0</span></div>\
             </div>\
+            <div id='legendContainer'></div>\
              </div>").appendTo(this.domRoot);
 
+//        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
+          $("<div id='impressumContainer'><a>Topoi © 2011</a><br>+henry mendell<br><a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
 //*
 
             $("#sexaInput > input").bind("change", function() 
@@ -156,6 +161,11 @@ myApp.prototype.init = function(params) {
 
         
         var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
+        
+        //Ori.input.trackMouseOn(uiBox[0]);
+//        uiBox[0].addEventListener('mousewheel', function(e) { $(this).css('top', e.wheelDelta/120); }, false);
+
+
         var presetBox = $("<div></div>").appendTo(uiBox);
         $("#viewPresets option[value='World']").attr('selected', true);
         presetBox.append("<span ><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
@@ -166,7 +176,7 @@ myApp.prototype.init = function(params) {
         presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
-        legend = $("<div id='legendContainer'></div>").appendTo(this.domRoot);
+
         uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
@@ -188,7 +198,7 @@ myApp.prototype.init = function(params) {
         
         $("#uiContainer, #infoContainer").hide();
         $("#uiContainer, #infoContainer").fadeIn(1000);
-
+                
     };
 
 
@@ -508,8 +518,8 @@ myApp.prototype.loadPreset = function(preset) {
         this.currentCamera.rotateY(Math.PI + 0.1);
 
         
-        $("<div>+henry mendell<br>+sebastian szczepanski</div>").appendTo("#legendContainer");
-/*
+
+//*
         for (i in model.sphere) {
             $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
         }

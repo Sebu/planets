@@ -27,11 +27,11 @@ ModelPtolemy = function(params) {
     realSunS1.anchor.addNode(realSunS2);
     realSunS2.anchor.addNode(this.realSun);
 
-
     this.startDate = DATES.PTOLEMY_EPOCH;
  
     this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
     this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
+
 
     var material = new THREE.LineBasicMaterial( {  color: "0xFFAAFF" });
     this.equator = new THREE.Line(equator, material );
@@ -75,13 +75,9 @@ ModelPtolemy = function(params) {
     this.setShowSphere1(false);
     this.setShowSphere2(false);
     this.setShowSphere3(false);
-
-
     this.setShowSphere0 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc"], state) };
     this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setGfx(["equator"], state) };
-
-
     this.setShowSphere1(true);
     this.setShowSphere2(true);
     this.setShowSphere3(true);
@@ -89,6 +85,15 @@ ModelPtolemy = function(params) {
 
     this.realSunS[1].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
     this.realSunS[2].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+
+    this.setAxisAngle1 = function(angle) {
+        this.sphere[1].setAxisAngle(90 - angle);
+    }
+
+    this.setAxisAngle2 = function(angle) {
+        this.sphere[2].setAxisAngle(angle);
+        this.realSunS[1].setAxisAngle(angle);
+    }    
 
     this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );    
 
@@ -106,7 +111,7 @@ ModelPtolemy = function(params) {
       this.setRotateAngle(this.rotateAngle);
     };
 
-
+    // specific
     this.sphere[2].setRotateAngle = function(angle) {
       this.rotateAngle = angle;
       var tmp = this.rotateAngle - this.getOffsetRotateAngle(); 
@@ -169,14 +174,7 @@ ModelPtolemy = function(params) {
 
     
 
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
 
-    this.setAxisAngle2 = function(angle) {
-        this.sphere[2].setAxisAngle(angle);
-        this.realSunS[1].setAxisAngle(angle);
-    }
 
     // TODO: rotate anchor.anchor? of2?
     this.adjustAnomaly = function() {
@@ -190,12 +188,13 @@ ModelPtolemy = function(params) {
       BasePlanetModel.prototype.addDays.call(this, days);
       this.adjustAnomaly();
       this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
-    },
+    }
+    
+    
     
     this.update = function(time) {
 //       this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         BasePlanetModel.prototype.update.call(this, time);
-//        this.sphere[3].setBobAngle(this.sphere[2].getRotateAngle());
         if(this.running) {
           this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
           this.adjustAnomaly();
@@ -203,8 +202,6 @@ ModelPtolemy = function(params) {
         
         this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[2]);
         
-
-
 
         // mean sun
         this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
