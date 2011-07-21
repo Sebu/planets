@@ -31,8 +31,8 @@ ModelPtolemySun = function(params) {
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
         this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
-        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
-        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
+        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
+        this.sphere[2].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
         this.adjustAnomaly();       
         
         // sun stuff

@@ -264,9 +264,9 @@ myApp.prototype.updateInfoBox = function() {
           $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
-        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun || model instanceof ModelPtolemyMoon2) {
+        if(model.ui == "ModelPtolemy") {
           $("#longitude").text( Utils.toSexa(mod(model.planet.longitude,360) ) );
-          $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[3].getOffsetRotateAngle(), 360) ) );
+          $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) ) );
           $("#epicycleLongitude").text( Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) ) );
           $("#deferentLongitude").text( Utils.toSexa(model.planet.deferentLongitude) );
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
@@ -425,47 +425,7 @@ myApp.prototype.setView = function(view) {
 myApp.prototype.getModel = function(name) {
   var mod = models[name];
   if(!mod) {
-      switch(name) {
-        case "Model4":
-        models[name] = new Model4({renderer: this});
-        break;
-      case "ModelMoonCompare":
-        models[name] = new ModelMoonCompare({renderer: this});
-        break;
-     case "ModelSun":
-        models[name] = new ModelSun({renderer: this});
-        break;
-      case "ModelSimple":
-        models[name] = new ModelSimple({renderer: this});
-        break;
-      case "ModelHippo":
-        models["ModelHippo"] = new ModelHippo({renderer: this});
-        break;
-      case "ModelYavetz":
-        models["ModelYavetz"] = new ModelYavetz({renderer: this});
-        break;
-      case "Model5":
-        models[name] = new Model5({renderer: this});
-        break;
-      case "ModelMoon":
-        models[name] = new ModelMoon({renderer: this});
-        break;
-      case "ModelAristotle":
-        models[name] = new ModelAristotle({renderer: this});
-        break;
-      case "ModelPtolemy":
-        models[name] = new ModelPtolemy({renderer: this});
-        break;        
-      case "ModelPtolemySun":
-        models[name] = new ModelPtolemySun({renderer: this});
-        break;  
-      case "ModelPtolemyMoon2":
-        models[name] = new ModelPtolemyMoon2({renderer: this});
-        break;          
-      default:
-      break;
-      };
-
+    models[name] = new window[name]({renderer: this});
     mod = models[name];
   };
   return mod;
@@ -501,7 +461,7 @@ myApp.prototype.loadPreset = function(preset) {
         }      
 
         $("#ptolemyInfoContainer").fadeOut(500);
-        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun || model instanceof ModelPtolemyMoon2) 
+        if(model.ui == "ModelPtolemy") 
             $("#ptolemyInfoContainer").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);
@@ -736,15 +696,16 @@ myApp.prototype.loadPreset = function(preset) {
 
        } else if (model.ui == "ModelPtolemy") {
            this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
+           this.currentCamera.rotateRight(Math.PI/2);
            planetLabel2.setText("sun");       
 
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
-            UI.slider({model:model.sphere[3], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-            UI.slider({model:model.sphere[3], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+            UI.slider({model:model.sphere[2], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 //            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");

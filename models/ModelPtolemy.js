@@ -4,7 +4,7 @@
  * @constructor
  */
 ModelPtolemy = function(params) {
-    params.name = "ModelPtolemy";
+    params.name = params.nam || "ModelPtolemy";
     ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/11.0;
     
@@ -19,7 +19,7 @@ ModelPtolemy = function(params) {
 
     this.oldAdjustAnomaly = this.adjustAnomaly;
     this.adjustAnomaly = function() {
-      var tmp = this.sphere[3].getRotateAngle() - this.sphere[3].getOffsetRotateAngle(); 
+      var tmp = this.sphere[3].getRotateAngle() - this.sphere[2].getOffsetRotateAngle(); 
       var realAngle = tmp/PI_SCALE - Math.asin((this.sphere[3].equant/this.sphere[3].radius) * Math.sin(tmp/PI_SCALE));
       this.sphere[3].anchor.rotation.y = realAngle;
       this.oldAdjustAnomaly();
@@ -32,8 +32,8 @@ ModelPtolemy = function(params) {
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
         this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
-        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
-        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
+        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
+        this.sphere[2].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
         this.adjustAnomaly();   
 
         // sun stuff
@@ -52,3 +52,12 @@ ModelPtolemy = function(params) {
 
 ModelPtolemy.prototype = new ModelBase;
 ModelPtolemy.prototype.constructor = ModelPtolemy;
+
+
+ModelPtolemyInferior = function(params) {
+    params.name = "ModelPtolemyInferior";
+    ModelPtolemyBase.call(this, params);	
+}
+
+ModelPtolemyInferior.prototype = new ModelBase;
+ModelPtolemyInferior.prototype.constructor = ModelPtolemyInferior;

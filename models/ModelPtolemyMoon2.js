@@ -45,8 +45,8 @@ ModelPtolemyMoon2 = function(params) {
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
         this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
-        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
-        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
+        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
+        this.sphere[2].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
         this.adjustAnomaly();   
         
        
@@ -68,3 +68,36 @@ ModelPtolemyMoon2 = function(params) {
 
 ModelPtolemyMoon2.prototype = new ModelBase;
 ModelPtolemyMoon2.prototype.constructor = ModelPtolemyMoon2;
+
+
+ModelPtolemyMoon1a = function(params) {
+    params.name = "ModelPtolemyMoon1a";
+	  ModelPtolemyMoon2.call(this, params);	
+
+    
+    this.adjustAnomaly = function() {
+      var realAngle = this.sphere[2].getRotateAngle() - this.sphere[3].getRotateAngle();
+      this.sphere[2].anchor.rotation.y = realAngle/PI_SCALE;
+    }
+        
+    
+};
+
+ModelPtolemyMoon1a.prototype = new ModelBase;
+ModelPtolemyMoon1a.prototype.constructor = ModelPtolemyMoon1a;
+
+
+ModelPtolemyMoon1b = function(params) {
+    params.name = "ModelPtolemyMoon1b";
+	  ModelPtolemyMoon2.call(this, params);	
+
+    
+    this.adjustAnomaly = function() {
+      this.sphere[4].anchor.rotation.y = -this.sphere[4].anchor.rotation.y;
+    }
+        
+    
+};
+
+ModelPtolemyMoon1b.prototype = new ModelBase;
+ModelPtolemyMoon1b.prototype.constructor = ModelPtolemyMoon1b;

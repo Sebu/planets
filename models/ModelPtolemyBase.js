@@ -92,13 +92,13 @@ ModelPtolemyBase = function(params) {
 
     // TODO: rotate anchor.anchor? of2?
     this.adjustAnomaly = function() {
-       var adjustment = -this.sphere[3].anchor.rotation.y+(this.sphere[3].rotateAngle/PI_SCALE)-this.sphere[3].getOffsetRotateAngle()/PI_SCALE;
+       var adjustment = -this.sphere[3].anchor.rotation.y+(this.sphere[3].rotateAngle/PI_SCALE)-this.sphere[2].getOffsetRotateAngle()/PI_SCALE;
        this.sphere[4].anchor.rotation.y += adjustment;
     }
 
 
     this.addDays = function(days) {
-      this.sphere[3].updateOffsetRotateMovement(days); 
+      this.sphere[2].updateOffsetRotateMovement(days); 
       ModelBase.prototype.addDays.call(this, days);
       this.adjustAnomaly();
       this.updatePlanetMetadata(this.planet,this.sphere[1], this.ecliptic, this.sphere[3]);
@@ -110,7 +110,7 @@ ModelPtolemyBase = function(params) {
 //        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
         if(this.running) {
-          this.sphere[3].updateOffsetRotateMovement(this.dayDelta);
+          this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
           this.adjustAnomaly();
         }
                 

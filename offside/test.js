@@ -57,47 +57,7 @@ myApp.prototype.newScene = function() {
 myApp.prototype.getModel = function(name) {
   var mod = models[name];
   if(!mod) {
-      switch(name) {
-        case "Model4":
-        models[name] = new Model4({renderer: this});
-        break;
-      case "ModelMoonCompare":
-        models[name] = new ModelMoonCompare({renderer: this});
-        break;
-     case "ModelSun":
-        models[name] = new ModelSun({renderer: this});
-        break;
-      case "ModelSimple":
-        models[name] = new ModelSimple({renderer: this});
-        break;
-      case "ModelHippo":
-        models["ModelHippo"] = new ModelHippo({renderer: this});
-        break;
-      case "ModelYavetz":
-        models["ModelYavetz"] = new ModelYavetz({renderer: this});
-        break;
-      case "Model5":
-        models[name] = new Model5({renderer: this});
-        break;
-      case "ModelMoon":
-        models[name] = new ModelMoon({renderer: this});
-        break;
-      case "ModelAristotle":
-        models[name] = new ModelAristotle({renderer: this});
-        break;
-      case "ModelPtolemy":
-        models[name] = new ModelPtolemy({renderer: this});
-        break;        
-      case "ModelPtolemySun":
-        models[name] = new ModelPtolemySun({renderer: this});
-        break;  
-      case "ModelPtolemyMoon2":
-        models[name] = new ModelPtolemyMoon2({renderer: this});
-        break;              
-      default:
-      break;
-      };
-
+    models[name] = new window[name]({renderer: this});
     mod = models[name];
   };
   return mod;
