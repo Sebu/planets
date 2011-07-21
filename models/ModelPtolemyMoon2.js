@@ -30,7 +30,7 @@ ModelPtolemyMoon2 = function(params) {
         this.sphere[3].setBobAngle(0);
         this.adjustAnomaly();       
         
-        this.sphere[3].anchor.rotation.x = Math.PI/2;
+//        this.sphere[3].pivot.rotation.z = Math.PI/2;
         
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);

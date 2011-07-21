@@ -146,9 +146,6 @@ ModelPtolemyBase = function(params) {
         this.date = this.startDate + this.days;
     }
     
-    this.setAxisAngle1 = function(angle) {
-        this.sphere[1].setAxisAngle(90 - angle);
-    }
 
     this.setAxisAngle2 = function(angle) {
         this.sphere[2].setAxisAngle(angle);
@@ -157,10 +154,12 @@ ModelPtolemyBase = function(params) {
 
     this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );   
    
+/*
     this.sphere[2].updateMovement = function(step) {
       this.rotateAngle += this.step * step;
       this.setRotateAngle(this.rotateAngle);
     };
+//*/
     
     this.setShowSun1 = function(state) { 
       this.planet.setEnabled(state); 
@@ -178,7 +177,7 @@ ModelPtolemyBase = function(params) {
     this.getShowSun2 = function(state) { return true; }
 
     this.updateBlob = function() {
-      var scale = (this.sphere[2].radius+this.radius1)*this.factor;
+      var scale = (this.sphere[2].radius+this.sphere[3].radius)*this.factor;
       this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
     }
@@ -216,14 +215,15 @@ ModelPtolemyBase = function(params) {
 
 
     this.setRadiusE = function(value) {
-      this.radius1 = value;
+      this.sphere[3].radius = value;
       this.sphere[3].setScale(value*this.factor);
+
       this.planet.setDist(value*this.factor);
       
       this.updateBlob();
       this.updateSunDist();
     };
-    this.getRadiusE = function() { return this.radius1; }    
+    this.getRadiusE = function() { return this.sphere[3].radius; }    
     
 };
 

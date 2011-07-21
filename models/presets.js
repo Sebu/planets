@@ -377,8 +377,8 @@ PtolemyMoon2: {
   showHippo: false,
   sunDist: 1.7,
   centuryStep: 1,  
-  derefentRadius: "6;0",
-  epicycleRadius: "39;30",
+  derefentRadius: "12;29",
+  epicycleRadius: "60;00",
   apsidalAngle: "0",
   equant: "0",
 //  mean
