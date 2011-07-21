@@ -5,7 +5,6 @@
  */
 ModelPtolemySun = function(params) {
     params.name = "ModelPtolemySun";
-    params.spheres = 4;
 	  ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/7.0;
 
@@ -28,14 +27,12 @@ ModelPtolemySun = function(params) {
     
     this.reset = function () {
         ModelBase.prototype.reset.call(this);
-        this.setEquant( Utils.toDec(this.currentPlanet.equant));
-        this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
-        this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
-        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );
-        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep );
-       
-        this.sphere[4].setBobAngle(0);
-//        this.setMeanLongitude( Utils.toDec(this.currentPlanet.MeanLongitude) );
+        this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
+        this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
+        this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
+        this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
+        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
+        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
         this.adjustAnomaly();       
         
         // sun stuff

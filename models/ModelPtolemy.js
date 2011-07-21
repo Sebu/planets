@@ -5,7 +5,6 @@
  */
 ModelPtolemy = function(params) {
     params.name = "ModelPtolemy";
-    params.spheres = 4;
     ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/11.0;
     
@@ -18,25 +17,24 @@ ModelPtolemy = function(params) {
 
     };
 
-    // TODO: move to adjustAnomaly
-    this.sphere[3].setRotateAngle = function(angle) {
-      this.rotateAngle = angle;
-      var tmp = this.rotateAngle - this.getOffsetRotateAngle(); 
-      var realAngle = tmp/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(tmp/PI_SCALE));
-      this.anchor.rotation.y = realAngle;
-    };
-
+    this.oldAdjustAnomaly = this.adjustAnomaly;
+    this.adjustAnomaly = function() {
+      var tmp = this.sphere[3].getRotateAngle() - this.sphere[3].getOffsetRotateAngle(); 
+      var realAngle = tmp/PI_SCALE - Math.asin((this.sphere[3].equant/this.sphere[3].radius) * Math.sin(tmp/PI_SCALE));
+      this.sphere[3].anchor.rotation.y = realAngle;
+      this.oldAdjustAnomaly();
+    }
+    
     
     this.reset = function () {
         ModelBase.prototype.reset.call(this);
-        this.setEquant( Utils.toDec(this.currentPlanet.equant));
-        this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
-        this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
-        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
-        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep );
-
-        this.sphere[4].setBobAngle(0);
-        this.adjustAnomaly();
+        this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
+        this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
+        this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
+        this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
+        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
+        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
+        this.adjustAnomaly();   
 
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);

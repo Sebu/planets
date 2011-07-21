@@ -6,7 +6,7 @@
 ModelPtolemyBase = function(params) {
 	  ModelBase.call(this);
     params.name = params.name || "ModelPtolemySun";
-    params.spheres = params.spheres || 3;
+    params.spheres = params.spheres || 4;
     this.genSpheres(params);
 
     BaseMixin.call(this);
@@ -122,7 +122,7 @@ ModelPtolemyBase = function(params) {
 
         // lines
         this.epicycleRadius[0] = this.sphere[3].gfx.markerball.currentPos();
-        this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].gfx.markerball.currentPos();
+        this.epicycleRadius[1] = this.planet.mesh.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
           
         this.deferentRadius[0] = this.sphere[3].anchor.currentPos();
@@ -142,7 +142,7 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
         this.earthToVernal[0] = this.earth.mesh.currentPos();        
-        this.earthToVernal[1] = this.sphere[2].gfx.markerball.currentPos();
+        this.earthToVernal[1] = this.sphere[1].gfx.markerball.currentPos();
         this.earthToVernalLine.setPos(this.earthToVernal);        
 
         
@@ -176,14 +176,17 @@ ModelPtolemyBase = function(params) {
       var scale = (this.sphere[3].radius+this.sphere[4].radius)*this.factor;
       this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
+      this.apsidal = [ {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor}, {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];
+      this.apsidalLine.setPos(this.apsidal);       
     }
-    
+
+
+    // TODO: change    
     this.sphere[4].setBobAngle = function(angle) {
       var scale = 90/12;
       this.bobAngle = (Math.abs(mod(angle, 360)-180)-90)/scale;
       this.anchor.rotation.x = 0;// degToRad(this.bobAngle);
     };
-        
     this.sphere[4].getBobAngle = function() {
       return this.bobAngle;
     };
@@ -193,6 +196,7 @@ ModelPtolemyBase = function(params) {
       this.equantPoint.position.z = this.sphere[3].equant*this.factor*2;
       this.sphere[3].anchor.position.z = this.sphere[3].equant*this.factor;
       
+            
       this.updateBlob();
       this.updateSunDist();
     };
@@ -202,8 +206,9 @@ ModelPtolemyBase = function(params) {
     this.setRadiusD = function(value) {
       this.sphere[3].radius = value;
       this.sphere[3].setScale(value*this.factor);
-      this.sphere[4].anchor.position.z = value*this.factor;
+      this.sphere[4].pivot.position.z = value*this.factor;
 
+     
       this.updateBlob();
       this.updateSunDist();
     };
@@ -221,6 +226,12 @@ ModelPtolemyBase = function(params) {
     };
     this.getRadiusE = function() { return this.sphere[4].radius; }    
     
+    this.setBaseRadius = function(value) {
+      this.sphere[2].radius = value;
+      this.sphere[2].setScale(this.sphere[2].radius*this.factor);
+      this.sphere[3].pivot.position.z = this.sphere[2].radius*this.factor;  
+    }
+    this.getBaseRadius = function() { return this.sphere[2].radius; }
 };
 
 ModelPtolemyBase.prototype = new ModelBase;

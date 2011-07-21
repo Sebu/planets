@@ -358,7 +358,8 @@ PtolemySun: {
   showStars: false,
   showHippo: false,
   centuryStep: 0,  
-  derefentRadius: 60.0,
+  baseRadius: "0.0",    
+  derefentRadius: "60;0",
   epicycleRadius: 0,
   apsidalAngle: 56.5,
   equant: "2;30",
@@ -369,28 +370,6 @@ PtolemySun: {
     {AxisAngle: 0.0, Speed: 0, RotateStart: 0 }
   ] },
 
-/*
-PtolemyMoon2: { 
-  caption: "Ptolemy Moon2",
-  model: "ModelPtolemyMoon2",
-  ui: "ModelPtolemy",
-  label: "Moon",
-  showStars: false,
-  showHippo: false,
-  sunDist: 1.7,
-  centuryStep: 0,  
-  derefentRadius: "60;00",
-  epicycleRadius: "6;20",
-  apsidalAngle: "0",
-  equant: "0",
-//  mean
-  sphere: [
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Step: "0",  RotateStart: "41;27" },
-    {AxisAngle: 0.0, Step: "0", RotateStart:  "70;37" },
-    {AxisAngle: 0.0, Step: "0", RotateStart: "-268;49" "-13;03,53,56,17,51,59", RotateStart: "-268;49" }
-  ] },
-//*/
 
 PtolemyMoon2: { 
   caption: "Ptolemy Moon 2",
@@ -402,17 +381,40 @@ PtolemyMoon2: {
   showSun: false,  
   sunDist: 1.7,
   centuryStep: 0,  
+  baseRadius: "12;30",
   derefentRadius: "60;00",
   epicycleRadius: "6;20",
   apsidalAngle: "0",
   equant: "0",
-//  mean
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 0.0, Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
     {AxisAngle: 0.0, Step: "12;11,26,41,20,17,59", RotateStart:  "70;37" },
-    {AxisAngle: 0.0, Step: "-13;03,53,56,17,51,59", RotateStart: "-268;49" }
+    {AxisAngle: 0.0, Step: "13;03,53,56,17,51,59", RotateStart: "268;49" }
   ] },
+
+PtolemyMoon3: { 
+  caption: "Ptolemy Moon 3",
+  model: "ModelPtolemyMoon2",
+  ui: "ModelPtolemy",
+  label: "Moon",
+  showStars: false,
+  showHippo: false,
+  showSun: false,  
+  sunDist: 1.7,
+  accurateMoon: true,
+  centuryStep: 0,  
+  baseRadius: "12;30",
+  derefentRadius: "60;00",
+  epicycleRadius: "6;20",
+  apsidalAngle: "0",
+  equant: "0",
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 0.0, Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
+    {AxisAngle: 0.0, Step: "12;11,26,41,20,17,59", RotateStart:  "70;37" },
+    {AxisAngle: 0.0, Step: "13;03,53,56,17,51,59", RotateStart: "268;49" }
+  ] },  
         
 PtolemyMars: { 
   caption: "Ptolemy Mars",
@@ -424,6 +426,7 @@ PtolemyMars: {
   sunDist: 1.7,
   showSun: false,
   centuryStep: 1,  
+  baseRadius: "0.0",  
   derefentRadius: "60;0",
   epicycleRadius: "39;30",
   MeanLongitude: "3;32",
@@ -437,26 +440,7 @@ PtolemyMars: {
     {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
   ] },
 
-/*/
-PtolemyVenus: { 
-  model: "ModelPtolemy",
-  ui: "ModelPtolemy",
-  label: "Venus",
-  showStars: false,
-  showHippo: false,
-  sunDist: 1.7,
-  derefentRadius: "60;0",
-  epicycleRadius: "43;10",
-  MeanLongitude: "330;45",
-  apsidalAngle: "46;10",
-  equant: "1;15",
-//  mean
-  sphere: [
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Step: "0;59,08,17,13,12,31", RotateStart: 0},
-    {AxisAngle: 0.0, Step: "0;36,59,25,53,11,28", RotateStart: "71;07" }
-  ] },
-//*/
+
   
 PtolemyJupiter: { 
   caption: "Ptolemy Jupiter",
@@ -467,6 +451,7 @@ PtolemyJupiter: {
   showHippo: false,
   sunDist: 1.7,
   centuryStep: 1,
+  baseRadius: "0.0",    
   derefentRadius: "60;0",
   epicycleRadius: "11;30",
   apsidalAngle: "152;09",
@@ -488,6 +473,7 @@ PtolemySaturn: {
   showHippo: false,
   sunDist: 1.7,
   centuryStep: 1,  
+  baseRadius: "0.0",    
   derefentRadius: "60;0",
   epicycleRadius: "6;30",
   apsidalAngle: "224;10",
@@ -498,8 +484,51 @@ PtolemySaturn: {
     {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },   
     {AxisAngle: 0.0, Step: "0;02,00,33,31,28,51",  RotateStart: "296;43"},
     {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
+  ] },
+
+PtolemyMercury: { 
+  caption: "Ptolemy Mercury",
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Mercury",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  centuryStep: 1,  
+  baseRadius: "0.0",    
+  derefentRadius: "60;0",
+  epicycleRadius: "22;30",
+  apsidalAngle: "181;10",
+  equant: "3;0",
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },   
+    {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31",  RotateStart: "330;45"},
+    {AxisAngle: 0.0, Step: "3;06,24,06,59,35,50", RotateStart: "21;55" }
+  ] },
+
+//*/
+PtolemyVenus: { 
+  caption: "Ptolemy Venus",
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Venus",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  centuryStep: 1,    
+  baseRadius: "0.0",    
+  derefentRadius: "60;0",
+  epicycleRadius: "43;10",
+  apsidalAngle: "46;10",
+  equant: "1;15",
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },    
+    {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31", RotateStart: "330;45"},
+    {AxisAngle: 0.0, Step: "0;36,59,25,53,11,28", RotateStart: "71;07" }
   ] }
-  
+//*/
 
 };
 
@@ -530,11 +559,7 @@ var TestPairs = {
     d2: {  date: "21.2.135", longitude: "148;50" },
     d3: {  date: "27.5.139", longitude: "242;34" }
   },
-/*/
-  PtolemyVenus: {
-    d1: { date: "16.12.138", longitude: "216;30" }
-  },
-//*/
+
   
   PtolemyJupiter: {
     d1: { date: "17.5.133", longitude: "233;11" },
@@ -546,7 +571,19 @@ var TestPairs = {
     d1: { date: "26.3.127", longitude: "181;13" },
     d2: {  date: "3.6.133", longitude: "249;40" },
     d3: {  date: "8.7.136", longitude: "284;14" }
-  }
+  },
+
+//*
+  PtolemyMercury: {
+    d1: { date: "4.6.134", longitude: "48;45" },
+    d2: { date: "3.10.134", longitude: "170;12" }
+  },
+//*/
+  PtolemyVenus: {
+    d1: { date: "8.3.132", longitude: "31;30" },
+    d2: { date: "16.12.138", longitude: "216;30" }
+  },
+//*/
 
 
 };

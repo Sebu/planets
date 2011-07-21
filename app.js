@@ -551,7 +551,7 @@ myApp.prototype.loadPreset = function(preset) {
         // playback div       
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
 
-        $("#playback").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"start\");} ' title='pause animation'>pause</div></div>");
+        $("#playback").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
 
 
         // create the right sliders for each model
