@@ -264,7 +264,7 @@ myApp.prototype.updateInfoBox = function() {
           $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
-        if(model.ui == "ModelPtolemy") {
+        if(model.ui == "ModelPtolemy" || model.ui == "ModelPtolemySun") {
           $("#longitude").text( Utils.toSexa(mod(model.planet.longitude,360) ) );
           $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) ) );
           $("#epicycleLongitude").text( Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) ) );
@@ -461,7 +461,7 @@ myApp.prototype.loadPreset = function(preset) {
         }      
 
         $("#ptolemyInfoContainer").fadeOut(500);
-        if(model.ui == "ModelPtolemy") 
+        if(model.ui == "ModelPtolemy" || model.ui == "ModelPtolemySun") 
             $("#ptolemyInfoContainer").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);

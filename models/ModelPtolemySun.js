@@ -38,8 +38,8 @@ ModelPtolemySun = function(params) {
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) ); 
-        this.realSunS[1].setRotateAngle( this.getRotateStart2() );
-        this.realSunS[2].setRotateAngle( (360-this.getRotateStart2()) );
+        this.realSunS[1].setRotateAngle( this.getRotateStart3() );
+        this.realSunS[2].setRotateAngle( (360-this.getRotateStart3()) );
 
     }    
 

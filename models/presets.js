@@ -468,7 +468,6 @@ PtolemyMars: {
   showStars: false,
   showHippo: false,
   sunDist: 1.7,
-  showSun: false,
   centuryStep: 1,  
   baseRadius: "0.0",  
   derefentRadius: "60;0",
@@ -529,7 +528,7 @@ PtolemySaturn: {
     {AxisAngle: 0.0, Step: "0;02,00,33,31,28,51",  RotateStart: "296;43"},
     {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
   ] },
-
+/*
 PtolemyMercury: { 
   caption: "Ptolemy Mercury",
   model: "ModelPtolemyInferior",
@@ -549,6 +548,28 @@ PtolemyMercury: {
     {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },   
     {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31",  RotateStart: "330;45"},
     {AxisAngle: 0.0, Step: "3;06,24,06,59,35,50", RotateStart: "21;55" }
+  ] },
+//*/
+
+PtolemyMercury: { 
+  caption: "Ptolemy Mercury",
+  model: "ModelPtolemyInferior",
+  ui: "ModelPtolemy",
+  label: "Mercury",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  centuryStep: 1,  
+  baseRadius: "3;0",    
+  derefentRadius: "60;0",
+  epicycleRadius: "22;30",
+  apsidalAngle: "181;10",
+  equant: "6;0",
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },   
+    {AxisAngle: 0.0, Step: "0",  RotateStart: 0 },
+    {AxisAngle: 0.0, Step: "0",  RotateStart: "21;55"  }
   ] },
 
 //*/

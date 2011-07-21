@@ -43,7 +43,7 @@ ModelPtolemyBase = function(params) {
 
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
     this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S1"] }); 
-    this.sphere[3].pivot.addNode(this.apsidalLine);
+    this.sphere[2].pivot.addNode(this.apsidalLine);
 
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S3"] }); 
@@ -194,7 +194,7 @@ ModelPtolemyBase = function(params) {
     this.setEquant = function(value) {
       this.sphere[3].equant = value;
       this.equantPoint.position.z = this.sphere[3].equant*this.factor*2;
-      this.sphere[3].anchor.position.z = this.sphere[3].equant*this.factor;
+      this.sphere[2].anchor.position.z = this.sphere[3].equant*this.factor;
       
             
       this.updateBlob();

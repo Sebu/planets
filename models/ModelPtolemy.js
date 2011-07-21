@@ -56,7 +56,10 @@ ModelPtolemy.prototype.constructor = ModelPtolemy;
 
 ModelPtolemyInferior = function(params) {
     params.name = "ModelPtolemyInferior";
-    ModelPtolemyBase.call(this, params);	
+    ModelPtolemy.call(this, params);
+
+    this.adjustAnomaly = function() {
+    }	
 }
 
 ModelPtolemyInferior.prototype = new ModelBase;
