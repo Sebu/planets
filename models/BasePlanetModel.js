@@ -212,7 +212,7 @@ ModelBase.prototype = {
 
         // hide arcs of outer sphere
         this.sphere[1].setGfx(["arc1","arc2"], false);
-        this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );
+        this.sphere[3].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );
         // hide sun sphere
         this.ecliptic.setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
@@ -359,7 +359,7 @@ ModelBase.prototype = {
         for (i in model.updateList) {
            model.updateList[i].updateMovement(this.dayDelta);
         }
-      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
+      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
     },
 
      setDays : function(days) {

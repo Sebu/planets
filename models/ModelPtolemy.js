@@ -5,20 +5,21 @@
  */
 ModelPtolemy = function(params) {
     params.name = "ModelPtolemy";
-    params.spheres = 3;
+    params.spheres = 4;
     ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/11.0;
     
     
     this.updateSunDist = function() {
-      var dist = (this.sphere[2].radius-this.radius1-this.sphere[2].equant)*this.factor;  
+      var dist = (this.sphere[3].radius-this.sphere[4].radius-this.sphere[3].equant)*this.factor;  
       this.realSunS[1].setScale(dist);
       this.realSunS[2].anchor.position.z = dist;
       this.sun.setDist(dist);
 
     };
 
-    this.sphere[2].setRotateAngle = function(angle) {
+    // TODO: move to adjustAnomaly
+    this.sphere[3].setRotateAngle = function(angle) {
       this.rotateAngle = angle;
       var tmp = this.rotateAngle - this.getOffsetRotateAngle(); 
       var realAngle = tmp/PI_SCALE - Math.asin((this.equant/this.radius) * Math.sin(tmp/PI_SCALE));
@@ -31,10 +32,10 @@ ModelPtolemy = function(params) {
         this.setEquant( Utils.toDec(this.currentPlanet.equant));
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius) ); 
-        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
-        this.sphere[2].setOffsetRotateSpeed( this.currentPlanet.centuryStep );
+        this.sphere[3].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle) );   
+        this.sphere[3].setOffsetRotateSpeed( this.currentPlanet.centuryStep );
 
-        this.sphere[3].setBobAngle(0);
+        this.sphere[4].setBobAngle(0);
         this.adjustAnomaly();
 
         // sun stuff

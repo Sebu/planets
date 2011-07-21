@@ -38,12 +38,12 @@ ModelPtolemyBase = function(params) {
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
-    this.sphere[2].anchor.addNode(this.equator);
+    this.sphere[3].anchor.addNode(this.equator);
 
 
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
     this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S1"] }); 
-    this.sphere[2].pivot.addNode(this.apsidalLine);
+    this.sphere[3].pivot.addNode(this.apsidalLine);
 
     this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S3"] }); 
@@ -76,12 +76,15 @@ ModelPtolemyBase = function(params) {
     this.setShowSphere1(false);
     this.setShowSphere2(false);
     this.setShowSphere3(false);
-    this.setShowSphere0 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc"], state) };
+    this.setShowSphere4(false);
+    this.setShowSphere1 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc","markerball"], state) };
     this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator"], state) };
     this.setShowSphere3 = function(state) { this.sphere[3].setGfx(["equator"], state) };
+    this.setShowSphere4 = function(state) { this.sphere[4].setGfx(["equator"], state) };
     this.setShowSphere1(true);
     this.setShowSphere2(true);
     this.setShowSphere3(true);
+    this.setShowSphere4(true);
     
     
     this.realSunS[1].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
@@ -89,49 +92,49 @@ ModelPtolemyBase = function(params) {
 
     // TODO: rotate anchor.anchor? of2?
     this.adjustAnomaly = function() {
-       var adjustment = -this.sphere[2].anchor.rotation.y+(this.sphere[2].rotateAngle/PI_SCALE)-this.sphere[2].getOffsetRotateAngle()/PI_SCALE;
-       this.sphere[3].anchor.rotation.y += adjustment;
+       var adjustment = -this.sphere[3].anchor.rotation.y+(this.sphere[3].rotateAngle/PI_SCALE)-this.sphere[3].getOffsetRotateAngle()/PI_SCALE;
+       this.sphere[4].anchor.rotation.y += adjustment;
     }
 
 
     this.addDays = function(days) {
-      this.sphere[2].updateOffsetRotateMovement(days); 
+      this.sphere[3].updateOffsetRotateMovement(days); 
       ModelBase.prototype.addDays.call(this, days);
       this.adjustAnomaly();
-      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
+      this.updatePlanetMetadata(this.planet,this.sphere[1], this.ecliptic, this.sphere[3]);
     }
 
 
-
+    
     this.update = function(time) {
 //        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
         if(this.running) {
-          this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
+          this.sphere[3].updateOffsetRotateMovement(this.dayDelta);
           this.adjustAnomaly();
         }
                 
-        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[2]);
+        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[3]);
 
 
         // mean sun
-        this.ecliptic.anchor.rotation.y = this.sphere[2].anchor.rotation.y + this.sphere[3].anchor.rotation.y;
+        this.ecliptic.anchor.rotation.y = this.sphere[3].anchor.rotation.y + this.sphere[4].anchor.rotation.y;
 
         // lines
-        this.epicycleRadius[0] = this.sphere[2].gfx.markerball.currentPos();
+        this.epicycleRadius[0] = this.sphere[3].gfx.markerball.currentPos();
         this.epicycleRadius[1] = this.planet.mesh.currentPos();//this.sphere[3].gfx.markerball.currentPos();
         this.epicycleRadiusLine.setPos(this.epicycleRadius);
           
-        this.deferentRadius[0] = this.sphere[2].anchor.currentPos();
-        this.deferentRadius[1] = this.sphere[2].gfx.markerball.currentPos();
+        this.deferentRadius[0] = this.sphere[3].anchor.currentPos();
+        this.deferentRadius[1] = this.sphere[3].gfx.markerball.currentPos();
         this.deferentRadiusLine.setPos(this.deferentRadius);
 
         this.equantPlanet[0] = this.equantPoint.currentPos();        
-        this.equantPlanet[1] = this.sphere[2].gfx.markerball.currentPos();
+        this.equantPlanet[1] = this.sphere[3].gfx.markerball.currentPos();
         this.equantPlanetLine.setPos(this.equantPlanet);
 
         this.earthToDeferent[0] = this.earth.mesh.currentPos();     
-        this.earthToDeferent[1] = this.sphere[2].gfx.markerball.currentPos();
+        this.earthToDeferent[1] = this.sphere[3].gfx.markerball.currentPos();
         this.earthToDeferentLine.setPos(this.earthToDeferent);
 
         this.earthToPlanet[0] = this.earth.mesh.currentPos();     
@@ -139,7 +142,7 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
         this.earthToVernal[0] = this.earth.mesh.currentPos();        
-        this.earthToVernal[1] = this.sphere[1].gfx.markerball.currentPos();
+        this.earthToVernal[1] = this.sphere[2].gfx.markerball.currentPos();
         this.earthToVernalLine.setPos(this.earthToVernal);        
 
         
@@ -152,14 +155,7 @@ ModelPtolemyBase = function(params) {
         this.realSunS[1].setAxisAngle(angle);
     }
 
-    this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );   
-   
-/*
-    this.sphere[2].updateMovement = function(step) {
-      this.rotateAngle += this.step * step;
-      this.setRotateAngle(this.rotateAngle);
-    };
-//*/
+ 
     
     this.setShowSun1 = function(state) { 
       this.planet.setEnabled(state); 
@@ -177,53 +173,53 @@ ModelPtolemyBase = function(params) {
     this.getShowSun2 = function(state) { return true; }
 
     this.updateBlob = function() {
-      var scale = (this.sphere[2].radius+this.sphere[3].radius)*this.factor;
+      var scale = (this.sphere[3].radius+this.sphere[4].radius)*this.factor;
       this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
     }
     
-    this.sphere[3].setBobAngle = function(angle) {
+    this.sphere[4].setBobAngle = function(angle) {
       var scale = 90/12;
       this.bobAngle = (Math.abs(mod(angle, 360)-180)-90)/scale;
       this.anchor.rotation.x = 0;// degToRad(this.bobAngle);
     };
         
-    this.sphere[3].getBobAngle = function() {
+    this.sphere[4].getBobAngle = function() {
       return this.bobAngle;
     };
 
     this.setEquant = function(value) {
-      this.sphere[2].equant = value;
-      this.equantPoint.position.z = this.sphere[2].equant*this.factor*2;
-      this.sphere[2].anchor.position.z = this.sphere[2].equant*this.factor;
+      this.sphere[3].equant = value;
+      this.equantPoint.position.z = this.sphere[3].equant*this.factor*2;
+      this.sphere[3].anchor.position.z = this.sphere[3].equant*this.factor;
       
       this.updateBlob();
       this.updateSunDist();
     };
-    this.getEquant = function() { return this.sphere[2].equant; }
+    this.getEquant = function() { return this.sphere[3].equant; }
     
    
     this.setRadiusD = function(value) {
-      this.sphere[2].radius = value;
-      this.sphere[2].setScale(value*this.factor);
-      this.sphere[3].anchor.position.z = value*this.factor;
+      this.sphere[3].radius = value;
+      this.sphere[3].setScale(value*this.factor);
+      this.sphere[4].anchor.position.z = value*this.factor;
 
       this.updateBlob();
       this.updateSunDist();
     };
-    this.getRadiusD = function() { return this.sphere[2].radius; }
+    this.getRadiusD = function() { return this.sphere[3].radius; }
 
 
     this.setRadiusE = function(value) {
-      this.sphere[3].radius = value;
-      this.sphere[3].setScale(value*this.factor);
+      this.sphere[4].radius = value;
+      this.sphere[4].setScale(value*this.factor);
 
       this.planet.setDist(value*this.factor);
       
       this.updateBlob();
       this.updateSunDist();
     };
-    this.getRadiusE = function() { return this.sphere[3].radius; }    
+    this.getRadiusE = function() { return this.sphere[4].radius; }    
     
 };
 

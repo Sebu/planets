@@ -185,7 +185,8 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
         $("#vis").hide();
 
-        this.loadPreset("Mercury1");
+//        this.loadPreset("Mercury1");
+        this.loadPreset("PtolemyMoon2");
 /*        
         TWEEN.start();
         this.viewPos = {x: 0, y: 0, z: -50};
@@ -263,10 +264,10 @@ myApp.prototype.updateInfoBox = function() {
           $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
           $("#latitude").text( model.planet.latitude.toFixed(1) );
         }
-        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) {
+        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun || model instanceof ModelPtolemyMoon2) {
           $("#longitude").text( Utils.toSexa(mod(model.planet.longitude,360) ) );
-          $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) ) );
-          $("#epicycleLongitude").text( Utils.toSexa( mod(model.sphere[3].getRotateAngle(), 360) ) );
+          $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[3].getOffsetRotateAngle(), 360) ) );
+          $("#epicycleLongitude").text( Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) ) );
           $("#deferentLongitude").text( Utils.toSexa(model.planet.deferentLongitude) );
           $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
           $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
@@ -500,7 +501,7 @@ myApp.prototype.loadPreset = function(preset) {
         }      
 
         $("#ptolemyInfoContainer").fadeOut(500);
-        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun) 
+        if(model instanceof ModelPtolemy || model instanceof ModelPtolemySun || model instanceof ModelPtolemyMoon2) 
             $("#ptolemyInfoContainer").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);
@@ -741,9 +742,9 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
-            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model.sphere[3], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-            UI.slider({model:model.sphere[2], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+            UI.slider({model:model.sphere[3], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 //            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
@@ -755,7 +756,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
 //            UI.slider({model:model, id:"Speed3", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[3], id:"RotateAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
-            UI.slider({model:model.sphere[3], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
+            UI.slider({model:model.sphere[4], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");

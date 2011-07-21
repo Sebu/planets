@@ -24,10 +24,9 @@ myApp.prototype.init = function(params) {
           for(var i in tests) { 
 
             model.setDate(tests[i].date);
+            model.addDays(0.5);
             var longReal = Math.abs( model.planet.longitude-180 );
             var longRef =  Math.abs( Number(Utils.toDec( tests[i].longitude )) - 180 );
-            var blaa = model.sphere[3].getRotateAngle();
-            console.log(model);
             ul.append("<li>" + ( longReal - longRef)  + "</li>");
             
           }
@@ -92,6 +91,9 @@ myApp.prototype.getModel = function(name) {
       case "ModelPtolemySun":
         models[name] = new ModelPtolemySun({renderer: this});
         break;  
+      case "ModelPtolemyMoon2":
+        models[name] = new ModelPtolemyMoon2({renderer: this});
+        break;              
       default:
       break;
       };
