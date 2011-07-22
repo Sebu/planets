@@ -717,7 +717,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
 //            UI.slider({model:model, id:"Speed3", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[3], id:"RotateAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
-            UI.slider({model:model.sphere[4], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
+//            UI.slider({model:model.sphere[4], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
@@ -732,7 +732,8 @@ myApp.prototype.loadPreset = function(preset) {
            UI.checkbox({model:model, id:"ShowSun1", text:"Sun1"}).appendTo("#visSuns");
            UI.checkbox({model:model, id:"ShowSun2", text:"Sun2"}).appendTo("#visSuns");
            
-           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);     
+           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1); 
+           this.currentCamera.rotateRight(Math.PI/2);    
            planetLabel2.setText("sun");       
    
 //*
