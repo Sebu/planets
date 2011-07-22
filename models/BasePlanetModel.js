@@ -212,7 +212,7 @@ ModelBase.prototype = {
 
         // hide arcs of outer sphere
         this.sphere[1].setGfx(["arc1","arc2"], false);
-        this.sphere[3].pivot.addNode( this.equantPoint = new Translate({z:4.0}) );
+        this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );
         // hide sun sphere
         this.ecliptic.setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
@@ -348,6 +348,9 @@ ModelBase.prototype = {
         this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
     },
 
+    adjustAnomaly : function() {
+      
+    },
 
      getDays : function() {
          return this.days;
@@ -425,6 +428,8 @@ ModelBase.prototype = {
             for (i = start + 1; i < stop; i++) {
                 this.sphere[i].updateMovement(step);
             }
+//            this.sphere[2].updateOffsetRotateMovement(step);
+            this.adjustAnomaly();
             var pos = node.currentPos();
             curvePos.push(pos);
         }
@@ -438,6 +443,7 @@ ModelBase.prototype = {
             this.sphere[i].setRotateAngle(oldRotate[i]);
             this.sphere[i].visUpdate = true;
         }
+        this.adjustAnomaly();
 
 
         return curvePos;

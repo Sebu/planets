@@ -26,6 +26,7 @@ var colors = {
 	
 };
 
+
 var planetPresets = { 
 
 Mercury1: {
@@ -528,6 +529,8 @@ PtolemySaturn: {
     {AxisAngle: 0.0, Step: "0;02,00,33,31,28,51",  RotateStart: "296;43"},
     {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
   ] },
+
+
 /*
 PtolemyMercury: { 
   caption: "Ptolemy Mercury",
@@ -595,6 +598,9 @@ PtolemyVenus: {
   ] }
 //*/
 
+};
+
+var uiBindings = {
 };
 
 

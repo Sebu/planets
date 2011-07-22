@@ -7,7 +7,7 @@ ModelPtolemyMoon2 = function(params) {
     params.name = "ModelPtolemyMoon2";
 	  ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/7.0;
-    this.setAnimSpeed(600);
+    this.setAnimSpeed(60);
 
 
     this.updateSunDist = function() {
@@ -73,11 +73,10 @@ ModelPtolemyMoon2.prototype.constructor = ModelPtolemyMoon2;
 ModelPtolemyMoon1a = function(params) {
     params.name = "ModelPtolemyMoon1a";
 	  ModelPtolemyMoon2.call(this, params);	
-
-    
+  
     this.adjustAnomaly = function() {
-      var realAngle = this.sphere[2].getRotateAngle() - this.sphere[3].getRotateAngle();
-      this.sphere[2].anchor.rotation.y = realAngle/PI_SCALE;
+      var realAngle = mod(this.sphere[2].getRotateAngle(), 360) - mod(this.sphere[3].getRotateAngle(), 360);
+      this.sphere[2].anchor.rotation.y = degToRad(realAngle);
     }
         
     

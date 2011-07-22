@@ -404,6 +404,7 @@ THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
 
     camera.matrixWorldInverse.multiplyVector3( posTmp );
     var zTmp = -posTmp.z;
+    var zTmp = -1;
     camera.projectionMatrix.multiplyVector3( posTmp );
     
     pos = {x: (posTmp.x+1) * canvas.domElement.width/2, y: (-posTmp.y+1) * canvas.domElement.height/2, z: zTmp };

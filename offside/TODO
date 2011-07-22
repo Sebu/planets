@@ -182,11 +182,12 @@ DONE
     - start values and observation tests
     - 59/85 values
     - angle epicycle/ apsidal line    
-    
+  - merge simple+hippo into model4
+  - merge ptolemy(sun) info ptolmey base model
+  - ptolemy moon: 1a/b, 2, 3
+  - ptolemy path
+
 TODO
-- merge simple+hippo into model4
-- merge ptolemy(sun) info ptolmey base model
-- ptolemy moon: 1a/b, 2, 3
 - better camera/movement/ortho view
 - update info box on change!!
 - fix/better labels
