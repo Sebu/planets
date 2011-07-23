@@ -852,6 +852,37 @@ var aLine = new THREE.Geometry();
 aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
 aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
     
+
+
+/*
+ * @constructor
+ * 
+ */
+Longituder = function() {
+    THREE.Object3D.call( this );
+}
+
+Longituder.prototype = new THREE.Object3D;
+Longituder.prototype.constructor = Longituder;
+
+
+Longituder.prototype.getApsidalAngle = function() {
+    return this.apsidalAngle;
+};
+
+Longituder.prototype.setApsidalSpeed = function(value) {
+      this.apsidalSpeed = value;
+      this.apsidalStep = (value != 0) ? value/(365.25*100) : 0.0;
+};
+      
+Longituder.prototype.getApsidalSpeed = function() {
+      return this.apsidalSpeed;
+};
+
+Longituder.prototype.updateApsidalMovement = function(step) { 
+      this.setApsidalAngle( this.getApsidalAngle() + (this.apsidalStep * step) );
+};
+
 /*
  * @constructor
  * the cosmological spheres

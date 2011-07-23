@@ -2,6 +2,10 @@ S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 ro
 
 BRiOhgY9FB
 
+
+                         r-r-r-r-t   
+day(S1) -- ecliptic --  latitud0r/apsidal/equant/--   -- base -- deferent -- epicycle -- planet
+            -- sun
 <script>
 scripts = ["vendor/modernizr-1.7.min.js","vendor/jquery.tools.min.js","vendor/sylvester.js","vendor/Three.js","libs/origami.js","libs/three.ext.js","libs/UIHelpers.js","models/config.js","models/BasePlanetModel.js","models/ModelSimple.js","models/ModelHippo.js","models/ModelSun.js","models/Model4.js","models/Model5.js","models/ModelYavetz.js","models/ModelMoon.js","models/ModelMoonCompare.js","models/ModelAristotel.js","models/ModelPtolemy.js","models/ModelPtolemySun.js","app.js"];
 
