@@ -127,7 +127,7 @@ option  {
 
 .caption { 
 	font-weight: bold;
-	font-size:13px;
+	font-size:16px;
 }
 
 
@@ -137,7 +137,7 @@ option  {
 
 
 .slider { 
-    position: relative;
+#    position: relative;
     margin: 8px 0 0 0;
     border-top: 1px solid #222;
     border-bottom: 1px solid #555;
@@ -282,9 +282,11 @@ margin: 0;
 padding: 0; 
 }
 
+
+
+
 #uiContainer {
-  float:left;
-  position:absolute;
+#  overflow: auto;
   padding: 0;
   width: 100%;
   top: 0px;
@@ -296,41 +298,27 @@ padding: 0;
   -webkit-transition-property: opacity; -webkit-transition-duration: 0.5s; 
 }
 
-
-#navi, #navi ul { float:left; list-style-type:none; margin:0; padding:0; }
-#navi li {  float:left; }
-#navi li ul { position: absolute; width: 60px; z-index: 2;  display: none;  }
-#navi li:hover ul { display:block; }
-
-#uiContainer ul { 
- float: left; 
-# width: 140px; 
- list-style-type: none; 
+.menu { 
+  float: left; 
+  position: relative;
 }
 
 
-#uiContainer li {
-position: absolute; 
+.menu .boxContent  {
+  list-style-type: none;
+  overflow: hidden;
+  position: absolute; 
+  width: 140px;
+  z-index: 2; 
+  display: none;  
 }
 
-#uiContainer ul ul {
-position: absolute; 
-width: 140px;
-z-index: 2; 
-display: none;  
+.menu:hover .boxContent {
+    display: block;
+    cursor: pointer;
 }
 
-#uiContainer ul li:hover ul { 
-display: block; 
-}
 
-.test {
-width: 140px;
-border: 1px solid #ccc; 
-text-align: center; 
-background: #ff9224; 
-color: #003366;
-}
 
 #view {
   width: 100%;

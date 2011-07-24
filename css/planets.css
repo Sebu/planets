@@ -1,6 +1,9 @@
+* { 
+margin: 0; 
+padding: 0; 
+}
+
 html,body {
-	padding: 0px;
-	margin: 0px;
 	border: 0px;
   width: 100%;
   height: 100%;
@@ -109,7 +112,7 @@ td { padding: 0; vertical-align: top; }
 }
 
 select {
-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   color: white;
   border: 0;
   padding: 1px 10px;
@@ -127,7 +130,7 @@ option  {
 
 .caption { 
 	font-weight: bold;
-	font-size:13px;
+	font-size:16px;
 }
 
 
@@ -262,7 +265,7 @@ select:focus,
 .boxContent {
 #  background-color: rgba(180,180,180,0.2);
 #  background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
-#  position: relative;
+  position: relative;
   width: 100%;
 #  border-radius: 5px;
    background: #272727;
@@ -282,6 +285,7 @@ select:focus,
 #  overflow: auto;
   padding: 0;
   width: 190px;
+#  width: 100%;
   top: 10px;
   left: 10px;
 #  opacity: 0.5;
@@ -296,6 +300,28 @@ select:focus,
 #  opacity: 1.0;
 #  -webkit-transform: perspective(900px) rotateY(0deg);
 }
+
+.menu { 
+	font-size: 16px;
+  float: left; 
+  position: relative;
+}
+
+
+.menu .boxContent  {
+  list-style-type: none;
+  overflow: none;
+  position: absolute; 
+  width: 190px;
+  z-index: 100; 
+  display: none;  
+}
+
+.menu:hover .boxContent {
+    display: block;
+    cursor: pointer;
+}
+
 
 #view {
   width: 100%;
@@ -417,24 +443,6 @@ canvas {
   overflow: hidden;
 }
 
-.scrollable {
-
-	/* required settings */
-	position:relative;
-	overflow:hidden;
-
-	/* vertical scrollables have typically larger height than width but not now */
-	height: 665px;
-	width: 700px;
-}
-
-/* root element for scrollable items */
-.scrollable .items {
-	position:absolute;
-
-	/* this time we have very large space for the height */
-	height:20000em;
-}
 
 
 

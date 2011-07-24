@@ -8,17 +8,24 @@ var UI = {
             $(selector).append("<option value='" + i + "'>" + caption + "</option>");
         }
     },
-
+/*
     box : function(params) {
         var id = params.id;
         var text = params.text || params.id;
-        return $("<div class='caption' id='cap" +id+ "'" +
+        return $("<div class=menu><div class='caption' id='cap" +id+ "'>" +
+                text + "</div><div class='boxContent' id='" + id + "'></div></div>");
+    },
+//*/
+    box : function(params) {
+        var id = params.id;
+        var text = params.text || params.id;
+        return $("<div><div class='caption' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
                 "<span class='triangle arrow-down'></span>" +
                 "<span class='triangle arrow-right' style='display:none'></span>" +
-                text + "</div><div class='boxContent' id='" + id + "'></div>");
+                text + "</div><div class='boxContent' id='" + id + "'></div></div>");
     },
-
+//*/
     input : function(params) {
         var model = params.model;
         var id = params.id;
