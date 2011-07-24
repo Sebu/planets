@@ -241,8 +241,7 @@ select:focus,
 
 
 .container {
-  text-overflow: ellipsis;
-  overflow: auto;
+#  overflow: hidden;
   border: 0px;
   z-index: 2;
   position: absolute;
@@ -296,35 +295,13 @@ select:focus,
 }
 
 
-#uiContainer:hover {
-#  opacity: 1.0;
-#  -webkit-transform: perspective(900px) rotateY(0deg);
-}
-
 .menu { 
-	font-size: 16px;
-  float: left; 
-  position: relative;
 }
 
-
-.menu .boxContent  {
-  list-style-type: none;
-  overflow: none;
-  position: absolute; 
-  width: 190px;
-  z-index: 100; 
-  display: none;  
-}
-
-.menu:hover .boxContent {
-    display: block;
-    cursor: pointer;
-}
 
 
 #view {
-  width: 100%;
+#  width: 100%;
 }
 
 #infoContainer {

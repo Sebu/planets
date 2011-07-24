@@ -22,7 +22,7 @@ myApp.prototype.init = function(params) {
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
         
                 // append to DOM
-        if(this.canvas) {
+        if(!this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
           this.domRoot.append(myApp.CANVAS_ERROR);
@@ -166,7 +166,9 @@ myApp.prototype.init = function(params) {
 //        uiBox[0].addEventListener('mousewheel', function(e) { $(this).css('top', e.wheelDelta/120); }, false);
 
 
-        var presetBox = $("<div></div>").appendTo(uiBox);
+//        var presetBox = $("<div></div>").appendTo(uiBox);
+        UI.box({id:"presetBox", text:""}).appendTo(uiBox);
+        var presetBox = $("#presetBox");
         $("#viewPresets option[value='World']").attr('selected', true);
         presetBox.append("<span ><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
@@ -177,8 +179,8 @@ myApp.prototype.init = function(params) {
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
 
-        uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
-        UI.optionsFromHash("#moonModel", moonModels);
+//        uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
+//        UI.optionsFromHash("#moonModel", moonModels);
 
         uiBox.append("<div id='view'></div>");
         uiBox.append("<div id='parameters'></div>");
@@ -491,16 +493,20 @@ myApp.prototype.loadPreset = function(preset) {
         }
 //*/
 
-        // view div
-        $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#view");
-        UI.optionsFromHash("#viewPresets", model.viewPresets);
 
-        $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#view");
-        UI.optionsFromHash("#longitudePresets", latitudePresets);
-        UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#view");
         // view sub box box 
         UI.box({id:"vis", text:"Show"}).appendTo("#view");
 
+
+        // view div
+        $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#vis");
+        UI.optionsFromHash("#viewPresets", model.viewPresets);
+
+        $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#vis");
+        UI.optionsFromHash("#longitudePresets", latitudePresets);
+        UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#vis");
+        
+        
         UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
         $("<div id='visSpheres'></div>").appendTo("#vis");
         for (i in model.sphere) {
@@ -512,9 +518,11 @@ myApp.prototype.loadPreset = function(preset) {
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
         // playback div       
-        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playback");
+        UI.box({id:"playbackBox", text:""}).appendTo("#playback");
 
-        $("#playback").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
+        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playbackBox");
+
+        $("#playbackBox").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
 
 
         // create the right sliders for each model
@@ -725,7 +733,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.text({model:model, id:"Date"}).appendTo("#playback");
+            UI.text({model:model, id:"Date"}).appendTo("#playbackBox");
 
             $("#apsidal input, #deferent input, #epicycle input").change();
 
@@ -753,7 +761,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed3", min: -1100, max:1100, text:"speed"}).appendTo("#deferent");
 
             UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
-            UI.text({model:model, id:"Date"}).appendTo("#playback");
+            UI.text({model:model, id:"Date"}).appendTo("#playbackBox");
             $("#apsidal input, #deferent input").change();
 //*/            
         } else if (model.ui == "ModelHippo") {
