@@ -187,6 +187,9 @@ myApp.prototype.init = function(params) {
 
 //        this.loadPreset("Mercury1");
         this.loadPreset("PtolemyMoon2");
+
+//        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
+
 /*        
         TWEEN.start();
         this.viewPos = {x: 0, y: 0, z: -50};

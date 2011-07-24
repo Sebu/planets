@@ -108,21 +108,7 @@ td { padding: 0; vertical-align: top; }
     -webkit-box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;
 }
 
-select {
-text-overflow: ellipsis;
-  color: white;
-  border: 0;
-  padding: 1px 10px;
-  border-radius: 4px;
-  background: -o-linear-gradient(#4d90fe, #4787ed);  
-  background: -moz-linear-gradient(#4d90fe, #4787ed);
-  background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
-}
 
-option  {
-   color: black;
-   background: #FFFFFF;
-}
 
 
 .caption { 
@@ -313,6 +299,7 @@ padding: 0;
   display: none;  
 }
 
+.menu select.parent:hover,
 .menu:hover .boxContent {
     display: block;
     cursor: pointer;

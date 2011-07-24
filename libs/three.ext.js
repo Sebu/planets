@@ -10,11 +10,12 @@ function mod(a, b)
 }
 
 Utils.daysToTime = function(days) {
-  var fullDays = Math.floor(days);
-  var rest = days - fullDays;
-  var hours = Math.floor(rest/(1/24));
-  var rest = rest - hours*(1/24);
-  var minutes = Math.floor( rest/(1/1440) );
+  var fullDays = Math.floor(days),
+  rest = days - fullDays,
+  hours = Math.floor(rest/(1/24)),
+  rest = rest - hours*(1/24),
+  minutes = Math.floor( rest/(1/1440) );
+  
   if(hours < 10) hours = "0" + hours;
   if(minutes < 10) minutes = "0" + minutes;
   return "" + fullDays + "d " + hours + "h " + minutes + "m";
@@ -171,13 +172,12 @@ Utils.julianToJd = function(year, month, day) {
 
 
 Utils.decToSex = function(num, prec) {
-  tmp2 = Math.round(num*Math.pow(60,prec))/Math.pow(60,prec);
-  tmp = Math.floor(tmp2);
+  var tmp2 = Math.round(num*Math.pow(60,prec))/Math.pow(60,prec),
+  tmp = Math.floor(tmp2),
   outstr = tmp.toString() + ";";
   tmp = num - tmp;
   cnt = 0;
   while(tmp > 0 && cnt < prec) {
-    console.log(tmp + " " + tmp2);
     tmp = tmp * 60;
     tmp2 = Math.floor(tmp);
 
@@ -214,7 +214,6 @@ Utils.sexagesimal = function(number) {
 }
 
 Utils.baseToDec = function(number, base) {
-        console.log(number);
         if (base < 2 || base > 64) {
             return "#base should be between 2 and 64#";
         }
@@ -233,7 +232,6 @@ Utils.baseToDec = function(number, base) {
         
         if (fraction) {
           for(var i=0;i<fraction.length;i++) {
-            console.log(result);
             result += Number(fraction[i]/base)/(Math.pow(60,i));
           }
         }
@@ -364,8 +362,9 @@ calcAngle = function(pos1, pos2) {
 }
 
 calcAngleRel = function(node1, node2, center) {
-    var pos1 = center.subtract( node1 );
-    var pos2 = center.subtract( node2 );
+    var pos1 = center.subtract( node1 ),
+    pos2 = center.subtract( node2 );
+
     return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
 }
 

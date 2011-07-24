@@ -128,7 +128,7 @@ ModelBase.prototype = {
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
-            this["setShowSphere" + i] = new Function("state", "console.log(state); this.sphere[" + i + "].setGfx([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"], state);");
+            this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setGfx([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"], state);");
             this["getShowSphere" + i] = function() { return true; };
 
         }
@@ -262,27 +262,28 @@ ModelBase.prototype = {
 //            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); 
 //            var polePos = sceneToSyl(this.earth.npole.currentPos()); 
 //            var upVec = earthPos.subtract(polePos);
-
-            var eclipticPos = sceneToSyl(ecliptic.anchor.currentPos()); 
-            var eclipticPolePos = sceneToSyl(ecliptic.gfx.npole.currentPos());
-            var eclipticUpVec = eclipticPos.subtract(eclipticPolePos);
             
-            var planetOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(eclipticPos);
-            var planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos);
+            var eclipticPos = sceneToSyl(ecliptic.anchor.currentPos()),
+            eclipticPolePos = sceneToSyl(ecliptic.gfx.npole.currentPos()),
+            eclipticUpVec = eclipticPos.subtract(eclipticPolePos),
+            
+            planetOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(eclipticPos),
+            planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos),
 
-            var equinoxOnPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(eclipticPos);
-            var equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec));
+            equinoxOnPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(eclipticPos),
+            equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec)),
 
-            var epiPos = sceneToSyl(this.equantPoint.currentPos()); 
-            var epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos);
+            epiPos = sceneToSyl(this.equantPoint.currentPos()),
+            epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos),
 
 //            var equinoxOnEpiPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(epiPos);
 //            var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));
 
 
 
-            var sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(eclipticPos);
-            var sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(eclipticPos, eclipticUpVec));
+            sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(eclipticPos);
+            sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(eclipticPos, eclipticUpVec));
+
             planet.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
             // shade planet if sun is in a 15deg region
@@ -393,18 +394,20 @@ ModelBase.prototype = {
     },
     
     calcCurve : function(params) {
-        curvePos = [];
-        oldAngle = [];
-        oldRotate = [];
-        var step = 0;
-        var start = params.start;
-        var stop = params.stop || this.sphere.length;
-        var node = params.node;
-        var maxSegments = params.segments || 80; //-Math.round(20/step);
-        var j =  -10;
+        var curvePos = []
+        oldAngle = [],
+        oldRotate = [],
+        step = 0,
+        start = params.start,
+        stop = params.stop || this.sphere.length,
+        node = params.node,
+        maxSegments = params.segments || 80,
+        pos = {x: 0, y: 0, z:0},
+        j =  -10,
+        i = 0;
       
         // save axis and rotation
-        for ( i = 1; i <= start; i++) {
+        for (i = 1; i <= start; i++) {
             oldAngle[i] = this.sphere[i].getAxisAngle();
             oldRotate[i] = this.sphere[i].getRotateAngle();
             this.sphere[i].setAxisAngle(0.0);
@@ -430,16 +433,16 @@ ModelBase.prototype = {
             }
 //            this.sphere[2].updateOffsetRotateMovement(step);
             this.adjustAnomaly();
-            var pos = node.currentPos();
+            pos = node.currentPos();
             curvePos.push(pos);
         }
         
         // restore axis
-        for (var i = 1; i <= start; i++)
+        for (i = 1; i <= start; i++)
             this.sphere[i].setAxisAngle(oldAngle[i]);
 
         // restore rotation
-        for (var i = 1; i < stop; i++) {
+        for (i = 1; i < stop; i++) {
             this.sphere[i].setRotateAngle(oldRotate[i]);
             this.sphere[i].visUpdate = true;
         }
