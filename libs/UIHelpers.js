@@ -19,7 +19,7 @@ var UI = {
     box : function(params) {
         var id = params.id;
         var text = params.text || params.id;
-        return $("<div><div class='caption' id='cap" +id+ "'" +
+        return $("<div ><div class='caption' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
                 "<span class='triangle arrow-down'></span>" +
                 "<span class='triangle arrow-right' style='display:none'></span>" +
