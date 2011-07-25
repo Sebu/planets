@@ -225,7 +225,7 @@ select:focus,
 
 
 .label {
-  z-index: 1;
+  z-index: 3;
   position: absolute;
   color: white;
   background-color: rgba(150,150,150,0.5);

@@ -148,6 +148,9 @@ ModelBase.prototype = {
 
         // add Sun and sun spheres
         this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
+
+
+        
         this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.ecliptic;
         // shortcuts for the sun
@@ -158,6 +161,10 @@ ModelBase.prototype = {
         // hide everything
         this.root.setEnabled(false);
 
+    },
+
+    addLong : function() {    
+      this.sphere[2].removeChild(this.sphere[3]);
     },
 
     loadPreset : function(node) {

@@ -22,7 +22,7 @@ myApp.prototype.init = function(params) {
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
         
                 // append to DOM
-        if(!this.canvas) {
+        if(this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
           this.domRoot.append(myApp.CANVAS_ERROR);
