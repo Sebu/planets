@@ -183,7 +183,7 @@ myApp.prototype.init = function(params) {
          
         
 //        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
-          $("<div id='impressumContainer'><a>Topoi © 2011</a><br>+henry mendell<br><a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
+          $("<div id='impressumContainer'><a>© 2011 Topoi</a> <a href>+henry mendell</a> <a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
 //*
 
             $("#sexaInput > input").bind("change", function() 

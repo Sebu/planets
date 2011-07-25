@@ -20,6 +20,7 @@ models/ModelYavetz.js
 models/ModelMoon.js
 models/ModelMoonCompare.js
 models/ModelAristotel.js
+models/ModelPtolemyBase.js
 models/ModelPtolemy.js
 models/ModelPtolemySun.js
 app.js
