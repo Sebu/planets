@@ -130,7 +130,7 @@ option  {
 
 .caption { 
 	font-weight: bold;
-	font-size:16px;
+	font-size:14px;
 }
 
 
@@ -274,11 +274,7 @@ select:focus,
    -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
-.wert {
-  float: right;
-  -webkit-user-select:auto;
-  -moz-user-select:auto;  
-}
+
 
 #uiContainer {
 #  overflow: auto;
@@ -304,6 +300,14 @@ select:focus,
 #  width: 100%;
 }
 
+.wert {
+//  float: right;
+  width: 100px;
+  text-align: right;
+  -webkit-user-select:auto;
+  -moz-user-select:auto;  
+}
+
 #infoContainer {
   position: absolute;
   width: 200px;
@@ -313,6 +317,18 @@ select:focus,
   font-size: 13px;
 #  -webkit-transform: perspective(500px) rotateY(-20deg);
 
+}
+
+
+#infoContainer table {
+  width: 100%;
+}
+
+#infoContainer td {
+  width: 110px;
+  text-align: right;
+  -webkit-user-select:auto;
+  -moz-user-select:auto;  
 }
 
 #playbackContainer {

@@ -112,10 +112,10 @@ ModelPtolemyBase = function(params) {
         ModelBase.prototype.update.call(this, time);
         if(this.running) {
           this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
-          this.adjustAnomaly();
+//          this.adjustAnomaly();
         }
                 
-        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[3]);
+//        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[3]);
 
 
         // mean sun

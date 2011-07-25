@@ -113,43 +113,71 @@ myApp.prototype.init = function(params) {
         // create some elements
         // TODO: more segmentation
         $("<div id='infoContainer'>\
-            <div id='sunAngleBox'>angle planet/sun<span class='wert' id='sunAngle'>0</span></div>\
-            <div>longitude<span class='wert' id='longitude'>0</span></div>\
-            <div id='meanLongitudeBox' style='display:none'>\
-              <div>mean longitude<span class='wert' id='meanLongitude'>0</span></div>\
-              <div>equation of time (hrs)<span class='wert' id='equationOfTime'>0</span></div>\
-            </div>\
-            <div>longitude speed <span class='wert' id='longitudeSpeed'>0</span></div>\
-            <div>latitude<span class='wert' id='latitude'>0</span></div>\
-            <div>days<span class='wert' id='days'>0</span></div>\
-            <div id='infoContainer2' style='display:none'>\
-              <div>angle planet/sun<span class='wert' id='sunAngle2'>0</span></div>\
-              <div>longitude<span class='wert' id='longitude2'>0</span></div>\
-              <div>longitude speed <span class='wert' id='longitudeSpeed2'>0</span></div>\
-              <div>latitude<span class='wert' id='latitude2'>0</span></div>\
-              <div>days<span class='wert' id='days2'>0</span></div>\
-              </div>\
-              <div id='sunInfoContainer' style='display:none'>\
-              <div>days per year<span class='wert' id='sunDaysPerYear'>0</span></div>\
-            </div>\
-            <div id='moonInfoContainer' style='display:none'>\
-              <div>zodiacal months<span class='wert' id='metonZodicalMonths'>0</span></div>\
-              <div>days/year<span class='wert' id='metonDaysPerYear'>0</span></div>\
-              <div>days/synodic month<span class='wert' id='synodicDaysPerMonth'>0</span></div>\
-              <div>days/zodical month<span class='wert' id='zodicalDaysPerMonth'>0</span></div>\
-              <div>days/draconitic month<span class='wert' id='draconiticDaysPerMonth'>0</span></div>\
-            </div>\
-            <div id='ptolemyInfoContainer' style='display:none'>\
-              <div>apsidal<span class='wert' id='apsidalLongitude'>0</span></div>\
-              <div>epicycle<span class='wert' id='epicycleLongitude'>0</span></div>\
-              <div>longitude deferent<span class='wert' id='deferentLongitude'>0</span></div>\
-              <div>gregorian date<span class='wert' id='gregorianDate'>0</span></div>\
-              <div>julian date<span class='wert' id='julianDate'>0</span></div>\
-              <div>egyptian date<span class='wert' id='egyptianDate'>0</span></div>\
-            </div>\
+            <table>\
+              <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>\
+              <tr><td>longitude</td><td id='longitude'>0</td></tr>\
+              <tr><td>longitude speed</td><td id='longitudeSpeed'>0</span></tr>\
+              <tr><td>latitude</td><td id='latitude'>0</span></tr>\
+              <tr><td>days</td><td id='days'>0</td></tr>\
+              </table>\
+            <table id='meanLongitudeBox' style='display:none'>\
+              <tr><td>mean longitude</td><td id='meanLongitude'>0</td></tr>\
+              <tr><td>equation of time (hrs)</td><td id='equationOfTime'>0</td></tr>\
+            </table>\
+            <table id='infoContainer2' style='display:none'>\
+              <tr><td>angle planet/sun</td><td id='sunAngle2'>0</td></tr>\
+              <tr><td>longitude</td><td id='longitude2'>0</td></tr>\
+              <tr><td>longitude speed</td><td id='longitudeSpeed2'>0</td></tr>\
+              <tr><td>latitude</td><td id='latitude2'>0</td></tr>\
+              <tr><td>days</td><td id='days2'>0</td></tr>\
+            </table>\
+            <table id='sunInfoContainer' style='display:none'>\
+              <tr><td>days per year</td><td id='sunDaysPerYear'>0</td></tr>\
+            </table>\
+            <table id='moonInfoContainer' style='display:none'>\
+              <tr><td>zodiacal months</td><td id='metonZodicalMonths'>0</td></tr>\
+              <tr><td>days/year</td><td id='metonDaysPerYear'>0</td></tr>\
+              <tr><td>days/synodic month</td><td id='synodicDaysPerMonth'>0</td></tr>\
+              <tr><td>days/zodical month</td><td id='zodicalDaysPerMonth'>0</td></tr>\
+              <tr><td>days/draconitic month</td><td id='draconiticDaysPerMonth'>0</td></tr>\
+            </table>\
+            <table id='ptolemyInfoContainer' style='display:none'>\
+              <tr><td>apsidal</td><td id='apsidalLongitude'>0</td></tr>\
+              <tr><td>epicycle</td><td id='epicycleLongitude'>0</td></tr>\
+              <tr><td>longitude deferent</td><td id='deferentLongitude'>0</td></tr>\
+              <tr><td>gregorian date</td><td id='gregorianDate'>0</td></tr>\
+              <tr><td>julian date</td><td id='julianDate'>0</td></tr>\
+              <tr><td>egyptian date</td><td id='egyptianDate'>0</td></tr>\
+            </table>\
             <div id='legendContainer'></div>\
              </div>").appendTo(this.domRoot);
+             
+          this.info = { 
+            meanLongitude : document.getElementById("meanLongitude"),
+            equationOfTime : document.getElementById("equationOfTime"),
 
+            days : document.getElementById("days"),
+            sunAngle : document.getElementById("sunAngle"),            
+            longitude : document.getElementById("longitude"),
+            longitudeSpeed : document.getElementById("longitudeSpeed"),
+            latitude : document.getElementById("latitude"),
+
+            days2 : document.getElementById("days2"),
+            sunAngle2 : document.getElementById("sunAngle2"),            
+            longitude2 : document.getElementById("longitude2"),
+            longitudeSpeed2 : document.getElementById("longitudeSpeed2"),
+            latitude2 : document.getElementById("latitude2"),
+            
+            apsidalLongitude : document.getElementById("apsidalLongitude"),
+            epicycleLongitude : document.getElementById("epicycleLongitude"),
+            deferentLongitude : document.getElementById("deferentLongitude"),
+            gregorianDate : document.getElementById("gregorianDate"),
+            julianDate : document.getElementById("julianDate"),
+            egyptianDate : document.getElementById("egyptianDate")
+          };  
+
+         
+        
 //        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
           $("<div id='impressumContainer'><a>Topoi © 2011</a><br>+henry mendell<br><a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
 //*
@@ -167,7 +195,7 @@ myApp.prototype.init = function(params) {
 
 
 //        var presetBox = $("<div></div>").appendTo(uiBox);
-        UI.box({id:"presetBox", text:""}).appendTo(uiBox);
+        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
         var presetBox = $("#presetBox");
         $("#viewPresets option[value='World']").attr('selected', true);
         presetBox.append("<span ><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
@@ -179,8 +207,8 @@ myApp.prototype.init = function(params) {
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
 
-//        uiBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
-//        UI.optionsFromHash("#moonModel", moonModels);
+        presetBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
+        UI.optionsFromHash("#moonModel", moonModels);
 
         uiBox.append("<div id='view'></div>");
         uiBox.append("<div id='parameters'></div>");
@@ -255,38 +283,38 @@ myApp.prototype.setCurrentScene = function(scene) {
     };
 
 myApp.prototype.updateInfoBox = function() {
-        if(model.sun.getEnabled()) $("#sunAngle").text( model.planet.sunAngle.toFixed(1) );
-        $("#days").text( Utils.daysToTime(model.getDays()) );
+        if(model.sun.getEnabled()) this.info.sunAngle.innerText = model.planet.sunAngle.toFixed(1);
+        this.info.days.innerText = Utils.daysToTime(model.getDays());
 
         if(model instanceof ModelSun) {
-          $("#longitude").text( model.planet.longitude.toFixed(6) );
-          $("#meanLongitude").text( model.getMeanLongitude().toFixed(6) );
-          $("#equationOfTime").text( model.getEquationOfTime().toFixed(6) );
-          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(11) );
-          $("#latitude").text( model.planet.latitude.toFixed(3) );
+          this.info.longitude.innerText = model.planet.longitude.toFixed(6);
+          this.info.meanLongitude.innerText = model.getMeanLongitude().toFixed(6);
+          this.info.equationOfTime.innerText = model.getEquationOfTime().toFixed(6);
+          this.info.longitudeSpeed.innerText = model.planet.longitudeSpeed.toFixed(11);
+          this.info.latitude.innerText = model.planet.latitude.toFixed(3);
         } else {
-          $("#longitude").text( model.planet.longitude.toFixed(1) );
-          $("#longitudeSpeed").text(model.planet.longitudeSpeed.toFixed(2) );
-          $("#latitude").text( model.planet.latitude.toFixed(1) );
+          this.info.longitude.innerText = model.planet.longitude.toFixed(1);
+          this.info.longitudeSpeed.innerText = model.planet.longitudeSpeed.toFixed(2);
+          this.info.latitude.innerText = model.planet.latitude.toFixed(1);
         }
         if(model.ui == "ModelPtolemy" || model.ui == "ModelPtolemySun") {
-          $("#longitude").text( Utils.toSexa(mod(model.planet.longitude,360) ) );
-          $("#apsidalLongitude").text( Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) ) );
-          $("#epicycleLongitude").text( Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) ) );
-          $("#deferentLongitude").text( Utils.toSexa(model.planet.deferentLongitude) );
-          $("#gregorianDate").text( Utils.dateToString(Utils.jdToMagic(model.date)) );                           
-          $("#julianDate").text( Utils.dateToString(Utils.jdToJulian(model.date)) );                           
-          $("#egyptianDate").text( Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );                          
+          this.info.longitude.innerText = Utils.toSexa(mod(model.planet.longitude,360) );
+          this.info.apsidalLongitude.innerText = Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) );
+          this.info.epicycleLongitude.innerText = Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) );
+          this.info.deferentLongitude.innerText =  Utils.toSexa(model.planet.deferentLongitude);
+          this.info.gregorianDate.innerText =  Utils.dateToString(Utils.jdToMagic(model.date));                           
+          this.info.julianDate.innerText =  Utils.dateToString(Utils.jdToJulian(model.date));                           
+          this.info.egyptianDate.innerText =  Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date));                          
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
 
         if(model instanceof ModelMoonCompare) {
           // infoBox data
-          $("#sunAngle2").text( model.planet2.sunAngle.toFixed(1) );
-          $("#longitude2").text( model.planet2.longitude.toFixed(1) );
-          $("#longitudeSpeed2").text(model.planet2.longitudeSpeed.toFixed(2));
-          $("#latitude2").text( model.planet2.latitude.toFixed(1) );
-          $("#days2").text(Math.round( model.getDays() ));
+          this.info.sunAngle2.innerText =  model.planet2.sunAngle.toFixed(1);
+          this.info.longitude2.innerText =  model.planet2.longitude.toFixed(1);
+          this.info.longitudeSpeed2.innerText =  model.planet2.longitudeSpeed.toFixed(2);
+          this.info.latitude2.innerText =  model.planet2.latitude.toFixed(1);
+          this.info.days2.innerText =  Math.round( model.getDays() );
 
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));
         }
@@ -495,7 +523,7 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // view sub box box 
-        UI.box({id:"vis", text:"Show"}).appendTo("#view");
+        UI.box({id:"vis", text:"View"}).appendTo("#view");
 
 
         // view div
@@ -518,7 +546,7 @@ myApp.prototype.loadPreset = function(preset) {
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
         // playback div       
-        UI.box({id:"playbackBox", text:""}).appendTo("#playback");
+        UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
 
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playbackBox");
 

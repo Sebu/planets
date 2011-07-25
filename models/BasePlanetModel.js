@@ -347,7 +347,8 @@ ModelBase.prototype = {
             // update movement of all spheres
             for (i in model.updateList) {
                 model.updateList[i].updateMovement(this.dayDelta);
-            }        
+            }
+            this.adjustAnomaly();        
             // OTHER
             // days determined by sun speed
           if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
