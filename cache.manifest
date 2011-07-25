@@ -1,15 +1,16 @@
 CACHE MANIFEST
-# rev 1
-index.html
+# rev 2
+dev.html
 css/planets.css
 vendor/modernizr-1.7.min.js
-vendor/jquery.tools.min.js
+vendor/jquery-ui-1.8.14.custom.min.js
 vendor/sylvester.js
 vendor/Three.js 
+vendor/Stats.js
 libs/origami.js
 libs/three.ext.js
 libs/UIHelpers.js
-models/config.js
+models/presets.js
 models/BasePlanetModel.js
 models/ModelSimple.js
 models/ModelHippo.js
@@ -23,4 +24,5 @@ models/ModelAristotel.js
 models/ModelPtolemyBase.js
 models/ModelPtolemy.js
 models/ModelPtolemySun.js
+models/ModelPtolemyMoon2.js
 app.js

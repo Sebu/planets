@@ -219,8 +219,8 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
         $("#vis").hide();
 
-//        this.loadPreset("Mercury1");
-        this.loadPreset("PtolemyMoon2");
+        this.loadPreset("Mercury1");
+//        this.loadPreset("PtolemyMoon2");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
