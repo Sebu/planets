@@ -114,6 +114,7 @@ myApp.prototype.init = function(params) {
         // TODO: more segmentation
         $("<div id='infoContainer'>\
             <table>\
+              <thead><tr><td colspan=2 class=infoHeader>Planet</td></tr></thead>\
               <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>\
               <tr><td>longitude</td><td id='longitude'>0</td></tr>\
               <tr><td>longitude speed</td><td id='longitudeSpeed'>0</span></tr>\
@@ -125,6 +126,7 @@ myApp.prototype.init = function(params) {
               <tr><td>equation of time (hrs)</td><td id='equationOfTime'>0</td></tr>\
             </table>\
             <table id='infoContainer2' style='display:none'>\
+              <thead><tr><td colspan=2 class=infoHeader>Planet 2</td></tr></thead>\
               <tr><td>angle planet/sun</td><td id='sunAngle2'>0</td></tr>\
               <tr><td>longitude</td><td id='longitude2'>0</td></tr>\
               <tr><td>longitude speed</td><td id='longitudeSpeed2'>0</td></tr>\
@@ -135,6 +137,7 @@ myApp.prototype.init = function(params) {
               <tr><td>days per year</td><td id='sunDaysPerYear'>0</td></tr>\
             </table>\
             <table id='moonInfoContainer' style='display:none'>\
+              <thead><tr><td colspan=2 class=infoHeader></td></tr></thead>\
               <tr><td>zodiacal months</td><td id='metonZodicalMonths'>0</td></tr>\
               <tr><td>days/year</td><td id='metonDaysPerYear'>0</td></tr>\
               <tr><td>days/synodic month</td><td id='synodicDaysPerMonth'>0</td></tr>\
@@ -142,6 +145,7 @@ myApp.prototype.init = function(params) {
               <tr><td>days/draconitic month</td><td id='draconiticDaysPerMonth'>0</td></tr>\
             </table>\
             <table id='ptolemyInfoContainer' style='display:none'>\
+              <thead><tr><td colspan=2 class=infoHeader></td></tr></thead>\
               <tr><td>apsidal</td><td id='apsidalLongitude'>0</td></tr>\
               <tr><td>epicycle</td><td id='epicycleLongitude'>0</td></tr>\
               <tr><td>longitude deferent</td><td id='deferentLongitude'>0</td></tr>\
@@ -400,6 +404,7 @@ myApp.prototype.draw = function(time) {
             component = this.components[i];
             if (component.enabled) this.canvas.render(component, this.currentCamera);
         }
+          
         this.stats.update();
         //*/
     };

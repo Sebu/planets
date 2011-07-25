@@ -354,9 +354,13 @@ ModelBase.prototype = {
           if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
-        this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
+        this.updateMetadata();
     },
 
+    updateMetadata : function() {
+       this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
+    },
+    
     adjustAnomaly : function() {
       
     },
@@ -371,7 +375,8 @@ ModelBase.prototype = {
         for (i in model.updateList) {
            model.updateList[i].updateMovement(this.dayDelta);
         }
-      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
+      this.updateMetadata();
+//      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
     },
 
      setDays : function(days) {

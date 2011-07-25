@@ -38,7 +38,7 @@ ModelPtolemyBase = function(params) {
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
-    this.sphere[3].anchor.addNode(this.equator);
+//    this.sphere[3].anchor.addNode(this.equator);
 
 
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
@@ -87,8 +87,8 @@ ModelPtolemyBase = function(params) {
     this.setShowSphere4(true);
     
     
-    this.realSunS[1].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
-    this.realSunS[2].setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.realSunS[1].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.realSunS[2].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
 /*
     // TODO: rotate anchor.anchor? of2?

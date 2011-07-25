@@ -28,8 +28,6 @@ html,body {
 }
 
 a { color: #FC0; cursor: pointer; }
-table { border-collapse: collapse; }
-td { padding: 0; vertical-align: top; }
 
 .ui-slider-handle {
     cursor: default;
@@ -301,11 +299,11 @@ select:focus,
 }
 
 .wert {
-//  float: right;
+#  float: right;
   width: 100px;
   text-align: right;
-  -webkit-user-select:auto;
-  -moz-user-select:auto;  
+# -webkit-user-select:auto;
+# -moz-user-select:auto;  
 }
 
 #infoContainer {
@@ -324,11 +322,18 @@ select:focus,
   width: 100%;
 }
 
+.infoHeader {
+  color: #AAA;
+  font-size: 12px;
+  border-bottom:1px solid #AAA;
+}
+
 #infoContainer td {
   width: 110px;
   text-align: right;
-  -webkit-user-select:auto;
-  -moz-user-select:auto;  
+  vertical-align: bottom;
+#  -webkit-user-select:auto;
+#  -moz-user-select:auto;  
 }
 
 #playbackContainer {

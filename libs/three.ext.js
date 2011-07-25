@@ -398,12 +398,18 @@ THREE.Object3D.prototype.currentPos = function() {
     return {x: pos.n14, y: pos.n24, z: pos.n34};
 }
 
+
+// determine current position in world space
+THREE.Object3D.prototype.currentPosFast = function() {
+    var pos = this.matrixWorld;
+    return {x: pos.n14, y: pos.n24, z: pos.n34};
+}
+
 THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
-    var posTmp = this.currentPos();
+    var posTmp = this.currentPosFast();
 
     camera.matrixWorldInverse.multiplyVector3( posTmp );
     var zTmp = -posTmp.z;
-//    var zTmp = -1;
     camera.projectionMatrix.multiplyVector3( posTmp );
     
     pos = {x: (posTmp.x+1) * canvas.domElement.width/2, y: (-posTmp.y+1) * canvas.domElement.height/2, z: zTmp };

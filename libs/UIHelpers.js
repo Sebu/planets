@@ -120,24 +120,28 @@ var UI = {
 };
 
 UI.Label = function(params) {
-        this.ele = $("<div class='label'>" +  params.text + "</div>");
-        this.ele.appendTo("body");
+
+        this.ele = document.createElement("div"); // $("<div class='label' style='top:0px;left:0px;'>" +  params.text + "</div>");
+        this.ele.setAttribute("class","label");
+        document.body.appendChild(this.ele); // this.ele.appendTo("body");
         this.setPosition(params.pos || {x:0, y:0, z:-1});
+        this.setText(params.text);
 };
 
 UI.Label.prototype.constructor = UI.Label;
 
 
 UI.Label.prototype.setText = function(text) {
-  this.ele[0].innerHTML = text;
+  this.ele.innerText = text;
 };
 
 UI.Label.prototype.setPosition = function(pos) {
-  if(pos.z<0) { this.ele.hide(); return; }
-  this.ele.show();
+  if(pos.z<0) { this.ele.style.display = "none"; return; }
+  this.ele.style.display = "block";
   this.pos = pos;
-  this.ele.css('left', pos.x);
-  this.ele.css('top', pos.y);
+  this.ele.style.left = pos.x + "px";
+  this.ele.style.top = pos.y + "px";  
+//  this.ele.css('top', pos.y);
 };
 
 
