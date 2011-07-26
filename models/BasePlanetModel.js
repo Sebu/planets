@@ -163,9 +163,17 @@ ModelBase.prototype = {
 
     },
 
-    addLong : function() {    
-      this.sphere[2].removeChild(this.sphere[3]);
+    ptolemizeSpheres : function() {  
+      this.ptolemySphere = new Longituder();  
+      this.sphere[1].anchor.removeChild(this.sphere[2]);
+      this.sphere[2].anchor.removeChild(this.ecliptic);
+      
+      this.sphere[1].anchor.addNode(this.ptolemySphere);
+      this.ptolemySphere.anchor.addNode(this.sphere[2]);
+      this.ptolemySphere.addNode(this.ecliptic);      
+      
     },
+    
 
     loadPreset : function(node) {
 
@@ -221,7 +229,7 @@ ModelBase.prototype = {
         this.sphere[1].setGfx(["arc1","arc2"], false);
         this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );
         // hide sun sphere
-        this.ecliptic.setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+        this.ecliptic.setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
         // reset everything
         this.reset();
@@ -308,6 +316,7 @@ ModelBase.prototype = {
             planet.lastPerp = planet.perpAngle;
             planet.longitude = calcAngle(planetOnPlane, equinoxOnPlane);
             planet.perpAngle = calcAngle(planetOnPlane, equinoxOnPlanePerp);
+
             // HACK: dot product angle fix > 90
 //*
             if (planet.perpAngle<=90)
@@ -358,7 +367,7 @@ ModelBase.prototype = {
     },
 
     updateMetadata : function() {
-       this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
+       this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
     },
     
     adjustAnomaly : function() {
@@ -375,6 +384,7 @@ ModelBase.prototype = {
         for (i in model.updateList) {
            model.updateList[i].updateMovement(this.dayDelta);
         }
+      this.adjustAnomaly(); 
       this.updateMetadata();
 //      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
     },
@@ -444,7 +454,7 @@ ModelBase.prototype = {
             for (i = start + 1; i < stop; i++) {
                 this.sphere[i].updateMovement(step);
             }
-//            this.sphere[2].updateOffsetRotateMovement(step);
+            this.ptolemySphere.updateMovement(step);
             this.adjustAnomaly();
             pos = node.currentPos();
             curvePos.push(pos);

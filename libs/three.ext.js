@@ -203,7 +203,7 @@ Utils.toDec = function(number) {
 
 Utils.toSexa = function(number) {
   val = Utils.decToBase(number.toString(),60).split(",");
-  return val[0];
+  return val[0] + "," + val[1];
 }
 
 Utils.sexagesimal = function(number) {
@@ -865,11 +865,32 @@ aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
  */
 Longituder = function() {
     THREE.Object3D.call( this );
+    this.anchor = new THREE.Object3D();
+    this.pivot = new THREE.Object3D();
+    this.addNode(this.pivot);
+    this.pivot.addNode(this.anchor);
+    this.setInclination(0);
 }
 
 Longituder.prototype = new THREE.Object3D;
 Longituder.prototype.constructor = Longituder;
 
+
+Longituder.prototype.setInclination = function(angle) {
+  this.inclination = angle;
+//  this.delta = 90;
+//  this.pivot.rotation.y = degToRad(this.delta);
+  this.pivot.rotation.z = degToRad(this.inclination);
+};
+
+Longituder.prototype.getInclination  = function() {
+  return this.inclination;
+};
+
+Longituder.prototype.setApsidalAngle = function(angle) {
+    this.apsidalAngle = angle;
+    this.anchor.rotation.y = degToRad(this.apsidalAngle) //-this.delta);
+};
 
 Longituder.prototype.getApsidalAngle = function() {
     return this.apsidalAngle;
@@ -884,7 +905,7 @@ Longituder.prototype.getApsidalSpeed = function() {
       return this.apsidalSpeed;
 };
 
-Longituder.prototype.updateApsidalMovement = function(step) { 
+Longituder.prototype.updateMovement = function(step) { 
       this.setApsidalAngle( this.getApsidalAngle() + (this.apsidalStep * step) );
 };
 
@@ -914,11 +935,13 @@ Spherical = function Spherical(params) {
     this.rotateStart = params.rotateStart || 0.0;
     this.speed = params.speed || 0.0;
 
-    this.pivot = new Node();
-    this.addNode(this.pivot);
-    
+//    this.pivot = new Node();
+//    this.addNode(this.pivot);
+  
+    this.pivot = this;
+    this.eulerOrder = "ZYX";  
     this.anchor = new Node();
-    this.pivot.addNode(this.anchor);
+    this.addNode(this.anchor);
 
     this.material = new THREE.LineBasicMaterial( { opacity: 0.8, color: rgbToHex(this.gfx.color) } );
     this.materialArc =  new THREE.LineBasicMaterial( { opacity: 0.5,  color: rgbToHex(this.gfx.color) } );
@@ -1113,7 +1136,7 @@ Spherical.prototype.updateMovement = function(step) {
 
 Spherical.prototype.setOffsetRotateAngle = function(angle) {
     this.offsetRotateAngle = angle;
-    this.pivot.rotation.y = degToRad(this.offsetRotateAngle);
+    this.rotation.y = degToRad(this.offsetRotateAngle);
 };
 
 Spherical.prototype.getOffsetRotateAngle = function() {

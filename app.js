@@ -18,7 +18,7 @@ myApp.prototype.init = function(params) {
 
         // create canvas (WebGL if possible)
 //        this.canvas = new Ori.Canvas({antialias: true})
-        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
+        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true });
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
         
                 // append to DOM
@@ -222,10 +222,10 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='view'></div>");
         uiBox.append("<div id='parameters'></div>");
         uiBox.append("<div id='playback'></div>");
-        $("#vis").hide();
+//DEAD?        $("#vis").hide();
 
-        this.loadPreset("Mercury1");
-//        this.loadPreset("PtolemyMoon2");
+//        this.loadPreset("Mercury1");
+        this.loadPreset("PtolemyMars");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
@@ -292,8 +292,6 @@ myApp.prototype.setCurrentScene = function(scene) {
     };
 
 myApp.prototype.updateInfoBox = function() {
-        if(model.sun.getEnabled()) this.info.sunAngle.innerText = model.planet.sunAngle.toFixed(1);
-        this.info.days.innerText = Utils.daysToTime(model.getDays());
 
         if(model instanceof ModelSun) {
           this.info.longitude.innerText = model.planet.longitude.toFixed(6);
@@ -308,7 +306,8 @@ myApp.prototype.updateInfoBox = function() {
         }
         if(model.ui == "ModelPtolemy" || model.ui == "ModelPtolemySun") {
           this.info.longitude.innerText = Utils.toSexa(mod(model.planet.longitude,360) );
-          this.info.apsidalLongitude.innerText = Utils.toSexa( mod(model.sphere[2].getOffsetRotateAngle(), 360) );
+          this.info.latitude.innerText = Utils.toSexa(model.planet.latitude );
+          this.info.apsidalLongitude.innerText = Utils.toSexa( mod(model.ptolemySphere.getApsidalAngle(), 360) );
           this.info.epicycleLongitude.innerText = Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) );
           this.info.deferentLongitude.innerText =  Utils.toSexa(model.planet.deferentLongitude);
           this.info.gregorianDate.innerText =  Utils.dateToString(Utils.jdToMagic(model.date));                           
@@ -327,6 +326,8 @@ myApp.prototype.updateInfoBox = function() {
 
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));
         }
+       if(model.sun.getEnabled()) this.info.sunAngle.innerText = model.planet.sunAngle.toFixed(1);
+       this.info.days.innerText = Utils.daysToTime(model.getDays());        
 }
 // update loop
 myApp.prototype.update = function(time) {
@@ -749,15 +750,15 @@ myApp.prototype.loadPreset = function(preset) {
        } else if (model.ui == "ModelPtolemy") {
            this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
            this.currentCamera.rotateRight(Math.PI/2);
-           planetLabel2.setText("sun");       
+           planetLabel2.setText("Sun");       
 
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
-            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-            UI.slider({model:model.sphere[2], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+            UI.slider({model:model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 //            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");

@@ -66,7 +66,7 @@ var UI = {
     slider : function(params) {
         var instance = params.model,
         id = params.id,
-        tooltip = params.tip || "empty :(",
+        tooltip = params.tip || "no tooltip :(",
         text = params.text || params.id,
         min = params.min || 0,
         max = params.max || 100,
@@ -88,7 +88,7 @@ var UI = {
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
         else
           tmp =  $("<div class='sliderBox'>" + text + "</div>");
-        ele = $("<div title='" + tooltip + "' id='" + id + "'>" +
+        ele = $("<div  id='" + id + "'>" + //title='" + tooltip + "'
             "<div class='slider'></div>" +
             "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");

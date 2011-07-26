@@ -366,7 +366,7 @@ PtolemySun: {
   equant: "2;30",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },    
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },    
     {AxisAngle: 0.0, Speed: 365.2466666,  RotateStart: 274.25 },
     {AxisAngle: 0.0, Speed: 0, RotateStart: 0 }
   ] },
@@ -473,18 +473,39 @@ PtolemyMars: {
   baseRadius: "0.0",  
   derefentRadius: "60;0",
   epicycleRadius: "39;30",
-  MeanLongitude: "3;32",
+  apsidalAngle: "106;40",
+  equant: "6;0",
+  inclination: "1",
+  deviation: "2;15",
+//  mean
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: "23;51", Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 0.0, Step: "0;31,26,36,53,51,33",  RotateStart: "3;32" },
+    {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
+  ] },
+
+PtolemyMars2: { 
+  caption: "Ptolemy Mars",
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Mars",
+  showStars: false,
+  showHippo: false,
+  sunDist: 1.7,
+  centuryStep: 1,  
+  baseRadius: "0.0",  
+  derefentRadius: "60;0",
+  epicycleRadius: "39;30",
   apsidalAngle: "106;40",
   equant: "6;0",
 //  mean
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 0.0, Step: "0;31,26,36,53,51,33",  RotateStart: "3;32" },
     {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
   ] },
-
-
   
 PtolemyJupiter: { 
   caption: "Ptolemy Jupiter",
@@ -503,7 +524,7 @@ PtolemyJupiter: {
   equant: "2;45",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 0.0, Step: "0;04,59,14,26,46,31",  RotateStart: "184;41"},
     {AxisAngle: 0.0, Step: "0;54,09,02,46,26,00", RotateStart: "146;04" }
   ] },
@@ -525,7 +546,7 @@ PtolemySaturn: {
   equant: "3;25",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },   
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },   
     {AxisAngle: 0.0, Step: "0;02,00,33,31,28,51",  RotateStart: "296;43"},
     {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
   ] },
@@ -570,7 +591,7 @@ PtolemyMercury: {
   equant: "6;0",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },   
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },   
     {AxisAngle: 0.0, Step: "0",  RotateStart: 0 },
     {AxisAngle: 0.0, Step: "0",  RotateStart: "21;55"  }
   ] },
@@ -592,7 +613,7 @@ PtolemyVenus: {
   equant: "1;15",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0.0,  RotateStart: 0 },    
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },    
     {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31", RotateStart: "330;45"},
     {AxisAngle: 0.0, Step: "0;36,59,25,53,11,28", RotateStart: "71;07" }
   ] }

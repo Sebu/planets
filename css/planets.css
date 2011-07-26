@@ -147,10 +147,34 @@ option  {
 }
 
 .sliderBox {
-  overflow: none;
+  overflow: hidden;
   position: relative;
   padding: 0 0 0 8px;
 }
+.sliderBox:hover {
+  overflow: visible;
+}
+
+.tooltip {
+#  display: none;
+  opacity: 0.0;
+  position: absolute;
+  background: rgba(40,40,40,0.5);
+  left: 190px;
+  top: 40px;
+  width: 200px;
+#  min-height:40px;
+  font-size: 14px;
+  -webkit-transition-property: opacity top; 
+  -webkit-transition-duration: 0.5s;
+}
+
+.sliderBox:hover .tooltip {
+  opacity: 1.0;
+  display: block;
+  top: 18px;  
+}
+
 
 .ui-state-focus {
     outline: none;
@@ -291,19 +315,8 @@ select:focus,
 }
 
 
-.tooltip {
-  display: none;
-  position: absolute;
-  background: rgba(40,40,40,0.5);
-  left: 190px;
-  top: 4px;
-  width: 100px;
-  
-}
 
-.sliderBox:hover .tooltip {
-  display: block;
-}
+
 
 .menu { 
 	font-size: 16px;
@@ -359,7 +372,7 @@ select:focus,
 .infoHeader {
   color: #AAA;
   font-size: 12px;
-  border-bottom:1px dotted #AAA;
+  border-bottom:1px solid #AAA;
 }
 
 #infoContainer td {

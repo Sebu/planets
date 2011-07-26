@@ -19,11 +19,23 @@ ModelPtolemy = function(params) {
     };
 
     this.adjustAnomaly = function() {
-      var tmp = this.sphere[3].getRotateAngle() - this.sphere[2].getOffsetRotateAngle(); 
-      var realAngle = tmp/PI_SCALE - Math.asin((this.sphere[3].equant/this.sphere[3].radius) * Math.sin(tmp/PI_SCALE));
-      this.sphere[3].anchor.rotation.y = realAngle;
-       var adjustment = -this.sphere[3].anchor.rotation.y+(this.sphere[3].rotateAngle/PI_SCALE)-this.sphere   [2].getOffsetRotateAngle()/PI_SCALE;
-       this.sphere[4].anchor.rotation.y += adjustment;
+      var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
+      lambdaMA = this.sphere[3].getRotateAngle()/PI_SCALE - lambdaA,
+      lambdaAN = 85.5/PI_SCALE,
+      lambdaN = lambdaA - lambdaAN;
+      defDelta = Math.asin((this.sphere[3].equant/this.sphere[3].radius) * Math.sin(lambdaMA)),
+      earthDelta = Math.asin((-this.sphere[3].equant/this.sphere[3].radius) * Math.sin(lambdaMA)),
+      lambdaCA = lambdaMA - defDelta - earthDelta;      
+      console.log(mod(lambdaCA*PI_SCALE,360));
+      this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
+      this.sphere[4].rotation.y = earthDelta;
+      this.sphere[4].anchor.rotation.y += (-earthDelta + defDelta);
+
+      this.ptolemySphere.pivot.rotation.y = lambdaN;
+      this.ptolemySphere.anchor.rotation.y -= lambdaN;
+      //
+      this.bobAngle = degToRad(this.getDeviation()) * Math.sin( lambdaCA + lambdaAN );
+      this.sphere[4].anchor.rotation.x =  this.bobAngle;
     }
     
 

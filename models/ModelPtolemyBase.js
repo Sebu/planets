@@ -10,8 +10,11 @@ ModelPtolemyBase = function(params) {
     this.genSpheres(params);
 
     BaseMixin.call(this);
+    this.ptolemizeSpheres(); // :) add some ecliptic/latitude and apsidal stuff to the daily
 
     this.sphere[1].realAngle = 0;
+
+    this.updateList.push(this.ptolemySphere);
 
 
     this.realSunS = [];
@@ -98,23 +101,20 @@ ModelPtolemyBase = function(params) {
     }
 //*/
 
+
+/*    
     this.addDays = function(days) {
-      this.sphere[2].updateOffsetRotateMovement(days); 
       ModelBase.prototype.addDays.call(this, days);
       this.adjustAnomaly();
       this.updatePlanetMetadata(this.planet,this.sphere[1], this.ecliptic, this.sphere[3]);
     }
-
+*/
 
     
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+//        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
-        if(this.running) {
-          this.sphere[2].updateOffsetRotateMovement(this.dayDelta);
-//          this.adjustAnomaly();
-        }
-                
+
 //        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[3]);
 
 
@@ -152,12 +152,16 @@ ModelPtolemyBase = function(params) {
     
 
     this.setAxisAngle2 = function(angle) {
-        this.sphere[2].setAxisAngle(angle);
+        this.ptolemySphere.axisAngle = angle;
+        this.ptolemySphere.rotation.z = degToRad(angle);
         this.realSunS[1].setAxisAngle(angle);
-    }
+    };
+    
+    this.getAxisAngle2 = function() {
+      return this.ptolemySphere.axisAngle;
+    };
 
  
-    
     this.setShowSun1 = function(state) { 
       this.planet.setEnabled(state); 
       this.sphere[2].setGfx(["equator"],state);
@@ -183,13 +187,12 @@ ModelPtolemyBase = function(params) {
 
 
     // TODO: change    
-    this.sphere[4].setBobAngle = function(angle) {
-      var scale = 90/12;
-      this.bobAngle = (Math.abs(mod(angle, 360)-180)-90)/scale;
-      this.anchor.rotation.x = 0;// degToRad(this.bobAngle);
+    this.setBobAngle = function(angle) {
+      this.bobAngle = Math.PI/4 + Math.sin(this.sphere[3].getRotateAngle()/PI_SCALE);
+      this.sphere[4].anchor.rotation.x =  this.bobAngle;
     };
-    this.sphere[4].getBobAngle = function() {
-      return this.bobAngle;
+    this.getBobAngle = function() {
+      return this.sphere[4].bobAngle;
     };
 
     this.setEquant = function(value) {
@@ -234,17 +237,25 @@ ModelPtolemyBase = function(params) {
     }
     this.getBaseRadius = function() { return this.sphere[2].radius; }
 
+    this.setDeviation = function(value) {
+      this.deviation = value;
+    }
+    this.getDeviation = function() { return this.deviation; }
+    
     this.reset = function () {
         ModelBase.prototype.reset.call(this);
         this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
         this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
         this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
         this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
-        this.sphere[2].setOffsetRotateAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
-        this.sphere[2].setOffsetRotateSpeed( this.currentPlanet.centuryStep || 0 );
+        this.ptolemySphere.setApsidalAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
+        this.ptolemySphere.setApsidalSpeed( Utils.toDec(this.currentPlanet.centuryStep || 0) );
+        this.ptolemySphere.setInclination( Utils.toDec(this.currentPlanet.inclination || 0) );
+        this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
+//        this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
         this.adjustAnomaly();   
         
-       
+//        this.setBobAngle(30);
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    
