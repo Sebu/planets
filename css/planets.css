@@ -11,9 +11,9 @@ html,body {
   -webkit-user-select:none;
   -moz-user-select:none;
   
- font-family: 'Droid Sans', sans-serif;
+ font-family: 'Open Sans', sans-serif;
 # font-family: 'Josefin Sans', sans-serif;
-#  font-family: 'Lekton', serif;
+# font-family: 'Lekton', serif;
 
   font-size:100%;
   line-height:1.125em;
@@ -147,6 +147,8 @@ option  {
 }
 
 .sliderBox {
+  overflow: none;
+  position: relative;
   padding: 0 0 0 8px;
 }
 
@@ -285,11 +287,44 @@ select:focus,
 #  -webkit-transform-style: preserve-3d;
 #  -webkit-transform-origin: 0px 400px;
 #  -webkit-transform: perspective(800px) rotateY(20deg);
-  -webkit-transition-property: opacity; -webkit-transition-duration: 0.5s; 
+#  -webkit-transition-property: opacity; -webkit-transition-duration: 0.5s; 
 }
 
 
+.tooltip {
+  display: none;
+  position: absolute;
+  background: rgba(40,40,40,0.5);
+  left: 190px;
+  top: 4px;
+  width: 100px;
+  
+}
+
+.sliderBox:hover .tooltip {
+  display: block;
+}
+
 .menu { 
+	font-size: 16px;
+  float: left; 
+  position: relative;
+}
+
+
+.menu .boxContent  {
+  list-style-type: none;
+  overflow: none;
+  position: absolute; 
+  width: 190px;
+  z-index: 100; 
+  display: none;  
+}
+
+.menu select.parent:hover,
+.menu:hover .boxContent {
+    display: block;
+    cursor: pointer;
 }
 
 
@@ -309,10 +344,9 @@ select:focus,
 #infoContainer {
   position: absolute;
   width: 200px;
-  top: 10px;
-  right: 10px; 
-  
-  font-size: 13px;
+  top: 0px;
+  right: 0px; 
+  font-size: 12px;
 #  -webkit-transform: perspective(500px) rotateY(-20deg);
 
 }
@@ -325,7 +359,7 @@ select:focus,
 .infoHeader {
   color: #AAA;
   font-size: 12px;
-  border-bottom:1px solid #AAA;
+  border-bottom:1px dotted #AAA;
 }
 
 #infoContainer td {

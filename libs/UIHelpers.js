@@ -11,19 +11,22 @@ var UI = {
 /*
     box : function(params) {
         var id = params.id;
-        var text = params.text || params.id;
+        var text = params.element || params.text || params.id;
         return $("<div class=menu><div class='caption' id='cap" +id+ "'>" +
                 text + "</div><div class='boxContent' id='" + id + "'></div></div>");
     },
-//*/
+/*/
     box : function(params) {
-        var id = params.id;
-        var text = params.text || params.id;
-        return $("<div ><div class='caption' id='cap" +id+ "'" +
+        var id = params.id,
+        text = params.element || params.text || params.id,
+        ele =  $("<div ><div class='caption' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
                 "<span class='triangle arrow-down' title='hide' ></span>" +
                 "<span class='triangle arrow-right' style='display:none' title='show'></span>" +
-                text + "</div><div class='boxContent' id='" + id + "'></div></div>");
+                "</div><div class='boxContent' id='" + id + "'></div></div>");
+        $("#cap" + id,ele).append(text);
+        
+        return ele;
     },
 //*/
     input : function(params) {
@@ -61,15 +64,15 @@ var UI = {
     },
 
     slider : function(params) {
-        var instance = params.model;
-        var id = params.id;
-        var tooltip = params.tip || "";
-        var text = params.text || params.id;
-        var min = params.min || 0;
-        var max = params.max || 100;
-        var toggle = params.toggle || false;
-        var step = params.step || 1;
-        var color = {r:0.1, g:0.3, b:0.4};
+        var instance = params.model,
+        id = params.id,
+        tooltip = params.tip || "empty :(",
+        text = params.text || params.id,
+        min = params.min || 0,
+        max = params.max || 100,
+        toggle = params.toggle || false,
+        step = params.step || 1,
+        color = {r:0.1, g:0.3, b:0.4};
         //style='background:" + rgbToCSS(color) + "'
         
         
@@ -93,7 +96,8 @@ var UI = {
         $(".slider",ele).slider({slide:change, animate: "fast", max: max, min: min, step: step, value: value});
         $("input",ele).bind("change",change2);
 //        $(".slider",ele).bind("slidechange",change);
-        if(toggle) $(":checkbox",tmp).bind("click", function() 
+        if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
+         if(toggle) $(":checkbox",tmp).bind("click", function() 
           { 
             $("#" + id + " > input").attr('disabled', !this.checked);
             if(!this.checked) instance["set"+id](0);
@@ -105,12 +109,13 @@ var UI = {
 
 
     checkbox : function(params) {
-        var model = params.model;
-        var id = params.id;
-        var text = params.text || params.id;
-        var value = model["get"+id]() ? "checked" : "";;
+        var model = params.model,
+        id = params.id,
+        text = params.text || params.id,
+        color = params.color || "#FFF";
+        value = model["get"+id]() ? "checked" : "";
         var change = params.change || function()  { model["set"+id](this.checked); };
-        var tmp  = $("<span></span>");
+        var tmp  = $("<span style='color:" + color + "'></span>");
         var ele = $("<input type=checkbox " + value +">" + text + "</input>");
         tmp.append(ele);
         ele.bind("click", change);

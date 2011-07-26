@@ -199,14 +199,19 @@ myApp.prototype.init = function(params) {
 
 
 //        var presetBox = $("<div></div>").appendTo(uiBox);
-        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
-        var presetBox = $("#presetBox");
-        $("#viewPresets option[value='World']").attr('selected', true);
-        presetBox.append("<span ><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
+
+//        $("#viewPresets option[value='World']").attr('selected', true);
+        var presetsEle = $("<span><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
         $.extend(true, planetPresets, vault);
-        UI.optionsFromHash("#planetPreset", planetPresets);
         
+
+        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
+        var presetBox = $("#presetBox");
+
+        presetBox.append(presetsEle);
+        UI.optionsFromHash("#planetPreset", planetPresets);
+
         presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
@@ -383,10 +388,13 @@ myApp.prototype.update = function(time) {
         } else {
             if(model.sphere[1].gfx.markerball.getEnabled())
               equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
+            else equinoxLabel.setPosition({x:0, y: 0, z:-1});
             if(model.sphere[1].gfx.npole.getEnabled())
               npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
+            else npoleLabel.setPosition({x:0, y: 0, z:-1});
             if(model.sphere[1].gfx.spole.getEnabled())
               spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
+            else spoleLabel.setPosition({x:0, y: 0, z:-1});
         }
 
         planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
@@ -544,7 +552,7 @@ myApp.prototype.loadPreset = function(preset) {
         $("<div id='visSpheres'></div>").appendTo("#vis");
         for (i in model.sphere) {
             if(model["getShowSphere" + i])
-              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i))}).appendTo("#visSpheres");
+              UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
