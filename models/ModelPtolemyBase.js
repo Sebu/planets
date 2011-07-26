@@ -27,7 +27,7 @@ ModelPtolemyBase = function(params) {
     this.updateList.push(realSunS1);
     this.updateList.push(realSunS2);    
         
-    this.sphere[1].anchor.addNode(realSunS1);
+    this.ptolemySphere.addNode(realSunS1);
     realSunS1.anchor.addNode(realSunS2);
     realSunS2.anchor.addNode(this.realSun);
 
@@ -119,7 +119,7 @@ ModelPtolemyBase = function(params) {
 
 
         // mean sun
-        this.ecliptic.anchor.rotation.y = this.sphere[3].anchor.rotation.y + this.sphere[4].anchor.rotation.y;
+//        this.ecliptic.anchor.rotation.y = this.ptolemySphere.anchor.rotation.y + this.sphere[3].anchor.rotation.y + this.sphere[4].anchor.rotation.y;
 
         // lines
         this.epicycleRadius[0] = this.sphere[3].gfx.markerball.currentPos();
@@ -241,6 +241,11 @@ ModelPtolemyBase = function(params) {
       this.deviation = value;
     }
     this.getDeviation = function() { return this.deviation; }
+
+    this.setLambdaAN = function(value) {
+      this.lambdaAN = value;
+    }
+    this.getLambdaAN = function() { return this.lambdaAN; }
     
     this.reset = function () {
         ModelBase.prototype.reset.call(this);
@@ -252,7 +257,7 @@ ModelPtolemyBase = function(params) {
         this.ptolemySphere.setApsidalSpeed( Utils.toDec(this.currentPlanet.centuryStep || 0) );
         this.ptolemySphere.setInclination( Utils.toDec(this.currentPlanet.inclination || 0) );
         this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
-//        this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
+        this.setLambdaAN( Utils.toDec(this.currentPlanet.lambdaAN || 0) );
         this.adjustAnomaly();   
         
 //        this.setBobAngle(30);

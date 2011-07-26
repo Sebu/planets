@@ -155,8 +155,8 @@ option  {
   overflow: visible;
 }
 
-.tooltip {
-#  display: none;
+.sliderBox .tooltip {
+  display: block;
   opacity: 0.0;
   position: absolute;
   background: rgba(40,40,40,0.5);
@@ -164,9 +164,9 @@ option  {
   top: 40px;
   width: 200px;
 #  min-height:40px;
-  font-size: 14px;
   -webkit-transition-property: opacity top; 
   -webkit-transition-duration: 0.5s;
+  font-size: 14px;
 }
 
 .sliderBox:hover .tooltip {
@@ -199,7 +199,7 @@ option  {
 	border:1px  #ddd;
   background: #333;
   color: white;
-	font-size:14px;
+	font-size:16px;
 	margin:1;
 	padding:1;
 	text-align:center;

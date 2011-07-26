@@ -477,6 +477,7 @@ PtolemyMars: {
   equant: "6;0",
   inclination: "1",
   deviation: "2;15",
+  lambdaAN: "85;30",
 //  mean
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
@@ -485,27 +486,6 @@ PtolemyMars: {
     {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
   ] },
 
-PtolemyMars2: { 
-  caption: "Ptolemy Mars",
-  model: "ModelPtolemy",
-  ui: "ModelPtolemy",
-  label: "Mars",
-  showStars: false,
-  showHippo: false,
-  sunDist: 1.7,
-  centuryStep: 1,  
-  baseRadius: "0.0",  
-  derefentRadius: "60;0",
-  epicycleRadius: "39;30",
-  apsidalAngle: "106;40",
-  equant: "6;0",
-//  mean
-  sphere: [
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Step: "0;31,26,36,53,51,33",  RotateStart: "3;32" },
-    {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
-  ] },
   
 PtolemyJupiter: { 
   caption: "Ptolemy Jupiter",
@@ -522,9 +502,12 @@ PtolemyJupiter: {
   apsidalAngle: "152;09",
   MeanLongitude:  "184;41",
   equant: "2;45",
+  inclination: "1;30",
+  deviation: "2;30",
+  lambdaAN: "71",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: "23;51", Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 0.0, Step: "0;04,59,14,26,46,31",  RotateStart: "184;41"},
     {AxisAngle: 0.0, Step: "0;54,09,02,46,26,00", RotateStart: "146;04" }
   ] },
@@ -544,9 +527,12 @@ PtolemySaturn: {
   apsidalAngle: "224;10",
   MeanLongitude: "296;43",
   equant: "3;25",
+  inclination: "2;30",
+  deviation: "4;30",
+  lambdaAN: "133",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },   
+    {AxisAngle: "23;51", Speed: 0.0,  RotateStart: 0 },   
     {AxisAngle: 0.0, Step: "0;02,00,33,31,28,51",  RotateStart: "296;43"},
     {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
   ] },
@@ -592,8 +578,8 @@ PtolemyMercury: {
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },   
-    {AxisAngle: 0.0, Step: "0",  RotateStart: 0 },
-    {AxisAngle: 0.0, Step: "0",  RotateStart: "21;55"  }
+    {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31",  RotateStart: "330;45"},
+    {AxisAngle: 0.0, Step: "3;06,24,06,59,35,50", RotateStart: "21;55" }
   ] },
 
 //*/
@@ -606,7 +592,7 @@ PtolemyVenus: {
   showHippo: false,
   sunDist: 1.7,
   centuryStep: 1,    
-  baseRadius: "0.0",    
+  baseRadius: "0",    
   derefentRadius: "60;0",
   epicycleRadius: "43;10",
   apsidalAngle: "46;10",

@@ -95,11 +95,9 @@ myApp.prototype.init = function(params) {
 //        this.tbCamera = new THREE.TrackballCamera({fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far: 10000, target: model.root});
 //        this.currentCamera = this.tbCcamera;
 
-        // setup moving labels        
-        planetLabel = new UI.Label({text: "Planet"});
-        planetLabel2 = new UI.Label({text: "Moon"});
 
-        sunLabel = new UI.Label({text: "Sun"});
+
+
         equinoxLabel = new UI.Label({text: "Vernal Equinox"});
         npoleLabel = new UI.Label({text: "North pole"});
         spoleLabel = new UI.Label({text: "South pole"});
@@ -108,7 +106,11 @@ myApp.prototype.init = function(params) {
         eastLabel = new UI.Label({text: "East"});
         westLabel = new UI.Label({text: "West"});
 
+        sunLabel = new UI.Label({text: "Sun"});
 
+        // setup moving labels        
+        planetLabel = new UI.Label({text: "Planet"});
+        planetLabel2 = new UI.Label({text: "Moon"});
 
         // create some elements
         // TODO: more segmentation
@@ -225,7 +227,7 @@ myApp.prototype.init = function(params) {
 //DEAD?        $("#vis").hide();
 
 //        this.loadPreset("Mercury1");
-        this.loadPreset("PtolemyMars");
+        this.loadPreset("PtolemyMercury");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
@@ -430,8 +432,7 @@ myApp.prototype.setView = function(view) {
         model.currentPos = view.from;
         model.currentLookAt = view.at;
 
-        planetLabel.setPosition({x:0, y:0, z:-1});
-        planetLabel2.setPosition({x:0, y:0, z:-1});
+
 
         equinoxLabel.setPosition({x:0, y:0, z:-1});
         npoleLabel.setPosition({x:0, y:0, z:-1});
@@ -440,6 +441,9 @@ myApp.prototype.setView = function(view) {
         southLabel.setPosition({x:0, y:0, z:-1});
         eastLabel.setPosition({x:0, y:0, z:-1});
         westLabel.setPosition({x:0, y:0, z:-1});
+
+        planetLabel.setPosition({x:0, y:0, z:-1});
+        planetLabel2.setPosition({x:0, y:0, z:-1});
 
 //        model.changeView(model.currentPos);
         if (model.currentPos == "Free") var pos = { x: 0.0, y: 0.0, z: -17 };
@@ -793,9 +797,9 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
-            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
-            UI.slider({model:model.sphere[2], id: "OffsetRotateSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+            UI.slider({model:model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
             UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
