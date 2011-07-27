@@ -1012,6 +1012,10 @@ Spherical = function Spherical(params) {
     this.gfx.centerLine = new Curve({trails: false, pos: apsidal, color: this.gfx.color }); 
     this.anchor.addNode(this.gfx.centerLine);
     
+    
+    this.gfx.disc = new Disc( {radius: 9.0, color: this.gfx.color });
+//    this.anchor.addNode(this.gfx.disc);
+    
     this.setAxisAngle(this.axisAngle);
     this.setRotateAngle(this.rotateAngle);
     this.setSpeed(this.speed);
@@ -1076,6 +1080,7 @@ Spherical.prototype.setScale = function(value) {
   this.gfx.equator.scale  = new THREE.Vector3( value, value, value );
   this.gfx.markerarc.scale  = new THREE.Vector3( -value, value, value );
   this.gfx.centerLine.scale = new THREE.Vector3( value, value, value );
+//  this.gfx.disc.scale = new THREE.Vector3( value, 0, value );
   this.gfx.markerball.position.z = value;
   this.gfx.markerend.position.z = value;
   this.gfx.npole.position.y = value;
