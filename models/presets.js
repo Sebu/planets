@@ -366,7 +366,7 @@ PtolemySun: {
   equant: "2;30",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },    
+    {AxisAngle: "23;51", Speed: 0.0,  RotateStart: 0 },    
     {AxisAngle: 0.0, Speed: 365.2466666,  RotateStart: 274.25 },
     {AxisAngle: 0.0, Speed: 0, RotateStart: 0 }
   ] },

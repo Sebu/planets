@@ -154,7 +154,7 @@ ModelPtolemyBase = function(params) {
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;
         this.ptolemySphere.rotation.z = degToRad(angle);
-        this.realSunS[1].setAxisAngle(angle);
+//        this.realSunS[1].setAxisAngle(angle);
     };
     
     this.getAxisAngle2 = function() {
