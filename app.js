@@ -203,7 +203,7 @@ myApp.prototype.init = function(params) {
 //        var presetBox = $("<div></div>").appendTo(uiBox);
 
 //        $("#viewPresets option[value='World']").attr('selected', true);
-        var presetsEle = $("<span><select style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
+        var presetsEle = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
         var vault = localStorage.getJson("customPresets") || {};
         $.extend(true, planetPresets, vault);
         
@@ -213,6 +213,8 @@ myApp.prototype.init = function(params) {
 
         presetBox.append(presetsEle);
         UI.optionsFromHash("#planetPreset", planetPresets);
+        
+        //$(".chzn-select").chosen();
 
         presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");

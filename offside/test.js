@@ -18,16 +18,28 @@ myApp.prototype.init = function(params) {
 
 
         for(var n in TestPairs) {
+          var tests = TestPairs[n],
+          ul = $("#mainBox").append("<table>" + n + "</table>"),
+          i;
+          
           this.loadPreset(n);
-          var tests = TestPairs[n];
-          var ul = $("#mainBox").append("<br>" + n + "<ul></ul>");
-          for(var i in tests) { 
+
+          for(i in tests) { 
 
             model.setDate(tests[i].date);
             model.addDays(0.5);
-            var longReal = Math.abs( model.planet.longitude-180 );
-            var longRef =  Math.abs( Number(Utils.toDec( tests[i].longitude )) - 180 );
-            ul.append("<li>" + ( longReal - longRef)  + "</li>");
+            var longReal = Math.abs( model.planet.longitude-180 ),
+            longRef =  Math.abs( Number(Utils.toDec( tests[i].longitude )) - 180 ),
+            latReal = model.planet.latitude,
+            latRef = Number( Utils.toDec(tests[i].latitude) ),
+            colorLong = "#FFF",
+            colorLat = "#FFF";
+               
+            if ( (longReal - longRef) > 0.4) colorLong="#F44";        
+            if ( Math.abs(latReal - latRef) > 0.1) colorLat="#F44";      
+                        
+            ul.append("<tr><td style='color:" + colorLong + ";'>" + (longReal - longRef).toFixed(2)  + 
+                     "</td><td style='color:" + colorLat + ";'>"  + ( latReal - latRef).toFixed(2)  + "</td></tr>");
             
           }
         }

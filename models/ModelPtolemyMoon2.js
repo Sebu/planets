@@ -27,7 +27,12 @@ ModelPtolemyMoon2 = function(params) {
       this.sphere[3].anchor.rotation.y = realAngle;
       this.sphere[4].anchor.rotation.y = -this.sphere[4].anchor.rotation.y;
 
+      var lambdaAN = (this.lambdaAN)/PI_SCALE;
+      // inclination correction
+      this.ptolemySphere.pivot.rotation.y = -lambdaAN;
+      this.ptolemySphere.anchor.rotation.y = lambdaAN;
 
+      // mean anomaly correction
       //TODO: 2 disjoint models :)
       if(this.currentPlanet.accurateMoon) {
         var realAngle2 = tmp/PI_SCALE - Math.asin((this.sphere[2].radius/this.sphere[3].radius) * Math.sin(tmp/PI_SCALE));            

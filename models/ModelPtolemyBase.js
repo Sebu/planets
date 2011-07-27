@@ -154,7 +154,7 @@ ModelPtolemyBase = function(params) {
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;
         this.ptolemySphere.rotation.z = degToRad(angle);
-//        this.realSunS[1].setAxisAngle(angle);
+        this.realSunS[1].setAxisAngle(angle);
     };
     
     this.getAxisAngle2 = function() {
@@ -242,6 +242,11 @@ ModelPtolemyBase = function(params) {
     }
     this.getDeviation = function() { return this.deviation; }
 
+    this.setKM = function(value) {
+      this.KM = value;
+    }
+    this.getKM = function() { return this.KM; }
+    
     this.setLambdaAN = function(value) {
       this.lambdaAN = value;
     }
@@ -257,6 +262,7 @@ ModelPtolemyBase = function(params) {
         this.ptolemySphere.setApsidalSpeed( Utils.toDec(this.currentPlanet.centuryStep || 0) );
         this.ptolemySphere.setInclination( Utils.toDec(this.currentPlanet.inclination || 0) );
         this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
+        this.setKM( Utils.toDec(this.currentPlanet.km || 0) );        
         this.setLambdaAN( Utils.toDec(this.currentPlanet.lambdaAN || 0) );
         this.adjustAnomaly();   
         

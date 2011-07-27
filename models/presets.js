@@ -454,9 +454,11 @@ PtolemyMoon3: {
   epicycleRadius: "6;20",
   apsidalAngle: "0",
   equant: "0",
+  inclination: "5",
+  lambdaAN: "36;15",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
+    {AxisAngle: "23;51", Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
     {AxisAngle: 0.0, Step: "12;11,26,41,20,17,59", RotateStart:  "70;37" },
     {AxisAngle: 0.0, Step: "13;03,53,56,17,51,59", RotateStart: "268;49" }
   ] },  
@@ -483,6 +485,7 @@ PtolemyMars: {
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: "23;51", Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: 0.0, Step: "0;31,26,36,53,51,33",  RotateStart: "3;32" },
+//    {AxisAngle: 0.0, Step: "0", RotateStart: "0" }    
     {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
   ] },
 
@@ -575,9 +578,13 @@ PtolemyMercury: {
   epicycleRadius: "22;30",
   apsidalAngle: "181;10",
   equant: "6;0",
+  inclination: "-0;45",
+  deviation: "6;15",
+  km:  "7;00",
+  lambdaAN: "90",  
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
-    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },   
+    {AxisAngle: "23;51", Speed: 0.0,  RotateStart: 0 },   
     {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31",  RotateStart: "330;45"},
     {AxisAngle: 0.0, Step: "3;06,24,06,59,35,50", RotateStart: "21;55" }
   ] },
@@ -620,46 +627,46 @@ var moonModels = {
 var TestPairs = {
 
   PtolemySun: {
-    d1: { date: "9.2.139", longitude: "318;50" },
-    d2: { date: "26.9.139", longitude: "180" },
-    d3: { date: "22.3.140", longitude: "0" },
-    d4: { date: "25.6.140", longitude: "90" }
+    d1: { date: "9.2.139", longitude: "318;50", latitude: "0;0"  },
+    d2: { date: "26.9.139", longitude: "180", latitude: "0;0" },
+    d3: { date: "22.3.140", longitude: "0", latitude: "0;0" },
+    d4: { date: "25.6.140", longitude: "90", latitude: "0;0" }
   },
 
-  PtolemyMoon2: {
-    d1: { date: "6.5.133", longitude: "217;48" },  
-    d2: { date: "20.10.134", longitude: "19;42" },
-    d3: { date: "6.3.136", longitude: "169;01" }
+  PtolemyMoon3: {
+    d1: { date: "6.5.133", longitude: "217;48", latitude: "-0;50,53" },  
+    d2: { date: "20.10.134", longitude: "19;42", latitude: "-0;01,38" },
+    d3: { date: "6.3.136", longitude: "169;01", latitude: "-0;19,28" }
   },
     
   PtolemyMars: {
-    d1: { date: "15.12.130", longitude: "81;0" },
-    d2: {  date: "21.2.135", longitude: "148;50" },
-    d3: {  date: "27.5.139", longitude: "242;34" }
+    d1: { date: "15.12.130", longitude: "81;0", latitude: "3;35,55" },
+    d2: {  date: "21.2.135", longitude: "148;50", latitude: "3;38,39" },
+    d3: {  date: "27.5.139", longitude: "242;34", latitude: "-4;16,00" }
   },
 
   
   PtolemyJupiter: {
-    d1: { date: "17.5.133", longitude: "233;11" },
-    d2: {  date: "21.8.136", longitude: "337;54" },
-    d3: {  date: "8.10.137", longitude: "14;23" }
+    d1: { date: "17.5.133", longitude: "233;11", latitude: "100;0" },
+    d2: {  date: "21.8.136", longitude: "339;15,32", latitude: "100;0" },
+    d3: {  date: "8.10.137", longitude: "14;23", latitude: "100;0" }
   },
   
   PtolemySaturn: {
-    d1: { date: "26.3.127", longitude: "181;13" },
-    d2: {  date: "3.6.133", longitude: "249;40" },
-    d3: {  date: "8.7.136", longitude: "284;14" }
+    d1: { date: "26.3.127", longitude: "181;13", latitude: "100;0" },
+    d2: {  date: "3.6.133", longitude: "249;40", latitude: "0;0" },
+    d3: {  date: "8.7.136", longitude: "284;14", latitude: "0;0" }
   },
 
 //*
   PtolemyMercury: {
-    d1: { date: "4.6.134", longitude: "48;45" },
-    d2: { date: "3.10.134", longitude: "170;12" }
+    d1: { date: "4.6.134", longitude: "48;45", latitude: "100;0" },
+    d2: { date: "3.10.134", longitude: "170;12", latitude: "100;0" }
   },
 //*/
   PtolemyVenus: {
-    d1: { date: "8.3.132", longitude: "31;30" },
-    d2: { date: "16.12.138", longitude: "216;30" }
+    d1: { date: "8.3.132", longitude: "31;30", latitude: "100;0" },
+    d2: { date: "16.12.138", longitude: "216;30", latitude: "100;0" }
   },
 //*/
 
