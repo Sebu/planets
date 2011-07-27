@@ -93,7 +93,7 @@ var UI = {
             "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");
         tmp.append(ele);
-        $(".slider",ele).slider({slide:change, animate: "fast", max: max, min: min, step: step, value: value});
+        $(".slider",ele).slider({slide:change, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
         $("input",ele).bind("change",change2);
 //        $(".slider",ele).bind("slidechange",change);
          if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");

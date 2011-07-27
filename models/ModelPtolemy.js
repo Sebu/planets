@@ -29,6 +29,8 @@ ModelPtolemy = function(params) {
       lambdaD = lambdaCA + lambdaAN,
       j = degToRad(this.getDeviation()) * Math.sin( lambdaD );
 
+
+      console.log(this.sphere[3].getRotateAngle());
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
 
@@ -55,8 +57,8 @@ ModelPtolemy.prototype.constructor = ModelPtolemy;
 ModelPtolemyInferior = function(params) {
     params.name = "ModelPtolemyInferior";
     ModelPtolemy.call(this, params);
-    
-    this.sphere[4].anchor.rotation.z
+
+    this.sphere[4].anchor.eulerOrder = "XZY";    
 
     this.adjustAnomaly = function() {
       var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
@@ -71,8 +73,8 @@ ModelPtolemyInferior = function(params) {
       
       // bobbing motion
       this.ptolemySphere.pivot.rotation.z =  i;
-      this.sphere[4].rotation.x =  j;
-      this.sphere[4].rotation.z =  -k;      
+      this.sphere[4].anchor.rotation.x =  j;
+      this.sphere[4].anchor.rotation.z =  -k;      
       
       // base & deferent motion
       this.sphere[2].anchor.rotation.y = -lambdaMA;

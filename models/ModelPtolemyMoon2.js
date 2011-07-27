@@ -27,10 +27,12 @@ ModelPtolemyMoon2 = function(params) {
       this.sphere[3].anchor.rotation.y = realAngle;
       this.sphere[4].anchor.rotation.y = -this.sphere[4].anchor.rotation.y;
 
-      var lambdaAN = (this.lambdaAN)/PI_SCALE;
+      //TODO: magic??? 
+      var lambdaAN = (this.lambdaAN+this.wd)/PI_SCALE  + realAngle + Math.PI/2; 
       // inclination correction
       this.ptolemySphere.pivot.rotation.y = -lambdaAN;
-      this.ptolemySphere.anchor.rotation.y = lambdaAN;
+      this.ptolemySphere.anchor.rotation.y = lambdaAN;   
+
 
       // mean anomaly correction
       //TODO: 2 disjoint models :)
@@ -40,7 +42,8 @@ ModelPtolemyMoon2 = function(params) {
       } else {
         var adjustment = tmp/PI_SCALE-realAngle;
       }
-      this.sphere[4].anchor.rotation.y += adjustment;      
+      this.sphere[4].anchor.rotation.y += adjustment;   
+      
     }
         
     

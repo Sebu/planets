@@ -48,14 +48,6 @@ ModelPtolemyBase = function(params) {
     this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S1"] }); 
     this.sphere[2].pivot.addNode(this.apsidalLine);
 
-    this.epicycleRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.epicycleRadiusLine = new Curve({trails: false, pos: this.epicycleRadius, color: colors["S3"] }); 
-    this.root.addNode(this.epicycleRadiusLine);
-    
-    this.deferentRadius = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.deferentRadiusLine = new Curve({trails: false, pos: this.deferentRadius, color: colors["S2"] }); 
-    this.root.addNode(this.deferentRadiusLine);
-
 
     this.earthToDeferent = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.earthToDeferentLine = new Curve({trails: false, linewdith:1, pos: this.earthToDeferent, color: {r:0.6,g:0.6,b:1.0} }); 
@@ -65,10 +57,6 @@ ModelPtolemyBase = function(params) {
     this.earthToPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.earthToPlanetLine = new Curve({trails: false, pos: this.earthToPlanet, color: {r:1.0,g:1.0,b:1.0} }); 
     this.root.addNode(this.earthToPlanetLine);
-
-    this.earthToVernal = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.earthToVernalLine = new Curve({trails: false, pos: this.earthToVernal, color: colors["S1"] }); 
-    this.root.addNode(this.earthToVernalLine);
 
     
     this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
@@ -122,14 +110,6 @@ ModelPtolemyBase = function(params) {
 //        this.ecliptic.anchor.rotation.y = this.ptolemySphere.anchor.rotation.y + this.sphere[3].anchor.rotation.y + this.sphere[4].anchor.rotation.y;
 
         // lines
-        this.epicycleRadius[0] = this.sphere[3].gfx.markerball.currentPos();
-        this.epicycleRadius[1] = this.planet.mesh.currentPos();
-        this.epicycleRadiusLine.setPos(this.epicycleRadius);
-          
-        this.deferentRadius[0] = this.sphere[3].anchor.currentPos();
-        this.deferentRadius[1] = this.sphere[3].gfx.markerball.currentPos();
-        this.deferentRadiusLine.setPos(this.deferentRadius);
-
         this.equantPlanet[0] = this.equantPoint.currentPos();        
         this.equantPlanet[1] = this.sphere[3].gfx.markerball.currentPos();
         this.equantPlanetLine.setPos(this.equantPlanet);
@@ -142,9 +122,7 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanet[1] = this.planet.mesh.currentPos();
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
-        this.earthToVernal[0] = this.earth.mesh.currentPos();        
-        this.earthToVernal[1] = this.sphere[1].gfx.markerball.currentPos();
-        this.earthToVernalLine.setPos(this.earthToVernal);        
+ 
 
         
         this.date = this.startDate + this.days;
@@ -154,7 +132,7 @@ ModelPtolemyBase = function(params) {
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;
         this.ptolemySphere.rotation.z = degToRad(angle);
-        this.realSunS[1].setAxisAngle(angle);
+//        this.realSunS[1].setAxisAngle(angle);
     };
     
     this.getAxisAngle2 = function() {

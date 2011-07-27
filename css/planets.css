@@ -29,30 +29,6 @@ html,body {
 
 a { color: #FC0; cursor: pointer; }
 
-.ui-slider-handle {
-    cursor: default;
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background: -o-linear-gradient(#4B4947, #32302D);    
-    background: -moz-linear-gradient(#4B4947, #32302D);
-    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
-    box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;    
-    -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-    -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-    margin: -8px;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-}
-
-.ui-slider-handle:hover {
-    background: -o-linear-gradient(#6B6967, #42403D);
-    background: -moz-linear-gradient(#6B6967, #42403D);
-    background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#42403D));
-    box-shadow: 0 0 4px 4px #333;
-  
-}
 
 
 .circle {
@@ -75,6 +51,8 @@ a { color: #FC0; cursor: pointer; }
     padding: 1px 10px;
     border-radius: 4px;
     cursor: default;
+    color: #FFF;
+    text-shadow: #111 1px 1px 1px;
     background: -o-linear-gradient(#4d90fe, #4787ed);    
     background: -moz-linear-gradient(#4d90fe, #4787ed);
 #    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
@@ -138,12 +116,47 @@ option  {
 }
 
 
+
+.ui-slider-handle {
+    cursor: default;
+    position: absolute;
+    top: 3px;    
+    width: 16px;
+    height: 16px;
+    background: -o-linear-gradient(#4B4947, #32302D);    
+    background: -moz-linear-gradient(#4B4947, #32302D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
+    box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;    
+    -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+    -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+    margin: -8px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+.ui-slider-handle:hover {
+    background: -o-linear-gradient(#6B6967, #42403D);
+    background: -moz-linear-gradient(#6B6967, #42403D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#42403D));
+    box-shadow: 0 0 4px 4px #333;
+
+  
+}
+
+
+.ui-slider-range { height: 6px; border-radius: 6px; background: #CCC; position: absolute; z-index: 0; display: block;  }
+
 .slider { 
     position: relative;
     margin: 8px 0 0 0;
     border-top: 1px solid #222;
     border-bottom: 1px solid #555;
 	  width:120px;
+	  height: 6px;
+	  top: -3px;
+	  background: #666;
+	  border-radius: 6px;
 	  float:left; 
 }
 
@@ -200,7 +213,8 @@ option  {
 	border:1px  #ddd;
   background: #333;
   color: white;
-	font-size:16px;
+  font-size:16px;
+  font-weight:bold;
 	margin:1;
 	padding:1;
 	text-align:center;

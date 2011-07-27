@@ -229,7 +229,7 @@ myApp.prototype.init = function(params) {
 //DEAD?        $("#vis").hide();
 
 //        this.loadPreset("Mercury1");
-        this.loadPreset("PtolemyMercury");
+        this.loadPreset("PtolemyMars");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
