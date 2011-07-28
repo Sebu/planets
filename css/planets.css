@@ -362,8 +362,8 @@ select:focus,
 }
 
 .wert {
-# -webkit-user-select:auto;
-# -moz-user-select:auto;  
+# -webkit-user-select:text;
+# -moz-user-select:text;  
 }
 
 #infoContainer {
