@@ -561,7 +561,7 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 Disc = function(params) {
   var color = params.color || colors["Earth"];
   THREE.Mesh.call(  this, 
-                    new THREE.SphereGeometry(params.radius,20,30), 
+                    new THREE.Sphere(params.radius,20,30), 
                     new THREE.MeshLambertMaterial({color: rgbToHex(color), shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
@@ -586,13 +586,13 @@ Translate.prototype.constructor = Translate;
 */
 sphereGeo = [
 
-                [ new THREE.SphereGeometry( 1, 32, 16 ), 0 ],
-                [ new THREE.SphereGeometry( 1, 16, 8 ), 10 ],
-                [ new THREE.SphereGeometry( 1, 8, 4 ), 20 ]
+                [ new THREE.Sphere( 1, 32, 16 ), 0 ],
+                [ new THREE.Sphere( 1, 16, 8 ), 10 ],
+                [ new THREE.Sphere( 1, 8, 4 ), 20 ]
 
 ];
 
-planetGeo = new THREE.SphereGeometry( 1 , 32, 16 );
+planetGeo = new THREE.Sphere( 1 , 32, 16 );
 
 
 /*
@@ -846,11 +846,11 @@ Cloud.prototype.constructor = Cloud;
 
 
 
-var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
+var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
-var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
-var cone = new THREE.CylinderGeometry( 10, 0.0001, 0.15, 0.4);
+var markerend = new THREE.Cylinder( 10, 0.1, 0.1, 0.01);
+var cone = new THREE.Cylinder( 10, 0.0001, 0.15, 0.4);
 //THREE.LatheGeometry([new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 )]);
 
 var aLine = new THREE.Geometry();
