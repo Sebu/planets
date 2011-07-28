@@ -118,42 +118,42 @@ myApp.prototype.init = function(params) {
             <table>\
               <thead><tr><td colspan=2 class=infoHeader>Planet</td></tr></thead>\
               <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>\
-              <tr><td>longitude</td><td id='longitude'>0</td></tr>\
-              <tr><td>longitude speed</td><td id='longitudeSpeed'>0</span></tr>\
-              <tr><td>latitude</td><td id='latitude'>0</span></tr>\
-              <tr><td>passed days</td><td id='days'>0</td></tr>\
+              <tr><td>longitude</td><td class=wert id='longitude'>0</td></tr>\
+              <tr><td>longitude speed</td><td class=wert  id='longitudeSpeed'>0</span></tr>\
+              <tr><td>latitude</td><td class=wert  id='latitude'>0</span></tr>\
+              <tr><td>passed days</td><td  class=wert  id='days'>0</td></tr>\
               </table>\
             <table id='meanLongitudeBox' style='display:none'>\
-              <tr><td>mean longitude</td><td id='meanLongitude'>0</td></tr>\
-              <tr><td>equation of time (hrs)</td><td id='equationOfTime'>0</td></tr>\
+              <tr><td>mean longitude</td><td class=wert  id='meanLongitude'>0</td></tr>\
+              <tr><td>equation of time (hrs)</td><td class=wert id='equationOfTime'>0</td></tr>\
             </table>\
             <table id='infoContainer2' style='display:none'>\
               <thead><tr><td colspan=2 class=infoHeader>Planet 2</td></tr></thead>\
-              <tr><td>angle planet/sun</td><td id='sunAngle2'>0</td></tr>\
-              <tr><td>longitude</td><td id='longitude2'>0</td></tr>\
-              <tr><td>longitude speed</td><td id='longitudeSpeed2'>0</td></tr>\
-              <tr><td>latitude</td><td id='latitude2'>0</td></tr>\
-              <tr><td>days</td><td id='days2'>0</td></tr>\
+              <tr><td>angle planet/sun</td><td class=wert id='sunAngle2'>0</td></tr>\
+              <tr><td>longitude</td><td class=wert id='longitude2'>0</td></tr>\
+              <tr><td>longitude speed</td><td class=wert id='longitudeSpeed2'>0</td></tr>\
+              <tr><td>latitude</td><td class=wert id='latitude2'>0</td></tr>\
+              <tr><td>days</td><td class=wert id='days2'>0</td></tr>\
             </table>\
             <table id='sunInfoContainer' style='display:none'>\
-              <tr><td>days per year</td><td id='sunDaysPerYear'>0</td></tr>\
+              <tr><td>days per year</td><td class=wert id='sunDaysPerYear'>0</td></tr>\
             </table>\
             <table id='moonInfoContainer' style='display:none'>\
               <thead><tr><td colspan=2 class=infoHeader></td></tr></thead>\
-              <tr><td>zodiacal months</td><td id='metonZodicalMonths'>0</td></tr>\
-              <tr><td>days/year</td><td id='metonDaysPerYear'>0</td></tr>\
-              <tr><td>days/synodic month</td><td id='synodicDaysPerMonth'>0</td></tr>\
-              <tr><td>days/zodical month</td><td id='zodicalDaysPerMonth'>0</td></tr>\
-              <tr><td>days/draconitic month</td><td id='draconiticDaysPerMonth'>0</td></tr>\
+              <tr><td>zodiacal months</td><td class=wert  id='metonZodicalMonths'>0</td></tr>\
+              <tr><td>days/year</td><td class=wert id='metonDaysPerYear'>0</td></tr>\
+              <tr><td>days/synodic month</td><td class=wert id='synodicDaysPerMonth'>0</td></tr>\
+              <tr><td>days/zodical month</td><td class=wert id='zodicalDaysPerMonth'>0</td></tr>\
+              <tr><td>days/draconitic month</td><td class=wert id='draconiticDaysPerMonth'>0</td></tr>\
             </table>\
             <table id='ptolemyInfoContainer' style='display:none'>\
               <thead><tr><td colspan=2 class=infoHeader></td></tr></thead>\
-              <tr><td>apsidal</td><td id='apsidalLongitude'>0</td></tr>\
-              <tr><td>epicycle</td><td id='epicycleLongitude'>0</td></tr>\
-              <tr><td>longitude deferent</td><td id='deferentLongitude'>0</td></tr>\
-              <tr><td>gregorian date</td><td id='gregorianDate'>0</td></tr>\
-              <tr><td>julian date</td><td id='julianDate'>0</td></tr>\
-              <tr><td>egyptian date</td><td id='egyptianDate'>0</td></tr>\
+              <tr><td>apsidal</td><td class=wert id='apsidalLongitude'>0</td></tr>\
+              <tr><td>epicycle</td><td class=wert id='epicycleLongitude'>0</td></tr>\
+              <tr><td>longitude deferent</td><td class=wert id='deferentLongitude'>0</td></tr>\
+              <tr><td>gregorian date</td><td class=wert id='gregorianDate'>0</td></tr>\
+              <tr><td>julian date</td><td class=wert id='julianDate'>0</td></tr>\
+              <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>\
             </table>\
             <div id='legendContainer'></div>\
              </div>").appendTo(this.domRoot);

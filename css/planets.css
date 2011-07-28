@@ -362,11 +362,8 @@ select:focus,
 }
 
 .wert {
-#  float: right;
-  width: 100px;
-  text-align: right;
-# -webkit-user-select:auto;
-# -moz-user-select:auto;  
+ -webkit-user-select:auto;
+ -moz-user-select:auto;  
 }
 
 #infoContainer {
