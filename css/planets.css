@@ -109,6 +109,7 @@ option  {
 
 
 .caption { 
+#  padding: 6px;
 	font-weight: bold;
 	font-size:14px;
 }
@@ -163,6 +164,7 @@ option  {
     border-radius: 3px;
 	  float:left; 
 }
+
 
 .sliderBox {
   overflow: hidden;
@@ -275,8 +277,8 @@ select:focus,
   z-index: 3;
   position: absolute;
   color: white;
-  background-color: rgba(150,150,150,0.5);
-#  background: -webkit-gradient(linear, left top, right top, from(rgba(150,150,150,0.8)), to(rgba(150,150,150,0.0)));
+  background: -o-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));
+  background: -moz-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));
   background: -webkit-gradient(linear, left top, right top, from(rgba(0,0,0,0.8)), to(rgba(0,0,0,0.0)));    
 
 	font-weight: bold;
@@ -343,7 +345,7 @@ select:focus,
 
 .menu { 
   color: white;
-	font-size: 16px;
+	font-size: 20px;
   float: left; 
   position: relative;
 }

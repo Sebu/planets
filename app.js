@@ -220,7 +220,7 @@ myApp.prototype.init = function(params) {
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
 
-        presetBox.append("<span><select title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
+        presetBox.append("<span><select class='chzn-select' title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
 
         uiBox.append("<div id='view'></div>");
@@ -548,7 +548,7 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // view div
-        $("<select  title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select>").appendTo("#vis");
+        $("<span><select  class='chzn-select' title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select></span>").appendTo("#vis");
         UI.optionsFromHash("#viewPresets", model.viewPresets);
 
         $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#vis");
