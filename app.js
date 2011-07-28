@@ -296,7 +296,7 @@ myApp.prototype.setCurrentScene = function(scene) {
     };
 
 myApp.prototype.updateInfoBox = function() {
-
+/*
         if(model instanceof ModelSun) {
           this.info.longitude.innerText = model.planet.longitude.toFixed(6);
           this.info.meanLongitude.innerText = model.getMeanLongitude().toFixed(6);
@@ -331,7 +331,8 @@ myApp.prototype.updateInfoBox = function() {
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));
         }
        if(model.sun.getEnabled()) this.info.sunAngle.innerText = model.planet.sunAngle.toFixed(1);
-       this.info.days.innerText = Utils.daysToTime(model.getDays());        
+       this.info.days.innerText = Utils.daysToTime(model.getDays());      
+*/  
 }
 // update loop
 myApp.prototype.update = function(time) {
