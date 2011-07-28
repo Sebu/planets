@@ -8,6 +8,7 @@ ModelPtolemy = function(params) {
     ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/11.0;
     
+    this.sphere[4].anchor.eulerOrder = "ZXY";  
     
     this.updateSunDist = function() {
       var dist = (this.sphere[3].radius-this.sphere[4].radius-this.sphere[3].equant)*this.factor;  
@@ -29,8 +30,8 @@ ModelPtolemy = function(params) {
       lambdaD = lambdaCA + lambdaAN,
       j = degToRad(this.getDeviation()) * Math.sin( lambdaD );
 
+      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaD);  
 
-      console.log(this.sphere[3].getRotateAngle());
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
 
@@ -41,6 +42,7 @@ ModelPtolemy = function(params) {
       // bobbing motion
       this.sphere[4].rotation.y = earthDelta;
       this.sphere[4].anchor.rotation.x =  j;
+      this.sphere[4].anchor.rotation.z =  degToRad(this.ptolemySphere.inclination); 
       
       // mean anomaly correction
       this.sphere[4].anchor.rotation.y += (-earthDelta + defDelta);

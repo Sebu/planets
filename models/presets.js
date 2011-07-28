@@ -483,8 +483,10 @@ PtolemyMars: {
   epicycleRadius: "39;30",
   apsidalAngle: "106;40",
   equant: "6;0",
-  inclination: "1",
+//  inclination: "31",
+ inclination: "1",
   deviation: "2;15",
+//  lambdaAN:  "106;40", 
   lambdaAN: "85;30",
 //  mean
   sphere: [

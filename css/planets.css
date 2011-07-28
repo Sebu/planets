@@ -238,8 +238,8 @@ option  {
 	border:1px  #ddd;
   background: #333;
   color: white;
-
-	font-size:14px;
+  font-size:16px;
+  font-weight:bold;
 	margin:1;
 #	text-align:center;
 	width:140px;

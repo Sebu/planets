@@ -774,7 +774,7 @@ myApp.prototype.loadPreset = function(preset) {
 
             UI.box({id:"epicycle", text:"Epicycle"}).appendTo("#parameters");
             UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
-//            UI.slider({model:model, id:"Speed3", max:1100, step:0.0001, text:"Speed (days)"}).appendTo("#epicycle");
+            UI.slider({model:model, id:"LambdaAN", max:360, step:0.1}).appendTo("#angle");
 //            UI.slider({model:model.sphere[3], id:"RotateAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[4], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
