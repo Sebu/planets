@@ -371,7 +371,7 @@ select:focus,
 
 #infoContainer {
   position: absolute;
-  width: 200px;
+  width: 240px;
   top: 0px;
   right: 0px; 
   font-size: 12px;
@@ -391,7 +391,7 @@ select:focus,
 }
 
 #infoContainer td {
-  width: 110px;
+  width: 120px;
   text-align: right;
   vertical-align: bottom;
 #  -webkit-user-select:auto;

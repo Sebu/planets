@@ -43,7 +43,7 @@ Utils.dateToStringEgypt = function(date) {
 
 Utils.dateToString = function(date) {
 //  if (date[0]<1) date[0] += 1;
-  return "" + date[1] + " / " + date[2] + " / " + date[0] + "";
+  return "" + date[1] + " / " + date[2] + " / " + date[0] + " 00:00";
 }
 
 Utils.leapJulian = function(year) {
