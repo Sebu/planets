@@ -569,7 +569,7 @@ myApp.prototype.loadPreset = function(preset) {
         // playback div       
         UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
 
-        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"length of a year in seconds"}).appendTo("#playbackBox");
+        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"duration of a year in seconds"}).appendTo("#playbackBox");
 
         $("#playbackBox").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
 
