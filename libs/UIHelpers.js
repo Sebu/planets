@@ -8,7 +8,7 @@ var UI = {
             $(selector).append("<option value='" + i + "'>" + caption + "</option>");
         }
     },
-/*
+//*
     box : function(params) {
         var id = params.id;
         var text = params.element || params.text || params.id;
