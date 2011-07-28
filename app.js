@@ -121,7 +121,7 @@ myApp.prototype.init = function(params) {
               <tr><td>longitude</td><td id='longitude'>0</td></tr>\
               <tr><td>longitude speed</td><td id='longitudeSpeed'>0</span></tr>\
               <tr><td>latitude</td><td id='latitude'>0</span></tr>\
-              <tr><td>days</td><td id='days'>0</td></tr>\
+              <tr><td>passed days</td><td id='days'>0</td></tr>\
               </table>\
             <table id='meanLongitudeBox' style='display:none'>\
               <tr><td>mean longitude</td><td id='meanLongitude'>0</td></tr>\

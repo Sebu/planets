@@ -96,7 +96,7 @@ var UI = {
         $(".slider",ele).slider({slide:change, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
         $("input",ele).bind("change",change2);
 //        $(".slider",ele).bind("slidechange",change);
-         if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
+//         if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
          if(toggle) $(":checkbox",tmp).bind("click", function() 
           { 
             $("#" + id + " > input").attr('disabled', !this.checked);
