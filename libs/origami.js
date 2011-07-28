@@ -144,6 +144,7 @@ Ori.Input.prototype = {
   mouseDown : function(e) {
     if(e.button == 0) Ori.input.mouse.b1 = true;
     Ori.input.drag = {x: e.clientX, y: e.clientY};
+    
   },
 
   mouseUp : function(e) {
