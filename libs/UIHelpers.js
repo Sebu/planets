@@ -8,12 +8,14 @@ var UI = {
             $(selector).append("<option value='" + i + "'>" + caption + "</option>");
         }
     },
-/*
+//*
     box : function(params) {
         var id = params.id;
         var text = params.element || params.text || params.id;
-        return $("<div class=menu><div class='caption' id='cap" +id+ "'>" +
-                text + "</div><div class='boxContent' id='" + id + "'></div></div>");
+        ele = $("<div class=menu><div class='caption' id='cap" +id+ "'>" +
+                "</div><div class='boxContent' id='" + id + "'></div></div>");
+        $("#cap" + id,ele).append(text);
+        return ele;
     },
 /*/
     box : function(params) {

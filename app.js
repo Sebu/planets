@@ -208,10 +208,11 @@ myApp.prototype.init = function(params) {
         $.extend(true, planetPresets, vault);
         
 
-        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
+//        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
+        UI.box({id:"presetBox", element: presetsEle}).appendTo(uiBox);
         var presetBox = $("#presetBox");
+//        presetBox.append(presetsEle);
 
-        presetBox.append(presetsEle);
         UI.optionsFromHash("#planetPreset", planetPresets);
         
         //$(".chzn-select").chosen();

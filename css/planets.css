@@ -90,16 +90,22 @@ a { color: #FC0; cursor: pointer; }
 
 select {
   text-overflow: ellipsis;
-  color: white;
+  color: black;
+  
   border: 0;
   padding: 1px 10px;
   font-weight: bold;
 #  border-radius: 4px;
-  background: black;
+  background: white;
 #   background: -webkit-gradient(linear, left top, left bottom, from(rgba(95, 93, 91, 0.5)), to(rgba(70,78,75, 0.5)));
 #  background: -o-linear-gradient(#4d90fe, #4787ed);  
 #  background: -moz-linear-gradient(#4d90fe, #4787ed);
-  background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
+#  background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
+}
+
+.menu:hover select {
+  color: black;
+  background: #DDD;
 }
 
 option  {
@@ -109,9 +115,9 @@ option  {
 
 
 .caption { 
-#  padding: 6px;
-	font-weight: bold;
-	font-size:14px;
+  padding: 6px;
+#	font-weight: bold;
+#	font-size:14px;
 }
 
 
@@ -328,10 +334,10 @@ select:focus,
 #uiContainer {
 #  overflow: auto;
   padding: 0;
-  width: 190px;
-#  width: 100%;
-  top: 10px;
-  left: 10px;
+#  width: 190px;
+  width: 100%;
+  top: 0px;
+  left: 0px;
 #  opacity: 0.5;
 #  -webkit-transform-style: preserve-3d;
 #  -webkit-transform-origin: 0px 400px;
@@ -344,7 +350,7 @@ select:focus,
 
 
 .menu { 
-  color: white;
+  color: #DDD; 
 	font-size: 20px;
   float: left; 
   position: relative;
@@ -352,7 +358,7 @@ select:focus,
 
 .menu:hover { 
   color: black;
-  background: white;
+  background: #DDD;
 }
 
 
@@ -362,6 +368,8 @@ select:focus,
   position: absolute; 
   width: 190px;
 #  z-index: 100; 
+  background: #DDD;
+  box-shadow: none;
   display: none;  
 }
 
@@ -384,7 +392,7 @@ select:focus,
 #infoContainer {
   position: absolute;
   width: 240px;
-  top: 0px;
+  top: 30px;
   right: 0px; 
   font-size: 12px;
 #  -webkit-transform: perspective(500px) rotateY(-20deg);
