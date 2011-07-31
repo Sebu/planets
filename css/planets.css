@@ -11,7 +11,7 @@ html,body {
   -webkit-user-select:none;
   -moz-user-select:none;
   
-font-family: 'Open Sans', sans-serif;
+font-family: 'Droid Sans', sans-serif;
 # font-family: 'Josefin Sans', sans-serif;
 # font-family: 'Lekton', serif;
 
@@ -19,7 +19,8 @@ font-family: 'Open Sans', sans-serif;
   line-height:1.125em;
   
   color: #FFFFFF;
-  background: #1B1917;
+#  background: #1B1917;
+  background: #000;
 #  background: url(../textures/starsmap.jpg) no-repeat center center fixed;
 #  -webkit-background-size: cover;
 #  -moz-background-size: cover;
@@ -117,7 +118,7 @@ option  {
 .caption { 
   padding: 6px;
 #	font-weight: bold;
-#	font-size:14px;
+	font-size: 32px;
 }
 
 
@@ -303,10 +304,11 @@ select:focus,
    color: white;
 #  background-color: rgba(95, 93, 91, 0.5);
 #  background-color: rgba(70,78,75, 0.5);
-
   background: -o-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
   background: -moz-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(95, 93, 91, 0.5)), to(rgba(70,78,75, 0.5)));
+  background:  #333;
+
   box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;  
   -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
   -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
@@ -321,6 +323,7 @@ select:focus,
 #  background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
   position: relative;
   width: 100%;
+  z-index: 1;   
 #  border-radius: 5px;
    background: #272727;
    background-color: rgba(39,39,39, 0.5);
@@ -350,15 +353,18 @@ select:focus,
 
 
 .menu { 
+  font-family: "Quattrocento Sans" ,sans-serif;
   color: #DDD; 
 	font-size: 20px;
   float: left; 
   position: relative;
+  overflow: hidden;
 }
 
 .menu:hover { 
   color: black;
   background: #DDD;
+  overflow: visible;
 }
 
 
@@ -367,14 +373,17 @@ select:focus,
   overflow: none;
   position: absolute; 
   width: 190px;
-#  z-index: 100; 
   background: #DDD;
   box-shadow: none;
-  display: none;  
+#  display: none;  
+  top: -300px;
+  -webkit-transition-property: top; -webkit-transition-duration: 0.1s;   
 }
 
 .menu:hover .boxContent {
-    display: block;
+    top: 30px;
+    opacity: 1.0;   
+    
     cursor: pointer;
 }
 

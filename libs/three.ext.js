@@ -768,24 +768,30 @@ Circle.prototype = new THREE.Geometry;
 Circle.prototype.constructor = Circle;
 
 Circle.prototype.gen = function() {
+    var slices = 50,
+    arc =  this.angle / PI_SCALE,
+    beta = this.beta  / PI_SCALE,
+    theta = 0,
+    sinTheta = 0,    
+    cosTheta = 0,
+    cosPhi = Math.cos(beta),
+    sinPhi = Math.sin(beta),
+    x = 0,y = 0,z = cosPhi,
+    sliceNum = 0;
+
     this.vertices = [];
     this.colors = [];
-
-    var slices = 50;//Math.abs(Math.round(this.angle/5));
-    var arc = (this.angle / 180.0) * Math.PI;
-    var beta = (this.beta / 180) * Math.PI;
-    var cosPhi = Math.cos(beta);
-    var sinPhi = Math.sin(beta);
-    var x = 0,y = 0,z = cosPhi;
-    for (var sliceNum = 0; sliceNum <= slices; sliceNum++) {
-        var theta = sliceNum * arc / slices;
-        var sinTheta = Math.sin(theta);
-        var cosTheta = Math.cos(theta);
+    
+    for (sliceNum = 0; sliceNum <= slices; sliceNum++) {
+        theta = sliceNum * arc / slices;
+        sinTheta = Math.sin(theta);
+        cosTheta = Math.cos(theta);
 
         x = sinTheta * sinPhi;
         y = cosTheta * sinPhi;
 
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
+        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x*1.01, y*1.01, z ) ) );        
         if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
               color.setHSV( 0.5, 0.0, 1.0 - 0.7 * (sliceNum / slices) );
@@ -956,7 +962,9 @@ Spherical = function Spherical(params) {
     this.addNode(this.gfx.arc2);
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
-    this.gfx.equator = new THREE.Line(equator, this.material );
+    eqMat = new THREE.LineBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), opacity: 0.8, color: rgbToHex(this.gfx.color) } );
+    this.gfx.equator = new THREE.Ribbon(equator, eqMat );
+    this.gfx.equator.doubleSided = true;
     this.gfx.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.gfx.equator.rotation.x = Math.PI/2;
     this.anchor.addNode(this.gfx.equator);

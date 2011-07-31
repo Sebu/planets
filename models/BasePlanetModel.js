@@ -147,7 +147,7 @@ ModelBase.prototype = {
         }
 
         // add Sun and sun spheres
-        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: {r:0.2, g:0.2, b:1.0}}));
+        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));
 
 
         

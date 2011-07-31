@@ -19,7 +19,7 @@ myApp.prototype.init = function(params) {
         // create canvas (WebGL if possible)
 //        this.canvas = new Ori.Canvas({antialias: true})
         this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true });
-        if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x1B1917 );
+        if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 ); //0x1B1917 );
         
                 // append to DOM
         if(this.canvas) {
@@ -80,8 +80,8 @@ myApp.prototype.init = function(params) {
 
         
 // SKY SPHERE
-/*
-				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
+//*
+				var mesh = new THREE.Mesh( new THREE.Sphere( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );
 //*/	
@@ -182,6 +182,7 @@ myApp.prototype.init = function(params) {
             egyptianDate : document.getElementById("egyptianDate")
           };  
 
+          console.log(this.info.days);
          
         
 //        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
@@ -299,7 +300,7 @@ myApp.prototype.setCurrentScene = function(scene) {
 myApp.prototype.updateInfoBox = function() {
 //*
         if(model instanceof ModelSun) {
-          this.info.longitude.innerText = model.planet.longitude.toFixed(6);
+          this.info.longitude.innerHTML = model.planet.longitude.toFixed(6);
           this.info.meanLongitude.innerText = model.getMeanLongitude().toFixed(6);
           this.info.equationOfTime.innerText = model.getEquationOfTime().toFixed(6);
           this.info.longitudeSpeed.innerText = model.planet.longitudeSpeed.toFixed(11);
@@ -761,27 +762,30 @@ myApp.prototype.loadPreset = function(preset) {
            planetLabel2.setText("Sun");       
 
 //*
-            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.box({id:"apsidal", text:"Apsidal line"}).appendTo("#parameters");
+           UI.box({id:"daily"}).appendTo("#parameters");
+           UI.checkbox({model:model, id:"Speed1", text:"movement"}).appendTo("#daily");           
+
+           UI.box({id:"ecliptic"}).appendTo("#parameters");
+           UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity"}).appendTo("#ecliptic");
+           
+            UI.box({id:"apsidal"}).appendTo("#parameters");
             UI.slider({model:model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
-            UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#apsidal");
             UI.slider({model:model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+
 //            UI.slider({model:model.sphere[2], id: "OffsetRotateAngle", max: 360, step:0.05, text: "Apsidal"}).appendTo("#angle");
 
-            UI.box({id:"deferent", text:"Deferent"}).appendTo("#parameters");
+            UI.box({id:"deferent"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
-            UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "Radius"}).appendTo("#deferent");
+            UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "radius"}).appendTo("#deferent");
+            UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#deferent");            
 //            UI.slider({model:model, id:"Speed2", max:20100, step:0.0001, text:"Speed (days)"}).appendTo("#deferent");
 
-            UI.box({id:"epicycle", text:"Epicycle"}).appendTo("#parameters");
-            UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "Radius"}).appendTo("#epicycle");
-            UI.slider({model:model, id:"LambdaAN", max:360, step:0.1}).appendTo("#angle");
+            UI.box({id:"epicycle"}).appendTo("#parameters");
+            UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[3], id:"RotateAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[4], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
-            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
+
 
             UI.text({model:model, id:"Date"}).appendTo("#playbackBox");
 

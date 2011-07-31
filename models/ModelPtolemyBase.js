@@ -19,7 +19,7 @@ ModelPtolemyBase = function(params) {
 
     this.realSunS = [];
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: colors["S2"]});
-    var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S3"]});
+    var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S2"]});
 
     this.realSun = new Planet({ glow: true, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
     this.realSun.setBeta(90.0);
@@ -37,11 +37,11 @@ ModelPtolemyBase = function(params) {
     this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
 
 
-    var material = new THREE.LineBasicMaterial( {  color: "0xFFAAFF" });
+    var material = new THREE.LineBasicMaterial( {  color: rgbToHex(colors["S2"]) });
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
-//    this.sphere[3].anchor.addNode(this.equator);
+    this.sphere[3].anchor.addNode(this.equator);
 
 
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
