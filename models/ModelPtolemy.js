@@ -8,7 +8,8 @@ ModelPtolemy = function(params) {
     ModelPtolemyBase.call(this, params);	
     this.factor = 1.0/11.0;
     
-    this.sphere[4].anchor.eulerOrder = "ZXY";  
+    this.sphere[4].anchor.eulerOrder = "XYZ";  
+    this.sphere[4].ptolemy.eulerOrder = "YXZ";  
     
     this.updateSunDist = function() {
       var dist = (this.sphere[3].radius-this.sphere[4].radius-this.sphere[3].equant)*this.factor;  
@@ -28,9 +29,9 @@ ModelPtolemy = function(params) {
       earthDelta = Math.asin((-this.sphere[3].equant/this.sphere[3].radius) * Math.sin(lambdaMA)),
       lambdaCA = lambdaMA - defDelta - earthDelta,
       lambdaD = lambdaCA + lambdaAN,
-      j = degToRad(this.getDeviation()) * Math.sin( lambdaD );
+      j = degToRad(this.getDeviation()) * Math.sin( lambdaD  );
 
-      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaD);  
+//      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaD);  
 
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
@@ -40,12 +41,16 @@ ModelPtolemy = function(params) {
       this.ptolemySphere.anchor.rotation.y -= lambdaN;
 
       // bobbing motion
-      this.sphere[4].rotation.y = earthDelta;
-      this.sphere[4].anchor.rotation.x =  j;
-      this.sphere[4].anchor.rotation.z =  degToRad(this.ptolemySphere.inclination); 
+      this.sphere[4].rotation.y = -lambdaMA  + defDelta + Math.PI/2; // - lambdaN; //earthDelta;
+      this.sphere[4].rotation.z =  degToRad(this.ptolemySphere.inclination);
+      
+      this.sphere[4].ptolemy.rotation.y =  lambdaMA - defDelta - Math.PI/2 + earthDelta;
+//      this.sphere[4].anchor.rotation.x = j;
+//      this.sphere[4].anchor.rotation.x =  degToRad(this.ptolemySphere.inclination);
+//      this.sphere[4].anchor.rotation.z =  degToRad(this.ptolemySphere.inclination); 
       
       // mean anomaly correction
-      this.sphere[4].anchor.rotation.y += (-earthDelta + defDelta);
+      this.sphere[4].anchor.rotation.y += - earthDelta + defDelta;
 
     }
     

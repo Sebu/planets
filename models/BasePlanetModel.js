@@ -170,7 +170,13 @@ ModelBase.prototype = {
       
       this.sphere[1].anchor.addNode(this.ptolemySphere);
       this.ptolemySphere.anchor.addNode(this.sphere[2]);
-      this.ptolemySphere.addNode(this.ecliptic);      
+      this.ptolemySphere.addNode(this.ecliptic);
+      
+      
+      this.sphere[4].removeChild(this.sphere[4].anchor);
+      this.sphere[4].ptolemy =  new Node(); 
+      this.sphere[4].addNode(this.sphere[4].ptolemy);      
+      this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 
       
     },
     

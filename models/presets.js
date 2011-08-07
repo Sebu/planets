@@ -466,7 +466,37 @@ PtolemyMoon3: {
     {AxisAngle: 0.0, Step: "12;11,26,41,20,17,59", RotateStart:  "70;37" },
     {AxisAngle: 0.0, Step: "13;03,53,56,17,51,59", RotateStart: "268;49" }
   ] },  
-        
+
+
+PtolemyMars2: { 
+  caption: "Ptolemy Mars",
+  model: "ModelPtolemy",
+  ui: "ModelPtolemy",
+  label: "Mars",
+  showStars: false,
+  showHippo: false,
+  showSun: false,  
+  sunDist: 1.7,
+  centuryStep: 1,  
+  baseRadius: "0.0",  
+  derefentRadius: "60;0",
+  epicycleRadius: "39;30",
+  apsidalAngle: "106;40",
+  equant: "6;0",
+//  inclination: "31",
+ inclination: "1",
+  deviation: "2;15",
+//  lambdaAN:  "106;40", 
+  lambdaAN: "85;30",
+//  mean
+  sphere: [
+    {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },
+    {AxisAngle: 0.0, Step: "0;31,26,36,53,51,33",  RotateStart: "3;32" },
+//    {AxisAngle: 0.0, Step: "0", RotateStart: "0" }    
+    {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
+  ] },
+          
 PtolemyMars: { 
   caption: "Ptolemy Mars",
   model: "ModelPtolemy",

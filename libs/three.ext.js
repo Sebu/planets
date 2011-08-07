@@ -807,7 +807,7 @@ Circle.prototype.gen = function() {
         y = cosTheta * sinPhi;
 
         this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
-        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x*1.01, y*1.01, z ) ) );        
+//        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x*1.01, y*1.01, z ) ) );        
         if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
               color.setHSV( 0.5, 0.0, 1.0 - 0.7 * (sliceNum / slices) );
@@ -979,7 +979,7 @@ Spherical = function Spherical(params) {
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
     eqMat = new THREE.LineBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), opacity: 0.8, color: rgbToHex(this.gfx.color) } );
-    this.gfx.equator = new THREE.Ribbon(equator, eqMat );
+    this.gfx.equator = new THREE.Line(equator, eqMat );
     this.gfx.equator.doubleSided = true;
     this.gfx.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.gfx.equator.rotation.x = Math.PI/2;
