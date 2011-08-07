@@ -9,16 +9,22 @@ function mod(a, b)
     return a - (b * Math.floor(a / b));
 }
 
-Utils.daysToTime = function(days) {
+Utils.daysFraction = function(days) {
   var fullDays = Math.floor(days),
   rest = days - fullDays,
   hours = Math.floor(rest/(1/24)),
   rest = rest - hours*(1/24),
   minutes = Math.floor( rest/(1/1440) );
-  
-  if(hours < 10) hours = "0" + hours;
-  if(minutes < 10) minutes = "0" + minutes;
-  return "" + fullDays + "d " + hours + "h " + minutes + "m";
+  return [hours, minutes];
+}
+
+Utils.daysToTime = function(days) {
+  var fullDays = Math.floor(days),
+  data = Utils.daysFraction(days);
+
+  if(data[0] < 10) data[0] = "0" + data[0];
+  if(data[1] < 10) data[1] = "0" + data[1];
+  return "" + fullDays + "d " + data[0] + "h " + data[1] + "m";
   
   
 
@@ -37,13 +43,16 @@ Utils.EgyptNames = ["Toth", "Phaophi", "Athyr", "Choiak", "Tybi", "Mechir", "Pha
 , "Pachon", "Payni", "Epiphi", "Mesore", "Epagomenal"];  
 
 Utils.dateToStringEgypt = function(date) {
-  return "" + date[2] + " " + Utils.EgyptNames[date[1]-1] + "  " + date[0] + "";
+  if(date[3] < 10) date[3] = "0" + date[3];
+  if(date[4] < 10) date[4] = "0" + date[4];
+  return "" + date[2] + " " + Utils.EgyptNames[date[1]-1] + "  " + date[0] + " " + date[3] + ":" + date[4];
 }
 
 
 Utils.dateToString = function(date) {
-//  if (date[0]<1) date[0] += 1;
-  return "" + date[1] + " / " + date[2] + " / " + date[0] + " 00:00";
+  if(date[3] < 10) date[3] = "0" + date[3];
+  if(date[4] < 10) date[4] = "0" + date[4];
+  return "" + date[1] + " / " + date[2] + " / " + date[0] + " " + date[3] + ":" + date[4];
 }
 
 Utils.leapJulian = function(year) {
@@ -56,10 +65,10 @@ Utils.leapGregorian = function(year) {
 }
 
 Utils.jdToEgyptian = function(jd) {
-    var z, a, b, year, month, day;
+    var z, a, b, year, month, day, hour, minute;
 
 //    jd += 0.5;
-    z = Math.floor(jd + 0.5) - 1448638;
+    z = Math.floor(jd) - 1448638;
 
     year = Math.floor(z / 365);
     a = Math.floor(365 * year);
@@ -67,7 +76,9 @@ Utils.jdToEgyptian = function(jd) {
     b = Math.floor(30 * month);
     day = (z - a - b);
 
-    return new Array(year+1, month+1, day+1);
+    var data = Utils.daysFraction(jd);
+     
+    return new Array(year+1, month+1, day+1, data[0], data[0]);
 }
 
 Utils.gregorianToJd =function(year, month, day) {
@@ -99,7 +110,8 @@ Utils.magicToJd = function(year, month, day) {
 
 Utils.jdToGregorian = function(jd) {
     var wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad,
-        yindex, dyindex, year, yearday, leapadj;
+        yindex, dyindex, year, yearday, leapadj, hour, minute;
+
 
     wjd = Math.floor(jd - 0.5) + 0.5;
     depoch = wjd - Utils.GREGORIAN_EPOCH;
@@ -122,11 +134,14 @@ Utils.jdToGregorian = function(jd) {
     month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
     day = (wjd - Utils.gregorianToJd(year, month, 1)) + 1;
 
-    return new Array(year, month, day);
+    var data = Utils.daysFraction(jd);
+   
+    return new Array(year, month, day, data[0], data[1]);
+//    return new Array(year, month, day);
 }
 
 Utils.jdToJulian = function(td) {
-    var z, a, alpha, b, c, d, e, year, month, day;
+    var z, a, alpha, b, c, d, e, year, month, day, hour, minute;
 
     td += 0.5;
     z = Math.floor(td);
@@ -148,8 +163,9 @@ Utils.jdToJulian = function(td) {
 //    if (year < 1) {
 //        year--;
 //    }
-
-    return new Array(year, month, day);
+    var data = Utils.daysFraction(td);
+   
+    return new Array(year, month, day, data[0], data[1]);
 }
 
 Utils.julianToJd = function(year, month, day) {

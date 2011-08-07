@@ -21,7 +21,7 @@ myApp.prototype.init = function(params) {
         this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true });
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 ); //0x1B1917 );
         
-                // append to DOM
+                //home/seb/git/topoi/dev.html// append to DOM
         if(this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
@@ -80,7 +80,7 @@ myApp.prototype.init = function(params) {
 
         
 // SKY SPHERE
-//*
+/*
 				var mesh = new THREE.Mesh( new THREE.Sphere( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );

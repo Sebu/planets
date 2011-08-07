@@ -3,6 +3,19 @@ S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 ro
 BRiOhgY9FB
 
 
+The user should also have the raw Julian date (with fractions).
+The time for the common Julian date will be the same as the Gregorian.
+The time for the Egyptian will be 12 hours off.
+
+For the inner planets, remember that the second wheel is on line through the center of the epicycle that is parallel to the ecliptic.  The second diameter in the outer planet model is always parallel to the ecliptic
+
+Once you've put in the tilted deferent for the outer planets, keep in mind that the second diameter (perpendicular to the line from the earth) is kept parallel to the ecliptic.
+
+It does not appear that the times have been put in anyway, so that this message is probably unimportant.
+
+
+
+
              s2          r-r-r-r-t   
 day(S1) -- ecliptic --  latitud0r/apsidal/equant/--   -- base -- deferent -- epicycle -- planet
             -- sun
