@@ -516,7 +516,7 @@ PtolemyMars: {
  inclination: "1",
   deviation: "2;15",
 //  lambdaAN:  "106;40", 
-  lambdaAN: "85;30",
+  lambdaAN: "90;0",
 //  mean
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
@@ -569,7 +569,7 @@ PtolemySaturn: {
   equant: "3;25",
   inclination: "2;30",
   deviation: "4;30",
-  lambdaAN: "133",
+  lambdaAN: "138",
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },   
@@ -677,9 +677,9 @@ var TestPairs = {
   },
 
   PtolemyMoon3: {
-    d1: { date: "6.5.133", longitude: "217;48", latitude: "-0;50,53" },  
-    d2: { date: "20.10.134", longitude: "19;42", latitude: "-0;01,38" },
-    d3: { date: "6.3.136", longitude: "169;01", latitude: "-0;19,28" }
+    d1: { date: "6.5.133", longitude: "217;48", latitude: "-0.848" },  
+    d2: { date: "20.10.134", longitude: "19;42", latitude: "-0.027222222" },
+    d3: { date: "6.3.136", longitude: "169;01", latitude: "-0.324444444" }
   },
     
   PtolemyMars: {
@@ -699,7 +699,7 @@ var TestPairs = {
   PtolemySaturn: {
     d1: { date: "26.3.127", longitude: "181;13", latitude: "3;01,26" },
     d2: {  date: "3.6.133", longitude: "249;40", latitude: "1;11,50" },
-    d3: {  date: "8.7.136", longitude: "284;14", latitude: "-0;35,56" },
+    d3: {  date: "8.7.136", longitude: "284;14", latitude: "-0.59" },
     d4: { date: "16.7.153", longitude: "141;10,49", latitude: "1;39,29" }    
     
   },

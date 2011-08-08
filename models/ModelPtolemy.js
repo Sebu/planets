@@ -29,9 +29,9 @@ ModelPtolemy = function(params) {
       earthDelta = Math.asin((-this.sphere[3].equant/this.sphere[3].radius) * Math.sin(lambdaMA)),
       lambdaCA = lambdaMA - defDelta - earthDelta,
       lambdaD = lambdaCA + lambdaAN,
-      j = degToRad(this.getDeviation()) * Math.sin( lambdaD  );
+      j = degToRad(this.getDeviation()) * Math.sin( lambdaD );
 
-//      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaD);  
+      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA );  
 
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
@@ -41,13 +41,11 @@ ModelPtolemy = function(params) {
       this.ptolemySphere.anchor.rotation.y -= lambdaN;
 
       // bobbing motion
-      this.sphere[4].rotation.y = -lambdaMA  + defDelta + Math.PI/2; // - lambdaN; //earthDelta;
-      this.sphere[4].rotation.z =  degToRad(this.ptolemySphere.inclination);
+      this.sphere[4].rotation.y = earthDelta;
+      this.sphere[4].rotation.z = k; //degToRad(this.ptolemySphere.inclination);
       
-      this.sphere[4].ptolemy.rotation.y =  lambdaMA - defDelta - Math.PI/2 + earthDelta;
-//      this.sphere[4].anchor.rotation.x = j;
-//      this.sphere[4].anchor.rotation.x =  degToRad(this.ptolemySphere.inclination);
-//      this.sphere[4].anchor.rotation.z =  degToRad(this.ptolemySphere.inclination); 
+//      this.sphere[4].ptolemy.rotation.y = lambdaMA - Math.PI/2;
+      this.sphere[4].anchor.rotation.x = j;
       
       // mean anomaly correction
       this.sphere[4].anchor.rotation.y += - earthDelta + defDelta;
