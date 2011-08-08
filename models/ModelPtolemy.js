@@ -42,9 +42,8 @@ ModelPtolemy = function(params) {
 
       // bobbing motion
       this.sphere[4].rotation.y = earthDelta;
-      this.sphere[4].rotation.z = k; //degToRad(this.ptolemySphere.inclination);
+      this.sphere[4].rotation.z = k;
       
-//      this.sphere[4].ptolemy.rotation.y = lambdaMA - Math.PI/2;
       this.sphere[4].anchor.rotation.x = j;
       
       // mean anomaly correction
@@ -64,27 +63,41 @@ ModelPtolemyInferior = function(params) {
     ModelPtolemy.call(this, params);
 
     this.sphere[4].anchor.eulerOrder = "XZY";    
+    this.sphere[4].ptolemy.eulerOrder = "YXZ";  
 
     this.adjustAnomaly = function() {
       var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
       lambdaMA = this.sphere[3].getRotateAngle()/PI_SCALE - lambdaA,
       defDelta = Math.asin(((this.sphere[3].equant/2)/this.sphere[3].radius) * Math.sin(lambdaMA)),
       lambdaAN = this.lambdaAN/PI_SCALE,
+      lambdaN = lambdaA - lambdaAN,
       lambdaCA = lambdaMA,
       lambdaD = lambdaCA + lambdaAN,
       i = degToRad(this.ptolemySphere.inclination) * Math.sin( lambdaD ),
       j = degToRad(this.getDeviation()) * Math.sin( lambdaD + Math.PI/2 ),
       k = degToRad(this.getKM()) * Math.sin( lambdaD );      
       
-      // bobbing motion
-      this.ptolemySphere.pivot.rotation.z =  i;
-      this.sphere[4].anchor.rotation.x =  j;
-      this.sphere[4].anchor.rotation.z =  -k;      
+      var  k1 = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA ); 
+
+
+
       
       // base & deferent motion
       this.sphere[2].anchor.rotation.y = -lambdaMA;
       this.sphere[3].anchor.rotation.y = 2*lambdaMA;
-      
+
+      // inclination correction
+      this.ptolemySphere.pivot.rotation.y = lambdaN;
+      this.ptolemySphere.anchor.rotation.y -= lambdaN;
+      this.ptolemySphere.pivot.rotation.z =  i;
+
+      // bobbing motion
+      this.sphere[4].rotation.z = k;
+
+      // bobbing motion
+
+      this.sphere[4].anchor.rotation.x = -j;
+
       // mean anomaly correction
       this.sphere[4].anchor.rotation.y -= defDelta;
       

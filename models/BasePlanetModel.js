@@ -363,7 +363,7 @@ ModelBase.prototype = {
             for (i in model.updateList) {
                 model.updateList[i].updateMovement(this.dayDelta);
             }
-            this.wd += this.dayDelta*13.2293;
+            this.wd += this.dayDelta*0.05; //13.2293;
             this.adjustAnomaly();        
             // OTHER
             // days determined by sun speed
@@ -391,7 +391,7 @@ ModelBase.prototype = {
         for (i in model.updateList) {
            model.updateList[i].updateMovement(this.dayDelta);
         }
-      this.wd += this.dayDelta*13.2293;
+      this.wd += this.dayDelta*0.05;//13.2293;
       this.adjustAnomaly(); 
       this.updateMetadata();
 //      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
