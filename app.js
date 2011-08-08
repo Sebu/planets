@@ -152,7 +152,7 @@ myApp.prototype.init = function(params) {
               <tr><td>epicycle</td><td class=wert id='epicycleLongitude'>0</td></tr>\
               <tr><td>longitude deferent</td><td class=wert id='deferentLongitude'>0</td></tr>\
               <tr><td>gregorian date</td><td class=wert id='gregorianDate'>0</td></tr>\
-              <tr><td>julian date</td><td class=wert id='julianDate'>0</td></tr>\
+              <tr><td>julian days</td><td class=wert id='julianDate'>0</td></tr>\
               <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>\
             </table>\
             <div id='legendContainer'></div>\
@@ -317,7 +317,7 @@ myApp.prototype.updateInfoBox = function() {
           this.info.epicycleLongitude.innerText = Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) );
           this.info.deferentLongitude.innerText =  Utils.toSexa(model.planet.deferentLongitude);
           this.info.gregorianDate.innerText =  Utils.dateToString(Utils.jdToMagic(model.date));                           
-          this.info.julianDate.innerText =  Utils.dateToString(Utils.jdToJulian(model.date));                           
+          this.info.julianDate.innerText =  model.date.toFixed(2); //Utils.dateToString(Utils.jdToJulian(model.date));                           
           this.info.egyptianDate.innerText =  Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date));                          
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
