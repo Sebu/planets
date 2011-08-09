@@ -655,14 +655,16 @@ var TestPairs = {
   PtolemyMars: {
     d1: { date: "15.12.130", longitude: "81;0", latitude: "3;35,55" },
     d2: {  date: "21.2.135", longitude: "148;50", latitude: "3;38,39" },
-    d3: {  date: "27.5.139", longitude: "242;34", latitude: "-4;16,00" }
+    d3: {  date: "27.5.139", longitude: "242;34", latitude: "-4;16,00" },
+    d4: { date: "20.5.383", longitude: "114;50,53", latitude: "0;45,27" }      
   },
 
   
   PtolemyJupiter: {
     d1: { date: "17.5.133", longitude: "233;11", latitude: "1;15,51" },
     d2: {  date: "21.8.136", longitude: "339;15,32", latitude: "-1;55,51" },
-    d3: {  date: "8.10.137", longitude: "14;23", latitude: "-2;04,05" }
+    d3: {  date: "8.10.137", longitude: "14;23", latitude: "-2;04,05" },
+    d4: { date: "20.5.383", longitude: "269;32,21", latitude: "0;20,40" }     
 
   },
   
@@ -676,12 +678,16 @@ var TestPairs = {
 
   PtolemyVenus: {
     d1: { date: "8.3.132", longitude: "31;11", latitude: "3;08,06" },
-    d2: { date: "16.12.138", longitude: "216;48,47", latitude: "3;02,01" }
+    d2: { date: "16.12.138", longitude: "216;48,47", latitude: "3;02,01" },
+    d3: { date: "20.5.383", longitude: "34;07,21", latitude: "-0;57,54" }       
   },
   
   PtolemyMercury: {
     d1: { date: "4.6.134", longitude: "49;14,43", latitude: "-2;42,08" },
-    d2: { date: "3.10.134", longitude: "170;36,24", latitude: "1;27,42" }
+    d2: { date: "3.10.134", longitude: "170;36,24", latitude: "1;27,42" },
+    d3: { date: "21.6.253", longitude: "80;31,36", latitude: "1;13,39" },    
+    d4: { date: "14.6.283", longitude: "103;06,15", latitude: "-1;56,04" },
+    d5: { date: "20.5.383", longitude: "79;14,25", latitude: "-0;25,38" }       
   }
 
 

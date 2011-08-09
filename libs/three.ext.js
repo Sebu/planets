@@ -239,7 +239,7 @@ Utils.baseToDec = function(number, base) {
  
 
         var negative = '';
-        if (result < 0) {
+        if (number[0][0] == "-") {
             negative = '-';
         }
         result = Math.abs(result);

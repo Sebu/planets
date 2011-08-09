@@ -35,12 +35,12 @@ myApp.prototype.init = function(params) {
             colorLong = "#FFF",
             colorLat = "#FFF";
                
-            if ( (longReal - longRef) > 0.4) colorLong="#F44";        
+            if ( Math.abs(longReal - longRef) > 0.4) colorLong="#F44";        
             if ( Math.abs(latReal - latRef) >= 0.16) colorLat="#F44";      
                         
             ul.append("<tr><td style='color:" + colorLong + ";'>" + (longReal - longRef).toFixed(2)  + 
                      "</td><td style='color:" + colorLat + ";'>"  + ( latReal - latRef).toFixed(2)  + 
-                     "</td></tr>");
+                     "</td><td>"  + latRef.toFixed(2) + "</td></tr>");
             
           }
         }
