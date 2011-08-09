@@ -646,7 +646,7 @@ var TestPairs = {
     d4: { date: "25.6.140", longitude: "90", latitude: "0;0" }
   },
 
-  PtolemyMoon2: {
+  PtolemyMoon3: {
     d1: { date: "6.5.133", longitude: "217;48", latitude: "-0.848" },  
     d2: { date: "20.10.134", longitude: "19;42", latitude: "-0.027222222" },
     d3: { date: "6.3.136", longitude: "169;01", latitude: "-0.324444444" }
