@@ -459,7 +459,7 @@ PtolemyMoon3: {
   apsidalAngle: "0",
   equant: "0",
   inclination: "5",
-  lambdaAN: "310;07,53", 
+  lambdaAN: "2;15", 
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: "23;51,20", Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
@@ -600,7 +600,7 @@ PtolemyMercury: {
 //*/
 PtolemyVenus: { 
   caption: "Ptolemy Venus",
-  model: "ModelPtolemy",
+  model: "ModelPtolemyVenus",
   ui: "ModelPtolemy",
   label: "Venus",
   showStars: false,

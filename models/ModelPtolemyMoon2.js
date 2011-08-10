@@ -28,10 +28,10 @@ ModelPtolemyMoon2 = function(params) {
       this.sphere[4].anchor.rotation.y = -this.sphere[4].anchor.rotation.y;
 
       //TODO: magic??? 
-      var lambdaN = this.lambdaAN/PI_SCALE + this.wd/PI_SCALE;
+      var lambdaN = (this.lambdaAN/PI_SCALE + this.wd/PI_SCALE)  - this.sphere[2].getRotateAngle()/PI_SCALE;
       // inclination correction
       this.ptolemySphere.pivot.rotation.y = lambdaN;
-      this.ptolemySphere.anchor.rotation.y = -lambdaN;   
+      this.ptolemySphere.anchor.rotation.y = - (lambdaN + 0.15/PI_SCALE);   
 
 
       // mean anomaly correction
