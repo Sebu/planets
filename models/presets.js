@@ -434,7 +434,7 @@ PtolemyMoon2: {
   apsidalAngle: "0",
   equant: "0",
   inclination: "5",
-  lambdaAN: "310;07,53", 
+  lambdaAN: "354;15", 
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: "23;51,20", Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
@@ -453,13 +453,13 @@ PtolemyMoon3: {
   sunDist: 1.7,
   accurateMoon: true,
   centuryStep: 0,  
-  baseRadius: "12;30",
+  baseRadius: "12;29",
   derefentRadius: "60;00",
   epicycleRadius: "6;20",
   apsidalAngle: "0",
   equant: "0",
   inclination: "5",
-  lambdaAN: "2;15", 
+  lambdaAN: "336;0", 
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: "23;51,20", Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
@@ -647,9 +647,10 @@ var TestPairs = {
   },
 
   PtolemyMoon3: {
-    d1: { date: "6.5.133", longitude: "217;48", latitude: "-0.848" },  
-    d2: { date: "20.10.134", longitude: "19;42", latitude: "-0.027222222" },
-    d3: { date: "6.3.136", longitude: "169;01", latitude: "-0.324444444" }
+    d1: { date: "6.5.133", longitude: "217;48", latitude: "-0;50,53" },  
+    d2: { date: "20.10.134", longitude: "19;42", latitude: "-0;01,38" },
+    d3: { date: "6.3.136", longitude: "169;01", latitude: "-0;19,28" },
+    d4: { date: "6.4.355", longitude: "103;49,41", latitude: "-2;28,23" }
   },
     
   PtolemyMars: {

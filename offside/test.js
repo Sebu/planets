@@ -40,7 +40,8 @@ myApp.prototype.init = function(params) {
                         
             ul.append("<tr><td style='color:" + colorLong + ";'>" + (longReal - longRef).toFixed(2)  + 
                      "</td><td style='color:" + colorLat + ";'>"  + ( latReal - latRef).toFixed(2)  + 
-                     "</td><td>"  + latRef.toFixed(2) + "</td></tr>");
+//                     "</td><td>"  + latRef.toFixed(2) +
+                     "</td></tr>");                     
             
           }
         }

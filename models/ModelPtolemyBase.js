@@ -175,7 +175,7 @@ ModelPtolemyBase = function(params) {
 
     this.setEquant = function(value) {
       this.sphere[3].equant = value;
-      this.equantPoint.position.z = this.sphere[3].equant*this.factor*2;
+      this.equantPoint.position.z = this.sphere[3].equant*this.factor/2;
       this.sphere[2].anchor.position.z = this.sphere[3].equant*this.factor;
       
             
