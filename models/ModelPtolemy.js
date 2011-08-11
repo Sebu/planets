@@ -125,7 +125,7 @@ ModelPtolemyInferior = function(params) {
       lambdaMA = this.sphere[3].getRotateAngle()/PI_SCALE - lambdaA,
       lambdaAN = this.lambdaAN/PI_SCALE,
       lambdaN = mod(lambdaA - lambdaAN,360),
-      defDelta = Math.asin(((this.sphere[3].equant/2)/this.sphere[3].radius) * Math.sin(lambdaMA)),
+     // defDelta = Math.asin(((this.sphere[3].equant/2)/this.sphere[3].radius) * Math.sin(lambdaMA)),
       lambdaCA = lambdaMA,
       lambdaD = lambdaCA + lambdaAN,
       i = degToRad(this.ptolemySphere.inclination) * Math.sin( lambdaD ),
@@ -135,8 +135,34 @@ ModelPtolemyInferior = function(params) {
 
       // longitude      
       // base & deferent motion
+
+      lambdaMA = mod(lambdaMA,Math.PI*2);
+            
       this.sphere[2].anchor.rotation.y = -lambdaMA;
-      this.sphere[3].anchor.rotation.y = 2*lambdaMA;
+      var e = this.sphere[2].radius,
+      R = this.sphere[3].radius,
+      sin1c = Math.sin(lambdaMA),
+      sin2c = Math.sin(2*lambdaMA),      
+      cos1c = Math.cos(lambdaMA),
+      cos2c = Math.cos(2*lambdaMA),      
+      s = Math.sqrt((R*R)-(e*e*(sin1c+sin2c)*(sin1c+sin2c))) + e*(cos1c+cos2c),
+      w1 = sin1c*e,
+      w2 = sin1c*s,
+      w3 = w1+w2;
+      angle = Math.PI - Math.asin(w3/R);
+
+//*
+      if( (lambdaMA + angle < Math.PI) || (lambdaMA + angle > 3*Math.PI) )
+        angle = Math.asin(w3/R);
+//      else 
+//        angle = Math.PI - Math.asin(w3/R);        
+//*/        
+
+//      if (
+      var trueAngle = lambdaMA + angle;      
+      
+
+      this.sphere[3].anchor.rotation.y = trueAngle; //2*lambdaMA;
       // mean anomaly correction
 //      this.sphere[4].anchor.rotation.y -= defDelta;
 

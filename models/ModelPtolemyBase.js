@@ -45,7 +45,7 @@ ModelPtolemyBase = function(params) {
 
 
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
-    this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S1"] }); 
+    this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S3"] }); 
     this.sphere[2].pivot.addNode(this.apsidalLine);
 
 
