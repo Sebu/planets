@@ -56,7 +56,7 @@ ModelPtolemyBase = function(params) {
 
     this.earthToPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.earthToPlanetLine = new Curve({trails: false, pos: this.earthToPlanet, color: {r:1.0,g:1.0,b:1.0} }); 
-    this.root.addNode(this.earthToPlanetLine);
+//    this.root.addNode(this.earthToPlanetLine);
 
     
     this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];

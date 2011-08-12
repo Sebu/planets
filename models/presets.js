@@ -588,7 +588,7 @@ PtolemyMercury: {
   inclination: "-0.75",
   deviation: "6;15",
   km:  "-7;00",
-  lambdaAN: "94",  
+  lambdaAN: "93",  
   sphere: [
     {AxisAngle: 0.0, Speed: 0.0,  RotateStart: 0 },
     {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },   
