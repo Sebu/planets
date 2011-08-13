@@ -182,8 +182,7 @@ myApp.prototype.init = function(params) {
             egyptianDate : document.getElementById("egyptianDate")
           };  
 
-          console.log(this.info.days);
-         
+        
         
 //        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
           $("<div id='impressumContainer'><a>© 2011 Topoi</a> <a href>+henry mendell</a> <a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
@@ -204,17 +203,23 @@ myApp.prototype.init = function(params) {
 //        var presetBox = $("<div></div>").appendTo(uiBox);
 
 //        $("#viewPresets option[value='World']").attr('selected', true);
-        var presetsEle = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");
-        var vault = localStorage.getJson("customPresets") || {};
-        $.extend(true, planetPresets, vault);
+        var presetsEle1 = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle2 = $("<span><select class='chzn-select' style='width:90px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle3 = $("<span><select class='chzn-select' style='width:47px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
+//        var vault = localStorage.getJson("customPresets") || {};
+//        $.extend(true, planetPresets, vault);
         
 
 //        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
-        UI.box({id:"presetBox", element: presetsEle}).appendTo(uiBox);
+        UI.box({id:"presetBox"}).appendTo(uiBox);
         var presetBox = $("#presetBox");
+        presetBox.append(presetsEle1);        
+        presetBox.append(this.presetsEle2);
+        presetBox.append(this.presetsEle3);        
+
 //        presetBox.append(presetsEle);
 
-        UI.optionsFromHash("#planetPreset", planetPresets);
+        UI.optionsFromHash("#modelPreset", planetPresets);
         
         //$(".chzn-select").chosen();
 
@@ -231,7 +236,8 @@ myApp.prototype.init = function(params) {
 //DEAD?        $("#vis").hide();
 
 //        this.loadPreset("Mercury1");
-        this.loadPreset("PtolemyMercury");
+        this.loadPlanets("Eudoxus");
+//        this.loadPreset("1");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
@@ -249,6 +255,35 @@ myApp.prototype.init = function(params) {
 
     };
 
+myApp.prototype.loadPlanets = function(value) {
+    this.currentModel = planetPresets[value];
+    
+    if(this.currentModel.model) {
+      this.currentPlanet = planetPresets;
+      this.presetsEle2.hide();
+      this.presetsEle3.hide();      
+      this.loadPreset(value);
+      return;
+    }
+    
+    UI.optionsFromHash("#planetsPreset", this.currentModel);
+    this.presetsEle2.show();
+    for(var i in this.currentModel) {
+      this.loadPresets(i);
+      break;
+    }
+    
+};
+
+myApp.prototype.loadPresets = function(value) {
+    this.currentPlanet = this.currentModel[value];
+    UI.optionsFromHash("#planetPreset", this.currentPlanet);
+    this.presetsEle3.show();
+    for(var i in this.currentPlanet) {
+      this.loadPreset(i);
+      break;
+    }    
+};
 
 myApp.prototype.addPreset = function() {
     var vault = localStorage.getJson("customPresets") || {};
@@ -494,7 +529,7 @@ myApp.prototype.loadPreset = function(preset) {
 
         // switch model
         this.currentPreset = preset;
-        var planet = planetPresets[preset];
+        var planet = this.currentPlanet[preset];
         model = this.getModel(planet.model);
         this.setCurrentScene(model.root);
         model.loadPreset(planet);

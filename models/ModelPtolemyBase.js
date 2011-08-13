@@ -100,7 +100,7 @@ ModelPtolemyBase = function(params) {
 
     
     this.update = function(time) {
-//        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
 
 //        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[3]);

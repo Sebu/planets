@@ -463,7 +463,7 @@ ModelBase.prototype = {
             for (i = start + 1; i < stop; i++) {
                 this.sphere[i].updateMovement(step);
             }
-//            this.ptolemySphere.updateMovement(step);
+            if(this.ptolemySphere) this.ptolemySphere.updateMovement(step);
             this.adjustAnomaly();
             pos = node.currentPos();
             curvePos.push(pos);
