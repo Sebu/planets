@@ -120,6 +120,7 @@ ModelPtolemyInferior = function(params) {
     this.sphere[4].anchor.eulerOrder = "XZY";    
     this.sphere[4].ptolemy.eulerOrder = "YXZ";  
 
+
     this.adjustAnomaly = function() {
       var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
       lambdaMA = this.sphere[3].getRotateAngle()/PI_SCALE - lambdaA,
@@ -182,6 +183,8 @@ ModelPtolemyInferior = function(params) {
       this.sphere[4].anchor.rotation.x = -j;
 
       
+      this.equantPoint.position.z = this.sphere[3].equant*this.factor/2;
+
     }	
 }
 

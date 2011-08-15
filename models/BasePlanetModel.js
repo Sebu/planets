@@ -128,7 +128,7 @@ ModelBase.prototype = {
             this["getSpeed" + i] = new Function("return this.sphere[" + i + "].getSpeed();");
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
-            this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setGfx([\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"], state);");
+            this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setShow(state);");
             this["getShowSphere" + i] = function() { return true; };
 
         }
@@ -141,10 +141,7 @@ ModelBase.prototype = {
         // add stars
         this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
         
-        //TODO: deprecated? / override
-        this.showSphere1 = function(state) {
-            this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc","markerball","markerend"], state);
-        }
+        this.sphere[1].gfx.visuals =["equator","npole","spole","rotationarc","markerarc","markerball","markerend"];
 
         // add Sun and sun spheres
         this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));
@@ -235,7 +232,8 @@ ModelBase.prototype = {
         this.sphere[1].setGfx(["arc1","arc2"], false);
         this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );
         // hide sun sphere
-        this.ecliptic.setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+        this.ecliptic.setShow(false); 
+//setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
         // reset everything
         this.reset();

@@ -946,6 +946,9 @@ Spherical = function Spherical(params) {
     this.moving = true;
 
     this.gfx = new Object();
+
+// [\"equator\",\"npole\",\"spole\",\"rotationarc\",\"markerarc\",\"arc1\",\"arc2\",\"markerball\",\"markerend\"]
+    this.gfx.visuals = ["equator","npole","spole","rotationarc","markerarc","markerball","markerend"];
     this.gfx.scale = params.scale;
 
     this.gfx.color = params.color || { r: 0.5, g: 0.5, b: 0.5};
@@ -1050,6 +1053,14 @@ Spherical = function Spherical(params) {
 Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
 
+Spherical.prototype.setShow = function(state) {
+  this.visible = state;
+  this.setGfx(this.gfx.visuals, state);
+}
+
+Spherical.prototype.getShow = function() {
+  return this.visible;
+}
 
 Spherical.prototype.setMoving = function(state) {
   return this.moving = state;

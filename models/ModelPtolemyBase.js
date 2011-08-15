@@ -56,7 +56,7 @@ ModelPtolemyBase = function(params) {
 
     this.earthToPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.earthToPlanetLine = new Curve({trails: false, pos: this.earthToPlanet, color: {r:1.0,g:1.0,b:1.0} }); 
-//    this.root.addNode(this.earthToPlanetLine);
+    this.root.addNode(this.earthToPlanetLine);
 
     
     this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
@@ -100,10 +100,8 @@ ModelPtolemyBase = function(params) {
 
     
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+        if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
-
-//        this.updatePlanetMetadata(this.planet, this.sphere[1], this.ecliptic, this.sphere[3]);
 
 
         // mean sun
@@ -175,10 +173,10 @@ ModelPtolemyBase = function(params) {
 
     this.setEquant = function(value) {
       this.sphere[3].equant = value;
-      this.equantPoint.position.z = this.sphere[3].equant*this.factor/2;
       this.sphere[2].anchor.position.z = this.sphere[3].equant*this.factor;
       
-            
+      this.equantPoint.position.z = this.sphere[3].equant*this.factor*2;
+           
       this.updateBlob();
       this.updateSunDist();
     };

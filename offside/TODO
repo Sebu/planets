@@ -203,22 +203,30 @@ DONE
   - merge ptolemy(sun) info ptolmey base model
   - ptolemy moon: 1a/b, 2, 3
   - ptolemy path
+  - julian days time stuff from longitude (e.g. see mail)
+  - fix: load presets through setters
 
 TODO
-- julian days time stuff from longitude (e.g. see mail)
-- latitude 359-370 (3) (4)
-- better camera/movement/ortho view
-- update info box on change!!
-- fix/better labels
+- fix minor 
+  - show egyptian date epoch: nabonassar etc. (see 127p and photo)
+
+- sphere Show/Hide
+- path
+- visualize crank in ptolemy
+- longitude based time zones
+- inner planets sun distance/angle?
+- load/reset/save
+- better camera/movement/crank/ortho view
+- fix labels
+- merge model (1+ models into one for comparission)
+
+- spreadsheet
+
+  
 - more view presets/tweening
   - use different cameras
   - reset position (tween)
-- aristotle
-- ptolemy
-  - data
-    - date presets 
-  - sun
-- fix: load presets through setters
+- update info box on change!!
 
 
 
