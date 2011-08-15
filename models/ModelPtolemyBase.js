@@ -81,22 +81,6 @@ ModelPtolemyBase = function(params) {
     this.realSunS[1].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
     this.realSunS[2].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
-/*
-    // TODO: rotate anchor.anchor? of2?
-    this.adjustAnomaly = function() {
-       var adjustment = -this.sphere[3].anchor.rotation.y+(this.sphere[3].rotateAngle/PI_SCALE)-this.sphere[2].getOffsetRotateAngle()/PI_SCALE;
-       this.sphere[4].anchor.rotation.y += adjustment;
-    }
-//*/
-
-
-/*    
-    this.addDays = function(days) {
-      ModelBase.prototype.addDays.call(this, days);
-      this.adjustAnomaly();
-      this.updatePlanetMetadata(this.planet,this.sphere[1], this.ecliptic, this.sphere[3]);
-    }
-*/
 
     
     this.update = function(time) {

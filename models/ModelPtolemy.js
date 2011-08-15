@@ -29,9 +29,8 @@ ModelPtolemy = function(params) {
       earthDelta = Math.asin((-this.sphere[3].equant/this.sphere[3].radius) * Math.sin(lambdaMA)),
       lambdaCA = lambdaMA - defDelta - earthDelta,
       lambdaD = lambdaCA + lambdaAN,
-      j = degToRad(this.getDeviation()) * Math.sin( lambdaD );
-
-      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA );  
+      j = degToRad(this.getDeviation()) * Math.sin( lambdaD ),
+      k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA );  
 
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
@@ -87,7 +86,6 @@ ModelPtolemyVenus = function(params) {
       j = degToRad(this.getDeviation()) * Math.sin( lambdaD + Math.PI/2 ),
       k = degToRad(this.getKM()) * Math.sin( lambdaD );   
 
-//      var  k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA );  
 
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
@@ -126,7 +124,6 @@ ModelPtolemyInferior = function(params) {
       lambdaMA = this.sphere[3].getRotateAngle()/PI_SCALE - lambdaA,
       lambdaAN = this.lambdaAN/PI_SCALE,
       lambdaN = mod(lambdaA - lambdaAN,360),
-     // defDelta = Math.asin(((this.sphere[3].equant/2)/this.sphere[3].radius) * Math.sin(lambdaMA)),
       lambdaCA = lambdaMA,
       lambdaD = lambdaCA + lambdaAN,
       i = degToRad(this.ptolemySphere.inclination) * Math.sin( lambdaD ),
@@ -139,7 +136,6 @@ ModelPtolemyInferior = function(params) {
 
       lambdaMA = mod(lambdaMA,Math.PI*2);
             
-      this.sphere[2].anchor.rotation.y = -lambdaMA;
       var e = this.sphere[2].radius,
       R = this.sphere[3].radius,
       PI41 = Math.PI/2,
@@ -169,8 +165,10 @@ ModelPtolemyInferior = function(params) {
 
       var trueAngle = lambdaMA + angle;      
       
-
-      this.sphere[3].anchor.rotation.y = trueAngle; //2*lambdaMA;
+      // long. correction
+      this.sphere[2].anchor.rotation.y = -lambdaMA;
+      this.sphere[3].anchor.rotation.y = trueAngle;
+      this.equantPoint.position.z = this.sphere[3].equant*this.factor/2;
       // mean anomaly correction
       this.sphere[4].anchor.rotation.y += angleDiff;
 
@@ -183,7 +181,6 @@ ModelPtolemyInferior = function(params) {
       this.sphere[4].anchor.rotation.x = -j;
 
       
-      this.equantPoint.position.z = this.sphere[3].equant*this.factor/2;
 
     }	
 }

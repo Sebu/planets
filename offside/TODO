@@ -209,7 +209,7 @@ DONE
 TODO
 - fix minor 
   - show egyptian date epoch: nabonassar etc. (see 127p and photo)
-
+  - ptolemy -> ptolemy amagest
 - sphere Show/Hide
 - path
 - visualize crank in ptolemy
@@ -217,15 +217,15 @@ TODO
 - inner planets sun distance/angle?
 - load/reset/save
 - better camera/movement/crank/ortho view
+  - more view presets/tweening
+    - use different cameras
+    - reset position (tween)
 - fix labels
 - merge model (1+ models into one for comparission)
 
 - spreadsheet
-
   
-- more view presets/tweening
-  - use different cameras
-  - reset position (tween)
+
 - update info box on change!!
 
 
@@ -241,12 +241,8 @@ NEXT
 - update hippopede only on demand
 - only show last or first spheres of a model
 - variable slider max ( depended on model )
-
 - dist: 9*|sun-moon|
-- keyframe animation?
-- email yavetz sphere 3-4
-- moon speed functions days per year
-- menu with s2 start values (deprecated)
+
 
 auftrag:
 - use Three.js
