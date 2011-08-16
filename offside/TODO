@@ -208,10 +208,11 @@ DONE
 
 TODO
 - fix minor 
+  - set sexigesimal input / show
   - show egyptian date epoch: nabonassar etc. (see 127p and photo)
   - ptolemy -> ptolemy amagest
 - sphere Show/Hide
-- path
+- fix ptolemy path
 - visualize crank in ptolemy
 - longitude based time zones
 - inner planets sun distance/angle?
