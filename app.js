@@ -204,16 +204,20 @@ myApp.prototype.init = function(params) {
 
 //        $("#viewPresets option[value='World']").attr('selected', true);
         var presetsEle1 = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
-        this.presetsEle2 = $("<span><select class='chzn-select' style='width:90px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle2 = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle3 = $("<span><select class='chzn-select' style='width:47px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
 //        var vault = localStorage.getJson("customPresets") || {};
 //        $.extend(true, planetPresets, vault);
         
 
 //        UI.box({id:"presetBox", text:"Presets"}).appendTo(uiBox);
-        UI.box({id:"presetBox"}).appendTo(uiBox);
+//        UI.box({id:"presetBox"}).appendTo(uiBox);
+        $("<div id=presetBox></div>").appendTo(uiBox);
         var presetBox = $("#presetBox");
-        presetBox.append(presetsEle1);        
+        presetBox.append(presetsEle1); 
+        presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
+        presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
+       
         presetBox.append(this.presetsEle2);
         presetBox.append(this.presetsEle3);        
 
@@ -221,10 +225,7 @@ myApp.prototype.init = function(params) {
 
         UI.optionsFromHash("#modelPreset", planetPresets);
         
-        //$(".chzn-select").chosen();
 
-        presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
-        presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
         
 
         presetBox.append("<span><select class='chzn-select' title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
@@ -277,6 +278,14 @@ myApp.prototype.loadPlanets = function(value) {
 
 myApp.prototype.loadPresets = function(value) {
     this.currentPlanet = this.currentModel[value];
+
+    if(this.currentPlanet.model) {
+      this.currentPlanet = this.currentModel;
+      this.presetsEle3.hide();
+      this.loadPreset(value);
+      return;
+    }
+
     UI.optionsFromHash("#planetPreset", this.currentPlanet);
     this.presetsEle3.show();
     for(var i in this.currentPlanet) {

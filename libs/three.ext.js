@@ -1020,9 +1020,6 @@ Spherical = function Spherical(params) {
 
     this.anchor.addNode(this.gfx.npole);
     this.anchor.addNode(this.gfx.spole);
-//    nodePool[this.inner_id] = this.gfx.markerball;
-//    nodePool[this.inner_id+"npole"] = this.gfx.npole;
-//    nodePool[this.inner_id+"spole"] = this.gfx.spole;
 
     this.progressArc = new Circle({ angle : 40 });
     var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(this.gfx.color),
@@ -1037,9 +1034,10 @@ Spherical = function Spherical(params) {
     
     var apsidal = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 1} ];
     this.gfx.centerLine = new Curve({trails: false, pos: apsidal, color: this.gfx.color }); 
+    this.gfx.centerLine.visible = false;
     this.anchor.addNode(this.gfx.centerLine);
     
-    
+    // DEBUG
     this.gfx.disc = new Disc( {radius: 9.0, color: this.gfx.color });
 //    this.anchor.addNode(this.gfx.disc);
     

@@ -20,13 +20,14 @@ myApp.prototype.init = function(params) {
           this.currentModel = planetPresets[m];
         
           for(var n in TestPairs[m]) {
+            
             for(var j in TestPairs[m][n]) { break; }
             
-            var tests = TestPairs[m][n][j],
+            var tests = TestPairs[m][n],
             ul = $("#mainBox").append("<table>" + n + "</table>"),
             i;
             
-            this.loadPreset(planetPresets[m][n][j]);
+            this.loadPreset(planetPresets[m][n]);
 
             for(i in tests) { 
 

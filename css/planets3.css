@@ -100,11 +100,13 @@ select {
 #  background: -o-linear-gradient(#4d90fe, #4787ed);  
 #  background: -moz-linear-gradient(#4d90fe, #4787ed);
   background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
+  background: rgba(45, 43, 41, 1.0);
 }
 
 option  {
-   color: black;
-   background: #FFFFFF;
+   color: white;
+
+   background: black;
 }
 
 

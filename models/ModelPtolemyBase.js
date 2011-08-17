@@ -68,10 +68,10 @@ ModelPtolemyBase = function(params) {
     this.setShowSphere2(false);
     this.setShowSphere3(false);
     this.setShowSphere4(false);
-    this.setShowSphere1 = function(state) { this.sphere[1].setGfx(["equator","npole","spole","rotationarc","markerarc","markerball"], state) };
-    this.setShowSphere2 = function(state) { this.sphere[2].setGfx(["equator"], state) };
-    this.setShowSphere3 = function(state) { this.sphere[3].setGfx(["equator"], state) };
-    this.setShowSphere4 = function(state) { this.sphere[4].setGfx(["equator"], state) };
+    this.sphere[1].gfx.visuals = ["equator","npole","spole","rotationarc","markerarc","markerball"];
+    this.sphere[2].gfx.visuals = ["equator"];
+    this.sphere[3].gfx.visuals = ["equator","centerLine"];
+    this.sphere[4].gfx.visuals = ["equator","centerLine"];
     this.setShowSphere1(true);
     this.setShowSphere2(true);
     this.setShowSphere3(true);

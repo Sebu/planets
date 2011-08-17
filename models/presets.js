@@ -122,7 +122,75 @@ Eudoxus: {
     {AxisAngle: 24.0, Speed: 10940, RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 390, RotateStart: 0 },
     {AxisAngle: 18.0, Speed: 390, RotateStart: 0 }] }
-  }
+  },
+
+  Sun: { 
+  caption: "Sun",
+  model: "ModelSun",
+  ui: "ModelSun",     
+  label: "Sun",
+  showSun: false,
+  sunYears: 99,  
+  sphere: [
+    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 369, RotateStart: 0 },
+    {AxisAngle: 0.5,  Speed: 0, RotateStart: 0 }] },
+
+  Moon: {
+  caption : "Moon",
+  model: "ModelMoon",
+  ui: "ModelMoon",    
+  label: "Moon",
+  metonYear: 19,
+  metonSynodicMonths: 235,
+  metonDays:6940,
+  sarosDraconiticMonths: 242,
+  sarosSynodicMonths: 223,
+  sphere: [
+    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
+    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]
+  },
+
+MoonCompare: { 
+  caption: "Moon comparision",
+  model: "ModelMoonCompare",
+  ui: "ModelMoonCompare",     
+  metonYear: 19,
+  label: "Moon",  
+  metonSynodicMonths: 235,
+  metonDays:6940,
+  sarosDraconiticMonths: 242,
+  sarosSynodicMonths: 223,
+  sphere: [
+    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
+    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
+
+Simple: { 
+  caption: "Basic",
+  model: "ModelSimple",
+  ui: "ModelSimple",  
+  showSun: false,  
+  sphere: [
+    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 365, RotateStart: 0 }
+  ] },
+
+    
+HippopedeIntroduction: {
+  caption: "Hippopede introduction",
+  model: "Model4",
+  ui: "ModelHippo",
+  showStars: false,
+  showSun: false,
+  showPath: false,
+  sphere: [
+    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0, ShowSphere: false },
+    {AxisAngle: 24.0, Speed: 0,  RotateStart: 0 },
+    {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
+    {AxisAngle: 30.0, Speed: -110,  RotateStart: 0 }
+  ] }
 },
 
 
@@ -212,45 +280,9 @@ Callippus: {
     {AxisAngle: 22.5, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 22.5, Speed: 0, RotateStart: 0 },
   ] }
-  }
-},
-
-
-
-Yavetz: {
-  Test: {
-    1:  { 
-    caption: "Yavetz",
-    model: "ModelYavetz",
-    ui: "ModelYavetz",  
-    betaRotate: 30.0,
-    sphere: [
-      {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
-      {AxisAngle: 24.0,  Speed: 365,  RotateStart: 0 },
-      {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
-      {AxisAngle: 30.0, Speed: 110,  RotateStart: 95 },
-    ]}
-  }
-},
-
-
-MoonMeton: {
+  },
+  Moon: { 
   caption : "Moon",
-  model: "ModelMoon",
-  ui: "ModelMoon",    
-  label: "Moon",
-  metonYear: 19,
-  metonSynodicMonths: 235,
-  metonDays:6940,
-  sarosDraconiticMonths: 242,
-  sarosSynodicMonths: 223,
-  sphere: [
-    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
-
-MoonCallippus: { 
-  caption : "Callippus Moon",
   model: "ModelMoon",
   ui: "ModelMoon",     
   label: "Moon",  
@@ -262,7 +294,28 @@ MoonCallippus: {
   sphere: [
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
+    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]}
+},
+
+
+
+Yavetz: {
+  Test: {
+    caption: "Yavetz",
+    model: "ModelYavetz",
+    ui: "ModelYavetz",  
+    betaRotate: 30.0,
+    sphere: [
+      {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
+      {AxisAngle: 24.0,  Speed: 365,  RotateStart: 0 },
+      {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
+      {AxisAngle: 30.0, Speed: 110,  RotateStart: 95 },
+    ]}
+},
+
+
+
+/*
       
 Moon3: {
   model: "ModelMoon",
@@ -277,60 +330,12 @@ Moon3: {
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
     {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
-  
+*/
 
     
-Sun: { 
-  caption: "Sun Eudoxus",
-  model: "ModelSun",
-  ui: "ModelSun",     
-  label: "Sun",
-  showSun: false,
-  sunYears: 99,  
-  sphere: [
-    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 369, RotateStart: 0 },
-    {AxisAngle: 0.5,  Speed: 0, RotateStart: 0 }] },
 
-MoonCompare: { 
-  caption: "Moon comparision",
-  model: "ModelMoonCompare",
-  ui: "ModelMoonCompare",     
-  metonYear: 19,
-  label: "Moon",  
-  metonSynodicMonths: 235,
-  metonDays:6940,
-  sarosDraconiticMonths: 242,
-  sarosSynodicMonths: 223,
-  sphere: [
-    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 5.0,  Speed: 0, RotateStart: 0 }]},
 
-SimpleTest: { 
-  caption: "Eudoxus basics",
-  model: "ModelSimple",
-  ui: "ModelSimple",  
-  showSun: false,  
-  sphere: [
-    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: 24.0, Speed: 365, RotateStart: 0 }
-  ] },
 
-    
-HippopedeIntroduction: {
-  caption: "Hippopede introduction",
-  model: "Model4",
-  ui: "ModelHippo",
-  showStars: false,
-  showSun: false,
-  showPath: false,
-  sphere: [
-    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0, ShowSphere: false },
-    {AxisAngle: 24.0, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
-    {AxisAngle: 30.0, Speed: -110,  RotateStart: 0 }
-  ] },
 
 Aristotle: {
   caption: "Aristotle",
@@ -348,8 +353,7 @@ Aristotle: {
 Ptolemy: {
 
   Sun: {
-    1: { 
-    caption: "Ptolemy Sun",
+    caption: "Sun",
     model: "ModelPtolemySun",
     ui: "ModelPtolemySun",
     label: "Sun", 
@@ -367,11 +371,11 @@ Ptolemy: {
       {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },    
       {AxisAngle: 0.0, Speed: 365.2466666,  RotateStart: 274.25 },
       {AxisAngle: 0.0, Speed: 0, RotateStart: 0 }
-    ] }
+    ] 
   }, 
   Moon: {
-    a: { 
-    caption: "Ptolemy Moon 1a",
+    "1a": { 
+    caption: "1a",
     model: "ModelPtolemyMoon1a",
     ui: "ModelPtolemy",
     label: "Moon",
@@ -393,8 +397,8 @@ Ptolemy: {
       {AxisAngle: 0.0, Step: "0", RotateStart: "0" }
     ] },
 
-    b: { 
-    caption: "Ptolemy Moon 1b",
+    "1b": { 
+    caption: "1b",
     model: "ModelPtolemyMoon1b",
     ui: "ModelPtolemy",
     label: "Moon",
@@ -417,7 +421,7 @@ Ptolemy: {
     ] },
 
     2: { 
-    caption: "Ptolemy Moon 2",
+    caption: "2",
     model: "ModelPtolemyMoon2",
     ui: "ModelPtolemy",
     label: "Moon",
@@ -441,7 +445,7 @@ Ptolemy: {
     ] },
 
     3: { 
-    caption: "Ptolemy Moon 3",
+    caption: "3",
     model: "ModelPtolemyMoon2",
     ui: "ModelPtolemy",
     label: "Moon",
@@ -468,8 +472,7 @@ Ptolemy: {
 
           
   Mars: {
-    1: {
-    caption: "Ptolemy Mars",
+    caption: "Mars",
     model: "ModelPtolemy",
     ui: "ModelPtolemy",
     label: "Mars",
@@ -493,13 +496,12 @@ Ptolemy: {
       {AxisAngle: 0.0, Step: "0;31,26,36,53,51,33",  RotateStart: "3;32" },
   //    {AxisAngle: 0.0, Step: "0", RotateStart: "0" }    
       {AxisAngle: 0.0, Step: "0;27,41,40,19,20,58", RotateStart: "327;13" }
-    ] }
+    ] 
   },
 
   
   Jupiter: { 
-    1: { 
-    caption: "Ptolemy Jupiter",
+    caption: "Jupiter",
     model: "ModelPtolemy",
     ui: "ModelPtolemy",
     label: "Jupiter",
@@ -521,12 +523,11 @@ Ptolemy: {
       {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },
       {AxisAngle: 0.0, Step: "0;04,59,14,26,46,31",  RotateStart: "184;41"},
       {AxisAngle: 0.0, Step: "0;54,09,02,46,26,00", RotateStart: "146;04" }
-    ] }
+    ] 
   },
   
   Saturn: {
-    1: { 
-    caption: "Ptolemy Saturn",
+    caption: "Saturn",
     model: "ModelPtolemy",
     ui: "ModelPtolemy",
     label: "Saturn",
@@ -548,12 +549,11 @@ Ptolemy: {
       {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },   
       {AxisAngle: 0.0, Step: "0;02,00,33,31,28,51",  RotateStart: "296;43"},
       {AxisAngle: 0.0, Step: "0;57,07,43,41,43,40", RotateStart: "34;02" }
-    ] }
+    ]
   },
 
   Mercury: {
-    1: { 
-    caption: "Ptolemy Mercury",
+    caption: "Mercury",
     model: "ModelPtolemyInferior",
     ui: "ModelPtolemy",
     label: "Mercury",
@@ -577,13 +577,12 @@ Ptolemy: {
       {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31",  RotateStart: "330;45"},
   //    {AxisAngle: 0.0, Step: "0", RotateStart: "0" }
       {AxisAngle: 0.0, Step: "3;06,24,06,59,35,50", RotateStart: "21;55" }
-    ] }
+    ]
   },
 
 //*/
   Venus: {
-    1: { 
-    caption: "Ptolemy Venus",
+    caption: "Venus",
     model: "ModelPtolemyVenus",
     ui: "ModelPtolemy",
     label: "Venus",
@@ -606,7 +605,7 @@ Ptolemy: {
       {AxisAngle: "23;51,20", Speed: 0.0,  RotateStart: 0 },    
       {AxisAngle: 0.0, Step: "0;59,08,17,13,12,31", RotateStart: "330;45"},
       {AxisAngle: 0.0, Step: "0;36,59,25,53,11,28", RotateStart: "71;07" }
-    ] }
+    ]
   }
 }
 
@@ -627,16 +626,16 @@ var TestPairs = {
 
   Ptolemy: {
     Sun: {
-      1: {
+//      1: {
       d1: { date: "9.2.139", longitude: "318;50", latitude: "0;0"  },
       d2: { date: "26.9.139", longitude: "180", latitude: "0;0" },
       d3: { date: "22.3.140", longitude: "0", latitude: "0;0" },
       d4: { date: "25.6.140", longitude: "90", latitude: "0;0" }
-    }
+//    }
     },
 
     Moon: {
-    3: {
+     3: {
       d1: { date: "6.5.133", longitude: "217;48", latitude: "-0;50,53" },  
       d2: { date: "20.10.134", longitude: "19;42", latitude: "-0;01,38" },
       d3: { date: "6.3.136", longitude: "169;01", latitude: "-0;19,28" },
@@ -645,12 +644,12 @@ var TestPairs = {
     },
       
     Mars: {
-    1: {
+//    1: {
       d1: { date: "15.12.130", longitude: "81;0", latitude: "3;35,55" },
       d2: {  date: "21.2.135", longitude: "148;50", latitude: "3;38,39" },
       d3: {  date: "27.5.139", longitude: "242;34", latitude: "-4;16,00" },
       d4: { date: "20.5.383", longitude: "114;50,53", latitude: "0;45,27" }      
-    }
+//    }
     },
 
     
@@ -673,11 +672,11 @@ var TestPairs = {
     },
 
     Venus: {
-      1: {
+//      1: {
       d1: { date: "8.3.132", longitude: "31;11", latitude: "3;08,06" },
       d2: { date: "16.12.138", longitude: "216;48,47", latitude: "3;02,01" },
       d3: { date: "20.5.383", longitude: "34;07,21", latitude: "-0;57,54" }       
-      }
+//      }
     },
     
     Mercury: {
