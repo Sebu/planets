@@ -30,7 +30,6 @@ Utils.daysToTime = function(days) {
 
 }
 
-Utils.GREGORIAN_SWITCH = 2299160.5;
 Utils.GREGORIAN_EPOCH = 1721425.5;
 Utils.JULIAN_EPOCH = 1721423.5;
 
@@ -45,9 +44,17 @@ Utils.EgyptNames = ["Toth", "Phaophi", "Athyr", "Choiak", "Tybi", "Mechir", "Pha
 Utils.dateToStringEgypt = function(date) {
   if(date[3] < 10) date[3] = "0" + date[3];
   if(date[4] < 10) date[4] = "0" + date[4];
-  return "" + date[2] + " " + Utils.EgyptNames[date[1]-1] + "  " + date[0] + " " + date[3] + ":" + date[4];
+  return "" + date[2] + " " + Utils.EgyptNames[date[1]-1] + " " + date[0] + " " + date[3] + ":" + date[4];
 }
 
+Utils.jdToEpoch = function(jd) {
+  if( jd >= 1771297 ) return "Antoninus";
+  else if( jd >= 1763632 ) return "Hadrian";
+  else if( jd >= 1710707 ) return "Augustus";  
+  else if( jd >= 1603398 ) return "Philippus";
+  else if( jd >= 1448638 ) return "Nabonassar";
+  else return "N/A";
+}
 
 Utils.dateToString = function(date) {
   if(date[3] < 10) date[3] = "0" + date[3];
@@ -94,7 +101,7 @@ Utils.gregorianToJd =function(year, month, day) {
            day);
 }
 
-
+Utils.GREGORIAN_SWITCH = 2299160.5;
 Utils.jdToMagic = function(jd) {
   if(jd<=Utils.GREGORIAN_SWITCH) return Utils.jdToJulian(jd);
   else return Utils.jdToGregorian(jd);
@@ -577,7 +584,7 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 Disc = function(params) {
   var color = params.color || colors["Earth"];
   THREE.Mesh.call(  this, 
-                    new THREE.Sphere(params.radius,20,30), 
+                    new THREE.SphereGeometry(params.radius,20,30), 
                     new THREE.MeshLambertMaterial({color: rgbToHex(color), shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
@@ -602,13 +609,13 @@ Translate.prototype.constructor = Translate;
 */
 sphereGeo = [
 
-                [ new THREE.Sphere( 1, 32, 16 ), 0 ],
-                [ new THREE.Sphere( 1, 16, 8 ), 10 ],
-                [ new THREE.Sphere( 1, 8, 4 ), 20 ]
+                [ new THREE.SphereGeometry( 1, 32, 16 ), 0 ],
+                [ new THREE.SphereGeometry( 1, 16, 8 ), 10 ],
+                [ new THREE.SphereGeometry( 1, 8, 4 ), 20 ]
 
 ];
 
-planetGeo = new THREE.Sphere( 1 , 32, 16 );
+planetGeo = new THREE.SphereGeometry( 1 , 32, 16 );
 
 
 /*
@@ -868,11 +875,11 @@ Cloud.prototype.constructor = Cloud;
 
 
 
-var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
 var equator = new Circle({ angle : 359.9 });
 
-var markerend = new THREE.Cylinder( 10, 0.1, 0.1, 0.01);
-var cone = new THREE.Cylinder( 10, 0.0001, 0.15, 0.4);
+var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
+var cone = new THREE.CylinderGeometry( 10, 0.0001, 0.15, 0.4);
 //THREE.LatheGeometry([new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 )]);
 
 var aLine = new THREE.Geometry();

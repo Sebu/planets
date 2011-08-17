@@ -154,6 +154,7 @@ myApp.prototype.init = function(params) {
               <tr><td>gregorian date</td><td class=wert id='gregorianDate'>0</td></tr>\
               <tr><td>julian days</td><td class=wert id='julianDate'>0</td></tr>\
               <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>\
+              <tr><td></td><td class=wert id='egyptianEpoch'></td></tr>\
             </table>\
             <div id='legendContainer'></div>\
              </div>").appendTo(this.domRoot);
@@ -179,7 +180,8 @@ myApp.prototype.init = function(params) {
             deferentLongitude : document.getElementById("deferentLongitude"),
             gregorianDate : document.getElementById("gregorianDate"),
             julianDate : document.getElementById("julianDate"),
-            egyptianDate : document.getElementById("egyptianDate")
+            egyptianDate : document.getElementById("egyptianDate"),
+            egyptianEpoch : document.getElementById("egyptianEpoch")
           };  
 
         
@@ -203,9 +205,9 @@ myApp.prototype.init = function(params) {
 //        var presetBox = $("<div></div>").appendTo(uiBox);
 
 //        $("#viewPresets option[value='World']").attr('selected', true);
-        var presetsEle1 = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
-        this.presetsEle2 = $("<span><select class='chzn-select' style='width:136px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
-        this.presetsEle3 = $("<span><select class='chzn-select' style='width:47px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
+        var presetsEle1 = $("<span><select class='chzn-select' style='font-size:18px;width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle2 = $("<span><select class='chzn-select' style='width:130px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle3 = $("<span><select class='chzn-select' style='width:55px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
 //        var vault = localStorage.getJson("customPresets") || {};
 //        $.extend(true, planetPresets, vault);
         
@@ -236,9 +238,8 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
 //DEAD?        $("#vis").hide();
 
-//        this.loadPreset("Mercury1");
-        this.loadPlanets("Eudoxus");
-//        this.loadPreset("1");
+        $("#modelPreset option[value='Ptolemy']").attr('selected',true);
+        this.loadPlanets("Ptolemy");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
@@ -362,7 +363,8 @@ myApp.prototype.updateInfoBox = function() {
           this.info.deferentLongitude.innerText =  Utils.toSexa(model.planet.deferentLongitude);
           this.info.gregorianDate.innerText =  Utils.dateToString(Utils.jdToMagic(model.date));                           
           this.info.julianDate.innerText =  model.date.toFixed(2); //Utils.dateToString(Utils.jdToJulian(model.date));                           
-          this.info.egyptianDate.innerText =  Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date));                          
+          this.info.egyptianDate.innerText =  Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date));
+          this.info.egyptianEpoch.innerText =  Utils.jdToEpoch(model.date);                          
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
 
@@ -582,7 +584,7 @@ myApp.prototype.loadPreset = function(preset) {
 
         
 
-//*
+/*
         for (i in model.sphere) {
             $("<div style='float:left; color:" + rgbToCSS(model.sphere[i].gfx.color) + "'> S" + (Number(i)) + " </div>").appendTo("#legendContainer");
         }

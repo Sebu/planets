@@ -9,6 +9,24 @@ ModelPtolemySun = function(params) {
     this.factor = 1.0/7.0;
 
 
+
+    this.setShowSun1 = function(state) { 
+      this.planet.setEnabled(state); 
+      this.sphere[2].setGfx(["equator"],state);
+      this.sphere[3].setGfx(["equator"],state);
+    };
+        
+    this.setShowSun2 = function(state) { 
+      this.realSun.setEnabled(state); 
+      this.realSunS[1].setGfx(["equator"],state);
+      this.realSunS[2].setGfx(["equator"],state);
+    };
+
+    this.getShowSun1 = function(state) { return this.planet.getEnabled(); }    
+    this.getShowSun2 = function(state) { return this.realSun.getEnabled(); }
+    
+    this.setShowSun2(true);
+    
     this.updateSunDist = function() {
       this.realSunS[1].setScale(this.sphere[3].radius*this.factor);
       this.realSunS[2].setScale(this.sphere[3].equant*this.factor);

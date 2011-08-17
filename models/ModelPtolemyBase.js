@@ -1,4 +1,6 @@
+PtolemyMixin = function() {
 
+}
 
 /**
  * @constructor
@@ -16,27 +18,26 @@ ModelPtolemyBase = function(params) {
 
     this.updateList.push(this.ptolemySphere);
 
-
+    // Add Ptolemy Sun
     this.realSunS = [];
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: colors["S2"]});
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S2"]});
-
     this.realSun = new Planet({ glow: true, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
     this.realSun.setBeta(90.0);
-  
     this.updateList.push(realSunS1);
     this.updateList.push(realSunS2);    
-        
     this.ptolemySphere.addNode(realSunS1);
     realSunS1.anchor.addNode(realSunS2);
     realSunS2.anchor.addNode(this.realSun);
 
+    // date start
     this.startDate = DATES.PTOLEMY_EPOCH;
- 
+
+    // scale 
     this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
     this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
 
-
+    // add ecliptic vis
     var material = new THREE.LineBasicMaterial( {  color: rgbToHex(colors["S2"]) });
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
@@ -44,40 +45,51 @@ ModelPtolemyBase = function(params) {
     this.sphere[3].anchor.addNode(this.equator);
 
 
+    // add the crank vis
+    this.crank = new THREE.Line(equator, material );
+    this.crank.rotation.y = Math.PI/2;
+    this.sphere[4].addNode(this.crank);
+    
+    this.adjustCrank = function () {
+      var scale = Math.sin(this.getDeviation()/PI_SCALE) * this.sphere[4].radius*this.factor;
+      this.crank.scale  = new THREE.Vector3( scale, scale, scale );
+      this.crank.position.z = -this.sphere[4].radius*this.factor*1.2;  
+    }
+
+    
+    // apsidal line
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
     this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S3"] }); 
     this.sphere[2].pivot.addNode(this.apsidalLine);
 
-
+    // and more lines
     this.earthToDeferent = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.earthToDeferentLine = new Curve({trails: false, linewdith:1, pos: this.earthToDeferent, color: {r:0.6,g:0.6,b:1.0} }); 
     this.root.addNode(this.earthToDeferentLine);
 
-
     this.earthToPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.earthToPlanetLine = new Curve({trails: false, pos: this.earthToPlanet, color: {r:1.0,g:1.0,b:1.0} }); 
     this.root.addNode(this.earthToPlanetLine);
-
     
     this.equantPlanet = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
     this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
     this.root.addNode(this.equantPlanetLine);
 
-    
+
+
+    // show/hide modifications    
     this.setShowSphere1(false);
     this.setShowSphere2(false);
     this.setShowSphere3(false);
     this.setShowSphere4(false);
     this.sphere[1].gfx.visuals = ["equator","npole","spole","rotationarc","markerarc","markerball"];
-    this.sphere[2].gfx.visuals = ["equator"];
+    this.sphere[2].gfx.visuals = ["equator","centerLine"];
     this.sphere[3].gfx.visuals = ["equator","centerLine"];
     this.sphere[4].gfx.visuals = ["equator","centerLine"];
     this.setShowSphere1(true);
     this.setShowSphere2(true);
     this.setShowSphere3(true);
     this.setShowSphere4(true);
-    
-    
     this.realSunS[1].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
     this.realSunS[2].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
@@ -104,17 +116,14 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanet[1] = this.planet.mesh.currentPos();
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
- 
-
-        
         this.date = this.startDate + this.days;
     }
     
 
+
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;
         this.ptolemySphere.rotation.z = degToRad(angle);
-//        this.realSunS[1].setAxisAngle(angle);
     };
     
     this.getAxisAngle2 = function() {
@@ -122,21 +131,6 @@ ModelPtolemyBase = function(params) {
     };
 
  
-    this.setShowSun1 = function(state) { 
-      this.planet.setEnabled(state); 
-      this.sphere[2].setGfx(["equator"],state);
-      this.sphere[3].setGfx(["equator"],state);
-    };
-        
-    this.setShowSun2 = function(state) { 
-      this.realSun.setEnabled(state); 
-      this.realSunS[1].setGfx(["equator"],state);
-      this.realSunS[2].setGfx(["equator"],state);
-    };
-
-    this.getShowSun1 = function(state) { return true; }    
-    this.getShowSun2 = function(state) { return true; }
-
     this.updateBlob = function() {
       var scale = (this.sphere[3].radius+this.sphere[4].radius)*this.factor;
       this.sphere[1].setScale(scale); 
@@ -144,16 +138,6 @@ ModelPtolemyBase = function(params) {
       this.apsidal = [ {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor}, {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];
       this.apsidalLine.setPos(this.apsidal);       
     }
-
-
-    // TODO: change    
-    this.setBobAngle = function(angle) {
-      this.bobAngle = Math.PI/4 + Math.sin(this.sphere[3].getRotateAngle()/PI_SCALE);
-      this.sphere[4].anchor.rotation.x =  this.bobAngle;
-    };
-    this.getBobAngle = function() {
-      return this.sphere[4].bobAngle;
-    };
 
     this.setEquant = function(value) {
       this.sphere[3].equant = value;
@@ -185,6 +169,7 @@ ModelPtolemyBase = function(params) {
 
       this.planet.setDist(value*this.factor);
       
+      this.adjustCrank(); 
       this.updateBlob();
       this.updateSunDist();
     };

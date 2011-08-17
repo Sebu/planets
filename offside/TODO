@@ -205,14 +205,15 @@ DONE
   - ptolemy path
   - julian days time stuff from longitude (e.g. see mail)
   - fix: load presets through setters
-
+  - fix ptolemy path
+  
 TODO
 - fix minor 
   - set sexigesimal input / show
   - show egyptian date epoch: nabonassar etc. (see 127p and photo)
   - ptolemy -> ptolemy amagest
 - sphere Show/Hide
-- fix ptolemy path
+
 - visualize crank in ptolemy
 - longitude based time zones
 - inner planets sun distance/angle?

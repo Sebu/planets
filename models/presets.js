@@ -634,14 +634,7 @@ var TestPairs = {
 //    }
     },
 
-    Moon: {
-     3: {
-      d1: { date: "6.5.133", longitude: "217;48", latitude: "-0;50,53" },  
-      d2: { date: "20.10.134", longitude: "19;42", latitude: "-0;01,38" },
-      d3: { date: "6.3.136", longitude: "169;01", latitude: "-0;19,28" },
-      d4: { date: "6.4.355", longitude: "103;49,41", latitude: "-2;28,23" }
-    }
-    },
+
       
     Mars: {
 //    1: {
@@ -654,21 +647,21 @@ var TestPairs = {
 
     
     Jupiter: {
-      1: {
+//      1: {
       d1: { date: "17.5.133", longitude: "233;11", latitude: "1;15,51" },
       d2: {  date: "21.8.136", longitude: "339;15,32", latitude: "-1;55,51" },
       d3: {  date: "8.10.137", longitude: "14;23", latitude: "-2;04,05" },
       d4: { date: "20.5.383", longitude: "269;32,21", latitude: "0;20,40" }     
-    }
+//    }
     },
     
     Saturn: {
-      1: {
+//      1: {
       d1: { date: "26.3.127", longitude: "181;13", latitude: "3;01,26" },
       d2: {  date: "3.6.133", longitude: "249;40", latitude: "1;11,50" },
       d3: {  date: "8.7.136", longitude: "284;14", latitude: "-0.59" },
       d4: { date: "16.7.153", longitude: "141;10,49", latitude: "1;39,29" }    
-      }
+//      }
     },
 
     Venus: {
@@ -680,14 +673,23 @@ var TestPairs = {
     },
     
     Mercury: {
-      1: {
+//      1: {
       d1: { date: "4.6.134", longitude: "49;14,43", latitude: "-2;42,08" },
       d2: { date: "3.10.134", longitude: "170;36,24", latitude: "1;27,42" },
       d3: { date: "21.6.253", longitude: "80;31,36", latitude: "1;13,39" },    
       d4: { date: "14.6.283", longitude: "103;06,15", latitude: "-1;56,04" },
       d5: { date: "20.5.383", longitude: "79;14,25", latitude: "-0;25,38" }       
-      }
-  }
+//      }
+  },
+  
+    Moon: {
+     3: {
+      d1: { date: "6.5.133", longitude: "217;48", latitude: "-0;50,53" },  
+      d2: { date: "20.10.134", longitude: "19;42", latitude: "-0;01,38" },
+      d3: { date: "6.3.136", longitude: "169;01", latitude: "-0;19,28" },
+      d4: { date: "6.4.355", longitude: "103;49,41", latitude: "-2;28,23" }
+    }
+    }  
   }
 
 };
