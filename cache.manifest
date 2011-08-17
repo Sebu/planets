@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 3
+# rev 4
 dev.html
 css/planets.css
 vendor/modernizr-1.7.min.js
@@ -13,7 +13,6 @@ libs/UIHelpers.js
 models/presets.js
 models/BasePlanetModel.js
 models/ModelSimple.js
-models/ModelHippo.js
 models/ModelSun.js
 models/Model4.js
 models/Model5.js

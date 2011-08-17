@@ -301,7 +301,7 @@ Callippus: {
 
 Yavetz: {
   Test: {
-    caption: "Yavetz",
+//    caption: "Yavetz",
     model: "ModelYavetz",
     ui: "ModelYavetz",  
     betaRotate: 30.0,

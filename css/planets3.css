@@ -94,18 +94,17 @@ select {
   border: 0;
   padding: 1px 10px;
   font-weight: bold;
-#  border-radius: 4px;
-  background: black;
-#   background: -webkit-gradient(linear, left top, left bottom, from(rgba(95, 93, 91, 0.5)), to(rgba(70,78,75, 0.5)));
-#  background: -o-linear-gradient(#4d90fe, #4787ed);  
-#  background: -moz-linear-gradient(#4d90fe, #4787ed);
-  background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
-  background: rgba(45, 43, 41, 1.0);
+  border-radius: 4px;
+  background: rgb(45, 43, 41);
+}
+
+.modelSelect {
+  font-size: 16px;
+  padding: 1px;
 }
 
 option  {
    color: white;
-
    background: black;
 }
 
@@ -200,15 +199,7 @@ option  {
 .ui-state-focus {
     outline: none;
 }
-/*
-  background: #333;
-	height:12px;
-#	position:relative; 
-	width:120px;
-#	top: 4px;
-#	float:left; 
-}
-*/
+
 
 .slider[disabled] {
   color: gray;
@@ -267,8 +258,8 @@ select:focus,
 .range:hover,
 .range:focus {
   outline: none;
-  color: black;
-  background: white;
+#  color: black;
+#  background: white;
 #  background: rgb(35,75,200);
 }
 
