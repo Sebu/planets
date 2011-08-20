@@ -278,9 +278,7 @@ select:focus,
   position: absolute;
   color: white;
   background-color: rgba(150,150,150,0.5);
-#  background: -webkit-gradient(linear, left top, right top, from(rgba(150,150,150,0.8)), to(rgba(150,150,150,0.0)));
   background: -webkit-gradient(linear, left top, right top, from(rgba(0,0,0,0.8)), to(rgba(0,0,0,0.0)));    
-
 	font-weight: bold;
 	font-size:14px;
   color: rgb(255,255,255);

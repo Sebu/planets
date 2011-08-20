@@ -39,7 +39,7 @@ ModelPtolemy = function(params) {
       this.ptolemySphere.pivot.rotation.y = lambdaN;
       this.ptolemySphere.anchor.rotation.y -= lambdaN;
 
-      // bobbing motion
+      // bobbing motion (oriented to earth)
       this.sphere[4].rotation.y = earthDelta;
       this.sphere[4].rotation.z = k;
       
