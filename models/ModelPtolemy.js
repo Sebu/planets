@@ -30,7 +30,9 @@ ModelPtolemy = function(params) {
       lambdaCA = lambdaMA - defDelta - earthDelta,
       lambdaD = lambdaCA + lambdaAN,
       j = degToRad(this.getDeviation()) * Math.sin( lambdaD ),
-      k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA );  
+      k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA ); 
+
+      this.sphere[4].gfx.crank.rotation.z = lambdaMA; 
 
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;

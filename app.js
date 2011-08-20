@@ -205,9 +205,9 @@ myApp.prototype.init = function(params) {
 //        var presetBox = $("<div></div>").appendTo(uiBox);
 
 //        $("#viewPresets option[value='World']").attr('selected', true);
-        var presetsEle1 = $("<span><select class='chzn-select' style='font-size:18px;width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
-        this.presetsEle2 = $("<span><select class='chzn-select' style='width:130px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
-        this.presetsEle3 = $("<span><select class='chzn-select' style='width:55px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
+        var presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle2 = $("<span><select class='chzn-select modelSelect' style='width:150px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle3 = $("<span><select class='chzn-select modelSelect' style='width:36px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
 //        var vault = localStorage.getJson("customPresets") || {};
 //        $.extend(true, planetPresets, vault);
         
@@ -301,12 +301,12 @@ myApp.prototype.addPreset = function() {
     for(var i in model.sphere) {
       store.sphere[i] = { axisAngle: model.sphere[i].getAxisAngle(), speed: model.sphere[i].getSpeed(), rotateStart: model.sphere[i].getRotateStart()  };
     }
-    var text = prompt('Please enter a name for the preset.',model.name + '1');
+    var text = prompt('Please enter a name for the preset.', model.name + '1');
     if(text && (!vault[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
       vault[text] = store;
       localStorage.setJson("customPresets", vault);
       $.extend(true, planetPresets, vault);
-      UI.optionsFromHash("#planetPreset", planetPresets);
+      UI.optionsFromHash("#modelPreset", planetPresets);
       this.loadPreset(text); 
     }
 };
@@ -322,7 +322,7 @@ myApp.prototype.removePreset = function() {
   delete planetPresets[text];
   delete vault[text];
   localStorage.setJson("customPresets", vault);
-  UI.optionsFromHash("#planetPreset", planetPresets);
+  UI.optionsFromHash("#modelPreset", planetPresets);
   this.loadPreset("Mercury1");   
 };
 

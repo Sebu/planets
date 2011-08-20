@@ -206,18 +206,19 @@ DONE
   - julian days time stuff from longitude (e.g. see mail)
   - fix: load presets through setters
   - fix ptolemy path
-  
+    - show egyptian date epoch: nabonassar etc. (see 127p and photo)
+  - sphere Show/Hide
+
 TODO
 - fix minor 
   - set sexigesimal input / show
-  - show egyptian date epoch: nabonassar etc. (see 127p and photo)
   - ptolemy -> ptolemy amagest
-- sphere Show/Hide
 
 - visualize crank in ptolemy
 - longitude based time zones
 - inner planets sun distance/angle?
 - load/reset/save
+
 - better camera/movement/crank/ortho view
   - more view presets/tweening
     - use different cameras

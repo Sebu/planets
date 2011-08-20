@@ -46,14 +46,27 @@ ModelPtolemyBase = function(params) {
 
 
     // add the crank vis
-    this.crank = new THREE.Line(equator, material );
+    this.sphere[4].gfx.crank = new THREE.Line(equator, material );
+    this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: colors["S2"] });
+    this.crank = new Node();
     this.crank.rotation.y = Math.PI/2;
+    this.sphere[4].gfx.crank.addNode(this.sphere[4].gfx.crankRadius);
+    this.sphere[4].gfx.crank.addNode(this.crankPoint0 = new Translate({x:0, y: 1, z: 0}));
+    this.sphere[4].addNode(this.crankPoint1 = new Translate({x:0, y: 0, z: 0}));
+    this.crank.addNode(this.sphere[4].gfx.crank);
+
     this.sphere[4].addNode(this.crank);
     
+    // crank line
+    this.cline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
+    this.crankLine = new Curve({trails: false, pos: this.cline, color: colors["S2"] }); 
+    this.root.addNode(this.crankLine);
+
     this.adjustCrank = function () {
       var scale = Math.sin(this.getDeviation()/PI_SCALE) * this.sphere[4].radius*this.factor;
       this.crank.scale  = new THREE.Vector3( scale, scale, scale );
       this.crank.position.z = -this.sphere[4].radius*this.factor*1.2;  
+      this.crankPoint1.position.z = -this.sphere[4].radius*this.factor;  
     }
 
     
@@ -104,6 +117,10 @@ ModelPtolemyBase = function(params) {
 //        this.ecliptic.anchor.rotation.y = this.ptolemySphere.anchor.rotation.y + this.sphere[3].anchor.rotation.y + this.sphere[4].anchor.rotation.y;
 
         // lines
+        this.cline[0] = this.crankPoint0.currentPos();        
+        this.cline[1] = this.crankPoint1.currentPos();  
+        this.crankLine.setPos(this.cline);
+
         this.equantPlanet[0] = this.equantPoint.currentPos();        
         this.equantPlanet[1] = this.sphere[3].gfx.markerball.currentPos();
         this.equantPlanetLine.setPos(this.equantPlanet);
