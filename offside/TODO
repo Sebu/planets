@@ -208,17 +208,17 @@ DONE
   - fix ptolemy path
     - show egyptian date epoch: nabonassar etc. (see 127p and photo)
   - sphere Show/Hide
+  - visualize crank in ptolemy
 
 TODO
 - fix minor 
   - set sexigesimal input / show
   - ptolemy -> ptolemy amagest
 
-- visualize crank in ptolemy
+
 - longitude based time zones
 - inner planets sun distance/angle?
 - load/reset/save
-
 - better camera/movement/crank/ortho view
   - more view presets/tweening
     - use different cameras

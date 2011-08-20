@@ -32,7 +32,7 @@ ModelPtolemy = function(params) {
       j = degToRad(this.getDeviation()) * Math.sin( lambdaD ),
       k = degToRad(this.ptolemySphere.getInclination()) * Math.sin( lambdaMA ); 
 
-      this.sphere[4].gfx.crank.rotation.z = lambdaMA; 
+
 
       // true deferent angle
       this.sphere[3].anchor.rotation.y = lambdaMA - defDelta;
@@ -45,8 +45,9 @@ ModelPtolemy = function(params) {
       this.sphere[4].rotation.y = earthDelta;
       this.sphere[4].rotation.z = k;
       
-      this.sphere[4].anchor.rotation.x = j;
-      
+      this.sphere[4].ptolemy.rotation.x = j;
+      this.sphere[4].gfx.crank.rotation.z = -lambdaD + Math.PI/2; 
+            
       // mean anomaly correction
       this.sphere[4].anchor.rotation.y += - earthDelta + defDelta;
 
@@ -101,9 +102,10 @@ ModelPtolemyVenus = function(params) {
       this.sphere[4].rotation.y = earthDelta;
       this.sphere[4].rotation.z = k;
       
-      this.sphere[4].anchor.rotation.x = j;
+      this.sphere[4].ptolemy.rotation.x = j;
+      this.sphere[4].gfx.crank.rotation.z = -lambdaD;      
       
-      // mean anomaly correction
+      // mean anomaly correction     
       this.sphere[4].anchor.rotation.y += - earthDelta + defDelta;
 
     }
@@ -180,7 +182,8 @@ ModelPtolemyInferior = function(params) {
       this.ptolemySphere.anchor.rotation.y -= lambdaN + 0.15/PI_SCALE;
       this.ptolemySphere.pivot.rotation.z =  i;
       this.sphere[4].rotation.z = k;
-      this.sphere[4].anchor.rotation.x = -j;
+      this.sphere[4].ptolemy.rotation.x = -j;
+      this.sphere[4].gfx.crank.rotation.z = lambdaD + Math.PI;       
 
       
 

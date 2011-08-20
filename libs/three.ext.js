@@ -585,7 +585,7 @@ Disc = function(params) {
   var color = params.color || colors["Earth"];
   THREE.Mesh.call(  this, 
                     new THREE.SphereGeometry(params.radius,20,30), 
-                    new THREE.MeshLambertMaterial({color: rgbToHex(color), shading: THREE.FlatShading}) );
+                    new THREE.MeshLambertMaterial({color: rgbToHex(color), opacity: 0.2, shading: THREE.FlatShading}) );
   this.scale.y = 0.01;
   this.overdraw = true;
 }
@@ -715,7 +715,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = false;
+  this.meshGlow.visible = state;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -858,8 +858,8 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 
-    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-/*
+//    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+//*
     var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
         map: THREE.ImageUtils.loadTexture('textures/star.png'),  
         blending: THREE.AdditiveBlending, 
@@ -1045,8 +1045,9 @@ Spherical = function Spherical(params) {
     this.anchor.addNode(this.gfx.centerLine);
     
     // DEBUG
-    this.gfx.disc = new Disc( {radius: 9.0, color: this.gfx.color });
-//    this.anchor.addNode(this.gfx.disc);
+    this.gfx.disc = new Disc( {radius: 1.0, color: this.gfx.color });
+    this.gfx.disc.scale
+    this.anchor.addNode(this.gfx.disc);
     
     this.setAxisAngle(this.axisAngle);
     this.setRotateAngle(this.rotateAngle);
@@ -1120,7 +1121,7 @@ Spherical.prototype.setScale = function(value) {
   this.gfx.equator.scale  = new THREE.Vector3( value, value, value );
   this.gfx.markerarc.scale  = new THREE.Vector3( -value, value, value );
   this.gfx.centerLine.scale = new THREE.Vector3( value, value, value );
-//  this.gfx.disc.scale = new THREE.Vector3( value, 0, value );
+  this.gfx.disc.scale = new THREE.Vector3( value, 0, value );
   this.gfx.markerball.position.z = value;
   this.gfx.markerend.position.z = value;
   this.gfx.npole.position.y = value;

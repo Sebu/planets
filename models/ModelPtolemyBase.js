@@ -52,7 +52,9 @@ ModelPtolemyBase = function(params) {
     this.crank.rotation.y = Math.PI/2;
     this.sphere[4].gfx.crank.addNode(this.sphere[4].gfx.crankRadius);
     this.sphere[4].gfx.crank.addNode(this.crankPoint0 = new Translate({x:0, y: 1, z: 0}));
-    this.sphere[4].addNode(this.crankPoint1 = new Translate({x:0, y: 0, z: 0}));
+
+    this.sphere[4].ptolemy.addNode(this.crankPoint1 = new Translate({x:0, y: 0, z: 0}));
+
     this.crank.addNode(this.sphere[4].gfx.crank);
 
     this.sphere[4].addNode(this.crank);

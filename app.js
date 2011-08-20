@@ -80,8 +80,8 @@ myApp.prototype.init = function(params) {
 
         
 // SKY SPHERE
-/*
-				var mesh = new THREE.Mesh( new THREE.Sphere( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
+//*
+				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
 				this.skyScene.addObject( mesh );
 //*/	
