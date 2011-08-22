@@ -47,7 +47,7 @@ ModelPtolemyBase = function(params) {
 
     // add the crank vis
     this.sphere[4].gfx.crank = new THREE.Line(equator, material );
-    this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: colors["S2"] });
+    this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: colors["S4"] });
     this.crank = new Node();
     this.crank.rotation.y = Math.PI/2;
     this.sphere[4].gfx.crank.addNode(this.sphere[4].gfx.crankRadius);
@@ -61,7 +61,7 @@ ModelPtolemyBase = function(params) {
     
     // crank line
     this.cline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
-    this.crankLine = new Curve({trails: false, pos: this.cline, color: colors["S2"] }); 
+    this.crankLine = new Curve({trails: false, pos: this.cline, color: colors["S4"] }); 
     this.root.addNode(this.crankLine);
 
     this.adjustCrank = function () {
