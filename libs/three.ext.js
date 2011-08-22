@@ -1059,11 +1059,25 @@ Spherical = function Spherical(params) {
 Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
 
+Spherical.prototype.VISUALS = ["equator","npole","spole","rotationarc","markerarc","markerball","markerend"];
+
+// set visible elements
+Spherical.prototype.setVisuals = function(vis) {
+  this.setGfx(this.VISUALS, false); // reset
+  this.gfx.visuals = vis;
+  this.setShow(this.getShow());
+}
+
+Spherical.prototype.setGfx = function(vis, state) {
+    for (var i in vis) {
+        this.gfx[vis[i]].setEnabled(state);
+    }
+};
+
 Spherical.prototype.setShow = function(state) {
   this.visible = state;
   this.setGfx(this.gfx.visuals, state);
 }
-
 Spherical.prototype.getShow = function() {
   return this.visible;
 }
@@ -1087,12 +1101,7 @@ Spherical.prototype.getPlane = function() {
     return plane;
 }
 
-Spherical.prototype.setGfx = function(vis, state) {
-    for (var i in vis) {
-        this.gfx[vis[i]].setEnabled(state);
-    }
 
-};
 
 
 Spherical.prototype.setAxisAngle = function(angle) {

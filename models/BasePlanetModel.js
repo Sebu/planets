@@ -141,7 +141,7 @@ ModelBase.prototype = {
         // add stars
         this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
         
-        this.sphere[1].gfx.visuals =["equator","npole","spole","rotationarc","markerarc","markerball","markerend"];
+        this.sphere[1].setVisuals( ["equator","npole","spole","rotationarc","markerarc","markerball","markerend"] );
 
         // add Sun and sun spheres
         this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));
