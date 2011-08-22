@@ -79,10 +79,15 @@ var UI = {
         
         
         var value = params.value ||  instance["get"+id]();
-//        console.log(instance.valueOf());
-        var change = params.change || function(event, ui)  { instance["set"+id](Number(Utils.toDec(ui.value))); $("#" + id + " > input").attr("value",Number(Utils.toDec(ui.value))); };
+        var change = params.change || function(event, ui)  { 
+            instance["set"+id](Number(Utils.toDec(ui.value))); 
+            $("#" + id + " > input").attr("value",Number(Utils.toDec(ui.value))); 
+        };
 
-        var change2 = params.change || function()  { instance["set"+id](Number(Utils.toDec(this.value))); $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value))); };
+        var change2 = params.change || function()  { 
+          instance["set"+id](Number(Utils.toDec(this.value)));
+           $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value)));
+        };
 
 
 

@@ -10,7 +10,6 @@ ModelSun = function(params) {
 
     BaseMixin.call(this);
     
-    this.planet.setGlow(true);
 
     this.sunYears = 0;
     this.setSunYears = function(speed) {
@@ -30,13 +29,14 @@ ModelSun = function(params) {
     }
 
     this.getDaysPerYear = function() {
-       return  (1.0 - (1.0/this.getSunYears())) * this.sphere[2].getSpeed();
+      return  (1.0 - (1.0/this.getSunYears())) * this.sphere[2].getSpeed();
     }
 
    
     this.loadPreset = function(node) {
         ModelBase.prototype.loadPreset.call(this,node);
         this.setSunYears(this.currentPlanet.sunYears);
+        this.planet.setGlow(true);
     }
 
 };

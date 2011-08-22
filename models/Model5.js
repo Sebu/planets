@@ -19,17 +19,17 @@ Model5 = function(params) {
     }
 
 
-    this.beta=0;
-    this.getBeta = function() {return this.beta; }
+    this._beta=0;
+    this.getBeta = function() {return this._beta; }
     this.setBeta = function(val) {
-        this.beta=val;
+        this._beta=val;
         this.updateMovement();
     }
 
-    this.gamma=0;
-    this.getGamma = function() {return this.gamma; }
+    this._gamma=0;
+    this.getGamma = function() {return this._gamma; }
     this.setGamma = function(val) {
-        this.gamma=val;
+        this._gamma=val;
         this.updateMovement();
     }
 
@@ -38,20 +38,21 @@ Model5 = function(params) {
       this.setAlpha(this.currentPlanet.alpha);
       this.setBeta(this.currentPlanet.beta);
       this.setGamma(this.currentPlanet.gamma);
-
     }
+
     this.updateMovement = function() {
-        var alpha = (this.alpha!=0) ? 360/this.alpha : 0;
-        var beta = (this.beta!=0) ? 360/this.beta : 0;
-        var gamma = (this.gamma!=0) ? 360/this.gamma : 0;
-        this.sphere[3].setStep(alpha);
-        this.sphere[4].setStep(-beta);
-        this.sphere[5].setStep(gamma);
+      var alpha = (this.alpha!=0) ? 360/this.alpha : 0,
+      beta = (this.beta!=0) ? 360/this._beta : 0,
+      gamma = (this.gamma!=0) ? 360/this._gamma : 0;
+      
+      this.sphere[3].setStep(alpha);
+      this.sphere[4].setStep(-beta);
+      this.sphere[5].setStep(gamma);
     }
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
-        ModelBase.prototype.update.call(this, time);
+      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+      ModelBase.prototype.update.call(this, time);
     }
 
 

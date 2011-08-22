@@ -715,7 +715,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = state;
+  this.meshGlow.visible = false;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -858,8 +858,8 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 
-//    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-//*
+    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+/*
     var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
         map: THREE.ImageUtils.loadTexture('textures/star.png'),  
         blending: THREE.AdditiveBlending, 
@@ -1046,8 +1046,7 @@ Spherical = function Spherical(params) {
     
     // DEBUG
     this.gfx.disc = new Disc( {radius: 1.0, color: this.gfx.color });
-    this.gfx.disc.scale
-    this.anchor.addNode(this.gfx.disc);
+//    this.anchor.addNode(this.gfx.disc);
     
     this.setAxisAngle(this.axisAngle);
     this.setRotateAngle(this.rotateAngle);
