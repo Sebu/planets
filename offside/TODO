@@ -211,29 +211,27 @@ DONE
   - visualize crank in ptolemy
 
 TODO
-- fix minor 
-  - set sexigesimal input / show
-  - ptolemy -> ptolemy amagest
-
-
-- longitude based time zones
-- inner planets sun distance/angle?
 - load/reset/save
 - better camera/movement/crank/ortho view
   - more view presets/tweening
     - use different cameras
     - reset position (tween)
 - fix labels
+
+- fix minor 
+  - set sexigesimal input / show
+  - ptolemy -> ptolemy amagest
+- longitude based time zones
+- inner planets sun distance/angle?
 - merge model (1+ models into one for comparission)
 
-- spreadsheet
-  
-
-- update info box on change!!
 
 
 
 NEXT
+- spreadsheet  
+- update info box on change!!
+
 - info container values (show full in tooltip)
 - webdesigners: 
   animation speed, latitude presets, center direction labels, radio buttons switch

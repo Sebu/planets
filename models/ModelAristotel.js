@@ -12,10 +12,10 @@ ModelAristotle = function(params) {
     BaseMixin.call(this);
 
     // add unwinding spheres
-    var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]});
-    var s6 = this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: colors["S3"]});
-    var s7 = this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
-    var s8 = this.sphere[8] = new Spherical({ scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]}),
+    s6 = this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: colors["S3"]}),
+    s7 = this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S2"]}),
+    s8 = this.sphere[8] = new Spherical({ scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
     
     this.updateList.push(s5);
     this.updateList.push(s6);    
@@ -162,6 +162,7 @@ ModelAristotle = function(params) {
       this.sphere[5].setRotateStart(-start);
     }
 
+
     this.loadPreset = function(node) {
         ModelBase.prototype.loadPreset.call(this,node);
     }
@@ -177,11 +178,11 @@ ModelAristotle = function(params) {
     }
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: colors["Path"]});
-        this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: colors["Hippo"]});
-        ModelBase.prototype.update.call(this, time);
-        
+      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: colors["Path"]});
+      this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: colors["Hippo"]});
+      ModelBase.prototype.update.call(this, time);
     }
+
 };
 
 ModelAristotle.prototype = new ModelBase;

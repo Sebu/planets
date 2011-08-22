@@ -9,9 +9,9 @@ BaseMixin = function() {
         // TODO: hacky all over
     this.setSpeed1 = function(speed) {
           if (this.sphere[1].getSpeed()==0 && speed == 1) {
-            this.setAnimSpeed(this.getAnimSpeed()*this.speed0Factor);
+            this.setAnimSpeed(this.getAnimSpeed()*100);
           } else if(this.sphere[1].getSpeed()!=0 && speed == 0) {
-            this.setAnimSpeed(this.getAnimSpeed()/this.speed0Factor);
+            this.setAnimSpeed(this.getAnimSpeed()/100);
           }
           $("#AnimSpeed > input").attr("value",Number(this.getAnimSpeed()));
           this.sphere[1].setSpeed(-speed);
@@ -31,9 +31,7 @@ ModelBase = function() {
     this.currentPlanet = {};
     this.currentPos = "Free";
     this.currentLookAt = "Earth";
-    this.speed0Factor = 100;
 
-    // model specific moon
     this.days = 0;
 
     this.setAnimSpeed(60);
@@ -71,7 +69,7 @@ ModelBase.prototype = {
         this.curves = {};
         this.sphere = new Array(params.spheres);
         this.updateList = [];
-//        this.viewPoints = {"Free":0, "Earth":0, "Planet":0};
+
         this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
 
         this.light = Sunlight();
@@ -83,43 +81,45 @@ ModelBase.prototype = {
 
 
         // DIRECTION MARKERS
-        this.root.addNode( this.north = new Translate({id: "North", x:-4.5,y:0.2}) );
-        this.root.addNode( this.south = new Translate({id: "South", x:4.5,y:0.2}) );
-        this.root.addNode( this.east = new Translate({id: "East", z:-4.5,y:0.2}) );
-        this.root.addNode( this.west = new Translate({id: "West", z:4.5,y:0.2}) );
+        this.root.addNode( this.north = new Translate({id: "North", x:-4.5, y:0.2}) );
+        this.root.addNode( this.south = new Translate({id: "South", x:4.5,  y:0.2}) );
+        this.root.addNode( this.east =  new Translate({id: "East" , z:-4.5, y:0.2}) );
+        this.root.addNode( this.west =  new Translate({id: "West" , z:4.5,  y:0.2}) );
 
         // planet surface for earth view
-// {r: 0.992, g: 0.906, b: 0.796}
         this.root.addNode(this.earthPlane = new Disc({radius: 9.0, color: colors["Earth"]}) );
         this.earthPlane.setEnabled(false);
 
         
         // first and outer sphere
         this.sphere[1] = new Spherical({inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
+        this.root.addNode(this.sphere[1]);
+        this.updateList[0] = this.sphere[1];
         
+        // add earth to sphere 1
         this.earth = new Planet({
             betaRotate:180.0,
             dist: 0.0, scale: 0.6,
             emit:0.0, 
-            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-//            color: colors["Earth"],
+//            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
-        
-        this.root.addNode(this.sphere[1]);
-        this.updateList[0] = this.sphere[1];
 
-        // additional spheres
+
+        // add additional spheres
         for (var i = 2; i <= params.spheres; i++) {
             tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: 9-i*0.1, color: colors["S" + i + ""]});
             this.sphere[i - 1].anchor.addNode(tmp);
             this.updateList.push(tmp);
         }
         
+        // add the planet
         this.sphere[params.spheres].anchor.addNode(this.planet = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet",  color:colors["Planet"] }));
 
+
         // TODO: remove them, use model.sphere[x] etc.
-        // create some shortcuts
+        // create some standard shortcuts
         for (i in this.sphere) {
             this["setSpeed" + i] = new Function("value", "this.sphere[" + i + "].setSpeed(value);");
             this["setStep" + i] = new Function("value", "this.sphere[" + i + "].setStep(value);");
@@ -129,37 +129,31 @@ ModelBase.prototype = {
             this["getAxisAngle" + i] = new Function("return this.sphere[" + i + "].getAxisAngle();");
             this["getRotateStart" + i] = new Function("return this.sphere[" + i + "].getRotateStart();");
             this["setShowSphere" + i] = new Function("state", "this.sphere[" + i + "].setShow(state);");
-            this["getShowSphere" + i] = function() { return true; };
-
+            this["getShowSphere" + i] = new Function("return this.sphere[" + i + "].getShow();");
         }
         
 
-   
         //TODO: hack white north pole
         this.sphere[1].gfx.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
 
         // add stars
         this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
-        
+
+        // default visuals for sphere1        
         this.sphere[1].gfx.visuals =["equator","npole","spole","rotationarc","markerarc","markerball","markerend"];
 
-        // add Sun and sun spheres
-        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));
-
-
-        
+        // add ecliptic and Sun
+        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));       
         this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.ecliptic;
-        // shortcuts for the sun
-
         this.setSunSpeed = function(value) { this.ecliptic.setSpeed(value); };
         this.getSunSpeed = function() { return this.ecliptic.getSpeed(); };
-  
-        // hide everything
-        this.root.setEnabled(false);
+
 
     },
 
+
+    //TODO: move to ptolemyBase
     ptolemizeSpheres : function() {  
       this.ptolemySphere = new Longituder();  
       this.sphere[1].anchor.removeChild(this.sphere[2]);
@@ -168,7 +162,6 @@ ModelBase.prototype = {
       this.sphere[1].anchor.addNode(this.ptolemySphere);
       this.ptolemySphere.anchor.addNode(this.sphere[2]);
       this.ptolemySphere.addNode(this.ecliptic);
-      
       
       this.sphere[4].removeChild(this.sphere[4].anchor);
       this.sphere[4].ptolemy =  new Node(); 
@@ -211,7 +204,7 @@ ModelBase.prototype = {
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
         this.setSunSpeed(365.2466666);
-//        this.sun.setEnabled(false);
+
         this.sun.setEnabled(this.currentPlanet.showSun);
         this.sun.setGlow(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
@@ -221,7 +214,6 @@ ModelBase.prototype = {
         this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );
         // hide sun sphere
         this.ecliptic.setShow(false); 
-//setGfx(["npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
 
         // reset everything
         this.reset();
@@ -236,11 +228,10 @@ ModelBase.prototype = {
     },
 
 
-    setDate : function(value) {
-      
+    // jump to a certain date in the model
+    setDate : function(value) {      
       var date = Number(value);
-      if(date)
-        this.addDays(date);
+      if(date) this.addDays(date);
       else {  
         var date = value.toString().split(".");
         if(date.length!=3) { 
@@ -251,12 +242,10 @@ ModelBase.prototype = {
         }
         if(date.length!=3) return;
         
-        
         var realDays = Utils.magicToJd(Number(date[2]), Number(date[1]), Number(date[0]));
         var days = realDays - this.startDate;
         this.setDays(days);  
-      }
-      
+      }      
     },
 
     getDate : function() {
@@ -265,10 +254,6 @@ ModelBase.prototype = {
 
     updatePlanetMetadata : function(planet, dayRef, ecliptic, epi) {
             
-            //TODO: ecliptic latitude?
-//            var earthPos = sceneToSyl(this.earth.mesh.currentPos()); 
-//            var polePos = sceneToSyl(this.earth.npole.currentPos()); 
-//            var upVec = earthPos.subtract(polePos);
             
             var eclipticPos = sceneToSyl(ecliptic.anchor.currentPos()),
             eclipticPolePos = sceneToSyl(ecliptic.gfx.npole.currentPos()),
@@ -282,10 +267,6 @@ ModelBase.prototype = {
 
             epiPos = sceneToSyl(this.equantPoint.currentPos()),
             epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos),
-
-//            var equinoxOnEpiPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(epiPos);
-//            var equinoxOnEpiPlanePerp = equinoxOnEpiPlane.rotate(Math.PI/2, Line.create(epiPos,eclipticUpVec));
-
 
 
             sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(eclipticPos);
@@ -340,7 +321,7 @@ ModelBase.prototype = {
     // TODO: comments!!!!
     update : function(time) {
 
-        if(this.running) {
+       if(this.running) {
             // days passed (speed indicates seconds for one solar year)
             this.dayDelta = this.ecliptic.getSpeed()*(time/this.speed);
             this.days += this.dayDelta;
@@ -359,28 +340,26 @@ ModelBase.prototype = {
         this.updateMetadata();
     },
 
+    // separate it for easy modification
     updateMetadata : function() {
        this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
     },
     
-    adjustAnomaly : function() {
-      
-    },
+    adjustAnomaly : function() {},
 
      getDays : function() {
          return this.days;
      },
 
     addDays : function(days) {
-      this.dayDelta = days; ///this.ecliptic.getSpeed();
+      this.dayDelta = days;
       this.days += this.dayDelta;
         for (i in model.updateList) {
            model.updateList[i].updateMovement(this.dayDelta);
         }
-      this.wd += this.dayDelta*0.05; //13.2293;
+      this.wd += this.dayDelta*0.05;
       this.adjustAnomaly(); 
       this.updateMetadata();
-//      this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
     },
 
      setDays : function(days) {
