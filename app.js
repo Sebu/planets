@@ -238,8 +238,8 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
 //DEAD?        $("#vis").hide();
 
-        $("#modelPreset option[value='Ptolemy']").attr('selected',true);
-        this.loadPlanets("Ptolemy");
+        $("#modelPreset option[value='Eudoxus']").attr('selected',true);
+        this.loadPlanets("Eudoxus");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
@@ -545,7 +545,7 @@ myApp.prototype.loadPreset = function(preset) {
         this.setCurrentScene(model.root);
         model.loadPreset(planet);
         planetLabel.setText(model.currentPlanet.label);
-        planetLabel2.setText("moon");
+        planetLabel2.setText("Moon");
         //model.reset();
         
         this.setView({from: "Free",at:"Earth"});
@@ -610,8 +610,8 @@ myApp.prototype.loadPreset = function(preset) {
             if(model["getShowSphere" + i])
               UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
-        UI.checkbox({model:model, id:"ShowCurve0", text:"path"}).appendTo("#vis");
-        UI.checkbox({model:model, id:"ShowCurve1", text:"hippo"}).appendTo("#vis");
+        UI.checkbox({model:model, id:"ShowPath", text:"path"}).appendTo("#vis");
+        UI.checkbox({model:model, id:"ShowHippo", text:"hippo"}).appendTo("#vis");
         UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
 
         // playback div       
@@ -749,7 +749,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 
-            UI.checkbox({model:model, id:"Speed1Fix", text:"S 1 (daily)"}).appendTo("#speed");           
+            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");           
             UI.slider({model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
@@ -822,12 +822,12 @@ myApp.prototype.loadPreset = function(preset) {
 
             UI.box({id:"deferent"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"start"}).appendTo("#deferent");
-            UI.slider({model:model, id: "RadiusD", max: 1000, step:0.05, text: "radius"}).appendTo("#deferent");
+            UI.slider({model:model, id: "RadiusDeferent", max: 1000, step:0.05, text: "radius"}).appendTo("#deferent");
             UI.slider({model:model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#deferent");            
 //            UI.slider({model:model, id:"Speed2", max:20100, step:0.0001, text:"Speed (days)"}).appendTo("#deferent");
 
             UI.box({id:"epicycle"}).appendTo("#parameters");
-            UI.slider({model:model, id: "RadiusE", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
+            UI.slider({model:model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[3], id:"RotateAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 //            UI.slider({model:model.sphere[4], id:"BobAngle", max:360, step:0.01, text:"Angle"}).appendTo("#epicycle");
 
@@ -843,7 +843,7 @@ myApp.prototype.loadPreset = function(preset) {
            UI.checkbox({model:model, id:"ShowSun1", text:"Sun1"}).appendTo("#visSuns");
            UI.checkbox({model:model, id:"ShowSun2", text:"Sun2"}).appendTo("#visSuns");
            
-           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1); 
+           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
            this.currentCamera.rotateRight(Math.PI/2);    
            planetLabel2.setText("sun");       
    

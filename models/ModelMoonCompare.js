@@ -6,7 +6,7 @@
 ModelMoonCompare = function(params) {
 	  ModelMoon.call(this,params);	
 
-    this.showPhase = false;
+
 
 
     var s20 = this.sphere[4] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
@@ -21,15 +21,12 @@ ModelMoonCompare = function(params) {
     this.sphere[5].anchor.addNode(this.planet2);
 
 
-   this.setShowSphere4 = function(state) {
-      this.sphere[4].setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
-    }
-   this.getShowSphere4 = function() { return true; };
+//["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"]
+   this.setShowSphere4 = function(state) { this.sphere[4].setShow(state); }
+   this.getShowSphere4 = function() { return this.sphere[4].getShow(); };
        
-   this.setShowSphere5 = function(state) {
-      this.sphere[5].setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"], state);
-    }
-   this.getShowSphere5 = function() { return true; };
+   this.setShowSphere5 = function(state) { this.sphere[5].setShow(state); }
+   this.getShowSphere5 = function() { return this.sphere[4].getShow(); };
 
 
     this.updateMoon = function() {
@@ -67,6 +64,7 @@ ModelMoonCompare = function(params) {
         this.sphere[5].setRotateAngle(this.sphere[3].rotateStart);
     }
 
+    this.showPhase = false;
     this.setShowPhase = function(state) {  
       this.showPhase = state;
       this.setAxisAngle3(5);
@@ -75,6 +73,7 @@ ModelMoonCompare = function(params) {
     this.getShowPhase = function() {
       return this.showPhase;
     } 
+
 
     this.setAxisAngle2 = function(angle) {
         this.sphere[2].setAxisAngle(angle); 

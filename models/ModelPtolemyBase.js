@@ -75,7 +75,7 @@ ModelPtolemyBase = function(params) {
     // apsidal line
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
     this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S3"] }); 
-    this.sphere[2].pivot.addNode(this.apsidalLine);
+    this.sphere[2].addNode(this.apsidalLine);
 
     // and more lines
     this.earthToDeferent = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
@@ -93,20 +93,12 @@ ModelPtolemyBase = function(params) {
 
 
     // show/hide modifications    
-    this.setShowSphere1(false);
-    this.setShowSphere2(false);
-    this.setShowSphere3(false);
-    this.setShowSphere4(false);
-    this.sphere[1].gfx.visuals = ["equator","npole","spole","rotationarc","markerarc","markerball"];
-    this.sphere[2].gfx.visuals = ["equator","centerLine"];
-    this.sphere[3].gfx.visuals = ["equator","centerLine"];
-    this.sphere[4].gfx.visuals = ["equator","centerLine"];
-    this.setShowSphere1(true);
-    this.setShowSphere2(true);
-    this.setShowSphere3(true);
-    this.setShowSphere4(true);
-    this.realSunS[1].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
-    this.realSunS[2].setGfx(["equator", "npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], false);
+    this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"]);
+    this.sphere[2].setVisuals(["equator","centerLine"]);
+    this.sphere[3].setVisuals(["equator","centerLine"]);
+    this.sphere[4].setVisuals(["disc","equator","centerLine"]);
+    this.realSunS[1].setVisuals([]);
+    this.realSunS[2].setVisuals([]);
 
 
     
@@ -142,7 +134,7 @@ ModelPtolemyBase = function(params) {
 
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;
-        this.ptolemySphere.rotation.z = degToRad(angle);
+        this.ptolemySphere.rotation.z = angle/PI_SCALE;
     };
     
     this.getAxisAngle2 = function() {
@@ -170,19 +162,19 @@ ModelPtolemyBase = function(params) {
     this.getEquant = function() { return this.sphere[3].equant; }
     
    
-    this.setRadiusD = function(value) {
+    this.setRadiusDeferent = function(value) {
       this.sphere[3].radius = value;
       this.sphere[3].setScale(value*this.factor);
-      this.sphere[4].pivot.position.z = value*this.factor;
+      this.sphere[4].position.z = value*this.factor;
 
      
       this.updateBlob();
       this.updateSunDist();
     };
-    this.getRadiusD = function() { return this.sphere[3].radius; }
+    this.getRadiusDeferent = function() { return this.sphere[3].radius; }
 
 
-    this.setRadiusE = function(value) {
+    this.setRadiusEpicycle = function(value) {
       this.sphere[4].radius = value;
       this.sphere[4].setScale(value*this.factor);
 
@@ -192,12 +184,12 @@ ModelPtolemyBase = function(params) {
       this.updateBlob();
       this.updateSunDist();
     };
-    this.getRadiusE = function() { return this.sphere[4].radius; }    
+    this.getRadiusEpicycle = function() { return this.sphere[4].radius; }
     
     this.setBaseRadius = function(value) {
       this.sphere[2].radius = value;
       this.sphere[2].setScale(this.sphere[2].radius*this.factor);
-      this.sphere[3].pivot.position.z = this.sphere[2].radius*this.factor;  
+      this.sphere[3].position.z = this.sphere[2].radius*this.factor;
     }
     this.getBaseRadius = function() { return this.sphere[2].radius; }
 
@@ -219,8 +211,8 @@ ModelPtolemyBase = function(params) {
     this.reset = function () {
         ModelBase.prototype.reset.call(this);
         this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
-        this.setRadiusD( Utils.toDec(this.currentPlanet.derefentRadius || 0) ); 
-        this.setRadiusE( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
+        this.setRadiusDeferent( Utils.toDec(this.currentPlanet.derefentRadius || 0) );
+        this.setRadiusEpicycle( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
         this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
         this.ptolemySphere.setApsidalAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
         this.ptolemySphere.setApsidalSpeed( Utils.toDec(this.currentPlanet.centuryStep || 0) );
@@ -230,7 +222,6 @@ ModelPtolemyBase = function(params) {
         this.setLambdaAN( Utils.toDec(this.currentPlanet.lambdaAN || 0) );
         this.adjustAnomaly();   
         
-//        this.setBobAngle(30);
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);
         this.realSunS[1].setOffsetRotateAngle( 56.5 );    

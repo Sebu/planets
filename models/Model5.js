@@ -11,10 +11,10 @@ Model5 = function(params) {
     BaseMixin.call(this);
   
 
-    this.alpha=0;
-    this.getAlpha = function() {return this.alpha; }
+    this._alpha=0;
+    this.getAlpha = function() {return this._alpha; }
     this.setAlpha = function(val) {
-        this.alpha=val;
+        this._alpha=val;
         this.updateMovement();
     }
 
@@ -34,14 +34,14 @@ Model5 = function(params) {
     }
 
     this.loadPreset = function(node) {
-      ModelBase.prototype.loadPreset.call(this,node);
+      ModelBase.prototype.loadPreset.call(this, node);
       this.setAlpha(this.currentPlanet.alpha);
       this.setBeta(this.currentPlanet.beta);
       this.setGamma(this.currentPlanet.gamma);
     }
 
     this.updateMovement = function() {
-      var alpha = (this.alpha!=0) ? 360/this.alpha : 0,
+      var alpha = (this.alpha!=0) ? 360/this._alpha : 0,
       beta = (this.beta!=0) ? 360/this._beta : 0,
       gamma = (this.gamma!=0) ? 360/this._gamma : 0;
       

@@ -8,8 +8,8 @@ ModelAristotle = function(params) {
     params.spheres = 4;
     
     this.genSpheres(params);
-    
     BaseMixin.call(this);
+    
 
     // add unwinding spheres
     var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]}),
@@ -29,8 +29,7 @@ ModelAristotle = function(params) {
 
 
 
-
-          
+    // create nice joint gfx element and add it          
     this.createJoint = function(params) {
       var mat = new THREE.LineBasicMaterial( { linewidth: params.linewidth, color: rgbToHex(params.color) } );
       params.to.gfx.njoint = new THREE.Line( aLine, mat );
@@ -47,7 +46,44 @@ ModelAristotle = function(params) {
    this.createJoint({from: this.sphere[2], to: this.sphere[7], color: colors["S2"], linewidth:2 }); 
    this.createJoint({from: this.sphere[1], to: this.sphere[8], color: colors["S1"], linewidth:1 }); 
     
+   // show hide stuff
+   this.setShowSphere18 = function(state) {
+      this.sphere[1].setGfx(["npole","spole"], state);
+      this.sphere[8].setGfx(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere18 = function() { return false; };
 
+   this.setShowSphere36 = function(state) {
+      this.sphere[3].setGfx(["npole","spole"], state);
+      this.sphere[6].setGfx(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere36 = function() { return false; };
+
+   this.setShowSphere27 = function(state) {
+      this.sphere[2].setGfx(["npole","spole"], state);
+      this.sphere[7].setGfx(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere27 = function() { return false; };
+   
+   this.setShowSphere45 = function(state) {
+      this.sphere[4].setGfx(["npole","spole"], state);
+      this.sphere[5].setGfx(["sjoint","njoint","npole","spole"], state);
+    }
+   this.getShowSphere45 = function() { return false; };      
+   
+   this.setShowSphere5 = function(state) { this.sphere[5].setShow(state); } 
+   this.getShowSphere5 = function() { return this.sphere[5].getShow(); };
+
+   this.setShowSphere6 = function(state) { this.sphere[6].setShow(state); }
+   this.getShowSphere6 = function() { return this.sphere[6].getShow(); };
+
+   this.setShowSphere7 = function(state) { this.sphere[7].setShow(state); }
+   this.getShowSphere7 = function() { return this.sphere[7].getShow(); };
+
+   this.setShowSphere8 = function(state) { this.sphere[8].setShow(state); }
+   this.getShowSphere8 = function() { return this.sphere[8].getShow(); };
+   
+   
     // ecliptic
     this.setAxisAngle2 = function(angle) {
       var angle1 = this.sphere[2].getAxisAngle();
@@ -77,14 +113,16 @@ ModelAristotle = function(params) {
     }
 
 
-
-    this.setSpeed1Fix = function(speed) {
-      this.setSpeed1(speed);
+    this.setSpeed1Old = this.setSpeed1;
+    
+    this.setSpeed1 = function(speed) {
+      this.setSpeed1Old(speed);
       this.sphere[8].setSpeed(this.sphere[1].getSpeed());
     }
 
-    this.getSpeed1Fix = function() {
-      return this.getSpeed1();
+    this.getSpeed1Old = this.getSpeed1;
+    this.getSpeed1 = function() {
+      return this.getSpeed1Old();
     }
 
     this.setSpeed2 = function(speed) {
@@ -98,54 +136,6 @@ ModelAristotle = function(params) {
         this.sphere[5].setSpeed(speed);
         this.sphere[6].setSpeed(-speed);
     }
-
-   this.setShowSphere18 = function(state) {
-      this.sphere[1].setGfx(["npole","spole"], state);
-      this.sphere[8].setGfx(["sjoint","njoint","npole","spole"], state);
-    }
-   this.getShowSphere18 = function() { return false; };
-
-   this.setShowSphere36 = function(state) {
-      this.sphere[3].setGfx(["npole","spole"], state);
-      this.sphere[6].setGfx(["sjoint","njoint","npole","spole"], state);
-    }
-   this.getShowSphere36 = function() { return false; };
-
-   this.setShowSphere27 = function(state) {
-      this.sphere[2].setGfx(["npole","spole"], state);
-      this.sphere[7].setGfx(["sjoint","njoint","npole","spole"], state);
-    }
-   this.getShowSphere27 = function() { return false; };
-   
-   this.setShowSphere45 = function(state) {
-      this.sphere[4].setGfx(["npole","spole"], state);
-      this.sphere[5].setGfx(["sjoint","njoint","npole","spole"], state);
-    }
-   this.getShowSphere45 = function() { return false; };      
-   
-   this.setShowSphere5 = function(state) {
-      this.sphere[5].setGfx(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
-    }
-   this.getShowSphere5 = function() { return false; };
-
-   this.setShowSphere6 = function(state) {
-      this.sphere[6].setGfx(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
-    }
-   this.getShowSphere6 = function() { return false; };
-
-   this.setShowSphere7 = function(state) {
-      this.sphere[7].setGfx(["sjoint","njoint","equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
-    }
-   this.getShowSphere7 = function() { return false; };
-
-  this.getShowSphere2 = function() { return false; };
-  this.getShowSphere3 = function() { return false; };
-  this.getShowSphere4 = function() { return false; };
-
-   this.setShowSphere8 = function(state) {
-      this.sphere[8].setGfx(["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball","markerend"], state);
-    }
-   this.getShowSphere8 = function() { return true; };
 
     this.setRotateStart2 = function(start) {
       this.sphere[2].setRotateStart(start);

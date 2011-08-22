@@ -45,10 +45,10 @@ ModelBase.prototype.constructor = ModelBase;
 ModelBase.prototype = {
 
 
-    setShowCurve0 : function(state) { this.showCurve[0] = state; if(this.curves[0]) this.curves[0].setEnabled(state); },
-    getShowCurve0 : function() { if(!this.curves[0]) return this.showCurve[0]; },
-    setShowCurve1 : function(state) { this.showCurve[1] = state; if(this.curves[1]) this.curves[1].setEnabled(state); },
-    getShowCurve1 : function() { return this.showCurve[1]; },
+    setShowPath : function(state) { this.showCurve[0] = state; if(this.curves[0]) this.curves[0].setEnabled(state); },
+    getShowPath : function() { if(!this.curves[0]) return this.showCurve[0]; },
+    setShowHippo : function(state) { this.showCurve[1] = state; if(this.curves[1]) this.curves[1].setEnabled(state); },
+    getShowHippo : function() { return this.showCurve[1]; },
     setShowStars : function(state) { this.stars.setEnabled(state); },
     getShowStars : function() { return this.stars.getEnabled(); },
 
@@ -139,15 +139,12 @@ ModelBase.prototype = {
         // add stars
         this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
         
-
-        // add Sun and sun spheres
-        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));
-
         // default visuals for sphere1        
         this.sphere[1].setVisuals( ["equator","npole","spole","rotationarc","markerarc","markerball","markerend"] );
 
         // add ecliptic and Sun
-        this.sphere[2].pivot.addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["Sun"] }));       
+        this.sphere[2].addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S4"] }));
+        this.ecliptic.setVisuals([]);    
         this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.ecliptic;
         this.setSunSpeed = function(value) { this.ecliptic.setSpeed(value); };
@@ -202,8 +199,8 @@ ModelBase.prototype = {
         }
         
         this.setShowStars(this.currentPlanet.showStars);
-        this.setShowCurve0(this.currentPlanet.showPath);
-        this.setShowCurve1(this.currentPlanet.showHippo);
+        this.setShowPath(this.currentPlanet.showPath);
+        this.setShowHippo(this.currentPlanet.showHippo);
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
@@ -214,8 +211,8 @@ ModelBase.prototype = {
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 
         // hide arcs of outer sphere
-        this.sphere[1].setGfx(["arc1","arc2"], false);
-        this.sphere[2].pivot.addNode( this.equantPoint = new Translate({z:0.0}) );
+//        this.sphere[1].setGfx(["arc1","arc2"], false);
+        this.sphere[2].addNode( this.equantPoint = new Translate({z:0.0}) );
         // hide sun sphere
         this.ecliptic.setShow(false); 
 
