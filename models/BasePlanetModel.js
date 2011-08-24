@@ -92,7 +92,7 @@ ModelBase.prototype = {
 
         
         // first and outer sphere
-        this.sphere[1] = new Spherical({inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
+        this.sphere[1] = new Spherical({vortex: true, inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
         this.root.addNode(this.sphere[1]);
         this.updateList[0] = this.sphere[1];
         

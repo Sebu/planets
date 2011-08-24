@@ -43,10 +43,16 @@ Spherical = function Spherical(params) {
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
     eqMat = new THREE.LineBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), opacity: 0.8, color: rgbToHex(this.gfx.color) } );
-    this.gfx.equator = new THREE.Line(equator, eqMat );
-    this.gfx.equator.doubleSided = true;
+
+    if(params.vortex) {
+      this.gfx.equator = new Disc( {radius: 1.15, innerRadius: 1.0, color: this.gfx.color });
+    } else {
+     this.gfx.equator = new THREE.Line(equator, eqMat );      
+     this.gfx.equator.rotation.x = Math.PI/2;
+    }
+
+//    this.gfx.equator.doubleSided = true;
     this.gfx.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
-    this.gfx.equator.rotation.x = Math.PI/2;
     this.anchor.addNode(this.gfx.equator);
 
     this.markerArc = new Circle({ angle : 90 });

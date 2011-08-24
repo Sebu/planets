@@ -78,15 +78,96 @@ THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
 
 
 
+THREE.DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
+
+	THREE.Geometry.call( this );
+
+	var scope = this;
+
+	this.innerRadius = innerRadius || 0;
+	this.outerRadius = outerRadius || 100;
+	this.spread =  spread || 0;	
+	this.segments = segments || 8;
+
+	var temp_uv = [];
+
+	for ( var j = 0; j <= this.segments; ++j ) {
+
+			var v = j / this.segments * 2 * Math.PI;
+			var x1 = (this.innerRadius)*Math.cos(v)*Math.cos( this.spread/2 );
+			var y1 = (this.innerRadius)*Math.sin(v)*Math.cos( this.spread/2 );
+ 	  	var x2 = (this.outerRadius)*Math.cos(v);
+			var y2 = (this.outerRadius)*Math.sin(v);
+
+			var z1 = (this.innerRadius)*Math.sin( this.spread/2 );
+			var z2 = -(this.innerRadius)*Math.sin( this.spread/2 );
+
+			vert( x1, z1, y1 );
+			vert( x2, 0, y2 );			
+			vert( x1, z2, y1 );
+			
+	}
+
+
+	for ( var j = 1; j <= this.segments; ++j ) {
+
+			var a = 3*j;
+			var a2 = 3*j + 2;
+
+			var b = 3*j + 1;
+			var c = 3*(j - 1) + 1;
+			var d = 3*(j - 1);
+			var d2 = 3*(j - 1) + 2;			
+
+			f4( a, b, c, d );
+			f4( d2, c, b, a2 );			
+
+//*
+      var unit = (1/this.segments);
+			this.faceVertexUvs[ 0 ].push( [new THREE.UV(unit*(j), 1 ),
+							new THREE.UV( unit*(j), 0 ),
+							new THREE.UV( unit*(j-1), 0 ),
+							new THREE.UV( unit*(j-1), 1 )
+							] );
+//*/
+	}
+
+	this.computeCentroids();
+	this.computeFaceNormals();
+	this.computeVertexNormals();
+
+	function vert( x, y, z ) {
+
+		scope.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
+
+	};
+
+	function f4( a, b, c, d ) {
+		scope.faces.push( new THREE.Face4( a, b, c, d ) );
+	};
+
+};
+
+THREE.DiscGeometry.prototype = new THREE.Geometry();
+THREE.DiscGeometry.prototype.constructor = THREE.TorusGeometry;
+
 
 // disc of planet surface 
 Disc = function(params) {
   var color = params.color || colors["Earth"];
+  var inner = params.innerRadius || 0;
   THREE.Mesh.call(  this, 
-                    new THREE.SphereGeometry(params.radius,20,30), 
-                    new THREE.MeshLambertMaterial({color: rgbToHex(color), transparent: true, opacity: 0.2, shading: THREE.FlatShading}) );
-  this.scale.y = 0.01;
-  this.overdraw = true;
+//                    new THREE.SphereGeometry(params.radius,20,30),
+                    new THREE.DiscGeometry(inner, params.radius, 0, 60),  
+                    new THREE.MeshLambertMaterial({
+                       color: rgbToHex(color),
+                       transparent: true, 
+                       map: THREE.ImageUtils.loadTexture('textures/ramp.png'),
+//                       opacity: 0.6,
+                       shading: THREE.FlatShading}) );
+//  this.scale.y = 0.01;
+//  this.overdraw = true;
+//  this.doubleSided = true;
 }
 Disc.prototype = new THREE.Mesh;
 Disc.prototype.constructor = Disc;
@@ -356,9 +437,9 @@ Cloud = function(params) {
        norm = Math.sqrt(x * x + y * y + z * z) / 10.0;
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
-
+//*
     var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
-/*
+/*/
     var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
         map: THREE.ImageUtils.loadTexture('textures/star.png'),  
         blending: THREE.AdditiveBlending, 

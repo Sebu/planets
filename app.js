@@ -18,7 +18,7 @@ myApp.prototype.init = function(params) {
 
         // create canvas (WebGL if possible)
 //        this.canvas = new Ori.Canvas({antialias: true})
-        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true });
+        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 ); //0x1B1917 );
         
                 //home/seb/git/topoi/dev.html// append to DOM
