@@ -51,7 +51,6 @@ Spherical = function Spherical(params) {
      this.gfx.equator.rotation.x = Math.PI/2;
     }
 
-//    this.gfx.equator.doubleSided = true;
     this.gfx.equator.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.anchor.addNode(this.gfx.equator);
 
@@ -70,13 +69,15 @@ Spherical = function Spherical(params) {
 //    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
     
     
-    this.gfx.markerball =  new THREE.Mesh(cone, materialCone);
+    this.gfx.markerball =  new THREE.Mesh(geometryBall, materialCone);
     this.gfx.markerend =  new THREE.Mesh(markerend, materialCone);
     this.gfx.markerball.position.z = params.scale;
 //    this.gfx.markerball.position.x = -0.2;
     this.gfx.markerball.rotation.y = -Math.PI/2;
     this.gfx.markerend.position.z = params.scale;
     this.gfx.markerend.rotation.y = -Math.PI/2;
+    this.anchor.addNode(this.gfx.markerball);
+//    this.addNode(this.gfx.markerend);
     
     
     this.gfx.sphere = new THREE.Mesh(planetGeo, materialBall);
@@ -88,8 +89,6 @@ Spherical = function Spherical(params) {
     this.gfx.spole = new THREE.Mesh(geometryBall, materialBall);
     this.gfx.npole.position.y = params.scale;
     this.gfx.spole.position.y = -params.scale;
-    this.anchor.addNode(this.gfx.markerball);
-    this.addNode(this.gfx.markerend);
 
     this.anchor.addNode(this.gfx.npole);
     this.anchor.addNode(this.gfx.spole);

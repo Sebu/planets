@@ -3,6 +3,12 @@
 var planetPresets = { 
 
 Eudoxus: {
+
+  ComareTest: {
+    model: "ModelCompareBase",
+    ui: "Ptolemy"
+  },
+  
   Mercury: {
     1: {
 //    caption: "Eudoxus Mercury 1",

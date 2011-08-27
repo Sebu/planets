@@ -11,6 +11,11 @@ THREE.Camera.prototype.setFov = function(fov) {
 	  this.updateProjectionMatrix();
 };
 
+THREE.Camera.prototype.setEye = function(pos) {
+    this.position.set(pos.x, pos.y, pos.z);
+};
+
+/*
 // rotation around lookAt
 THREE.Camera.prototype.rotateTarget = function(target) {
 
@@ -43,9 +48,7 @@ THREE.Camera.prototype.setTarget = function(target) {
     this.updateNew();
 }
 
-THREE.Camera.prototype.setEye = function(pos) {
-    this.position.set(pos.x, pos.y, pos.z);
-};
+
 
 // addition of up/right/dir vector
 THREE.Camera.prototype.init = function(params) {
@@ -127,4 +130,6 @@ THREE.Camera.prototype.rotateUp = function(angle) {
     this.dir = m.multiply(this.dir);
     this.updateNew();
 }
+
+//*/
 

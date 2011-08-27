@@ -42,9 +42,9 @@ ModelPtolemySun = function(params) {
     };
     
     
-    this.oldReset = this.reset;
+    this.resetOld = this.reset;
     this.reset = function () {
-        this.oldReset();
+        this.resetOld();
        
         // sun stuff
         this.realSunS[1].setOffsetRotateSpeed(0);

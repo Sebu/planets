@@ -224,7 +224,12 @@ ModelBase.prototype = {
     setRunning : function(state) {
         this.running=state;
     },
-    tooglePause : function() {
+    
+    getRunning : function() {
+      return this.running;
+    },
+    
+    togglePause : function() {
         this.running=!this.running;
     },
 
@@ -321,15 +326,13 @@ ModelBase.prototype = {
     // update movement and parameters
     // TODO: comments!!!!
     update : function(time) {
-
        if(this.running) {
             // days passed (speed indicates seconds for one solar year)
             this.dayDelta = this.ecliptic.getSpeed()*(time/this.speed);
             this.days += this.dayDelta;
-
             // update movement of all spheres
-            for (i in model.updateList) {
-                model.updateList[i].updateMovement(this.dayDelta);
+            for (i in this.updateList) {
+                this.updateList[i].updateMovement(this.dayDelta);
             }
             this.wd += this.dayDelta*0.05; //13.2293;
             this.adjustAnomaly();        
@@ -355,8 +358,8 @@ ModelBase.prototype = {
     addDays : function(days) {
       this.dayDelta = days;
       this.days += this.dayDelta;
-        for (i in model.updateList) {
-           model.updateList[i].updateMovement(this.dayDelta);
+        for (i in this.updateList) {
+           this.updateList[i].updateMovement(this.dayDelta);
         }
       this.wd += this.dayDelta*0.05;
       this.adjustAnomaly(); 

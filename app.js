@@ -34,7 +34,7 @@ myApp.prototype.init = function(params) {
         Ori.input.trackMouseOn(this.canvas.domElement);
         
 
-        Ori.input.trackKeysOn(window);
+//        Ori.input.trackKeysOn(window);
         if(Modernizr.touch) Ori.input.trackTouchOn(this.canvas.domElement);
            
 
@@ -47,9 +47,23 @@ myApp.prototype.init = function(params) {
 
         // setup camera
         // TODO : shorten
-        this.camera = new THREE.Camera(70, window.innerWidth / window.innerHeight, 0.1, 10000);		
-        this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
-        this.currentCamera = this.camera;
+        this.cameras = { 
+          Trackball: { 
+            caption: "Global",
+            instance: new THREE.TrackballCamera({ noPan: true, fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000, domElement: this.canvas.domElement})
+          },
+          FPS: { 
+            caption: "Local",
+            instance: new THREE.FirstPersonCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000, domElement: this.canvas.domElement})
+          }          
+        };
+        
+        this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
+        this.cameras["Trackball"].instance.movementSpeed = 5.0;
+        
+//        this.camera = new THREE.RollCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000);		
+//        this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
+        this.currentCamera = this.cameras["Trackball"].instance;
 
 
         
@@ -65,7 +79,7 @@ myApp.prototype.init = function(params) {
 //*/
 
         this.skyCam = new THREE.Camera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
-        this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
+//        this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
         this.skyScene = new THREE.Scene();
 
 
@@ -387,6 +401,7 @@ myApp.prototype.update = function(time) {
 
         if(Ori.input.isDown("DEBUG")) debugBox.toggle();
 
+/*
         // handle input     
         if (model.currentPos != "Earth") {
           if (Ori.input.isDown("LEFT")) this.currentCamera.translateNew(0.6, 0, 0);
@@ -394,9 +409,11 @@ myApp.prototype.update = function(time) {
           if (Ori.input.isDown("DOWN")) this.currentCamera.translateNew(0, 0, -0.6);
           if (Ori.input.isDown("UP")) this.currentCamera.translateNew(0, 0, 0.6);
         }
+*/        
         
-        
-        if (Ori.input.mouse.wheel) this.currentCamera.translateNew(0.0, 0.0, Ori.input.mouse.z);
+//        if (Ori.input.mouse.wheel) this.currentCamera.translateNew(0.0, 0.0, Ori.input.mouse.z);
+
+/*
         if (Ori.input.mouse.b1) {
             var x = Ori.input.mouse.x;
             var y = Ori.input.mouse.y;
@@ -411,16 +428,17 @@ myApp.prototype.update = function(time) {
 
             }
 
-            this.currentCamera.rotateRight(pitch);
+            //this.currentCamera.rotateRight(pitch);
 
-            this.skyCam.rotateRight(pitch);
+//            this.skyCam.rotateRight(pitch);
             
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
             
-            if (model.currentPos != "Earth") this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
-            if (model.currentPos != "Earth") this.skyCam.rotateTarget({x: 0, y: 0, z: 0});
+            //if (model.currentPos != "Earth") this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
+//            if (model.currentPos != "Earth") this.skyCam.rotateTarget({x: 0, y: 0, z: 0});
         }
+//*/        
         
         // update model
         model.update(time);
@@ -433,7 +451,7 @@ myApp.prototype.update = function(time) {
 
         //TODO: model.ui specific
         // update Label position/visibility
-//*/
+
         if (model.currentPos == "Earth") {
             northLabel.setPosition(model.north.getPosCanvas(this.currentCamera, this.canvas));
             southLabel.setPosition(model.south.getPosCanvas(this.currentCamera, this.canvas));
@@ -479,11 +497,7 @@ myApp.prototype.resize = function() {
     };
 
 
-myApp.prototype.setView = function(view) {
-        model.currentPos = view.from;
-        model.currentLookAt = view.at;
-
-
+myApp.prototype.setCamera = function(cam) {
 
         equinoxLabel.setPosition({x:0, y:0, z:-1});
         npoleLabel.setPosition({x:0, y:0, z:-1});
@@ -495,11 +509,23 @@ myApp.prototype.setView = function(view) {
 
         planetLabel.setPosition({x:0, y:0, z:-1});
         planetLabel2.setPosition({x:0, y:0, z:-1});
+        
+  this.currentCamera = this.cameras[cam].instance;
+}
+// TODO: change to set camera :)
+myApp.prototype.setView = function(view) {
+        model.currentPos = view.from;
+        model.currentLookAt = view.at;
+
+
+
+
 
 //        model.changeView(model.currentPos);
         if (model.currentPos == "Free") var pos = { x: 0.0, y: 0.0, z: -17 };
         else var pos = { x: 0.0, y: 0.0, z: 0.0 };
 
+/*
         model.earth.setEnabled(true);
         model.planet.setEnabled(true);
         model.earthPlane.setEnabled(false);
@@ -519,13 +545,16 @@ myApp.prototype.setView = function(view) {
         this.currentCamera.right = $V([1,0,0]);
         this.currentCamera.upVec = $V([0,1,0]);
         this.currentCamera.dir = $V([0,0,1]);
-        this.currentCamera.setEye(pos);
-        this.currentCamera.updateNew();        
+*/
+//        this.currentCamera.setEye(pos);
+//        this.currentCamera.updateNew();        
+
     };
 
 //TODO: shorten like eval(name + "()");
 myApp.prototype.getModel = function(name) {
   var mod = models[name];
+
   if(!mod) {
     models[name] = new window[name]({renderer: this});
     mod = models[name];
@@ -547,8 +576,10 @@ myApp.prototype.loadPreset = function(preset) {
         planetLabel.setText(model.currentPlanet.label);
         planetLabel2.setText("Moon");
         //model.reset();
-        
+  
+              
         this.setView({from: "Free",at:"Earth"});
+        this.setCamera("Trackball");
         
         if(!model.sun.getEnabled()) sunLabel.setPosition({x:0, y:0, z:-1});
 
@@ -580,7 +611,7 @@ myApp.prototype.loadPreset = function(preset) {
         $("#parameters > *").remove();
         $("#legendContainer > *").remove();
         
-        this.currentCamera.rotateY(Math.PI + 0.1);
+//        this.currentCamera.rotateY(Math.PI + 0.1);
 
         
 
@@ -596,8 +627,12 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // view div
-        $("<span><select  class='chzn-select' title='current position' id='viewPresets' onchange='app.setView(model.viewPresets[this.value]);'></select></span>").appendTo("#vis");
-        UI.optionsFromHash("#viewPresets", model.viewPresets);
+//        $("<span><select  class='chzn-select' title='current position' id='viewPresets' onchange='app.setView(this..viewPresets[this.value]);'></select></span>").appendTo("#vis");
+//        UI.optionsFromHash("#viewPresets", model.viewPresets);
+
+        $("<span><select  class='chzn-select' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span>").appendTo("#vis");
+        UI.optionsFromHash("#viewPresets", this.cameras);
+
 
         $("<select style='width:75px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#vis");
         UI.optionsFromHash("#longitudePresets", latitudePresets);
@@ -619,7 +654,7 @@ myApp.prototype.loadPreset = function(preset) {
 
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"duration of a year in seconds"}).appendTo("#playbackBox");
 
-        $("#playbackBox").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.tooglePause(); if(model.running) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
+        $("#playbackBox").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.togglePause(); if(model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
 
 
         // create the right sliders for each model
@@ -701,21 +736,23 @@ myApp.prototype.loadPreset = function(preset) {
         } else if (model.ui == "Model4") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({color: model.sphere[2].gfx.color, model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+            UI.slider({ model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
+//            color: model.sphere[2].gfx.color,
+            
             //$("#AxisAngle1").hover(function (e) {
             //   model.sphere[1].materialArc.linewidth = 10;
             //}, function (e) {
             //  model.sphere[1].materialArc.linewidth = 1;});
             
-            UI.slider({color: model.sphere[3].gfx.color, model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-            UI.slider({color: model.sphere[4].gfx.color, model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
+            UI.slider({ model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
+            UI.slider({ model:model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
             UI.checkbox({ model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
-            UI.slider({color: model.sphere[2].gfx.color, model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
-            UI.slider({color: model.sphere[3].gfx.color, model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
-            UI.slider({model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
+            UI.slider({ model:model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
+            UI.slider({ model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
+            UI.slider({ model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
 
             UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
@@ -803,8 +840,8 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
 
        } else if (model.ui == "ModelPtolemy") {
-           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
-           this.currentCamera.rotateRight(Math.PI/2);
+//           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
+//           this.currentCamera.rotateRight(Math.PI/2);
            planetLabel2.setText("Sun");       
 
 //*
@@ -843,8 +880,8 @@ myApp.prototype.loadPreset = function(preset) {
            UI.checkbox({model:model, id:"ShowSun1", text:"Sun1"}).appendTo("#visSuns");
            UI.checkbox({model:model, id:"ShowSun2", text:"Sun2"}).appendTo("#visSuns");
            
-           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
-           this.currentCamera.rotateRight(Math.PI/2);    
+//           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
+//           this.currentCamera.rotateRight(Math.PI/2);    
            planetLabel2.setText("sun");       
    
 //*
@@ -897,12 +934,12 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // initial update of sliders/state
-        model.tooglePause();
+        model.togglePause();
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed  input").change();
         $("#AxisAngle1 input").change();
         
-        this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
+//        this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
 
 
 

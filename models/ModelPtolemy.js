@@ -11,14 +11,7 @@ ModelPtolemy = function(params) {
     this.sphere[4].anchor.eulerOrder = "XYZ";  
     this.sphere[4].ptolemy.eulerOrder = "YXZ";  
     
-    this.updateSunDist = function() {
-      var dist = (this.sphere[3].radius-this.sphere[4].radius-this.sphere[3].equant)*this.factor;  
-      this.realSunS[1].setScale(dist);
-      this.realSunS[2].anchor.position.z = dist;
-      this.sun.setDist(dist);
 
-
-    };
 
     this.adjustAnomaly = function() {
       var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
@@ -53,20 +46,6 @@ ModelPtolemy = function(params) {
 
     }
     
-
-};
-
-ModelPtolemy.prototype = new ModelBase;
-ModelPtolemy.prototype.constructor = ModelPtolemy;
-
-ModelPtolemyVenus = function(params) {
-    params.name = params.nam || "ModelPtolemyVenus";
-    ModelPtolemyBase.call(this, params);	
-    this.factor = 1.0/11.0;
-    
-    this.sphere[4].anchor.eulerOrder = "XYZ";  
-    this.sphere[4].ptolemy.eulerOrder = "YXZ";  
-    
     this.updateSunDist = function() {
       var dist = (this.sphere[3].radius-this.sphere[4].radius-this.sphere[3].equant)*this.factor;  
       this.realSunS[1].setScale(dist);
@@ -75,6 +54,26 @@ ModelPtolemyVenus = function(params) {
 
 
     };
+    
+
+};
+
+ModelPtolemy.prototype = new ModelBase;
+ModelPtolemy.prototype.constructor = ModelPtolemy;
+
+
+/**
+ * @constructor
+ */
+ModelPtolemyVenus = function(params) {
+    params.name = params.nam || "ModelPtolemyVenus";
+    ModelPtolemyBase.call(this, params);	
+    this.factor = 1.0/11.0;
+    
+    this.sphere[4].anchor.eulerOrder = "XYZ";  
+    this.sphere[4].ptolemy.eulerOrder = "YXZ";  
+    
+
 
     this.adjustAnomaly = function() {
       var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
@@ -110,15 +109,29 @@ ModelPtolemyVenus = function(params) {
 
     }
     
+    
+    this.updateSunDist = function() {
+      var dist = (this.sphere[2].radius+this.sphere[3].radius+this.sphere[4].radius+this.sphere[3].equant)*this.factor;  
+      this.realSunS[1].setScale(dist);
+      this.realSunS[2].anchor.position.z = dist;
+      this.sun.setDist(dist);
+    };    
+    
 
 };
 
 ModelPtolemyVenus.prototype = new ModelBase;
 ModelPtolemyVenus.prototype.constructor = ModelPtolemyVenus;
+
+
+/**
+ * @constructor
+ */
 ModelPtolemyInferior = function(params) {
     params.name = "ModelPtolemyInferior";
-    ModelPtolemy.call(this, params);
-
+    ModelPtolemyBase.call(this, params);
+    this.factor = 1.0/11.0;
+    
     this.sphere[4].anchor.eulerOrder = "XZY";    
     this.sphere[4].ptolemy.eulerOrder = "YXZ";  
 
@@ -185,9 +198,13 @@ ModelPtolemyInferior = function(params) {
       this.sphere[4].ptolemy.rotation.x = -j;
       this.sphere[4].gfx.crank.rotation.z = lambdaD + Math.PI;       
 
-      
-
     }	
+    this.updateSunDist = function() {
+      var dist = (this.sphere[2].radius+this.sphere[3].radius+this.sphere[4].radius+this.sphere[3].equant)*this.factor;  
+      this.realSunS[1].setScale(dist);
+      this.realSunS[2].anchor.position.z = dist;
+      this.sun.setDist(dist);
+    };    
 }
 
 ModelPtolemyInferior.prototype = new ModelBase;
