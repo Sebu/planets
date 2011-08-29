@@ -61,6 +61,8 @@ THREE.Object3D.prototype.currentPosFast = function() {
 }
 
 THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
+    if (!this.getEnabled()) return {x:0, y:0, z:-1};
+    
     var posTmp = this.currentPosFast();
 
     camera.matrixWorldInverse.multiplyVector3( posTmp );
@@ -70,6 +72,7 @@ THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
     pos = {x: (posTmp.x+1) * canvas.domElement.width/2, y: (-posTmp.y+1) * canvas.domElement.height/2, z: zTmp };
 
     //if node is outside of canvas shift pos to z=-1 
+
     if (pos.x<0 || pos.x>canvas.domElement.width-50) pos.z = -1.0;
     if (pos.y<0 || pos.y>canvas.domElement.height-20) pos.z = -1.0;
 

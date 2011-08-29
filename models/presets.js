@@ -4,10 +4,7 @@ var planetPresets = {
 
 Eudoxus: {
 
-  ComareTest: {
-    model: "ModelCompareBase",
-    ui: "Ptolemy"
-  },
+
   
   Mercury: {
     1: {
@@ -196,7 +193,12 @@ HippopedeIntroduction: {
     {AxisAngle: 24.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
     {AxisAngle: 30.0, Speed: -110,  RotateStart: 0 }
-  ] }
+  ] },
+  
+  ComareTest: {
+    model: "ModelCompareBase",
+    ui: "Ptolemy"
+  }  
 },
 
 

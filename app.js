@@ -19,6 +19,9 @@ myApp.prototype.init = function(params) {
         // create canvas (WebGL if possible)
 //        this.canvas = new Ori.Canvas({antialias: true})
         this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
+        
+        this.canvas.shadowMapEnabled = true;
+				this.canvas.shadowMapSoft = true;
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 ); //0x1B1917 );
         
                 //home/seb/git/topoi/dev.html// append to DOM
@@ -52,6 +55,10 @@ myApp.prototype.init = function(params) {
             caption: "Global",
             instance: new THREE.TrackballCamera({ noPan: true, fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000, domElement: this.canvas.domElement})
           },
+          TrackballIso: { 
+            caption: "Isometric",
+            instance: new THREE.TrackballCamera({ noPan: true, fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000, domElement: this.canvas.domElement})
+          },          
           FPS: { 
             caption: "Local",
             instance: new THREE.FirstPersonCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000, domElement: this.canvas.domElement})
@@ -60,6 +67,8 @@ myApp.prototype.init = function(params) {
         
         this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
         this.cameras["Trackball"].instance.movementSpeed = 5.0;
+        this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
+        this.cameras["TrackballIso"].instance.movementSpeed = 5.0;
         
 //        this.camera = new THREE.RollCamera(70, window.innerWidth / window.innerHeight, 0.1, 10000);		
 //        this.camera.init({ eye : { x: 0.0 , y: 0.0, z: -10.0 } });
@@ -67,8 +76,8 @@ myApp.prototype.init = function(params) {
 
 
         
-//        var ortho = 70;
-//        this.camera.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
+        var ortho = 70;
+        this.cameras["TrackballIso"].instance.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
 
 
 
@@ -442,38 +451,28 @@ myApp.prototype.update = function(time) {
         
         // update model
         model.update(time);
-
-        // infoBox data
-//        if(model.running) {
-          this.updateInfoBox();
-//        }
+        this.updateInfoBox();
+        this.updateLabels();
 
 
-        //TODO: model.ui specific
-        // update Label position/visibility
 
-        if (model.currentPos == "Earth") {
-            northLabel.setPosition(model.north.getPosCanvas(this.currentCamera, this.canvas));
-            southLabel.setPosition(model.south.getPosCanvas(this.currentCamera, this.canvas));
-            eastLabel.setPosition(model.east.getPosCanvas(this.currentCamera, this.canvas));
-            westLabel.setPosition(model.west.getPosCanvas(this.currentCamera, this.canvas));
-        } else {
-            if(model.sphere[1].gfx.markerball.getEnabled())
-              equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
-            else equinoxLabel.setPosition({x:0, y: 0, z:-1});
-            if(model.sphere[1].gfx.npole.getEnabled())
-              npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
-            else npoleLabel.setPosition({x:0, y: 0, z:-1});
-            if(model.sphere[1].gfx.spole.getEnabled())
-              spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
-            else spoleLabel.setPosition({x:0, y: 0, z:-1});
-        }
-
-        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
-        if (model.sun.getEnabled()) sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.currentCamera, this.canvas)); 
 
 //*/        
     };
+
+
+myApp.prototype.updateLabels = function() {
+        northLabel.setPosition(model.north.getPosCanvas(this.currentCamera, this.canvas));
+        southLabel.setPosition(model.south.getPosCanvas(this.currentCamera, this.canvas));
+        eastLabel.setPosition(model.east.getPosCanvas(this.currentCamera, this.canvas));
+        westLabel.setPosition(model.west.getPosCanvas(this.currentCamera, this.canvas));
+        equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
+        npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
+        spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
+        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
+        sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.currentCamera, this.canvas)); 
+};
+
 
 
 myApp.prototype.draw = function(time) {
@@ -514,16 +513,16 @@ myApp.prototype.setCamera = function(cam) {
 }
 // TODO: change to set camera :)
 myApp.prototype.setView = function(view) {
-        model.currentPos = view.from;
-        model.currentLookAt = view.at;
+//        model.currentPos = view.from;
+//        model.currentLookAt = view.at;
 
 
 
 
 
 //        model.changeView(model.currentPos);
-        if (model.currentPos == "Free") var pos = { x: 0.0, y: 0.0, z: -17 };
-        else var pos = { x: 0.0, y: 0.0, z: 0.0 };
+//        if (model.currentPos == "Free") var pos = { x: 0.0, y: 0.0, z: -17 };
+//        else var pos = { x: 0.0, y: 0.0, z: 0.0 };
 
 /*
         model.earth.setEnabled(true);

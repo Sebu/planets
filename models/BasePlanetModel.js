@@ -73,6 +73,7 @@ ModelBase.prototype = {
         this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
 
         this.light = Sunlight();
+        this.light.castShadow = true;
 
         this.camera = params.renderer.camera;
         this.renderer = params.renderer;
