@@ -123,7 +123,7 @@ THREE.DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
 			var d2 = 3*(j - 1) + 2;			
 
 			f4( a, b, c, d );
-			f4( d2, c, b, a2 );			
+//			f4( d2, c, b, a2 );			
 
 //*
       var unit = (1/this.segments);
@@ -154,7 +154,7 @@ THREE.DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
 THREE.DiscGeometry.prototype = new THREE.Geometry();
 THREE.DiscGeometry.prototype.constructor = THREE.TorusGeometry;
 
-
+// THREE.ImageUtils.loadTexture('textures/ramp.png')
 // disc of planet surface 
 Disc = function(params) {
   var color = params.color || colors["Earth"];
@@ -165,12 +165,12 @@ Disc = function(params) {
                     new THREE.MeshLambertMaterial({
                        color: rgbToHex(color),
                        transparent: true, 
-                       map: THREE.ImageUtils.loadTexture('textures/ramp.png'),
-//                       opacity: 0.6,
+                       map: params.map,
+                       opacity: params.opacity || 1,
                        shading: THREE.FlatShading}) );
 //  this.scale.y = 0.01;
 //  this.overdraw = true;
-//  this.doubleSided = true;
+  this.doubleSided = true;
 }
 Disc.prototype = new THREE.Mesh;
 Disc.prototype.constructor = Disc;

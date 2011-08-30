@@ -70,10 +70,9 @@ ModelBase.prototype = {
         this.sphere = new Array(params.spheres);
         this.updateList = [];
 
-        this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
 
         this.light = Sunlight();
-        this.light.castShadow = true;
+//        this.light.castShadow = true;
 
         this.camera = params.renderer.camera;
         this.renderer = params.renderer;
@@ -81,17 +80,28 @@ ModelBase.prototype = {
         this.root.addNode(this.light);
 
 
-        // DIRECTION MARKERS
-        this.root.addNode( this.north = new Translate({id: "North", x:-4.5, y:0.2}) );
-        this.root.addNode( this.south = new Translate({id: "South", x:4.5,  y:0.2}) );
-        this.root.addNode( this.east =  new Translate({id: "East" , z:-4.5, y:0.2}) );
-        this.root.addNode( this.west =  new Translate({id: "West" , z:4.5,  y:0.2}) );
-
         // planet surface for earth view
         this.root.addNode(this.earthPlane = new Disc({radius: 9.0, color: colors["Earth"]}) );
-        this.earthPlane.setEnabled(false);
 
-        
+
+        // DIRECTION MARKERS
+        this.earthPlane.addNode( this.north = new Translate({id: "North", x:-4.5, y:0.2}) );
+        this.earthPlane.addNode( this.south = new Translate({id: "South", x:4.5,  y:0.2}) );
+        this.earthPlane.addNode( this.east =  new Translate({id: "East" , z:-4.5, y:0.2}) );
+        this.earthPlane.addNode( this.west =  new Translate({id: "West" , z:4.5,  y:0.2}) );
+
+
+        // hide markers when hiding earthPlane
+        var that = this;
+        this.earthPlane.setEnabled = function(state){
+          this.visible = state;
+          that.north.setEnabled(state);
+          that.south.setEnabled(state);
+          that.east.setEnabled(state);
+          that.west.setEnabled(state);          
+        }
+        this.earthPlane.setEnabled(false);
+                
         // first and outer sphere
         this.sphere[1] = new Spherical({vortex: true, inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
         this.root.addNode(this.sphere[1]);

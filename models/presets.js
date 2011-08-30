@@ -3,9 +3,6 @@
 var planetPresets = { 
 
 Eudoxus: {
-
-
-  
   Mercury: {
     1: {
 //    caption: "Eudoxus Mercury 1",
@@ -359,7 +356,7 @@ Aristotle: {
   ]},
 
 Ptolemy: {
-
+  caption: "Ptolemy Almagest", 
   Sun: {
     caption: "Sun",
     model: "ModelPtolemySun",

@@ -45,7 +45,7 @@ Spherical = function Spherical(params) {
     eqMat = new THREE.LineBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), opacity: 0.8, color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
-      this.gfx.equator = new Disc( {radius: 1.15, innerRadius: 1.0, color: this.gfx.color });
+      this.gfx.equator = new Disc( {opacity:0.2, map: THREE.ImageUtils.loadTexture('textures/ramp.png'), radius: 1.35, innerRadius: 1.0, color: this.gfx.color });
     } else {
      this.gfx.equator = new THREE.Line(equator, eqMat );      
      this.gfx.equator.rotation.x = Math.PI/2;
@@ -110,7 +110,7 @@ Spherical = function Spherical(params) {
     this.anchor.addNode(this.gfx.centerLine);
     
     // DEBUG
-    this.gfx.disc = new Disc( {radius: 1.0, color: this.gfx.color });
+    this.gfx.disc = new Disc( {opacity:0.2, radius: 1.0, color: this.gfx.color });
     this.anchor.addNode(this.gfx.disc);
     
     this.setAxisAngle(this.axisAngle);

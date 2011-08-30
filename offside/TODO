@@ -209,21 +209,21 @@ DONE
     - show egyptian date epoch: nabonassar etc. (see 127p and photo)
   - sphere Show/Hide
   - visualize crank in ptolemy
+  - fix labels
+  - better camera/movement/crank/ortho view
+    - more view presets/tweening
+      - use different cameras
+      - reset position (tween)  
+  - inner planets sun distance/angle?
+  - merge model (1+ models into one for comparission)
+  - rename ptolemy -> ptolemy amagest 
+
 
 TODO
 - load/reset/save
-- better camera/movement/crank/ortho view
-  - more view presets/tweening
-    - use different cameras
-    - reset position (tween)
-- fix labels
-
 - fix minor 
-  - set sexigesimal input / show
-  - ptolemy -> ptolemy amagest
+  - set sexigesimal input / show 
 - longitude based time zones
-- inner planets sun distance/angle?
-- merge model (1+ models into one for comparission)
 
 
 

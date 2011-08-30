@@ -21,7 +21,7 @@ ModelPtolemyMoon2 = function(params) {
     
     this.adjustAnomaly = function() {
       var tmp = this.sphere[2].getRotateAngle() - 2*this.sphere[3].getRotateAngle(); 
-      this.sphere[2].anchor.rotation.y = degToRad(tmp);
+      this.sphere[2].anchor.rotation.y = tmp/PI_SCALE;
       var tmp = 2*this.sphere[3].getRotateAngle();
       var realAngle = tmp/PI_SCALE - Math.asin((-this.sphere[2].radius/this.sphere[3].radius) * Math.sin(tmp/PI_SCALE));      
       this.sphere[3].anchor.rotation.y = realAngle;
@@ -59,7 +59,7 @@ ModelPtolemyMoon1a = function(params) {
   
     this.adjustAnomaly = function() {
       var realAngle = mod(this.sphere[2].getRotateAngle(), 360) - mod(this.sphere[3].getRotateAngle(), 360);
-      this.sphere[2].anchor.rotation.y = degToRad(realAngle);
+      this.sphere[2].anchor.rotation.y = realAngle/PI_SCALE;
     }
         
     

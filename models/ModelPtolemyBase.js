@@ -52,7 +52,6 @@ ModelPtolemyBase = function(params) {
     this.crank.rotation.y = Math.PI/2;
     this.sphere[4].gfx.crank.addNode(this.sphere[4].gfx.crankRadius);
     this.sphere[4].gfx.crank.addNode(this.crankPoint0 = new Translate({x:0, y: 1, z: 0}));
-
     this.sphere[4].ptolemy.addNode(this.crankPoint1 = new Translate({x:0, y: 0, z: 0}));
 
     this.crank.addNode(this.sphere[4].gfx.crank);
@@ -61,8 +60,8 @@ ModelPtolemyBase = function(params) {
     
     // crank line
     this.cline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
-    this.crankLine = new Curve({trails: false, pos: this.cline, color: colors["S4"] }); 
-    this.root.addNode(this.crankLine);
+    this.sphere[4].gfx.crankLine = new Curve({trails: false, pos: this.cline, color: colors["S4"] }); 
+    this.root.addNode(this.sphere[4].gfx.crankLine);
 
     this.adjustCrank = function () {
       var scale = Math.sin(this.getDeviation()/PI_SCALE) * this.sphere[4].radius*this.factor;
@@ -90,13 +89,21 @@ ModelPtolemyBase = function(params) {
     this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
     this.root.addNode(this.equantPlanetLine);
 
-
+    var that = this;
+    this.earth.setEnabled = function(state) {
+      this.mesh.visible = state; 
+      if(this.glow) this.meshGlow.visible = state; 
+      that.earthToDeferentLine.setEnabled(state);
+      that.earthToPlanetLine.setEnabled(state);
+      that.equantPlanetLine.setEnabled(state); 
+      that.apsidalLine.setEnabled(state);    
+    }
 
     // show/hide modifications    
     this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"]);
     this.sphere[2].setVisuals(["equator","centerLine"]);
     this.sphere[3].setVisuals(["equator","centerLine"]);
-    this.sphere[4].setVisuals(["disc","equator","centerLine"]);
+    this.sphere[4].setVisuals(["crankLine", "crankRadius","crank","disc","equator","centerLine"]);
     this.realSunS[1].setVisuals([]);
     this.realSunS[2].setVisuals([]);
 
@@ -113,7 +120,7 @@ ModelPtolemyBase = function(params) {
         // lines
         this.cline[0] = this.crankPoint0.currentPos();        
         this.cline[1] = this.crankPoint1.currentPos();  
-        this.crankLine.setPos(this.cline);
+        this.sphere[4].gfx.crankLine.setPos(this.cline);
 
         this.equantPlanet[0] = this.equantPoint.currentPos();        
         this.equantPlanet[1] = this.sphere[3].gfx.markerball.currentPos();

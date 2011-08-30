@@ -4,6 +4,7 @@ var UI = {
     optionsFromHash : function(selector, hash) {
         $(selector).children().remove();
         for (i in hash) {
+            if(i=="caption") continue;
             var caption = hash[i].caption || i;
             $(selector).append("<option value='" + i + "'>" + caption + "</option>");
         }

@@ -1,19 +1,22 @@
-
-
-
-
-
 var Ori = Ori || {};
+
+Ori.supportsWebGL = function() {
+    return window.WebGLRenderingContext;
+};
+
+Ori.supportsCanvas = function() {
+    return !!document.createElement('canvas').getContext;
+};
 
 /**
  * @constructor
  */
 Ori.Canvas = function(params) {
-        if(Modernizr.webgl && !params.forceCanvas) {
+        if(Ori.supportsWebGL() && !params.forceCanvas) {
             this.graphics = new THREE.WebGLRenderer(params);
             this.graphics.type = "webgl";
         }
-        else if(Modernizr.canvas) {
+        else if(Ori.supportsCanvas()) {
           this.graphics = new THREE.CanvasRenderer(params);
           this.graphics.type = "canvas";
         }
@@ -25,16 +28,16 @@ Ori.Canvas = function(params) {
         return this.graphics;
 }
 
-	
-
 Ori.Canvas.prototype.constructor = Ori.Renderer;
+
+
 
 Ori.CANVAS_ERROR = "bla";
 
 Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
 Ori.GfxProfile = {
-  low: { 
+  low: {
     resolution : 100,
     particles : Ori.Q.LOW,
     textures : Ori.Q.LOW,
@@ -44,6 +47,7 @@ Ori.GfxProfile = {
     }
 };
 Ori.gfxStore = [];
+
 Ori.registerGfx = function(node) {
   Ori.gfxStore.push(node);
   node.setQuality(Ori.GfxProfile.low);
@@ -232,15 +236,8 @@ Ori.App.prototype = {
       var self = this;
       (function requestLoop() {
         self.loop();
-        requestAnimFrame(requestLoop); //, this.canvas.domElement);
+        requestAnimFrame(requestLoop);
       })();   
-//      setInterval(function() { self.mainLoop(); }, 33);
-
-//    for(i=0; i< this.components.length; i++) {
-//      component = components[i];
-//      if(component.enabled) component.update(time);      
-//      if(component.enabled && component.drawable) component.draw(time);      
-//    }
   }
 
 };
@@ -252,12 +249,9 @@ Storage.prototype.setJson = function(key, value)
 
 Storage.prototype.getJson = function(key)
 {  
-  try
-  {
+  try {
     return JSON.parse(this.getItem(key));
-  }
-  catch(e)
-  {
+  } catch(e) {
     return this.getItem(key);
   }
 };
