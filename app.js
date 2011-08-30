@@ -412,8 +412,9 @@ myApp.prototype.updateLabels = function() {
         equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
         npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
         spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
-        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
         sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.currentCamera, this.canvas)); 
+        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
+//        planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));                
 };
 
 
@@ -457,6 +458,7 @@ myApp.prototype.loadPreset = function(preset) {
         planetLabel.setText(model.currentPlanet.label);
 
         this.setCamera("Trackball");
+        this.currentCamera.reset();
         
         // build up ui
         $("#moonInfoContainer").fadeOut(500);
@@ -736,9 +738,9 @@ myApp.prototype.loadPreset = function(preset) {
            UI.checkbox({model:model, id:"ShowSun1", text:"Sun1"}).appendTo("#visSuns");
            UI.checkbox({model:model, id:"ShowSun2", text:"Sun2"}).appendTo("#visSuns");
            
-//           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
-//           this.currentCamera.rotateRight(Math.PI/2);    
-           planetLabel2.setText("sun");       
+           this.currentCamera.rotateY((Math.PI*3)/2 - 0.1);
+           this.currentCamera.rotateRight(Math.PI/2);    
+           planetLabel2.setText("Sun");       
    
 //*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");

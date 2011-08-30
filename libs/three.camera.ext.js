@@ -110,16 +110,18 @@ THREE.Camera.prototype.rotateUp = function(angle) {
 //    this.update();
 }
 
-
+THREE.Camera.prototype.reset = function() {
+    this.right = Vector.create([1, 0, 0]);
+    this.upVec = Vector.create([0, 1, 0]);
+    this.dir = Vector.create(  [0, 0, 1]);
+}
 
 //*/
 
 THREE.FPSCamera = function ( parameters ) {
     THREE.Camera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
 
-    this.right = Vector.create([1, 0, 0]);
-    this.upVec = Vector.create([0, 1, 0]);
-    this.dir = Vector.create(  [0, 0, 1]);
+    this.reset();
     this.useTarget = false;
     
     this.mouseX = this.rotateRight;
@@ -137,9 +139,7 @@ THREE.FPSCamera.prototype.constructor = THREE.FPSCamera;
 THREE.BallCamera = function ( parameters ) {
     THREE.Camera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
 
-    this.right = Vector.create([1, 0, 0]);
-    this.upVec = Vector.create([0, 1, 0]);
-    this.dir = Vector.create(  [0, 0, 1]);
+    this.reset();
 
     this.useTarget = false;
     this.mouseX = this.rotateRight;

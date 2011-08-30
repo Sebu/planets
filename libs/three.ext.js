@@ -298,7 +298,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = false;
+  this.meshGlow.visible = state;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -441,9 +441,9 @@ Cloud = function(params) {
        geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
     }
 //*
-    var mat =  new THREE.ParticleBasicMaterial({size: 2.5, sizeAttenuation:false});
+    var mat =  new THREE.ParticleBasicMaterial({size: 1.5, sizeAttenuation:false});
 /*/
-    var mat = new THREE.ParticleBasicMaterial({  size: 1.0,  
+    var mat = new THREE.ParticleBasicMaterial({  size: 0.8,  
         map: THREE.ImageUtils.loadTexture('textures/star.png'),  
         blending: THREE.AdditiveBlending, 
   //    depthTest: false, 
