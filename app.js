@@ -382,6 +382,8 @@ myApp.prototype.update = function(time) {
         model.update(time);
         this.updateInfoBox();
         this.updateLabels();
+        
+//        this.currentCamera.setTarget(model.planet.currentPos());
 };
 
 
