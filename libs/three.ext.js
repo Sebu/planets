@@ -198,7 +198,7 @@ sphereGeo = [
 
 ];
 
-planetGeo = new THREE.SphereGeometry( 1 , 32, 16 );
+planetGeo = new THREE.SphereGeometry( 1 , 16, 12 );
 
 
 /*
@@ -226,7 +226,7 @@ Planet = function(params) {
     Ori.registerGfx(this);
 // color: rgbToHex(this.color),
 //   map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-    this.material =  new THREE.MeshLambertMaterial( {  
+    this.material =  new THREE.MeshBasicMaterial( {  
         color: rgbToHex(this.gfx.color),
         map: this.gfx.map,
         shading: THREE.FlatShading });
@@ -298,7 +298,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = state;
+  this.meshGlow.visible = false;//state;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -458,7 +458,7 @@ Cloud.prototype.constructor = Cloud;
 
 
 
-var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
+var geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
 var equator = new Circle({ angle : 359.9 });
 
 var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);

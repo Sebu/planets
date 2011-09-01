@@ -42,10 +42,12 @@ Spherical = function Spherical(params) {
     this.addNode(this.gfx.arc2);
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
-    eqMat = new THREE.LineBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'), opacity: 0.8, color: rgbToHex(this.gfx.color) } );
+    eqMat = new THREE.LineBasicMaterial( {opacity: 0.8, color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
-      this.gfx.equator = new Disc( {opacity:0.2, map: THREE.ImageUtils.loadTexture('textures/ramp.png'), radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
+      this.gfx.equator = new Disc( {opacity:0.2, 
+       map: THREE.ImageUtils.loadTexture('textures/ramp.png'),
+       radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
     } else {
      this.gfx.equator = new THREE.Line(equator, eqMat );      
      this.gfx.equator.rotation.x = Math.PI/2;

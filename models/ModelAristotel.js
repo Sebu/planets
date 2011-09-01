@@ -45,7 +45,12 @@ ModelAristotle = function(params) {
    this.createJoint({from: this.sphere[3], to: this.sphere[6], color: colors["S3"], linewidth:3 }); 
    this.createJoint({from: this.sphere[2], to: this.sphere[7], color: colors["S2"], linewidth:2 }); 
    this.createJoint({from: this.sphere[1], to: this.sphere[8], color: colors["S1"], linewidth:1 }); 
-    
+
+  this.sphere[5].setVisuals(["sjoint", "njoint", "sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball","markerend"]);
+  this.sphere[6].setVisuals(["sjoint", "njoint", "sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball","markerend"]);
+  this.sphere[7].setVisuals(["sjoint", "njoint", "sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball","markerend"]);
+  this.sphere[8].setVisuals(["sjoint", "njoint", "sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball","markerend"]);   
+
    // show hide stuff
    this.setShowSphere18 = function(state) {
       this.sphere[1].setGfx(["npole","spole"], state);

@@ -1,6 +1,7 @@
 
 var UI = {
-
+    innerText : function(element, value) { element.firstChild.nodeValue = value; },
+    
     optionsFromHash : function(selector, hash) {
         $(selector).children().remove();
         for (i in hash) {
@@ -74,18 +75,18 @@ var UI = {
         min = params.min || 0,
         max = params.max || 100,
         toggle = params.toggle || false,
-        step = params.step || 1,
+        step = params.step  || 0.2,
         color = {r:0.1, g:0.3, b:0.4};
         //style='background:" + rgbToCSS(color) + "'
         
         
         var value = params.value ||  instance["get"+id]();
-        var change = params.change || function(event, ui)  { 
+        var changeSlider = params.change || function(event, ui)  { 
             instance["set"+id](Number(Utils.toDec(ui.value))); 
-            $("#" + id + " > input").attr("value",Number(Utils.toDec(ui.value))); 
+            $("#" + id + " > input").attr("value", Utils.toDec(ui.value) ); // Utils.decToBase(ui.value,60)
         };
 
-        var change2 = params.change || function()  { 
+        var changeInput = params.change || function()  { 
           instance["set"+id](Number(Utils.toDec(this.value)));
            $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value)));
         };
@@ -101,8 +102,8 @@ var UI = {
             "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");
         tmp.append(ele);
-        $(".slider",ele).slider({slide:change, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
-        $("input",ele).bind("change",change2);
+        $(".slider",ele).slider({slide: changeSlider, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
+        $("input",ele).bind("change", changeInput);
 //        $(".slider",ele).bind("slidechange",change);
          if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
          if(toggle) $(":checkbox",tmp).bind("click", function() 
@@ -134,10 +135,11 @@ var UI = {
 
 UI.Label = function(params) {
 
-        this.ele = document.createElement("div"); // $("<div class='label' style='top:0px;left:0px;'>" +  params.text + "</div>");
+        this.ele = document.createElement("div"); 
         this.ele.setAttribute("class","label");
-        document.body.appendChild(this.ele); // this.ele.appendTo("body");
+        document.body.appendChild(this.ele);
         this.setPosition(params.pos || {x:0, y:0, z:-1});
+        this.ele.innerHTML = " ";
         this.setText(params.text);
 };
 
@@ -145,7 +147,7 @@ UI.Label.prototype.constructor = UI.Label;
 
 
 UI.Label.prototype.setText = function(text) {
-  this.ele.innerText = text;
+  this.ele.firstChild.nodeValue = text;
 };
 
 UI.Label.prototype.setPosition = function(pos) {
@@ -154,7 +156,6 @@ UI.Label.prototype.setPosition = function(pos) {
   this.pos = pos;
   this.ele.style.left = pos.x + "px";
   this.ele.style.top = pos.y + "px";  
-//  this.ele.css('top', pos.y);
 };
 
 

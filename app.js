@@ -23,6 +23,7 @@ myApp.prototype.init = function(params) {
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 );
         
         // add Canvas DOM Element & or error box
+        $(this.domRoot).empty();
         if(this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
@@ -144,7 +145,7 @@ myApp.prototype.init = function(params) {
               <tr><td>gregorian date</td><td class=wert id='gregorianDate'>0</td></tr>\
               <tr><td>julian days</td><td class=wert id='julianDate'>0</td></tr>\
               <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>\
-              <tr><td></td><td class=wert id='egyptianEpoch'></td></tr>\
+              <tr><td></td><td class=wert id='egyptianEpoch'>0</td></tr>\
             </table>\
             <div id='legendContainer'></div>\
              </div>").appendTo(this.domRoot);
@@ -313,42 +314,42 @@ myApp.prototype.setCurrentScene = function(scene) {
 
 myApp.prototype.updateInfoBox = function() {
 //*
-        if(model instanceof ModelSun) {
-          this.info.longitude.innerHTML = model.planet.longitude.toFixed(6);
-          this.info.meanLongitude.innerText = model.getMeanLongitude().toFixed(6);
-          this.info.equationOfTime.innerText = model.getEquationOfTime().toFixed(6);
-          this.info.longitudeSpeed.innerText = model.planet.longitudeSpeed.toFixed(11);
-          this.info.latitude.innerText = model.planet.latitude.toFixed(3);
+        if(model.ui == "ModelSun") {
+          UI.innerText(this.info.longitude, model.planet.longitude.toFixed(6) );
+          UI.innerText(this.info.meanLongitude, model.getMeanLongitude().toFixed(6) );
+          UI.innerText(this.info.equationOfTime, model.getEquationOfTime().toFixed(6) );
+          UI.innerText(this.info.longitudeSpeed, model.planet.longitudeSpeed.toFixed(11) );
+          UI.innerText(this.info.latitude, model.planet.latitude.toFixed(3) );
         } else {
-          this.info.longitude.innerText = model.planet.longitude.toFixed(1);
-          this.info.longitudeSpeed.innerText = model.planet.longitudeSpeed.toFixed(2);
-          this.info.latitude.innerText = model.planet.latitude.toFixed(1);
+          UI.innerText(this.info.longitude, model.planet.longitude.toFixed(1) );
+          UI.innerText(this.info.longitudeSpeed, model.planet.longitudeSpeed.toFixed(2) );
+          UI.innerText(this.info.latitude, model.planet.latitude.toFixed(1) );
         }
         if(model.ui == "ModelPtolemy" || model.ui == "ModelPtolemySun") {
-          this.info.longitude.innerText = Utils.toSexa(mod(model.planet.longitude,360) );
-          this.info.latitude.innerText = Utils.toSexa(model.planet.latitude );
-          this.info.apsidalLongitude.innerText = Utils.toSexa( mod(model.ptolemySphere.getApsidalAngle(), 360) );
-          this.info.epicycleLongitude.innerText = Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) );
-          this.info.deferentLongitude.innerText =  Utils.toSexa(model.planet.deferentLongitude);
-          this.info.gregorianDate.innerText =  Utils.dateToString(Utils.jdToMagic(model.date));                           
-          this.info.julianDate.innerText =  model.date.toFixed(2); //Utils.dateToString(Utils.jdToJulian(model.date));                           
-          this.info.egyptianDate.innerText =  Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date));
-          this.info.egyptianEpoch.innerText =  Utils.jdToEpoch(model.date);                          
+          UI.innerText(this.info.longitude, Utils.toSexa(mod(model.planet.longitude,360) ) );
+          UI.innerText(this.info.latitude, Utils.toSexa(model.planet.latitude ) );
+          UI.innerText(this.info.apsidalLongitude, Utils.toSexa( mod(model.ptolemySphere.getApsidalAngle(), 360) ) );
+          UI.innerText(this.info.epicycleLongitude, Utils.toSexa( mod(model.sphere[4].getRotateAngle(), 360) ) );
+          UI.innerText(this.info.deferentLongitude, Utils.toSexa(model.planet.deferentLongitude) );
+          UI.innerText(this.info.gregorianDate, Utils.dateToString(Utils.jdToMagic(model.date)) );                           
+          UI.innerText(this.info.julianDate, model.date.toFixed(2) );
+          UI.innerText(this.info.egyptianDate, Utils.dateToStringEgypt(Utils.jdToEgyptian(model.date)) );
+          UI.innerText(this.info.egyptianEpoch, Utils.jdToEpoch(model.date) );                          
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
 
-        if(model instanceof ModelMoonCompare) {
+        if(model.ui == "ModelMoonCompare") {
           // infoBox data
-          this.info.sunAngle2.innerText =  model.planet2.sunAngle.toFixed(1);
-          this.info.longitude2.innerText =  model.planet2.longitude.toFixed(1);
-          this.info.longitudeSpeed2.innerText =  model.planet2.longitudeSpeed.toFixed(2);
-          this.info.latitude2.innerText =  model.planet2.latitude.toFixed(1);
-          this.info.days2.innerText =  Math.round( model.getDays() );
+          UI.innerText(this.info.sunAngle2, model.planet2.sunAngle.toFixed(1) );
+          UI.innerText(this.info.longitude2, model.planet2.longitude.toFixed(1) );
+          UI.innerText(this.info.longitudeSpeed2, model.planet2.longitudeSpeed.toFixed(2) );
+          UI.innerText(this.info.latitude2, model.planet2.latitude.toFixed(1) );
+          UI.innerText(this.info.days2,  Math.round( model.getDays() ) );
 
           planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));
         }
        if(model.sun.getEnabled()) this.info.sunAngle.innerText = model.planet.sunAngle.toFixed(1);
-       this.info.days.innerText = Utils.daysToTime(model.getDays());      
+       UI.innerText(this.info.days, Utils.daysToTime(model.getDays()) );      
 //*/  
 }
 // update loop
@@ -416,7 +417,6 @@ myApp.prototype.updateLabels = function() {
         spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
         sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.currentCamera, this.canvas)); 
         planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
-//        planetLabel2.setPosition(model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));                
 };
 
 
@@ -489,6 +489,7 @@ myApp.prototype.loadPreset = function(preset) {
         $("#view > *").remove();
         $("#parameters > *").remove();
         $("#legendContainer > *").remove();
+        planetLabel2.setPosition({x:0, y:0, z:-1});
         
         this.currentCamera.rotateY(Math.PI + 0.1);
 
@@ -718,7 +719,7 @@ myApp.prototype.loadPreset = function(preset) {
            UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity"}).appendTo("#ecliptic");
            
             UI.box({id:"apsidal"}).appendTo("#parameters");
-            UI.slider({model:model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.01, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model:model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.1, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model:model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
             UI.box({id:"deferent"}).appendTo("#parameters");
@@ -796,7 +797,7 @@ myApp.prototype.loadPreset = function(preset) {
         $("#moon input, #angle  input, #speed  input").change();
         $("#AxisAngle1 input").change();
         
-//        this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
+        this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
 
 
 
