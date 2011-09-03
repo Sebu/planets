@@ -9,7 +9,7 @@ myApp = function(params) {
 myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
-myApp.CANVAS_ERROR = $("<div id='canvasError'>Your browser does not seem to support <a href='http://en.wikipedia.org/wiki/Canvas_element'>Canvas</a> or <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>.<br/>Find out how to get it <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>here</a>.</div>");
+myApp.CANVAS_ERROR = $("<div>Your browser does not seem to support <a href='http://en.wikipedia.org/wiki/Canvas_element'>Canvas</a> or <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>.<br/>Find out how to get it <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>here</a>.</div>");
 
 myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
@@ -22,12 +22,13 @@ myApp.prototype.init = function(params) {
         // set clear color        
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 );
         
+        //return;
         // add Canvas DOM Element & or error box
-        $(this.domRoot).empty();
+        $("#splashStatus").empty();
         if(this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
-          this.domRoot.append(myApp.CANVAS_ERROR);
+          $("#splashStatus").append(myApp.CANVAS_ERROR);
           return 0;
         }
         
