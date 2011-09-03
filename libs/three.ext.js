@@ -163,11 +163,12 @@ Disc = function(params) {
 //                    new THREE.SphereGeometry(params.radius,20,30),
                     new THREE.DiscGeometry(inner, params.radius, 0, 60),  
                     new THREE.MeshLambertMaterial({
+//                       ambient: rgbToHex(color),
                        color: rgbToHex(color),
                        transparent: true, 
                        map: params.map,
-                       opacity: params.opacity || 1,
-                       shading: THREE.FlatShading}) );
+                       opacity: params.opacity || 1
+                       }) );
 //  this.scale.y = 0.01;
 //  this.overdraw = true;
   this.doubleSided = true;
@@ -226,10 +227,16 @@ Planet = function(params) {
     Ori.registerGfx(this);
 // color: rgbToHex(this.color),
 //   map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
-    this.material =  new THREE.MeshBasicMaterial( {  
+    if(params.phong) 
+      this.material =  new THREE.MeshPhongMaterial( {  
         color: rgbToHex(this.gfx.color),
+//        ambient: rgbToHex(this.gfx.color),
+        ambient: 0x333333,
         map: this.gfx.map,
-        shading: THREE.FlatShading });
+//        shading: THREE.FlatShading
+      });
+    else 
+      this.material =  new THREE.MeshBasicMaterial({ color: rgbToHex(this.gfx.color) });
 
 
 

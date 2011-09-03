@@ -56,7 +56,7 @@ a { color: #FC0; cursor: pointer; }
     text-shadow: #111 1px 1px 1px;
     background: -o-linear-gradient(#4d90fe, #4787ed);    
     background: -moz-linear-gradient(#4d90fe, #4787ed);
-#    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
     background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
 #    box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
 #    -moz-box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
@@ -64,6 +64,22 @@ a { color: #FC0; cursor: pointer; }
 #    -webkit-box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
 }
 
+.checkbox {
+    display: inline-block;
+    padding: 1px 10px;
+#   border-radius: 4px;
+font-weight:bold;
+  background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
+ -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+}
+
+.checked {
+    background: #272727;
+#    background: #276787;
+    box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+    -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+    -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+}
 
 .button:active {
 #    padding: 2px 15px 0 15px;
@@ -480,7 +496,7 @@ select:focus,
 
 #splashStatus {
   padding: 1em;
-  border-top: 3px dashed #111;
+  border-top: 3px dashed #000;
 }
 
 .arrow-down {

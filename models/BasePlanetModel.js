@@ -112,6 +112,7 @@ ModelBase.prototype = {
             betaRotate:180.0,
             dist: 0.0, scale: 0.6,
             emit:0.0, 
+            phong: true,
             map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
 //            color: colors["Earth"],
             inner_id: this.name+"Earth"})

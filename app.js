@@ -22,7 +22,7 @@ myApp.prototype.init = function(params) {
         // set clear color        
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 );
         
-        //return;
+//        return;
         // add Canvas DOM Element & or error box
         $("#splashStatus").empty();
         if(this.canvas) {

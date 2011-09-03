@@ -122,14 +122,18 @@ var UI = {
         id = params.id,
         text = params.text || params.id,
         color = params.color || "#FFF";
-        value = model["get"+id]() ? "checked" : "";
-        var change = params.change || function()  { model["set"+id](this.checked); };
-        var tmp  = $("<span style='color:" + color + "'></span>");
-        var ele = $("<input type=checkbox " + value +">" + text + "</input>");
-        tmp.append(ele);
+        value = model["get"+id]();
+        
+        var change = params.change || function()  { $(this).toggleClass('checked'); model["set"+id]($(this).is(".checked")); };
+//        var tmp  = $("<span style='color:" + color + "'></span>");
+//        var ele = $("<input type=checkbox " + value +">" + text + "</input>");
+        var ele =  $("<div class='checkbox' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>");
+//        tmp.append(ele);
+        ele.checked = true;
+        if(value) ele.toggleClass("checked");
         ele.bind("click", change);
                 
-        return tmp;
+        return ele; //tmp;
     }
 };
 
