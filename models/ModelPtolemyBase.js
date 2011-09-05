@@ -10,6 +10,10 @@ ModelPtolemyBase = function(params) {
     params.name = params.name || "ModelPtolemySun";
     params.spheres = params.spheres || 4;
     this.genSpheres(params);
+    
+    this.setShowHippo = null;
+   
+    
 
     BaseMixin.call(this);
     this.ptolemizeSpheres(); // :) add some ecliptic/latitude and apsidal stuff to the daily

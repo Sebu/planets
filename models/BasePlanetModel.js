@@ -46,7 +46,7 @@ ModelBase.prototype = {
 
 
     setShowPath : function(state) { this.showCurve[0] = state; if(this.curves[0]) this.curves[0].setEnabled(state); },
-    getShowPath : function() { if(!this.curves[0]) return this.showCurve[0]; },
+    getShowPath : function() { return this.showCurve[0]; },
     setShowHippo : function(state) { this.showCurve[1] = state; if(this.curves[1]) this.curves[1].setEnabled(state); },
     getShowHippo : function() { return this.showCurve[1]; },
     setShowStars : function(state) { this.stars.setEnabled(state); },
@@ -211,8 +211,8 @@ ModelBase.prototype = {
         }
         
         this.setShowStars(this.currentPlanet.showStars);
-        this.setShowPath(this.currentPlanet.showPath);
-        this.setShowHippo(this.currentPlanet.showHippo);
+        if(this.setShowPath) this.setShowPath(this.currentPlanet.showPath);
+        if(this.setShowHippo) this.setShowHippo(this.currentPlanet.showHippo);
         this.sun.setDist(this.currentPlanet.sunDist);
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);

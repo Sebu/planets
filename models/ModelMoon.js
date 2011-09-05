@@ -74,6 +74,9 @@ ModelMoon = function(params) {
     params.spheres = 3;
     this.genSpheres(params);
 
+    this.setShowHippo = null;
+    this.setShowPath = null;
+    
     MoonMixin.call(this);
     BaseMixin.call(this);    
 

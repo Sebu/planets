@@ -22,8 +22,9 @@ var UI = {
 /*/
     box : function(params) {
         var id = params.id,
+        color = params.color || {r: 1, g: 1, b: 1},
         text = params.element || params.text || params.id,
-        ele =  $("<div ><div class='caption' id='cap" +id+ "'" +
+        ele =  $("<div  ><div  style='color: " + rgbToCSS(color) + ";' class='caption' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
                 "<span class='triangle arrow-down' title='hide' ></span>" +
                 "<span class='triangle arrow-right' style='display:none' title='show'></span>" +

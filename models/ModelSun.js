@@ -10,6 +10,9 @@ ModelSun = function(params) {
 
     BaseMixin.call(this);
     
+    this.setShowHippo = null;
+    this.setShowPath = null;
+    
 
     this.sunYears = 0;
     this.setSunYears = function(speed) {

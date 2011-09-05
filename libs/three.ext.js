@@ -305,7 +305,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = false;//state;
+  this.meshGlow.visible = state;
 };
 
 Planet.prototype.setQuality = function(profile) {

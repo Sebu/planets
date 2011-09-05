@@ -476,6 +476,11 @@ select:focus,
   font-weight:bold;
 }
 
+.center {
+  text-align: center;
+  width: 100%;
+}
+
 #splash {
   text-align: center;
   font-size: 18px;

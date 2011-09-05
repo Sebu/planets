@@ -511,14 +511,15 @@ myApp.prototype.loadPreset = function(preset) {
         UI.optionsFromHash("#longitudePresets", latitudePresets);
         UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#vis");
         UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
-        $("<div id='visSpheres'></div>").appendTo("#vis");
+        $("<div id='visSpheres' class='center'></div>").appendTo("#vis");
         for (i in model.sphere) {
-            if(model["getShowSphere" + i])
+            if(model["setShowSphere" + i])
               UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
-        UI.checkbox({model:model, id:"ShowPath", text:"path"}).appendTo("#vis");
-        UI.checkbox({model:model, id:"ShowHippo", text:"hippo"}).appendTo("#vis");
-        UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#vis");
+        $("<div id='visOther' class='center'></div>").appendTo("#vis");
+        if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path"}).appendTo("#visOther");
+        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippo"}).appendTo("#visOther");
+        if(model.setShowStars) UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#visOther");
 
 
         // playback div       
@@ -604,7 +605,36 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
+/*
+        } else if (model.ui == "Model4") {
 
+            UI.box({id:"daily", text:"Daily", color: colors["S1"]}).appendTo("#parameters");
+            UI.checkbox({ model:model, id:"Speed1", text:"enabled"}).appendTo("#daily");
+            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"right ascension"}).appendTo("#daily");
+            
+            UI.box({id:"ecliptic", text:"Ecliptic", color: colors["S2"]}).appendTo("#parameters");
+            UI.slider({ model:model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity of ecliptic"}).appendTo("#ecliptic");
+            UI.slider({ model:model, id:"Speed2",  max:12000, text:"zodiacal speed"}).appendTo("#ecliptic");
+            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"longitude"}).appendTo("#ecliptic");
+
+            UI.box({id:"inner", text:"S 3", color: colors["S3"]}).appendTo("#parameters");
+            UI.slider({ model:model, id: "AxisAngle3", max: 360, step:0.05, text: "right angle"}).appendTo("#inner");
+            UI.slider({ model:model, id:"RotateStart3", max: 360, step:0.05, text:"start"}).appendTo("#inner");
+            UI.slider({ model:model, id: "Speed3", max:1100, text:"S 3,4 speed"}).appendTo("#inner");
+                        
+            UI.box({id:"inner2", text:"S 4", color: colors["S4"]}).appendTo("#parameters");
+            UI.slider({ model:model, id: "AxisAngle4", max: 360, step:0.05, text: "angle"}).appendTo("#inner2");
+            UI.slider({ model:model, id:"RotateStart4", max: 360, step:0.05, text:"start"}).appendTo("#inner2");
+
+            $("#ecliptic input, #inner input").change();
+            
+//            UI.slider({ model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
+//          UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
+            
+            
+
+            
+/*/
         } else if (model.ui == "Model4") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
@@ -627,7 +657,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
-
+//*/
            
         } else if (model.ui == "ModelAristotle") {
 
@@ -795,7 +825,7 @@ myApp.prototype.loadPreset = function(preset) {
         // initial update of sliders/state
         model.togglePause();
         $("#capvis,#caprotateStart, #pauseButton").click();
-        $("#moon input, #angle  input, #speed  input").change();
+        $("#moon input, #angle  input, #speed input").change();
         $("#AxisAngle1 input").change();
         
         this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});

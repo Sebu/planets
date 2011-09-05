@@ -6,6 +6,7 @@
 ModelPtolemy = function(params) {
     params.name = params.nam || "ModelPtolemy";
     ModelPtolemyBase.call(this, params);	
+    this.setShowSphere2 = null;
     this.factor = 1.0/11.0;
     
     this.sphere[4].anchor.eulerOrder = "XYZ";  

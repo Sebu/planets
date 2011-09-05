@@ -8,6 +8,7 @@ Model5 = function(params) {
     params.spheres = 5;
     this.genSpheres(params);
 
+    this.setShowHippo = null;
     BaseMixin.call(this);
   
 
