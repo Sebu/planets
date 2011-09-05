@@ -350,7 +350,8 @@ ModelBase.prototype = {
             this.adjustAnomaly();        
             // OTHER
             // days determined by sun speed
-          if(this.sun.getEnabled()) this.light.setPos(this.sun.mesh.currentPos());
+            //if(this.sun.getEnabled()) 
+            this.light.setPos(this.sun.mesh.currentPos());
         }
         //TODO: on model change -> events?
         this.updateMetadata();

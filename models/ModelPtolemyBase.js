@@ -135,6 +135,8 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
         this.date = this.startDate + this.days;
+        if(this.realSun.getEnabled()) 
+        this.light.setPos(this.realSun.mesh.currentPos());
     }
     
 

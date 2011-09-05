@@ -407,7 +407,7 @@ Circle.prototype.gen = function() {
 //        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x*1.01, y*1.01, z ) ) );        
         if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
-              color.setHSV( 0.5, 0.0, 1.0 - 0.7 * (sliceNum / slices) );
+              color.setHSV( 0.5, 0.0, 1.0 - 0.8 * (sliceNum / slices) );
               this.colors.push( color );
         }
 
