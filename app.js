@@ -17,7 +17,7 @@ myApp.prototype.init = function(params) {
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({forceCanvas: 1, clearAlpha: 1, antialias: true});
+        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 1, antialias: true});
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         // set clear color        
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 );
