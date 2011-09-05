@@ -29,7 +29,7 @@ Spherical = function Spherical(params) {
     this.anchor = new Node();
     this.addNode(this.anchor);
 
-    this.material = new THREE.LineBasicMaterial( { opacity: 0.8, color: rgbToHex(this.gfx.color) } );
+    this.material = new THREE.LineBasicMaterial( { opacity: 0.5, color: rgbToHex(this.gfx.color) } );
     this.materialArc =  new THREE.LineBasicMaterial( { opacity: 0.5,  color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
@@ -42,7 +42,7 @@ Spherical = function Spherical(params) {
     this.addNode(this.gfx.arc2);
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
-    eqMat = new THREE.LineBasicMaterial( {opacity: 0.8, color: rgbToHex(this.gfx.color) } );
+    eqMat = new THREE.LineBasicMaterial( {opacity: 0.5, color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
       this.gfx.equator = new Disc( {opacity:0.5, 
@@ -65,9 +65,9 @@ Spherical = function Spherical(params) {
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
     geometryBall.overdraw = true;
     
-    var materialBall = new THREE.MeshBasicMaterial( { transparent:true, opacity: 0.2, color: rgbToHex(this.gfx.color) } );
+    var materialBall = new THREE.MeshBasicMaterial( { transparent:true, opacity: 1.0, color: rgbToHex(this.gfx.color) } );
    
-    var materialCone = new THREE.MeshBasicMaterial( { opacity: 0.5, color: "0xFFFFFF" } );
+    var materialCone = new THREE.MeshBasicMaterial( { opacity: 1.0, color: "0xFFFFFF" } );
 //    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
     
     
@@ -97,7 +97,7 @@ Spherical = function Spherical(params) {
 
     this.progressArc = new Circle({ angle : 40 });
     var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(this.gfx.color),
-                opacity: 0.9
+                opacity: 1.0
                 } );
     progressMat.vertexColors = true;
     this.gfx.rotationarc = new THREE.Line( this.progressArc, progressMat );
