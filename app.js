@@ -17,7 +17,7 @@ myApp.prototype.init = function(params) {
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({clearAlpha: 1, antialias: true});
+        this.canvas = new Ori.Canvas({forceCanvas: 1, clearAlpha: 1, antialias: true});
         this.canvas.setSize(window.innerWidth, window.innerHeight);
         // set clear color        
         if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 );
@@ -366,8 +366,15 @@ myApp.prototype.update = function(time) {
         if (Ori.input.isDown("DOWN")) this.currentCamera.translateNew(0, 0, -0.6);
         if (Ori.input.isDown("UP")) this.currentCamera.translateNew(0, 0, 0.6);
 //*/
+        if (Ori.input.mouse.b2) {
+           var y = Ori.input.mouse.y;
+           var pitch = (y - Ori.input.drag.y) * time;
+           this.currentCamera.mouseWheel(0.0, 0.0, -pitch);
+           Ori.input.drag.y = y;
+        }
         
-        if (Ori.input.mouse.wheel) this.currentCamera.mouseWheel(0.0, 0.0, Ori.input.mouse.z);
+        if (Ori.input.mouse.wheel)
+         this.currentCamera.mouseWheel(0.0, 0.0, Ori.input.mouse.z);
 
         if (Ori.input.mouse.b1) {
             var x = Ori.input.mouse.x;

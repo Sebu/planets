@@ -230,13 +230,11 @@ Planet = function(params) {
     if(params.phong) 
       this.material =  new THREE.MeshPhongMaterial( {  
         color: rgbToHex(this.gfx.color),
-//        ambient: rgbToHex(this.gfx.color),
         ambient: 0x333333,
         map: this.gfx.map,
-//        shading: THREE.FlatShading
       });
     else 
-      this.material =  new THREE.MeshBasicMaterial({ color: rgbToHex(this.gfx.color) });
+      this.material =  new THREE.MeshBasicMaterial({ color: rgbToHex(this.gfx.color), map: this.gfx.map });
 
 
 

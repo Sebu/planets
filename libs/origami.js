@@ -99,7 +99,7 @@ Ori.Input = function() {
     
     this.keymap = {};
     this.binding = {};
-    this.mouse = {x:0, y:0, z:0, wheel: false, b1: false, b2: false};
+    this.mouse = {x:0, y:0, z:0, wheel: false, b1: false, b2: false, b3: false};
 
 
 
@@ -146,13 +146,18 @@ Ori.Input.prototype = {
   },
 
   mouseDown : function(e) {
+    console.log(e.button);
     if(e.button == 0) Ori.input.mouse.b1 = true;
+    if(e.button == 1) Ori.input.mouse.b2 = true;    
+//    if(e.button == 2) Ori.input.mouse.b3 = true;    
     Ori.input.drag = {x: e.clientX, y: e.clientY};
     
   },
 
   mouseUp : function(e) {
     if(e.button == 0) Ori.input.mouse.b1 = false;
+    if(e.button == 1) Ori.input.mouse.b2 = false;    
+//    if(e.button == 2) Ori.input.mouse.b3 = false;     
   },
 
   mouseMove : function(e) {

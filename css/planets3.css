@@ -11,41 +11,16 @@ html,body {
   -webkit-user-select:none;
   -moz-user-select:none;
   
-font-family: 'Open Sans', sans-serif;
-# font-family: 'Josefin Sans', sans-serif;
-# font-family: 'Lekton', serif;
-
+  font-family: 'Open Sans', sans-serif;
   font-size:100%;
   line-height:1.125em;
-  
   color: #FFFFFF;
-  background: #1B1917;
   background-color: #000000;
-#  background: url(../textures/starsmap.jpg) no-repeat center center fixed;
-#  -webkit-background-size: cover;
-#  -moz-background-size: cover;
-#  -o-background-size: cover;  
-#  background-size: cover;
 }
 
 a { color: #FC0; cursor: pointer; }
 
 
-
-.circle {
-  display: block;
-  width: 40px;
-  height: 40px;
-  float:left;
-	text-align:center;
-	vertical-align:middle;
-	font-size: 12px;
-  font-weight:bold;
-  -moz-border-radius: 14px;
-  -webkit-border-radius: 14px;
-#  -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
-  background:  -webkit-gradient(radial,45% 45%,5,60% 60%,40,from(yellow),color-stop(75%, green),to(rgba(255,255,255,0)));
-}
 
 .button {
     display: inline-block;
@@ -54,56 +29,42 @@ a { color: #FC0; cursor: pointer; }
     cursor: default;
     color: #FFF;
     text-shadow: #111 1px 1px 1px;
+    background: #4d90fe;    
+    background: -ms-linear-gradient(#4d90fe, #4787ed);      
     background: -o-linear-gradient(#4d90fe, #4787ed);    
     background: -moz-linear-gradient(#4d90fe, #4787ed);
-    background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
     background: -webkit-gradient(linear, left top, left bottom, from(#4d90fe), to(#4787ed));
-#    box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
-#    -moz-box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
-#    -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-#    -webkit-box-shadow: inset 0 1px 0 #5da0fe, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #145;
 }
 
 .checkbox {
-    display: inline-block;
-    padding: 1px 10px;
-#   border-radius: 4px;
-font-weight:bold;
+  display: inline-block;
+  padding: 1px 10px;
+  cursor: default;
+  font-weight:bold;
+  background: #4B4947;
+  background: -ms-linear-gradient(#4B4947, #32302D);    
+  background: -o-linear-gradient(#4B4947, #32302D);    
+  background: -moz-linear-gradient(#4B4947, #32302D);  
   background: -webkit-gradient(linear, left top, left bottom, from(#4B4947), to(#32302D));
   box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
- -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
 }
 
 .checked {
-    background: #272727;
-#    background: #276787;
-    box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
-    -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
-    -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+   background: #272727;
+   box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+   -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+   -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
 .button:active {
-#    padding: 2px 15px 0 15px;
     background: #272727;
-#    background: #276787;
     box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
     -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
     -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
 
-
-.button.disabled {
-    color: #111;
-    padding: 1px 15px;
-    text-shadow: 0 1px 0 #4B4947;
-    background: -o-linear-gradient(#3B3937, #2B2927);
-    background: -moz-linear-gradient(#3B3937, #2B2927);
-    background: -webkit-gradient(linear, left top, left bottom, from(#3B3937), to(#2B2927));
-    box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;    
-    -moz-box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;
-    -webkit-box-shadow: inset 0 1px 0 #4B4947, 0 -1px 0 #111, 0 1px 0 #111, -1px 0 0 #111, 1px 0 0 #111, 0 1px 1px #111;
-}
 
 
 select {
@@ -137,14 +98,14 @@ option  {
   float:left;
 }
 
-
-
 .ui-slider-handle {
     cursor: default;
     position: absolute;
     top: 3px;    
     width: 6px;
     height: 18px;
+    background: #4B4947;
+    background: -ms-linear-gradient(#4B4947, #32302D);
     background: -o-linear-gradient(#4B4947, #32302D);    
     background: -moz-linear-gradient(#4B4947, #32302D);
     background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
@@ -175,7 +136,6 @@ option  {
     border-top: 1px solid #222;
     border-bottom: 1px solid #555;
 	  width:120px;
-#	  height: 6px;
 	  top: -1px;
 	  background: #111;
     height: 3px;
@@ -285,13 +245,13 @@ select:focus,
 .label {
   z-index: 3;
   position: absolute;
-  color: white;
-  background-color: rgba(150,150,150,0.5);
+  background: rgba(150,150,150,0.5);
+  background: -ms-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    
+  background: -o-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    
   background: -moz-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    
   background: -webkit-gradient(linear, left top, right top, from(rgba(0,0,0,0.8)), to(rgba(0,0,0,0.0)));    
 	font-weight: bold;
 	font-size:14px;
-  color: rgb(255,255,255);
   border-radius: 2px;
 
 }
@@ -303,9 +263,8 @@ select:focus,
   z-index: 2;
   position: absolute;
    color: white;
-#  background-color: rgba(95, 93, 91, 0.5);
-#  background-color: rgba(70,78,75, 0.5);
-
+  background: rgba(95, 93, 91, 0.5);
+  background: -ms-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
   background: -o-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
   background: -moz-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(95, 93, 91, 0.5)), to(rgba(70,78,75, 0.5)));
@@ -319,11 +278,8 @@ select:focus,
 
 
 .boxContent {
-#  background-color: rgba(180,180,180,0.2);
-#  background: -webkit-gradient(linear, left top, left bottom, from(#6B6967), to(#52504D));
-  position: relative;
-  width: 100%;
-#  border-radius: 5px;
+   position: relative;
+   width: 100%;
    background: #272727;
    background-color: rgba(39,39,39, 0.5);
    box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
@@ -334,20 +290,11 @@ select:focus,
 
 
 #uiContainer {
-#  overflow: auto;
   padding: 0;
   width: 190px;
-#  width: 100%;
   top: 10px;
   left: 10px;
-#  opacity: 0.5;
-#  -webkit-transform-style: preserve-3d;
-#  -webkit-transform-origin: 0px 400px;
-#  -webkit-transform: perspective(800px) rotateY(20deg);
-#  -webkit-transition-property: opacity; -webkit-transition-duration: 0.5s; 
 }
-
-
 
 
 
@@ -379,11 +326,6 @@ select:focus,
 }
 
 
-
-#view {
-#  width: 100%;
-}
-
 .wert {
 # -webkit-user-select:auto;
 # -moz-user-select:auto;  
@@ -395,8 +337,6 @@ select:focus,
   top: 0px;
   right: 0px; 
   font-size: 12px;
-#  -webkit-transform: perspective(500px) rotateY(-20deg);
-
 }
 
 
@@ -413,9 +353,7 @@ select:focus,
 #infoContainer td {
   width: 120px;
   text-align: right;
-  vertical-align: bottom;
-#  -webkit-user-select:auto;
-#  -moz-user-select:auto;  
+  vertical-align: bottom; 
 }
 
 #playbackContainer {
@@ -496,9 +434,7 @@ select:focus,
   box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;  
   -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
   -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-
   border-radius: 5px;
-  #padding: 1em;
 }
 
 #splashStatus {
