@@ -248,7 +248,7 @@ Planet = function(params) {
             size: 2.3,
             map: THREE.ImageUtils.loadTexture(this.gfx.glowMap),
             blending: THREE.AdditiveBlending,
-            depthTest: false,              
+//            depthTest: false,              
             transparent: true
         });
     this.meshGlow = new THREE.ParticleSystem(geo, mat);

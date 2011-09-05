@@ -26,6 +26,7 @@ myApp.prototype.init = function(params) {
         // add Canvas DOM Element & or error box
         $("#splashStatus").empty();
         if(this.canvas) {
+          $("#splash").remove();
           this.domRoot.append(this.canvas.domElement);
         } else {
           $("#splashStatus").append(myApp.CANVAS_ERROR);
@@ -65,13 +66,13 @@ myApp.prototype.init = function(params) {
 
 
         // SKY SPHERE
-/*        
-        this.skyCam = new THREE.Camera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
-        this.skyCam.init({ eye : { x: 0.0 , y: 0.0, z: -600.0 } });
+//*        
+        this.skyCam = new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000});
+        this.skyCam.setEye( { x: 0.0 , y: 0.0, z: -600.0 });
         this.skyScene = new THREE.Scene();
 				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
 				mesh.flipSided = true;
-				this.skyScene.addObject( mesh );
+//				this.skyScene.addObject( mesh );
 //*/	
 
 
@@ -375,7 +376,8 @@ myApp.prototype.update = function(time) {
             var yaw = (x - Ori.input.drag.x) * -0.2 * time;
             this.currentCamera.mouseY(yaw);
             this.currentCamera.mouseX(pitch);
-//            this.skyCam.rotateRight(pitch);
+            this.skyCam.mouseY(yaw);
+            this.skyCam.mouseX(pitch);            
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }
@@ -424,7 +426,7 @@ myApp.prototype.updateLabels = function() {
 
 myApp.prototype.draw = function(time) {
         this.canvas.clear();
-//        this.canvas.render(this.skyScene, this.skyCam);
+        this.canvas.render(this.skyScene, this.skyCam);
         this.canvas.render(this.currentScene, this.currentCamera);
     };
 
@@ -513,12 +515,12 @@ myApp.prototype.loadPreset = function(preset) {
         UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
         $("<div id='visSpheres' class='center'></div>").appendTo("#vis");
         for (i in model.sphere) {
-            if(model["setShowSphere" + i])
+            if(model["setShowSphere" + i]) 
               UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         $("<div id='visOther' class='center'></div>").appendTo("#vis");
-        if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path"}).appendTo("#visOther");
-        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippo"}).appendTo("#visOther");
+        if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path", color: rgbToCSS(colors["Path"]) }).appendTo("#visOther");
+        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippo", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
         if(model.setShowStars) UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#visOther");
 
 
