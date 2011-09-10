@@ -45,9 +45,9 @@ Spherical = function Spherical(params) {
     eqMat = new THREE.LineBasicMaterial( {opacity: 0.5, color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
-      this.gfx.equator = new Disc( {opacity:0.5, 
+      this.gfx.equator = new Disc( {opacity:0.3, 
        map: THREE.ImageUtils.loadTexture('textures/ramp.png'),
-       radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
+       radius: 1.25, innerRadius: 1.0, color: this.gfx.color });
     } else {
      this.gfx.equator = new THREE.Line(equator, eqMat );      
      this.gfx.equator.rotation.x = Math.PI/2;
@@ -119,7 +119,8 @@ Spherical = function Spherical(params) {
     this.setRotateAngle(this.rotateAngle);
     this.setSpeed(this.speed);
 
-    this.setVisuals(["sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball","markerend"]);
+    //"markerarc",,"markerend"
+    this.setVisuals(["sphere","arc1","arc2","equator","npole","spole","rotationarc","markerball"]);
     
 
 };
@@ -127,7 +128,7 @@ Spherical = function Spherical(params) {
 Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
 
-Spherical.prototype.DEFAULT_VISUALS = ["sphere","disc","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball","markerend"];
+Spherical.prototype.DEFAULT_VISUALS = ["sphere","disc","arc1","arc2","equator","npole","spole","rotationarc","markerball","markerarc","markerend"];
 
 // set visible elements
 Spherical.prototype.setVisuals = function(vis) {

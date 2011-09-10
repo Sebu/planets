@@ -48,16 +48,36 @@ THREE.Object3D.prototype.currentMatrixWorld = function() {
 }
 
 // determine current position in world space
+/*
 THREE.Object3D.prototype.currentPos = function() {
     var pos = this.currentMatrixWorld();
-    return {x: pos.n14, y: pos.n24, z: pos.n34};
+    if(!this.cPos) this.cPos = new THREE.Vector3();
+    this.cPos.x = pos.n14;
+    this.cPos.y = pos.n24;
+    this.cPos.z = pos.n34;
+    return {x:, y: ,z:;
+}
+//*/
+
+// determine current position in world space
+THREE.Object3D.prototype.currentPos = function() {
+    var pos = this.currentMatrixWorld();
+    if(!this.cPos) this.cPos = new THREE.Vector3();
+    this.cPos.x = pos.n14;
+    this.cPos.y = pos.n24;
+    this.cPos.z = pos.n34;
+    return this.cPos;
 }
 
 
-// determine current position in world space
+// determine current position in world space FAST
 THREE.Object3D.prototype.currentPosFast = function() {
     var pos = this.matrixWorld;
-    return {x: pos.n14, y: pos.n24, z: pos.n34};
+    if(!this.cPos) this.cPos = new THREE.Vector3();
+    this.cPos.x = pos.n14;
+    this.cPos.y = pos.n24;
+    this.cPos.z = pos.n34;
+    return this.cPos;
 }
 
 THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
@@ -162,7 +182,7 @@ Disc = function(params) {
   THREE.Mesh.call(  this, 
 //                    new THREE.SphereGeometry(params.radius,20,30),
                     new THREE.DiscGeometry(inner, params.radius, 0, 60),  
-                    new THREE.MeshLambertMaterial({
+                    new THREE.MeshBasicMaterial({
 //                       ambient: rgbToHex(color),
                        color: rgbToHex(color),
                        transparent: true, 
@@ -268,11 +288,17 @@ Planet = function(params) {
     
     this.mesh = new THREE.Mesh(planetGeo, this.material);
     this.mesh.scale.set( this.gfx.scale, this.gfx.scale, this.gfx.scale );
+    this.mesh.cPos = new THREE.Vector3();
     this.mesh.overdraw = true;
     this.setDist(this.dist);
     this.mesh.rotation.z = Math.PI;
     this.addNode(this.mesh);
     this.addNode(this.meshGlow);
+
+    //collision
+    this.mesh.sc = new THREE.SphereCollider(this.mesh.cPos, this.gfx.scale);
+    this.mesh.sc.mesh = this.mesh;
+    THREE.Collisions.colliders.push(this.mesh.sc);
 
     this.rotation.x = this.beta/PI_SCALE;
 

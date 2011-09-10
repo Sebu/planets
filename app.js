@@ -64,7 +64,9 @@ myApp.prototype.init = function(params) {
         // set trackball as default
         this.currentCamera = this.cameras["Trackball"].instance;
 
-
+        // for collision
+        this.projector = new THREE.Projector();
+        
         // SKY SPHERE
 //*        
         this.skyCam = new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000});
@@ -108,8 +110,8 @@ myApp.prototype.init = function(params) {
         // create some elements
         // TODO: more segmentation
         $("<div id='infoContainer'>\
+            <thead><tr><td colspan=2 class=infoHeader>Planet</td></tr></thead>\
             <table>\
-              <thead><tr><td colspan=2 class=infoHeader>Planet</td></tr></thead>\
               <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>\
               <tr><td>longitude</td><td class=wert id='longitude'>0</td></tr>\
               <tr><td>longitude speed</td><td class=wert  id='longitudeSpeed'>0</span></tr>\
@@ -393,8 +395,23 @@ myApp.prototype.update = function(time) {
         model.update(time);
         this.updateInfoBox();
         this.updateLabels();
+
+        this.currentCamera.update();
+        var x = ( Ori.input.mouse.x / window.innerWidth ) * 2 - 1;
+	      var y = -( Ori.input.mouse.y / window.innerHeight ) * 2 + 1;
+        var vector = new THREE.Vector3( x, y, 0.5 );
+        model.earth.mesh.currentPosFast();
+        model.sun.mesh.currentPosFast();        
+        model.planet.mesh.currentPosFast();
+        vector = this.projector.unprojectVector( vector, this.currentCamera );
+        model.dline[0] = this.currentCamera.position;     
+        model.dline[1] = vector.clone();
+        model.dlineLine.setPos(model.dline);
+        var ray = new THREE.Ray( this.currentCamera.position, vector.subSelf( this.currentCamera.position ).normalize() );
+        var cs = THREE.Collisions.rayCastNearest( ray );
+        if(cs) { cs.mesh.materials[0].color.setHex( 0xaa0000 ); }
         
-//        this.currentCamera.setTarget(model.planet.currentPos());
+        
 };
 
 

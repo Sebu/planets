@@ -29,8 +29,8 @@ ModelBase = function() {
     this.showCurve[1] = true;
     
     this.currentPlanet = {};
-    this.currentPos = "Free";
-    this.currentLookAt = "Earth";
+//    this.currentPos = "Free";
+//    this.currentLookAt = "Earth";
 
     this.days = 0;
 
@@ -80,6 +80,12 @@ ModelBase.prototype = {
         this.root.addNode(this.light);
 
 
+
+        // DEBUG
+        this.dline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
+        this.dlineLine = new Curve({trails: false, pos: this.dline, color: colors["S4"] }); 
+        this.root.addNode(this.dlineLine);
+    
         // planet surface for earth view
         this.root.addNode(this.earthPlane = new Disc({radius: 9.0, color: colors["Earth"]}) );
 
@@ -110,7 +116,8 @@ ModelBase.prototype = {
         // add earth to sphere 1
         this.earth = new Planet({
             betaRotate:180.0,
-            dist: 0.0, scale: 0.6,
+//            dist: 2.0,
+            scale: 0.6,
             emit:0.0, 
             phong: true,
             map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
@@ -152,7 +159,7 @@ ModelBase.prototype = {
         this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
         
         // default visuals for sphere1        
-        this.sphere[1].setVisuals( ["equator","npole","spole","rotationarc","markerarc","markerball","markerend"] );
+        this.sphere[1].setVisuals( ["equator","npole","spole","rotationarc","markerball"] );
 
         // add ecliptic and Sun
         this.sphere[2].addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S4"] }));
@@ -162,7 +169,7 @@ ModelBase.prototype = {
         this.setSunSpeed = function(value) { this.ecliptic.setSpeed(value); };
         this.getSunSpeed = function() { return this.ecliptic.getSpeed(); };
 
-
+        
     },
 
 
@@ -447,7 +454,7 @@ ModelBase.prototype = {
             }
             if(this.ptolemySphere) this.ptolemySphere.updateMovement(step);
             this.adjustAnomaly();
-            pos = node.currentPos();
+            pos = node.currentPos().clone();
             curvePos.push(pos);
         }
         
