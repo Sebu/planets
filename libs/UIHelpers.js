@@ -35,39 +35,39 @@ var UI = {
     },
 //*/
     input : function(params) {
-        var model = params.model;
-        var id = params.id;
-        var text = params.text || params.id;
-        var min = params.min || 0;
-        var max = params.max || 100;
-        var step = params.step || 1;
-        var value = params.value || window[model]["get"+id]();
-        var change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
+        var model = params.model,
+        id = params.id,
+        text = params.text || params.id,
+        min = params.min || 0,
+        max = params.max || 100,
+        step = params.step || 1,
+        value = params.value || window[model]["get"+id](),
+        change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
 
         ele =  $("<div id='" + id + "'>" +
             "<div>" + text + "</div>" +
-
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" +value+ "' class='range' onchange='"+change+"'/>" +
             "</div>");
         return ele;
     },
 
     text : function(params) {
-        var model = params.model;
-        var id = params.id;
-        var tooltip = params.tip || "";
-        var text = params.text || params.id;
-        var min = params.min || 0;
-        var max = params.max || 100;
-        var step = params.step || 1;
-        var value = params.value ||  model["get"+id]();
-        var change = params.change || function(e)  { if(e.keyCode == 13) model["set"+id](this.value); };
+        var model = params.model,
+        id = params.id,
+        tooltip = params.tip || "",
+        text = params.text || params.id,
+        min = params.min || 0,
+        max = params.max || 100,
+        step = params.step || 1,
+        value = params.value ||  model["get"+id](),
+        change = params.change || function(e)  { if(e.keyCode == 13) model["set"+id](this.value); };
 
         ele =  $( "<input type='text' placeholder='date' value='" + value + "' class='text'/>" );
         $(ele).bind("keyup",change);
         return ele;
     },
 
+/*
     slider : function(params) {
         var instance = params.model,
         id = params.id,
@@ -77,64 +77,89 @@ var UI = {
         max = params.max || 100,
         toggle = params.toggle || false,
         step = params.step  || 0.2,
-        color = {r:0.1, g:0.3, b:0.4};
-        //style='background:" + rgbToCSS(color) + "'
-        
-        
-        var value = params.value ||  instance["get"+id]();
-        var changeSlider = params.change || function(event, ui)  { 
+        color = {r:0.1, g:0.3, b:0.4},
+        value = params.value ||  instance["get"+id]();
+        changeSlider = params.change || function(event, ui)  { 
             instance["set"+id](Number(Utils.toDec(ui.value))); 
             $("#" + id + " > input").attr("value", Utils.toDec(ui.value) ); // Utils.decToBase(ui.value,60)
-        };
-
-        var changeInput = params.change || function()  { 
+        },
+        changeInput = params.change || function()  { 
           instance["set"+id](Number(Utils.toDec(this.value)));
            $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value)));
         };
-
-
 
         if(toggle)
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
         else
           tmp =  $("<div class='sliderBox'>" + text + "</div>");
+          
         ele = $("<div  id='" + id + "'>" + //title='" + tooltip + "'
             "<div class='slider'></div>" +
-            "<input  type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
+            "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");
         tmp.append(ele);
         $(".slider",ele).slider({slide: changeSlider, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
+//        $("input",ele).bind("focus", function() { this.style.background = "#FFF"; } );
+//        $("input",ele).bind("blur", function() { this.style.background = "#957"; } );
         $("input",ele).bind("change", changeInput);
-//        $(".slider",ele).bind("slidechange",change);
          if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
-         if(toggle) $(":checkbox",tmp).bind("click", function() 
-          { 
+         if(toggle) $(":checkbox",tmp).bind("click", function() { 
             $("#" + id + " > input").attr('disabled', !this.checked);
             if(!this.checked) instance["set"+id](0);
             else instance["set"+id]( $("#" + id + " > .slider").val() );  
           } );
         return tmp;
     },
+/*/
+    slider : function(params) {
+        var instance = params.model,
+        id = params.id,
+        tooltip = params.tip || "",
+        text = params.text || params.id,
+        min = params.min || 0,
+        max = params.max || 100,
+        toggle = params.toggle || false,
+        step = params.step  || 0.2,
+        color = {r:0.1, g:0.3, b:0.4},
+        unit = "",
+        value = params.value ||  instance["get"+id]();
+        changeInput = params.change || function()  { 
+          instance["set"+id](Number(Utils.toDec(this.value)));
+        };
 
-
+        tmp =  $("<div class='sliderBox'>" + text + "</div>");
+          
+        ele = $("<div><span  id='" + id + "'>" + //title='" + tooltip + "'
+            "<input type='text' style='width: 140px;' min="+min+" max="+max+" step="+step+" value='" + value + unit + "'  class='range'/>" +
+            "</span><span class='range''>days</span></div>");
+        tmp.append(ele);
+//        $("input",ele).bind("focus", function() { this.value = instance["get"+id]();  } );
+//        $("input",ele).bind("blur", function() { this.value  += unit; } );
+        $("input",ele).bind("change", changeInput);
+         if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
+         if(toggle) $(":checkbox",tmp).bind("click", function() { 
+            $("#" + id + " > input").attr('disabled', !this.checked);
+            if(!this.checked) instance["set"+id](0);
+            else instance["set"+id]( $("#" + id + " > .slider").val() );  
+          } );
+        return tmp;
+    },
+//*/
 
     checkbox : function(params) {
         var model = params.model,
         id = params.id,
         text = params.text || params.id,
         color = params.color || "#FFF";
-        value = model["get"+id]();
+        value = model["get"+id](),
+        ele =  $("<div class='checkbox' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>"),
+        change = params.change || function()  { $(this).toggleClass('checked'); model["set"+id]($(this).is(".checked")); };
         
-        var change = params.change || function()  { $(this).toggleClass('checked'); model["set"+id]($(this).is(".checked")); };
-//        var tmp  = $("<span style='color:" + color + "'></span>");
-//        var ele = $("<input type=checkbox " + value +">" + text + "</input>");
-        var ele =  $("<div class='checkbox' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>");
-//        tmp.append(ele);
         ele.checked = true;
         if(value) ele.toggleClass("checked");
         ele.bind("click", change);
                 
-        return ele; //tmp;
+        return ele;
     }
 };
 

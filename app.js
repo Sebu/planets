@@ -318,6 +318,7 @@ myApp.prototype.setCurrentScene = function(scene) {
 
 myApp.prototype.updateInfoBox = function() {
 //*
+        //OPT: merge dom updates
         if(model.ui == "ModelSun") {
           UI.innerText(this.info.longitude, model.planet.longitude.toFixed(6) );
           UI.innerText(this.info.meanLongitude, model.getMeanLongitude().toFixed(6) );
@@ -417,9 +418,6 @@ myApp.prototype.update = function(time) {
 
 
 myApp.prototype.setCamera = function(cam) {
-
-     
-  
   this.currentCamera = this.cameras[cam].instance;
   switch(cam) {
     case "Trackball":
@@ -435,6 +433,7 @@ myApp.prototype.setCamera = function(cam) {
 }
 
 myApp.prototype.updateLabels = function() {
+        //OPT: merge dom updates
         northLabel.setPosition(model.north.getPosCanvas(this.currentCamera, this.canvas));
         southLabel.setPosition(model.south.getPosCanvas(this.currentCamera, this.canvas));
         eastLabel.setPosition(model.east.getPosCanvas(this.currentCamera, this.canvas));
@@ -450,7 +449,7 @@ myApp.prototype.updateLabels = function() {
 
 myApp.prototype.draw = function(time) {
         this.canvas.clear();
-        this.canvas.render(this.skyScene, this.skyCam);
+//        this.canvas.render(this.skyScene, this.skyCam);
         this.canvas.render(this.currentScene, this.currentCamera);
     };
 
