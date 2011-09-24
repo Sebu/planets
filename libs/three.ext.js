@@ -186,7 +186,7 @@ Disc = function(params) {
 //                       ambient: rgbToHex(color),
                        color: rgbToHex(color),
                        transparent: true, 
-                       map: params.map,
+//                       map: params.map,
                        opacity: params.opacity || 1
                        }) );
 //  this.scale.y = 0.01;

@@ -1,7 +1,9 @@
 var Ori = Ori || {};
 
 Ori.supportsWebGL = function() {
-    return window.WebGLRenderingContext;
+    try { 
+      return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); 
+    } catch( e ) { return false; }
 };
 
 Ori.supportsCanvas = function() {
