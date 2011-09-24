@@ -67,7 +67,7 @@ var UI = {
         return ele;
     },
 
-/*
+//*
     slider : function(params) {
         var instance = params.model,
         id = params.id,

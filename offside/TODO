@@ -1,3 +1,20 @@
+TODO
+- canvas earth 
+- hide info box
+- load/reset/save
+- fix minor 
+  - set sexigesimal input / show 
+- longitude based time zones
+- events
+  - collision event ( object )
+  - change event 
+
+
+
+
+
+
+
 S0 rotate z * rotate y * S1 rotate z * rotate y * S2 rotate z * rotate y * S3 rotate z * rotate -S2/2 * rotate beta
 
 BRiOhgY9FB
@@ -219,11 +236,6 @@ DONE
   - rename ptolemy -> ptolemy amagest 
 
 
-TODO
-- load/reset/save
-- fix minor 
-  - set sexigesimal input / show 
-- longitude based time zones
 
 
 
