@@ -110,8 +110,8 @@ myApp.prototype.init = function(params) {
         // create some elements
         // TODO: more segmentation
         $("<div id='infoContainer'>\
-            <thead><tr><td colspan=2 class=infoHeader>Planet</td></tr></thead>\
             <table>\
+              <thead><tr><td colspan=2 class=infoHeader>Planet</td></tr></thead>\
               <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>\
               <tr><td>longitude</td><td class=wert id='longitude'>0</td></tr>\
               <tr><td>longitude speed</td><td class=wert  id='longitudeSpeed'>0</span></tr>\
@@ -397,6 +397,7 @@ myApp.prototype.update = function(time) {
         this.updateInfoBox();
         this.updateLabels();
 
+/* 
         this.currentCamera.update();
         var x = ( Ori.input.mouse.x / window.innerWidth ) * 2 - 1;
 	      var y = -( Ori.input.mouse.y / window.innerHeight ) * 2 + 1;
@@ -411,7 +412,7 @@ myApp.prototype.update = function(time) {
         var ray = new THREE.Ray( this.currentCamera.position, vector.subSelf( this.currentCamera.position ).normalize() );
         var cs = THREE.Collisions.rayCastNearest( ray );
         if(cs) { cs.mesh.materials[0].color.setHex( 0xaa0000 ); }
-        
+*/        
         
 };
 

@@ -74,8 +74,8 @@ ModelBase.prototype = {
         this.light = Sunlight();
 //        this.light.castShadow = true;
 
-        this.camera = params.renderer.camera;
         this.renderer = params.renderer;
+        this.camera = this.renderer.camera;
         this.root = this.renderer.newScene();
         this.root.addNode(this.light);
 
@@ -84,7 +84,7 @@ ModelBase.prototype = {
         // DEBUG
         this.dline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
         this.dlineLine = new Curve({trails: false, pos: this.dline, color: colors["S4"] }); 
-        this.root.addNode(this.dlineLine);
+//        this.root.addNode(this.dlineLine);
     
         // planet surface for earth view
         this.root.addNode(this.earthPlane = new Disc({radius: 9.0, color: colors["Earth"]}) );
@@ -119,7 +119,7 @@ ModelBase.prototype = {
 //            dist: 2.0,
             scale: 0.6,
             emit:0.0, 
-            phong: true,
+            phong: (this.renderer.canvas.type=="webgl"),
             map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
 //            color: colors["Earth"],
             inner_id: this.name+"Earth"})

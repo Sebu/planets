@@ -182,11 +182,11 @@ Disc = function(params) {
   THREE.Mesh.call(  this, 
 //                    new THREE.SphereGeometry(params.radius,20,30),
                     new THREE.DiscGeometry(inner, params.radius, 0, 60),  
-                    new THREE.MeshBasicMaterial({
+                    new THREE.MeshLambertMaterial({
 //                       ambient: rgbToHex(color),
                        color: rgbToHex(color),
                        transparent: true, 
-//                       map: params.map,
+                       map: params.map,
                        opacity: params.opacity || 1
                        }) );
 //  this.scale.y = 0.01;

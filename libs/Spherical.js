@@ -47,7 +47,7 @@ Spherical = function Spherical(params) {
     if(params.vortex) {
       this.gfx.equator = new Disc( {opacity:0.3, 
        map: THREE.ImageUtils.loadTexture('textures/ramp.png'),
-       radius: 1.25, innerRadius: 1.0, color: this.gfx.color });
+       radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
     } else {
      this.gfx.equator = new THREE.Line(equator, eqMat );      
      this.gfx.equator.rotation.x = Math.PI/2;
