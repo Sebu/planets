@@ -72,12 +72,12 @@ Spherical = function Spherical(params) {
     
     
     this.gfx.markerball =  new THREE.Mesh(geometryBall, materialCone);
-    this.gfx.markerend =  new THREE.Mesh(markerend, materialCone);
+//    this.gfx.markerend =  new THREE.Mesh(markerend, materialCone);
     this.gfx.markerball.position.z = params.scale;
 //    this.gfx.markerball.position.x = -0.2;
     this.gfx.markerball.rotation.y = -Math.PI/2;
-    this.gfx.markerend.position.z = params.scale;
-    this.gfx.markerend.rotation.y = -Math.PI/2;
+//    this.gfx.markerend.position.z = params.scale;
+//    this.gfx.markerend.rotation.y = -Math.PI/2;
     this.anchor.addNode(this.gfx.markerball);
 //    this.addNode(this.gfx.markerend);
     
@@ -128,7 +128,7 @@ Spherical = function Spherical(params) {
 Spherical.prototype = new THREE.Object3D;
 Spherical.prototype.constructor = Spherical;
 
-Spherical.prototype.DEFAULT_VISUALS = ["sphere","disc","arc1","arc2","equator","npole","spole","rotationarc","markerball","markerarc","markerend"];
+Spherical.prototype.DEFAULT_VISUALS = ["sphere","disc","arc1","arc2","equator","npole","spole","rotationarc","markerball","markerarc"];
 
 // set visible elements
 Spherical.prototype.setVisuals = function(vis) {

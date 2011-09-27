@@ -75,7 +75,7 @@ Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68, SCROLL: 1
  */
 Ori.Timer = function() {
   this.time = 0;
-  this.maxStep = 0.05;
+  this.maxStep = 0.1;
   this.lastTime = 0;
    
 };
@@ -148,7 +148,6 @@ Ori.Input.prototype = {
   },
 
   mouseDown : function(e) {
-    console.log(e.button);
     if(e.button == 0) Ori.input.mouse.b1 = true;
     if(e.button == 1) Ori.input.mouse.b2 = true;    
 //    if(e.button == 2) Ori.input.mouse.b3 = true;    
@@ -216,7 +215,7 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
-  this.targetFps = 30;
+  this.targetFps = 10;
   this.targetTime = 1.0/this.targetFps;
   this.elapsedTime = 0;
   this.timer = new Ori.Timer();
@@ -224,14 +223,23 @@ Ori.App = function() {
 
 Ori.App.prototype.constructor = Ori.App;
 
+
+
+
 Ori.App.prototype = {
 
   loop : function() {
     var time = this.timer.tick();
     this.elapsedTime += time;
 //    if(this.elapsedTime >= this.targetTime) {
+      this.runningSlow = false;
+      if(time >= this.targetTime) {
+        this.runningSlow = true;
+      }
       this.update(time);
-      this.draw(time);
+      //if(!this.runningSlow)
+       this.draw(time);
+
 //      this.elapsedTime = 0;
 //    }
     Ori.input.reset();
@@ -239,7 +247,6 @@ Ori.App.prototype = {
   
  
   run : function() {
-  
       var self = this;
       (function requestLoop() {
         self.loop();
@@ -262,6 +269,9 @@ Storage.prototype.getJson = function(key)
     return this.getItem(key);
   }
 };
+
+//window.onerror = function() {
+//};
 
 window.requestAnimFrame = (function(){
       return  window.requestAnimationFrame       || 

@@ -120,7 +120,7 @@ ModelBase.prototype = {
             scale: 0.6,
             emit:0.0, 
             phong: (this.renderer.canvas.type=="webgl"),
-            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+//            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
 //            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);

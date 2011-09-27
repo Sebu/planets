@@ -26,7 +26,6 @@ myApp.prototype.init = function(params) {
         // add Canvas DOM Element & or error box
         $("#splashStatus").empty();
         if(this.canvas) {
-          $("#splash").remove();
           this.domRoot.append(this.canvas.domElement);
         } else {
           $("#splashStatus").append(myApp.CANVAS_ERROR);
@@ -80,13 +79,11 @@ myApp.prototype.init = function(params) {
 
 
         // DEBUG und stats.js
-        debugBox = $("<div class='container' id='debugContainer'>\
-                     <div class='sexa' id='sexaInput'><input  type='text' value=0></input></div>\
-                     <div class='sexa wert' id='sexaResult'>0</div>\
+        this.debugBox = $("<div class='container' id='debugContainer'>\
                      </div>").appendTo(this.domRoot);        
         this.stats = new Stats();
         Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
-//        debugBox.append( this.stats.domElement );
+        this.debugBox.append( this.stats.domElement );
         
 		
         // create models
@@ -229,7 +226,7 @@ myApp.prototype.init = function(params) {
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
                
-
+        $("#splash").hide();
     };
 
 myApp.prototype.loadPlanets = function(value) {
@@ -307,7 +304,7 @@ myApp.prototype.removePreset = function() {
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
-        scene.addLight(new THREE.AmbientLight(0xFFFFFF));
+        scene.add(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
     };
@@ -360,6 +357,12 @@ myApp.prototype.updateInfoBox = function() {
 // update loop
 myApp.prototype.update = function(time) {
 
+        //DEBUG
+        if (this.runningSlow) this.debugBox.show();
+        else this.debugBox.hide();
+//          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
+
+        
         if(Ori.input.isDown("DEBUG")) debugBox.toggle();
 
 /*
@@ -452,6 +455,7 @@ myApp.prototype.draw = function(time) {
         this.canvas.clear();
 //        this.canvas.render(this.skyScene, this.skyCam);
         this.canvas.render(this.currentScene, this.currentCamera);
+        this.stats.update();
     };
 
 myApp.prototype.resize = function() {

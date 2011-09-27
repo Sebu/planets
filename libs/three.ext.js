@@ -34,7 +34,7 @@ rgbToCSS = function(color) {
 
 // extend THREE.Object3D 
 Node = THREE.Object3D;
-THREE.Object3D.prototype.addNode = function(node) { this.addChild(node); };
+THREE.Object3D.prototype.addNode = function(node) { this.add(node); };
 THREE.Object3D.prototype.setPos = function(pos) { this.position.set(pos.x, pos.y, pos.z); }
 THREE.Object3D.prototype.setEnabled = function(state) { this.visible = state; };
 THREE.Object3D.prototype.getEnabled = function() { return this.visible; };
@@ -186,7 +186,7 @@ Disc = function(params) {
 //                       ambient: rgbToHex(color),
                        color: rgbToHex(color),
                        transparent: true, 
-                       map: params.map,
+//                       map: params.map,
                        opacity: params.opacity || 1
                        }) );
 //  this.scale.y = 0.01;
@@ -329,7 +329,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = state;
+  this.meshGlow.visible = false; //state;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -492,8 +492,8 @@ Cloud.prototype.constructor = Cloud;
 var geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
 var equator = new Circle({ angle : 359.9 });
 
-var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
-var cone = new THREE.CylinderGeometry( 10, 0.0001, 0.15, 0.4);
+//var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
+//var cone = new THREE.CylinderGeometry( 10, 0.0001, 0.15, 0.4);
 //THREE.LatheGeometry([new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 )]);
 
 var aLine = new THREE.Geometry();
