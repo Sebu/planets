@@ -363,7 +363,6 @@ myApp.prototype.update = function(time) {
         //DEBUG
         if (this.runningSlow) this.debugBox.show();
         else this.debugBox.hide();
-        this.debugBox.show();
 //          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
 
         

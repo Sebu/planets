@@ -267,7 +267,7 @@ Planet = function(params) {
     var x = 0,y = 0,z = 0;
     geo.vertices.push( new THREE.Vertex( new THREE.Vector3( 0.0, 0.0, 0.0 ) ) );
     
-    var map = (Ori.gfxProfile.texture>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(this.gfx.glowMap) : undefined;
+    var map = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(this.gfx.glowMap) : undefined;
     var mat = new THREE.ParticleBasicMaterial({
             size: 2.3,
             map: map,
