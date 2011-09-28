@@ -106,7 +106,7 @@ ModelPtolemyBase = function(params) {
     // show/hide modifications    
     this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"]);
     this.sphere[2].setVisuals(["equator","centerLine"]);
-    this.sphere[3].setVisuals(["equator","centerLine"]);
+    this.sphere[3].setVisuals(["equator"]);
     this.sphere[4].setVisuals(["crankLine", "crankRadius","crank","disc","equator","centerLine"]);
     this.realSunS[1].setVisuals([]);
     this.realSunS[2].setVisuals([]);
@@ -114,7 +114,7 @@ ModelPtolemyBase = function(params) {
 
     
     this.update = function(time) {
-        if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+//        if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
 
 
@@ -137,6 +137,10 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanet[0] = this.earth.mesh.currentPos();     
         this.earthToPlanet[1] = this.planet.mesh.currentPos();
         this.earthToPlanetLine.setPos(this.earthToPlanet);
+
+        this.sphere[3].centerL[0] = this.sphere[3].gfx.markerball.currentPos();     
+        this.sphere[3].centerL[1] = this.sphere[3].gfx.markerball.currentPos();
+        this.sphere[3].gfx.centerLine.setPos(this.sphere[3].centerL);
 
         this.date = this.startDate + this.days;
         if(this.realSun.getEnabled()) 

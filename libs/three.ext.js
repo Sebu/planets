@@ -292,6 +292,7 @@ Planet = function(params) {
     this.mesh.overdraw = true;
     this.setDist(this.dist);
     this.mesh.rotation.z = Math.PI;
+    this.mesh.rotation.y = Math.PI/2;
     this.addNode(this.mesh);
     this.addNode(this.meshGlow);
 

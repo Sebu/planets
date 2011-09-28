@@ -45,6 +45,14 @@ ModelPtolemyMoon2 = function(params) {
       this.sphere[4].anchor.rotation.y += adjustment;   
       
     }
+
+    // override update to draw corret sphere 3 line from crank to epi
+    this.oldUpdate = this.update;
+    this.update = function(time) {
+        this.oldUpdate( time);
+
+    }
+
         
     
 };

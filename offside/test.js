@@ -68,8 +68,7 @@ myApp.prototype.draw = function(time) {
 
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
-        scene.addLight(new THREE.AmbientLight(0xFFFFFF));
-        this.scenes.push(scene);
+//        this.scenes.push(scene);
         return scene;
     };
 

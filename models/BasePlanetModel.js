@@ -113,14 +113,17 @@ ModelBase.prototype = {
         this.root.addNode(this.sphere[1]);
         this.updateList[0] = this.sphere[1];
         
+
+        
+        var usePhong = (this.renderer.canvas && this.renderer.canvas.type=="webgl");
         // add earth to sphere 1
         this.earth = new Planet({
             betaRotate:180.0,
 //            dist: 2.0,
             scale: 0.6,
             emit:0.0, 
-            phong: (this.renderer.canvas.type=="webgl"),
-//            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+            phong: usePhong,
+            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
 //            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
@@ -176,14 +179,14 @@ ModelBase.prototype = {
     //TODO: move to ptolemyBase
     ptolemizeSpheres : function() {  
       this.ptolemySphere = new Longituder();  
-      this.sphere[1].anchor.removeChild(this.sphere[2]);
-      this.sphere[2].anchor.removeChild(this.ecliptic);
+      this.sphere[1].anchor.remove(this.sphere[2]);
+      this.sphere[2].anchor.remove(this.ecliptic);
       
       this.sphere[1].anchor.addNode(this.ptolemySphere);
       this.ptolemySphere.anchor.addNode(this.sphere[2]);
       this.ptolemySphere.addNode(this.ecliptic);
       
-      this.sphere[4].removeChild(this.sphere[4].anchor);
+      this.sphere[4].remove(this.sphere[4].anchor);
       this.sphere[4].ptolemy =  new Node(); 
       this.sphere[4].addNode(this.sphere[4].ptolemy);      
       this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 
