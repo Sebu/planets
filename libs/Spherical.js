@@ -71,6 +71,7 @@ Spherical = function Spherical(params) {
 //    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
     
     
+
     this.gfx.markerball =  new THREE.Mesh(geometryBall, materialCone);
 //    this.gfx.markerend =  new THREE.Mesh(markerend, materialCone);
     this.gfx.markerball.position.z = params.scale;
@@ -103,11 +104,13 @@ Spherical = function Spherical(params) {
     this.gfx.rotationarc = new THREE.Line( this.progressArc, progressMat );
     this.gfx.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.gfx.rotationarc.rotation.x = Math.PI/2;
-    this.anchor.addNode(this.gfx.rotationarc);
+
+//    if(Ori.gfxProfile.geomerty>=Ori.Q.MEDIUM)
+      this.anchor.addNode(this.gfx.rotationarc);
 
     
-    this.centerL = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 1} ];
-    this.gfx.centerLine = new Curve({trails: false, pos: this.centerL, color: this.gfx.color }); 
+    var centerL = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 1} ];
+    this.gfx.centerLine = new Curve({trails: false, pos: centerL, color: this.gfx.color }); 
     this.gfx.centerLine.visible = false;
     this.anchor.addNode(this.gfx.centerLine);
     

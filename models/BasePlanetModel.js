@@ -109,20 +109,24 @@ ModelBase.prototype = {
         this.earthPlane.setEnabled(false);
                 
         // first and outer sphere
-        this.sphere[1] = new Spherical({vortex: true, inner_id: this.name+"S1", scale: 9,  color: colors["S1"]})
+        this.sphere[1] = new Spherical({
+            vortex: (Ori.gfxProfile.geometry >= Ori.Q.MEDIUM), 
+            inner_id: this.name+"S1", 
+            scale: 9,  
+            color: colors["S1"]
+            });
         this.root.addNode(this.sphere[1]);
         this.updateList[0] = this.sphere[1];
         
 
         
-        var usePhong = (this.renderer.canvas && this.renderer.canvas.type=="webgl");
         // add earth to sphere 1
         this.earth = new Planet({
             betaRotate:180.0,
 //            dist: 2.0,
             scale: 0.6,
             emit:0.0, 
-            phong: usePhong,
+            phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
             map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
 //            color: colors["Earth"],
             inner_id: this.name+"Earth"})
@@ -420,6 +424,7 @@ ModelBase.prototype = {
     calcCurve : function(params) {
         var curvePos = []
         oldAngle = [],
+        oldApsidal = 0,
         oldRotate = [],
         step = 0,
         start = params.start,
@@ -437,7 +442,8 @@ ModelBase.prototype = {
             this.sphere[i].setAxisAngle(0.0);
             this.sphere[i].setRotateAngle(0.0);
         }
-
+        if(this.ptolemySphere) oldApsidal = this.ptolemySphere.getApsidalAngle();
+  
         // approximate step width
         for (i = start + 1; i < stop; i++) {
             this.sphere[i].visUpdate = false;
@@ -470,6 +476,7 @@ ModelBase.prototype = {
             this.sphere[i].setRotateAngle(oldRotate[i]);
             this.sphere[i].visUpdate = true;
         }
+        if(this.ptolemySphere) this.ptolemySphere.setApsidalAngle(oldApsidal);
         this.adjustAnomaly();
 
 

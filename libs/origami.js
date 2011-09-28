@@ -10,6 +10,37 @@ Ori.supportsCanvas = function() {
     return !!document.createElement('canvas').getContext;
 };
 
+
+Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
+
+Ori.GfxProfiles = {
+  undefined: {
+    resolution : 0.70,
+    particles : Ori.Q.NONE,
+    textures : Ori.Q.LOW,
+    geometry : Ori.Q.LOW,
+    alpha : Ori.Q.NONE,
+    shading : Ori.Q.LOW
+    },   
+  canvas: {
+    resolution : 0.70,
+    particles : Ori.Q.NONE,
+    textures : Ori.Q.LOW,
+    geometry : Ori.Q.LOW,
+    alpha : Ori.Q.NONE,
+    shading : Ori.Q.LOW
+    },
+  webgl: {
+    resolution : 1.0,
+    particles : Ori.Q.HIGH,
+    textures : Ori.Q.HIGH,
+    geometry : Ori.Q.HIGH,
+    alpha : Ori.Q.HIGH,
+    shading : Ori.Q.HIGH
+    }    
+};
+
+Ori.gfxProfile = Ori.GfxProfiles.undefined;
 /**
  * @constructor
  */
@@ -25,7 +56,7 @@ Ori.Canvas = function(params) {
         this.graphics.autoClear = false;
         this.graphics.sortObjects = false;
 
-
+        Ori.gfxProfile = Ori.GfxProfiles[this.graphics.type];
        
         return this.graphics;
 }
@@ -36,23 +67,12 @@ Ori.Canvas.prototype.constructor = Ori.Renderer;
 
 Ori.CANVAS_ERROR = "bla";
 
-Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
-Ori.GfxProfile = {
-  low: {
-    resolution : 100,
-    particles : Ori.Q.LOW,
-    textures : Ori.Q.LOW,
-    geometry : Ori.Q.LOW,
-    alpha : Ori.Q.NONE,
-    shading : Ori.Q.LOW
-    }
-};
 Ori.gfxStore = [];
 
 Ori.registerGfx = function(node) {
   Ori.gfxStore.push(node);
-  node.setQuality(Ori.GfxProfile.low);
+  node.setQuality(Ori.gfxProfile);
 }
 
 Ori.loadContent = function(uri) {

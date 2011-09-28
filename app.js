@@ -18,9 +18,10 @@ myApp.prototype.init = function(params) {
 
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 1, antialias: true});
-        this.canvas.setSize(window.innerWidth, window.innerHeight);
+        
         // set clear color        
-        if(this.canvas.type == "webgl") this.canvas.setClearColorHex( 0x070707 );
+        if(this.canvas.type == "webgl") 
+          this.canvas.setClearColorHex( 0x070707 );
         
 //        return;
         // add Canvas DOM Element & or error box
@@ -62,6 +63,8 @@ myApp.prototype.init = function(params) {
 
         // set trackball as default
         this.currentCamera = this.cameras["Trackball"].instance;
+
+        this.resize();
 
         // for collision
         this.projector = new THREE.Projector();
@@ -459,10 +462,12 @@ myApp.prototype.draw = function(time) {
     };
 
 myApp.prototype.resize = function() {
-        var width = window.innerWidth;
-        var height = window.innerHeight;
+        var width = window.innerWidth,
+        height = window.innerHeight,
+        factor = Ori.gfxProfile.resolution;
         this.currentCamera.setAspect(width / height);
-        this.canvas.setSize(width, height);
+        
+        this.canvas.setSize(width*factor, height*factor);
     };
 
 

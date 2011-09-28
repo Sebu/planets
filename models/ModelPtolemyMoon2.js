@@ -46,11 +46,11 @@ ModelPtolemyMoon2 = function(params) {
       
     }
 
-    // override update to draw corret sphere 3 line from crank to epi
-    this.oldUpdate = this.update;
-    this.update = function(time) {
-        this.oldUpdate( time);
-
+    // override setBaseRadius to draw corret sphere 3 line from crank to epi
+    this.oldSetBaseRadius = this.setBaseRadius;
+    this.setBaseRadius = function(value) {
+      this.oldSetBaseRadius(value);
+      if(this.currentPlanet.accurateMoon) this.sphere[2].crankPoint.position.z = -this.sphere[2].radius*this.factor;
     }
 
         

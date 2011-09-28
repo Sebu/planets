@@ -186,7 +186,7 @@ Disc = function(params) {
 //                       ambient: rgbToHex(color),
                        color: rgbToHex(color),
                        transparent: true, 
-//                       map: params.map,
+                       map: params.map,
                        opacity: params.opacity || 1
                        }) );
 //  this.scale.y = 0.01;
@@ -330,7 +330,7 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = false; //state;
+  this.meshGlow.visible = state;
 };
 
 Planet.prototype.setQuality = function(profile) {
@@ -378,7 +378,7 @@ Curve  = function(params) {
     this.geo = new THREE.Geometry();
     this.setPos(params.pos);
 
-    var width = params.linewidth || 2;
+    var width = params.linewidth*Ori.gfxProfile.resolution || 2;
     var material = new THREE.LineBasicMaterial( { linewidth: width, color: rgbToHex(params.color)  } );     
     if(this.trails) material.vertexColors = true;
 

@@ -49,7 +49,7 @@ ModelPtolemyBase = function(params) {
     this.sphere[3].anchor.addNode(this.equator);
 
 
-    // add the crank vis
+    // add the bob crank vis
     this.sphere[4].gfx.crank = new THREE.Line(equator, material );
     this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: colors["S4"] });
     this.crank = new Node();
@@ -93,6 +93,16 @@ ModelPtolemyBase = function(params) {
     this.equantPlanetLine = new Curve({trails: false, pos: this.equantPlanet, color: {r:1.0,g:1.0,b:0.0} }); 
     this.root.addNode(this.equantPlanetLine);
 
+
+    // inner crank
+    this.centerL = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
+    this.centerLine = new Curve({trails: false, pos: this.centerL, color: colors["S3"] }); 
+    this.root.addNode(this.centerLine);
+    this.sphere[2].crankPoint = new Translate({x:0, y:0, z:0});
+//    this.sphere[2].crankPoint.position.z = this.sphere[2].gfx.scale;
+    this.sphere[2].anchor.addNode(this.sphere[2].crankPoint);
+
+
     var that = this;
     this.earth.setEnabled = function(state) {
       this.mesh.visible = state; 
@@ -103,6 +113,15 @@ ModelPtolemyBase = function(params) {
       that.apsidalLine.setEnabled(state);    
     }
 
+    this.sphere[3].setShow = function(state) {
+      this.visible = state;
+      this.setGfx(this.gfx.visuals, state);
+//      that.centerLine.setEnabled(state);
+      that.earthToDeferentLine.setEnabled(state);
+      that.equantPlanetLine.setEnabled(state); 
+      that.apsidalLine.setEnabled(state);               
+    }
+    
     // show/hide modifications    
     this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"]);
     this.sphere[2].setVisuals(["equator","centerLine"]);
@@ -114,7 +133,7 @@ ModelPtolemyBase = function(params) {
 
     
     this.update = function(time) {
-//        if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+        if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
         ModelBase.prototype.update.call(this, time);
 
 
@@ -138,9 +157,9 @@ ModelPtolemyBase = function(params) {
         this.earthToPlanet[1] = this.planet.mesh.currentPos();
         this.earthToPlanetLine.setPos(this.earthToPlanet);
 
-        this.sphere[3].centerL[0] = this.sphere[3].gfx.markerball.currentPos();     
-        this.sphere[3].centerL[1] = this.sphere[3].gfx.markerball.currentPos();
-        this.sphere[3].gfx.centerLine.setPos(this.sphere[3].centerL);
+        this.centerL[0] = this.sphere[2].crankPoint.currentPos();  
+        this.centerL[1] = this.sphere[3].gfx.markerball.currentPos();
+        this.centerLine.setPos(this.centerL);
 
         this.date = this.startDate + this.days;
         if(this.realSun.getEnabled()) 
@@ -207,7 +226,9 @@ ModelPtolemyBase = function(params) {
       this.sphere[2].radius = value;
       this.sphere[2].setScale(this.sphere[2].radius*this.factor);
       this.sphere[3].position.z = this.sphere[2].radius*this.factor;
+      this.sphere[2].crankPoint.position.z = this.sphere[2].radius*this.factor;
     }
+    
     this.getBaseRadius = function() { return this.sphere[2].radius; }
 
     this.setDeviation = function(value) {

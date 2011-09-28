@@ -461,9 +461,9 @@ select:focus,
 canvas {
 //  position: absolute; 
 //  top: 0px;
-//  width: 100%;
-//  height: 100%;  
-//  overflow: hidden;
+  width: 100%;
+  height: 100%;  
+  overflow: hidden;
 }
 
 
