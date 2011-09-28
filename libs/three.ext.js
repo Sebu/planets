@@ -178,17 +178,22 @@ THREE.DiscGeometry.prototype.constructor = THREE.TorusGeometry;
 // disc of planet surface 
 Disc = function(params) {
   var color = params.color || colors["Earth"];
-  var inner = params.innerRadius || 0;
+  inner = params.innerRadius || 0,
+  specs =  {
+              color: rgbToHex(color),
+              transparent: true, 
+              map: params.map,
+              opacity: params.opacity || 1 
+            };
+  if(Ori.gfxProfile.shading>=Ori.Q.HIGH)
+    this.material =  new THREE.MeshLambertMaterial(specs);  
+  else 
+     this.material =  new THREE.MeshBasicMaterial(specs);
+      
   THREE.Mesh.call(  this, 
 //                    new THREE.SphereGeometry(params.radius,20,30),
                     new THREE.DiscGeometry(inner, params.radius, 0, 60),  
-                    new THREE.MeshLambertMaterial({
-//                       ambient: rgbToHex(color),
-                       color: rgbToHex(color),
-                       transparent: true, 
-                       map: params.map,
-                       opacity: params.opacity || 1
-                       }) );
+                    this.material );
 //  this.scale.y = 0.01;
 //  this.overdraw = true;
   this.doubleSided = true;
@@ -262,15 +267,17 @@ Planet = function(params) {
     var x = 0,y = 0,z = 0;
     geo.vertices.push( new THREE.Vertex( new THREE.Vector3( 0.0, 0.0, 0.0 ) ) );
     
+    var map = (Ori.gfxProfile.texture>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(this.gfx.glowMap) : undefined;
     var mat = new THREE.ParticleBasicMaterial({
             size: 2.3,
-            map: THREE.ImageUtils.loadTexture(this.gfx.glowMap),
+            map: map,
             blending: THREE.AdditiveBlending,
 //            depthTest: false,              
             transparent: true
         });
     this.meshGlow = new THREE.ParticleSystem(geo, mat);
-    this.setGlow(this.gfx.glow);
+
+      this.setGlow(this.gfx.glow);
 //    this.mesh = new THREE.LOD();
 //    for (i = 0; i < sphereGeo.length; i++ ) {
 //       mesh = new THREE.Mesh( sphereGeo[ i ][ 0 ], this.material );
@@ -330,7 +337,8 @@ Planet.prototype.setDist = function(dist) {
 
 Planet.prototype.setGlow = function(state) {
   this.gfx.glow = state;
-  this.meshGlow.visible = state;
+  this.meshGlow.visible = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? state : false;
+
 };
 
 Planet.prototype.setQuality = function(profile) {

@@ -121,13 +121,14 @@ ModelBase.prototype = {
 
         
         // add earth to sphere 1
+        var earthMap = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg') : undefined;
         this.earth = new Planet({
             betaRotate:180.0,
 //            dist: 2.0,
             scale: 0.6,
             emit:0.0, 
             phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
-            map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
+            map: earthMap,
 //            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
@@ -185,11 +186,9 @@ ModelBase.prototype = {
       this.ptolemySphere = new Longituder();  
       this.sphere[1].anchor.remove(this.sphere[2]);
       this.sphere[2].anchor.remove(this.ecliptic);
-      
       this.sphere[1].anchor.addNode(this.ptolemySphere);
       this.ptolemySphere.anchor.addNode(this.sphere[2]);
       this.ptolemySphere.addNode(this.ecliptic);
-      
       this.sphere[4].remove(this.sphere[4].anchor);
       this.sphere[4].ptolemy =  new Node(); 
       this.sphere[4].addNode(this.sphere[4].ptolemy);      

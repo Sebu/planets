@@ -116,7 +116,7 @@ ModelPtolemyBase = function(params) {
     this.sphere[3].setShow = function(state) {
       this.visible = state;
       this.setGfx(this.gfx.visuals, state);
-//      that.centerLine.setEnabled(state);
+      that.centerLine.setEnabled(state);
       that.earthToDeferentLine.setEnabled(state);
       that.equantPlanetLine.setEnabled(state); 
       that.apsidalLine.setEnabled(state);               

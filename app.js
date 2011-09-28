@@ -363,6 +363,7 @@ myApp.prototype.update = function(time) {
         //DEBUG
         if (this.runningSlow) this.debugBox.show();
         else this.debugBox.hide();
+        this.debugBox.show();
 //          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
 
         
@@ -455,7 +456,7 @@ myApp.prototype.updateLabels = function() {
 
 
 myApp.prototype.draw = function(time) {
-        this.canvas.clear();
+//        this.canvas.clear();
 //        this.canvas.render(this.skyScene, this.skyCam);
         this.canvas.render(this.currentScene, this.currentCamera);
         this.stats.update();

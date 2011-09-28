@@ -15,7 +15,7 @@ Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
 Ori.GfxProfiles = {
   undefined: {
-    resolution : 0.70,
+    resolution : 1.0,
     particles : Ori.Q.NONE,
     textures : Ori.Q.LOW,
     geometry : Ori.Q.LOW,
@@ -23,9 +23,9 @@ Ori.GfxProfiles = {
     shading : Ori.Q.LOW
     },   
   canvas: {
-    resolution : 0.70,
+    resolution : 1.0,
     particles : Ori.Q.NONE,
-    textures : Ori.Q.LOW,
+    textures : Ori.Q.MEDIUM,
     geometry : Ori.Q.LOW,
     alpha : Ori.Q.NONE,
     shading : Ori.Q.LOW
@@ -33,7 +33,7 @@ Ori.GfxProfiles = {
   webgl: {
     resolution : 1.0,
     particles : Ori.Q.HIGH,
-    textures : Ori.Q.HIGH,
+    textures : Ori.Q.MEDIUM,
     geometry : Ori.Q.HIGH,
     alpha : Ori.Q.HIGH,
     shading : Ori.Q.HIGH
@@ -53,7 +53,7 @@ Ori.Canvas = function(params) {
           this.graphics = new THREE.CanvasRenderer(params);
           this.graphics.type = "canvas";
         }
-        this.graphics.autoClear = false;
+//        this.graphics.autoClear = false;
         this.graphics.sortObjects = false;
 
         Ori.gfxProfile = Ori.GfxProfiles[this.graphics.type];
@@ -257,7 +257,7 @@ Ori.App.prototype = {
         this.runningSlow = true;
       }
       this.update(time);
-      //if(!this.runningSlow)
+      if(!this.runningSlow)
        this.draw(time);
 
 //      this.elapsedTime = 0;

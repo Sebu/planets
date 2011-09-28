@@ -45,8 +45,9 @@ Spherical = function Spherical(params) {
     eqMat = new THREE.LineBasicMaterial( {opacity: 0.5, color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
+      var map = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture('textures/ramp.png') : undefined;
       this.gfx.equator = new Disc( {opacity:0.3, 
-       map: THREE.ImageUtils.loadTexture('textures/ramp.png'),
+       map: map,
        radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
     } else {
      this.gfx.equator = new THREE.Line(equator, eqMat );      
@@ -62,8 +63,9 @@ Spherical = function Spherical(params) {
     this.gfx.markerarc.rotation.y = Math.PI/2;
     this.anchor.addNode(this.gfx.markerarc);
 
+
     //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
-    geometryBall.overdraw = true;
+//    geometryBall.overdraw = true;
     
     var materialBall = new THREE.MeshBasicMaterial( { transparent:true, opacity: 1.0, color: rgbToHex(this.gfx.color) } );
    

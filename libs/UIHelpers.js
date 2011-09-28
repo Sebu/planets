@@ -184,8 +184,8 @@ UI.Label.prototype.setPosition = function(pos) {
   if(pos.z<0) { this.ele.style.display = "none"; return; }
   this.ele.style.display = "block";
   this.pos = pos;
-  this.ele.style.left = pos.x/Ori.gfxProfile.resolution + "px";
-  this.ele.style.top = pos.y/Ori.gfxProfile.resolution + "px";  
+  this.ele.style.left = pos.x + "px";
+  this.ele.style.top = pos.y + "px";  
 };
 
 
