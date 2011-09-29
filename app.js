@@ -17,28 +17,32 @@ myApp.prototype.init = function(params) {
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 1, antialias: true});
+        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
         
         // set clear color        
-        if(this.canvas.type == "webgl") 
-          this.canvas.setClearColorHex( 0x070707 );
-        
+//        if(this.canvas.type == "webgl")
+//          this.canvas.setClearColorHex( 0x070707 );
+
+        var splashStatus = $("#splashStatus");
 //        return;
         // add Canvas DOM Element & or error box
-        $("#splashStatus").empty();
+        splashStatus.empty();
         if(this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
-          $("#splashStatus").append(myApp.CANVAS_ERROR);
+          splashStatus.append(myApp.CANVAS_ERROR);
           return 0;
         }
-        
+        splashStatus.empty();
+        splashStatus.append("register input...");
         // track inputs
         Ori.input.trackMouseOn(this.canvas.domElement);
 //        Ori.input.trackKeysOn(window);
         Ori.input.register(Ori.KEY.DOWN, "DOWN");
         Ori.input.register(Ori.KEY.UP, "UP");
 
+        splashStatus.empty();
+        splashStatus.append("setup cameras...");
         // setup camera
         // TODO : shorten
         this.cameras = { 
@@ -88,7 +92,9 @@ myApp.prototype.init = function(params) {
         Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
         this.debugBox.append( this.stats.domElement );
         
-		
+
+        splashStatus.empty();
+        splashStatus.append("setup default model...");
         // create models
         this.models = {};
         // set start model
@@ -96,6 +102,8 @@ myApp.prototype.init = function(params) {
 
 
         // create labels
+        splashStatus.empty();
+        splashStatus.append("setup labels...");
         equinoxLabel = new UI.Label({text: "Vernal Equinox"});
         npoleLabel = new UI.Label({text: "North pole"});
         spoleLabel = new UI.Label({text: "South pole"});
@@ -108,6 +116,8 @@ myApp.prototype.init = function(params) {
         planetLabel2 = new UI.Label({text: "Moon"});
 
         // create some elements
+        splashStatus.empty();
+        splashStatus.append("setup infobox...");
         // TODO: more segmentation
         $("<div id='infoContainer'>\
             <table>\
@@ -190,7 +200,8 @@ myApp.prototype.init = function(params) {
 //*/
 
 
-        
+        splashStatus.empty();
+        splashStatus.append("setup UI...");
         var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         var presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle2 = $("<span><select class='chzn-select modelSelect' style='width:150px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
@@ -319,7 +330,7 @@ myApp.prototype.setCurrentScene = function(scene) {
 myApp.prototype.updateInfoBox = function() {
 //*
         //OPT: merge dom updates
-        if(model.ui == "ModelSun") {
+        if(model.ui === "ModelSun") {
           UI.innerText(this.info.longitude, model.planet.longitude.toFixed(6) );
           UI.innerText(this.info.meanLongitude, model.getMeanLongitude().toFixed(6) );
           UI.innerText(this.info.equationOfTime, model.getEquationOfTime().toFixed(6) );
@@ -330,7 +341,7 @@ myApp.prototype.updateInfoBox = function() {
           UI.innerText(this.info.longitudeSpeed, model.planet.longitudeSpeed.toFixed(2) );
           UI.innerText(this.info.latitude, model.planet.latitude.toFixed(1) );
         }
-        if(model.ui == "ModelPtolemy" || model.ui == "ModelPtolemySun") {
+        if(model.ui === "ModelPtolemy" || model.ui === "ModelPtolemySun") {
           UI.innerText(this.info.longitude, Utils.toSexa(mod(model.planet.longitude,360) ) );
           UI.innerText(this.info.latitude, Utils.toSexa(model.planet.latitude ) );
           UI.innerText(this.info.apsidalLongitude, Utils.toSexa( mod(model.ptolemySphere.getApsidalAngle(), 360) ) );
@@ -343,7 +354,7 @@ myApp.prototype.updateInfoBox = function() {
           planetLabel2.setPosition(model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
 
-        if(model.ui == "ModelMoonCompare") {
+        if(model.ui === "ModelMoonCompare") {
           // infoBox data
           UI.innerText(this.info.sunAngle2, model.planet2.sunAngle.toFixed(1) );
           UI.innerText(this.info.longitude2, model.planet2.longitude.toFixed(1) );
@@ -361,8 +372,8 @@ myApp.prototype.updateInfoBox = function() {
 myApp.prototype.update = function(time) {
 
         //DEBUG
-//        if (this.runningSlow) this.debugBox.show();
-//        else this.debugBox.hide();
+        if (this.runningSlow) this.debugBox.show();
+        else this.debugBox.hide();
 //          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
 
         

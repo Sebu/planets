@@ -1,4 +1,6 @@
-var Ori = Ori || {};
+var Ori = Ori || {
+    version : "1.0"
+};
 
 Ori.supportsWebGL = function() {
     try { 
