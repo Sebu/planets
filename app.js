@@ -19,6 +19,8 @@ myApp.prototype.init = function(params) {
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
         
+        setupCommonGeomerty();
+        
         // set clear color        
 //        if(this.canvas.type == "webgl")
 //          this.canvas.setClearColorHex( 0x070707 );
@@ -239,8 +241,12 @@ myApp.prototype.init = function(params) {
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
-               
-        $("#splash").hide();
+        if(this.canvas.type==="canvas") {
+          this.debugBox.show();
+           splashStatus.empty();
+           splashStatus.append("<div>Your browser or graphics card does not seem to support <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>. The Following experience will be limited.</div><br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>OK</div>");
+        } else                       
+          $("#splash").hide();
     };
 
 myApp.prototype.loadPlanets = function(value) {
@@ -373,7 +379,7 @@ myApp.prototype.update = function(time) {
 
         //DEBUG
 //        if (this.runningSlow) 
-          this.debugBox.show();
+          
 //        else 
 //          this.debugBox.hide();
 //          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
@@ -481,6 +487,7 @@ myApp.prototype.resize = function() {
         this.currentCamera.setAspect(width / height);
         
         this.canvas.setSize(width*factor, height*factor);
+        resizeSplash();
     };
 
 

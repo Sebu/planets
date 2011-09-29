@@ -22,15 +22,18 @@ Ori.GfxProfiles = {
     textures : Ori.Q.LOW,
     geometry : Ori.Q.LOW,
     alpha : Ori.Q.NONE,
-    shading : Ori.Q.LOW
+    shading : Ori.Q.LOW,
+    circleRes : 25
     },   
   canvas: {
     resolution : 1.0,
     particles : Ori.Q.NONE,
     textures : Ori.Q.NONE,
     geometry : Ori.Q.LOW,
-    alpha : Ori.Q.NONE,
-    shading : Ori.Q.NONE
+    alpha : Ori.Q.LOW,
+    shading : Ori.Q.NONE,
+    circleRes : 24,
+    curveRes : 0.5
     },
   webgl: {
     resolution : 1.0,
@@ -38,7 +41,9 @@ Ori.GfxProfiles = {
     textures : Ori.Q.HIGH,
     geometry : Ori.Q.HIGH,
     alpha : Ori.Q.HIGH,
-    shading : Ori.Q.HIGH
+    shading : Ori.Q.HIGH,
+    circleRes : 50,
+    curveRes : 1.0
     }    
 };
 

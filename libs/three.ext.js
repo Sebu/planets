@@ -427,7 +427,7 @@ Circle.prototype = new THREE.Geometry;
 Circle.prototype.constructor = Circle;
 
 Circle.prototype.gen = function() {
-    var slices = 50,
+    var slices = Ori.gfxProfile.circleRes,
     arc =  this.angle / PI_SCALE,
     beta = this.beta  / PI_SCALE,
     theta = 0,
@@ -510,9 +510,10 @@ Cloud.prototype = new THREE.ParticleSystem;
 Cloud.prototype.constructor = Cloud;
 
 
-
-var geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
-var equator = new Circle({ angle : 359.9 });
+function setupCommonGeomerty() {
+  geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
+  equator = new Circle({ angle : 359.9 });
+};  
 
 //var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
 //var cone = new THREE.CylinderGeometry( 10, 0.0001, 0.15, 0.4);

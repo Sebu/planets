@@ -429,7 +429,7 @@ ModelBase.prototype = {
         start = params.start,
         stop = params.stop || this.sphere.length,
         node = params.node,
-        maxSegments = params.segments || 80,
+        maxSegments = (params.segments || 80) * Ori.gfxProfile.curveRes,
         pos = {x: 0, y: 0, z:0},
         j =  -10,
         i = 0;
@@ -449,7 +449,7 @@ ModelBase.prototype = {
             oldRotate[i] = this.sphere[i].getRotateAngle();
             step += Math.abs(this.sphere[i].getStep());
         }
-        step = 10.0/step;
+        step = 10.0/(step*Ori.gfxProfile.curveRes);
         
         // calculate positions of curve points
         for (i = start + 1; i < stop; i++) {

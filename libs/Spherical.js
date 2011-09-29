@@ -30,24 +30,24 @@ Spherical = function Spherical(params) {
     this.addNode(this.anchor);
 
     this.material = new THREE.LineBasicMaterial( {
-        //opacity: 0.5,
+        opacity:  (Ori.gfxProfile.alpha) ? 0.5 : 1.0,
         color: rgbToHex(this.gfx.color) } );
-    this.materialArc =  new THREE.LineBasicMaterial( {
-        //opacity: 0.5,
-        color: rgbToHex(this.gfx.color) } );
+//    this.materialArc =  new THREE.LineBasicMaterial( {
+//        //opacity: 0.5,
+//        color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
-    this.gfx.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
+    this.gfx.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.material ); //Arc
     this.gfx.arc1.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.addNode(this.gfx.arc1);
 
-    this.gfx.arc2 = new THREE.Line(this.arcangle21, this.materialArc );
+    this.gfx.arc2 = new THREE.Line(this.arcangle21, this.material ); //Arc
     this.gfx.arc2.scale  = new THREE.Vector3( -params.scale, -params.scale, -params.scale );
     this.addNode(this.gfx.arc2);
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
     eqMat = new THREE.LineBasicMaterial( {
-        //opacity: 0.5,
+        opacity: (Ori.gfxProfile.alpha) ? 0.5 : 1.0,
         color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
@@ -56,7 +56,8 @@ Spherical = function Spherical(params) {
        map: map,
        radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
     } else {
-     this.gfx.equator = new THREE.Line(equator, eqMat );      
+//     this.equator = new Circle({angle:359.9});
+     this.gfx.equator =  new THREE.Line(equator, eqMat );      
      this.gfx.equator.rotation.x = Math.PI/2;
     }
 
@@ -250,7 +251,7 @@ Spherical.prototype.setArcBeta = function(angle) {
 
 Spherical.prototype.setArcAngle = function(angle) {
 
-    
+/*    
     if(angle > 0) {
      this.gfx.markerball.scale.z = 1.0;
 //     this.gfx.markerball.position.x = -0.2;
@@ -259,8 +260,9 @@ Spherical.prototype.setArcAngle = function(angle) {
      this.gfx.markerball.scale.z = -1.0;
 //     this.gfx.markerball.position.x = 0.2;
      }
-    
+*/    
     // update progress angle
+//    if(this.gfx.equator.getEnabled()) this.equator.setAngle(360-angle);
     if(this.gfx.rotationarc.getEnabled()) this.progressArc.setAngle(-angle);
 };
 
