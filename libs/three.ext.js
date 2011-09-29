@@ -34,7 +34,7 @@ rgbToCSS = function(color) {
 
 // extend THREE.Object3D 
 Node = THREE.Object3D;
-THREE.Object3D.prototype.addNode = function(node) { this.add(node); };
+THREE.Object3D.prototype.addNode = function(node) { this.addChild(node); };
 THREE.Object3D.prototype.setPos = function(pos) { this.position.set(pos.x, pos.y, pos.z); }
 THREE.Object3D.prototype.setEnabled = function(state) { this.visible = state; };
 THREE.Object3D.prototype.getEnabled = function() { return this.visible; };

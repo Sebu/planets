@@ -110,7 +110,7 @@ ModelBase.prototype = {
                 
         // first and outer sphere
         this.sphere[1] = new Spherical({
-            vortex: (Ori.gfxProfile.geometry >= Ori.Q.MEDIUM), 
+            vortex: (Ori.gfxProfile.geometry >= Ori.Q.HIGH), 
             inner_id: this.name+"S1", 
             scale: 9,  
             color: colors["S1"]
@@ -184,12 +184,12 @@ ModelBase.prototype = {
     //TODO: move to ptolemyBase
     ptolemizeSpheres : function() {  
       this.ptolemySphere = new Longituder();  
-      this.sphere[1].anchor.remove(this.sphere[2]);
-      this.sphere[2].anchor.remove(this.ecliptic);
+      this.sphere[1].anchor.removeChild(this.sphere[2]);
+      this.sphere[2].anchor.removeChild(this.ecliptic);
       this.sphere[1].anchor.addNode(this.ptolemySphere);
       this.ptolemySphere.anchor.addNode(this.sphere[2]);
       this.ptolemySphere.addNode(this.ecliptic);
-      this.sphere[4].remove(this.sphere[4].anchor);
+      this.sphere[4].removeChild(this.sphere[4].anchor);
       this.sphere[4].ptolemy =  new Node(); 
       this.sphere[4].addNode(this.sphere[4].ptolemy);      
       this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 

@@ -44,7 +44,17 @@ Ori.GfxProfiles = {
     shading : Ori.Q.HIGH,
     circleRes : 50,
     curveRes : 1.0
-    }    
+    },
+  opera: {
+    resolution : 1.0,
+    particles : Ori.Q.NONE,
+    textures : Ori.Q.LOW,
+    geometry : Ori.Q.MEDIUM,
+    alpha : Ori.Q.NONE,
+    shading : Ori.Q.LOW,
+    circleRes : 24,
+    curveRes : 0.5
+    }        
 };
 
 Ori.gfxProfile = Ori.GfxProfiles.undefined;
@@ -64,6 +74,7 @@ Ori.Canvas = function(params) {
         this.graphics.sortObjects = false;
 
         Ori.gfxProfile = Ori.GfxProfiles[this.graphics.type];
+        if($.browser.opera) Ori.gfxProfile = Ori.GfxProfiles["opera"];
        
         return this.graphics;
 }

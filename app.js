@@ -9,7 +9,7 @@ myApp = function(params) {
 myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
-myApp.CANVAS_ERROR = $("<div>Your browser does not seem to support <a href='http://en.wikipedia.org/wiki/Canvas_element'>Canvas</a> or <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>.<br/>Find out how to get it <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>here</a>.</div>");
+myApp.CANVAS_ERROR = $(APP_STRINGS.HTML5);
 
 myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
@@ -244,7 +244,7 @@ myApp.prototype.init = function(params) {
         if(this.canvas.type==="canvas") {
           this.debugBox.show();
            splashStatus.empty();
-           splashStatus.append("<div>Your browser or graphics card does not seem to support <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a>. The Following experience will be limited.</div><br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>OK</div>");
+           splashStatus.append(APP_STRINGS.WEBGL);
         } else                       
           $("#splash").hide();
     };
@@ -324,7 +324,7 @@ myApp.prototype.removePreset = function() {
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
-        scene.add(new THREE.AmbientLight(0xFFFFFF));
+        scene.addLight(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
     };
