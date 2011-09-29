@@ -74,7 +74,7 @@ myApp.prototype.init = function(params) {
         this.projector = new THREE.Projector();
         
         // SKY SPHERE
-//*        
+/*        
         this.skyCam = new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000});
         this.skyCam.setEye( { x: 0.0 , y: 0.0, z: -600.0 });
         this.skyScene = new THREE.Scene();
@@ -403,8 +403,8 @@ myApp.prototype.update = function(time) {
             var yaw = (x - Ori.input.drag.x) * -0.2 * time;
             this.currentCamera.mouseY(yaw);
             this.currentCamera.mouseX(pitch);
-            this.skyCam.mouseY(yaw);
-            this.skyCam.mouseX(pitch);            
+//            this.skyCam.mouseY(yaw);
+//            this.skyCam.mouseX(pitch);            
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }

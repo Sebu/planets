@@ -342,7 +342,7 @@ Planet.prototype.setGlow = function(state) {
 };
 
 Planet.prototype.setQuality = function(profile) {
-  if(profile.textures) console.log("textures");
+//  if(profile.textures) console.log("textures");
 }
 
 Planet.prototype.reset = function() {
