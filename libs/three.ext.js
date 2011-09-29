@@ -254,7 +254,7 @@ Planet = function(params) {
 //   map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
     if(params.phong) 
       this.material =  new THREE.MeshPhongMaterial( {  
-        color: rgbToHex(this.gfx.color),
+//        color: rgbToHex(this.gfx.color),
         ambient: 0x222222,
         map: this.gfx.map,
       });
@@ -291,9 +291,22 @@ Planet = function(params) {
 //    new THREE.MeshBasicMaterial( { color: this.color } )
 //    this.material =  new THREE.MeshPhongMaterial( { ambient: this.color, specular: 0x000000, color: 0x888888, shininess: 3, shading: THREE.SmoothShading });
     //params.scale
-    
-    
-    this.mesh = new THREE.Mesh(planetGeo, this.material);
+var PI2 = Math.PI * 2;
+    				var program = function ( context ) {
+
+					context.beginPath();
+					context.arc( 0, 0, 1, 0, PI2, true );
+					context.closePath();
+					context.fill();
+
+				}
+
+    if (Ori.gfxProfile.geometry>=Ori.Q.MEDIUM)
+      this.mesh = new THREE.Mesh(planetGeo, this.material);
+    else
+      this.mesh = new THREE.Particle( new THREE.ParticleCanvasMaterial( { color: rgbToHex(this.gfx.color), program: program } ) );
+      
+      
     this.mesh.scale.set( this.gfx.scale, this.gfx.scale, this.gfx.scale );
     this.mesh.cPos = new THREE.Vector3();
     this.mesh.overdraw = true;
@@ -372,7 +385,7 @@ Curve  = function(params) {
         this.curvePos = pos;
         this.geo.vertices = [];
         this.geo.colors = [];
-        for (var i = 0; i < this.curvePos.length; i++) {
+        for (var i = 0, len=this.curvePos.length; i < len; i++) {
             this.geo.vertices.push( new THREE.Vertex( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) ) );
             if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
@@ -403,7 +416,7 @@ Curve.prototype.constructor = Curve;
 Circle = function(params) {
     THREE.Geometry.call( this );
 
-    this.trails = true;//(params.trails==undefined) ? false : params.trails;
+    this.trails = (params.trails==undefined) ? false : params.trails;
     
     this.setAngle(params.angle);
     this.setBeta(params.betaRotate || 90);

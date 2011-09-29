@@ -17,7 +17,7 @@ myApp.prototype.init = function(params) {
         this.scenes = [];
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
+        this.canvas = new Ori.Canvas({forceCanvas: 1, clearAlpha: 0, antialias: true});
         
         // set clear color        
 //        if(this.canvas.type == "webgl")
@@ -372,8 +372,10 @@ myApp.prototype.updateInfoBox = function() {
 myApp.prototype.update = function(time) {
 
         //DEBUG
-        if (this.runningSlow) this.debugBox.show();
-        else this.debugBox.hide();
+//        if (this.runningSlow) 
+          this.debugBox.show();
+//        else 
+//          this.debugBox.hide();
 //          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
 
         

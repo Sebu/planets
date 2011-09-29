@@ -1,6 +1,9 @@
 * { 
-margin: 0; 
-padding: 0; 
+  margin: 0; 
+  padding: 0; 
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -khtml-user-select:none;
 }
 
 html,body {
@@ -8,8 +11,7 @@ html,body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  -webkit-user-select:none;
-  -moz-user-select:none;
+
   
   font-family: 'Open Sans', monospace;
   font-size:100%;
@@ -241,6 +243,7 @@ select:focus,
 
 
 .label {
+  -moz-user-select:none;
   z-index: 3;
   position: absolute;
   background: rgba(150,150,150,0.5);
@@ -460,7 +463,7 @@ select:focus,
 }
 
 canvas {
-  position: absolute;
+//  position: absolute;
 //  top: 0px;
   //width: 100%;
   //height: 100%;

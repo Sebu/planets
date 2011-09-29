@@ -27,15 +27,15 @@ Ori.GfxProfiles = {
   canvas: {
     resolution : 1.0,
     particles : Ori.Q.NONE,
-    textures : Ori.Q.MEDIUM,
+    textures : Ori.Q.NONE,
     geometry : Ori.Q.LOW,
     alpha : Ori.Q.NONE,
-    shading : Ori.Q.LOW
+    shading : Ori.Q.NONE
     },
   webgl: {
     resolution : 1.0,
     particles : Ori.Q.HIGH,
-    textures : Ori.Q.MEDIUM,
+    textures : Ori.Q.NONE, //MEDIUM,
     geometry : Ori.Q.HIGH,
     alpha : Ori.Q.HIGH,
     shading : Ori.Q.HIGH
@@ -64,10 +64,6 @@ Ori.Canvas = function(params) {
 }
 
 Ori.Canvas.prototype.constructor = Ori.Renderer;
-
-
-
-Ori.CANVAS_ERROR = "bla";
 
 
 Ori.gfxStore = [];

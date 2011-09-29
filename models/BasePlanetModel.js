@@ -129,7 +129,7 @@ ModelBase.prototype = {
             emit:0.0, 
             phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
             map: earthMap,
-//            color: colors["Earth"],
+            color: colors["Earth"],
             inner_id: this.name+"Earth"})
         this.sphere[1].addNode(this.earth);
 

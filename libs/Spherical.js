@@ -29,8 +29,12 @@ Spherical = function Spherical(params) {
     this.anchor = new Node();
     this.addNode(this.anchor);
 
-    this.material = new THREE.LineBasicMaterial( { opacity: 0.5, color: rgbToHex(this.gfx.color) } );
-    this.materialArc =  new THREE.LineBasicMaterial( { opacity: 0.5,  color: rgbToHex(this.gfx.color) } );
+    this.material = new THREE.LineBasicMaterial( {
+        //opacity: 0.5,
+        color: rgbToHex(this.gfx.color) } );
+    this.materialArc =  new THREE.LineBasicMaterial( {
+        //opacity: 0.5,
+        color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
     this.gfx.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.materialArc );
@@ -42,7 +46,9 @@ Spherical = function Spherical(params) {
     this.addNode(this.gfx.arc2);
 
 //    var materialArc = new THREE.LineBasicMaterial( { color: rgbToHex(this.gfx.color) });
-    eqMat = new THREE.LineBasicMaterial( {opacity: 0.5, color: rgbToHex(this.gfx.color) } );
+    eqMat = new THREE.LineBasicMaterial( {
+        //opacity: 0.5,
+        color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
       var map = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture('textures/ramp.png') : undefined;
@@ -81,7 +87,7 @@ Spherical = function Spherical(params) {
     this.gfx.markerball.rotation.y = -Math.PI/2;
 //    this.gfx.markerend.position.z = params.scale;
 //    this.gfx.markerend.rotation.y = -Math.PI/2;
-    this.anchor.addNode(this.gfx.markerball);
+      this.anchor.addNode(this.gfx.markerball);
 //    this.addNode(this.gfx.markerend);
     
     
@@ -98,11 +104,16 @@ Spherical = function Spherical(params) {
     this.anchor.addNode(this.gfx.npole);
     this.anchor.addNode(this.gfx.spole);
 
-    this.progressArc = new Circle({ angle : 40 });
-    var progressMat = new THREE.LineBasicMaterial( { linewidth:6, color: rgbToHex(this.gfx.color),
-                opacity: 1.0
+    var trails = (Ori.gfxProfile.shading>=Ori.Q.MEDIUM) ? true : false;
+    this.progressArc = new Circle({ angle : 40, trails: trails });
+    var progressMat = new THREE.LineBasicMaterial( {
+        linewidth:6,
+        color: rgbToHex(this.gfx.color),
+        vertexColors : trails
+
+        //        opacity: 1.0
                 } );
-    progressMat.vertexColors = true;
+//    progressMat.vertexColors = true;
     this.gfx.rotationarc = new THREE.Line( this.progressArc, progressMat );
     this.gfx.rotationarc.scale  = new THREE.Vector3( params.scale, params.scale, params.scale );
     this.gfx.rotationarc.rotation.x = Math.PI/2;
