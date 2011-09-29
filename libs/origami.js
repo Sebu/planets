@@ -35,7 +35,7 @@ Ori.GfxProfiles = {
   webgl: {
     resolution : 1.0,
     particles : Ori.Q.HIGH,
-    textures : Ori.Q.NONE, //MEDIUM,
+    textures : Ori.Q.HIGH,
     geometry : Ori.Q.HIGH,
     alpha : Ori.Q.HIGH,
     shading : Ori.Q.HIGH
