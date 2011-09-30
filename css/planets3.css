@@ -1,9 +1,7 @@
 * { 
   margin: 0; 
   padding: 0; 
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -khtml-user-select:none;
+
 }
 
 html,body {
@@ -12,7 +10,9 @@ html,body {
   height: 100%;
   overflow: hidden;
 
-  
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -khtml-user-select:none;
   font-family: 'Open Sans', monospace;
   font-size:100%;
   line-height:1.125em;
