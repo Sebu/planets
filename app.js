@@ -511,7 +511,6 @@ myApp.prototype.loadPreset = function(preset) {
         model.loadPreset(planet);
         planetLabel.setText(model.currentPlanet.label);
         
-        console.log(model);
 
         this.setCamera("Trackball");
         this.currentCamera.reset();
