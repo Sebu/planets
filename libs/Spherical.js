@@ -128,8 +128,7 @@ Spherical = function Spherical(params) {
     this.gfx.centerLine.visible = false;
     this.anchor.addNode(this.gfx.centerLine);
     
-    // DEBUG
-    this.gfx.disc = new Disc( {opacity:0.2, radius: 1.0, color: this.gfx.color });
+    this.gfx.disc = new Disc( {opacity: 0.2, radius: 1.0, color: this.gfx.color });
     this.anchor.addNode(this.gfx.disc);
     
     this.setAxisAngle(this.axisAngle);

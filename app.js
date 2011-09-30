@@ -9,7 +9,6 @@ myApp = function(params) {
 myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
-myApp.CANVAS_ERROR = $(APP_STRINGS.HTML5);
 
 myApp.prototype.init = function(params) {
         this.domRoot = params.domRoot;
@@ -21,61 +20,30 @@ myApp.prototype.init = function(params) {
         
         setupCommonGeomerty();
         
-        // set clear color        
+        // set clear color (deprecated)
 //        if(this.canvas.type == "webgl")
 //          this.canvas.setClearColorHex( 0x070707 );
 
-        var splashStatus = $("#splashStatus");
-//        return;
+        this.splashStatus = $("#splashStatus");
+
         // add Canvas DOM Element & or error box
-        splashStatus.empty();
+        this.splashStatus.empty();
         if(this.canvas) {
           this.domRoot.append(this.canvas.domElement);
         } else {
-          splashStatus.append(myApp.CANVAS_ERROR);
+          this.splashStatus.append(APP_STRINGS.EN.NO_HTML5);
           return 0;
         }
-        splashStatus.empty();
-        splashStatus.append("register input...");
-        // track inputs
-        Ori.input.trackMouseOn(this.canvas.domElement);
-//        Ori.input.trackKeysOn(window);
-        Ori.input.register(Ori.KEY.DOWN, "DOWN");
-        Ori.input.register(Ori.KEY.UP, "UP");
 
-        splashStatus.empty();
-        splashStatus.append("setup cameras...");
-        // setup camera
-        // TODO : shorten
-        this.cameras = { 
-          Trackball: { 
-            caption: "Global",
-            instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
-          },
-          FPS: { 
-            caption: "Local",
-            instance: new THREE.FPSCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
-          },
-          TrackballIso: { 
-            caption: "Isometric",
-            instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
-          }
-        };
-        this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
-        this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
-        var ortho = 70;
-        this.cameras["TrackballIso"].instance.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
-        this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
-
-        // set trackball as default
-        this.currentCamera = this.cameras["Trackball"].instance;
-
+        this.setupCameras();
         this.resize();
 
-        // for collision
+        this.setupInput();
+
+        // setupPicking  for collision
         this.projector = new THREE.Projector();
         
-        // SKY SPHERE
+        // SKY SPHERE (deprecated)
 /*        
         this.skyCam = new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000});
         this.skyCam.setEye( { x: 0.0 , y: 0.0, z: -600.0 });
@@ -86,7 +54,7 @@ myApp.prototype.init = function(params) {
 //*/	
 
 
-
+        // setupDebug
         // DEBUG und stats.js
         this.debugBox = $("<div class='container' id='debugContainer'>\
                      </div>").appendTo(this.domRoot);        
@@ -95,17 +63,17 @@ myApp.prototype.init = function(params) {
         this.debugBox.append( this.stats.domElement );
         
 
-        splashStatus.empty();
-        splashStatus.append("setup default model...");
+        this.splashStatus.empty();
+        this.splashStatus.append("setup default model...");
         // create models
         this.models = {};
         // set start model
         model = this.getModel("Model4");
 
 
-        // create labels
-        splashStatus.empty();
-        splashStatus.append("setup labels...");
+        // setupLabels
+        this.splashStatus.empty();
+        this.splashStatus.append("setup labels...");
         equinoxLabel = new UI.Label({text: "Vernal Equinox"});
         npoleLabel = new UI.Label({text: "North pole"});
         spoleLabel = new UI.Label({text: "South pole"});
@@ -117,9 +85,9 @@ myApp.prototype.init = function(params) {
         planetLabel = new UI.Label({text: "Planet"});
         planetLabel2 = new UI.Label({text: "Moon"});
 
-        // create some elements
-        splashStatus.empty();
-        splashStatus.append("setup infobox...");
+        // setupInfobox
+        this.splashStatus.empty();
+        this.splashStatus.append("setup infobox...");
         // TODO: more segmentation
         $("<div id='infoContainer'>\
             <table>\
@@ -202,8 +170,8 @@ myApp.prototype.init = function(params) {
 //*/
 
 
-        splashStatus.empty();
-        splashStatus.append("setup UI...");
+        this.splashStatus.empty();
+        this.splashStatus.append("setup UI...");
         var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
         var presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle2 = $("<span><select class='chzn-select modelSelect' style='width:150px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
@@ -243,11 +211,52 @@ myApp.prototype.init = function(params) {
 
         if(this.canvas.type==="canvas") {
           this.debugBox.show();
-           splashStatus.empty();
-           splashStatus.append(APP_STRINGS.WEBGL);
+           this.splashStatus.empty();
+           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
+           this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>OK</div>");
         } else                       
           $("#splash").hide();
     };
+
+
+myApp.prototype.setupInput = function() {
+        this.splashStatus.empty();
+        this.splashStatus.append("register input...");
+        // track inputs
+        Ori.input.trackMouseOn(this.canvas.domElement);
+//        Ori.input.trackKeysOn(window);
+        Ori.input.register(Ori.KEY.DOWN, "DOWN");
+        Ori.input.register(Ori.KEY.UP, "UP");
+}
+
+myApp.prototype.setupCameras = function() {
+        this.splashStatus.empty();
+        this.splashStatus.append("setup cameras...");
+        // setup camera
+        // TODO : shorten
+        this.cameras = { 
+          Trackball: { 
+            caption: "Global",
+            instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+          },
+          FPS: { 
+            caption: "Local",
+            instance: new THREE.FPSCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+          },
+          TrackballIso: { 
+            caption: "Isometric",
+            instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+          }
+        };
+        this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
+        this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
+        var ortho = 70;
+        this.cameras["TrackballIso"].instance.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
+        this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
+
+        // set trackball as default
+        this.currentCamera = this.cameras["Trackball"].instance;
+}
 
 myApp.prototype.loadPlanets = function(value) {
     this.currentModel = planetPresets[value];
@@ -377,33 +386,20 @@ myApp.prototype.updateInfoBox = function() {
 // update loop
 myApp.prototype.update = function(time) {
 
-        //DEBUG
-//        if (this.runningSlow) 
-          
-//        else 
-//          this.debugBox.hide();
-//          console.log("WARNING! App is running slow. Update cylce took " + time + " seconds. Resulting in approx." + 1/time + " frames per second.");
+       
+//        if(Ori.input.isDown("DEBUG")) debugBox.toggle();
 
-        
-        if(Ori.input.isDown("DEBUG")) debugBox.toggle();
-
-/*
-        // handle input     
-        if (Ori.input.isDown("LEFT")) this.currentCamera.translateNew(0.6, 0, 0);
-        if (Ori.input.isDown("RIGHT")) this.currentCamera.translateNew(-0.6, 0, 0);
-        if (Ori.input.isDown("DOWN")) this.currentCamera.translateNew(0, 0, -0.6);
-        if (Ori.input.isDown("UP")) this.currentCamera.translateNew(0, 0, 0.6);
-//*/
+        // zoom with middle button or wheel      
         if (Ori.input.mouse.b2) {
            var y = Ori.input.mouse.y;
            var pitch = (y - Ori.input.drag.y) * time;
            this.currentCamera.mouseWheel(0.0, 0.0, -pitch);
            Ori.input.drag.y = y;
         }
-        
         if (Ori.input.mouse.wheel)
          this.currentCamera.mouseWheel(0.0, 0.0, Ori.input.mouse.z);
 
+        // rotate with left button
         if (Ori.input.mouse.b1) {
             var x = Ori.input.mouse.x;
             var y = Ori.input.mouse.y;
@@ -411,17 +407,16 @@ myApp.prototype.update = function(time) {
             var yaw = (x - Ori.input.drag.x) * -0.2 * time;
             this.currentCamera.mouseY(yaw);
             this.currentCamera.mouseX(pitch);
-//            this.skyCam.mouseY(yaw);
-//            this.skyCam.mouseX(pitch);            
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }
         
-        // update model
+        // update model, info, labels
         model.update(time);
         this.updateInfoBox();
         this.updateLabels();
 
+        // check for collision/picking of pickable objects
 /* 
         this.currentCamera.update();
         var x = ( Ori.input.mouse.x / window.innerWidth ) * 2 - 1;
@@ -478,17 +473,18 @@ myApp.prototype.draw = function(time) {
 //        this.canvas.render(this.skyScene, this.skyCam);
         this.canvas.render(this.currentScene, this.currentCamera);
         this.stats.update();
-    };
+};
 
+//on resize adjust camera aspect and canvas size
 myApp.prototype.resize = function() {
         var width = window.innerWidth,
         height = window.innerHeight,
         factor = Ori.gfxProfile.resolution;
         this.currentCamera.setAspect(width / height);
-        
         this.canvas.setSize(width*factor, height*factor);
-        resizeSplash();
-    };
+        // center splashscreen
+        centerSplash();
+};
 
 
 
@@ -514,6 +510,8 @@ myApp.prototype.loadPreset = function(preset) {
         this.setCurrentScene(model.root);
         model.loadPreset(planet);
         planetLabel.setText(model.currentPlanet.label);
+        
+        console.log(model);
 
         this.setCamera("Trackball");
         this.currentCamera.reset();

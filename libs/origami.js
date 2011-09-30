@@ -16,7 +16,7 @@ Ori.supportsCanvas = function() {
 Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
 Ori.GfxProfiles = {
-  undefined: {
+  base: {
     resolution : 1.0,
     particles : Ori.Q.NONE,
     textures : Ori.Q.LOW,
@@ -43,7 +43,7 @@ Ori.GfxProfiles = {
     alpha : Ori.Q.HIGH,
     shading : Ori.Q.HIGH,
     circleRes : 50,
-    curveRes : 1.0
+    curveRes : 1.0    
     },
   opera: {
     resolution : 1.0,
@@ -57,11 +57,13 @@ Ori.GfxProfiles = {
     }        
 };
 
-Ori.gfxProfile = Ori.GfxProfiles.undefined;
+Ori.gfxProfile = Ori.GfxProfiles.base;
 /**
  * @constructor
  */
 Ori.Canvas = function(params) {
+
+        
         if(Ori.supportsWebGL() && !params.forceCanvas) {
             this.graphics = new THREE.WebGLRenderer(params);
             this.graphics.type = "webgl";
@@ -73,8 +75,8 @@ Ori.Canvas = function(params) {
 //        this.graphics.autoClear = false;
         this.graphics.sortObjects = false;
 
-        Ori.gfxProfile = Ori.GfxProfiles[this.graphics.type];
-        if($.browser.opera) Ori.gfxProfile = Ori.GfxProfiles["opera"];
+        if(this.graphics.type) $.extend(Ori.gfxProfile, Ori.GfxProfiles[this.graphics.type]);
+        if($.browser.opera) $.extend(Ori.gfxProfile, Ori.GfxProfiles["opera"]);
        
         return this.graphics;
 }
