@@ -273,7 +273,7 @@ Ori.App.prototype = {
         this.runningSlow = true;
       }
       this.update(time);
-      if(!this.runningSlow)
+//      if(!this.runningSlow)
        this.draw(time);
 
 //      this.elapsedTime = 0;
