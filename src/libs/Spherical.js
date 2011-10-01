@@ -51,7 +51,7 @@ Spherical = function Spherical(params) {
         color: rgbToHex(this.gfx.color) } );
 
     if(params.vortex) {
-      var map = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture('textures/ramp.png') : undefined;
+      var map = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(config.rampTexture) : undefined;
       this.gfx.equator = new Disc( {opacity:0.3, 
        map: map,
        radius: 0.85, innerRadius: 1.0, color: this.gfx.color });

@@ -10,6 +10,10 @@ var UI = {
             $(selector).append("<option value='" + i + "'>" + caption + "</option>");
         }
     },
+    
+    addTooltip : function(ele,tooltip) {
+      if(tooltip) ele.append("<div class='tooltip'>" + tooltip + "</div>");
+    },
 /*
     box : function(params) {
         var id = params.id;
@@ -24,13 +28,15 @@ var UI = {
         var id = params.id,
         color = params.color || {r: 1, g: 1, b: 1},
         text = params.element || params.text || params.id,
-        ele =  $("<div  ><div  style='color: " + rgbToCSS(color) + ";' class='caption' id='cap" +id+ "'" +
+        ele =  $("<div  ><div  style='color: " + rgbToCSS(color) + ";' class='caption tipable' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
                 "<span class='triangle arrow-down' title='hide' ></span>" +
                 "<span class='triangle arrow-right' style='display:none' title='show'></span>" +
-                "</div><div class='boxContent' id='" + id + "'></div></div>");
-        $("#cap" + id,ele).append(text);
+                "</div><div class='boxContent' id='" + id + "'></div></div>"),
+        capEle =  $("#cap" + id,ele);
         
+        capEle.append(text);
+        UI.addTooltip(capEle, params.tooltip);
         return ele;
     },
 //*/
@@ -54,7 +60,6 @@ var UI = {
     text : function(params) {
         var model = params.model,
         id = params.id,
-        tooltip = params.tip || "",
         text = params.text || params.id,
         min = params.min || 0,
         max = params.max || 100,
@@ -62,7 +67,8 @@ var UI = {
         value = params.value ||  model["get"+id](),
         change = params.change || function(e)  { if(e.keyCode == 13) model["set"+id](this.value); };
 
-        ele =  $( "<input type='text' placeholder='date' value='" + value + "' class='text'/>" );
+        ele =  $( "<input type='text' placeholder='date' value='" + value + "' class='text tipable'/>" );
+        UI.addTooltip(ele, params.tooltip);
         $(ele).bind("keyup",change);
         return ele;
     },
@@ -71,7 +77,6 @@ var UI = {
     slider : function(params) {
         var instance = params.model,
         id = params.id,
-        tooltip = params.tip || "",
         text = params.text || params.id,
         min = params.min || 0,
         max = params.max || 100,
@@ -91,9 +96,9 @@ var UI = {
         if(toggle)
           tmp =  $("<div><input type=checkbox checked>" + text + "</div>");
         else
-          tmp =  $("<div class='sliderBox'>" + text + "</div>");
+          tmp =  $("<div class='sliderBox tipable'>" + text + "</div>");
           
-        ele = $("<div  id='" + id + "'>" + //title='" + tooltip + "'
+        ele = $("<div  id='" + id + "'>" + 
             "<div class='slider'></div>" +
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");
@@ -102,7 +107,7 @@ var UI = {
 //        $("input",ele).bind("focus", function() { this.style.background = "#FFF"; } );
 //        $("input",ele).bind("blur", function() { this.style.background = "#957"; } );
         $("input",ele).bind("change", changeInput);
-         if(tooltip!="") tmp.append("<div class='container tooltip'>" + tooltip + "</div>");
+        UI.addTooltip(tmp,params.tooltip);
          if(toggle) $(":checkbox",tmp).bind("click", function() { 
             $("#" + id + " > input").attr('disabled', !this.checked);
             if(!this.checked) instance["set"+id](0);
@@ -152,13 +157,13 @@ var UI = {
         text = params.text || params.id,
         color = params.color || "#FFF";
         value = model["get"+id](),
-        ele =  $("<div class='checkbox' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>"),
+        ele =  $("<div class='checkbox tipable' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>"),
         change = params.change || function()  { $(this).toggleClass('checked'); model["set"+id]($(this).is(".checked")); };
         
         ele.checked = true;
         if(value) ele.toggleClass("checked");
         ele.bind("click", change);
-                
+        UI.addTooltip(ele, params.tooltip);        
         return ele;
     }
 };

@@ -51,7 +51,8 @@ ModelBase.prototype = {
     getShowHippo : function() { return this.showCurve[1]; },
     setShowStars : function(state) { this.stars.setEnabled(state); },
     getShowStars : function() { return this.stars.getEnabled(); },
-
+    setShowSun : function(state) { this.sun.setEnabled(state); },
+    getShowSun : function() { return this.sun.getEnabled(); },
 
     setAnimSpeed : function(val) {
         this.speed = val;
@@ -121,7 +122,7 @@ ModelBase.prototype = {
 
         
         // add earth to sphere 1
-        var earthMap = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg') : undefined;
+        var earthMap = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(config.earthTexture) : undefined;
         this.earth = new Planet({
             betaRotate:180.0,
 //            dist: 2.0,
@@ -172,7 +173,7 @@ ModelBase.prototype = {
         // add ecliptic and Sun
         this.sphere[2].addNode(this.ecliptic = new Spherical({ scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S4"] }));
         this.ecliptic.setVisuals([]);    
-        this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
+        this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, glowMap: config.sunGlowTexture, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: 9.0, inner_id: params.name+"Sun", color:colors["Sun"] }));
         this.updateList[this.sphere.length] = this.ecliptic;
         this.setSunSpeed = function(value) { this.ecliptic.setSpeed(value); };
         this.getSunSpeed = function() { return this.ecliptic.getSpeed(); };

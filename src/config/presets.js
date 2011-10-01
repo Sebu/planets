@@ -1,11 +1,11 @@
 
 
-var APP_STRINGS = {
-  EN : {
-  NO_HTML5: "<div>Your browser does not seem to understand <a href='http://en.wikipedia.org/wiki/HTML5'>HTML5</a>. This following experience requires a browser with either <a href='http://en.wikipedia.org/wiki/Canvas_element'>Canvas</a> or <a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a> support.</div><br><div>Such support can be found in <a href='http://www.google.com/chrome'>Google Chrome 3.0+</a>, <a href='http://www.mozilla.org/de/firefox/'>Firefox 3.0+</a>, <a href='http://www.apple.com/safari/'>Safari 3.0+</a>, <a href='http://windows.microsoft.com/de-DE/internet-explorer/products/ie/home'>Internet Explorer 9.0+</a> or <a href='http://www.opera.com/'>Opera 10.0+</a>.</div>",
-  NO_WEBGL: "<div>The Following experience will be limited.</div><br><div><a href='http://en.wikipedia.org/wiki/Webgl'>WebGL</a> is not enabled or supported by your browser or graphics card. A guide to enable it in Google Chrome, Firefox, and Safari can be found <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>here</a>.</div>"
-  }
+var config = {
+  earthTexture : 'images/earthmap1k.jpg',
+  sunGlowTexture : 'images/sun.png',
+  rampTexture : 'images/ramp.png'
 };
+
 
 var planetPresets = { 
 
@@ -240,7 +240,7 @@ Callippus: {
     {AxisAngle: 24.0, Speed: 730, RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 0, RotateStart: 0 },
     {AxisAngle: 30.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 30.0, Speed: 0, RotateStart: 0 },
+    {AxisAngle: 30.0, Speed: 0, RotateStart: 0 }
   ] },
 
   2: { 
@@ -256,7 +256,7 @@ Callippus: {
     {AxisAngle: 24.0,  Speed: 730, RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 0, RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 0, RotateStart: 0 },
-    {AxisAngle: 45.0, Speed: 0, RotateStart: 0 },
+    {AxisAngle: 45.0, Speed: 0, RotateStart: 0 }
   ] },
 
   3: { 
@@ -272,7 +272,7 @@ Callippus: {
     {AxisAngle: 24.0,  Speed: 730,  RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 45.0, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: -45.0, Speed: 0, RotateStart: 0 },
+    {AxisAngle: -45.0, Speed: 0, RotateStart: 0 }
   ] }
   },
 
@@ -290,9 +290,28 @@ Callippus: {
     {AxisAngle: 24.0,  Speed: 365,  RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 22.5, Speed: 0,  RotateStart: 0 },
-    {AxisAngle: 22.5, Speed: 0, RotateStart: 0 },
+    {AxisAngle: 22.5, Speed: 0, RotateStart: 0 }
   ] }
   },
+  Sun: { 
+  caption: "Sun",
+  model: "Model5",
+  ui: "Model5",     
+  label: "Sun",
+  showSun: false,
+  sunYears: 99, 
+  alpha:570,
+  beta:95,
+  gamma:114,   
+  sphere: [
+    {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 369, RotateStart: 0 },
+    {AxisAngle: 0.5,  Speed: 0, RotateStart: 0 },
+    {AxisAngle: 0.0,  Speed: 0, RotateStart: 0 },
+    {AxisAngle: 0.0,  Speed: 0, RotateStart: 0 }
+    ] 
+  },  
+  
   Moon: { 
   caption : "Moon",
   model: "ModelMoon",
@@ -707,7 +726,7 @@ var TestPairs = {
 
 };
 
-var posAngle = 10;
+//var posAngle = 10;
 
 
 var DATES = {

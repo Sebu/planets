@@ -60,6 +60,12 @@ THREE.Camera.prototype.updateMatrix = function() {
 }
 
 
+
+THREE.Camera.prototype.getZ = function() { return -this.position.z; }
+THREE.Camera.prototype.setZ = function(zoom) {
+    this.position.z = -zoom;
+}
+
 THREE.Camera.prototype.translateNew = function(x, y, z) {
     this.position.x += this.dir.elements[0] * z;
     this.position.y += this.dir.elements[1] * z;

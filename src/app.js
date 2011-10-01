@@ -74,16 +74,16 @@ myApp.prototype.init = function(params) {
         // setupLabels
         this.splashStatus.empty();
         this.splashStatus.append("setup labels...");
-        equinoxLabel = new UI.Label({text: "Vernal Equinox"});
-        npoleLabel = new UI.Label({text: "North pole"});
-        spoleLabel = new UI.Label({text: "South pole"});
+        equinoxLabel = new UI.Label({text: APP_STRINGS.EN.VERNAL });
+        npoleLabel = new UI.Label({text: APP_STRINGS.EN.NORTH_POLE });
+        spoleLabel = new UI.Label({text: APP_STRINGS.EN.SOUTH_POLE });
         northLabel = new UI.Label({text: "North"});
         southLabel = new UI.Label({text: "South"});
         eastLabel = new UI.Label({text: "East"});
         westLabel = new UI.Label({text: "West"});
-        sunLabel = new UI.Label({text: "Sun"});
-        planetLabel = new UI.Label({text: "Planet"});
-        planetLabel2 = new UI.Label({text: "Moon"});
+        sunLabel = new UI.Label({text: APP_STRINGS.EN.SUN });
+        planetLabel = new UI.Label({text: APP_STRINGS.EN.PLANET });
+        planetLabel2 = new UI.Label({text: APP_STRINGS.EN.MOON });
 
         // setupInfobox
         this.splashStatus.empty();
@@ -162,7 +162,7 @@ myApp.prototype.init = function(params) {
         
         
 //        legend = $("<div class='container' id='legendContainer'></div>").appendTo(this.domRoot);
-          $("<div id='impressumContainer'><a>© 2011 Topoi</a> <a href>+henry mendell</a> <a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
+//          $("<div id='impressumContainer'><a>© 2011 Topoi</a> <a href>+henry mendell</a> <a href>+sebastian szczepanski</a></div>").appendTo(this.domRoot);
 
 /*
           $("#sexaInput > input").bind("change", function() 
@@ -176,8 +176,7 @@ myApp.prototype.init = function(params) {
         var presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle2 = $("<span><select class='chzn-select modelSelect' style='width:150px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle3 = $("<span><select class='chzn-select modelSelect' style='width:36px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
-//        var vault = localStorage.getJson("customPresets") || {};
-//        $.extend(true, planetPresets, vault);
+
         
 
 
@@ -190,11 +189,8 @@ myApp.prototype.init = function(params) {
         presetBox.append(this.presetsEle2);
         presetBox.append(this.presetsEle3);        
 
+        this.loadCustomPresets();
 
-        UI.optionsFromHash("#modelPreset", planetPresets);
-        
-
-        
 
         presetBox.append("<span><select class='chzn-select' title='Moon models' id='moonModel' onchange='model.setCurrentMoonModel(this.options[this.selectedIndex].value);model.reset();'></select></span>");
         UI.optionsFromHash("#moonModel", moonModels);
@@ -204,7 +200,7 @@ myApp.prototype.init = function(params) {
         uiBox.append("<div id='playback'></div>");
 //DEAD?        $("#vis").hide();
 
-        $("#modelPreset option[value='Eudoxus']").attr('selected',true);
+        // load default model
         this.loadPlanets("Eudoxus");
 
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
@@ -259,6 +255,7 @@ myApp.prototype.setupCameras = function() {
 }
 
 myApp.prototype.loadPlanets = function(value) {
+    $("#modelPreset option[value='"+value+"']").attr('selected',true);
     this.currentModel = planetPresets[value];
     
     if(this.currentModel.model) {
@@ -298,19 +295,31 @@ myApp.prototype.loadPresets = function(value) {
     }    
 };
 
+myApp.prototype.getVault = function() {
+  var vault = localStorage.getJson("customPresets") || { custom: {} };
+  vault.custom.caption = APP_STRINGS.EN.CUSTOM;
+  return vault;
+};
+
+myApp.prototype.loadCustomPresets = function() {
+  var vault = this.getVault();
+  $.extend(true, planetPresets, vault);
+  UI.optionsFromHash("#modelPreset", planetPresets);
+};
+
 myApp.prototype.addPreset = function() {
-    var vault = localStorage.getJson("customPresets") || {};
-    var store = { model: model.name, writeable: true, sphere: [] };
-    for(var i in model.sphere) {
-      store.sphere[i] = { axisAngle: model.sphere[i].getAxisAngle(), speed: model.sphere[i].getSpeed(), rotateStart: model.sphere[i].getRotateStart()  };
-    }
-    var text = prompt('Please enter a name for the preset.', model.name + '1');
+    var vault = this.getVault();
+
+    // TODO: actual save stuff :D
+    var store = { model: model.name, ui: model.ui, writeable: true, sphere: [] };
+   
+    
+    var text = prompt(APP_STRINGS.EN.CUSTOM_NEW, model.name + '1');
     if(text && (!vault[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
-      vault[text] = store;
+      vault.custom[text] = store;
       localStorage.setJson("customPresets", vault);
-      $.extend(true, planetPresets, vault);
-      UI.optionsFromHash("#modelPreset", planetPresets);
-      this.loadPreset(text); 
+      this.loadCustomPresets();
+      this.loadPlanets("custom"); 
     }
 };
 
@@ -318,15 +327,16 @@ myApp.prototype.addPreset = function() {
 
 myApp.prototype.removePreset = function() {
   var text = this.currentPreset;
-  if(!planetPresets[text] || !planetPresets[text].writeable) { 
+  if(!planetPresets.custom[text]) { 
     alert('Preset "' + text + '" is locked.'); return;
   }
-  var vault = localStorage.getJson("customPresets") || {};
-  delete planetPresets[text];
-  delete vault[text];
+  var vault = this.getVault();
+  delete planetPresets.custom[text];
+  delete vault.custom[text];
   localStorage.setJson("customPresets", vault);
-  UI.optionsFromHash("#modelPreset", planetPresets);
-  this.loadPreset("Mercury1");   
+  
+  this.loadCustomPresets();
+  this.loadPlanets("Eudoxus");   
 };
 
 
@@ -413,8 +423,7 @@ myApp.prototype.update = function(time) {
         
         // update model, info, labels
         model.update(time);
-        this.updateInfoBox();
-        this.updateLabels();
+
 
         // check for collision/picking of pickable objects
 /* 
@@ -472,6 +481,8 @@ myApp.prototype.draw = function(time) {
 //        this.canvas.clear();
 //        this.canvas.render(this.skyScene, this.skyCam);
         this.canvas.render(this.currentScene, this.currentCamera);
+        this.updateInfoBox();
+        this.updateLabels();        
         this.stats.update();
 };
 
@@ -556,27 +567,31 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // view sub box box 
-        UI.box({id:"vis", text:"View"}).appendTo("#view");
+        UI.box({id:"vis", text:"View", tooltip : "test" }).appendTo("#view");
         $("<span><select  style='width:85px;' class='chzn-select' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span>").appendTo("#vis");
         UI.optionsFromHash("#viewPresets", this.cameras);
         $("<select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#vis");
         UI.optionsFromHash("#longitudePresets", latitudePresets);
-        UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tip: "change latitude"}).appendTo("#vis");
-        UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, tooltip: "field of view"}).appendTo("#vis");
+        UI.slider({model:model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#vis");
+        UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#vis");
+        
+        UI.slider({model: this.currentCamera, id: "Z", min:0, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#vis");
+        
         $("<div id='visSpheres' class='center'></div>").appendTo("#vis");
         for (i in model.sphere) {
             if(model["setShowSphere" + i]) 
               UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         $("<div id='visOther' class='center'></div>").appendTo("#vis");
+        if(model.setShowPath) UI.checkbox({model:model, id:"ShowSun", text:"sun", tooltip: "disable sun", color: rgbToCSS(colors["Sun"]) }).appendTo("#visOther");
         if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path", color: rgbToCSS(colors["Path"]) }).appendTo("#visOther");
-        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippo", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
+        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippopede", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
         if(model.setShowStars) UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#visOther");
 
 
         // playback div       
         UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
-        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tip:"duration of a year in seconds"}).appendTo("#playbackBox");
+        UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tooltip:"duration of a year in seconds"}).appendTo("#playbackBox");
         $("#playbackBox").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.togglePause(); if(model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
 
 
@@ -585,7 +600,7 @@ myApp.prototype.loadPreset = function(preset) {
         // create the right sliders for each model
         // TODO: tooltips and min/max values for each model and preset
         if (model instanceof ModelMoon || model instanceof ModelMoonCompare) {
-            UI.box({id:"moon", text:"Moon year month day cycle"}).appendTo("#parameters");
+            UI.box({id:"moon", text: APP_STRINGS.EN.MOON_CYCLE_CAPTION }).appendTo("#parameters");
             UI.slider({model:model, id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
             UI.slider({model:model, id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
             UI.slider({model:model, id:"MetonDays", "max":30000, text:"days"}).appendTo("#moon");
@@ -607,7 +622,7 @@ myApp.prototype.loadPreset = function(preset) {
 //           UI.slider({model:model, id:"Speed2", min: -6000, max:6000, text:"S 3 (synodic)"}).appendTo("#speed");
             UI.slider({model:model, id:"SunSpeed",  max:1100, text:"S 2 Sun"}).appendTo("#speed");
 
-            UI.box({id: "rotateStart", text: "Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.box({id: "rotateStart", text: APP_STRINGS.EN.ROTATION_START_CAPTION }).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1"}).appendTo("#rotateStart");
            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2"}).appendTo("#rotateStart");
            UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3"}).appendTo("#rotateStart");
@@ -651,7 +666,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
 
-            UI.box({id:"rotateStart", text: "Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.box({id:"rotateStart", text: APP_STRINGS.EN.ROTATION_START_CAPTION }).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
@@ -704,7 +719,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({ model:model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
             UI.slider({ model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
 
-            UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.box({id:"rotateStart", text: APP_STRINGS.EN.ROTATION_START_CAPTION }).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
@@ -749,7 +764,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.checkbox({model:model.sphere[8], id: "Moving", max:1100, text:"S 8"}).appendTo("#speed");
 
 
-            UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.box({id:"rotateStart", text:APP_STRINGS.EN.ROTATION_START_CAPTION}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
@@ -771,7 +786,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id: "Beta", max:1100}).appendTo("#speed");
             UI.slider({model:model, id: "Gamma", max:1100}).appendTo("#speed");
 
-            UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
+            UI.box({id:"rotateStart", text: APP_STRINGS.EN.ROTATION_START_CAPTION}).appendTo("#parameters");
             UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");

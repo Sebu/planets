@@ -26,7 +26,7 @@ ModelPtolemyBase = function(params) {
     this.realSunS = [];
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: colors["S2"]});
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S2"]});
-    this.realSun = new Planet({ glow: true, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
+    this.realSun = new Planet({ glow: true, glowMap: config.sunGlowTexture, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
     this.realSun.setBeta(90.0);
     this.updateList.push(realSunS1);
     this.updateList.push(realSunS2);    

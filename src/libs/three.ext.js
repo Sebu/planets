@@ -243,15 +243,13 @@ Planet = function(params) {
     this.gfx.scale = params.scale || 1.0;
     this.gfx.color = params.color || { r: 1.0, g: 1.0, b: 1.0 };  
     this.gfx.glow = params.glow || false;
-    this.gfx.glowMap = 'textures/sun.png';
+    this.gfx.glowMap = params.glowMap;
     this.gfx.map = params.map;
 
     this.addNode( this.npole = new Translate({y:-1.0}) ); 
     this.reset();
 
     Ori.registerGfx(this);
-// color: rgbToHex(this.color),
-//   map: THREE.ImageUtils.loadTexture('textures/earthmap1k.jpg'),
     if(params.phong) 
       this.material =  new THREE.MeshPhongMaterial( {  
 //        color: rgbToHex(this.gfx.color),
@@ -267,7 +265,7 @@ Planet = function(params) {
     var x = 0,y = 0,z = 0;
     geo.vertices.push( new THREE.Vertex( new THREE.Vector3( 0.0, 0.0, 0.0 ) ) );
     
-    var map = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(this.gfx.glowMap) : undefined;
+    var map = (this.gfx.glowMap && Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(this.gfx.glowMap) : undefined;
     var mat = new THREE.ParticleBasicMaterial({
             size: 2.3,
             map: map,
@@ -330,7 +328,7 @@ var PI2 = Math.PI * 2;
 Planet.prototype = new THREE.Object3D;
 Planet.prototype.constructor = Planet;
 
-Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; if(this.glow) this.meshGlow.visible = state; }
+Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; if(this.gfx.glow) this.meshGlow.visible = state; }
 Planet.prototype.getEnabled = function() { return this.mesh.visible; }
 
 Planet.prototype.setBeta = function(angle) {

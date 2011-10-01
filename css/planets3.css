@@ -40,6 +40,7 @@ a { color: #FC0; cursor: pointer; }
 
 .checkbox {
   display: inline-block;
+  position: relative;
   padding: 1px 10px;
   cursor: default;
   font-weight:bold;
@@ -145,31 +146,37 @@ option  {
 	  float:left; 
 }
 
+
 .sliderBox {
+  padding: 0 0 0 8px;
+}
+
+
+.tipable {
   overflow: hidden;
   position: relative;
-  padding: 0 0 0 8px;
-
 }
-.sliderBox:hover {
+.tipable:hover {
   overflow: visible;
 }
 
-.sliderBox .tooltip {
+.tipable .tooltip {
   display: block;
   opacity: 0.0;
   z-index: -2;
   position: absolute;
-  background: rgba(40,40,40,0.5);
+  background: rgba(40,40,40,0.7);
   left: 0px;
   top: 18px;
   width: 200px;
   -webkit-transition-property: opacity margin; 
   -webkit-transition-duration: 0.5s;
   font-size: 14px;
+  color: white;
+  border-radius: 5px;  
 }
 
-.sliderBox:hover .tooltip {
+.tipable:hover .tooltip {
   opacity: 1.0;
   display: block;
   margin: 0 0 0 190px;
