@@ -11,8 +11,8 @@ ModelYavetz = function(params) {
     BaseMixin.call(this);
   
 
-    this.alpha=0;
-    this.getAlpha = function() {return this.alpha;}
+//    this.alpha=0;
+    this.getAlpha = function() {return this.alpha; }
     this.setAlpha = function(val) {
         this.alpha=val;
         this.sphere[3].setArcBeta(180-this.alpha);
@@ -20,8 +20,8 @@ ModelYavetz = function(params) {
     }
 
 
-    this.beta=0;
-    this.getBeta = function() {return this.beta;}
+//    this.beta=0;
+    this.getBeta = function() {return this.beta; }
     this.setBeta = function(val) {
         this.beta=val;
         this.planet.setBeta(this.beta);
@@ -37,6 +37,13 @@ ModelYavetz = function(params) {
       ModelBase.prototype.loadPreset.call(this,node);
       this.setAlpha(this.currentPlanet.sphere[3].AxisAngle);
       this.setBeta(this.currentPlanet.betaRotate);
+    }
+
+    this.getPreset = function() {
+      var params = ModelBase.prototype.getPreset.call(this);
+      params.sphere[3].AxisAngle = this.getAlpha();
+      params.betaRotate = this.getBeta();
+      return params;
     }
 
     this.update = function(time) {

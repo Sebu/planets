@@ -41,6 +41,11 @@ ModelSun = function(params) {
         this.setSunYears(this.currentPlanet.sunYears);
         this.planet.setGlow(true);
     }
+    this.getPreset = function() {
+      var params = ModelBase.prototype.getPreset.call(this);
+      params.sunYears = this.getSunYears();
+      return params;
+    }
 
 };
 

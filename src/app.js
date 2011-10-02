@@ -277,6 +277,7 @@ myApp.prototype.loadPlanets = function(value) {
 };
 
 myApp.prototype.loadPresets = function(value) {
+    $("#planetsPreset option[value='"+value+"']").attr('selected',true);
     this.currentPlanet = this.currentModel[value];
 
     if(this.currentPlanet.model) {
@@ -296,30 +297,37 @@ myApp.prototype.loadPresets = function(value) {
 };
 
 myApp.prototype.getVault = function() {
-  var vault = localStorage.getJson("customPresets") || { custom: {} };
-  vault.custom.caption = APP_STRINGS.EN.CUSTOM;
+  // be able to update the format
+  if(!localStorage["version"]) {
+     localStorage['version'] = 1;
+     localStorage["presetCount"] = 0;
+     localStorage.setJson("customPresets", { custom: {} });
+  }
+  var vault = localStorage.getJson("customPresets");
   return vault;
 };
 
 myApp.prototype.loadCustomPresets = function() {
   var vault = this.getVault();
-  $.extend(true, planetPresets, vault);
+  vault.custom.caption = APP_STRINGS.EN.CUSTOM;
+  if(localStorage["presetCount"] && localStorage["presetCount"]>0) $.extend(true, planetPresets, vault);
   UI.optionsFromHash("#modelPreset", planetPresets);
 };
 
 myApp.prototype.addPreset = function() {
     var vault = this.getVault();
 
-    // TODO: actual save stuff :D
-    var store = { model: model.name, ui: model.ui, writeable: true, sphere: [] };
-   
-    
     var text = prompt(APP_STRINGS.EN.CUSTOM_NEW, model.name + '1');
-    if(text && (!vault[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
+    if(text && (!vault.custom[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
+      var store = model.getPreset(); //{ model: model.name, ui: model.ui, writeable: true, sphere: [] };
+      store.caption = text;
+      if(!vault.custom[text]) localStorage["presetCount"] = Number(localStorage["presetCount"]) + 1;      
       vault.custom[text] = store;
       localStorage.setJson("customPresets", vault);
+
       this.loadCustomPresets();
       this.loadPlanets("custom"); 
+      this.loadPresets(text);
     }
 };
 
@@ -330,13 +338,20 @@ myApp.prototype.removePreset = function() {
   if(!planetPresets.custom[text]) { 
     alert('Preset "' + text + '" is locked.'); return;
   }
-  var vault = this.getVault();
-  delete planetPresets.custom[text];
-  delete vault.custom[text];
-  localStorage.setJson("customPresets", vault);
+  if(confirm('Delete preset "' + text + '"?')) {
+    var vault = this.getVault();
+    delete planetPresets.custom;
+    delete vault.custom[text];
+    localStorage["presetCount"] = Number(localStorage["presetCount"]) - 1;
+    localStorage.setJson("customPresets", vault);
   
-  this.loadCustomPresets();
-  this.loadPlanets("Eudoxus");   
+    this.loadCustomPresets();
+    if(Number(localStorage["presetCount"])>0)   
+      this.loadPlanets("custom"); 
+    else {
+      this.loadPlanets("Eudoxus");   
+    }
+  }
 };
 
 
@@ -567,7 +582,7 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // view sub box box 
-        UI.box({id:"vis", text:"View", tooltip : "test" }).appendTo("#view");
+        UI.box({id:"vis", text:"View", tooltip : "change view point and parameters and toogle visibility of spheres and more" }).appendTo("#view");
         $("<span><select  style='width:85px;' class='chzn-select' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span>").appendTo("#vis");
         UI.optionsFromHash("#viewPresets", this.cameras);
         $("<select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#vis");
@@ -583,7 +598,7 @@ myApp.prototype.loadPreset = function(preset) {
               UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         $("<div id='visOther' class='center'></div>").appendTo("#vis");
-        if(model.setShowPath) UI.checkbox({model:model, id:"ShowSun", text:"sun", tooltip: "disable sun", color: rgbToCSS(colors["Sun"]) }).appendTo("#visOther");
+        if(model.setShowPath) UI.checkbox({model:model, id:"ShowSun", text:"sun", tooltip: "toggle sun visibilty", color: rgbToCSS(colors["Sun"]) }).appendTo("#visOther");
         if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path", color: rgbToCSS(colors["Path"]) }).appendTo("#visOther");
         if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippopede", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
         if(model.setShowStars) UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#visOther");
@@ -656,8 +671,8 @@ myApp.prototype.loadPreset = function(preset) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model:model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
             UI.slider({model:model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
-            UI.slider({model:model, id: "Alpha", max: 360, step:0.05}).appendTo("#angle");
-            UI.slider({model:model, id: "Beta", max: 360, step:0.05}).appendTo("#angle");
+            UI.slider({model:model, id: "Alpha", max: 360, step:0.05, text: "S 3-4"}).appendTo("#angle");
+            UI.slider({model:model, id: "Beta", max: 360, step:0.05, text: "planet latitude"}).appendTo("#angle");
 
             UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
 //            UI.slider({model:model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
@@ -870,7 +885,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"Speed2",  max:1100, text:"S 2"}).appendTo("#speed");
             UI.slider({model:model, id:"Speed3",  max:1100, text:"S 3"}).appendTo("#speed");
 
-        } else if (model instanceof  ModelSun) {
+        } else if (model.ui === "ModelSun") {
 
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");

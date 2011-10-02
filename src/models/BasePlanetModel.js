@@ -16,6 +16,7 @@ BaseMixin = function() {
           $("#AnimSpeed > input").attr("value",Number(this.getAnimSpeed()));
           this.sphere[1].setSpeed(-speed);
     }
+    this.getSpeed1 = function() { return -this.sphere[1].getSpeed() };
 }
 
 /**
@@ -196,9 +197,7 @@ ModelBase.prototype = {
       this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 
       
     },
-    
-
-    loadPreset : function(node) {
+       loadPreset : function(node) {
 
     	 // default planet settings
        this.currentPlanet = {
@@ -209,8 +208,8 @@ ModelBase.prototype = {
             showStars: true,
             showHippo: true,
             showPath: true,
-            showSun: true,
-            sphere: []
+            showSun: true
+//            sphere: []
         };
         // extend default settings  
         $.extend(true, this.currentPlanet, node);
@@ -244,6 +243,32 @@ ModelBase.prototype = {
 
         // reset everything
         this.reset();
+    },
+
+    getPreset : function() {
+        
+        var params = this.currentPlanet;
+        //TODO: better merge
+        for(var i in this.sphere) { 
+          if(this["getAxisAngle"+i])   params.sphere[i-1].AxisAngle = this["getAxisAngle"+i]();
+          if(this["getRotateStart"+i]) params.sphere[i-1].RotateStart = this["getRotateStart"+i]();
+          if(this["getSpeed"+i])       params.sphere[i-1].Speed = this["getSpeed"+i]();
+
+        }
+        
+        params.showStars = this.getShowStars();
+        params.showPath = this.getShowPath();
+        params.showHippo = this.getShowHippo();
+
+        params.sunDist = this.sun.getDist();
+        params.betaRotate = this.planet.getBeta();
+        params.color = this.planet.getShade();
+
+        params.showSun = this.sun.getEnabled();
+
+//        params.
+//        if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
+        return params;
     },
 
     // stop/start/pause toggle of the model
@@ -401,7 +426,8 @@ ModelBase.prototype = {
     // reset movement of spheres and parameters 
     reset : function () {
         for (var i in this.sphere) {
-            this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
+            this.sphere[i].reset();
+//            this.sphere[i].setRotateAngle(this.sphere[i].rotateStart);
         }
         this.wd = 0;
         this.ecliptic.setRotateAngle(0);

@@ -36,9 +36,17 @@ Model5 = function(params) {
 
     this.loadPreset = function(node) {
       ModelBase.prototype.loadPreset.call(this, node);
-      this.setAlpha(this.currentPlanet.alpha);
-      this.setBeta(this.currentPlanet.beta);
-      this.setGamma(this.currentPlanet.gamma);
+      this.setAlpha(this.currentPlanet.Alpha);
+      this.setBeta(this.currentPlanet.Beta);
+      this.setGamma(this.currentPlanet.Gamma);
+    }
+
+    this.getPreset = function() {
+      var params = ModelBase.prototype.getPreset.call(this);
+      params.Alpha = this.getAlpha();
+      params.Beta = this.getBeta();
+      params.Gamma = this.getGamma();
+      return params;
     }
 
     this.updateMovement = function() {

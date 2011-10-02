@@ -174,12 +174,12 @@ option  {
   font-size: 14px;
   color: white;
   border-radius: 5px;  
+  margin: 0 0 0 190px;
 }
 
 .tipable:hover .tooltip {
   opacity: 1.0;
   display: block;
-  margin: 0 0 0 190px;
 }
 
 

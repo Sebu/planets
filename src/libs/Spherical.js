@@ -200,6 +200,10 @@ Spherical.prototype.getAxisAngle = function() {
     return this.axisAngle;
 };
 
+Spherical.prototype.reset = function() {
+  this.setRotateAngle(this.getRotateStart());
+};
+
 Spherical.prototype.setRotateStart = function(val) {
     this.rotateStart = val;
 };

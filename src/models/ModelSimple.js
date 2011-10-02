@@ -10,8 +10,6 @@ ModelSimple = function(params) {
 
     this.setShowHippo = null;
 
-
-
     this.updateMetadata = function() {
        this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[2]);
     }

@@ -15,7 +15,7 @@ ModelAristotle = function(params) {
     var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]}),
     s6 = this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: colors["S3"]}),
     s7 = this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S2"]}),
-    s8 = this.sphere[8] = new Spherical({ scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    s8 = this.sphere[8] = new Spherical({ vortex: true, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
     
     this.updateList.push(s5);
     this.updateList.push(s6);    
@@ -157,10 +157,6 @@ ModelAristotle = function(params) {
       this.sphere[5].setRotateStart(-start);
     }
 
-
-    this.loadPreset = function(node) {
-        ModelBase.prototype.loadPreset.call(this,node);
-    }
 
     this.reset = function() {
         ModelBase.prototype.reset.call(this);

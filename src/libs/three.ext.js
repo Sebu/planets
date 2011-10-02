@@ -331,15 +331,19 @@ Planet.prototype.constructor = Planet;
 Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; if(this.gfx.glow) this.meshGlow.visible = state; }
 Planet.prototype.getEnabled = function() { return this.mesh.visible; }
 
+Planet.prototype.getBeta = function() { return this.beta; }
 Planet.prototype.setBeta = function(angle) {
     this.beta = angle;
     this.rotation.x = this.beta/PI_SCALE;
 };
 
+Planet.prototype.getShade = function() { return this.gfx.shade; }
 Planet.prototype.setShade = function(color) {
+    this.gfx.shade = this.color;
     this.material.color.setHex(rgbToHex(color));
 }
 
+Planet.prototype.getDist = function() { return this.dist; }
 Planet.prototype.setDist = function(dist) {
     this.dist = dist;
     this.mesh.position.y = this.dist;
@@ -472,6 +476,7 @@ Circle.prototype.setBeta = function(angle) {
     this.dirty = true;
     this.gen();
 }
+
 
 
 
