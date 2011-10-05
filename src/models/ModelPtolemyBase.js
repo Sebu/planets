@@ -16,6 +16,7 @@ ModelPtolemyBase = function(params) {
     
 
     BaseMixin.call(this);
+    
     this.ptolemizeSpheres(); // :) add some ecliptic/latitude and apsidal stuff to the daily
 
     this.sphere[1].realAngle = 0;
@@ -292,3 +293,5 @@ ModelPtolemyBase = function(params) {
 
 ModelPtolemyBase.prototype = new ModelBase;
 ModelPtolemyBase.prototype.constructor = ModelPtolemyBase;
+
+

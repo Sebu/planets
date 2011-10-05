@@ -500,7 +500,7 @@ Cloud = function(params) {
     var mat =  new THREE.ParticleBasicMaterial({size: 1.5, sizeAttenuation:false});
 /*/
     var mat = new THREE.ParticleBasicMaterial({  size: 0.8,  
-        map: THREE.ImageUtils.loadTexture('textures/star.png'),  
+        map: THREE.ImageUtils.loadTexture('images/star.png'),  
         blending: THREE.AdditiveBlending, 
   //    depthTest: false, 
         transparent: true  });

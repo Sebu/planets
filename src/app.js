@@ -513,7 +513,6 @@ myApp.prototype.resize = function() {
 };
 
 
-
 //return model instance or generate one (sort of a factory)
 myApp.prototype.getModel = function(name) {
   var mod = this.models[name];
@@ -607,7 +606,7 @@ myApp.prototype.loadPreset = function(preset) {
         // playback div       
         UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tooltip:"duration of a year in seconds"}).appendTo("#playbackBox");
-        $("#playbackBox").append("<div><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.togglePause(); if(model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div></div>");
+        $("#playbackBox").append("<div class='center'><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.togglePause(); if(model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div><div class='button' style='height:21px; padding: 4px' onclick='app.canvas.render(app.currentScene, app.currentCamera); window.open(app.canvas.domElement.toDataURL(\"image/jpeg\"));'><img src='images/camera2.png'></div></div>");
 
 
 
