@@ -184,6 +184,7 @@ Ori.Input.prototype = {
   },
 
   mouseDown : function(e) {
+    document.body.style.cursor="move";
     if(e.button == 0) Ori.input.mouse.b1 = true;
     if(e.button == 1) Ori.input.mouse.b2 = true;    
 //    if(e.button == 2) Ori.input.mouse.b3 = true;    
@@ -192,6 +193,7 @@ Ori.Input.prototype = {
   },
 
   mouseUp : function(e) {
+    document.body.style.cursor="default";
     if(e.button == 0) Ori.input.mouse.b1 = false;
     if(e.button == 1) Ori.input.mouse.b2 = false;    
 //    if(e.button == 2) Ori.input.mouse.b3 = false;     
@@ -203,6 +205,7 @@ Ori.Input.prototype = {
   },
 
   mouseWheel : function(e) {
+  
     Ori.input.mouse.z = e.wheelDelta/120;
     Ori.input.mouse.wheel = true;
   },

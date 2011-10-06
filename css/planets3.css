@@ -28,7 +28,7 @@ a { color: #FC0; cursor: pointer; }
     display: inline-block;
     padding: 1px 10px;
     border-radius: 4px;
-    cursor: default;
+    cursor: pointer;
     color: #FFF;
     text-shadow: #111 1px 1px 1px;
     background: #4d90fe;    
@@ -40,9 +40,9 @@ a { color: #FC0; cursor: pointer; }
 
 .checkbox {
   display: inline-block;
-  position: relative;
+//  position: relative;
   padding: 1px 10px;
-  cursor: default;
+  cursor: pointer;
   font-weight:bold;
   background: #4B4947;
   background: -ms-linear-gradient(#4B4947, #32302D);    
@@ -92,6 +92,7 @@ option  {
 
 
 .caption { 
+  position:relative;
 	font-weight: bold;
 	font-size:14px;
 }
@@ -102,7 +103,7 @@ option  {
 }
 
 .ui-slider-handle {
-    cursor: default;
+    cursor: move;
     position: absolute;
     top: 3px;    
     width: 6px;
@@ -148,13 +149,14 @@ option  {
 
 
 .sliderBox {
+  position:relative;
   padding: 0 0 0 8px;
 }
 
 
 .tipable {
   overflow: hidden;
-  position: relative;
+//  position: relative;
 }
 .tipable:hover {
   overflow: visible;
@@ -167,11 +169,11 @@ option  {
   position: absolute;
   background: rgba(40,40,40,0.7);
   left: 0px;
-  top: 18px;
+  top: 0px;
   width: 200px;
   -webkit-transition-property: opacity margin; 
   -webkit-transition-duration: 0.5s;
-  font-size: 14px;
+  font-size: 16px;
   color: white;
   border-radius: 5px;  
   margin: 0 0 0 190px;
@@ -179,7 +181,7 @@ option  {
 
 .tipable:hover .tooltip {
   opacity: 1.0;
-  display: block;
+//  display: block;
 }
 
 
@@ -425,6 +427,7 @@ select:focus,
 
 .center {
   text-align: center;
+  position:relative;
   width: 100%;
 }
 
@@ -471,6 +474,7 @@ select:focus,
 }
 
 canvas {
+//  cursor: pointer;
 //  position: absolute;
 //  top: 0px;
 //  width: 100%;

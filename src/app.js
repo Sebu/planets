@@ -599,14 +599,14 @@ myApp.prototype.loadPreset = function(preset) {
         $("<div id='visOther' class='center'></div>").appendTo("#vis");
         if(model.setShowPath) UI.checkbox({model:model, id:"ShowSun", text:"sun", tooltip: "toggle sun visibilty", color: rgbToCSS(colors["Sun"]) }).appendTo("#visOther");
         if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path", color: rgbToCSS(colors["Path"]) }).appendTo("#visOther");
-        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippopede", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
+        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippopede", tooltip: "toggle hippopede visibilty", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
         if(model.setShowStars) UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#visOther");
 
 
         // playback div       
         UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
         UI.slider({model: model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tooltip:"duration of a year in seconds"}).appendTo("#playbackBox");
-        $("#playbackBox").append("<div class='center'><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.togglePause(); if(model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div><div class='button' style='height:21px; padding: 4px' onclick='app.canvas.render(app.currentScene, app.currentCamera); window.open(app.canvas.domElement.toDataURL(\"image/jpeg\"));'><img src='images/camera2.png'></div></div>");
+        $("#playbackBox").append("<div class='center'><div class='button' onclick='model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='model.toggleRunning(); if(model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div><div class='button' style='height:21px; padding: 4px' onclick='app.canvas.render(app.currentScene, app.currentCamera); window.open(app.canvas.domElement.toDataURL(\"image/jpeg\"));'><img src='images/camera2.png'></div></div>");
 
 
 
@@ -904,7 +904,7 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // initial update of sliders/state
-        model.togglePause();
+        model.toggleRunning();
         $("#capvis,#caprotateStart, #pauseButton").click();
         $("#moon input, #angle  input, #speed input").change();
         $("#AxisAngle1 input").change();

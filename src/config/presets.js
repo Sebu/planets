@@ -3,9 +3,40 @@
 var config = {
   earthTexture : 'images/earthmap1k.jpg',
   sunGlowTexture : 'images/sun.png',
-  rampTexture : 'images/ramp.png'
+  rampTexture : 'images/ramp.png',
+  speedFactor : 100.0,
+  labelDist : 4.5,
+  sphereRadius : 9.0
 };
 
+// some basic colors
+// just add new
+var colors = {
+  Earth:  {r: 0.2, g:0.2, b:1.0},
+//  Earth:     {r: 0.96, g: 201/255, b: 204/255},
+  Planet: {r: 1.0, g:1.0, b:1.0},
+	Sun: 		{r:1.0,g:1.0,b:0.0},
+	S1:			{r: 0.3, g: 0.565, b: 0.996}, // {r:0.5, g:0.5, b:1.0},
+  S2: 		{r: 1.0, g: 1.0, b: 0.2},	
+	S3: 		{r: 0.2, g: 1.0, b: 0.2},
+	S4: 		{r: 1.0, g: 0.2, b: 0.2},
+	S5: 		{r:1.0, g: 0.0, b: 1.0},
+	Path: 	{r: 1.0, g: 1.0, b: 1.0},
+	Hippo: 	{r: 0.3, g: 0.565, b: 0.996}
+	
+};
+
+var defaultPreset = {
+            sunDist: 8,
+            color: colors["Planet"],
+            betaRotate: 90.0,
+            label: "Planet",
+            showStars: true,
+            showHippo: true,
+            showPath: true,
+            showSun: true,
+            sunSpeed: 365.2466666
+};
 
 var planetPresets = { 
 
@@ -734,23 +765,6 @@ var DATES = {
   PTOLEMY_EPOCH2 : 1448637.91689121,
 }
 
-// some basic colors
-// just add new
-// TODO: curve0,1,etc.
-var colors = {
-  Earth:  {r: 0.2, g:0.2, b:1.0},
-//  Earth:     {r: 0.96, g: 201/255, b: 204/255},
-  Planet: {r: 1.0, g:1.0, b:1.0},
-	Sun: 		{r:1.0,g:1.0,b:0.0},
-	S1:			{r: 0.3, g: 0.565, b: 0.996}, // {r:0.5, g:0.5, b:1.0},
-  S2: 		{r: 1.0, g: 1.0, b: 0.2},	
-	S3: 		{r: 0.2, g: 1.0, b: 0.2},
-	S4: 		{r: 1.0, g: 0.2, b: 0.2},
-	S5: 		{r:1.0, g: 0.0, b: 1.0},
-	Path: 	{r: 1.0, g: 1.0, b: 1.0},
-	Hippo: 	{r: 0.3, g: 0.565, b: 0.996}
-	
-};
 
 var latitudePresets = {
   Athens: 38,
