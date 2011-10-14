@@ -4,13 +4,13 @@
 // see libs/origami.js for Ori namespace
 myApp = function(params) {
     Ori.App.call(this);
-    this.init(params);
+    this.setup(params);
 };
 myApp.prototype = new Ori.App;
 myApp.prototype.constructor = myApp;
 
 
-myApp.prototype.init = function(params) {
+myApp.prototype.setup = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
         this.scenes = [];
@@ -358,7 +358,6 @@ myApp.prototype.removePreset = function() {
 // get new scene ( one for each model )
 myApp.prototype.newScene = function() {
         var scene = new THREE.Scene();
-        scene.addLight(new THREE.AmbientLight(0xFFFFFF));
         this.scenes.push(scene);
         return scene;
     };

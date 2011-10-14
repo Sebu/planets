@@ -125,7 +125,7 @@ THREE.Camera.prototype.reset = function() {
 //*/
 
 THREE.FPSCamera = function ( parameters ) {
-    THREE.Camera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
+    THREE.PerspectiveCamera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
 
     this.reset();
     this.useTarget = false;
@@ -139,11 +139,11 @@ THREE.FPSCamera = function ( parameters ) {
     }
 }
 
-THREE.FPSCamera.prototype = new THREE.Camera();
+THREE.FPSCamera.prototype = new THREE.PerspectiveCamera();
 THREE.FPSCamera.prototype.constructor = THREE.FPSCamera;
 
 THREE.BallCamera = function ( parameters ) {
-    THREE.Camera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
+    THREE.PerspectiveCamera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
 
     this.reset();
 
@@ -159,5 +159,5 @@ THREE.BallCamera = function ( parameters ) {
     }
 }
 
-THREE.BallCamera.prototype = new THREE.Camera();
+THREE.BallCamera.prototype = new THREE.PerspectiveCamera();
 THREE.BallCamera.prototype.constructor = THREE.BallCamera;

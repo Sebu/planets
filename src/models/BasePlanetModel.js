@@ -77,6 +77,7 @@ ModelBase.prototype = {
         this.renderer = params.renderer;
         this.camera = this.renderer.camera;
         this.root = this.renderer.newScene();
+        this.root.add(new THREE.AmbientLight(0xFFFFFF));
         this.root.addNode(this.light);
 
 

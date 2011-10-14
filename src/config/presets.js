@@ -15,6 +15,7 @@ var colors = {
   Earth:  {r: 0.2, g:0.2, b:1.0},
 //  Earth:     {r: 0.96, g: 201/255, b: 204/255},
   Planet: {r: 1.0, g:1.0, b:1.0},
+  Mars: {r: 1.0, g:0.5, b:0.5},
 	Sun: 		{r:1.0,g:1.0,b:0.0},
 	S1:			{r: 0.3, g: 0.565, b: 0.996}, // {r:0.5, g:0.5, b:1.0},
   S2: 		{r: 1.0, g: 1.0, b: 0.2},	
@@ -46,6 +47,7 @@ Eudoxus: {
 //    caption: "Eudoxus Mercury 1",
     model: "Model4",
     ui: "Model4",
+//    color: colors['Mars'],
     label: "Mercury",  
     sphere: [
       {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
