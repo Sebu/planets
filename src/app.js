@@ -1,29 +1,35 @@
 
 
-
-// see libs/origami.js for Ori namespace
-myApp = function(params) {
+/**
+ main class of the Topoi Cosmology App
+ @extends Ori.App
+ @constructor
+ @param params
+ @param params.domRoot dom element to add the canvas to
+*/
+cosmoApp = function(params) {
     Ori.App.call(this);
     this.setup(params);
 };
-myApp.prototype = new Ori.App;
-myApp.prototype.constructor = myApp;
+cosmoApp.prototype = new Ori.App;
+cosmoApp.prototype.constructor = cosmoApp;
 
-
-myApp.prototype.setup = function(params) {
+/**
+  setup canvas, input, camera, gui, models etc.
+  @function
+  @param params
+  @param params.domRoot dom element to add the canvas to
+*/
+cosmoApp.prototype.setup = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
-        this.scenes = [];
+//        this.scenes = [];
 
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
         
         setupCommonGeomerty();
         
-        // set clear color (deprecated)
-//        if(this.canvas.type == "webgl")
-//          this.canvas.setClearColorHex( 0x070707 );
-
         this.splashStatus = $("#splashStatus");
 
         // add Canvas DOM Element & or error box
@@ -36,23 +42,11 @@ myApp.prototype.setup = function(params) {
         }
 
         this.setupCameras();
-        this.resize();
-
         this.setupInput();
 
         // setupPicking  for collision
         this.projector = new THREE.Projector();
         
-        // SKY SPHERE (deprecated)
-/*        
-        this.skyCam = new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000});
-        this.skyCam.setEye( { x: 0.0 , y: 0.0, z: -600.0 });
-        this.skyScene = new THREE.Scene();
-				var mesh = new THREE.Mesh( new THREE.SphereGeometry( 700, 32, 16 ), new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('textures/starsmap.jpg') }) );
-				mesh.flipSided = true;
-//				this.skyScene.addObject( mesh );
-//*/	
-
 
         // setupDebug
         // DEBUG und stats.js
@@ -198,13 +192,14 @@ myApp.prototype.setup = function(params) {
         uiBox.append("<div id='view'></div>");
         uiBox.append("<div id='parameters'></div>");
         uiBox.append("<div id='playback'></div>");
-//DEAD?        $("#vis").hide();
 
         // load default model
         this.loadPlanets("Eudoxus");
 
+        //this.currentScene.add( this.currentCamera );
 //        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
+        // NO WEBGL error
         if(this.canvas.type==="canvas") {
           this.debugBox.show();
            this.splashStatus.empty();
@@ -215,7 +210,11 @@ myApp.prototype.setup = function(params) {
     };
 
 
-myApp.prototype.setupInput = function() {
+/**
+  setup input (mouse and keyboard)
+  @function
+*/
+cosmoApp.prototype.setupInput = function() {
         this.splashStatus.empty();
         this.splashStatus.append("register input...");
         // track inputs
@@ -225,78 +224,88 @@ myApp.prototype.setupInput = function() {
         Ori.input.register(Ori.KEY.UP, "UP");
 }
 
-myApp.prototype.setupCameras = function() {
-        this.splashStatus.empty();
-        this.splashStatus.append("setup cameras...");
-        // setup camera
-        // TODO : shorten
-        this.cameras = { 
-          Trackball: { 
-            caption: "Global",
-            instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
-          },
-          FPS: { 
-            caption: "Local",
-            instance: new THREE.FPSCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
-          },
-          TrackballIso: { 
-            caption: "Isometric",
-            instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
-          }
-        };
-        this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
-        this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
-        var ortho = 70;
-        this.cameras["TrackballIso"].instance.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
-        this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
+/**
+  setup Cameras ()
+  @function
+*/
+cosmoApp.prototype.setupCameras = function() {
+  this.splashStatus.empty();
+  this.splashStatus.append("setup cameras...");
+  // setup camera
+  // TODO : shorten
+  this.cameras = { 
+    Trackball: { 
+      caption: "Global",
+      instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+    },
+    FPS: { 
+      caption: "Local",
+      instance: new THREE.FPSCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+    },
+    TrackballIso: { 
+      caption: "Isometric",
+      instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+    }
+  };
+  this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
+  this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
+  var ortho = 70;
+  this.cameras["TrackballIso"].instance.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
+  this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
 
-        // set trackball as default
-        this.currentCamera = this.cameras["Trackball"].instance;
+  // set trackball as default
+  this.currentCamera = this.cameras["Trackball"].instance;
+  this.resize();
+
 }
 
-myApp.prototype.loadPlanets = function(value) {
-    $("#modelPreset option[value='"+value+"']").attr('selected',true);
-    this.currentModel = planetPresets[value];
-    
-    if(this.currentModel.model) {
-      this.currentPlanet = planetPresets;
-      this.presetsEle2.hide();
-      this.presetsEle3.hide();      
-      this.loadPreset(value);
-      return;
-    }
-    
-    UI.optionsFromHash("#planetsPreset", this.currentModel);
-    this.presetsEle2.show();
-    for(var i in this.currentModel) {
-      if(i=="caption") continue;
-      this.loadPresets(i);
-      break;
-    }
+cosmoApp.prototype.loadPlanets = function(value) {
+  $("#modelPreset option[value='"+value+"']").attr('selected',true);
+  this.currentModel = planetPresets[value];
+  
+  if(this.currentModel.model) {
+    this.currentPlanet = planetPresets;
+    this.presetsEle2.hide();
+    this.presetsEle3.hide();      
+    this.loadPreset(value);
+    return;
+  }
+  
+  UI.optionsFromHash("#planetsPreset", this.currentModel);
+  this.presetsEle2.show();
+  for(var i in this.currentModel) {
+    if(i=="caption") continue;
+    this.loadPresets(i);
+    break;
+  }
     
 };
 
-myApp.prototype.loadPresets = function(value) {
-    $("#planetsPreset option[value='"+value+"']").attr('selected',true);
-    this.currentPlanet = this.currentModel[value];
+cosmoApp.prototype.loadPresets = function(value) {
+  $("#planetsPreset option[value='"+value+"']").attr('selected',true);
+  this.currentPlanet = this.currentModel[value];
 
-    if(this.currentPlanet.model) {
-      this.currentPlanet = this.currentModel;
-      this.presetsEle3.hide();
-      this.loadPreset(value);
-      return;
-    }
+  if(this.currentPlanet.model) {
+    this.currentPlanet = this.currentModel;
+    this.presetsEle3.hide();
+    this.loadPreset(value);
+    return;
+  }
 
-    UI.optionsFromHash("#planetPreset", this.currentPlanet);
-    this.presetsEle3.show();
-    for(var i in this.currentPlanet) {
-      if(i=="caption") continue;    
-      this.loadPreset(i);
-      break;
-    }    
+  UI.optionsFromHash("#planetPreset", this.currentPlanet);
+  this.presetsEle3.show();
+  for(var i in this.currentPlanet) {
+    if(i=="caption") continue;    
+    this.loadPreset(i);
+    break;
+  }    
 };
 
-myApp.prototype.getVault = function() {
+/**
+ * @function
+ * @returns the vault of custom presets from browser localStorage
+ */
+cosmoApp.prototype.getVault = function() {
   // be able to update the format
   if(!localStorage["version"]) {
      localStorage['version'] = 1;
@@ -307,14 +316,23 @@ myApp.prototype.getVault = function() {
   return vault;
 };
 
-myApp.prototype.loadCustomPresets = function() {
+/** 
+ * add vault/custom data to UI presets list 
+ * @function
+ */
+cosmoApp.prototype.loadCustomPresets = function() {
   var vault = this.getVault();
   vault.custom.caption = APP_STRINGS.EN.CUSTOM;
   if(localStorage["presetCount"] && localStorage["presetCount"]>0) $.extend(true, planetPresets, vault);
   UI.optionsFromHash("#modelPreset", planetPresets);
 };
 
-myApp.prototype.addPreset = function() {
+
+/** 
+ * add a new custom preset to the vault 
+ * @function
+ */
+cosmoApp.prototype.addPreset = function() {
     var vault = this.getVault();
 
     var text = prompt(APP_STRINGS.EN.CUSTOM_NEW, model.name + '1');
@@ -332,8 +350,11 @@ myApp.prototype.addPreset = function() {
 };
 
 
-
-myApp.prototype.removePreset = function() {
+/** 
+ * remove a custom preset from the vault 
+ * @function
+ */
+cosmoApp.prototype.removePreset = function() {
   var text = this.currentPreset;
   if(!planetPresets.custom[text]) { 
     alert('Preset "' + text + '" is locked.'); return;
@@ -356,17 +377,25 @@ myApp.prototype.removePreset = function() {
 
 
 // get new scene ( one for each model )
-myApp.prototype.newScene = function() {
-        var scene = new THREE.Scene();
-        this.scenes.push(scene);
-        return scene;
-    };
+// cosmoApp.prototype.newScene = function() {
+//         var scene = new THREE.Scene();
+//         //this.scenes.push(scene);
+//         return scene;
+// };
 
-myApp.prototype.setCurrentScene = function(scene) {
+
+/**
+ * set the current render root scene
+ * @param scene the scene from the model to set
+ */
+cosmoApp.prototype.setCurrentScene = function(scene) {
         this.currentScene = scene;
 };
 
-myApp.prototype.updateInfoBox = function() {
+/**
+ * update the planet info box
+ */
+cosmoApp.prototype.updateInfoBox = function() {
 //*
         //OPT: merge dom updates
         if(model.ui === "ModelSun") {
@@ -407,8 +436,12 @@ myApp.prototype.updateInfoBox = function() {
        UI.innerText(this.info.days, Utils.daysToTime(model.getDays()) );      
 //*/  
 }
-// update loop
-myApp.prototype.update = function(time) {
+
+/** 
+  update loop
+  @override 
+*/
+cosmoApp.prototype.update = function(time) {
 
        
 //        if(Ori.input.isDown("DEBUG")) debugBox.toggle();
@@ -460,8 +493,11 @@ myApp.prototype.update = function(time) {
 };
 
 
-
-myApp.prototype.setCamera = function(cam) {
+/**
+ * sets the current camera select from this.cameras (trackball, isometric trackball, FPS)
+ * @param cam the label of the camera to set 
+ */
+cosmoApp.prototype.setCamera = function(cam) {
   this.currentCamera = this.cameras[cam].instance;
   switch(cam) {
     case "Trackball":
@@ -476,44 +512,46 @@ myApp.prototype.setCamera = function(cam) {
   
 }
 
-myApp.prototype.updateLabels = function() {
-        //OPT: merge dom updates
-        northLabel.setPosition(model.north.getPosCanvas(this.currentCamera, this.canvas));
-        southLabel.setPosition(model.south.getPosCanvas(this.currentCamera, this.canvas));
-        eastLabel.setPosition(model.east.getPosCanvas(this.currentCamera, this.canvas));
-        westLabel.setPosition(model.west.getPosCanvas(this.currentCamera, this.canvas));
-        equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
-        npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
-        spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
-        sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.currentCamera, this.canvas)); 
-        planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
+/** update the moving labels (north etc.)  */
+cosmoApp.prototype.updateLabels = function() {
+  //OPT: merge dom updates
+  northLabel.setPosition(model.north.getPosCanvas(this.currentCamera, this.canvas));
+  southLabel.setPosition(model.south.getPosCanvas(this.currentCamera, this.canvas));
+  eastLabel.setPosition(model.east.getPosCanvas(this.currentCamera, this.canvas));
+  westLabel.setPosition(model.west.getPosCanvas(this.currentCamera, this.canvas));
+  equinoxLabel.setPosition(model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas));
+  npoleLabel.setPosition(model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas));
+  spoleLabel.setPosition(model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas));
+  sunLabel.setPosition(model.sun.mesh.getPosCanvas(this.currentCamera, this.canvas)); 
+  planetLabel.setPosition(model.planet.mesh.getPosCanvas(this.currentCamera, this.canvas));
 };
 
 
 
-myApp.prototype.draw = function(time) {
-//        this.canvas.clear();
-//        this.canvas.render(this.skyScene, this.skyCam);
-        this.canvas.render(this.currentScene, this.currentCamera);
-        this.updateInfoBox();
-        this.updateLabels();        
-        this.stats.update();
+cosmoApp.prototype.draw = function(time) {
+  this.canvas.render(this.currentScene, this.currentCamera);
+  this.updateInfoBox();
+  this.updateLabels();        
+  this.stats.update();
 };
 
-//on resize adjust camera aspect and canvas size
-myApp.prototype.resize = function() {
-        var width = window.innerWidth,
-        height = window.innerHeight,
-        factor = Ori.gfxProfile.resolution;
-        this.currentCamera.setAspect(width / height);
-        this.canvas.setSize(width*factor, height*factor);
-        // center splashscreen
-        centerSplash();
+/** on resize adjust camera aspect and canvas size */
+cosmoApp.prototype.resize = function() {
+  var width = window.innerWidth,
+  height = window.innerHeight,
+  factor = Ori.gfxProfile.resolution;
+  this.currentCamera.setAspect(width / height);
+  this.canvas.setSize(width*factor, height*factor);
+  // center splashscreen
+  centerSplash();
 };
 
 
-//return model instance or generate one (sort of a factory)
-myApp.prototype.getModel = function(name) {
+/**
+ * @param name of the model to get 
+ * @returns a model instance from cache or generates one (sort of a factory)
+ */
+cosmoApp.prototype.getModel = function(name) {
   var mod = this.models[name];
   if(!mod) {
     this.models[name] = new window[name]({renderer: this});
@@ -523,23 +561,35 @@ myApp.prototype.getModel = function(name) {
 };
 
 
-//TODO: move to ui specific stuff
-// change planet model and create the UI ELEMENTS + add to DOM
-myApp.prototype.loadPreset = function(preset) {
 
-        // switch model
-        this.currentPreset = preset;
-        var planet = this.currentPlanet[preset];
-        model = this.getModel(planet.model);
-        this.setCurrentScene(model.root);
-        model.loadPreset(planet);
-        planetLabel.setText(model.currentPlanet.label);
-        
+/** 
+ * change planet model and create the UI ELEMENTS + add to DOM 
+ * @param preset the preset to load
+ */
+cosmoApp.prototype.loadPreset = function(preset) {
 
-        this.setCamera("Trackball");
-        this.currentCamera.reset();
-        
-        // build up ui
+  // switch model
+  this.currentPreset = preset;
+  var planet = this.currentPlanet[preset];
+  model = this.getModel(planet.model);
+  this.setCurrentScene(model.root);
+  model.loadPreset(planet);
+  planetLabel.setText(model.currentPlanet.label);
+  
+  // default camera
+  this.setCamera("Trackball");
+  this.currentCamera.reset();
+
+  // update UI 
+  this.setupUI();
+};
+
+/**
+ * build up ui from current model state
+ * TODO: move to ui specific stuff or split up a little
+ */
+cosmoApp.prototype.setupUI = function() {
+  
         $("#moonInfoContainer").fadeOut(500);
         $("#sunInfoContainer").fadeOut(500);
 
@@ -580,7 +630,7 @@ myApp.prototype.loadPreset = function(preset) {
 
 
         // view sub box box 
-        UI.box({id:"vis", text:"View", tooltip : "change view point and parameters and toogle visibility of spheres and more" }).appendTo("#view");
+        UI.box({id:"vis", text:"View" }).appendTo("#view");
         $("<span><select  style='width:85px;' class='chzn-select' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span>").appendTo("#vis");
         UI.optionsFromHash("#viewPresets", this.cameras);
         $("<select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#vis");
@@ -596,9 +646,9 @@ myApp.prototype.loadPreset = function(preset) {
               UI.checkbox({model:model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS(model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         $("<div id='visOther' class='center'></div>").appendTo("#vis");
-        if(model.setShowPath) UI.checkbox({model:model, id:"ShowSun", text:"sun", tooltip: "toggle sun visibilty", color: rgbToCSS(colors["Sun"]) }).appendTo("#visOther");
-        if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path", color: rgbToCSS(colors["Path"]) }).appendTo("#visOther");
-        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippopede", tooltip: "toggle hippopede visibilty", color:  rgbToCSS(colors["Hippo"]) }).appendTo("#visOther");
+        if(model.setShowPath) UI.checkbox({model:model, id:"ShowSun", text:"sun", tooltip: "toggle sun visibilty", color: rgbToCSS(config.colors["Sun"]) }).appendTo("#visOther");
+        if(model.setShowPath) UI.checkbox({model:model, id:"ShowPath", text:"path", color: rgbToCSS(config.colors["Path"]) }).appendTo("#visOther");
+        if(model.setShowHippo) UI.checkbox({model:model, id:"ShowHippo", text:"hippopede", tooltip: "toggle hippopede visibilty", color:  rgbToCSS(config.colors["Hippo"]) }).appendTo("#visOther");
         if(model.setShowStars) UI.checkbox({model:model, id:"ShowStars", text:"stars"}).appendTo("#visOther");
 
 
@@ -613,10 +663,10 @@ myApp.prototype.loadPreset = function(preset) {
         // create the right sliders for each model
         // TODO: tooltips and min/max values for each model and preset
         if (model instanceof ModelMoon || model instanceof ModelMoonCompare) {
-            UI.box({id:"moon", text: APP_STRINGS.EN.MOON_CYCLE_CAPTION }).appendTo("#parameters");
-            UI.slider({model:model, id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon");
-            UI.slider({model:model, id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon");
-            UI.slider({model:model, id:"MetonDays", "max":30000, text:"days"}).appendTo("#moon");
+            UI.box({id:"moon_cycle" }).appendTo("#parameters");
+            UI.slider({model:model, id:"MetonYear", "max":100, text:"Years"}).appendTo("#moon_cycle");
+            UI.slider({model:model, id:"MetonSynodicMonths", "max":1000, text:"Synodic months"}).appendTo("#moon_cycle");
+            UI.slider({model:model, id:"MetonDays", "max":30000, text:"days"}).appendTo("#moon_cycle");
 
             UI.box({id:"moon2", text:"Eclipse period"}).appendTo("#parameters");
             UI.slider({model:model, id:"SarosDraconiticMonths", "max":1000, text:"Draconitic months"}).appendTo("#moon2");
@@ -685,36 +735,7 @@ myApp.prototype.loadPreset = function(preset) {
             UI.slider({model:model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model:model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
 
-/*
-        } else if (model.ui == "Model4") {
 
-            UI.box({id:"daily", text:"Daily", color: colors["S1"]}).appendTo("#parameters");
-            UI.checkbox({ model:model, id:"Speed1", text:"enabled"}).appendTo("#daily");
-            UI.slider({model:model, id:"RotateStart1", max: 360, step:0.05, text:"right ascension"}).appendTo("#daily");
-            
-            UI.box({id:"ecliptic", text:"Ecliptic", color: colors["S2"]}).appendTo("#parameters");
-            UI.slider({ model:model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity of ecliptic"}).appendTo("#ecliptic");
-            UI.slider({ model:model, id:"Speed2",  max:12000, text:"zodiacal speed"}).appendTo("#ecliptic");
-            UI.slider({model:model, id:"RotateStart2", max: 360, step:0.05, text:"longitude"}).appendTo("#ecliptic");
-
-            UI.box({id:"inner", text:"S 3", color: colors["S3"]}).appendTo("#parameters");
-            UI.slider({ model:model, id: "AxisAngle3", max: 360, step:0.05, text: "right angle"}).appendTo("#inner");
-            UI.slider({ model:model, id:"RotateStart3", max: 360, step:0.05, text:"start"}).appendTo("#inner");
-            UI.slider({ model:model, id: "Speed3", max:1100, text:"S 3,4 speed"}).appendTo("#inner");
-                        
-            UI.box({id:"inner2", text:"S 4", color: colors["S4"]}).appendTo("#parameters");
-            UI.slider({ model:model, id: "AxisAngle4", max: 360, step:0.05, text: "angle"}).appendTo("#inner2");
-            UI.slider({ model:model, id:"RotateStart4", max: 360, step:0.05, text:"start"}).appendTo("#inner2");
-
-            $("#ecliptic input, #inner input").change();
-            
-//            UI.slider({ model:model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
-//          UI.box({id:"rotateStart", text:"Rotation Start (degrees)"}).appendTo("#parameters");
-            
-            
-
-            
-/*/
         } else if (model.ui == "Model4") {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
@@ -919,7 +940,7 @@ myApp.prototype.loadPreset = function(preset) {
 
 // setup site
 // TODO: maybe move to index.html
-app = new myApp({domRoot: $("#mainBox")});
+app = new cosmoApp({domRoot: $("#mainBox")});
 if(app) {
   window.onresize = function(e) { app.resize(e) };
   app.run();

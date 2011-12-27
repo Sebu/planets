@@ -1,10 +1,11 @@
 
 /**
  * @constructor
+ * @extends ModelBase
  */
 ModelSun = function(params) {
-	ModelBase.call(this);
     params.name = "ModelSun";
+	  ModelBase.call(this, params);
     params.spheres = 3;
     this.genSpheres(params);
 

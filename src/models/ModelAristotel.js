@@ -1,10 +1,11 @@
 
 /**
  * @constructor
+ * @extends ModelBase
  */
 ModelAristotle = function(params) {
-	ModelBase.call(this);
     params.name = "ModelAristotle";
+	  ModelBase.call(this, params);
     params.spheres = 4;
     
     this.genSpheres(params);
@@ -12,10 +13,10 @@ ModelAristotle = function(params) {
     
 
     // add unwinding spheres
-    var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: colors["S4"]}),
-    s6 = this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: colors["S3"]}),
-    s7 = this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: colors["S2"]}),
-    s8 = this.sphere[8] = new Spherical({ vortex: true, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: colors["S1"]});
+    var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]}),
+    s6 = this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]}),
+    s7 = this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]}),
+    s8 = this.sphere[8] = new Spherical({ vortex: true, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
     
     this.updateList.push(s5);
     this.updateList.push(s6);    
@@ -41,10 +42,10 @@ ModelAristotle = function(params) {
       params.to.anchor.addNode(params.to.gfx.njoint);
       params.to.anchor.addNode(params.to.gfx.sjoint);
     }
-   this.createJoint({from: this.sphere[4], to: this.sphere[5], color: colors["S4"], linewidth:4 }); 
-   this.createJoint({from: this.sphere[3], to: this.sphere[6], color: colors["S3"], linewidth:3 }); 
-   this.createJoint({from: this.sphere[2], to: this.sphere[7], color: colors["S2"], linewidth:2 }); 
-   this.createJoint({from: this.sphere[1], to: this.sphere[8], color: colors["S1"], linewidth:1 }); 
+   this.createJoint({from: this.sphere[4], to: this.sphere[5], color: config.colors["S4"], linewidth:4 }); 
+   this.createJoint({from: this.sphere[3], to: this.sphere[6], color: config.colors["S3"], linewidth:3 }); 
+   this.createJoint({from: this.sphere[2], to: this.sphere[7], color: config.colors["S2"], linewidth:2 }); 
+   this.createJoint({from: this.sphere[1], to: this.sphere[8], color: config.colors["S1"], linewidth:1 }); 
 
   this.sphere[5].setVisuals(["sjoint", "njoint", "sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball"]);
   this.sphere[6].setVisuals(["sjoint", "njoint", "sphere","arc1","arc2","equator","npole","spole","rotationarc","markerarc","markerball"]);
@@ -157,7 +158,7 @@ ModelAristotle = function(params) {
       this.sphere[5].setRotateStart(-start);
     }
 
-
+    /** @override */
     this.reset = function() {
         ModelBase.prototype.reset.call(this);
         this.setShowSphere2(false);
@@ -168,9 +169,10 @@ ModelAristotle = function(params) {
         this.setShowSphere7(false);   
     }
 
+    /** @override */
     this.update = function(time) {
-      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: colors["Path"]});
-      this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: colors["Hippo"]});
+      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: config.colors["Path"]});
+      this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: config.colors["Hippo"]});
       ModelBase.prototype.update.call(this, time);
     }
 

@@ -2,6 +2,7 @@
 
 /**
  * @constructor
+ * @extends ModelPtolemyBase
  */
 ModelPtolemySun = function(params) {
     params.name = "ModelPtolemySun";
