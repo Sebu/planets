@@ -23,14 +23,13 @@ cosmoApp.prototype.constructor = cosmoApp;
 cosmoApp.prototype.setup = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
-//        this.scenes = [];
 
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
         
         setupCommonGeomerty();
         
-        this.splashStatus = $("#splashStatus");
+        this.splashStatus = $("#TCsplashStatus");
 
         // add Canvas DOM Element & or error box
         this.splashStatus.empty();
@@ -167,7 +166,7 @@ cosmoApp.prototype.setup = function(params) {
         this.splashStatus.empty();
         this.splashStatus.append("setup UI...");
         var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
-        var presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
+        this.presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle2 = $("<span><select class='chzn-select modelSelect' style='width:150px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle3 = $("<span><select class='chzn-select modelSelect' style='width:36px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
 
@@ -176,7 +175,7 @@ cosmoApp.prototype.setup = function(params) {
 
         $("<div id=presetBox></div>").appendTo(uiBox);
         var presetBox = $("#presetBox");
-        presetBox.append(presetsEle1); 
+        presetBox.append(this.presetsEle1); 
         presetBox.append("<div class='button' onclick='app.addPreset();'>+</div>");
         presetBox.append("<div class='button' onclick='app.removePreset();'>-</div>");
        
@@ -196,8 +195,6 @@ cosmoApp.prototype.setup = function(params) {
         // load default model
         this.loadPlanets("Eudoxus");
 
-        //this.currentScene.add( this.currentCamera );
-//        uiBox.hover(function() { model.setRunning(false);}, function() {model.setRunning(true); } );
 
         // NO WEBGL error
         if(this.canvas.type==="canvas") {
@@ -206,7 +203,7 @@ cosmoApp.prototype.setup = function(params) {
            this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
            this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>OK</div>");
         } else                       
-          $("#splash").hide();
+          $("#TCsplash").hide();
     };
 
 
@@ -390,6 +387,7 @@ cosmoApp.prototype.removePreset = function() {
  */
 cosmoApp.prototype.setCurrentScene = function(scene) {
         this.currentScene = scene;
+        this.currentScene.add( this.currentCamera );
 };
 
 /**
@@ -482,13 +480,13 @@ cosmoApp.prototype.update = function(time) {
         model.sun.mesh.currentPosFast();        
         model.planet.mesh.currentPosFast();
         vector = this.projector.unprojectVector( vector, this.currentCamera );
-        model.dline[0] = this.currentCamera.position;     
-        model.dline[1] = vector.clone();
-        model.dlineLine.setPos(model.dline);
+//        model.dline[0] = this.currentCamera.position;     
+//        model.dline[1] = vector.clone();
+//        model.dlineLine.setPos(model.dline);
         var ray = new THREE.Ray( this.currentCamera.position, vector.subSelf( this.currentCamera.position ).normalize() );
-        var cs = THREE.Collisions.rayCastNearest( ray );
-        if(cs) { cs.mesh.materials[0].color.setHex( 0xaa0000 ); }
-*/        
+        var cs = ray.intersectScene(model.root)[0];
+        if(cs) { cs.object.material.color.setHex( 0xaa0000 ); }
+//*/        
         
 };
 
@@ -940,7 +938,7 @@ cosmoApp.prototype.setupUI = function() {
 
 // setup site
 // TODO: maybe move to index.html
-app = new cosmoApp({domRoot: $("#mainBox")});
+app = new cosmoApp({domRoot: $("#TCmainBox")});
 if(app) {
   window.onresize = function(e) { app.resize(e) };
   app.run();

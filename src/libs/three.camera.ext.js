@@ -81,7 +81,7 @@ THREE.Camera.prototype.rotate = function(angle, axis) {
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.up);
-//    this.update();
+    this.update();
 }
 
 
@@ -90,7 +90,7 @@ THREE.Camera.prototype.rotateX = function(angle) {
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.upVec);
-//    this.update();
+    this.update();
 }
 
 THREE.Camera.prototype.rotateY = function(angle) {
@@ -98,7 +98,7 @@ THREE.Camera.prototype.rotateY = function(angle) {
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.upVec);
-//    this.update();
+    this.update();
 }
 
 
@@ -106,14 +106,14 @@ THREE.Camera.prototype.rotateRight = function(angle) {
     var m = Matrix.Rotation(angle, this.right);
     this.dir = m.multiply(this.dir);
     this.upVec = m.multiply(this.upVec);
-//    this.update();
+    this.update();
 }
 
 THREE.Camera.prototype.rotateUp = function(angle) {
     var m = Matrix.Rotation(angle, this.upVec);
     this.right = m.multiply(this.right);
     this.dir = m.multiply(this.dir);
-//    this.update();
+    this.update();
 }
 
 THREE.Camera.prototype.reset = function() {
@@ -135,7 +135,7 @@ THREE.FPSCamera = function ( parameters ) {
     this.mouseWheel = function(val) {};
     
     this.update = function() {
-        THREE.BallCamera.prototype.update.call(this);
+//        THREE.BallCamera.prototype.update.call(this);
     }
 }
 
@@ -146,16 +146,16 @@ THREE.BallCamera = function ( parameters ) {
     THREE.PerspectiveCamera.call( this, parameters.fov, parameters.aspect, parameters.near, parameters.far, parameters.target );
 
     this.reset();
-
     this.useTarget = false;
     this.mouseX = this.rotateRight;
     this.mouseY = this.rotateUp;    
     this.mouseWheel = this.translateNew;
-    this.keyLeft = this.translateNew;    
+    this.keyLeft = this.translateNew;   
+     
     
     this.update = function() {
         this.rotateTarget({x: 0, y: 0, z: 0});
-        THREE.BallCamera.prototype.update.call(this);
+//        THREE.BallCamera.prototype.update.call(this);
     }
 }
 

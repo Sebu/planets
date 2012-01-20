@@ -16,7 +16,7 @@ ModelBase = function(params) {
         this.name = params.name;
     
     this.showCurve = [];            
-    this.curves = {};
+    this.curves = [];
     this.updateList = [];
     this.currentPlanet = {};
 
@@ -504,7 +504,7 @@ ModelBase.prototype = {
     * @param params.trails use a dark->light color gradient for the curve
     */
     addCurve : function(params) {
-        if(this.getShowCurve(params.index) ) return;
+        if(!this.getShowCurve(params.index)) return;
         if(!this.curves[params.index]) {
             this.curves[params.index] = new Curve(
                 {   trails: params.trails, 

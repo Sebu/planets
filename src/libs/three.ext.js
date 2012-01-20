@@ -290,10 +290,6 @@ var PI2 = Math.PI * 2;
     this.addNode(this.mesh);
     this.addNode(this.meshGlow);
 
-    //collision
-    this.mesh.sc = new THREE.SphereCollider(this.mesh.cPos, this.gfx.scale);
-    this.mesh.sc.mesh = this.mesh;
-    THREE.Collisions.colliders.push(this.mesh.sc);
 
     this.rotation.x = this.beta/PI_SCALE;
 
