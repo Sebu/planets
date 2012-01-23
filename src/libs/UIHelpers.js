@@ -27,7 +27,8 @@ var UI = {
     box : function(params) {
         var id = params.id,
         color = params.color || {r: 1, g: 1, b: 1},
-        text = params.element || params.text || params.id,
+        tooltip = params.tooltip || APP_STRINGS.EN[params.id.toUpperCase() + "_TIP"],
+        text = params.element || params.text || APP_STRINGS.EN[params.id.toUpperCase() + "_TEXT"] || params.id,
         ele =  $("<div'><div  style='color: " + rgbToCSS(color) + ";' class='caption tipable' id='cap" +id+ "'" +
                 "onclick='$(\".triangle\", this).toggle(); $(this).next().slideToggle();'>" +
                 "<span class='triangle arrow-down' title='hide' ></span>" +
@@ -36,7 +37,7 @@ var UI = {
         capEle =  $("#cap" + id,ele);
         
         capEle.append(text);
-        UI.addTooltip(capEle, params.tooltip);
+        UI.addTooltip(capEle, tooltip);
         return ele;
     },
 //*/

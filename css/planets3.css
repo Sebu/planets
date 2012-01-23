@@ -23,6 +23,27 @@ html,body {
 a { color: #FC0; cursor: pointer; }
 
 
+#TCsplash {
+  font-family: sans-serif;
+  text-align: center;
+//  position: absolute;
+  font-size: 18px;
+  
+  width: 500px;
+  z-index: 5;
+  margin: 15em auto 0;
+  background-color: rgba(45, 43, 41, 0.9);
+  box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  border-radius: 5px;
+}
+
+#TCsplashStatus {
+  padding: 1em;
+  border-top: 3px dashed #000;
+}
+
 
 .button {
     display: inline-block;
@@ -66,8 +87,6 @@ a { color: #FC0; cursor: pointer; }
     -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
     -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
-
-
 
 
 select {
@@ -397,7 +416,7 @@ select:focus,
 }
 
 
-#impressumContainer {
+#TCimpressumContainer {
   text-align: right;
   position: absolute;
   font-size: 0.75em;
@@ -407,14 +426,14 @@ select:focus,
   right: 10px;
 
 }
-#impressumContainer a {
+#TCimpressumContainer a {
   color: #FFF;
   text-decoration:none;
 }
-#impressumContainer a:hover {
+#TCimpressumContainer a:hover {
   text-decoration:underline;
 }
-#impressumContainer:hover {
+#TCimpressumContainer:hover {
   opacity: 0.4;
 }
 
@@ -431,29 +450,6 @@ select:focus,
   width: 100%;
 }
 
-#splash {
-  font-family: sans-serif;
-  text-align: center;
-//  position: absolute;
-  font-size: 18px;
-  
-  width: 500px;
-  z-index: 5;
-  margin: 15em auto 0;
-  background-color: rgba(45, 43, 41, 0.9);
-//  background: -o-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
-//  background: -moz-linear-gradient(rgba(95, 93, 91, 0.5), rgba(70,78,75, 0.5));
-//  background: -webkit-gradient(linear, left top, left bottom, from(rgba(95, 93, 91, 0.5)), to(rgba(70,78,75, 0.5)));
-  box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-  border-radius: 5px;
-}
-
-#splashStatus {
-  padding: 1em;
-  border-top: 3px dashed #000;
-}
 
 .arrow-down {
   margin: 2px;

@@ -59,19 +59,13 @@ myApp.prototype.init = function(params) {
 
 // update loop
 myApp.prototype.update = function(time) {
-
 //        model.update(time);
-    };
+};
 
 
 myApp.prototype.draw = function(time) {
-    };
+};
 
-myApp.prototype.newScene = function() {
-        var scene = new THREE.Scene();
-//        this.scenes.push(scene);
-        return scene;
-    };
 
 //TODO: shorten like eval(name + "()");
 myApp.prototype.getModel = function(name) {

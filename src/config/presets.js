@@ -6,18 +6,18 @@ var config = {
   rampTexture : 'images/ramp.png',
   speedFactor : 100.0,
   labelDist : 4.5,
-  sphereRadius : 9.0
+  sphereRadius : 9.0,
+  animSpeed : 60,
 };
 
 // some basic colors
 // just add new
-var colors = {
+config.colors = {
   Earth:  {r: 0.2, g:0.2, b:1.0},
-//  Earth:     {r: 0.96, g: 201/255, b: 204/255},
   Planet: {r: 1.0, g:1.0, b:1.0},
   Mars: {r: 1.0, g:0.5, b:0.5},
 	Sun: 		{r:1.0,g:1.0,b:0.0},
-	S1:			{r: 0.3, g: 0.565, b: 0.996}, // {r:0.5, g:0.5, b:1.0},
+	S1:			{r: 0.3, g: 0.565, b: 0.996},
   S2: 		{r: 1.0, g: 1.0, b: 0.2},	
 	S3: 		{r: 0.2, g: 1.0, b: 0.2},
 	S4: 		{r: 1.0, g: 0.2, b: 0.2},
@@ -29,7 +29,7 @@ var colors = {
 
 var defaultPreset = {
             sunDist: 8,
-            color: colors["Planet"],
+            color: config.colors["Planet"],
             betaRotate: 90.0,
             label: "Planet",
             showStars: true,
@@ -421,7 +421,7 @@ Ptolemy: {
           
   Mars: {
     caption: "Mars",
-    model: "ModelPtolemy",
+    model: "ModelPtolemySuperior",
     ui: "ModelPtolemy",
     label: "Mars",
     showStars: false,
@@ -450,7 +450,7 @@ Ptolemy: {
   
   Jupiter: { 
     caption: "Jupiter",
-    model: "ModelPtolemy",
+    model: "ModelPtolemySuperior",
     ui: "ModelPtolemy",
     label: "Jupiter",
     showStars: false,
@@ -476,7 +476,7 @@ Ptolemy: {
   
   Saturn: {
     caption: "Saturn",
-    model: "ModelPtolemy",
+    model: "ModelPtolemySuperior",
     ui: "ModelPtolemy",
     label: "Saturn",
     showStars: false,

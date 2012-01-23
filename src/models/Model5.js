@@ -1,10 +1,11 @@
 
 /**
  * @constructor
+  * @extends ModelBase
  */
 Model5 = function(params) {
-	ModelBase.call(this);
     params.name = "Model5";
+	  ModelBase.call(this, params);
     params.spheres = 5;
     this.genSpheres(params);
 
@@ -16,7 +17,7 @@ Model5 = function(params) {
     this.getAlpha = function() {return this._alpha; }
     this.setAlpha = function(val) {
         this._alpha=val;
-        this.updateMovement();
+        this.updateSteps();
     }
 
 
@@ -24,16 +25,17 @@ Model5 = function(params) {
     this.getBeta = function() {return this._beta; }
     this.setBeta = function(val) {
         this._beta=val;
-        this.updateMovement();
+        this.updateSteps();
     }
 
     this._gamma=0;
     this.getGamma = function() {return this._gamma; }
     this.setGamma = function(val) {
         this._gamma=val;
-        this.updateMovement();
+        this.updateSteps();
     }
-
+    
+    /** @override */
     this.loadPreset = function(node) {
       ModelBase.prototype.loadPreset.call(this, node);
       this.setAlpha(this.currentPlanet.Alpha);
@@ -49,7 +51,7 @@ Model5 = function(params) {
       return params;
     }
 
-    this.updateMovement = function() {
+    this.updateSteps = function() {
       var alpha = (this.alpha!=0) ? 360/this._alpha : 0,
       beta = (this.beta!=0) ? 360/this._beta : 0,
       gamma = (this.gamma!=0) ? 360/this._gamma : 0;
@@ -59,8 +61,9 @@ Model5 = function(params) {
       this.sphere[5].setStep(gamma);
     }
 
+    /** @override */
     this.update = function(time) {
-      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: config.colors["Path"]});
       ModelBase.prototype.update.call(this, time);
     }
 

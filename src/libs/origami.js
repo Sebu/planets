@@ -1,20 +1,30 @@
+/** @namespace */
 var Ori = Ori || {
     version : "1.0"
 };
 
+/** 
+  @function 
+  @returns {boolean} does the browser support WebGL?
+*/
 Ori.supportsWebGL = function() {
     try { 
       return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); 
     } catch( e ) { return false; }
 };
 
+/** 
+  @function 
+  @returns does the browser support HTML5 canvas?
+*/
 Ori.supportsCanvas = function() {
     return !!document.createElement('canvas').getContext;
 };
 
-
+/** @constant */
 Ori.Q = { NONE : 0, LOW : 1, MEDIUM : 2, HIGH : 3 };
 
+/** @constant */
 Ori.GfxProfiles = {
   base: {
     resolution : 1.0,
@@ -118,6 +128,12 @@ Ori.Timer = function() {
 
 Ori.Timer.prototype.constructor = Ori.Timer;
 
+
+/**
+  call every frame to get delta time since last call
+  @function
+  @returns delta time since last call in milliseconds
+*/
 Ori.Timer.prototype.tick = function() {
   var currentTime = Date.now();
   var deltaTmp = (currentTime - this.lastTime) / 1000;
@@ -147,6 +163,7 @@ Ori.Input.prototype.constructor = Ori.Input;
 
 
 Ori.Input.prototype = {
+  /** lends Ori.Input */
 
   trackKeysOn : function(element) {
     element.addEventListener('keydown', this.keyDown, false);
@@ -254,6 +271,7 @@ Ori.input = new Ori.Input();
  * @constructor
  */
 Ori.App = function() {
+  this.runningSlow = false;
   this.targetFps = 10;
   this.targetTime = 1.0/this.targetFps;
   this.elapsedTime = 0;
@@ -277,14 +295,20 @@ Ori.App.prototype = {
       }
       this.update(time);
 //      if(!this.runningSlow)
-       this.draw(time);
+      this.draw(time);
 
 //      this.elapsedTime = 0;
 //    }
     Ori.input.reset();
   },
   
- 
+  /** @interface */
+  update : function(deltaTime) {},
+  
+  /** @interface */
+  draw : function(deltaTime) {},
+  
+
   run : function() {
       var self = this;
       (function requestLoop() {

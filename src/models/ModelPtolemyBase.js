@@ -1,34 +1,21 @@
-PtolemyMixin = function() {
-    //TODO: move to ptolemyBase
-    this.ptolemizeSpheres = function() {  
-      this.ptolemySphere = new Longituder();  
-      this.sphere[1].anchor.remove(this.sphere[2]);
-      this.sphere[2].remove(this.ecliptic);
-      this.sphere[1].anchor.addNode(this.ptolemySphere);
-      this.ptolemySphere.anchor.addNode(this.sphere[2]);
-      this.ptolemySphere.addNode(this.ecliptic);
-      this.sphere[4].remove(this.sphere[4].anchor);
-      this.sphere[4].ptolemy =  new Node(); 
-      this.sphere[4].addNode(this.sphere[4].ptolemy);      
-      this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 
-      
-    };
-}
+
 
 /**
  * @constructor
+ * @extends ModelBase
  */
 ModelPtolemyBase = function(params) {
-	  ModelBase.call(this);
     params.name = params.name || "ModelPtolemySun";
+	  ModelBase.call(this, params);
     params.spheres = params.spheres || 4;
     this.genSpheres(params);
     
     this.setShowHippo = null;
    
     
-
+    /** @lends BaseMixin */
     BaseMixin.call(this);
+    /** @lends PtolemyMixin */
     PtolemyMixin.call(this);
     
     this.ptolemizeSpheres(); // :) add some ecliptic/latitude and apsidal stuff to the daily
@@ -39,9 +26,9 @@ ModelPtolemyBase = function(params) {
 
     // Add Ptolemy Sun
     this.realSunS = [];
-    var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: colors["S2"]});
-    var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: colors["S2"]});
-    this.realSun = new Planet({ glow: true, glowMap: config.sunGlowTexture, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color:colors["Sun"]});
+    var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: config.colors["S2"]});
+    var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: config.colors["S2"]});
+    this.realSun = new Planet({ glow: true, glowMap: config.sunGlowTexture, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color: config.colors["Sun"]});
     this.realSun.setBeta(90.0);
     this.updateList.push(realSunS1);
     this.updateList.push(realSunS2);    
@@ -57,7 +44,7 @@ ModelPtolemyBase = function(params) {
     this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
 
     // add ecliptic vis
-    var material = new THREE.LineBasicMaterial( {  color: rgbToHex(colors["S2"]) });
+    var material = new THREE.LineBasicMaterial( {  color: rgbToHex(config.colors["S2"]) });
     this.equator = new THREE.Line(equator, material );
     this.equator.scale  = new THREE.Vector3( 9,9,9 );
     this.equator.rotation.x = Math.PI/2;
@@ -66,7 +53,7 @@ ModelPtolemyBase = function(params) {
 
     // add the bob crank vis
     this.sphere[4].gfx.crank = new THREE.Line(equator, material );
-    this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: colors["S4"] });
+    this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: config.colors["S4"] });
     this.crank = new Node();
     this.crank.rotation.y = Math.PI/2;
     this.sphere[4].gfx.crank.addNode(this.sphere[4].gfx.crankRadius);
@@ -79,7 +66,7 @@ ModelPtolemyBase = function(params) {
     
     // crank line
     this.cline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
-    this.sphere[4].gfx.crankLine = new Curve({trails: false, pos: this.cline, color: colors["S4"] }); 
+    this.sphere[4].gfx.crankLine = new Curve({trails: false, pos: this.cline, color: config.colors["S4"] }); 
     this.root.addNode(this.sphere[4].gfx.crankLine);
 
     this.adjustCrank = function () {
@@ -92,7 +79,7 @@ ModelPtolemyBase = function(params) {
     
     // apsidal line
     this.apsidal = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
-    this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: colors["S3"] }); 
+    this.apsidalLine = new Curve({trails: false, pos: this.apsidal, color: config.colors["S3"] }); 
     this.sphere[2].addNode(this.apsidalLine);
 
     // and more lines
@@ -111,7 +98,7 @@ ModelPtolemyBase = function(params) {
 
     // inner crank
     this.centerL = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 10} ];
-    this.centerLine = new Curve({trails: false, pos: this.centerL, color: colors["S3"] }); 
+    this.centerLine = new Curve({trails: false, pos: this.centerL, color: config.colors["S3"] }); 
     this.root.addNode(this.centerLine);
     this.sphere[2].crankPoint = new Translate({x:0, y:0, z:0});
 //    this.sphere[2].crankPoint.position.z = this.sphere[2].gfx.scale;
@@ -145,11 +132,19 @@ ModelPtolemyBase = function(params) {
     this.realSunS[1].setVisuals([]);
     this.realSunS[2].setVisuals([]);
 
-
+    /** @override */
+    this.updateMovement = function(time) {
+      ModelBase.prototype.updateMovement.call(this, time);
+      //TODO: wd parameter :)
+      this.wd += this.dayDelta*0.05; //13.2293;
+      this.adjustAnomaly();        
+    };
     
+    /** @override */
     this.update = function(time) {
-        if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
-        
+        if(this.running)  
+          this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: config.colors["Path"]});
+          
         ModelBase.prototype.update.call(this, time);
 
 
@@ -178,17 +173,19 @@ ModelPtolemyBase = function(params) {
         this.centerLine.setPos(this.centerL);
 
         this.date = this.startDate + this.days;
+
         if(this.realSun.getEnabled()) 
-        this.light.setPos(this.realSun.mesh.currentPos());
+          this.sunLight.setPos(this.realSun.mesh.currentPos());
     }
     
 
-
+    /** @override */
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;
         this.ptolemySphere.rotation.z = angle/PI_SCALE;
     };
-    
+
+    /** @override */
     this.getAxisAngle2 = function() {
       return this.ptolemySphere.axisAngle;
     };
@@ -237,6 +234,7 @@ ModelPtolemyBase = function(params) {
       this.updateSunDist();
     };
     this.getRadiusEpicycle = function() { return this.sphere[4].radius; }
+
     
     this.setBaseRadius = function(value) {
       this.sphere[2].radius = value;
@@ -244,24 +242,22 @@ ModelPtolemyBase = function(params) {
       this.sphere[3].position.z = this.sphere[2].radius*this.factor;
       this.sphere[2].crankPoint.position.z = this.sphere[2].radius*this.factor;
     }
-    
     this.getBaseRadius = function() { return this.sphere[2].radius; }
 
-    this.setDeviation = function(value) {
-      this.deviation = value;
-    }
+
+    this.setDeviation = function(value) { this.deviation = value; }
     this.getDeviation = function() { return this.deviation; }
 
-    this.setKM = function(value) {
-      this.KM = value;
-    }
+
+    this.setKM = function(value) { this.KM = value; }
     this.getKM = function() { return this.KM; }
     
-    this.setLambdaAN = function(value) {
-      this.lambdaAN = value;
-    }
+
+    this.setLambdaAN = function(value) { this.lambdaAN = value; }
     this.getLambdaAN = function() { return this.lambdaAN; }
     
+
+    /** @override */
     this.getPreset = function() {
       var params = ModelBase.prototype.getPreset.call(this);    
       params.equant = this.getEquant();
@@ -278,6 +274,7 @@ ModelPtolemyBase = function(params) {
       return params;
     }
 
+    /** @override */
     this.reset = function () {
         ModelBase.prototype.reset.call(this);
         this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
@@ -298,10 +295,10 @@ ModelPtolemyBase = function(params) {
         this.realSunS[1].setRotateAngle( 274.25 );
         this.realSunS[2].setRotateAngle( (360-274.25) );
 
-        this.realSunS[2].setScale(0);
         this.realSun.setDist(0);
-        this.realSunS[1].setSpeed(365.2466666);
-        this.realSunS[2].setSpeed(-365.2466666);
+        this.realSunS[2].setScale(0);
+        this.realSunS[1].setSpeed(  this.currentPlanet.sunSpeed );
+        this.realSunS[2].setSpeed( -this.currentPlanet.sunSpeed );
 
     }    
 };

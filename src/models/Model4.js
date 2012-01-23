@@ -1,26 +1,37 @@
 
 /**
  * @constructor
+ * @extends ModelBase
  */
 Model4 = function(params) {
-	ModelBase.call(this);
 	params.name = params.name || "Model4";
+  ModelBase.call(this, params);
+
   params.spheres = params.spheres || 4;
-   
   this.genSpheres(params);
   
+  /** @lends BaseMixin */
   BaseMixin.call(this);
   
-  // s4 moves opposite to s3
+
+  /**
+   * s4 moves opposite to s3
+   * @override 
+   * @param speed the speed to set for S3 and -S4
+   */
   this.setSpeed3 = function(speed) {
         this.sphere[3].setSpeed( speed);
         this.sphere[4].setSpeed(-speed);
-  }
+  };
 
-
+  /** 
+   * @override 
+   * @function 
+   * @param time millisecons passed since last call
+   */
   this.update = function(time) {
-    this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: colors["Path"]});
-    this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: colors["Hippo"]});
+    this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: config.colors["Path"]});
+    this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: config.colors["Hippo"]});
     ModelBase.prototype.update.call(this, time);        
   }
 

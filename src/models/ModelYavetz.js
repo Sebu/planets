@@ -1,10 +1,11 @@
 
 /**
  * @constructor
+ * @extends ModelBase
  */
 ModelYavetz = function(params) {
-	ModelBase.call(this);
     params.name = "ModelYavetz";
+	ModelBase.call(this, params);
     params.spheres = 4;
     this.genSpheres(params);
 
@@ -47,8 +48,8 @@ ModelYavetz = function(params) {
     }
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
-        this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, node: this.planet.mesh, color: colors["Hippo"]});
+        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: config.colors["Path"]});
+        this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, node: this.planet.mesh, color: config.colors["Hippo"]});
         ModelBase.prototype.update.call(this, time);
     }
 };

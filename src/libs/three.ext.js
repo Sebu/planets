@@ -1,17 +1,5 @@
-
-
-
 PI_SCALE = 180.0/Math.PI;
 
-/*
-degToRad = function(deg) {
-    return deg/PI_SCALE;
-}
-
-RadToDeg = function(rad) {
-    return rad*PI_SCALE;
-}
-*/
 
 calcAngle = function(pos1, pos2) {
     return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
@@ -47,17 +35,6 @@ THREE.Object3D.prototype.currentMatrixWorld = function() {
     return this.matrixWorld;
 }
 
-// determine current position in world space
-/*
-THREE.Object3D.prototype.currentPos = function() {
-    var pos = this.currentMatrixWorld();
-    if(!this.cPos) this.cPos = new THREE.Vector3();
-    this.cPos.x = pos.n14;
-    this.cPos.y = pos.n24;
-    this.cPos.z = pos.n34;
-    return {x:, y: ,z:;
-}
-//*/
 
 // determine current position in world space
 THREE.Object3D.prototype.currentPos = function() {
@@ -92,7 +69,6 @@ THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
     pos = {x: (posTmp.x+1) * canvas.domElement.width/2, y: (-posTmp.y+1) * canvas.domElement.height/2, z: zTmp };
 
     //if node is outside of canvas shift pos to z=-1 
-
     if (pos.x<0 || pos.x>canvas.domElement.width-50) pos.z = -1.0;
     if (pos.y<0 || pos.y>canvas.domElement.height-20) pos.z = -1.0;
 
@@ -314,10 +290,6 @@ var PI2 = Math.PI * 2;
     this.addNode(this.mesh);
     this.addNode(this.meshGlow);
 
-    //collision
-    this.mesh.sc = new THREE.SphereCollider(this.mesh.cPos, this.gfx.scale);
-    this.mesh.sc.mesh = this.mesh;
-    THREE.Collisions.colliders.push(this.mesh.sc);
 
     this.rotation.x = this.beta/PI_SCALE;
 
@@ -516,15 +488,12 @@ Cloud.prototype.constructor = Cloud;
 function setupCommonGeomerty() {
   geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
   equator = new Circle({ angle : 359.9 });
+  aLine = new THREE.Geometry();
+  aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
+  aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );  
 };  
 
-//var markerend = new THREE.CylinderGeometry( 10, 0.1, 0.1, 0.01);
-//var cone = new THREE.CylinderGeometry( 10, 0.0001, 0.15, 0.4);
-//THREE.LatheGeometry([new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 )]);
 
-var aLine = new THREE.Geometry();
-aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
-aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
     
 
 
