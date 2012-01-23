@@ -3,7 +3,7 @@ PtolemyMixin = function() {
     this.ptolemizeSpheres = function() {  
       this.ptolemySphere = new Longituder();  
       this.sphere[1].anchor.remove(this.sphere[2]);
-      this.sphere[2].anchor.remove(this.ecliptic);
+      this.sphere[2].remove(this.ecliptic);
       this.sphere[1].anchor.addNode(this.ptolemySphere);
       this.ptolemySphere.anchor.addNode(this.sphere[2]);
       this.ptolemySphere.addNode(this.ecliptic);
@@ -149,6 +149,7 @@ ModelPtolemyBase = function(params) {
     
     this.update = function(time) {
         if(this.running)  this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: colors["Path"]});
+        
         ModelBase.prototype.update.call(this, time);
 
 
