@@ -100,7 +100,7 @@ ModelBase.prototype = {
 
     setupLight : function() {
         this.root.add( new THREE.AmbientLight(0xFFFFFF) );
-        this.sunLight = Sunlight();
+        this.sunLight = new THREE.PointLight( 0xFFFFFF, 1, 0 );
         this.root.add( this.sunLight );
     },
 

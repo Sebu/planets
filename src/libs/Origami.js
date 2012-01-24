@@ -73,25 +73,25 @@ Ori.gfxProfile = Ori.GfxProfiles.base;
  */
 Ori.Canvas = function(params) {
 
-        
-        if(Ori.supportsWebGL() && !params.forceCanvas) {
-            this.graphics = new THREE.WebGLRenderer(params);
-            this.graphics.type = "webgl";
-        }
-        else if(Ori.supportsCanvas()) {
-          this.graphics = new THREE.CanvasRenderer(params);
-          this.graphics.type = "canvas";
-        }
+  if(Ori.supportsWebGL() && !params.forceCanvas) {
+    this.graphics = new THREE.WebGLRenderer(params);
+    this.graphics.type = "webgl";
+  }
+  else if(Ori.supportsCanvas()) {
+    this.graphics = new THREE.CanvasRenderer(params);
+    this.graphics.type = "canvas";
+  }
 //        this.graphics.autoClear = false;
-        this.graphics.sortObjects = false;
+  this.graphics.sortObjects = false;
 
-        if(this.graphics.type) $.extend(Ori.gfxProfile, Ori.GfxProfiles[this.graphics.type]);
-        if($.browser.opera) $.extend(Ori.gfxProfile, Ori.GfxProfiles["opera"]);
+  // set/change profile  
+  if(this.graphics.type) $.extend(Ori.gfxProfile, Ori.GfxProfiles[this.graphics.type]);
+  if($.browser.opera) $.extend(Ori.gfxProfile, Ori.GfxProfiles["opera"]);
        
-        return this.graphics;
+  return this.graphics;
 }
 
-Ori.Canvas.prototype.constructor = Ori.Renderer;
+Ori.Canvas.prototype.constructor = Ori.Canvas;
 
 
 Ori.gfxStore = [];
@@ -101,19 +101,7 @@ Ori.registerGfx = function(node) {
   node.setQuality(Ori.gfxProfile);
 }
 
-Ori.loadContent = function(uri) {
-  var ext = uri.split('.').pop();
-  switch (ext) {
-    case "mp3":
-      var content = new Audio(uri); 
-      //content.load();
-      break;
-  }
 
-  return content;
-}
-
-Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68, SCROLL: 145 };
 
 
 /**
@@ -158,6 +146,9 @@ Ori.Input = function() {
 
 
 };
+
+Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68, SCROLL: 145 };
+
 
 Ori.Input.prototype.constructor = Ori.Input;
 
@@ -313,12 +304,15 @@ Ori.App.prototype = {
       var self = this;
       (function requestLoop() {
         self.loop();
-        requestAnimFrame(requestLoop);
+        requestAnimationFrame(requestLoop);
       })();   
   }
 
 };
 
+/**
+* add JSON packing to Storage
+*/
 Storage.prototype.setJson = function(key, value)
 {
   this.setItem(key, JSON.stringify(value));
@@ -333,16 +327,15 @@ Storage.prototype.getJson = function(key)
   }
 };
 
-//window.onerror = function() {
-//};
-
+/*
 window.requestAnimFrame = (function(){
       return  window.requestAnimationFrame       || 
               window.webkitRequestAnimationFrame || 
               window.mozRequestAnimationFrame    || 
               window.oRequestAnimationFrame      || 
               window.msRequestAnimationFrame     || 
-              function(/* function */ callback, /* DOMElement */ element){
+              function( callback,  element){
                 window.setTimeout(callback, 1000 / 60);
               };
     })();
+*/
