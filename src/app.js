@@ -27,6 +27,18 @@ cosmoApp.prototype.setup = function(params) {
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
         
+        this.canvas.shadowMapEnabled = true;
+				this.canvas.shadowMapSoft = true;
+
+				this.canvas.shadowCameraNear = 3;
+//				this.canvas.shadowCameraFar = camera.far;
+				this.canvas.shadowCameraFov = 50;
+
+				this.canvas.shadowMapBias = 0.0039;
+				this.canvas.shadowMapDarkness = 0.5;
+				this.canvas.shadowMapWidth = 1024;
+				this.canvas.shadowMapHeight = 1024;
+				
         setupCommonGeomerty();
         
         this.splashStatus = $("#TCsplashStatus");
@@ -201,7 +213,7 @@ cosmoApp.prototype.setup = function(params) {
           this.debugBox.show();
            this.splashStatus.empty();
            this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-           this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>OK</div>");
+           this.splashStatus.append("<br><div class='button' onclick='$(\"#TCsplash\").fadeOut();' value='ok'>OK</div>");
         } else                       
           $("#TCsplash").hide();
     };
@@ -386,6 +398,7 @@ cosmoApp.prototype.removePreset = function() {
  * @param scene the scene from the model to set
  */
 cosmoApp.prototype.setCurrentScene = function(scene) {
+        if(this.currentScene) this.currentScene.remove( this.currentCamera );
         this.currentScene = scene;
         this.currentScene.add( this.currentCamera );
 };
@@ -496,7 +509,11 @@ cosmoApp.prototype.update = function(time) {
  * @param cam the label of the camera to set 
  */
 cosmoApp.prototype.setCamera = function(cam) {
+  if(this.currentCamera && this.currentScene) 
+    this.currentScene.remove(this.currentCamera);
+   
   this.currentCamera = this.cameras[cam].instance;
+  this.currentScene.add(this.currentCamera);
   switch(cam) {
     case "Trackball":
     case "TrackballIso":

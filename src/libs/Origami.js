@@ -1,6 +1,6 @@
 /** @namespace */
 var Ori = Ori || {
-    version : "1.0"
+    VERSION : "1.0"
 };
 
 /** 
@@ -150,11 +150,11 @@ Ori.Input = function() {
 Ori.KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, S:83, W:87, A:65, D:68, SCROLL: 145 };
 
 
-Ori.Input.prototype.constructor = Ori.Input;
-
 
 Ori.Input.prototype = {
   /** lends Ori.Input */
+  
+  constructor : Ori.Input,
 
   trackKeysOn : function(element) {
     element.addEventListener('keydown', this.keyDown, false);
@@ -269,12 +269,10 @@ Ori.App = function() {
   this.timer = new Ori.Timer();
 };
 
-Ori.App.prototype.constructor = Ori.App;
-
-
-
 
 Ori.App.prototype = {
+
+  constructor : Ori.App,
 
   loop : function() {
     var time = this.timer.tick();
