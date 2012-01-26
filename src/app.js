@@ -251,6 +251,27 @@ cosmoApp.prototype.setupCameras = function() {
 
 }
 
+cosmoApp.prototype.traversePresets = function(presets, selection, depth) {
+  $("#modelPresets"+ depth +" option[value='"+ selection +"']").attr('selected',true);
+  this.currentPresets[depth] = presets; //this.currentPresets[depth-1];
+ 
+  if(this.currentPresets[depth].model) {
+    this.currentPlanet = planetPresets;
+    this.presetsEle2.hide();
+    this.presetsEle3.hide();      
+    this.loadPreset(value);
+    return;
+  }
+  
+  UI.optionsFromHash("#modelPresets"+(depth+1) + "", this.currentPresets[depth]);
+  this.presetsEle2.show();
+  for(var i in this.currentPresets[depth]) {
+    if(i=="caption") continue;
+    this.loadPresetss(presets[i], i, depth+1);
+    break;
+  }
+}
+
 cosmoApp.prototype.loadPlanets = function(value) {
   $("#modelPreset option[value='"+value+"']").attr('selected',true);
   this.currentModel = planetPresets[value];
@@ -291,6 +312,28 @@ cosmoApp.prototype.loadPresets = function(value) {
     this.loadPreset(i);
     break;
   }    
+};
+
+/** 
+ * change planet model and create the UI ELEMENTS + add to DOM 
+ * @param preset the preset to load
+ */
+cosmoApp.prototype.loadPreset = function(preset) {
+
+  // switch model
+  this.currentPreset = preset;
+  var planet = this.currentPlanet[preset];
+  this.model = this.getModel(planet.model);
+  this.setCurrentScene(this.model.root);
+  this.model.loadPreset(planet);
+  planetLabel.setText(this.model.currentPlanet.label);
+  
+  // default camera
+  this.setCamera("Trackball");
+  this.currentCamera.reset();
+
+  // update UI 
+  this.setupUI();
 };
 
 /**
@@ -405,7 +448,8 @@ cosmoApp.prototype.updateInfoBox = function() {
           UI.innerText(this.info.gregorianDate, Utils.dateToString(Utils.jdToMagic(this.model.date)) );                           
           UI.innerText(this.info.julianDate, this.model.date.toFixed(2) );
           UI.innerText(this.info.egyptianDate, Utils.dateToStringEgypt(Utils.jdToEgyptian(this.model.date)) );
-          UI.innerText(this.info.egyptianEpoch, Utils.jdToEpoch(this.model.date) );                          
+          UI.innerText(this.info.egyptianEpoch, Utils.jdToEpoch(this.model.date) ); 
+                                   
           planetLabel2.setPosition(this.model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
 
@@ -419,8 +463,9 @@ cosmoApp.prototype.updateInfoBox = function() {
 
           planetLabel2.setPosition(this.model.planet2.mesh.getPosCanvas(this.currentCamera, this.canvas));
         }
+        
        if(this.model.sun.getEnabled()) 
-         this.info.sunAngle.innerText = this.model.planet.sunAngle.toFixed(1);
+         UI.innerText(this.info.sunAngle, this.model.planet.sunAngle.toFixed(1) );
          
        UI.innerText(this.info.days, Utils.daysToTime(this.model.getDays()) );      
 //*/  
@@ -557,27 +602,7 @@ cosmoApp.prototype.getModel = function(name) {
 
 
 
-/** 
- * change planet model and create the UI ELEMENTS + add to DOM 
- * @param preset the preset to load
- */
-cosmoApp.prototype.loadPreset = function(preset) {
 
-  // switch model
-  this.currentPreset = preset;
-  var planet = this.currentPlanet[preset];
-  this.model = this.getModel(planet.model);
-  this.setCurrentScene(this.model.root);
-  this.model.loadPreset(planet);
-  planetLabel.setText(this.model.currentPlanet.label);
-  
-  // default camera
-  this.setCamera("Trackball");
-  this.currentCamera.reset();
-
-  // update UI 
-  this.setupUI();
-};
 
 /**
  * build up ui from current model state
