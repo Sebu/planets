@@ -8,23 +8,22 @@ var config = {
   labelDist : 4.5,
   sphereRadius : 9.0,
   animSpeed : 60,
-};
 
-// some basic colors
-// just add new
-config.colors = {
-  Earth:  {r: 0.2, g:0.2, b:1.0},
-  Planet: {r: 1.0, g:1.0, b:1.0},
-  Mars: {r: 1.0, g:0.5, b:0.5},
-	Sun: 		{r:1.0,g:1.0,b:0.0},
-	S1:			{r: 0.3, g: 0.565, b: 0.996},
-  S2: 		{r: 1.0, g: 1.0, b: 0.2},	
-	S3: 		{r: 0.2, g: 1.0, b: 0.2},
-	S4: 		{r: 1.0, g: 0.2, b: 0.2},
-	S5: 		{r:1.0, g: 0.0, b: 1.0},
-	Path: 	{r: 1.0, g: 1.0, b: 1.0},
-	Hippo: 	{r: 0.3, g: 0.565, b: 0.996}
-	
+  // some basic colors
+  // just add new
+  colors : {
+    Earth:  {r: 0.2, g:0.2, b:1.0},
+    Planet: {r: 1.0, g:1.0, b:1.0},
+    Mars: {r: 1.0, g:0.5, b:0.5},
+	  Sun: 		{r:1.0,g:1.0,b:0.0},
+	  S1:			{r: 0.3, g: 0.565, b: 0.996},
+    S2: 		{r: 1.0, g: 1.0, b: 0.2},	
+	  S3: 		{r: 0.2, g: 1.0, b: 0.2},
+	  S4: 		{r: 1.0, g: 0.2, b: 0.2},
+	  S5: 		{r:1.0, g: 0.0, b: 1.0},
+	  Path: 	{r: 1.0, g: 1.0, b: 1.0},
+	  Hippo: 	{r: 0.3, g: 0.565, b: 0.996}
+	}
 };
 
 var defaultPreset = {

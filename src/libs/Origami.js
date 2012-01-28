@@ -284,7 +284,7 @@ Ori.App.prototype = {
       }
       this.update(time);
 //      if(!this.runningSlow)
-      this.draw(time);
+        this.draw(time);
 
 //      this.elapsedTime = 0;
 //    }
