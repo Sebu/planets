@@ -224,28 +224,31 @@ cosmoApp.prototype.setupCameras = function() {
   this.splashStatus.append("setup cameras...");
   // setup camera
   // TODO : shorten
+  
+  var cameraParams = { fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000};
+  
   this.cameras = { 
     Trackball: { 
       caption: "Global",
-      instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+      instance: new THREE.BallCamera(cameraParams)
     },
     FPS: { 
       caption: "Local",
-      instance: new THREE.FPSCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+      instance: new THREE.FPSCamera(cameraParams)
     },
     TrackballIso: { 
       caption: "Isometric",
-      instance: new THREE.BallCamera({ fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000})
+      instance: new THREE.BallCamera(cameraParams)
     }
   };
   this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -17});
+  this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
   this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
   var ortho = 70;
   this.cameras["TrackballIso"].instance.projectionMatrix = THREE.Matrix4.makeOrtho( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
-  this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
 
-  // set trackball as default
-  
+
+  // set trackball as default camera
   this.setCamera("Trackball");
   this.resize();
 
@@ -256,9 +259,10 @@ cosmoApp.prototype.traversePresets = function(presets, selection, depth) {
   this.currentPresets[depth] = presets; //this.currentPresets[depth-1];
  
   if(this.currentPresets[depth].model) {
+    for (var i; i<depth; ++i) {
+      this.presetEle[i].hide();
+    }
     this.currentPlanet = planetPresets;
-    this.presetsEle2.hide();
-    this.presetsEle3.hide();      
     this.loadPreset(value);
     return;
   }

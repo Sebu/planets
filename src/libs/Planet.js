@@ -95,6 +95,11 @@ var PI2 = Math.PI * 2;
 Planet.prototype = new THREE.Object3D;
 Planet.prototype.constructor = Planet;
 
+
+Planet.prototype.setupGfx = function() {
+  
+};
+
 Planet.prototype.setEnabled = function(state) { this.mesh.visible = state; if(this.gfx.glow) this.meshGlow.visible = state; }
 Planet.prototype.getEnabled = function() { return this.mesh.visible; }
 

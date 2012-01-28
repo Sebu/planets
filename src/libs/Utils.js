@@ -32,10 +32,6 @@ Utils.GREGORIAN_EPOCH = 1721425.5;
 Utils.JULIAN_EPOCH = 1721423.5;
 
 
-
-
-
-
 Utils.EgyptNames = ["Toth", "Phaophi", "Athyr", "Choiak", "Tybi", "Mechir", "Phamenoth", "Pharmouthi"            
 , "Pachon", "Payni", "Epiphi", "Mesore", "Epagomenal"];  
 

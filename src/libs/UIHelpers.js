@@ -12,7 +12,7 @@ var UI = {
     },
     
     addTooltip : function(ele,tooltip) {
-      if(tooltip) ele.append("<div class='tooltip'>" + tooltip + "</div>");
+      if(tooltip) ele.append("<div class='ORItooltip'>" + tooltip + "</div>");
     },
 /*
     box : function(params) {
@@ -42,36 +42,32 @@ var UI = {
     },
 //*/
     input : function(params) {
-        var model = params.model,
+        var instance = params.model,
         id = params.id,
         text = params.text || params.id,
         min = params.min || 0,
         max = params.max || 100,
         step = params.step || 1,
-        value = params.value || window[model]["get"+id](),
-        change = params.change || model+ ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));"
-
-        ele =  $("<div id='" + id + "'>" +
+        value = params.value || window[instance]["get"+id](),
+        change = params.change || instance + ".set"+id+"(Number(value)); $(\"#" + id + " > input\").attr(\"value\",Number(value));",
+        element =  $("<div id='" + id + "'>" +
             "<div>" + text + "</div>" +
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" +value+ "' class='range' onchange='"+change+"'/>" +
             "</div>");
-        return ele;
+        return element;
     },
 
     text : function(params) {
-        var model = params.model,
+        var instance = params.model,
         id = params.id,
         text = params.text || params.id,
-        min = params.min || 0,
-        max = params.max || 100,
-        step = params.step || 1,
-        value = params.value ||  model["get"+id](),
-        change = params.change || function(e)  { if(e.keyCode == 13) model["set"+id](this.value); };
-
-        ele =  $( "<input type='text' placeholder='date' value='" + value + "' class='text tipable'/>" );
-        UI.addTooltip(ele, params.tooltip);
-        $(ele).bind("keyup",change);
-        return ele;
+        value = params.value ||  instance["get"+id](),
+        change = params.change || function(e)  { if(e.keyCode == 13) instance["set"+id](this.value); },
+        element =  $( "<input type='text' placeholder='date' value='" + value + "' class='text tipable'/>" );
+        
+        UI.addTooltip(element, params.tooltip);
+        $(element).bind("keyup",change);
+        return element;
     },
 
 //*
@@ -153,26 +149,26 @@ var UI = {
 //*/
 
     checkbox : function(params) {
-        var model = params.model,
+        var instance = params.model,
         id = params.id,
         text = params.text || params.id,
-        color = params.color || "#FFF";
-        value = model["get"+id](),
-        ele =  $("<div class='checkbox tipable' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>"),
-        change = params.change || function()  { $(this).toggleClass('checked'); model["set"+id]($(this).is(".checked")); };
+        color = params.color || "#FFF",
+        value = instance["get"+id](),
+        element =  $("<div class='ORIcheckbox tipable' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>"),
+        change = params.change || function()  { $(this).toggleClass('ORIchecked'); instance["set"+id]($(this).is(".ORIchecked")); };
         
-        ele.checked = true;
-        if(value) ele.toggleClass("checked");
-        ele.bind("click", change);
-        UI.addTooltip(ele, params.tooltip);        
-        return ele;
+        element.checked = true;
+        if(value) element.toggleClass("ORIchecked");
+        element.bind("click", change);
+        UI.addTooltip(element, params.tooltip);        
+        return element;
     }
 };
 
 UI.Label = function(params) {
 
         this.ele = document.createElement("div"); 
-        this.ele.setAttribute("class","label");
+        this.ele.setAttribute("class","ORIlabel");
         this.ele.setAttribute("unselectable","on");
         document.body.appendChild(this.ele);
         this.setPosition(params.pos || {x:0, y:0, z:-1});
@@ -180,19 +176,23 @@ UI.Label = function(params) {
         this.setText(params.text);
 };
 
-UI.Label.prototype.constructor = UI.Label;
+UI.Label.prototype = {
+  constructor : UI.Label,
+  
+  setText : function(text) {
+      this.ele.firstChild.nodeValue = text;
+  },
 
-
-UI.Label.prototype.setText = function(text) {
-  this.ele.firstChild.nodeValue = text;
-};
-
-UI.Label.prototype.setPosition = function(pos) {
-  if(pos.z<0) { this.ele.style.display = "none"; return; }
-  this.ele.style.display = "block";
-  this.pos = pos;
-  this.ele.style.left = pos.x + "px";
-  this.ele.style.top = pos.y + "px";  
+  setPosition : function(pos) {
+      if(pos.z<0) { 
+        this.ele.style.display = "none"; 
+        return; 
+      }
+      this.ele.style.display = "block";
+      this.pos = pos;
+      this.ele.style.left = pos.x + "px";
+      this.ele.style.top = pos.y + "px";  
+  }
 };
 
 

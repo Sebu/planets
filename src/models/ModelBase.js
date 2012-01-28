@@ -27,10 +27,10 @@ ModelBase = function(params) {
     
 };
 
-ModelBase.prototype.constructor = ModelBase;
-
 ModelBase.prototype = {
 
+    constructor : ModelBase,
+    
     setShowCurve : function(index, state) { this.showCurve[index] = state; if(this.curves[index]) this.curves[index].setEnabled(state); },
     getShowCurve : function(index) { return this.showCurve[index]; },
     /** set visiblity state of path */
@@ -505,14 +505,16 @@ ModelBase.prototype = {
     */
     addCurve : function(params) {
         if(!this.getShowCurve(params.index)) return;
+
+        var newCurve = this.calcCurve({start: params.start, stop: params.stop, node: params.node});
         if(!this.curves[params.index]) {
             this.curves[params.index] = new Curve(
                 {   trails: params.trails, 
-                    pos: this.calcCurve({start: params.start, stop: params.stop, node: params.node}), 
+                    pos: newCurve, 
                     color: params.color});
             params.anchor.addNode(this.curves[params.index]);
         } else {
-            this.curves[params.index].setPos( this.calcCurve({start: params.start,  stop: params.stop, node: params.node}) );
+            this.curves[params.index].setPoints( newCurve );
         }
     },
     
@@ -526,13 +528,13 @@ ModelBase.prototype = {
     * @returns {Array} of position vectors
     */    
     calcCurve : function(params) {
-        var curvePos = []
+        var curvePos = [],
         oldAngle = [],
         oldApsidal = 0,
         oldRotate = [],
-        step = 0,
         start = params.start,
         stop = params.stop || this.sphere.length,
+        step = 0,
         node = params.node,
         maxSegments = (params.segments || 80) * Ori.gfxProfile.curveRes,
         pos = {x: 0, y: 0, z:0},

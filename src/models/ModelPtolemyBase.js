@@ -154,23 +154,23 @@ ModelPtolemyBase = function(params) {
         // lines
         this.cline[0] = this.crankPoint0.currentPos();        
         this.cline[1] = this.crankPoint1.currentPos();  
-        this.sphere[4].gfx.crankLine.setPos(this.cline);
+        this.sphere[4].gfx.crankLine.setPoints(this.cline);
 
         this.equantPlanet[0] = this.equantPoint.currentPos();        
         this.equantPlanet[1] = this.sphere[3].gfx.markerball.currentPos();
-        this.equantPlanetLine.setPos(this.equantPlanet);
+        this.equantPlanetLine.setPoints(this.equantPlanet);
 
         this.earthToDeferent[0] = this.earth.mesh.currentPos();     
         this.earthToDeferent[1] = this.sphere[3].gfx.markerball.currentPos();
-        this.earthToDeferentLine.setPos(this.earthToDeferent);
+        this.earthToDeferentLine.setPoints(this.earthToDeferent);
 
         this.earthToPlanet[0] = this.earth.mesh.currentPos();     
         this.earthToPlanet[1] = this.planet.mesh.currentPos();
-        this.earthToPlanetLine.setPos(this.earthToPlanet);
+        this.earthToPlanetLine.setPoints(this.earthToPlanet);
 
         this.centerL[0] = this.sphere[2].crankPoint.currentPos();  
         this.centerL[1] = this.sphere[3].gfx.markerball.currentPos();
-        this.centerLine.setPos(this.centerL);
+        this.centerLine.setPoints(this.centerL);
 
         this.date = this.startDate + this.days;
 
@@ -196,7 +196,7 @@ ModelPtolemyBase = function(params) {
       this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
       this.apsidal = [ {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor}, {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];
-      this.apsidalLine.setPos(this.apsidal);       
+      this.apsidalLine.setPoints(this.apsidal);       
     }
 
     this.setEquant = function(value) {
