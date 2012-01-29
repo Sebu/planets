@@ -2,13 +2,13 @@ PI_SCALE = 180.0/Math.PI;
 
 
 calcAngle = function(pos1, pos2) {
-    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+    return	Math.acos( pos1.clone().normalize().dot(pos2.clone().normalize()) )*PI_SCALE;
 }
 
 calcAngleRel = function(node1, node2, center) {
-    var pos1 = center.subtract( node1 ),
-    pos2 = center.subtract( node2 );
-    return	Math.acos(pos1.toUnitVector().dot(pos2.toUnitVector()))*PI_SCALE;
+    var pos1 = center.clone().subSelf( node1 ),
+    pos2 = center.clone().subSelf( node2 );
+    return	Math.acos( pos1.normalize().dot(pos2.normalize()) )*PI_SCALE;
 }
 
 rgbToHex = function(color) {
@@ -19,6 +19,29 @@ rgbToCSS = function(color) {
   var rgb = "rgb(" + Math.round(color.r * 255) + "," + Math.round(color.g * 255) + "," + Math.round(color.b * 255) + ")";
   return rgb;
 };
+
+
+
+// extend THREE.Vector4 into Plane
+
+THREE.Vector4.prototype.createPlane = function() {
+};
+
+THREE.Vector4.prototype.pointOnPlane = function(v) {
+    var dot = dot( plane, sub(v,plane*plane.w) );
+    return sub(v, plane * dot );
+};
+
+/*
+  // Returns the point in the plane closest to the given point
+  pointClosestTo: function(point) {
+    var P = point.elements || point;
+    var A = this.anchor.elements, N = this.normal.elements;
+    var dot = (A[0] - P[0]) * N[0] + (A[1] - P[1]) * N[1] + (A[2] - (P[2] || 0)) * N[2];
+    return Vector.create([P[0] + N[0] * dot, P[1] + N[1] * dot, (P[2] || 0) + N[2] * dot]);
+  },
+*/
+
 
 // extend THREE.Object3D 
 Node = THREE.Object3D;
@@ -201,9 +224,6 @@ sphereGeo = [
 ];
 
 planetGeo = new THREE.SphereGeometry( 1 , 16, 12 );
-
-
-
 
 
 

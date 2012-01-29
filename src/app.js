@@ -160,6 +160,8 @@ cosmoApp.prototype.setup = function(params) {
         this.splashStatus.empty();
         this.splashStatus.append("setup UI...");
         var uiBox = $("<div class='container' id='uiContainer'></div>").appendTo(this.domRoot);
+        
+        
         this.presetsEle1 = $("<span><select class='chzn-select modelSelect' style='width:136px;' title='Planet presets' id='modelPreset' onchange='app.loadPlanets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle2 = $("<span><select class='chzn-select modelSelect' style='width:150px;' title='Planet presets' id='planetsPreset' onchange='app.loadPresets(this.options[this.selectedIndex].value);'>View</select></span>");
         this.presetsEle3 = $("<span><select class='chzn-select modelSelect' style='width:36px;' title='Planet presets' id='planetPreset' onchange='app.loadPreset(this.options[this.selectedIndex].value);'>View</select></span>");                
