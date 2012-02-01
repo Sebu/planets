@@ -3,7 +3,7 @@
  * @extends ModelPtolemyBase
  */
 ModelPtolemySuperior = function(params) {
-    params.name = "ModelPtolemy";
+    this.name = "ModelPtolemy";
     ModelPtolemyBase.call(this, params);	
     this.setShowSphere2 = null;
     this.factor = 1.0/11.0;
@@ -57,5 +57,5 @@ ModelPtolemySuperior = function(params) {
 
 };
 
-ModelPtolemySuperior.prototype = new ModelBase;
+ModelPtolemySuperior.prototype = new ModelPtolemyBase;
 ModelPtolemySuperior.prototype.constructor = ModelPtolemySuperior;

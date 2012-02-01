@@ -11,25 +11,23 @@
  * @returns instance of ModelBase :)
  */
 ModelBase = function(params) {
-
-    if(params)
-        this.name = params.name;
-    
-    this.showCurve = [];            
-    this.curves = [];
-    this.updateList = [];
-    this.currentPlanet = {};
-
-    this.days = 0;
-    this.setAnimSpeed(config.animSpeed);
-    this.setRunning(true);
-
-    
 };
 
 ModelBase.prototype = {
 
     constructor : ModelBase,
+    
+    create : function(params) {
+   
+        this.showCurve = [];            
+        this.curves = [];
+        this.updateList = [];
+        this.currentPlanet = {};
+
+        this.days = 0;
+        this.setAnimSpeed(config.animSpeed);
+        this.setRunning(true);
+    },
     
     setShowCurve : function(index, state) { this.showCurve[index] = state; if(this.curves[index]) this.curves[index].setEnabled(state); },
     getShowCurve : function(index) { return this.showCurve[index]; },

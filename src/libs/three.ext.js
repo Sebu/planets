@@ -2,13 +2,13 @@ PI_SCALE = 180.0/Math.PI;
 
 
 calcAngle = function(pos1, pos2) {
-    return	Math.acos( pos1.clone().normalize().dot(pos2.clone().normalize()) )*PI_SCALE;
+    return	Math.acos( pos1.toUnitVector().dot(pos2.toUnitVector()) )*PI_SCALE;
 }
 
 calcAngleRel = function(node1, node2, center) {
-    var pos1 = center.clone().subSelf( node1 ),
-    pos2 = center.clone().subSelf( node2 );
-    return	Math.acos( pos1.normalize().dot(pos2.normalize()) )*PI_SCALE;
+    var pos1 = center.substract( node1 ),
+    pos2 = center.substract( node2 );
+    return	Math.acos( pos1.toUnitVector.dot(pos2.toUnitVector()) )*PI_SCALE;
 }
 
 rgbToHex = function(color) {

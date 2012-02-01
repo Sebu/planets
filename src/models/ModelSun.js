@@ -4,8 +4,8 @@
  * @extends ModelBase
  */
 ModelSun = function(params) {
-    params.name = "ModelSun";
-	  ModelBase.call(this, params);
+    this.name = "ModelSun";
+    this.create(params);
     params.spheres = 3;
     this.genSpheres(params);
 
@@ -18,7 +18,7 @@ ModelSun = function(params) {
     this.sunYears = 0;
     this.setSunYears = function(speed) {
         this.sunYears = speed;
-        model.sphere[3].setSpeed(this.sunYears*365);
+        this.sphere[3].setSpeed(this.sunYears*365);
     }
     this.getSunYears = function() {
       return this.sunYears;

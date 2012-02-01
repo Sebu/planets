@@ -274,8 +274,14 @@ ModelPtolemyBase = function(params) {
       return params;
     }
 
-    /** @override */
-    this.reset = function () {
+   
+};
+
+ModelPtolemyBase.prototype = new ModelBase;
+ModelPtolemyBase.prototype.constructor = ModelPtolemyBase;
+
+/** @override */
+ModelPtolemyBase.prototype.reset = function () {
         ModelBase.prototype.reset.call(this);
         this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
         this.setRadiusDeferent( Utils.toDec(this.currentPlanet.derefentRadius || 0) );
@@ -300,10 +306,6 @@ ModelPtolemyBase = function(params) {
         this.realSunS[1].setSpeed(  this.currentPlanet.sunSpeed );
         this.realSunS[2].setSpeed( -this.currentPlanet.sunSpeed );
 
-    }    
 };
-
-ModelPtolemyBase.prototype = new ModelBase;
-ModelPtolemyBase.prototype.constructor = ModelPtolemyBase;
 
 

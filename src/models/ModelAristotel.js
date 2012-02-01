@@ -4,8 +4,8 @@
  * @extends ModelBase
  */
 ModelAristotle = function(params) {
-    params.name = "ModelAristotle";
-	  ModelBase.call(this, params);
+    this.name = "ModelAristotle";
+    this.create(params);
     params.spheres = 4;
     
     this.genSpheres(params);

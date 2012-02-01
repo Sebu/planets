@@ -4,8 +4,8 @@
   * @extends ModelBase
  */
 Model5 = function(params) {
-    params.name = "Model5";
-	  ModelBase.call(this, params);
+    this.name = "Model5";
+    this.create(params);
     params.spheres = 5;
     this.genSpheres(params);
 
