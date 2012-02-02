@@ -5,8 +5,15 @@
  * @extends ModelPtolemyBase
  */
 ModelPtolemyMoon2 = function(params) {
-    params.name = "ModelPtolemyMoon2";
-	  ModelPtolemyBase.call(this, params);	
+    this.name = "ModelPtolemyMoon2";
+}
+
+
+ModelPtolemyMoon2.prototype = new ModelPtolemyBase;
+ModelPtolemyMoon2.prototype.constructor = ModelPtolemyMoon2;
+
+ModelPtolemyMoon2.prototype.create = function(params) {
+	  ModelPtolemyBase.prototype.create.call(this, params);	
     this.factor = 1.0/7.0;
 
     //this.setAnimSpeed(60); //DEPRECATED?
@@ -59,7 +66,6 @@ ModelPtolemyMoon2 = function(params) {
     
 };
 
-ModelPtolemyMoon2.prototype = new ModelBase;
-ModelPtolemyMoon2.prototype.constructor = ModelPtolemyMoon2;
+
 
 

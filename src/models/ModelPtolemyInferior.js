@@ -4,7 +4,7 @@
  */
 ModelPtolemyInferior = function(params) {
     params.name = "ModelPtolemyInferior";
-    ModelPtolemyBase.call(this, params);
+    this.create(params);
     
     this.factor = 1.0/11.0;
     
@@ -84,5 +84,5 @@ ModelPtolemyInferior = function(params) {
     };    
 }
 
-ModelPtolemyInferior.prototype = new ModelBase;
+ModelPtolemyInferior.prototype = new ModelPtolemyBase;
 ModelPtolemyInferior.prototype.constructor = ModelPtolemyInferior;

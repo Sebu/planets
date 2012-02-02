@@ -4,7 +4,7 @@
  */
 ModelPtolemyVenus = function(params) {
     params.name = "ModelPtolemyVenus";
-    ModelPtolemyBase.call(this, params);	
+    this.create(params);	
 
     this.factor = 1.0/11.0;
     
@@ -57,5 +57,5 @@ ModelPtolemyVenus = function(params) {
 
 };
 
-ModelPtolemyVenus.prototype = new ModelBase;
+ModelPtolemyVenus.prototype = new ModelPtolemyBase;
 ModelPtolemyVenus.prototype.constructor = ModelPtolemyVenus;

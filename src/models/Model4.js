@@ -5,9 +5,9 @@
  */
 Model4 = function(params) {
 	this.name = "Model4";
-  this.create(params);
+  params.spheres = 4;
 
-  params.spheres = params.spheres || 4;
+  this.create(params);
   this.genSpheres(params);
   
   /** @lends BaseMixin */

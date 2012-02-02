@@ -4,10 +4,15 @@
  * @constructor
  * @extends ModelBase
  */
-ModelPtolemyBase = function(params) {
-    params.name = params.name || "ModelPtolemySun";
-	  ModelBase.call(this, params);
-    params.spheres = params.spheres || 4;
+ModelPtolemyBase = function(params) {};
+
+ModelPtolemyBase.prototype = new ModelBase;
+ModelPtolemyBase.prototype.constructor = ModelPtolemyBase;
+
+ModelPtolemyBase.prototype.create = function(params) {
+    this.name = "ModelPtolemySun";
+	  ModelBase.prototype.create.call(this, params);
+    params.spheres = 4;
     this.genSpheres(params);
     
     this.setShowHippo = null;
@@ -277,8 +282,7 @@ ModelPtolemyBase = function(params) {
    
 };
 
-ModelPtolemyBase.prototype = new ModelBase;
-ModelPtolemyBase.prototype.constructor = ModelPtolemyBase;
+
 
 /** @override */
 ModelPtolemyBase.prototype.reset = function () {

@@ -4,7 +4,7 @@
  */
 ModelPtolemySuperior = function(params) {
     this.name = "ModelPtolemy";
-    ModelPtolemyBase.call(this, params);	
+    this.create(params);	
     this.setShowSphere2 = null;
     this.factor = 1.0/11.0;
     

@@ -3,7 +3,7 @@
  * @extends ModelPtolemyMoon2
  */
 ModelPtolemyMoon1a = function(params) {
-    params.name = "ModelPtolemyMoon1a";
+    this.name = "ModelPtolemyMoon1a";
 	  ModelPtolemyMoon2.call(this, params);	
   
     /** @override */
@@ -24,7 +24,7 @@ ModelPtolemyMoon1a.prototype.constructor = ModelPtolemyMoon1a;
  * @extends ModelPtolemyMoon2
  */
 ModelPtolemyMoon1b = function(params) {
-    params.name = "ModelPtolemyMoon1b";
+    this.name = "ModelPtolemyMoon1b";
 	  ModelPtolemyMoon2.call(this, params);	
 
     /** @override */
