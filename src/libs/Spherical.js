@@ -56,7 +56,7 @@ Spherical = function Spherical(params) {
        map: map,
        radius: 0.85, innerRadius: 1.0, color: this.gfx.color });
     } else {
-//     this.equator = new Circle({angle:359.9});
+//     var equator = new Circle({angle:359.9});
      this.gfx.equator =  new THREE.Line(equator, eqMat );      
      this.gfx.equator.rotation.x = Math.PI/2;
     }
@@ -71,7 +71,7 @@ Spherical = function Spherical(params) {
     this.anchor.addNode(this.gfx.markerarc);
 
 
-    //var geometryBall = new THREE.Sphere( 0.1, 10, 10 );
+//    var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
 //    geometryBall.overdraw = true;
     
     var materialBall = new THREE.MeshBasicMaterial( { transparent:true, opacity: 1.0, color: rgbToHex(this.gfx.color) } );

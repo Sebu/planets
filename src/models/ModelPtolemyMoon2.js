@@ -4,15 +4,13 @@
  * @constructor
  * @extends ModelPtolemyBase
  */
-ModelPtolemyMoon2 = function(params) {
-    this.name = "ModelPtolemyMoon2";
+ModelPtolemyMoonBase = function() {
 }
 
+ModelPtolemyMoonBase.prototype = new ModelPtolemyBase;
+ModelPtolemyMoonBase.prototype.constructor = ModelPtolemyMoonBase;
 
-ModelPtolemyMoon2.prototype = new ModelPtolemyBase;
-ModelPtolemyMoon2.prototype.constructor = ModelPtolemyMoon2;
-
-ModelPtolemyMoon2.prototype.create = function(params) {
+ModelPtolemyMoonBase.prototype.create = function(params) {
 	  ModelPtolemyBase.prototype.create.call(this, params);	
     this.factor = 1.0/7.0;
 
@@ -61,11 +59,20 @@ ModelPtolemyMoon2.prototype.create = function(params) {
       this.oldSetBaseRadius(value);
       if(this.currentPlanet.accurateMoon) this.sphere[2].crankPoint.position.z = -this.sphere[2].radius*this.factor;
     }
-
-        
-    
 };
 
+
+/**
+ * @constructor
+ * @extends ModelPtolemyBase
+ */
+ModelPtolemyMoon2 = function(params) {
+  this.create();
+}
+
+ModelPtolemyMoon2.prototype = new ModelPtolemyMoonBase;
+ModelPtolemyMoon2.prototype.constructor = ModelPtolemyMoon2;
+ModelPtolemyMoon2.prototype.name = "ModelPtolemyMoon2";
 
 
 

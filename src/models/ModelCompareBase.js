@@ -33,7 +33,7 @@ ModelCompareBase = function(params) {
   
   this.setAnimSpeed(60);
 
-  this.root = this.app.newScene();    
+  this.root = new THREE.Scene();   
   this.root.addNode(this.models[0].root);
   this.root.addNode(this.models[1].root);  
 };

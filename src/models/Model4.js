@@ -4,9 +4,8 @@
  * @extends ModelBase
  */
 Model4 = function(params) {
-	this.name = "Model4";
-  params.spheres = 4;
 
+  params.spheres = 4;
   this.create(params);
   this.genSpheres(params);
   
@@ -29,6 +28,7 @@ Model4 = function(params) {
 
 Model4.prototype = new ModelBase;
 Model4.prototype.constructor = Model4;
+Model4.prototype.name = "Model4";
 
 /** 
  * @override 

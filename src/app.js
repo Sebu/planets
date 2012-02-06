@@ -8,7 +8,6 @@
  @param params.domRoot dom element to add the canvas to
 */
 cosmoApp = function(params) {
-    Ori.App.call(this);
     this.setup(params);
 };
 cosmoApp.prototype = new Ori.App;
@@ -28,7 +27,7 @@ cosmoApp.prototype.setup = function(params) {
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
         
 		
-        setupCommonGeomerty();
+        
         
         this.splashStatus = $("#TCsplashStatus");
 
@@ -130,21 +129,33 @@ cosmoApp.prototype.setup = function(params) {
              </div>").appendTo(this.domRoot);
              
           this.info = { 
-            meanLongitude : document.getElementById("meanLongitude"),
-            equationOfTime : document.getElementById("equationOfTime"),
-
+            // default
             days : document.getElementById("days"),
             sunAngle : document.getElementById("sunAngle"),            
             longitude : document.getElementById("longitude"),
             longitudeSpeed : document.getElementById("longitudeSpeed"),
             latitude : document.getElementById("latitude"),
 
+            // compare
             days2 : document.getElementById("days2"),
             sunAngle2 : document.getElementById("sunAngle2"),            
             longitude2 : document.getElementById("longitude2"),
             longitudeSpeed2 : document.getElementById("longitudeSpeed2"),
             latitude2 : document.getElementById("latitude2"),
             
+            // moon
+            metonZodicalMonths : document.getElementById("metonZodicalMonths"),
+            metonDaysPerYear : document.getElementById("metonDaysPerYear"),
+            synodicDaysPerMonth : document.getElementById("synodicDaysPerMonth"),
+            zodicalDaysPerMonth : document.getElementById("zodicalDaysPerMonth"),
+            draconiticDaysPerMonth : document.getElementById("draconiticDaysPerMonth"),           
+            
+            // sun
+            meanLongitude : document.getElementById("meanLongitude"),            
+            equationOfTime : document.getElementById("equationOfTime"),            
+            sunDaysPerYear : document.getElementById("sunDaysPerYear"),
+            
+            // ptolemy
             apsidalLongitude : document.getElementById("apsidalLongitude"),
             epicycleLongitude : document.getElementById("epicycleLongitude"),
             deferentLongitude : document.getElementById("deferentLongitude"),
@@ -440,6 +451,7 @@ cosmoApp.prototype.updateInfoBox = function() {
           UI.innerText(this.info.equationOfTime, this.model.getEquationOfTime().toFixed(6) );
           UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(11) );
           UI.innerText(this.info.latitude, this.model.planet.latitude.toFixed(3) );
+          UI.innerText(this.info.sunDaysPerYear,Utils.frac( this.model.getDaysPerYear() ) );
         } else {
           UI.innerText(this.info.longitude, this.model.planet.longitude.toFixed(1) );
           UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(2) );
@@ -459,6 +471,14 @@ cosmoApp.prototype.updateInfoBox = function() {
           planetLabel2.setPosition(this.model.realSun.mesh.getPosCanvas(this.currentCamera, this.canvas));   
         }
 
+        if(this.model.ui === "ModelMoon" || this.model.ui === "ModelMoonCompare") {
+          UI.innerText(this.info.metonZodicalMonths, this.model.getMetonZodicalMonths().toFixed() ); 
+          UI.innerText(this.info.metonDaysPerYear, this.model.getMetonDaysPerYear().toFixed(2) );
+          UI.innerText(this.info.synodicDaysPerMonth, this.model.getSynodicDaysPerMonth().toFixed(3) );
+          UI.innerText(this.info.zodicalDaysPerMonth, this.model.getZodicalDaysPerMonth().toFixed(3) );
+          UI.innerText(this.info.draconiticDaysPerMonth, this.model.getDraconiticDaysPerMonth().toFixed(3) );
+        }
+        
         if(this.model.ui === "ModelMoonCompare") {
           // infoBox data
           UI.innerText(this.info.sunAngle2, this.model.planet2.sunAngle.toFixed(1) );
@@ -729,13 +749,14 @@ cosmoApp.prototype.setupUI = function() {
             // onchange of a moon parameter -> update model
             $("#MetonYear > input,#MetonSynodicMonths > input,#SarosDraconiticMonths > input, #SarosSynodicMonths > input,#MetonDays > input").change(function() {
 
-                $("#metonZodicalMonths").html( this.model.getMetonZodicalMonths().toFixed());
-                $("#metonDaysPerYear").html( this.model.getMetonDaysPerYear().toFixed(2));
-                $("#synodicDaysPerMonth").html( this.model.getSynodicDaysPerMonth().toFixed(3));
-                $("#zodicalDaysPerMonth").html( this.model.getZodicalDaysPerMonth().toFixed(3));
-                $("#draconiticDaysPerMonth").html( this.model.getDraconiticDaysPerMonth().toFixed(3));
-                $("#Speed1 > input").attr({"value": this.model.moonSpeed1(this.model.draco, this.model.zodic) });
-                $("#Speed2 > input").attr({"value": this.model.moonSpeed2(this.model.draco, this.model.zodic) });
+//                $("#metonZodicalMonths").html(  app.model.getMetonZodicalMonths().toFixed());
+//                $("#metonDaysPerYear").html(  app.model.getMetonDaysPerYear().toFixed(2));
+//                $("#synodicDaysPerMonth").html(  app.model.getSynodicDaysPerMonth().toFixed(3));
+//                $("#zodicalDaysPerMonth").html(  app.model.getZodicalDaysPerMonth().toFixed(3));
+//                $("#draconiticDaysPerMonth").html(  app.model.getDraconiticDaysPerMonth().toFixed(3));
+         
+                $("#Speed1 > input").attr({"value":  app.model.moonSpeed1(app.model.draco, app.model.zodic) });
+                $("#Speed2 > input").attr({"value":  app.model.moonSpeed2(app.model.draco, app.model.zodic) });
 
             });
             $("#MetonYear > input").change();
@@ -916,8 +937,8 @@ cosmoApp.prototype.setupUI = function() {
             UI.slider({model: this.model, id:"Speed2", max:1100, text:"speed"}).appendTo("#deferent");
             UI.slider({model: this.model, id:"Speed3", min: -1100, max:1100, text:"speed"}).appendTo("#deferent");
 
-            UI.checkbox({model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
-            UI.text({model:model, id:"Date"}).appendTo("#playbackBox");
+            UI.checkbox({model: this.model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
+            UI.text({model: this.model, id:"Date"}).appendTo("#playbackBox");
             $("#apsidal input, #deferent input").change();
 //*/            
         } else if (this.model.ui == "ModelHippo") {
@@ -943,9 +964,9 @@ cosmoApp.prototype.setupUI = function() {
             UI.slider({model: this.model, id:"Speed2",  max:1100, text:"S 2 (zodiacal) in days"}).appendTo("#speed");
             UI.slider({model: this.model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
             
-            $("#Speed1 > input, #SunYears > input").change(function() {
-              $("#sunDaysPerYear").html(Utils.frac( this.model.getDaysPerYear() ));
-            });
+//            $("#Speed1 > input, #SunYears > input").change(function() {
+//              $("#sunDaysPerYear").html(Utils.frac( app.model.getDaysPerYear() ));
+//            });
         }
 
 

@@ -3,25 +3,24 @@
 /**
  * @constructor
  */
-ModelMoonCompare = function(params) {
-	  ModelMoon.call(this,params);	
+ModelMoonCompare = function() {
+  	this.create();
 
-
-
-
-    var s20 = this.sphere[4] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S2"]});
-    var s21 = this.sphere[5] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: colors["S4"]});
-    this.planet2 = new Planet({ dist: 9.0, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet2",  color:colors["Planet"]});
+    
+    var s20 = this.sphere[4] = new Spherical({inner_id: "S20", scale: 9, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]});
+    var s21 = this.sphere[5] = new Spherical({inner_id: "S21", scale: 9, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]});
+    this.planet2 = new Planet({ dist: config.sphereRadius, emit: 0.5, scale: 0.2, inner_id: this.name+"Planet2",  color: config.colors["Planet"]});
     this.planet2.setBeta(90.0);
     
     this.updateList.push(s20);    
     this.updateList.push(s21);    
-    this.sphere[1].anchor.addNode(s20);
-    this.sphere[4].anchor.addNode(s21);
+
     this.sphere[5].anchor.addNode(this.planet2);
+    this.sphere[4].anchor.addNode(s21);
+    this.sphere[1].anchor.addNode(s20);
 
 
-//["equator","npole","spole","rotationarc","markerarc","arc1","arc2","markerball"]
+    
    this.setShowSphere4 = function(state) { this.sphere[4].setShow(state); }
    this.getShowSphere4 = function() { return this.sphere[4].getShow(); };
        
@@ -56,7 +55,7 @@ ModelMoonCompare = function(params) {
 
 
     this.reset = function () {
-        ModelBase.prototype.reset.call(this);
+        ModelMoonBase.prototype.reset.call(this);
         this.sphere[2].setRotateAngle(this.sphere[2].rotateStart);
         this.sphere[3].setRotateAngle(this.sphere[3].rotateStart);
         
@@ -89,12 +88,13 @@ ModelMoonCompare = function(params) {
 
 
     this.update = function(time) {
-        ModelBase.prototype.update.call(this, time);
+        ModelMoonBase.prototype.update.call(this, time);
         this.updatePlanetMetadata(this.planet2,  this.sphere[1], this.ecliptic, this.sphere[2]);
     };    
 
     this.setCurrentMoonModels("Mendell", "SchFixed");
 };
 
-ModelMoonCompare.prototype = new ModelBase;
+ModelMoonCompare.prototype = new ModelMoonBase;
 ModelMoonCompare.prototype.constructor = ModelMoonCompare;
+ModelMoonCompare.prototype.name = "ModelMoonCompare";

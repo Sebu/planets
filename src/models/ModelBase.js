@@ -6,18 +6,21 @@
 /**
  * 
  * @constructor
- * @param params
- * @param params.name name of the model
  * @returns instance of ModelBase :)
  */
-ModelBase = function(params) {
+ModelBase = function() {
 };
 
 ModelBase.prototype = {
 
     constructor : ModelBase,
     
-    create : function(params) {
+    /**
+     * @param params
+     * @param params.name name of the model
+     * @returns instance of ModelBase :)
+     */
+    create : function() {
    
         this.showCurve = [];            
         this.curves = [];
@@ -129,7 +132,7 @@ ModelBase.prototype = {
     setupEcliptic : function(params) {
         this.sphere[2].addNode(this.ecliptic = new Spherical({ scale: config.sphereRadius, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"] }));
         this.ecliptic.setVisuals([]);    
-        this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: true, glowMap: config.sunGlowTexture, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: config.sphereRadius, inner_id: params.name+"Sun", color: config.colors["Sun"] }));
+        this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: false, glowMap: config.sunGlowTexture, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: config.sphereRadius, inner_id: params.name+"Sun", color: config.colors["Sun"] }));
         this.updateList[this.sphere.length] = this.ecliptic;
 
         this.setSunSpeed = function(value)  { this.ecliptic.setSpeed(value); };
@@ -241,7 +244,7 @@ ModelBase.prototype = {
         this.setSunSpeed(this.currentPlanet.sunSpeed);
 
         this.sun.setEnabled(this.currentPlanet.showSun);
-        this.sun.setGlow(this.currentPlanet.showSun);
+//        this.sun.setGlow(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
 
 

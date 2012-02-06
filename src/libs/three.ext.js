@@ -335,7 +335,7 @@ function setupCommonGeomerty() {
   aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
   aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );  
 };  
-
+setupCommonGeomerty();
 
     
 

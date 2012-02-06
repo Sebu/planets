@@ -13,8 +13,8 @@ Planet = function(params) {
     this.gfx = new Object();
     this.gfx.scale = params.scale || 1.0;
     this.gfx.color = params.color || { r: 1.0, g: 1.0, b: 1.0 };  
-    this.gfx.glow = params.glow || false;
-    this.gfx.glowMap = params.glowMap;
+    this.gfx.glow =  params.glow || false;
+    this.gfx.glowMap =  params.glowMap;
     this.gfx.map = params.map;
 
     this.addNode( this.npole = new Translate({y:-1.0}) ); 

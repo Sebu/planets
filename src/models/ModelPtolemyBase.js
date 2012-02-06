@@ -4,19 +4,19 @@
  * @constructor
  * @extends ModelBase
  */
-ModelPtolemyBase = function(params) {};
+ModelPtolemyBase = function() {};
 
 ModelPtolemyBase.prototype = new ModelBase;
 ModelPtolemyBase.prototype.constructor = ModelPtolemyBase;
+ModelPtolemyBase.prototype.name = "ModelPtolemySun";
 
-ModelPtolemyBase.prototype.create = function(params) {
-    this.name = "ModelPtolemySun";
-	  ModelBase.prototype.create.call(this, params);
-    params.spheres = 4;
-    this.genSpheres(params);
-    
-    this.setShowHippo = null;
+ModelPtolemyBase.prototype.create = function() {
+	  ModelBase.prototype.create.call(this);
+
+    this.genSpheres({spheres : 4});
    
+    this.setShowHippo = null;
+  
     
     /** @lends BaseMixin */
     BaseMixin.call(this);
@@ -33,7 +33,7 @@ ModelPtolemyBase.prototype.create = function(params) {
     this.realSunS = [];
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: config.colors["S2"]});
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: config.colors["S2"]});
-    this.realSun = new Planet({ glow: true, glowMap: config.sunGlowTexture, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: params.name+"realSun",  color: config.colors["Sun"]});
+    this.realSun = new Planet({ glow: true, glowMap: config.sunGlowTexture, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: this.name+"realSun",  color: config.colors["Sun"]});
     this.realSun.setBeta(90.0);
     this.updateList.push(realSunS1);
     this.updateList.push(realSunS2);    
@@ -203,6 +203,8 @@ ModelPtolemyBase.prototype.create = function(params) {
       this.apsidal = [ {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor}, {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];
       this.apsidalLine.setPoints(this.apsidal);       
     }
+
+    this.updateSunDist = function() {};
 
     this.setEquant = function(value) {
       this.sphere[3].equant = value;

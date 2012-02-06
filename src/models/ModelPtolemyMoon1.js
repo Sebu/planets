@@ -2,9 +2,8 @@
  * @constructor
  * @extends ModelPtolemyMoon2
  */
-ModelPtolemyMoon1a = function(params) {
-    this.name = "ModelPtolemyMoon1a";
-	  ModelPtolemyMoon2.call(this, params);	
+ModelPtolemyMoon1a = function() {
+    this.create();
   
     /** @override */
     this.adjustAnomaly = function() {
@@ -15,17 +14,16 @@ ModelPtolemyMoon1a = function(params) {
     
 };
 
-ModelPtolemyMoon1a.prototype = new ModelBase;
+ModelPtolemyMoon1a.prototype = new  ModelPtolemyMoonBase;
 ModelPtolemyMoon1a.prototype.constructor = ModelPtolemyMoon1a;
-
+ModelPtolemyMoon1a.prototype.name = "ModelPtolemyMoon1a";
 
 /**
  * @constructor
  * @extends ModelPtolemyMoon2
  */
-ModelPtolemyMoon1b = function(params) {
-    this.name = "ModelPtolemyMoon1b";
-	  ModelPtolemyMoon2.call(this, params);	
+ModelPtolemyMoon1b = function() {
+    this.create();
 
     /** @override */
     this.adjustAnomaly = function() {
@@ -35,5 +33,6 @@ ModelPtolemyMoon1b = function(params) {
     
 };
 
-ModelPtolemyMoon1b.prototype = new ModelBase;
+ModelPtolemyMoon1b.prototype = new ModelPtolemyMoonBase;
 ModelPtolemyMoon1b.prototype.constructor = ModelPtolemyMoon1b;
+ModelPtolemyMoon1b.prototype.name = "ModelPtolemyMoon1b";
