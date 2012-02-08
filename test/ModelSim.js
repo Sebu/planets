@@ -25,7 +25,7 @@ myApp.prototype.init = function(params) {
             for(var j in TestPairs[m][n]) { break; }
             
             var tests = TestPairs[m][n],
-            ul = $("#mainBox").append("<table>" + n + "</table>"),
+            ul = $("#mainBox").append("<table>" + m + " " + n + "</table>"),
             i;
             
             this.loadPreset(planetPresets[m][n]);

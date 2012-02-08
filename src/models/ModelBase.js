@@ -575,7 +575,7 @@ ModelBase.prototype = {
         for (i = start; i < stop; i++) {
             step += Math.abs(this.sphere[i].getStep());
         }
-        step = 10.0/(step*Ori.gfxProfile.curveRes);
+        step = 10.0 / (step * Ori.gfxProfile.curveRes);
         
         // jump to start position of curve
         this.updateMovement(j*step);

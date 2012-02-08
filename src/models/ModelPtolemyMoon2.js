@@ -64,7 +64,7 @@ ModelPtolemyMoonBase.prototype.create = function(params) {
  * @constructor
  * @extends ModelPtolemyMoonBase
  */
-ModelPtolemyMoon2 = function(params) {
+ModelPtolemyMoon2 = function() {
   this.create();
 }
 

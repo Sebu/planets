@@ -1,14 +1,13 @@
 
 /**
+ * Callippus model
  * @constructor
-  * @extends ModelBase
+ * @extends ModelBase
  */
-Model5 = function(params) {
-    this.name = "Model5";
-    params.spheres = 5;
+Model5 = function() {
 
-    this.create(params);
-    this.genSpheres(params);
+    this.create();
+    this.genSpheres({spheres : 5});
 
     this.setShowHippo = null;
     BaseMixin.call(this);
@@ -43,6 +42,7 @@ Model5 = function(params) {
 
 Model5.prototype = new ModelBase;
 Model5.prototype.constructor = Model5;
+Model5.prototype.name = "Model5";
 
 
     /** @override */
@@ -62,7 +62,8 @@ Model5.prototype.getPreset = function() {
     }
 
 Model5.prototype.updateSteps = function() {
-      var alpha = (this.alpha!=0) ? 360/this._alpha : 0,
+      var
+      alpha = (this.alpha!=0) ? 360/this._alpha : 0,
       beta = (this.beta!=0) ? 360/this._beta : 0,
       gamma = (this.gamma!=0) ? 360/this._gamma : 0;
       
@@ -73,6 +74,11 @@ Model5.prototype.updateSteps = function() {
 
 /** @override */
 Model5.prototype.update = function(time) {
-      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 2, node: this.planet.mesh, color: config.colors["Path"]});
+      this.addCurve({
+          index: 0,
+          anchor: this.sphere[1].anchor,
+          start: 2,
+          node: this.planet.mesh,
+          color: config.colors["Path"] });
       ModelBase.prototype.update.call(this, time);
 };

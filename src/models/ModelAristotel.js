@@ -3,30 +3,31 @@
  * @constructor
  * @extends ModelBase
  */
-ModelAristotle = function(params) {
-    this.name = "ModelAristotle";
-    this.create(params);
-    params.spheres = 4;
+ModelAristotle = function() {
+
+    this.create();
     
-    this.genSpheres(params);
+    this.genSpheres({spheres : 4});
+    
     BaseMixin.call(this);
     
 
     // add unwinding spheres
-    var s5 = this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]}),
-    s6 = this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]}),
-    s7 = this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]}),
-    s8 = this.sphere[8] = new Spherical({ vortex: true, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
+    this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]});
+    this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]});
+    this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]});
+    this.sphere[8] = new Spherical({ vortex: true, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
     
-    this.updateList.push(s5);
-    this.updateList.push(s6);    
-    this.updateList.push(s7);    
-    this.updateList.push(s8);  
+    this.updateList.push(this.sphere[5]);
+    this.updateList.push(this.sphere[6]);    
+    this.updateList.push(this.sphere[7]);    
+    this.updateList.push(this.sphere[8]);  
+
         
-    this.sphere[4].anchor.addNode(s5);
-    this.sphere[5].anchor.addNode(s6);
-    this.sphere[6].anchor.addNode(s7);
-    this.sphere[7].anchor.addNode(s8);
+    this.sphere[4].anchor.addNode(this.sphere[5]);
+      this.sphere[5].anchor.addNode(this.sphere[6]);
+        this.sphere[6].anchor.addNode(this.sphere[7]);
+          this.sphere[7].anchor.addNode(this.sphere[8]);
 
 
 
@@ -180,4 +181,5 @@ ModelAristotle = function(params) {
 
 ModelAristotle.prototype = new ModelBase;
 ModelAristotle.prototype.constructor = ModelAristotle;
+ModelAristotle.prototype.name = "ModelAristotle";
 

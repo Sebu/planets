@@ -3,11 +3,10 @@
  * @constructor
  * @extends ModelBase
  */
-ModelSun = function(params) {
-    this.name = "ModelSun";
-    this.create(params);
-    params.spheres = 3;
-    this.genSpheres(params);
+ModelSun = function() {
+
+    this.create();
+    this.genSpheres({spheres : 3});
 
     BaseMixin.call(this);
     
@@ -52,3 +51,4 @@ ModelSun = function(params) {
 
 ModelSun.prototype = new ModelBase;
 ModelSun.prototype.constructor = ModelSun;
+ModelSun.prototype.name = "ModelSun";

@@ -2,9 +2,9 @@
  * @constructor
  * @extends ModelPtolemyBase
  */
-ModelPtolemySuperior = function(params) {
-    this.name = "ModelPtolemy";
-    this.create(params);	
+ModelPtolemySuperior = function() {
+
+    this.create();	
     this.setShowSphere2 = null;
     this.factor = 1.0/11.0;
     
@@ -59,3 +59,4 @@ ModelPtolemySuperior = function(params) {
 
 ModelPtolemySuperior.prototype = new ModelPtolemyBase;
 ModelPtolemySuperior.prototype.constructor = ModelPtolemySuperior;
+ModelPtolemySuperior.prototype.name = "ModelPtolemy";

@@ -1,6 +1,6 @@
 
 /**
- * basic 4 sphere model from eudoxus
+ * basic 4 sphere eudoxus model  
  * use as an example for your own models
  * @constructor
  * @extends ModelBase
@@ -10,7 +10,7 @@ Model4 = function() {
   this.create();
   
   // generate 4 connected spheres
-  this.genSpheres([spheres : 4});
+  this.genSpheres({spheres : 4});
   
   /** @lends BaseMixin */
   BaseMixin.call(this);
@@ -33,11 +33,11 @@ Model4 = function() {
    */
   update = function(time) {
       this.addCurve({
-          index: 0, // curve storage index
-          anchor: this.sphere[1].anchor, // attach curve to anchor
-          start: 2, // first moving sphere
-          stop: 5,  // last moving sphere
-          node: this.planet.mesh, // observe this node
+          index: 0,                       // curve storage index
+          anchor: this.sphere[1].anchor,  // attach curve to anchor
+          start: 2,                       // first moving sphere
+          stop: 5,                        // last moving sphere
+          node: this.planet.mesh,         // observe this node
           color: config.colors["Path"] });
       this.addCurve({
           index: 1,

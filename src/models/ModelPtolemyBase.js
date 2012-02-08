@@ -153,7 +153,7 @@ ModelPtolemyBase.prototype.create = function() {
     /** @override */
     this.updateMovement = function(time) {
       ModelBase.prototype.updateMovement.call(this, time);
-      //TODO: wd parameter :)
+      //TODO: move wd parameter :)
       this.wd += this.dayDelta*0.05; //13.2293;
       this.adjustAnomaly();        
     };

@@ -2,9 +2,9 @@
  * @constructor
  * @extends ModelPtolemyBase
  */
-ModelPtolemyInferior = function(params) {
-    params.name = "ModelPtolemyInferior";
-    this.create(params);
+ModelPtolemyInferior = function() {
+
+    this.create();
     
     this.factor = 1.0/11.0;
     
@@ -75,7 +75,9 @@ ModelPtolemyInferior = function(params) {
       this.sphere[4].ptolemy.rotation.x = -j;
       this.sphere[4].gfx.crank.rotation.z = lambdaD + Math.PI;       
 
-    }	
+    };
+    
+    
     this.updateSunDist = function() {
       var dist = (this.sphere[2].radius+this.sphere[3].radius+this.sphere[4].radius+this.sphere[3].equant)*this.factor;  
       this.realSunS[1].setScale(dist);
@@ -86,3 +88,4 @@ ModelPtolemyInferior = function(params) {
 
 ModelPtolemyInferior.prototype = new ModelPtolemyBase;
 ModelPtolemyInferior.prototype.constructor = ModelPtolemyInferior;
+ModelPtolemyInferior.prototype.name = "ModelPtolemyInferior";

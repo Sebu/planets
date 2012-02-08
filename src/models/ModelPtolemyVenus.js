@@ -2,9 +2,9 @@
  * @constructor
  * @extends ModelPtolemyBase
  */
-ModelPtolemyVenus = function(params) {
-    params.name = "ModelPtolemyVenus";
-    this.create(params);	
+ModelPtolemyVenus = function() {
+
+    this.create();	
 
     this.factor = 1.0/11.0;
     
@@ -59,3 +59,4 @@ ModelPtolemyVenus = function(params) {
 
 ModelPtolemyVenus.prototype = new ModelPtolemyBase;
 ModelPtolemyVenus.prototype.constructor = ModelPtolemyVenus;
+ModelPtolemyVenus.prototype.name = "ModelPtolemyVenus";

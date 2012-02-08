@@ -690,6 +690,11 @@ var moonModels = {
 
 var TestPairs = {
 
+  Eudoxus: {
+    Moon: {	
+      d1: { date: 100, longitude: "115.76", latitude: "4.68"  },
+    },
+  },
   Ptolemy: {
     Sun: {
 //      1: {
