@@ -24,10 +24,10 @@ cosmoApp.prototype.setup = function(params) {
         this.currentScene = null;
 
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: true});
+        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
         
 		
-        
+        setupCommonGeomerty();
         
         this.splashStatus = $("#TCsplashStatus");
 

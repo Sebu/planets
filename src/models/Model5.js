@@ -73,6 +73,6 @@ Model5.prototype.updateSteps = function() {
 
 /** @override */
 Model5.prototype.update = function(time) {
-      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: config.colors["Path"]});
+      this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 2, node: this.planet.mesh, color: config.colors["Path"]});
       ModelBase.prototype.update.call(this, time);
 };

@@ -36,8 +36,8 @@ Model4.prototype.name = "Model4";
  * @param time millisecons passed since last call
  */
 Model4.prototype.update = function(time) {
-    this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, stop: 5, node: this.planet.mesh, color: config.colors["Path"]});
-    this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 2, stop: 5, node: this.planet.mesh, color: config.colors["Hippo"], trails: false});
+    this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 2, stop: 5, node: this.planet.mesh, color: config.colors["Path"]});
+    this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 3, stop: 5, node: this.planet.mesh, color: config.colors["Hippo"], trails: false});
     ModelBase.prototype.update.call(this, time);        
 };
 

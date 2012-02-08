@@ -15,13 +15,13 @@ ModelSun = function(params) {
     this.setShowPath = null;
     
 
-    this.sunYears = 0;
+    sunYears = 0;
     this.setSunYears = function(speed) {
-        this.sunYears = speed;
+        sunYears = speed;
         this.sphere[3].setSpeed(this.sunYears*365);
     }
     this.getSunYears = function() {
-      return this.sunYears;
+      return sunYears;
     }
     
     this.getMeanLongitude = function() {
@@ -40,8 +40,8 @@ ModelSun = function(params) {
     this.loadPreset = function(node) {
         ModelBase.prototype.loadPreset.call(this,node);
         this.setSunYears(this.currentPlanet.sunYears);
-//        this.planet.setGlow(true);
     }
+    
     this.getPreset = function() {
       var params = ModelBase.prototype.getPreset.call(this);
       params.sunYears = this.getSunYears();

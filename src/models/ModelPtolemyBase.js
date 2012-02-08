@@ -16,12 +16,9 @@ ModelPtolemyBase.prototype.create = function() {
     this.genSpheres({spheres : 4});
    
     this.setShowHippo = null;
-  
-    
+ 
     /** @lends BaseMixin */
     BaseMixin.call(this);
-    /** @lends PtolemyMixin */
-    PtolemyMixin.call(this);
     
     this.ptolemizeSpheres(); // :) add some ecliptic/latitude and apsidal stuff to the daily
 
@@ -284,7 +281,19 @@ ModelPtolemyBase.prototype.create = function() {
    
 };
 
-
+ModelPtolemyBase.prototype.ptolemizeSpheres = function() {  
+      this.ptolemySphere = new Longituder();  
+      this.sphere[1].anchor.remove(this.sphere[2]);
+      this.sphere[2].anchor.remove(this.ecliptic);
+      this.sphere[1].anchor.addNode(this.ptolemySphere);
+      this.ptolemySphere.anchor.addNode(this.sphere[2]);
+      this.ptolemySphere.addNode(this.ecliptic);
+      this.sphere[4].remove(this.sphere[4].anchor);
+      this.sphere[4].ptolemy =  new Node(); 
+      this.sphere[4].addNode(this.sphere[4].ptolemy);      
+      this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 
+      
+};
 
 /** @override */
 ModelPtolemyBase.prototype.reset = function () {
@@ -299,6 +308,7 @@ ModelPtolemyBase.prototype.reset = function () {
         this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
         this.setKM( Utils.toDec(this.currentPlanet.km || 0) );        
         this.setLambdaAN( Utils.toDec(this.currentPlanet.lambdaAN || 0) );
+        this.wd = 0;
         this.adjustAnomaly();   
         
         // sun stuff

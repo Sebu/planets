@@ -3,12 +3,9 @@
  * @constructor
  * @extends Model4
  */
-ModelSimple = function(params) {
-    this.name = "ModelSimple";
-    this.create(params);
-
-    params.spheres = 2;
-    this.genSpheres(params);
+ModelSimple = function() {
+    ModelBase.prototype.create.call(this);
+    this.genSpheres({spheres : 2});
 
     /** @lends BaseMixin */
     BaseMixin.call(this);
@@ -39,7 +36,7 @@ ModelSimple = function(params) {
    * @param time millisecons passed since last call
    */
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.root, start: 0, node: this.planet.mesh, color: config.colors["Path"]});
+        this.addCurve({index: 0, anchor: this.root, start: 1, node: this.planet.mesh, color: config.colors["Path"]});
         ModelBase.prototype.update.call(this, time);
     }
 
@@ -47,3 +44,4 @@ ModelSimple = function(params) {
 
 ModelSimple.prototype = new ModelBase;
 ModelSimple.prototype.constructor = ModelSimple;
+ModelSimple.prototype.name = "ModelSimple";

@@ -50,6 +50,25 @@ THREE.Object3D.prototype.setPos = function(pos) { this.position.set(pos.x, pos.y
 THREE.Object3D.prototype.setEnabled = function(state) { this.visible = state; };
 THREE.Object3D.prototype.getEnabled = function() { return this.visible; };
 
+
+// fast update of current world matrix
+THREE.Object3D.prototype.currentMatrixWorldTill = function(end) {
+    this.matrixAutoUpdate && this.updateMatrix();
+    if(!this.parent || this == end) return this.matrix;
+    this.matrixWorld.multiply(this.parent.currentMatrixWorldTill(end), this.matrix);
+    return this.matrixWorld;
+}
+
+// determine current position in world space
+THREE.Object3D.prototype.currentPosTill = function(end) {
+    var pos = this.currentMatrixWorldTill(end);
+    if(!this.cPos) this.cPos = new THREE.Vector3();
+    this.cPos.x = pos.n14;
+    this.cPos.y = pos.n24;
+    this.cPos.z = pos.n34;
+    return this.cPos;
+}
+
 // fast update of current world matrix
 THREE.Object3D.prototype.currentMatrixWorld = function() {
     this.matrixAutoUpdate && this.updateMatrix();
@@ -227,70 +246,6 @@ planetGeo = new THREE.SphereGeometry( 1 , 16, 12 );
 
 
 
-/*
- * @constructor
- */
-Circle = function(params) {
-    THREE.Geometry.call( this );
-
-    this.trails = (params.trails==undefined) ? false : params.trails;
-    
-    this.setAngle(params.angle);
-    this.setBeta(params.betaRotate || 90);
-
-};
-
-Circle.prototype = new THREE.Geometry;
-Circle.prototype.constructor = Circle;
-
-Circle.prototype.gen = function() {
-    var slices = Ori.gfxProfile.circleRes,
-    arc =  this.angle / PI_SCALE,
-    beta = this.beta  / PI_SCALE,
-    theta = 0,
-    sinTheta = 0,    
-    cosTheta = 0,
-    cosPhi = Math.cos(beta),
-    sinPhi = Math.sin(beta),
-    x = 0,y = 0,z = cosPhi,
-    sliceNum = 0;
-
-    this.vertices = [];
-    this.colors = [];
-    
-    for (sliceNum = 0; sliceNum <= slices; sliceNum++) {
-        theta = sliceNum * arc / slices;
-        sinTheta = Math.sin(theta);
-        cosTheta = Math.cos(theta);
-
-        x = sinTheta * sinPhi;
-        y = cosTheta * sinPhi;
-
-        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
-//        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x*1.01, y*1.01, z ) ) );        
-        if(this.trails) {
-              var color = new THREE.Color( 0xFFFFFF );
-              color.setHSV( 0.5, 0.0, 1.0 - 0.8 * (sliceNum / slices) );
-              this.colors.push( color );
-        }
-
-    }
-//    this.__webglLineCount = slices;
-    this.__dirtyVertices = true;
-
-}
-
-Circle.prototype.setAngle = function(angle) {
-    this.angle = angle % 360;
-    this.dirty = true;
-    this.gen();
-}
-
-Circle.prototype.setBeta = function(angle) {
-    this.beta = angle % 360;
-    this.dirty = true;
-    this.gen();
-}
 
 
 
@@ -335,9 +290,6 @@ function setupCommonGeomerty() {
   aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
   aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );  
 };  
-setupCommonGeomerty();
-
-    
 
 
 /*
@@ -396,13 +348,14 @@ sceneToSyl = function(pos) {
 
 
 // store key/values of 3D nodes (planet,sun,poles etc.)
-nodePool = {};
+//nodePool = {};
 
 // locate a specific node in world space
+/*
 getNodePos = function(name) {
     var node = nodePool[name];
     if(!node) return {x:0,y:0,z:0};
     return node.currentPos();
 }
-
+//*/
 

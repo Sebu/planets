@@ -485,7 +485,6 @@ ModelBase.prototype = {
         for (var i in this.sphere) {
             this.sphere[i].reset();
         }
-        this.wd = 0;
         this.ecliptic.setRotateAngle(0);
         this.days = 0;
         this.planet.reset();
@@ -519,6 +518,7 @@ ModelBase.prototype = {
         }
     },
     
+    
     /**
     * calculate a curve (hippopede or path) 
     * @function
@@ -527,7 +527,61 @@ ModelBase.prototype = {
     * @param params.stop   index of last  moving sphere, following elements are fixed
     * @param params.node   interpolate positions of this node
     * @returns {Array} of position vectors
-    */    
+    */
+    //*    
+    calcCurve : function(params) {
+        var curvePos = [], // store curve points
+        start = params.start, // first moving sphere
+        stop = params.stop || this.sphere.length, // last moving sphere
+        node = params.node, // observe this node
+        maxSegments = (params.segments || 80) * Ori.gfxProfile.curveRes,
+        j =  -10, // start segment of curve (-10 points before current state)
+        i = 0, // universal loop counter
+        step = 0; // default step width
+
+        
+        for (i = 1; i < this.sphere.length; i++) {
+          this.sphere[i].visUpdate = false;              
+        }
+        
+        // approximate step width
+        for (i = start; i < stop; i++) {
+            step += Math.abs(this.sphere[i].getStep());
+        }
+        step = 10.0/(step*Ori.gfxProfile.curveRes);
+        
+        // jump to start position of curve
+        this.updateMovement(j*step);
+
+        // calculate positions of curve points            
+        for (; j < maxSegments; j++) {
+            this.updateMovement(step);
+            pos = node.currentPosTill(this.sphere[start]).clone();
+            curvePos.push(pos);
+        }
+        
+        // RESTORE
+        this.updateMovement(-maxSegments*step);
+
+        for (i = 1; i < this.sphere.length; i++) {
+          this.sphere[i].visUpdate = true;              
+        }
+        
+        return curvePos;
+    }
+    //*/
+    
+    /**
+    * OLD VERSION
+    * calculate a curve (hippopede or path) 
+    * @function
+    * @param params
+    * @param params.start  index of first moving sphere, previouse elements are fixed
+    * @param params.stop   index of last  moving sphere, following elements are fixed
+    * @param params.node   interpolate positions of this node
+    * @returns {Array} of position vectors
+    */  
+    /*  
     calcCurve : function(params) {
         var curvePos = [],
         oldAngle = [],
@@ -542,7 +596,7 @@ ModelBase.prototype = {
         j =  -10,
         i = 0;
       
-        // save axis and rotation state
+        // SAVE axis and rotation state
         for (i = 1; i <= start; i++) {
             oldAngle[i] = this.sphere[i].getAxisAngle();
             oldRotate[i] = this.sphere[i].getRotateAngle();
@@ -550,6 +604,9 @@ ModelBase.prototype = {
             this.sphere[i].setRotateAngle(0.0);
         }
         if(this.ptolemySphere) oldApsidal = this.ptolemySphere.getApsidalAngle();
+  
+  
+  
   
         // approximate step width
         for (i = start + 1; i < stop; i++) {
@@ -559,7 +616,9 @@ ModelBase.prototype = {
         }
         step = 10.0/(step*Ori.gfxProfile.curveRes);
         
-        // calculate position of curve start point
+        
+        
+        // jump to start position of curve
         for (i = start + 1; i < stop; i++) {
           this.sphere[i].updateMovement(j*step);
         }
@@ -575,6 +634,8 @@ ModelBase.prototype = {
             curvePos.push(pos);
         }
         
+        
+        // RESTORE
         // restore axis state
         for (i = 1; i <= start; i++)
             this.sphere[i].setAxisAngle(oldAngle[i]);
@@ -590,6 +651,7 @@ ModelBase.prototype = {
 
         return curvePos;
     }
+    //*/
 
 
 }

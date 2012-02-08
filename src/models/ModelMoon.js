@@ -53,9 +53,74 @@ ModelMoonBase.prototype.create = function() {
     this.setShowHippo = null;
     this.setShowPath = null;
     
-    MoonMixin.call(this);
     BaseMixin.call(this);
-    this.setCurrentMoonModel("Mendell");   
+//    MoonMixin.call(this);
+    
+    var metonYear = 0,
+    metonSynodicMonths = 0,
+    metonDays = 0, // days per cycle
+    sarosDraconiticMonths = 0,
+    sarosSynodicMonths = 0;
+        
+    this.setMetonYear = function(val) {
+        metonYear = Number(val);
+        this.updateMoon();
+    }
+    this.getMetonYear = function() {
+        return metonYear;
+    }
+
+    this.setMetonSynodicMonths = function(val) {
+        metonSynodicMonths = Number(val);
+        this.updateMoon();
+    }
+    this.getMetonSynodicMonths = function() {
+        return metonSynodicMonths;
+    }
+
+
+    this.setMetonDays = function(val) {
+        metonDays = Number(val);
+        this.updateMoon();
+    }
+    this.getMetonDays = function() {
+        return metonDays;
+    }
+
+
+    this.setSarosDraconiticMonths = function(val) {
+        sarosDraconiticMonths = Number(val);
+        this.updateMoon();
+    }
+    this.getSarosDraconiticMonths = function() {
+        return sarosDraconiticMonths;
+    }
+
+
+    this.setSarosSynodicMonths = function(val) {
+        sarosSynodicMonths = Number(val);
+        this.updateMoon();
+    }
+    this.getSarosSynodicMonths = function() {
+        return sarosSynodicMonths;
+    }
+
+    this.getMetonZodicalMonths = function() {
+        return this.getMetonYear() + this.getMetonSynodicMonths();
+    }
+    this.getMetonDaysPerYear = function() {
+        return this.getMetonDays() / this.getMetonYear();
+    }
+    this.getSynodicDaysPerMonth = function() {
+        return this.getMetonDays() / this.getMetonSynodicMonths();
+    }
+    this.getZodicalDaysPerMonth = function() {
+        return this.getMetonDays() / this.getMetonZodicalMonths();
+    }
+
+    this.getDraconiticDaysPerMonth = function() {
+        return this.getSynodicDaysPerMonth()*(this.getSarosSynodicMonths() / this.getSarosDraconiticMonths());
+    }
 };
 
 /**
@@ -64,6 +129,7 @@ ModelMoonBase.prototype.create = function() {
  */
 ModelMoon = function() {
     this.create();
+    this.setCurrentMoonModel("Mendell");   
 };
 
 ModelMoon.prototype = new ModelMoonBase;

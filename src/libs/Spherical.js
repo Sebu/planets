@@ -4,37 +4,28 @@
  */
 Spherical = function Spherical(params) {
     THREE.Object3D.call( this );
-    
-    this.offsetRotateAngle = 0.0;
+
+    this.eulerOrder = "ZYX"; // revert rotate order
     this.visUpdate = true;
-
     this.inner_id = params.inner_id;
-
     this.moving = true;
-
-    this.gfx = new Object();
-
-    this.gfx.scale = params.scale;
-
-    this.gfx.color = params.color || { r: 0.5, g: 0.5, b: 0.5};
-
-
     this.axisAngle = params.axisAngle || 0.0;
     this.rotateAngle = params.rotateStart || 0.0;
     this.rotateStart = params.rotateStart || 0.0;
     this.speed = params.speed || 0.0;
+    var trails = (Ori.gfxProfile.shading>=Ori.Q.MEDIUM) ? true : false;
+    
+    this.gfx = new Object();
+    this.gfx.scale = params.scale;
+    this.gfx.color = params.color || { r: 0.5, g: 0.5, b: 0.5};
 
-//  this.pivot = this;
-    this.eulerOrder = "ZYX";  
+ 
     this.anchor = new Node();
     this.addNode(this.anchor);
 
     this.material = new THREE.LineBasicMaterial( {
         opacity:  (Ori.gfxProfile.alpha) ? 0.5 : 1.0,
         color: rgbToHex(this.gfx.color) } );
-//    this.materialArc =  new THREE.LineBasicMaterial( {
-//        //opacity: 0.5,
-//        color: rgbToHex(this.gfx.color) } );
 
     this.arcangle21 = new Circle({ angle : this.axisAngle });
     this.gfx.arc1 = this.arc1 = new THREE.Line(this.arcangle21, this.material ); //Arc
@@ -70,16 +61,10 @@ Spherical = function Spherical(params) {
     this.gfx.markerarc.rotation.y = Math.PI/2;
     this.anchor.addNode(this.gfx.markerarc);
 
-
-//    var geometryBall = new THREE.SphereGeometry( 0.1, 10, 10 );
-//    geometryBall.overdraw = true;
-    
+    // set materials    
     var materialBall = new THREE.MeshBasicMaterial( { transparent:true, opacity: 1.0, color: rgbToHex(this.gfx.color) } );
-   
     var materialCone = new THREE.MeshBasicMaterial( { opacity: 1.0, color: "0xFFFFFF" } );
-//    THREE.ColorUtils.adjustHSV(materialCone.color, 0, 0.0, -0.2);
-    
-    
+   
 
     this.gfx.markerball =  new THREE.Mesh(geometryBall, materialCone);
 //    this.gfx.markerend =  new THREE.Mesh(markerend, materialCone);
@@ -105,7 +90,7 @@ Spherical = function Spherical(params) {
     this.anchor.addNode(this.gfx.npole);
     this.anchor.addNode(this.gfx.spole);
 
-    var trails = (Ori.gfxProfile.shading>=Ori.Q.MEDIUM) ? true : false;
+    
     this.progressArc = new Circle({ angle : 40, trails: trails });
     var progressMat = new THREE.LineBasicMaterial( {
         linewidth:6,
@@ -134,8 +119,7 @@ Spherical = function Spherical(params) {
     this.setAxisAngle(this.axisAngle);
     this.setRotateAngle(this.rotateAngle);
     this.setSpeed(this.speed);
-
-    //"markerarc",,"markerend"
+    this.setOffsetRotateAngle(0.0);
     this.setVisuals(["sphere","arc1","arc2","equator","npole","spole","rotationarc","markerball"]);
     
 
@@ -178,11 +162,10 @@ Spherical.prototype.getMoving = function() {
 
 Spherical.prototype.getPlane = function() {
 
-//    var plane = Plane.create(Vector.Zero(3), posSyl(this.inner_id+"npole").toUnitVector());
-    var center = sceneToSyl(this.anchor.currentPos());
-    var polePos = sceneToSyl(this.gfx.npole.currentPos());
-    var upVec = center.subtract(polePos);
-    var plane = Plane.create(center, upVec.toUnitVector());
+    var center = sceneToSyl(this.anchor.currentPos()),
+    polePos = sceneToSyl(this.gfx.npole.currentPos()),
+    upVec = center.subtract(polePos),
+    plane = Plane.create(center, upVec.toUnitVector());
     return plane;
 }
 
@@ -252,7 +235,7 @@ Spherical.prototype.setArcBeta = function(angle) {
     this.progressArc.setBeta(angle);
 };
 
-Spherical.prototype.setArcAngle = function(angle) {
+Spherical.prototype.updateArcAngle = function() {
 
 /*    
     if(angle > 0) {
@@ -266,13 +249,13 @@ Spherical.prototype.setArcAngle = function(angle) {
 */    
     // update progress angle
 //    if(this.gfx.equator.getEnabled()) this.equator.setAngle(360-angle);
-    if(this.gfx.rotationarc.getEnabled()) this.progressArc.setAngle(-angle);
+    if(this.visUpdate && this.gfx.rotationarc.getEnabled()) this.progressArc.setAngle(-this.rotateAngle);
 };
 
 Spherical.prototype.setRotateAngle = function(angle) {
     this.rotateAngle = angle;
-    if(this.visUpdate) this.setArcAngle(angle);
     this.anchor.rotation.y = this.rotateAngle/PI_SCALE;
+    this.updateArcAngle();
 };
 
 Spherical.prototype.getRotateAngle = function() {

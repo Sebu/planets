@@ -88,7 +88,7 @@ var PI2 = Math.PI * 2;
 
     this.rotation.x = this.beta/PI_SCALE;
 
-    nodePool[params.inner_id] = this.mesh;
+    //nodePool[params.inner_id] = this.mesh;
 
 };
 
