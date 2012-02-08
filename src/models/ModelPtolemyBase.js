@@ -14,23 +14,31 @@ ModelPtolemyBase.prototype.create = function() {
 	  ModelBase.prototype.create.call(this);
 
     this.genSpheres({spheres : 4});
-   
+    
     this.setShowHippo = null;
  
     /** @lends BaseMixin */
     BaseMixin.call(this);
     
-    this.ptolemizeSpheres(); // :) add some ecliptic/latitude and apsidal stuff to the daily
+    // :) add some ecliptic/latitude and apsidal stuff to the daily
 
-    this.sphere[1].realAngle = 0;
 
-    this.updateList.push(this.ptolemySphere);
+    // TODO:deprecated?
+//    this.sphere[1].realAngle = 0;
+
 
     // Add Ptolemy Sun
     this.realSunS = [];
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: config.colors["S2"]});
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: config.colors["S2"]});
-    this.realSun = new Planet({ glow: true, glowMap: config.sunGlowTexture, dist: 6.5, emit: 0.5, scale: 0.2, inner_id: this.name+"realSun",  color: config.colors["Sun"]});
+    this.realSun = new Planet({
+        glow: true,
+        glowMap: config.sunGlowTexture,
+        dist: 6.5,
+        emit: 0.5,
+        scale: 0.2,
+        inner_id: this.name+"realSun",
+        color: config.colors["Sun"] });
     this.realSun.setBeta(90.0);
     this.updateList.push(realSunS1);
     this.updateList.push(realSunS2);    
@@ -55,7 +63,10 @@ ModelPtolemyBase.prototype.create = function() {
 
     // add the bob crank vis
     this.sphere[4].gfx.crank = new THREE.Line(equator, material );
-    this.sphere[4].gfx.crankRadius = new Curve({trails: false, pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ], color: config.colors["S4"] });
+    this.sphere[4].gfx.crankRadius = new Curve({
+        trails: false,
+        pos:  [ {x: 0,y: 1,z: 0}, {x: 0, y: 0,z: 0} ],
+        color: config.colors["S4"] });
     this.crank = new Node();
     this.crank.rotation.y = Math.PI/2;
     this.sphere[4].gfx.crank.addNode(this.sphere[4].gfx.crankRadius);
@@ -68,8 +79,13 @@ ModelPtolemyBase.prototype.create = function() {
     
     // crank line
     this.cline = [ {x: 0,y: 0,z: -10}, {x: 0, y: 0,z: 10} ];
-    this.sphere[4].gfx.crankLine = new Curve({trails: false, pos: this.cline, color: config.colors["S4"] }); 
+    this.sphere[4].gfx.crankLine = new Curve({
+        trails: false,
+        pos: this.cline,
+        color: config.colors["S4"] }); 
     this.root.addNode(this.sphere[4].gfx.crankLine);
+    
+    
 
     this.adjustCrank = function () {
       var scale = Math.sin(this.getDeviation()/PI_SCALE) * this.sphere[4].radius*this.factor;
@@ -197,7 +213,9 @@ ModelPtolemyBase.prototype.create = function() {
       var scale = (this.sphere[3].radius+this.sphere[4].radius)*this.factor;
       this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
-      this.apsidal = [ {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor}, {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];
+      this.apsidal = [ 
+          {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor},
+          {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];
       this.apsidalLine.setPoints(this.apsidal);       
     }
 
@@ -281,20 +299,34 @@ ModelPtolemyBase.prototype.create = function() {
    
 };
 
-ModelPtolemyBase.prototype.ptolemizeSpheres = function() {  
-      this.ptolemySphere = new Longituder();  
-      this.sphere[1].anchor.remove(this.sphere[2]);
-      this.sphere[2].anchor.remove(this.ecliptic);
-      this.sphere[1].anchor.addNode(this.ptolemySphere);
-      this.ptolemySphere.anchor.addNode(this.sphere[2]);
-      this.ptolemySphere.addNode(this.ecliptic);
-      this.sphere[4].remove(this.sphere[4].anchor);
-      this.sphere[4].ptolemy =  new Node(); 
-      this.sphere[4].addNode(this.sphere[4].ptolemy);      
-      this.sphere[4].ptolemy.addNode(this.sphere[4].anchor); 
+/**
+* @override
+*/
+ModelPtolemyBase.prototype.connectSpheres = function(params) {
+        this.ptolemySphere = new Longituder();  
+        this.updateList.push(this.ptolemySphere);
       
+        this.root.addNode(this.sphere[1]);
+          //S1
+          this.sphere[1].addNode( this.earth );
+          this.sphere[1].anchor.addNode( this.stars );
+          this.sphere[1].anchor.addNode( this.ptolemySphere ); 
+            this.ptolemySphere.addNode(this.ecliptic);                          
+              this.ecliptic.anchor.addNode(this.sun);
+            this.ptolemySphere.anchor.addNode( this.sphere[2] );          
+              //S2
+              this.sphere[2].addNode( this.equantPoint ); 
+              this.sphere[2].anchor.addNode( this.sphere[3] );
+                //S3
+                this.sphere[3].anchor.addNode( this.sphere[4] );  
+                  //S4
+                  this.sphere[4].anchor.addNode( this.planet );
+                  this.sphere[4].remove(this.sphere[4].anchor);
+                  this.sphere[4].ptolemy =  new Node(); 
+                  this.sphere[4].addNode(this.sphere[4].ptolemy);      
+                  this.sphere[4].ptolemy.addNode(this.sphere[4].anchor);             
 };
-
+    
 /** @override */
 ModelPtolemyBase.prototype.reset = function () {
         ModelBase.prototype.reset.call(this);
@@ -309,6 +341,7 @@ ModelPtolemyBase.prototype.reset = function () {
         this.setKM( Utils.toDec(this.currentPlanet.km || 0) );        
         this.setLambdaAN( Utils.toDec(this.currentPlanet.lambdaAN || 0) );
         this.wd = 0;
+        
         this.adjustAnomaly();   
         
         // sun stuff

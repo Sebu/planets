@@ -2,6 +2,7 @@
 
 /**
  * @constructor
+ * @extends ModelMoonBase
  */
 ModelMoonCompare = function() {
   	this.create();

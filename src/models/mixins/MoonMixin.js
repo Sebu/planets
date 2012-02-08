@@ -1,3 +1,0 @@
-MoonMixin = function() {
-
-}

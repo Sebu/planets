@@ -1,7 +1,7 @@
 
 /**
  * @constructor
- * @extends Model4
+ * @extends ModelBase
  */
 ModelSimple = function() {
     ModelBase.prototype.create.call(this);

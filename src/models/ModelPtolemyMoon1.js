@@ -1,6 +1,6 @@
 /**
  * @constructor
- * @extends ModelPtolemyMoon2
+ * @extends ModelPtolemyMoonBase
  */
 ModelPtolemyMoon1a = function() {
     this.create();
@@ -20,7 +20,7 @@ ModelPtolemyMoon1a.prototype.name = "ModelPtolemyMoon1a";
 
 /**
  * @constructor
- * @extends ModelPtolemyMoon2
+ * @extends ModelPtolemyMoonBase
  */
 ModelPtolemyMoon1b = function() {
     this.create();

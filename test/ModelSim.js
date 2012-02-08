@@ -70,7 +70,7 @@ myApp.prototype.draw = function(time) {
 //TODO: shorten like eval(name + "()");
 myApp.prototype.getModel = function(name) {
   var mod = models[name];
-  console.log(name);
+
   if(!mod) {
     models[name] = new window[name]({renderer: this});
     mod = models[name];
@@ -85,6 +85,7 @@ myApp.prototype.loadPreset = function(planet) {
 
         // switch model
 //        this.currentPreset = preset;
+
         model = this.getModel(planet.model);
         model.loadPreset(planet);
 

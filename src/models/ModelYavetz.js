@@ -6,6 +6,7 @@
 ModelYavetz = function() {
 
     ModelBase.prototype.create.call(this);
+    
     this.genSpheres({spheres : 4});
     BaseMixin.call(this);
 

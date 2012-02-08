@@ -1,4 +1,5 @@
-/*
+
+/**
  * @constructor
  * provide dist(tance) from center, scale, color, and beta rotation
  */

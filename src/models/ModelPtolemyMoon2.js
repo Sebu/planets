@@ -14,8 +14,6 @@ ModelPtolemyMoonBase.prototype.create = function(params) {
 	  ModelPtolemyBase.prototype.create.call(this, params);	
     this.factor = 1.0/7.0;
 
-    //this.setAnimSpeed(60); //DEPRECATED?
-
 
     this.updateSunDist = function() {
       this.realSunS[1].setScale(this.sphere[3].radius*this.factor);
@@ -64,7 +62,7 @@ ModelPtolemyMoonBase.prototype.create = function(params) {
 
 /**
  * @constructor
- * @extends ModelPtolemyBase
+ * @extends ModelPtolemyMoonBase
  */
 ModelPtolemyMoon2 = function(params) {
   this.create();

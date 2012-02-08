@@ -20,6 +20,7 @@ ModelBase.prototype = {
      * @param params.name name of the model
      * @returns instance of ModelBase :)
      */
+     
     create : function() {
    
         this.showCurve = [];            
@@ -69,43 +70,6 @@ ModelBase.prototype = {
     },
     
     /**
-    * base structure of planet system
-    * @function 
-    * @private
-    */
-    setupRoot : function() {
-//        this.light.castShadow = true;
-        //this.renderer = params.renderer;
-        //this.camera = params.renderer.camera;
-        this.root = new THREE.Scene(); //params.renderer.newScene();
-        
-        // planet surface for earth view
-        this.root.addNode(this.earthPlane = new Disc({radius: config.sphereRadius, color: config.colors["Earth"]}) );
-        // DIRECTION MARKERS
-        this.earthPlane.addNode( this.north = new Translate({id: "North", x:-config.labelDist, y:0.2}) );
-        this.earthPlane.addNode( this.south = new Translate({id: "South", x:config.labelDist,  y:0.2}) );
-        this.earthPlane.addNode( this.east =  new Translate({id: "East" , z:-config.labelDist, y:0.2}) );
-        this.earthPlane.addNode( this.west =  new Translate({id: "West" , z:config.labelDist,  y:0.2}) );
-        
-        // hide markers when hiding earthPlane
-        var that = this;
-        this.earthPlane.setEnabled = function(state){
-          this.visible = state;
-          that.north.setEnabled(state);
-          that.south.setEnabled(state);
-          that.east.setEnabled(state);
-          that.west.setEnabled(state);          
-        }
-        this.earthPlane.setEnabled(false);
-    },
-
-    setupLight : function() {
-        this.root.add( new THREE.AmbientLight(0xFFFFFF) );
-        this.sunLight = new THREE.PointLight( 0xFFFFFF, 1, 0 );
-        this.root.add( this.sunLight );
-    },
-
-    /**
     * create some standard shortcuts
     * TODO: remove them, use model.sphere[x] etc.
     * @private
@@ -125,33 +89,6 @@ ModelBase.prototype = {
         }
     },
 
-    /**
-    * add ecliptic and Sun
-    * @private
-    */
-    setupEcliptic : function(params) {
-        this.sphere[2].addNode(this.ecliptic = new Spherical({ scale: config.sphereRadius, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"] }));
-        this.ecliptic.setVisuals([]);    
-        this.ecliptic.anchor.addNode(this.sun = new Planet({ glow: false, glowMap: config.sunGlowTexture, betaRotate: 90.0, emit: 0.5, scale: 0.3, dist: config.sphereRadius, inner_id: params.name+"Sun", color: config.colors["Sun"] }));
-        this.updateList[this.sphere.length] = this.ecliptic;
-
-        this.setSunSpeed = function(value)  { this.ecliptic.setSpeed(value); };
-        this.getSunSpeed = function()       { return this.ecliptic.getSpeed(); };
-    },
-
-    setupEarth : function() {
-        var earthMap = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(config.earthTexture) : undefined;
-        this.earth = new Planet({
-            betaRotate:180.0,
-//            dist: 2.0,
-            scale: 0.6,
-            emit:0.0, 
-            phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
-            map: earthMap,
-            color: config.colors["Earth"],
-            inner_id: this.name+"Earth"});       
-    },
-
 
     /**
      genarate simple linear sphere system with a center earth/plane and planet
@@ -160,58 +97,147 @@ ModelBase.prototype = {
      @param params.spheres number of spheres to generate and connect
     */
     genSpheres : function(params) {
+    
         this.sphere = new Array(params.spheres);
         
-        this.setupRoot();
-        this.setupLight();
+        // ROOT_NODE / SCENE       
+        this.root = new THREE.Scene(); 
+        
+        // planet surface for earth view
+        this.root.addNode(this.earthPlane = new Disc({radius: config.sphereRadius, color: config.colors["Earth"]}) );
+        // DIRECTION MARKERS
+        this.earthPlane.addNode( this.north = new Translate({id: "North", x:-config.labelDist, y:0.2}) );
+        this.earthPlane.addNode( this.south = new Translate({id: "South", x:config.labelDist,  y:0.2}) );
+        this.earthPlane.addNode( this.east =  new Translate({id: "East" , z:-config.labelDist, y:0.2}) );
+        this.earthPlane.addNode( this.west =  new Translate({id: "West" , z:config.labelDist,  y:0.2}) );
+        
+        // hide markers when hiding earthPlane
+        var that = this;
+        this.earthPlane.setEnabled = function(state){
+          this.visible = state;
+          that.north.setEnabled(state);
+          that.south.setEnabled(state);
+          that.east.setEnabled(state);
+          that.west.setEnabled(state);          
+        }
+        this.earthPlane.setEnabled(false);
 
                  
-        // first and outer sphere
+
+        // first and outer sphere S1
         this.sphere[1] = new Spherical({
             vortex: (Ori.gfxProfile.geometry >= Ori.Q.HIGH), 
             inner_id: this.name+"S1", 
             scale: config.sphereRadius,  
-            color: config.colors["S1"]
-            });
-        this.root.addNode(this.sphere[1]);
+            color: config.colors["S1"] });
+        
         this.updateList[0] = this.sphere[1];
         // default visuals for sphere1        
         this.sphere[1].setVisuals( ["equator","npole","spole","rotationarc","markerball"] );
 
+
         // add additional spheres
         for (var i = 2; i <= params.spheres; i++) {
-            tmp = this.sphere[i] = new Spherical({inner_id: this.name+"S" + i + "", scale: config.sphereRadius-i*0.1, color: config.colors["S" + i + ""]});
-            this.sphere[i - 1].anchor.addNode(tmp);
-            this.updateList.push(tmp);
+            this.sphere[i] = new Spherical({
+                inner_id: this.name+"S" + i + "",
+                scale: config.sphereRadius-i*0.1,
+                color: config.colors["S" + i + ""] });
+            this.updateList.push( this.sphere[i] );
         }
         
-
         
-        // add earth to sphere 1
-        this.setupEarth();
-        this.sphere[1].addNode(this.earth);
+        // add earth to S1
+        var earthMap = (Ori.gfxProfile.textures>=Ori.Q.MEDIUM) ? THREE.ImageUtils.loadTexture(config.earthTexture) : undefined;
+        this.earth = new Planet({
+            betaRotate:180.0,
+            scale: 0.6,
+            emit:0.0, 
+            phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
+            map: earthMap,
+            color: config.colors["Earth"],
+            inner_id: this.name+"Earth" });    
+        
 
-        // add the planet
-        this.sphere[params.spheres].anchor.addNode(this.planet = new Planet({ dist: config.sphereRadius, emit: 0.5, scale: 0.2, inner_id: params.name+"Planet",  color: config.colors["Planet"] }));
 
-        this.setupShortcuts();
+        // create and planet and attach to LAST S
+        this.planet = new Planet({ 
+            dist: config.sphereRadius,
+            emit: 0.5,
+            scale: 0.2,
+            inner_id: params.name+"Planet",
+            color: config.colors["Planet"] });
+        
 
-      
-        // 
-        this.sphere[2].addNode( this.equantPoint = new Translate({z:0.0}) );
+
+        // create ecliptic and attach to S2
+        this.ecliptic = new Spherical({ 
+            scale: config.sphereRadius,
+            axisAngle: 0.0,
+            speed: 0.0,
+            color: config.colors["S4"] });    
+        
+        this.ecliptic.setVisuals([]); 
+        
+        // create SUN and attach to ECLIPTIC
+        this.sun = new Planet({
+            glow: false,
+            glowMap: config.sunGlowTexture,
+            betaRotate: 90.0,
+            emit: 0.5,
+            scale: 0.3,
+            dist: config.sphereRadius,
+            inner_id: this.name+"Sun",
+            color: config.colors["Sun"] });           
+        
+        this.updateList[this.sphere.length] = this.ecliptic;
+        this.setSunSpeed = function(value)  { this.ecliptic.setSpeed(value); };
+        this.getSunSpeed = function()       { return this.ecliptic.getSpeed(); };
+        
+        // create ambient and sunlight
+        this.root.add( new THREE.AmbientLight(0xFFFFFF) );
+        this.sunLight = new THREE.PointLight( 0xFFFFFF, 1, 0 );
+        this.root.add( this.sunLight );
+
 
         // add stars
-        this.sphere[1].anchor.addNode( this.stars = new Cloud({count:50}) );
-        
-        this.setupEcliptic(params);
+        this.stars = new Cloud({count:50})
 
         
+        // helper point
+        this.equantPoint = new Translate({z:0.0})
+
+
         //TODO: hack white north pole
         this.sphere[1].gfx.npole.materials = [ new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ];
         
+        
+        // connect eveything
+        this.connectSpheres(params);
+            
+        this.setupShortcuts();
     },
 
-
+    /**
+    * connect sphere nodes and earth/stars/planet etc.
+    * @function
+    */
+    connectSpheres : function(params) {
+        this.root.addNode(this.sphere[1]);
+          // S1
+          this.sphere[1].addNode( this.earth );
+          this.sphere[1].anchor.addNode( this.stars ); 
+          this.sphere[1].anchor.addNode( this.sphere[2] );
+            // S2
+            this.sphere[2].addNode( this.equantPoint );               
+            this.sphere[2].addNode( this.ecliptic ); 
+              this.ecliptic.anchor.addNode(this.sun);
+            // S3 - Slast
+            for (var i = 3; i <= params.spheres; i++) {
+              this.sphere[i - 1].anchor.addNode( this.sphere[i] );
+            }
+              // Slast
+              this.sphere[params.spheres].anchor.addNode( this.planet );
+    },
     /**
      * load preset model data
      * @function
@@ -235,18 +261,19 @@ ModelBase.prototype = {
             }
         }
         
-        this.setShowStars(this.currentPlanet.showStars);
+        if(this.setShowStars) this.setShowStars(this.currentPlanet.showStars);
         if(this.setShowPath) this.setShowPath(this.currentPlanet.showPath);
         if(this.setShowHippo) this.setShowHippo(this.currentPlanet.showHippo);
-        this.sun.setDist(this.currentPlanet.sunDist);
+
+        if(this.sun) this.sun.setDist(this.currentPlanet.sunDist);
+        if(this.sun) this.sun.setEnabled(this.currentPlanet.showSun);
+//        this.sun.setGlow(this.currentPlanet.showSun);
+        if(this.setSunSpeed) this.setSunSpeed(this.currentPlanet.sunSpeed);
+
         this.planet.setBeta(this.currentPlanet.betaRotate);
         this.planet.setShade(this.currentPlanet.color);
-        this.setSunSpeed(this.currentPlanet.sunSpeed);
 
-        this.sun.setEnabled(this.currentPlanet.showSun);
-//        this.sun.setGlow(this.currentPlanet.showSun);
         if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
-
 
         // hide sun sphere / better never ever show aka don't generate
         this.ecliptic.setShow(false); 
@@ -288,7 +315,7 @@ ModelBase.prototype = {
      * stop/start/pause toggle of the model
      */
     setRunning : function(state) {
-        this.running=state;
+        this.running = state;
     },
     
     getRunning : function() {
@@ -296,7 +323,7 @@ ModelBase.prototype = {
     },
     
     toggleRunning : function() {
-        this.running=!this.running;
+        this.running = !this.running;
     },
 
 
@@ -416,12 +443,12 @@ ModelBase.prototype = {
     */
     update : function(time) {
        if(this.running) 
-         this.updateMovement( this.ecliptic.getSpeed() * (time/this.speed) ); // days passed (speed indicates seconds for one solar year)
+           this.updateMovement( this.ecliptic.getSpeed() * (time/this.speed) ); // days passed (speed indicates seconds for one solar year)
 
        this.updateMetadata();
 
        if(this.sun.getEnabled()) 
-         this.sunLight.setPos(this.sun.mesh.currentPos());
+           this.sunLight.setPos(this.sun.mesh.currentPos());
     },
 
     /** 
@@ -431,20 +458,20 @@ ModelBase.prototype = {
     */
     updateMovement : function(time) {
             
-            // set current dayDelta/time and add to global passed days
-            this.dayDelta = time;
-            this.days += this.dayDelta;
+        // set current dayDelta/time and add to global passed days
+        this.dayDelta = time;
+        this.days += this.dayDelta;
 
-            // update movement of all objects(primary spheres) with updateMovement function
-            for (i in this.updateList) {
-                this.updateList[i].updateMovement(this.dayDelta);
-            }
+        // update movement of all objects(primary spheres) with updateMovement function
+        for (i in this.updateList) {
+            this.updateList[i].updateMovement( this.dayDelta );
+        }
   
     },
 
     // separate it for easy modification
     updateMetadata : function() {
-       this.updatePlanetMetadata(this.planet,this.sphere[1],this.ecliptic, this.sphere[3]);
+        this.updatePlanetMetadata( this.planet, this.sphere[1], this.ecliptic, this.sphere[3] );
     },
     
 
@@ -463,7 +490,7 @@ ModelBase.prototype = {
      */
     setDays : function(days) {
         this.reset();
-        this.addDays(days);
+        this.addDays( days );
     },
 
     /**
@@ -472,7 +499,7 @@ ModelBase.prototype = {
      * @param days the number of days to
      */
     addDays : function(days) {
-      this.updateMovement(days);  
+      this.updateMovement( days );  
       this.updateMetadata();
     },
 
@@ -508,10 +535,10 @@ ModelBase.prototype = {
 
         var newCurve = this.calcCurve({start: params.start, stop: params.stop, node: params.node});
         if(!this.curves[params.index]) {
-            this.curves[params.index] = new Curve(
-                {   trails: params.trails, 
-                    pos: newCurve, 
-                    color: params.color});
+            this.curves[params.index] = new Curve({
+                trails: params.trails, 
+                pos: newCurve, 
+                color: params.color});
             params.anchor.addNode(this.curves[params.index]);
         } else {
             this.curves[params.index].setPoints( newCurve );
