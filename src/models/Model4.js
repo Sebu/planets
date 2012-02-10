@@ -31,7 +31,7 @@ Model4 = function() {
    * @function 
    * @param time millisecons passed since last call
    */
-  update = function(time) {
+  this.update = function(time) {
       this.addCurve({
           index: 0,                       // curve storage index
           anchor: this.sphere[1].anchor,  // attach curve to anchor

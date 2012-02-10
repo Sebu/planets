@@ -13,14 +13,15 @@ ModelPtolemyInferior = function() {
 
 
     this.adjustAnomaly = function() {
-      var lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
+      var 
+      lambdaA = this.ptolemySphere.getApsidalAngle()/PI_SCALE,    
       lambdaMA = this.sphere[3].getRotateAngle()/PI_SCALE - lambdaA,
       lambdaAN = this.lambdaAN/PI_SCALE,
       lambdaN = mod(lambdaA - lambdaAN,360),
       lambdaCA = lambdaMA,
       lambdaD = lambdaCA + lambdaAN,
       earthDelta = Math.asin((this.sphere[2].radius/this.sphere[3].radius) * Math.sin(lambdaMA)),
-      i = this.ptolemySphere.inclination/PI_SCALE * Math.sin( lambdaD ),
+      i = this.ptolemySphere.getInclination()/PI_SCALE * Math.sin( lambdaD ),
       j = this.getDeviation()/PI_SCALE * Math.sin( lambdaD + Math.PI/2 ),
       k = this.getKM()/PI_SCALE * Math.sin( lambdaD );      
       
@@ -63,9 +64,11 @@ ModelPtolemyInferior = function() {
       this.sphere[2].anchor.rotation.y = -lambdaMA;
       this.sphere[3].anchor.rotation.y = trueAngle;
       this.equantPoint.position.z = this.sphere[3].equant*this.factor/2;
+
       // mean anomaly correction
       this.sphere[4].rotation.y = angleDiff - earthDelta;
       this.sphere[4].anchor.rotation.y += earthDelta;
+
       // latitude
       // inclination correction
       this.ptolemySphere.pivot.rotation.y = lambdaN;

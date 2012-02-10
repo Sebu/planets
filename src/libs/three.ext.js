@@ -119,7 +119,7 @@ THREE.Object3D.prototype.getPosCanvas = function(camera, canvas) {
 
 
 
-THREE.DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
+DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
 
 	THREE.Geometry.call( this );
 
@@ -178,19 +178,17 @@ THREE.DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
 	this.computeVertexNormals();
 
 	function vert( x, y, z ) {
-
-		scope.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
-
+  		scope.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
 	};
 
 	function f4( a, b, c, d ) {
-		scope.faces.push( new THREE.Face4( a, b, c, d ) );
+  		scope.faces.push( new THREE.Face4( a, b, c, d ) );
 	};
 
 };
 
-THREE.DiscGeometry.prototype = new THREE.Geometry();
-THREE.DiscGeometry.prototype.constructor = THREE.TorusGeometry;
+DiscGeometry.prototype = new THREE.Geometry();
+DiscGeometry.prototype.constructor = DiscGeometry; //THREE.TorusGeometry;
 
 // THREE.ImageUtils.loadTexture('textures/ramp.png')
 // disc of planet surface 
@@ -210,7 +208,7 @@ Disc = function(params) {
       
   THREE.Mesh.call(  this, 
 //                    new THREE.SphereGeometry(params.radius,20,30),
-                    new THREE.DiscGeometry(inner, params.radius, 0, 60),  
+                    new DiscGeometry(inner, params.radius, 0, 60),  
                     this.material );
 //  this.scale.y = 0.01;
 //  this.overdraw = true;
@@ -230,23 +228,6 @@ Translate = function(params) {
 
 Translate.prototype = new THREE.Object3D;
 Translate.prototype.constructor = Translate;
-
-/* sphere LOD
-* @deprecated
-*/
-sphereGeo = [
-
-                [ new THREE.SphereGeometry( 1, 32, 16 ), 0 ],
-                [ new THREE.SphereGeometry( 1, 16, 8 ), 10 ],
-                [ new THREE.SphereGeometry( 1, 8, 4 ), 20 ]
-
-];
-
-planetGeo = new THREE.SphereGeometry( 1 , 16, 12 );
-
-
-
-
 
 
 
@@ -284,22 +265,33 @@ Cloud.prototype.constructor = Cloud;
 
 
 function setupCommonGeomerty() {
-  geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
-  equator = new Circle({ angle : 359.9 });
-  aLine = new THREE.Geometry();
-  aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
-  aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );  
+    geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
+    equator = new Circle({ angle : 359.9 });
+    aLine = new THREE.Geometry();
+    aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
+    aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );  
+    /* sphere LOD
+    * @deprecated
+    */
+    sphereGeo = [
+
+                    [ new THREE.SphereGeometry( 1, 32, 16 ), 0 ],
+                    [ new THREE.SphereGeometry( 1, 16, 8 ), 10 ],
+                    [ new THREE.SphereGeometry( 1, 8, 4 ), 20 ]
+
+    ];
+
+    planetGeo = new THREE.SphereGeometry( 1 , 16, 12 );
 };  
 
 
 /*
  * @constructor
- * 
  */
 Longituder = function() {
     THREE.Object3D.call( this );
-    this.anchor = new THREE.Object3D();
-    this.pivot = new THREE.Object3D();
+    this.pivot = new Node();
+    this.anchor = new Node();
     this.addNode(this.pivot);
     this.pivot.addNode(this.anchor);
     this.setInclination(0);

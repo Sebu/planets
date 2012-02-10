@@ -32,7 +32,7 @@ ModelPtolemyBase.prototype.create = function() {
     var realSunS1 = this.realSunS[1] = new Spherical({ scale: 7.0,  color: config.colors["S2"]});
     var realSunS2 = this.realSunS[2] = new Spherical({ scale: 6.5,  color: config.colors["S2"]});
     this.realSun = new Planet({
-        glow: true,
+        glow: false,
         glowMap: config.sunGlowTexture,
         dist: 6.5,
         emit: 0.5,
@@ -161,7 +161,12 @@ ModelPtolemyBase.prototype.create = function() {
     /** @override */
     this.update = function(time) {
         if(this.running)  
-          this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 1, node: this.planet.mesh, color: config.colors["Path"]});
+          this.addCurve({
+              index: 0,
+              anchor: this.sphere[1],
+              start: 1,
+              node: this.planet.mesh,
+              color: config.colors["Path"] });
           
         ModelBase.prototype.update.call(this, time);
 
