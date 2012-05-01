@@ -31,11 +31,11 @@ Curve.prototype.gen = function(pos) {
     // reset vertices/colors and mark as dirty
     this.geo.vertices = [];
     this.geo.colors = [];
-    this.geo.__dirtyVertices = true;
+    this.geo.verticesNeedUpdate = true;
 
     // fill new data
     for(var i = 0, len=this.curvePos.length; i < len; i++) {
-        this.geo.vertices.push( new THREE.Vertex( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) ) );
+        this.geo.vertices.push( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) );
         
         // add trail gradient
         if(this.trails) {
@@ -86,8 +86,8 @@ Circle.prototype.gen = function() {
         x = sinTheta * sinPhi;
         y = cosTheta * sinPhi;
 
-        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
-//        this.vertices.push( new THREE.Vertex( new THREE.Vector3( x*1.01, y*1.01, z ) ) );        
+        this.vertices.push( new THREE.Vector3( x, y, z ) );
+//        this.vertices.push(  new THREE.Vector3( x*1.01, y*1.01, z ) );        
         if(this.trails) {
               var color = new THREE.Color( 0xFFFFFF );
               color.setHSV( 0.5, 0.0, 1.0 - 0.8 * (sliceNum / slices) );
@@ -96,7 +96,7 @@ Circle.prototype.gen = function() {
 
     }
 //    this.__webglLineCount = slices;
-    this.__dirtyVertices = true;
+    this.verticesNeedUpdate = true;
 
 }
 

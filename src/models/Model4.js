@@ -37,14 +37,14 @@ Model4 = function() {
           anchor: this.sphere[1].anchor,  // attach curve to anchor
           start: 2,                       // first moving sphere
           stop: 5,                        // last moving sphere
-          node: this.planet.mesh,         // observe this node
+          node: this.planet.gfx.mesh,     // observe this node
           color: config.colors["Path"] });
       this.addCurve({
           index: 1,
           anchor: this.sphere[2].anchor,
           start: 3,
           stop: 5,
-          node: this.planet.mesh,
+          node: this.planet.gfx.mesh,
           color: config.colors["Hippo"],
           trails: false  });
       ModelBase.prototype.update.call(this, time);        

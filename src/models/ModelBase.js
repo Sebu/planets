@@ -375,8 +375,8 @@ ModelBase.prototype = {
             eclipticPolePos = sceneToSyl(ecliptic.gfx.npole.currentPos()),
             eclipticUpVec = eclipticPos.subtract(eclipticPolePos),
             
-            planetOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(planet.mesh.currentPos())).subtract(eclipticPos),
-            planetPos = sceneToSyl(planet.mesh.currentPos()).subtract(eclipticPos),
+            planetOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(planet.gfx.mesh.currentPos())).subtract(eclipticPos),
+            planetPos = sceneToSyl(planet.gfx.mesh.currentPos()).subtract(eclipticPos),
 
             equinoxOnPlane = sceneToSyl(dayRef.gfx.markerball.currentPos()).subtract(eclipticPos),
             equinoxOnPlanePerp = equinoxOnPlane.rotate(Math.PI/2, Line.create(eclipticPos,eclipticUpVec)),
@@ -385,7 +385,7 @@ ModelBase.prototype = {
             epiOnPlane = sceneToSyl(epi.gfx.markerball.currentPos()).subtract(epiPos),
 
 
-            sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.mesh.currentPos())).subtract(eclipticPos);
+            sunOnPlane = ecliptic.getPlane().pointClosestTo(sceneToSyl(this.sun.gfx.mesh.currentPos())).subtract(eclipticPos);
             sunOnPlanePerp = sunOnPlane.rotate(Math.PI/2, Line.create(eclipticPos, eclipticUpVec));
 
             planet.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
@@ -448,7 +448,7 @@ ModelBase.prototype = {
        this.updateMetadata();
 
        if(this.sun.getEnabled()) 
-           this.sunLight.setPos(this.sun.mesh.currentPos());
+           this.sunLight.setPos(this.sun.gfx.mesh.currentPos());
     },
 
     /** 

@@ -47,8 +47,8 @@ ModelYavetz = function() {
     }
 
     this.update = function(time) {
-        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 2, node: this.planet.mesh, color: config.colors["Path"]});
-        this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 3, node: this.planet.mesh, color: config.colors["Hippo"]});
+        this.addCurve({index: 0, anchor: this.sphere[1].anchor, start: 2, node: this.planet.gfx.mesh, color: config.colors["Path"]});
+        this.addCurve({index: 1, anchor: this.sphere[2].anchor, start: 3, node: this.planet.gfx.mesh, color: config.colors["Hippo"]});
         ModelBase.prototype.update.call(this, time);
     }
 };

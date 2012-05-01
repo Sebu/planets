@@ -53,49 +53,57 @@ THREE.Object3D.prototype.getEnabled = function() { return this.visible; };
 
 // fast update of current world matrix
 THREE.Object3D.prototype.currentMatrixWorldTill = function(end) {
+    // update as expected
     this.matrixAutoUpdate && this.updateMatrix();
+    // quit fast
     if(!this.parent || this == end) return this.matrix;
+    // calculate recursive
     this.matrixWorld.multiply(this.parent.currentMatrixWorldTill(end), this.matrix);
     return this.matrixWorld;
+    
 }
+
+//// fast update of current world matrix
+//THREE.Object3D.prototype.currentMatrixWorld = function() {
+//    this.matrixAutoUpdate && this.updateMatrix();
+//    if(!this.parent) return this.matrix;
+//    this.matrixWorld.multiply(this.parent.currentMatrixWorld(), this.matrix);
+//    return this.matrixWorld;
+//}
 
 // determine current position in world space
 THREE.Object3D.prototype.currentPosTill = function(end) {
     var pos = this.currentMatrixWorldTill(end);
-    if(!this.cPos) this.cPos = new THREE.Vector3();
-    this.cPos.x = pos.n14;
-    this.cPos.y = pos.n24;
-    this.cPos.z = pos.n34;
+    //if(!this.cPos)
+    this.cPos = new THREE.Vector3(
+        pos.elements[12], //n14;
+        pos.elements[13], //n24;
+        pos.elements[14] //n34;
+        );
     return this.cPos;
-}
-
-// fast update of current world matrix
-THREE.Object3D.prototype.currentMatrixWorld = function() {
-    this.matrixAutoUpdate && this.updateMatrix();
-    if(!this.parent) return this.matrix;
-    this.matrixWorld.multiply(this.parent.currentMatrixWorld(), this.matrix);
-    return this.matrixWorld;
 }
 
 
 // determine current position in world space
 THREE.Object3D.prototype.currentPos = function() {
-    var pos = this.currentMatrixWorld();
-    if(!this.cPos) this.cPos = new THREE.Vector3();
-    this.cPos.x = pos.n14;
-    this.cPos.y = pos.n24;
-    this.cPos.z = pos.n34;
-    return this.cPos;
+    return this.currentPosTill(null);
+//    var pos = this.currentMatrixWorld();
+//    if(!this.cPos) this.cPos = new THREE.Vector3();
+//    this.cPos.x = pos.elements[12]; //n14;
+//    this.cPos.y = pos.elements[13]; //n24;
+//    this.cPos.z = pos.elements[14]; //n34;
+//    return this.cPos;
 }
 
 
 // determine current position in world space FAST
 THREE.Object3D.prototype.currentPosFast = function() {
     var pos = this.matrixWorld;
-    if(!this.cPos) this.cPos = new THREE.Vector3();
-    this.cPos.x = pos.n14;
-    this.cPos.y = pos.n24;
-    this.cPos.z = pos.n34;
+    this.cPos = new THREE.Vector3(
+        pos.elements[12], //n14;
+        pos.elements[13], //n24;
+        pos.elements[14] //n34;
+    );
     return this.cPos;
 }
 
@@ -178,7 +186,7 @@ DiscGeometry = function ( innerRadius, outerRadius, spread, segments ) {
 	this.computeVertexNormals();
 
 	function vert( x, y, z ) {
-  		scope.vertices.push( new THREE.Vertex( new THREE.Vector3( x, y, z ) ) );
+  		scope.vertices.push( new THREE.Vector3( x, y, z ) );
 	};
 
 	function f4( a, b, c, d ) {
@@ -239,13 +247,13 @@ Translate.prototype.constructor = Translate;
 Cloud = function(params) {
     var geo = new THREE.Geometry();
     var x = 0,y = 0,z = 0;
-    geo.vertices.push( new THREE.Vertex( new THREE.Vector3( 0.0, 10.0, 0.0 ) ) );
+    geo.vertices.push( new THREE.Vector3( 0.0, 10.0, 0.0 ) );
     for (var sliceNum = 0; sliceNum < params.count; sliceNum++) {
        x = (Math.random() - 0.5);
        y = (Math.random() - 0.5);
        z = (Math.random() - 0.5);
        norm = Math.sqrt(x * x + y * y + z * z) / 10.0;
-       geo.vertices.push( new THREE.Vertex( new THREE.Vector3( x / norm, y / norm, z / norm ) ) );
+       geo.vertices.push( new THREE.Vector3( x / norm, y / norm, z / norm ) );
     }
 //*
     var mat =  new THREE.ParticleBasicMaterial({size: 1.5, sizeAttenuation:false});
@@ -268,8 +276,8 @@ function setupCommonGeomerty() {
     geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
     equator = new Circle({ angle : 359.9 });
     aLine = new THREE.Geometry();
-    aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 1, 0 ) ) );
-    aLine.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );  
+    aLine.vertices.push( new THREE.Vector3( 0, 1, 0 ) );
+    aLine.vertices.push( new THREE.Vector3( 0, 0, 0 ) );  
     /* sphere LOD
     * @deprecated
     */
@@ -338,16 +346,4 @@ sceneToSyl = function(pos) {
     return Vector.create([pos.x, pos.y, pos.z]);
 }
 
-
-// store key/values of 3D nodes (planet,sun,poles etc.)
-//nodePool = {};
-
-// locate a specific node in world space
-/*
-getNodePos = function(name) {
-    var node = nodePool[name];
-    if(!node) return {x:0,y:0,z:0};
-    return node.currentPos();
-}
-//*/
 

@@ -78,7 +78,7 @@ Model5.prototype.update = function(time) {
           index: 0,
           anchor: this.sphere[1].anchor,
           start: 2,
-          node: this.planet.mesh,
+          node: this.planet.gfx.mesh,
           color: config.colors["Path"] });
       ModelBase.prototype.update.call(this, time);
 };

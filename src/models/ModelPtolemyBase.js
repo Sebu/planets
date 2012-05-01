@@ -50,8 +50,8 @@ ModelPtolemyBase.prototype.create = function() {
     this.startDate = DATES.PTOLEMY_EPOCH;
 
     // scale 
-    this.earth.mesh.scale.set( 0.2, 0.2, 0.2 );  
-    this.sun.mesh.scale.set( 0.2, 0.2, 0.2 );
+    this.earth.gfx.mesh.scale.set( 0.2, 0.2, 0.2 );  
+    this.sun.gfx.mesh.scale.set( 0.2, 0.2, 0.2 );
 
     // add ecliptic vis
     var material = new THREE.LineBasicMaterial( {  color: rgbToHex(config.colors["S2"]) });
@@ -125,8 +125,8 @@ ModelPtolemyBase.prototype.create = function() {
 
     var that = this;
     this.earth.setEnabled = function(state) {
-      this.mesh.visible = state; 
-      if(this.glow) this.meshGlow.visible = state; 
+      this.gfx.mesh.visible = state; 
+      if(this.gfx.glow) this.gfx.meshGlow.visible = state; 
       that.earthToDeferentLine.setEnabled(state);
       that.earthToPlanetLine.setEnabled(state);
       that.equantPlanetLine.setEnabled(state); 
@@ -165,7 +165,7 @@ ModelPtolemyBase.prototype.create = function() {
               index: 0,
               anchor: this.sphere[1],
               start: 1,
-              node: this.planet.mesh,
+              node: this.planet.gfx.mesh,
               color: config.colors["Path"] });
           
         ModelBase.prototype.update.call(this, time);
@@ -183,12 +183,12 @@ ModelPtolemyBase.prototype.create = function() {
         this.equantPlanet[1] = this.sphere[3].gfx.markerball.currentPos();
         this.equantPlanetLine.setPoints(this.equantPlanet);
 
-        this.earthToDeferent[0] = this.earth.mesh.currentPos();     
+        this.earthToDeferent[0] = this.earth.gfx.mesh.currentPos();     
         this.earthToDeferent[1] = this.sphere[3].gfx.markerball.currentPos();
         this.earthToDeferentLine.setPoints(this.earthToDeferent);
 
-        this.earthToPlanet[0] = this.earth.mesh.currentPos();     
-        this.earthToPlanet[1] = this.planet.mesh.currentPos();
+        this.earthToPlanet[0] = this.earth.gfx.mesh.currentPos();     
+        this.earthToPlanet[1] = this.planet.gfx.mesh.currentPos();
         this.earthToPlanetLine.setPoints(this.earthToPlanet);
 
         this.centerL[0] = this.sphere[2].crankPoint.currentPos();  
@@ -198,7 +198,7 @@ ModelPtolemyBase.prototype.create = function() {
         this.date = this.startDate + this.days;
 
         if(this.realSun.getEnabled()) 
-          this.sunLight.setPos(this.realSun.mesh.currentPos());
+          this.sunLight.setPos(this.realSun.gfx.mesh.currentPos());
     }
     
 
