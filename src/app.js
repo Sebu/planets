@@ -1,25 +1,14 @@
 
 
 /**
- main class of the Topoi Cosmology App
+ constructor of the Topoi Cosmology App
+ setup canvas, input, camera, gui, models etc.
  @extends Ori.App
  @constructor
  @param params
  @param params.domRoot dom element to add the canvas to
 */
 cosmoApp = function(params) {
-    this.setup(params);
-};
-cosmoApp.prototype = new Ori.App;
-cosmoApp.prototype.constructor = cosmoApp;
-
-/**
-  setup canvas, input, camera, gui, models etc.
-  @function
-  @param params
-  @param params.domRoot dom element to add the canvas to
-*/
-cosmoApp.prototype.setup = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
         this.models = {};
@@ -27,7 +16,6 @@ cosmoApp.prototype.setup = function(params) {
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
         
-		
         setupCommonGeomerty();
         
         this.splashStatus = $("#ori-splash-status");
@@ -38,7 +26,7 @@ cosmoApp.prototype.setup = function(params) {
           this.domRoot.append(this.canvas.domElement);
         } else {
           this.splashStatus.append(APP_STRINGS.EN.NO_HTML5);
-          return 0;
+          return;
         }
 
         this.setupCameras();
@@ -47,7 +35,16 @@ cosmoApp.prototype.setup = function(params) {
         // setupPicking  for collision
         this.projector = new THREE.Projector();
         
+        this.setupUI();
+};
+cosmoApp.prototype = new Ori.App;
+cosmoApp.prototype.constructor = cosmoApp;
 
+
+/**
+ * 
+ */
+cosmoApp.prototype.setupUI = function() {
         // setupDebug
         // DEBUG und stats.js
         this.debugBox = $("<div class='container' id='debugContainer'>\
@@ -68,6 +65,8 @@ cosmoApp.prototype.setup = function(params) {
         // setupLabels
         this.splashStatus.empty();
         this.splashStatus.append("setup labels...");
+        
+        //TODO: move labels to html code (style / rename etc.)
         equinoxLabel = new UI.Label({text: APP_STRINGS.EN.VERNAL });
         npoleLabel = new UI.Label({text: APP_STRINGS.EN.NORTH_POLE });
         spoleLabel = new UI.Label({text: APP_STRINGS.EN.SOUTH_POLE });
@@ -145,15 +144,23 @@ cosmoApp.prototype.setup = function(params) {
       
         this.loadCustomPresets();
         
+        $("#ui-container h3").uiBox();
+        $("#info-container h3").uiBox();
+        
+        $("#ui-container, #info-container").show();
 
+ 
+        UI.optionsFromHash("#viewPresets", this.cameras);
 
+        UI.optionsFromHash("#longitudePresets", latitudePresets);
+        
         // load default model
         this.loadPlanets("Eudoxus");
 
-        $("#view").uiBox();
+       
         // playback div       
 //        UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
-        $("#playback").uiBox();
+        
         $("#anim-speed").uiSlider({object: this.model, prop: "AnimSpeed", min:-1000, max:20000, step: 0.1});
         $("#pause-button").click(function() { 
             app.model.toggleRunning(); 
@@ -163,27 +170,26 @@ cosmoApp.prototype.setup = function(params) {
                 $("#pause-button").text("play");
             }
         }); 
+
         $("#screenshot-button").click(function() {
             app.canvas.render(app.currentScene, app.currentCamera);
             window.open(app.canvas.domElement.toDataURL("image/jpeg"));
         }); 
         
-        $("#info").uiBox();
+
         
 //        UI.slider({model: this.model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tooltip:"duration of a year in seconds"}).appendTo("#playbackBox");
-//        $("#playbackBox").append("<div class='center'><div class='button' onclick='app.model.reset();' value='reset'>reset</div><div class='button' id='pauseButton' onclick='app.model.toggleRunning(); if(app.model.getRunning()) { $(\"#pauseButton\").text(\"pause\");} else {$(\"#pauseButton\").text(\"play\");} ' title='pause animation'>pause</div><div class='button' onclick='app.canvas.render(app.currentScene, app.currentCamera); window.open(app.canvas.domElement.toDataURL(\"image/jpeg\"));'><img src='images/camera2.png'></div></div>");        
+  
         
         // NO WEBGL error
         if(this.canvas.type==="canvas") {
           this.debugBox.show();
           this.splashStatus.empty();
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-          this.splashStatus.append("<br><div class='button' onclick='$(\"#TCsplash\").fadeOut();' value='ok'>OK</div>");
+          this.splashStatus.append("<br><div class='button' onclick='$(\"#ori-splash\").fadeOut();' value='ok'>OK</div>");
         } else                       
-          $("#TCsplash").hide();
-    };
-
-
+          $("#ori-splash").hide();
+}
 /**
   setup input (mouse and keyboard)
   @function
@@ -320,7 +326,7 @@ cosmoApp.prototype.loadPreset = function(preset) {
   this.currentCamera.reset();
 
   // update UI 
-  this.setupUI();
+  this.updateUI();
 };
 
 /**
@@ -468,8 +474,8 @@ cosmoApp.prototype.updateInfoBox = function() {
 }
 
 /** 
-  update loop
-  @override 
+*  update loop
+*  @override 
 */
 cosmoApp.prototype.update = function(time) {
 
@@ -500,9 +506,19 @@ cosmoApp.prototype.update = function(time) {
         
         // update model, info, labels
         this.model.update(time);
+        
+        //this.handlePicking(time);
 
+       
+        
+};
 
-        // check for collision/picking of pickable objects
+/**
+* check for collision/picking of pickable objects
+* NOT USED YET
+*/
+cosmoApp.prototype.handlePicking = function(time) {
+    
 /* 
         this.currentCamera.update();
         var x = ( Ori.input.mouse.x / window.innerWidth ) * 2 - 1;
@@ -520,8 +536,7 @@ cosmoApp.prototype.update = function(time) {
         var ray = new THREE.Ray( this.currentCamera.position, vector.subSelf( this.currentCamera.position ).normalize() );
         var cs = ray.intersectScene(model.root)[0];
         if(cs) { cs.object.material.color.setHex( 0xaa0000 ); }
-//*/        
-        
+//*/ 
 };
 
 
@@ -609,14 +624,14 @@ cosmoApp.prototype.getModel = function(name) {
  * build up ui from current model state
  * TODO: move to ui specific stuff or split up a little
  */
-cosmoApp.prototype.setupUI = function() {
+cosmoApp.prototype.updateUI = function() {
   
         $("#moonInfoContainer").fadeOut(500);
         $("#sunInfoContainer").fadeOut(500);
         $("#meanLongitudeBox").fadeOut(500);
         
         
-        if(this.model instanceof ModelSun)  {
+        if(this.model.ui === "ModelSun")  {
             $("#sunInfoContainer").fadeIn(500);
             $("#meanLongitudeBox").fadeIn(500);
         }      
@@ -634,10 +649,7 @@ cosmoApp.prototype.setupUI = function() {
         $("#moon-select").fadeOut(500);
 
         // clear old ui elements
-//        $("#playback > *").remove();
-        $("#view > *").remove();
         $("#parameters > *").remove();
-//        $("#legendContainer > *").remove();
         planetLabel2.setPosition({x:0, y:0, z:-1});
         
         this.currentCamera.rotateY(Math.PI + 0.1);
@@ -645,26 +657,19 @@ cosmoApp.prototype.setupUI = function() {
         
 
 
-        // view sub box box 
-//        UI.box({id:"vis", text:"View" }).appendTo("#view");
+        $("#view-sliders > *").remove();
+        UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
+        UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
         
-        $("<span><select  style='width:85px;' class='chzn-select' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span>").appendTo("#view");
+        UI.slider({model: this.currentCamera, id: "Z", min:0, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
         
-        UI.optionsFromHash("#viewPresets", this.cameras);
-        $("<select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$(\"#AxisAngle1 > input\").attr(\"value\",latitudePresets[this.value]); $(\"#AxisAngle1 >input\").change();'></select>").appendTo("#view");
-        UI.optionsFromHash("#longitudePresets", latitudePresets);
-        UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view");
-        UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view");
-        
-        UI.slider({model: this.currentCamera, id: "Z", min:0, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view");
-        
-        $("<div id='visSpheres' class='center'></div>").appendTo("#view");
+        $("#visSpheres > *").remove();
         for (i in this.model.sphere) {
             if(this.model["setShowSphere" + i]) 
               UI.checkbox({model: this.model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS( this.model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         
-        $("<div id='visOther' class='center'></div>").appendTo("#view");
+        $("#visOther > *").remove();
         if(this.model.setShowPath) UI.checkbox({model: this.model, id:"ShowSun", text:"sun", tooltip: "toggle sun visibilty", color: rgbToCSS(config.colors["Sun"]) }).appendTo("#visOther");
         if(this.model.setShowPath) UI.checkbox({model: this.model, id:"ShowPath", text:"path", color: rgbToCSS(config.colors["Path"]) }).appendTo("#visOther");
         if(this.model.setShowHippo) UI.checkbox({model: this.model, id:"ShowHippo", text:"hippopede", tooltip: "toggle hippopede visibilty", color:  rgbToCSS(config.colors["Hippo"]) }).appendTo("#visOther");
@@ -713,7 +718,7 @@ cosmoApp.prototype.setupUI = function() {
               $("#infoContainer2").fadeIn(500);
             }
 
-            $("#moonInfoContainer,#moon-select").fadeIn(500);
+            $("#moonInfoContainer, #moon-select").fadeIn(500);
 
             // moon sliders setup
             // onchange of a moon parameter -> update model
@@ -958,7 +963,7 @@ cosmoApp.prototype.setupUI = function() {
 
 // setup site
 // TODO: maybe move to index.html
-app = new cosmoApp({domRoot: $("#TCmainBox")});
+app = new cosmoApp({domRoot: $("#canvas-main")});
 if(app) {
   window.onresize = function(e) { app.resize(e) };
   app.run();

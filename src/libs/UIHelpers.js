@@ -13,24 +13,36 @@
 
         return this.each(function() {        
 
-            var
-            id = this.id,
-            title = this.title,
-            tooltip = APP_STRINGS.EN[id.toUpperCase() + "_TIP"],
-            text = title || APP_STRINGS.EN[id.toUpperCase() + "_TEXT"] || params.id,
-            header = $("<div  class='caption tipable'>" +
-                             "<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
-                             "<span class='ori-triangle ori-arrow-right' title='show'></span>" +
-                           title +
-                         "</div>");
-            $(this).before(header);
+//            var
+//            id = this.id,
+//            title = this.title,
+//            tooltip = APP_STRINGS.EN[id.toUpperCase() + "_TIP"],
+//            text = title || APP_STRINGS.EN[id.toUpperCase() + "_TEXT"] || params.id,
+//            header = $("<div  class='caption tipable'>" +
+//                             "<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
+//                             "<span class='ori-triangle ori-arrow-right' title='show'></span>" +
+//                           title +
+//                         "</div>");
+//            $(this).before(header);
+            $(this).prepend("<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
+                           "<span class='ori-triangle ori-arrow-right' title='show'></span>");
                      
-            header.click(function() {$(".ori-triangle", this).toggle(); $(this).next().slideToggle(); } );
+            $(this).click(function() {
+                $(".ori-triangle", this).toggle(); 
+                $(this).next().slideToggle(); 
+                return false;
+           });
         
         });  
     };
     
     $.fn.uiSlider = function( options ) {
+        
+        var settings = $.extend( {
+          'location'         : 'top',
+          'background-color' : 'blue'
+        }, options);
+            
         return this.each(function() {     
        
             var 
@@ -54,13 +66,9 @@
                $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value)));
             };
 
-
-//            tmp =  $("<div class='sliderBox tipable'>" + text + "</div>");
-              
-//            ele = $("<div id='" + id + "'>" + 
             ele.append(text);
-            ele.append("<div class='slider'></div>" +
-                "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>");
+            ele.append("<div><div class='slider'></div>" +
+                "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/></div>");
 
             $(".slider",ele).slider({slide: changeSlider, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
             $("input",ele).bind("change", changeInput);
@@ -191,7 +199,7 @@ var UI = {
         text = params.text || params.id,
         color = params.color || "#FFF",
         value = instance["get"+id](),
-        element =  $("<div class='ORIcheckbox tipable' style='font-weight:bold;color:" + color + "'>"  + text +  "</div>"),
+        element =  $("<div class='ORIcheckbox tipable' style='color:" + color + "'>"  + text +  "</div>"),
         change = params.change || function()  { $(this).toggleClass('ORIchecked'); instance["set"+id]($(this).is(".ORIchecked")); };
         
         element.checked = true;
@@ -205,7 +213,7 @@ var UI = {
 UI.Label = function(params) {
 
         this.ele = document.createElement("div"); 
-        this.ele.setAttribute("class","ORIlabel");
+        this.ele.setAttribute("class","ori-label");
         this.ele.setAttribute("unselectable","on");
         document.body.appendChild(this.ele);
         this.setPosition(params.pos || {x:0, y:0, z:-1});

@@ -4,7 +4,7 @@
     <title>Virtual Cosmology Sandbox Beta</title>
     <meta charset="utf-8"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="css/planets3.css">
+    <link rel="stylesheet" type="text/css" href="css/cosmology.css">
     <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -21,15 +21,13 @@
 </head>
 <body>
 
-
-<div id="TCmainBox">
-    
-    <div id='TCsplash'>
+    <div id="canvas-main"></div>    
+    <div id='ori-splash'>
         <div class='ori-splash-header'>Virtual Cosmology Sandbox</div>
         <div id='ori-splash-status'>loading ...</div>
     </div>
     
-    <nav class='container' id='uiContainer'>
+    <nav class='container' id='ui-container'>
         <div id=presetBox>
             <span><select class='select-models' id='model-select'></select>
             <div class='button' id='add-preset'>+</div><div class='button' id='remove-preset'>-</div></span>
@@ -37,13 +35,21 @@
             <span><select class='select-models' id='preset-select'></select></span>
             <span><select id='moon-select'></select></span>
         </div>
-        <div id='view' class='side-box' title='View'>
-            
+        
+        <h3>View</h3>
+        <div id='view' class='side-box'>
+            <span><select style='width:85px;' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span><select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$("#AxisAngle1 > input").attr("value",latitudePresets[this.value]); $("#AxisAngle1 >input").change();'></select>    
+            <div id='view-sliders'></div>
+            <div id='visSpheres' class='center'></div>
+            <div id='visOther' class='center'></div>
         </div>
+        
         <div id='parameters'>
             <!-- elements are created on demand -->
         </div>
-        <div id='playback' class='side-box' title='Playback'>
+        
+        <h3>Playback</h3>
+        <div id='playback' class='side-box'>
             <div class='sliderBox' id='anim-speed' title='Animation Speed'></div>
             <div class='center'>
                 <div class='button' onclick='app.model.reset();' >reset</div>
@@ -54,54 +60,53 @@
     </nav>
     
     <div id='info-container'>
-        <div id='info' title='Planet informations'>
-        <table>
-              <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>
-              <tr><td>longitude</td><td class=wert id='longitude'>0</td></tr>
-              <tr><td>longitude speed</td><td class=wert  id='longitudeSpeed'>0</span></tr>
-              <tr><td>latitude</td><td class=wert  id='latitude'>0</span></tr>
-              <tr><td>passed days</td><td  class=wert  id='days'>0</td></tr>
-        </table>
-        <table id='meanLongitudeBox'>
-              <tr><td>mean longitude</td><td class=wert  id='meanLongitude'>0</td></tr>
-              <tr><td>equation of time (hrs)</td><td class=wert id='equationOfTime'>0</td></tr>
-        </table>
-        <table id='infoContainer2'>
-              <thead><tr><td colspan=2 class=infoHeader>Planet 2</td></tr></thead>
-              <tr><td>angle planet/sun</td><td class=wert id='sunAngle2'>0</td></tr>
-              <tr><td>longitude</td><td class=wert id='longitude2'>0</td></tr>
-              <tr><td>longitude speed</td><td class=wert id='longitudeSpeed2'>0</td></tr>
-              <tr><td>latitude</td><td class=wert id='latitude2'>0</td></tr>
-              <tr><td>days</td><td class=wert id='days2'>0</td></tr>
-        </table>
-        <table id='sunInfoContainer'>
-            <tr><td>days per year</td><td class=wert id='sunDaysPerYear'>0</td></tr>
-        </table>
-        <table id='moonInfoContainer'>
-              <thead><tr><td colspan=2 class=infoHeader></td></tr></thead>
-              <tr><td>zodiacal months</td><td class=wert  id='metonZodicalMonths'>0</td></tr>
-              <tr><td>days/year</td><td class=wert id='metonDaysPerYear'>0</td></tr>
-              <tr><td>days/synodic month</td><td class=wert id='synodicDaysPerMonth'>0</td></tr>
-              <tr><td>days/zodical month</td><td class=wert id='zodicalDaysPerMonth'>0</td></tr>
-              <tr><td>days/draconitic month</td><td class=wert id='draconiticDaysPerMonth'>0</td></tr>
-        </table>
-        <table id='ptolemyInfoContainer'>
-              <thead><tr><td colspan=2 class=infoHeader></td></tr></thead>
-              <tr><td>apsidal</td><td class=wert id='apsidalLongitude'>0</td></tr>
-              <tr><td>epicycle</td><td class=wert id='epicycleLongitude'>0</td></tr>
-              <tr><td>longitude deferent</td><td class=wert id='deferentLongitude'>0</td></tr>
-              <tr><td>gregorian date</td><td class=wert id='gregorianDate'>0</td></tr>
-              <tr><td>julian days</td><td class=wert id='julianDate'>0</td></tr>
-              <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>
-              <tr><td></td><td class=wert id='egyptianEpoch'>0</td></tr>
-        </table>
+        <h3>Planet informations</h3>
+        <div id='info'>
+            <table>
+                  <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>
+                  <tr><td>longitude</td><td class=wert id='longitude'>0</td></tr>
+                  <tr><td>longitude speed</td><td class=wert  id='longitudeSpeed'>0</span></tr>
+                  <tr><td>latitude</td><td class=wert  id='latitude'>0</span></tr>
+                  <tr><td>passed days</td><td  class=wert  id='days'>0</td></tr>
+            </table>
+            <table id='meanLongitudeBox'>
+                  <tr><td>mean longitude</td><td class=wert  id='meanLongitude'>0</td></tr>
+                  <tr><td>equation of time (hrs)</td><td class=wert id='equationOfTime'>0</td></tr>
+            </table>
+            <table id='infoContainer2'>
+                  <thead><tr><td colspan=2 class=infoHeader>Planet 2</td></tr></thead>
+                  <tr><td>angle planet/sun</td><td class=wert id='sunAngle2'>0</td></tr>
+                  <tr><td>longitude</td><td class=wert id='longitude2'>0</td></tr>
+                  <tr><td>longitude speed</td><td class=wert id='longitudeSpeed2'>0</td></tr>
+                  <tr><td>latitude</td><td class=wert id='latitude2'>0</td></tr>
+                  <tr><td>days</td><td class=wert id='days2'>0</td></tr>
+            </table>
+            <table id='sunInfoContainer'>
+                <tr><td>days per year</td><td class=wert id='sunDaysPerYear'>0</td></tr>
+            </table>
+            <table id='moonInfoContainer'>
+                  <tr><td>zodiacal months</td><td class=wert  id='metonZodicalMonths'>0</td></tr>
+                  <tr><td>days/year</td><td class=wert id='metonDaysPerYear'>0</td></tr>
+                  <tr><td>days/synodic month</td><td class=wert id='synodicDaysPerMonth'>0</td></tr>
+                  <tr><td>days/zodical month</td><td class=wert id='zodicalDaysPerMonth'>0</td></tr>
+                  <tr><td>days/draconitic month</td><td class=wert id='draconiticDaysPerMonth'>0</td></tr>
+            </table>
+            <table id='ptolemyInfoContainer'>
+                  <tr><td>apsidal</td><td class=wert id='apsidalLongitude'>0</td></tr>
+                  <tr><td>epicycle</td><td class=wert id='epicycleLongitude'>0</td></tr>
+                  <tr><td>longitude deferent</td><td class=wert id='deferentLongitude'>0</td></tr>
+                  <tr><td>gregorian date</td><td class=wert id='gregorianDate'>0</td></tr>
+                  <tr><td>julian days</td><td class=wert id='julianDate'>0</td></tr>
+                  <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>
+                  <tr><td></td><td class=wert id='egyptianEpoch'>0</td></tr>
+            </table>
         </div>
     </div>
     
     <footer id='impressum-container'>
         <a>© 2012 Topoi</a> <a>+henry mendell</a> <a>+sebastian szczepanski</a>
     </footer>
-</div>
+
 
 
 <!-- essential JS stuff --> 
