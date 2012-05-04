@@ -36,7 +36,7 @@
             <span><select id='moon-select'></select></span>
         </div>
         
-        <h3>View</h3>
+        <h3 id='view-header'>View</h3>
         <div id='view' class='side-box'>
             <span><select style='width:85px;' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span><select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$("#AxisAngle1 > input").attr("value",latitudePresets[this.value]); $("#AxisAngle1 >input").change();'></select>    
             <div id='view-sliders'></div>

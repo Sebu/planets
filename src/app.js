@@ -947,7 +947,7 @@ cosmoApp.prototype.updateUI = function() {
 
         // initial update of sliders/state
         this.model.toggleRunning();
-        $("#capvis, #caprotateStart").click(); // #pauseButton
+        $("#view-header, #caprotateStart").click(); // #pauseButton
         this.model.toggleRunning();
         $("#moon input, #angle  input, #speed input").change();
         $("#AxisAngle1 input").change();
