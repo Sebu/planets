@@ -49,7 +49,7 @@
             ele = $(this),
             id = this.id,
             instance = options.object,
-            prop = options.prop,
+            prop = options.property,
             text = this.title || options.text || options.id,
             min = options.min || 0,
             max = options.max || 100,
@@ -66,7 +66,7 @@
                $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value)));
             };
 
-            ele.append(text);
+//            ele.append(text);
             ele.append("<div><div class='slider'></div>" +
                 "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/></div>");
 

@@ -126,15 +126,28 @@ select {
 }
 
 #model-select {
- width: 136px;
+  width: 136px;
 }
 
 #planet-select {
- width: 150px;
+  width: 150px;
 }
 
 #preset-select {
- width: 36px;
+  width: 36px;
+}
+
+#camera-select {
+  width:85px;
+}
+
+#longitude-select {
+  width:105px;
+}
+
+#screenshot-button {
+ height:21px; 
+ padding: 4px;
 }
 
 option  {
@@ -142,12 +155,7 @@ option  {
    background: black;
 }
 
-.caption,
-#info-container h3 { 
-  position:relative;
-	font-weight: bold;
-	font-size:14px;
-}
+
 
 
 
@@ -402,16 +410,23 @@ select:focus,
   font-size: 12px;
 }
 
+.caption,
+#info-container h3 { 
+  position:relative;
+	font-weight: bold;
+	font-size:14px;
+}
+
+#info-container thead {
+  color: #AAA;
+  font-size: 12px;
+  border-bottom:1px solid #AAA;
+}
 
 #info-container table {
   width: 100%;
 }
 
-.infoHeader {
-  color: #AAA;
-  font-size: 12px;
-  border-bottom:1px solid #AAA;
-}
 
 #info-container td {
   width: 120px;

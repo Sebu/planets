@@ -58,10 +58,6 @@ cosmoApp.prototype.setupUI = function() {
         this.splashStatus.append("setup default model...");
 
         
-        // set start model
-   //     this.model = this.getModel("Model4");
-
-
         // setupLabels
         this.splashStatus.empty();
         this.splashStatus.append("setup labels...");
@@ -122,19 +118,17 @@ cosmoApp.prototype.setupUI = function() {
           };  
 
         
-        
-
         this.splashStatus.empty();
         this.splashStatus.append("setup UI...");
 
        
-        this.presetsEle1 = $("#model-select");
-        this.presetsEle2 = $("#planet-select");
-        this.presetsEle3 = $("#preset-select");                
+        this.modelSelect = $("#model-select");
+        this.planetSelect = $("#planet-select");
+        this.presetSelect = $("#preset-select");                
 
-        this.presetsEle1.change(function() { app.loadPlanets(this.options[this.selectedIndex].value); });  
-        this.presetsEle2.change(function() { app.loadPresets(this.options[this.selectedIndex].value); }); 
-        this.presetsEle3.change(function() { app.loadPreset(this.options[this.selectedIndex].value); }); 
+        this.modelSelect.change(function() { app.loadModel(this.options[this.selectedIndex].value); });  
+        this.planetSelect.change(function() { app.loadPlanet(this.options[this.selectedIndex].value); }); 
+        this.presetSelect.change(function() { app.loadPreset(this.options[this.selectedIndex].value); }); 
 
         $("#moon-select").click(function() { app.model.setCurrentMoonModel(this.options[this.selectedIndex].value); app.model.reset(); } );  
         UI.optionsFromHash("#moon-select", moonModels);
@@ -150,18 +144,33 @@ cosmoApp.prototype.setupUI = function() {
         $("#ui-container, #info-container").show();
 
  
-        UI.optionsFromHash("#viewPresets", this.cameras);
+        $("#camera-select").change(function() { app.setCamera(this.value); } ); 
 
-        UI.optionsFromHash("#longitudePresets", latitudePresets);
+        $("#longitude-select").change(function() { 
+            $("#AxisAngle1 > input")
+                .attr("value",this.value)
+                .change(); 
+        }); 
         
         // load default model
-        this.loadPlanets("Eudoxus");
+        this.loadModel("Eudoxus");
 
        
-        // playback div       
-//        UI.box({id:"playbackBox", text:"Playback"}).appendTo("#playback");
         
-        $("#anim-speed").uiSlider({object: this.model, prop: "AnimSpeed", min:-1000, max:20000, step: 0.1});
+        $("#anim-speed").uiSlider({ 
+            object: this.model,
+            property: "AnimSpeed",
+            min: -1000,
+            max: 20000, 
+            step: 0.1,
+            text: "Animation Speed",
+            tooltip:"duration of a year in seconds"
+        });
+        
+        $("#reset-button").click(function() { 
+            app.model.reset();
+        });
+        
         $("#pause-button").click(function() { 
             app.model.toggleRunning(); 
             if(app.model.getRunning()) { 
@@ -178,7 +187,7 @@ cosmoApp.prototype.setupUI = function() {
         
 
         
-//        UI.slider({model: this.model, id: "AnimSpeed", min:-1000, max:20000, step: 0.1, text: "Animation Speed", tooltip:"duration of a year in seconds"}).appendTo("#playbackBox");
+
   
         
         // NO WEBGL error
@@ -214,7 +223,12 @@ cosmoApp.prototype.setupCameras = function() {
   // setup camera
   // TODO : shorten
   
-  var cameraParams = { fov: 70, aspect: window.innerWidth / window.innerHeight, near: 0.1, far : 10000};
+  var cameraParams = { 
+    fov: 70,
+    aspect: window.innerWidth / window.innerHeight,
+    near: 0.1,
+    far : 10000
+  };
   
   this.cameras = { 
     Trackball: { 
@@ -234,7 +248,14 @@ cosmoApp.prototype.setupCameras = function() {
   this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
   this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
   var ortho = 70;
-  this.cameras["TrackballIso"].instance.projectionMatrix.makeOrthographic( window.innerWidth / - ortho, window.innerWidth / ortho, window.innerHeight / ortho, window.innerHeight / - ortho, - 10, 1000 );	
+  this.cameras["TrackballIso"].instance.projectionMatrix.makeOrthographic( 
+      window.innerWidth / - ortho,
+      window.innerWidth / ortho,
+      window.innerHeight / ortho,
+      window.innerHeight / - ortho,
+      -10,
+      1000
+   );	
 
 
   // set trackball as default camera
@@ -243,63 +264,42 @@ cosmoApp.prototype.setupCameras = function() {
 
 }
 
-cosmoApp.prototype.traversePresets = function(presets, selection, depth) {
-  $("#modelPresets"+ depth +" option[value='"+ selection +"']").attr('selected',true);
-  this.currentPresets[depth] = presets; //this.currentPresets[depth-1];
- 
-  if(this.currentPresets[depth].model) {
-    for (var i; i<depth; ++i) {
-      this.presetEle[i].hide();
-    }
-    this.currentPlanet = planetPresets;
-    this.loadPreset(value);
-    return;
-  }
-  
-  UI.optionsFromHash("#modelPresets"+(depth+1) + "", this.currentPresets[depth]);
-  this.presetsEle2.show();
-  for(var i in this.currentPresets[depth]) {
-    if(i=="caption") continue;
-    this.loadPresetss(presets[i], i, depth+1);
-    break;
-  }
-}
 
-cosmoApp.prototype.loadPlanets = function(value) {
+cosmoApp.prototype.loadModel = function(value) {
   $("#model-select option[value='"+value+"']").attr('selected',true);
   this.currentModel = planetPresets[value];
   
   if(this.currentModel.model) {
     this.currentPlanet = planetPresets;
-    this.presetsEle2.hide();
-    this.presetsEle3.hide();      
+    this.planetSelect.hide();
+    this.presetSelect.hide();      
     this.loadPreset(value);
     return;
   }
   
   UI.optionsFromHash("#planet-select", this.currentModel);
-  this.presetsEle2.show();
+  this.planetSelect.show();
   for(var i in this.currentModel) {
     if(i=="caption") continue;
-    this.loadPresets(i);
+    this.loadPlanet(i);
     break;
   }
     
 };
 
-cosmoApp.prototype.loadPresets = function(value) {
+cosmoApp.prototype.loadPlanet = function(value) {
   $("#planet-select option[value='"+value+"']").attr('selected',true);
   this.currentPlanet = this.currentModel[value];
 
   if(this.currentPlanet.model) {
     this.currentPlanet = this.currentModel;
-    this.presetsEle3.hide();
+    this.presetSelect.hide();
     this.loadPreset(value);
     return;
   }
 
   UI.optionsFromHash("#preset-select", this.currentPlanet);
-  this.presetsEle3.show();
+  this.presetSelect.show();
   for(var i in this.currentPlanet) {
     if(i=="caption") continue;    
     this.loadPreset(i);
@@ -372,8 +372,8 @@ cosmoApp.prototype.addPreset = function() {
       localStorage.setJson("customPresets", vault);
 
       this.loadCustomPresets();
-      this.loadPlanets("custom"); 
-      this.loadPresets(text);
+      this.loadModel("custom"); 
+      this.loadPlanet(text);
     }
 };
 
@@ -396,9 +396,9 @@ cosmoApp.prototype.removePreset = function() {
   
     this.loadCustomPresets();
     if(Number(localStorage["presetCount"])>0)   
-      this.loadPlanets("custom"); 
+      this.loadModel("custom"); 
     else {
-      this.loadPlanets("Eudoxus");   
+      this.loadModel("Eudoxus");   
     }
   }
 };
@@ -410,7 +410,9 @@ cosmoApp.prototype.removePreset = function() {
  * @param scene the scene from the model to set
  */
 cosmoApp.prototype.setCurrentScene = function(scene) {
-        if(this.currentScene) this.currentScene.remove( this.currentCamera );
+        if(this.currentScene) {
+            this.currentScene.remove( this.currentCamera );
+        }
         this.currentScene = scene;
         this.currentScene.add( this.currentCamera );
 };
@@ -596,8 +598,6 @@ cosmoApp.prototype.resize = function() {
   factor = Ori.gfxProfile.resolution;
   this.currentCamera.setAspect(width / height);
   this.canvas.setSize(width*factor, height*factor);
-  // center splashscreen
-  //centerSplash();
 };
 
 
@@ -641,7 +641,8 @@ cosmoApp.prototype.updateUI = function() {
             $("#ptolemyInfoContainer").fadeIn(500);
 
         $("#sunAngleBox").fadeOut(500);
-        if (this.model.sun.getEnabled()) $("#sunAngleBox").fadeIn(500);
+        if (this.model.sun.getEnabled()) 
+            $("#sunAngleBox").fadeIn(500);
         
         $("#infoContainer2").fadeOut(500);
 
@@ -660,7 +661,6 @@ cosmoApp.prototype.updateUI = function() {
         $("#view-sliders > *").remove();
         UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
         UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
-        
         UI.slider({model: this.currentCamera, id: "Z", min:0, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
         
         $("#visSpheres > *").remove();

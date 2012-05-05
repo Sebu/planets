@@ -28,17 +28,27 @@
     </div>
     
     <nav class='container' id='ui-container'>
-        <div id=presetBox>
-            <span><select class='select-models' id='model-select'></select>
-            <div class='button' id='add-preset'>+</div><div class='button' id='remove-preset'>-</div></span>
-            <span><select class='select-models' id='planet-select'></select></span>
-            <span><select class='select-models' id='preset-select'></select></span>
-            <span><select id='moon-select'></select></span>
-        </div>
+        <span><select class='select-models' id='model-select'></select>
+        <div id='add-preset' class='button'>+</div><div id='remove-preset' class='button'>-</div></span>
+        <span><select class='select-models' id='planet-select'></select></span>
+        <span><select class='select-models' id='preset-select'></select></span>
+        <span><select id='moon-select'></select></span>
         
         <h3 id='view-header'>View</h3>
         <div id='view' class='side-box'>
-            <span><select style='width:85px;' title='current position' id='viewPresets' onchange='app.setCamera(this.value);'></select></span><select style='width:105px;' title='latitude presets' id='longitudePresets' onchange='$("#AxisAngle1 > input").attr("value",latitudePresets[this.value]); $("#AxisAngle1 >input").change();'></select>    
+            <span><select title='current position' id='camera-select'>
+                <option value='Trackball'>Global</option>
+                <option value='FPS'>Local</option>
+                <option value='TrackballIso'>Isometric</option>
+            </select></span><select title='latitude presets' id='longitude-select'>
+                <option value='38'>Athens</option>
+                <option value='30.97'>Alexandria</option>
+                <option value='36.66'>Cnidus</option>
+                <option value='30'>Heliopolis</option>
+                <option value='40.23'>Cyzicus</option>
+                <option value='0'>Equator</option>
+                <option value='90'>North pole</option>
+            </select>    
             <div id='view-sliders'></div>
             <div id='visSpheres' class='center'></div>
             <div id='visOther' class='center'></div>
@@ -50,31 +60,31 @@
         
         <h3>Playback</h3>
         <div id='playback' class='side-box'>
+            Animation Speed
             <div class='sliderBox' id='anim-speed' title='Animation Speed'></div>
-            <div class='center'>
-                <div class='button' onclick='app.model.reset();' >reset</div>
-                <div class='button' id='pause-button' title='pause animation'>pause</div>
-                <div class='button' id='screenshot-button'><img src='images/camera2.png'></div>
-           </div>            
+            <div class='button' id='reset-button'>reset</div>
+            <div class='button' id='pause-button' title='pause animation'>pause</div>
+            <div class='button' id='screenshot-button'><img src='images/camera2.png'></div>
        </div>
     </nav>
+
     
     <div id='info-container'>
         <h3>Planet informations</h3>
-        <div id='info'>
+        <div>
             <table>
                   <tr id='sunAngleBox'><td>angle planet/sun</td><td id='sunAngle'>0</td></tr>
                   <tr><td>longitude</td><td class=wert id='longitude'>0</td></tr>
-                  <tr><td>longitude speed</td><td class=wert  id='longitudeSpeed'>0</span></tr>
-                  <tr><td>latitude</td><td class=wert  id='latitude'>0</span></tr>
-                  <tr><td>passed days</td><td  class=wert  id='days'>0</td></tr>
+                  <tr><td>longitude speed</td><td class=wert id='longitudeSpeed'>0</span></tr>
+                  <tr><td>latitude</td><td class=wert id='latitude'>0</span></tr>
+                  <tr><td>passed days</td><td  class=wert id='days'>0</td></tr>
             </table>
             <table id='meanLongitudeBox'>
-                  <tr><td>mean longitude</td><td class=wert  id='meanLongitude'>0</td></tr>
+                  <tr><td>mean longitude</td><td class=wert id='meanLongitude'>0</td></tr>
                   <tr><td>equation of time (hrs)</td><td class=wert id='equationOfTime'>0</td></tr>
             </table>
             <table id='infoContainer2'>
-                  <thead><tr><td colspan=2 class=infoHeader>Planet 2</td></tr></thead>
+                  <thead><tr><td colspan=2>Planet 2</td></tr></thead>
                   <tr><td>angle planet/sun</td><td class=wert id='sunAngle2'>0</td></tr>
                   <tr><td>longitude</td><td class=wert id='longitude2'>0</td></tr>
                   <tr><td>longitude speed</td><td class=wert id='longitudeSpeed2'>0</td></tr>
