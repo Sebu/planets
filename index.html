@@ -21,26 +21,26 @@
 </head>
 <body>
 
-    <div id="canvas-main"></div>    
+    <section id="canvas-main"></section>    
     <div id='ori-splash'>
         <div class='ori-splash-header'>Virtual Cosmology Sandbox</div>
         <div id='ori-splash-status'>loading ...</div>
     </div>
     
-    <nav class='container' id='ui-container'>
-        <span><select class='select-models' id='model-select'></select>
-        <div id='add-preset' class='button'>+</div><div id='remove-preset' class='button'>-</div></span>
-        <span><select class='select-models' id='planet-select'></select></span>
-        <span><select class='select-models' id='preset-select'></select></span>
-        <span><select id='moon-select'></select></span>
+    <aside class='container' id='ui-container'>
+        <select class='select-models' id='model-select'></select>
+        <span id='add-preset' class='button'>+</span><span id='remove-preset' class='button'>-</span>
+        <select class='select-models' id='planet-select'></select>
+        <select class='select-models' id='preset-select'></select>
+        <select id='moon-select'></select>
         
         <h3 id='view-header'>View</h3>
         <div id='view' class='side-box'>
-            <span><select title='current position' id='camera-select'>
+            <select title='current position' id='camera-select'>
                 <option value='Trackball'>Global</option>
                 <option value='FPS'>Local</option>
                 <option value='TrackballIso'>Isometric</option>
-            </select></span><select title='latitude presets' id='longitude-select'>
+            </select><select title='latitude presets' id='longitude-select'>
                 <option value='38'>Athens</option>
                 <option value='30.97'>Alexandria</option>
                 <option value='36.66'>Cnidus</option>
@@ -48,7 +48,7 @@
                 <option value='40.23'>Cyzicus</option>
                 <option value='0'>Equator</option>
                 <option value='90'>North pole</option>
-            </select>    
+            </select>
             <div id='view-sliders'></div>
             <div id='visSpheres' class='center'></div>
             <div id='visOther' class='center'></div>
@@ -66,7 +66,7 @@
             <div class='button' id='pause-button' title='pause animation'>pause</div>
             <div class='button' id='screenshot-button'><img src='images/camera2.png'></div>
        </div>
-    </nav>
+    </aside>
 
     
     <div id='info-container'>
