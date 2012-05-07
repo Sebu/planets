@@ -47,6 +47,7 @@ cosmoApp.prototype.constructor = cosmoApp;
 cosmoApp.prototype.setupUI = function() {
         // setupDebug
         // DEBUG und stats.js
+        that = this;
         this.debugBox = $("<div class='container' id='debugContainer'>\
                      </div>").appendTo(this.domRoot);        
         this.stats = new Stats();
@@ -138,8 +139,8 @@ cosmoApp.prototype.setupUI = function() {
       
         this.loadCustomPresets();
         
-        $("#ui-container h3").uiBox();
-        $("#info-container h3").uiBox();
+        $("#ui-container h3").collapsible();
+        $("#info-container h3").collapsible();
         
         $("#ui-container, #info-container").show();
 
@@ -157,15 +158,7 @@ cosmoApp.prototype.setupUI = function() {
 
        
         
-        $("#anim-speed").uiSlider({ 
-            object: this.model,
-            property: "AnimSpeed",
-            min: -1000,
-            max: 20000, 
-            step: 0.1,
-            text: "Animation Speed",
-            tooltip:"duration of a year in seconds"
-        });
+
         
         $("#reset-button").click(function() { 
             app.model.reset();
@@ -185,6 +178,10 @@ cosmoApp.prototype.setupUI = function() {
             window.open(app.canvas.domElement.toDataURL("image/jpeg"));
         }); 
         
+        $("#date-input").bind("keyup", function(e) { 
+            if(e.keyCode == 13) 
+                that.setDate(this.value); 
+        });
 
         
 
@@ -264,6 +261,9 @@ cosmoApp.prototype.setupCameras = function() {
 
 }
 
+cosmoApp.prototype.setDate = function(date) {
+    this.model.setDate(date);
+}
 
 cosmoApp.prototype.loadModel = function(value) {
   $("#model-select option[value='"+value+"']").attr('selected',true);
@@ -649,8 +649,10 @@ cosmoApp.prototype.updateUI = function() {
 
         $("#moon-select").fadeOut(500);
 
+        $("#date-input").hide();
+        
         // clear old ui elements
-        $("#parameters > *").remove();
+        $("#parameters").empty();
         planetLabel2.setPosition({x:0, y:0, z:-1});
         
         this.currentCamera.rotateY(Math.PI + 0.1);
@@ -658,18 +660,18 @@ cosmoApp.prototype.updateUI = function() {
         
 
 
-        $("#view-sliders > *").remove();
+        $("#view-sliders").empty();
         UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
         UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
         UI.slider({model: this.currentCamera, id: "Z", min:-200, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
         
-        $("#visSpheres > *").remove();
+        $("#visSpheres").empty();
         for (i in this.model.sphere) {
             if(this.model["setShowSphere" + i]) 
               UI.checkbox({model: this.model, id:"ShowSphere" + i, text:"S" + (Number(i)), color:  rgbToCSS( this.model.sphere[i].gfx.color) }).appendTo("#visSpheres");
         }
         
-        $("#visOther > *").remove();
+        $("#visOther").empty();
         if(this.model.setShowPath) UI.checkbox({model: this.model, id:"ShowSun", text:"sun", tooltip: "toggle sun visibilty", color: rgbToCSS(config.colors["Sun"]) }).appendTo("#visOther");
         if(this.model.setShowPath) UI.checkbox({model: this.model, id:"ShowPath", text:"path", color: rgbToCSS(config.colors["Path"]) }).appendTo("#visOther");
         if(this.model.setShowHippo) UI.checkbox({model: this.model, id:"ShowHippo", text:"hippopede", tooltip: "toggle hippopede visibilty", color:  rgbToCSS(config.colors["Hippo"]) }).appendTo("#visOther");
@@ -678,7 +680,15 @@ cosmoApp.prototype.updateUI = function() {
 
 
 
-
+        $("#anim-speed").empty().inputSlider({ 
+            object: this.model,
+            property: "AnimSpeed",
+            min: -1000,
+            max: 20000, 
+            step: 0.1,
+            text: "Animation Speed",
+            tooltip:"duration of a year in seconds"
+        });
 
 
         // create the right sliders for each model
@@ -884,8 +894,8 @@ cosmoApp.prototype.updateUI = function() {
             UI.slider({model: this.model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
 
 
-
-            UI.text({model: this.model, id:"Date"}).appendTo("#playbackBox");
+            $("#date-input").show();
+//            UI.text({model: this.model, id:"Date"}).appendTo("#playback");
 
             $("#apsidal input, #deferent input, #epicycle input").change();
 
@@ -913,7 +923,9 @@ cosmoApp.prototype.updateUI = function() {
             UI.slider({model: this.model, id:"Speed3", min: -1100, max:1100, text:"speed"}).appendTo("#deferent");
 
             UI.checkbox({model: this.model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#deferent");
-            UI.text({model: this.model, id:"Date"}).appendTo("#playbackBox");
+
+            $("#date-input").show();
+//            UI.text({model: this.model, id:"Date"}).appendTo("#playback");
             $("#apsidal input, #deferent input").change();
 //*/            
         } else if (this.model.ui == "ModelHippo") {

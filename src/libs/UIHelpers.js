@@ -3,27 +3,31 @@
 
 (function( $ ){
 
-    $.fn.uiBox = function( options ) {
 
-        // Create some defaults, extending them with any options that were provided
-        var settings = $.extend( {
-          'location'         : 'top',
-          'background-color' : 'blue'
-        }, options);
+    var topics = {};
+
+    $.fn.Topic = function( id ) {
+        var callbacks,
+            topic = id && topics[ id ];
+        if ( !topic ) {
+            callbacks = jQuery.Callbacks();
+            topic = {
+                publish: callbacks.fire,
+                subscribe: callbacks.add,
+                unsubscribe: callbacks.remove
+            };
+            if ( id ) {
+                topics[ id ] = topic;
+            }
+        }
+        return topic;
+    };
+
+    $.fn.collapsible = function( options ) {
+
 
         return this.each(function() {        
 
-//            var
-//            id = this.id,
-//            title = this.title,
-//            tooltip = APP_STRINGS.EN[id.toUpperCase() + "_TIP"],
-//            text = title || APP_STRINGS.EN[id.toUpperCase() + "_TEXT"] || params.id,
-//            header = $("<div  class='caption tipable'>" +
-//                             "<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
-//                             "<span class='ori-triangle ori-arrow-right' title='show'></span>" +
-//                           title +
-//                         "</div>");
-//            $(this).before(header);
             $(this).prepend("<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
                            "<span class='ori-triangle ori-arrow-right' title='show'></span>");
                      
@@ -36,7 +40,7 @@
         });  
     };
     
-    $.fn.uiSlider = function( options ) {
+    $.fn.inputSlider = function( options ) {
         
         var settings = $.extend( {
           'location'         : 'top',
@@ -47,31 +51,37 @@
        
             var 
             ele = $(this),
-            id = this.id,
             instance = options.object,
             prop = options.property,
-            text = this.title || options.text || options.id,
             min = options.min || 0,
             max = options.max || 100,
             toggle = options.toggle || false,
             step = options.step  || 0.2,
             value = options.value ||  instance["get"+prop](),
-
+            sliderElement = $("<div class='slider'></div>"),
+            inputElement = $("<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>"),
             changeSlider = options.change || function(event, ui)  { 
                 instance["set"+prop](Number(Utils.toDec(ui.value))); 
-                $("#" + id + " > input").attr("value", Utils.toDec(ui.value) ); // Utils.decToBase(ui.value,60)
+                inputElement.attr("value", Utils.toDec(ui.value) );
             },
             changeInput = options.change || function()  { 
-              instance["set"+prop](Number(Utils.toDec(this.value)));
-               $("#" + id + " > .slider").slider("value",Number(Utils.toDec(this.value)));
+                instance["set"+prop](Number(Utils.toDec(this.value)));
+                sliderElement.slider("value", Number(Utils.toDec(this.value)));
             };
 
-//            ele.append(text);
-            ele.append("<div><div class='slider'></div>" +
-                "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/></div>");
+            sliderElement.slider({
+                slide: changeSlider,
+                range: "min",
+                animate: "fast",
+                max: max,
+                min: min,
+                step: step,
+                value: value
+            });
+            inputElement.bind("change", changeInput);
 
-            $(".slider",ele).slider({slide: changeSlider, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
-            $("input",ele).bind("change", changeInput);
+            ele.append(sliderElement);
+            ele.append(inputElement);                       
             
         });     
     };
@@ -134,18 +144,19 @@ var UI = {
         return element;
     },
 
-    text : function(params) {
-        var instance = params.model,
-        id = params.id,
-        text = params.text || params.id,
-        value = params.value ||  instance["get"+id](),
-        change = params.change || function(e)  { if(e.keyCode == 13) instance["set"+id](this.value); },
-        element =  $( "<input type='text' placeholder='date' value='" + value + "' class='text tipable'/>" );
+//    text : function(params) {
+//        var 
+//        instance = params.model,
+//        id = params.id,
+//        text = params.text || params.id,
+//        value = params.value ||  instance["get"+id](),
+//        change = params.change || function(e)  { if(e.keyCode == 13) instance["set"+id](this.value); },
+//        element =  $( "<input type='text' placeholder='date' value='" + value + "' class='text tipable'/>" );
         
-        UI.addTooltip(element, params.tooltip);
-        $(element).bind("keyup",change);
-        return element;
-    },
+//        UI.addTooltip(element, params.tooltip);
+//        $(element).bind("keyup",change);
+//        return element;
+//    },
 
 
     slider : function(params) {
