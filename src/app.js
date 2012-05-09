@@ -147,11 +147,14 @@ cosmoApp.prototype.setupUI = function() {
  
         $("#camera-select").change(function() { app.setCamera(this.value); } ); 
 
+
         $("#longitude-select").change(function() { 
             $("#AxisAngle1 > input")
                 .attr("value",this.value)
                 .change(); 
         }); 
+
+
         
         // load default model
         this.loadModel("Eudoxus");
@@ -657,6 +660,7 @@ cosmoApp.prototype.updateUI = function() {
         
         this.currentCamera.rotateY(Math.PI + 0.1);
 
+        this.splashStatus.append("setup UI...2");
         
 
 
