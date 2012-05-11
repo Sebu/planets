@@ -33,18 +33,10 @@ THREE.Camera.prototype.rotateTarget = function(target) {
 
 // lookAt
 THREE.Camera.prototype.setTarget = function(target) {
-
-    
-    this.dir.x = target.x - this.position.x;
-    this.dir.y = target.y - this.position.y;
-    this.dir.z = target.z - this.position.Z;
-
-    // TODO: fix degenerate :D
-    this.dir.normalize(); // = this.dir.toUnitVector();
-    this.upVec.normalize(); // = this.upVec.toUnitVector();
-    this.right = this.upVec.cross(this.upVec, this.dir);
-
-//    this.update();
+    this.dir.sub(target, this.position);
+    this.dir.normalize();
+    this.upVec.normalize();
+    this.right.cross(this.upVec, this.dir);
 }
 
 
@@ -67,13 +59,13 @@ THREE.Camera.prototype.setZ = function(zoom) {
 }
 
 THREE.Camera.prototype.translateNew = function(x, y, z) {
-    this.position.x += this.dir.x * z;
-    this.position.y += this.dir.y * z;
-    this.position.z += this.dir.z * z;
-    this.position.x += this.right.x * x;
-    this.position.y += this.right.y * x;
-    this.position.z += this.right.z * x;
-//    this.update();
+    this.position.x += this.dir.x * z + this.right.x * x;
+    this.position.y += this.dir.y * z + this.right.y * x;
+    this.position.z += this.dir.z * z + this.right.z * x;
+//    this.position.x += this.right.x * x;
+//    this.position.y += this.right.y * x;
+//    this.position.z += this.right.z * x;
+////    this.update();
 }
 
 THREE.Camera.prototype.rotate = function(angle, axis) {

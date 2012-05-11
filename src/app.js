@@ -244,7 +244,7 @@ cosmoApp.prototype.setupCameras = function() {
       instance: new THREE.BallCamera(cameraParams)
     }
   };
-  this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -15.5});
+  this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -16});
   this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
   this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
   var ortho = 70;
