@@ -18,7 +18,7 @@ cosmoApp = function(params) {
         
         setupCommonGeomerty();
         
-        this.splashStatus = $("#ori-splash-status");
+        this.splashStatus = $("#splash-status");
 
         // add Canvas DOM Element & or error box
         this.splashStatus.empty();
@@ -144,6 +144,9 @@ cosmoApp.prototype.setupUI = function() {
         
         $("#ui-container, #info-container").show();
 
+//        $("#ui-container, #info-container").draggable({ snap: "#canvas-main", containment: "window"});
+
+
  
         $("#camera-select").change(function() { app.setCamera(this.value); } ); 
 
@@ -195,9 +198,9 @@ cosmoApp.prototype.setupUI = function() {
           this.debugBox.show();
           this.splashStatus.empty();
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-          this.splashStatus.append("<br><div class='button' onclick='$(\"#ori-splash\").fadeOut();' value='ok'>OK</div>");
+          this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>CONITUNE</div>");
         } else                       
-          $("#ori-splash").hide();
+          $("#splash").hide();
 }
 /**
   setup input (mouse and keyboard)

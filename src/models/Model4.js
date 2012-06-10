@@ -18,7 +18,7 @@ Model4 = function() {
   
   /**
    * s4 moves opposite to s3
-   * @override 
+   * @methodOf Model4.prototype
    * @param speed the speed to set for S3 and -S4
    */
   this.setSpeed3 = function(speed) {
@@ -27,8 +27,8 @@ Model4 = function() {
   };
 
   /** 
-   * @override 
-   * @function 
+   * @override
+   * @methodOf Model4.prototype
    * @param time millisecons passed since last call
    */
   this.update = function(time) {

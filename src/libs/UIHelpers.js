@@ -210,11 +210,14 @@ var UI = {
         text = params.text || params.id,
         color = params.color || "#FFF",
         value = instance["get"+id](),
-        element =  $("<div class='ORIcheckbox tipable' style='color:" + color + "'>"  + text +  "</div>"),
-        change = params.change || function()  { $(this).toggleClass('ORIchecked'); instance["set"+id]($(this).is(".ORIchecked")); };
+        element =  $("<div class='checkbox tipable' style='color:" + color + "'>"  + text +  "</div>"),
+        change = params.change || function()  { 
+            $(this).toggleClass('checked'); 
+            instance["set"+id]($(this).is(".checked"));
+        };
         
         element.checked = true;
-        if(value) element.toggleClass("ORIchecked");
+        if(value) element.toggleClass("checked");
         element.bind("click", change);
         UI.addTooltip(element, params.tooltip);        
         return element;

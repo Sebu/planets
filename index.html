@@ -4,6 +4,7 @@
     <title>Virtual Cosmology Sandbox Beta</title>
     <meta charset="utf-8"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="src/vendor/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="css/cosmology.css">
     <script type="text/javascript">
 
@@ -22,12 +23,13 @@
 <body>
 
     <section id="canvas-main"></section>    
-    <div id='ori-splash'>
-        <div class='ori-splash-header'>Virtual Cosmology Sandbox</div>
-        <div id='ori-splash-status'>loading ...</div>
+    <div id='splash'>
+        <h1>Virtual Cosmology Sandbox</h1>
+        <div id='splash-status'>loading ...</div>
     </div>
     
     <aside class='container' id='ui-container'>
+        <div id='content'>
         <select class='select-models' id='model-select'></select>
         <span id='add-preset' class='button'>+</span><span id='remove-preset' class='button'>-</span>
         <select class='select-models' id='planet-select'></select>
@@ -62,11 +64,12 @@
         <div id='playback' class='side-box'>
             <h4>Animation Speed</h4>
             <div class='sliderBox' id='anim-speed' title='Animation Speed'></div>
-            <div class='button' id='reset-button'>reset</div>
-            <div class='button' id='pause-button' title='pause animation'>pause</div>
+            <div class='button' id='reset-button'>RESET</div>
+            <div class='button' id='pause-button' title='pause animation'>PAUSE</div>
             <div class='button' id='screenshot-button'><img src='images/camera2.png' alt='screenshot'></div>
             <input id='date-input' style='display:none;' type='text' placeholder='date' class='text'/>
-       </div>
+        </div>
+        </div>
     </aside>
 
     
@@ -121,8 +124,12 @@
 
 
 <!-- essential JS stuff --> 
+<!--
 <script type="text/javascript" src="src/vendor/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="src/vendor/jquery-ui-1.8.19.custom.min.js"></script>
+<script type="text/javascript" src="src/vendor/jquery-ui-1.8.20.custom.min.js"></script>
+-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 
 
 <!-- matrix/vector lib and 3d abstraction  
