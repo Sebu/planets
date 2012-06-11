@@ -622,9 +622,23 @@ cosmoApp.prototype.getModel = function(name) {
   return mod;
 };
 
+cosmoApp.prototype.setFov = function(val) {
+  this.currentCamera.setFov(val);
+};
 
 
+cosmoApp.prototype.getFov = function() {
+  return  this.currentCamera.getFov();
+};
 
+cosmoApp.prototype.setZ = function(val) {
+  this.currentCamera.setZ(val);
+};
+
+
+cosmoApp.prototype.getZ = function() {
+  return  this.currentCamera.getZ();
+};
 
 /**
  * build up ui from current model state
@@ -669,8 +683,8 @@ cosmoApp.prototype.updateUI = function() {
 
         $("#view-sliders").empty();
         UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
-        UI.slider({model: this.currentCamera, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
-        UI.slider({model: this.currentCamera, id: "Z", min:-200, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
+        UI.slider({model: this, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
+        UI.slider({model: this, id: "Z", min:-200, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
         
         $("#visSpheres").empty();
         for (i in this.model.sphere) {
