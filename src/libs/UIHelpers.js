@@ -122,7 +122,7 @@ var UI = {
         capEle =  $("#cap" + id, ele);
         
         capEle.append(text);
-        UI.addTooltip(capEle, tooltip);
+//        UI.addTooltip(capEle, tooltip);
         return ele;
     },
 
@@ -192,7 +192,7 @@ var UI = {
         tmp.append(ele);
         $(".slider",ele).slider({slide: changeSlider, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
         $("input",ele).bind("change", changeInput);
-        UI.addTooltip(tmp,params.tooltip);
+//        UI.addTooltip(tmp,params.tooltip);
 
 //         if(toggle) $(":checkbox",tmp).bind("click", function() { 
 //            $("#" + id + " > input").attr('disabled', !this.checked);
@@ -219,7 +219,7 @@ var UI = {
         element.checked = true;
         if(value) element.toggleClass("checked");
         element.bind("click", change);
-        UI.addTooltip(element, params.tooltip);        
+//        UI.addTooltip(element, params.tooltip);        
         return element;
     }
 };

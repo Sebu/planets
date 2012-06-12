@@ -56,11 +56,11 @@ THREE.Camera.prototype.updateMatrix = function() {
 
 THREE.Camera.prototype.getZ = function() { return this.z; }
 THREE.Camera.prototype.setZ = function(zoom) {
-    
-    this.position.x += this.dir.x * (zoom-this.z);
-    this.position.y += this.dir.y * (zoom-this.z);
-    this.position.z += this.dir.z * (zoom-this.z);
-    this.z = zoom;
+    this.translateNew(0, 0, zoom-this.z);
+//    this.position.x += this.dir.x * (zoom-this.z);
+//    this.position.y += this.dir.y * (zoom-this.z);
+//    this.position.z += this.dir.z * (zoom-this.z);
+//    this.z = zoom;
 //    this.position.z = -zoom;
 }
 
@@ -69,10 +69,6 @@ THREE.Camera.prototype.translateNew = function(x, y, z) {
     this.position.x += this.dir.x * z + this.right.x * x;
     this.position.y += this.dir.y * z + this.right.y * x;
     this.position.z += this.dir.z * z + this.right.z * x;
-//    this.position.x += this.right.x * x;
-//    this.position.y += this.right.y * x;
-//    this.position.z += this.right.z * x;
-////    this.update();
 }
 
 THREE.Camera.prototype.rotate = function(angle, axis) {
