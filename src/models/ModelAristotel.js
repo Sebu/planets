@@ -16,7 +16,7 @@ ModelAristotle = function() {
     this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]});
     this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]});
     this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]});
-    this.sphere[8] = new Spherical({ vortex: true, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
+    this.sphere[8] = new Spherical({ vortex: false, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
     
     this.updateList.push(this.sphere[5]);
     this.updateList.push(this.sphere[6]);    

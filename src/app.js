@@ -816,20 +816,20 @@ cosmoApp.prototype.updateUI = function() {
         } else if (this.model.ui == "ModelAristotle") {
 
             $("#visSpheres > *").remove();
-            UI.checkbox({model: this.model, id:"ShowSphere1", text:"S1"}).appendTo("#visSpheres");
-            UI.checkbox({model: this.model, id:"ShowSphere2", text:"S2"}).appendTo("#visSpheres");
-            UI.checkbox({model: this.model, id:"ShowSphere3", text:"S3"}).appendTo("#visSpheres");
-            UI.checkbox({model: this.model, id:"ShowSphere4", text:"S4"}).appendTo("#visSpheres");
+            UI.checkbox({model: this.model, id:"ShowSphere1", text:"S1", color: rgbToCSS(config.colors["S1"]) }).appendTo("#visSpheres");
+            UI.checkbox({model: this.model, id:"ShowSphere2", text:"S2", color: rgbToCSS(config.colors["S2"])}).appendTo("#visSpheres");
+            UI.checkbox({model: this.model, id:"ShowSphere3", text:"S3", color: rgbToCSS(config.colors["S3"])}).appendTo("#visSpheres");
+            UI.checkbox({model: this.model, id:"ShowSphere4", text:"S4", color: rgbToCSS(config.colors["S4"])}).appendTo("#visSpheres");
             $("<div id='visSpheres1'></div>").appendTo("#visSpheres");
-            UI.checkbox({model: this.model, id:"ShowSphere18", text:"P18"}).appendTo("#visSpheres1");
-            UI.checkbox({model: this.model, id:"ShowSphere27", text:"P27"}).appendTo("#visSpheres1");
-            UI.checkbox({model: this.model, id:"ShowSphere36", text:"P36"}).appendTo("#visSpheres1");
-            UI.checkbox({model: this.model, id:"ShowSphere45", text:"P45"}).appendTo("#visSpheres1");
+            UI.checkbox({model: this.model, id:"ShowSphere18", text:"P18", color: rgbToCSS(config.colors["S1"]) }).appendTo("#visSpheres1");
+            UI.checkbox({model: this.model, id:"ShowSphere27", text:"P27", color: rgbToCSS(config.colors["S2"])}).appendTo("#visSpheres1");
+            UI.checkbox({model: this.model, id:"ShowSphere36", text:"P36", color: rgbToCSS(config.colors["S3"])}).appendTo("#visSpheres1");
+            UI.checkbox({model: this.model, id:"ShowSphere45", text:"P45", color: rgbToCSS(config.colors["S4"])}).appendTo("#visSpheres1");
             $("<div id='visSpheres2'></div>").appendTo("#visSpheres");
-            UI.checkbox({model: this.model, id:"ShowSphere8", text:"S8"}).appendTo("#visSpheres2");
-            UI.checkbox({model: this.model, id:"ShowSphere7", text:"S7"}).appendTo("#visSpheres2");
-            UI.checkbox({model: this.model, id:"ShowSphere6", text:"S6"}).appendTo("#visSpheres2");
-            UI.checkbox({model: this.model, id:"ShowSphere5", text:"S5"}).appendTo("#visSpheres2");
+            UI.checkbox({model: this.model, id:"ShowSphere8", text:"S8", color: rgbToCSS(config.colors["S1"]) }).appendTo("#visSpheres2");
+            UI.checkbox({model: this.model, id:"ShowSphere7", text:"S7", color: rgbToCSS(config.colors["S2"])}).appendTo("#visSpheres2");
+            UI.checkbox({model: this.model, id:"ShowSphere6", text:"S6", color: rgbToCSS(config.colors["S3"])}).appendTo("#visSpheres2");
+            UI.checkbox({model: this.model, id:"ShowSphere5", text:"S5", color: rgbToCSS(config.colors["S4"])}).appendTo("#visSpheres2");
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model: this.model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
