@@ -126,7 +126,7 @@ ModelBase.prototype = {
 
         // first and outer sphere S1
         this.sphere[1] = new Spherical({
-            vortex: (Ori.gfxProfile.geometry >= Ori.Q.HIGH), 
+            vortex: false, //(Ori.gfxProfile.geometry >= Ori.Q.HIGH), 
             inner_id: this.name+"S1", 
             scale: config.sphereRadius,  
             color: config.colors["S1"] });

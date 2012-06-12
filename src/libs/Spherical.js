@@ -39,6 +39,7 @@ Spherical = function(params) {
     this.gfx.materialCone = new THREE.MeshBasicMaterial( { opacity: 1.0, color: "0xFFFFFF" } );
     this.gfx.poleMaterial = new THREE.LineBasicMaterial({
         opacity:  (Ori.gfxProfile.alpha) ? 0.5 : 1.0,
+       linewidth: 2,
         color: rgbToHex(this.gfx.color) });
     this.gfx.progressMat = new THREE.LineBasicMaterial( {
         linewidth:6,
