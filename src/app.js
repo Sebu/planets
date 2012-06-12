@@ -497,8 +497,10 @@ cosmoApp.prototype.update = function(time) {
            this.currentCamera.mouseWheel(0.0, 0.0, -pitch);
            Ori.input.drag.y = y;
         }
-        if (Ori.input.mouse.wheel)
+        if (Ori.input.mouse.wheel) {
          this.currentCamera.mouseWheel(0.0, 0.0, Ori.input.mouse.z);
+         $("#Z > input").attr("value",Number( this.currentCamera.getZ() ));
+        }
 
         // rotate with left button
         if (Ori.input.mouse.b1) {
@@ -684,7 +686,8 @@ cosmoApp.prototype.updateUI = function() {
         $("#view-sliders").empty();
         UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
         UI.slider({model: this, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
-        UI.slider({model: this, id: "Z", min:-60, max: 1, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
+
+        UI.slider({model: this, id: "Z", min:-60, max: 1, step:1, text:"zoom level", tooltip: "set view distance"}).appendTo("#nav-container");
         
         $("#visSpheres").empty();
         for (i in this.model.sphere) {

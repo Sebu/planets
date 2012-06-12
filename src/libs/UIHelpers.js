@@ -76,7 +76,9 @@
                 max: max,
                 min: min,
                 step: step,
-                value: value
+                value: value,
+                orientation: options.orientation || "horizontal"
+
             });
             inputElement.bind("change", changeInput);
 
@@ -190,7 +192,16 @@ var UI = {
             "<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>" +
             "</div>");
         tmp.append(ele);
-        $(".slider",ele).slider({slide: changeSlider, range: "min", animate: "fast", max: max, min: min, step: step, value: value});
+        $(".slider",ele).slider({
+            slide: changeSlider,
+            range: "min",
+            animate: "fast",
+            max: max,
+            min: min,
+            step: step,
+            value: value,
+            orientation:  params.orientation || "horizontal"
+        });
         $("input",ele).bind("change", changeInput);
 //        UI.addTooltip(tmp,params.tooltip);
 

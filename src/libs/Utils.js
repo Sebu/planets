@@ -29,6 +29,7 @@ Utils.daysToTime = function(days) {
 }
 
 Utils.GREGORIAN_EPOCH = 1721425.5;
+Utils.GREGORIAN_SWITCH = 2299160.5; 
 Utils.JULIAN_EPOCH = 1721423.5;
 
 
@@ -95,7 +96,7 @@ Utils.gregorianToJd =function(year, month, day) {
            day);
 }
 
-Utils.GREGORIAN_SWITCH = 2299160.5;
+
 Utils.jdToMagic = function(jd) {
   if(jd<=Utils.GREGORIAN_SWITCH) return Utils.jdToJulian(jd);
   else return Utils.jdToGregorian(jd);

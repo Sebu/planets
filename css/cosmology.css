@@ -481,6 +481,15 @@ select:focus,
 }
 
 
+#nav-container {
+  position: absolute;
+  opacity: 0.45;
+  bottom: 40px;
+  right: 10px;
+
+}
+
+
 #impressum-container {
   text-align: right;
   position: absolute;
@@ -491,6 +500,7 @@ select:focus,
   right: 10px;
 
 }
+
 #impressum-container a {
   color: #FFF;
   text-decoration:none;
