@@ -12,6 +12,7 @@ THREE.Camera.prototype.setFov = function(fov) {
 };
 
 THREE.Camera.prototype.setEye = function(pos) {
+    this.z = pos.z;
     this.position.set(pos.x, pos.y, pos.z);
 };
 
@@ -53,12 +54,18 @@ THREE.Camera.prototype.updateMatrix = function() {
 
 
 
-THREE.Camera.prototype.getZ = function() { return -this.position.z; }
+THREE.Camera.prototype.getZ = function() { return this.z; }
 THREE.Camera.prototype.setZ = function(zoom) {
-    this.position.z = -zoom;
+    
+    this.position.x += this.dir.x * (zoom-this.z);
+    this.position.y += this.dir.y * (zoom-this.z);
+    this.position.z += this.dir.z * (zoom-this.z);
+    this.z = zoom;
+//    this.position.z = -zoom;
 }
 
 THREE.Camera.prototype.translateNew = function(x, y, z) {
+    this.z += z;
     this.position.x += this.dir.x * z + this.right.x * x;
     this.position.y += this.dir.y * z + this.right.y * x;
     this.position.z += this.dir.z * z + this.right.z * x;

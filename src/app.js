@@ -684,7 +684,7 @@ cosmoApp.prototype.updateUI = function() {
         $("#view-sliders").empty();
         UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
         UI.slider({model: this, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
-        UI.slider({model: this, id: "Z", min:-200, max: 60, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
+        UI.slider({model: this, id: "Z", min:-60, max: 1, step:1, text:"distance", tooltip: "set view distance"}).appendTo("#view-sliders");
         
         $("#visSpheres").empty();
         for (i in this.model.sphere) {
