@@ -189,8 +189,32 @@ cosmoApp.prototype.setupUI = function() {
                 that.setDate(this.value); 
         });
 
-        
+        $("#parameters-hide-button").click(function() { 
+            $("#content-scroll").toggle();
+        });
 
+        $("#zoom-plus").click(function() { 
+            that.setZ(that.getZ()+1);
+            $("#zoom-slider").slider('value',that.getZ());
+        });
+        
+        $("#zoom-minus").click(function() { 
+            that.setZ(that.getZ()-1);
+            $("#zoom-slider").slider('value',that.getZ());
+        });
+                
+        $("#zoom-slider").slider({
+                slide: function(event, ui) { that.setZ(ui.value); },
+                value: -17,
+                range: "min",
+                animate: "fast",
+                min:-60,
+                max: 1,
+                step:1,
+                orientation: "vertical"
+         });
+//        UI.slider({model: this, id: "Z", min:-60, max: 1, step:1, text:"zoom level", tooltip: "set view distance"}).appendTo("#nav-container");
+        
   
         
         // NO WEBGL error
@@ -602,7 +626,7 @@ cosmoApp.prototype.draw = function(time) {
 /** on resize adjust camera aspect and canvas size */
 cosmoApp.prototype.resize = function() {
   var width = window.innerWidth,
-  height = window.innerHeight,
+  height = window.innerHeight-35,
   factor = Ori.gfxProfile.resolution;
   this.currentCamera.setAspect(width / height);
   this.canvas.setSize(width*factor, height*factor);
@@ -639,6 +663,7 @@ cosmoApp.prototype.setZ = function(val) {
 
 
 cosmoApp.prototype.getZ = function() {
+  if(!this.currentCamera) return 0;
   return  this.currentCamera.getZ();
 };
 
@@ -687,8 +712,7 @@ cosmoApp.prototype.updateUI = function() {
         UI.slider({model: this.model, id: "AxisAngle1", max: 360, step:0.01, text: "view latitude", tooltip: "change latitude"}).appendTo("#view-sliders");
         UI.slider({model: this, id: "Fov", max: 160, step:1, text: "field of view", tooltip: "set field of view"}).appendTo("#view-sliders");
 
-        UI.slider({model: this, id: "Z", min:-60, max: 1, step:1, text:"zoom level", tooltip: "set view distance"}).appendTo("#nav-container");
-        
+
         $("#visSpheres").empty();
         for (i in this.model.sphere) {
             if(this.model["setShowSphere" + i]) 
