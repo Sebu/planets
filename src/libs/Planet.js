@@ -6,17 +6,6 @@
 Planet = function(params) {
     THREE.Object3D.call( this );
 
-
-    var 
-    PI2 = Math.PI * 2,
-    program = function ( context ) {
- 	    	context.beginPath();
-		  	context.arc( 0, 0, 1, 0, PI2, true );
-		  	context.closePath();
-		  	context.fill();
-		}
-  	
-
     this.gfx = new Object();
     
     
@@ -26,6 +15,21 @@ Planet = function(params) {
     this.gfx.map = params.map;
     this.gfx.usePhong = params.phong;
     this.gfx.opacity = params.opacity || 1.0;
+    
+    var opacity = this.gfx.opacity;
+
+    var 
+    PI2 = Math.PI * 2,
+    program = function ( context ) {
+ 	    	context.globalAlpha = opacity;
+ 	    	context.beginPath();
+		  	context.arc( 0, 0, 1, 0, PI2, true );
+		  	context.closePath();
+		  	context.fill();
+		}
+  	
+
+
 
     if(this.gfx.usePhong) 
       this.gfx.material =  new THREE.MeshPhongMaterial( {  
@@ -62,7 +66,10 @@ Planet = function(params) {
     if (Ori.gfxProfile.geometry>=Ori.Q.MEDIUM)
       this.gfx.mesh = new THREE.Mesh(planetGeo, this.gfx.material);
     else
-      this.gfx.mesh = new THREE.Particle( new THREE.ParticleCanvasMaterial( { color: rgbToHex(this.gfx.color), program: program } ) );
+      this.gfx.mesh = new THREE.Particle( new THREE.ParticleCanvasMaterial( { 
+          color: rgbToHex(this.gfx.color),
+          program: program 
+      }));
     this.gfx.mesh.scale.set( this.gfx.scale, this.gfx.scale, this.gfx.scale );
     this.gfx.mesh.cPos = new THREE.Vector3();
     this.gfx.mesh.overdraw = true;
