@@ -174,7 +174,7 @@ ModelBase.prototype = {
             emit: 0.0,
             phong: false, //(Ori.gfxProfile.shading >= Ori.Q.HIGH),
             opacity: 0.1,
-            scale: config.sphereRadius,
+            scale: -config.sphereRadius,
             color: config.colors["S1"] });        
 
 
