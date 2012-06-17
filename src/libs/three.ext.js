@@ -289,7 +289,7 @@ function setupCommonGeomerty() {
 
     ];
 
-    planetGeo = new THREE.SphereGeometry( 1 , 16, 12 );
+    planetGeo = new THREE.SphereGeometry( 1 , 32, 32 );
 };  
 
 

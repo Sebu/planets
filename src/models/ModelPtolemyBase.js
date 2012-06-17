@@ -201,7 +201,7 @@ ModelPtolemyBase.prototype.create = function() {
           this.sunLight.setPos(this.realSun.gfx.mesh.currentPos());
     }
     
-
+    
     /** @override */
     this.setAxisAngle2 = function(angle) {
         this.ptolemySphere.axisAngle = angle;

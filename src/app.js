@@ -487,7 +487,7 @@ cosmoApp.prototype.updateInfoBox = function() {
           UI.innerText(this.info.epicycleLongitude, Utils.toSexa( mod(this.model.sphere[4].getRotateAngle(), 360) ) );
           UI.innerText(this.info.deferentLongitude, Utils.toSexa(this.model.planet.deferentLongitude) );
           UI.innerText(this.info.gregorianDate, Utils.dateToString(Utils.jdToMagic(this.model.date)) );                           
-          UI.innerText(this.info.julianDate, this.model.date.toFixed(2) );
+//          UI.innerText(this.info.julianDate, this.model.date.toFixed(2) );
           UI.innerText(this.info.egyptianDate, Utils.dateToStringEgypt(Utils.jdToEgyptian(this.model.date)) );
           UI.innerText(this.info.egyptianEpoch, Utils.jdToEpoch(this.model.date) ); 
                                    
@@ -700,9 +700,9 @@ cosmoApp.prototype.updateUI = function() {
             $("#meanLongitudeBox").show();
         }      
 
-        $("#ptolemyInfoContainer").fadeOut(500);
+        $("#ptolemyInfoContainer").hide();
         if(this.model.ui == "ModelPtolemy" || this.model.ui == "ModelPtolemySun") 
-            $("#ptolemyInfoContainer").fadeIn(500);
+            $("#ptolemyInfoContainer").show();
 
         $("#sunAngleBox").fadeOut(500);
         if (this.model.sun.getEnabled()) 

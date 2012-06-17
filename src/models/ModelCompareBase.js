@@ -6,10 +6,10 @@ ModelCompareBase = function(params) {
 
   this.app = params.renderer;
   
-  this.models = [ this.app.getModel("Model4"), this.app.getModel("ModelMoon")];
-  this.ui = "Model4";
-  this.models[0].loadPreset(planetPresets["Eudoxus"]["Mercury"][1]);  
-  this.models[1].loadPreset(planetPresets["Eudoxus"]["Moon"]);
+  this.models = [ this.app.getModel("ModelPtolemyMoon1a"), this.app.getModel("ModelPtolemyMoon1b")];
+  this.ui = "ModelPtolemy";
+  this.models[0].loadPreset(planetPresets["Ptolemy"]["Moon"]["1a"]);  
+  this.models[1].loadPreset(planetPresets["Ptolemy"]["Moon"]["1b"]);
   
   // TODO: extract into function
   this.currentPlanet = this.models[0].currentPlanet;
@@ -26,10 +26,68 @@ ModelCompareBase = function(params) {
 
     
   this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
+  this.realSun = this.models[0].realSun;
   this.sphere[1] = this.models[0].sphere[1];
+  this.sphere[4] = this.models[0].sphere[4];
+  this.ptolemySphere = this.models[0].ptolemySphere;
     
-  this.mergeSetFunctions({ setSpeed1 : "value", setSpeed2 : "value", setSpeed3 : "value", setSunSpeed : "value", update: "time", reset: "", setAxisAngle1 : "value",  setAxisAngle2 : "value", setAxisAngle3 : "value", setAxisAngle4 : "value",  getShowHippo : "",  setAnimSpeed : "value", togglePause : "state" });
-  this.mergeGetFunctions({ getSpeed1: "", getSpeed2: "", getSpeed3: "", getSunSpeed: "", getRotateStart1: "", getRotateStart2: "", getRotateStart3: "", getRotateStart4: "", getAxisAngle1 : "",  getAxisAngle2 : "", getAxisAngle3 : "", getAxisAngle4 : "", getRunning: "", getAnimSpeed: "", getDays:"", getAxisAngle1 : "", getShowPath : "", getShowStars : "" });
+  this.mergeSetFunctions({ 
+        setSpeed1 : "value",
+        setSpeed2 : "value",
+        setSpeed3 : "value",
+        setSunSpeed : "value",
+        update: "time",
+        updateMovement: "time",
+        setAxisAngle1 : "value",
+        setAxisAngle2 : "value",
+        setAxisAngle3 : "value",
+        setAxisAngle4 : "value",
+        getShowHippo : "",
+        setAnimSpeed : "value",
+        togglePause : "state",
+        setApsidalAngle : "value",
+        setBaseRadius: "value",
+        setEquant: "value",
+        setRadiusDeferent: "value",
+        setRadiusEpicycle: "value",
+        setDeviation : "value",
+        setKM : "value",
+        setLambdaAN : "value"
+  });
+  this.mergeGetFunctions({ 
+        getSpeed1: "",
+        getSpeed2: "",
+        getSpeed3: "",
+        getSunSpeed: "",
+        getRotateStart1: "",
+        getRotateStart2: "",
+        getRotateStart3: "",
+        getRotateStart4: "",
+        getAxisAngle1 : "",
+        getAxisAngle2 : "",
+        getAxisAngle3 : "",
+        getAxisAngle4 : "",
+        getRunning: "",
+        getAnimSpeed: "",
+        getDays:"",
+        getAxisAngle1 : "",
+        getShowPath : "",
+        getShowStars : "",
+        getApsidalAngle : "",
+        getBaseRadius: "",
+        getEquant: "",
+        getRadiusDeferent: "",
+        getRadiusEpicycle: "",
+        getDeviation : "",
+        getKM : "",
+        getLambdaAN : "",
+        getPreset : "",
+        toggleRunning:"",
+        reset: "",
+        adjustAnomaly: "",
+                adjustCrank : ""
+
+  });
   
   this.setAnimSpeed(60);
 

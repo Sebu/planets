@@ -232,12 +232,9 @@ HippopedeIntroduction: {
     {AxisAngle: 24.0, Speed: 0,  RotateStart: 0 },
     {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
     {AxisAngle: 30.0, Speed: -110,  RotateStart: 0 }
-  ] },
+  ] }
   
-  ComareTest: {
-    model: "ModelCompareBase",
-    ui: "Ptolemy"
-  }  
+ 
 },
 
 
@@ -625,6 +622,11 @@ Ptolemy: {
       {AxisAngle: 0.0, Step: "13;10,34,58,33,30,30",  RotateStart: "41;27" },
       {AxisAngle: 0.0, Step: "13;03,53,56,17,51,59", RotateStart:  "268;49" }
     ] },
+    
+    "1a+b": {
+        model: "ModelCompareBase",
+        ui: "ModelPtolemy"
+    },  
 
     2: { 
     caption: "2",
