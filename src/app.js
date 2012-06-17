@@ -189,12 +189,13 @@ cosmoApp.prototype.setupUI = function() {
         });
 
         $("#parameters-hide-button").click(function() { 
-            $("#ui-container").toggleClass('hide');
-            
+             $("#content-scroll").toggleClass('hide');
+             $("#ui-container").toggleClass('hide');
         });
 
         $("#info-button").click(function() { 
             $("#page").toggleClass('slide');
+            $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
             $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
             that.resize();
         });
@@ -948,15 +949,15 @@ cosmoApp.prototype.updateUI = function() {
            UI.slider({model: this.model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity"}).appendTo("#ecliptic");
            
             UI.box({id:"apsidal"}).appendTo("#parameters");
-            UI.slider({model: this.model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.1, text: "Angle"}).appendTo("#apsidal");
-            UI.slider({model: this.model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+//            UI.slider({model: this.model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.1, text: "Angle"}).appendTo("#apsidal");
+//            UI.slider({model: this.model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
             UI.box({id:"deferent"}).appendTo("#parameters");
             UI.slider({model: this.model, id: "RadiusDeferent", max: 1000, step:0.05, text: "radius"}).appendTo("#deferent");
             UI.slider({model: this.model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#deferent");            
 
             UI.box({id:"epicycle"}).appendTo("#parameters");
-            UI.slider({model: this.model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
+//            UI.slider({model: this.model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
 
 
             $("#date-input").show();
