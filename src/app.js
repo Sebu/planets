@@ -64,9 +64,9 @@ cosmoApp.prototype.setupUI = function() {
         this.splashStatus.append("setup labels...");
         
         //TODO: move labels to html code (style / rename etc.)
-        equinoxLabel = new UI.Label({text: APP_STRINGS.EN.VERNAL });
+        equinoxLabel = new UI.Label({text: APP_STRINGS.EN.VERNAL});
         npoleLabel = new UI.Label({text: APP_STRINGS.EN.NORTH_POLE });
-        spoleLabel = new UI.Label({text: APP_STRINGS.EN.SOUTH_POLE });
+        spoleLabel = new UI.Label({text: APP_STRINGS.EN.SOUTH_POLE});
         northLabel = new UI.Label({text: "North"});
         southLabel = new UI.Label({text: "South"});
         eastLabel = new UI.Label({text: "East"});
@@ -140,7 +140,7 @@ cosmoApp.prototype.setupUI = function() {
         this.loadCustomPresets();
         
         $("#ui-container h3").collapsible();
-        $("#info-container h3").collapsible();
+        //$("#info-container h3").collapsible();
         
         $("#ui-container, #info-container").show();
 
@@ -164,8 +164,7 @@ cosmoApp.prototype.setupUI = function() {
 
        
         
-
-        
+       
         $("#reset-button").click(function() { 
             app.model.reset();
         });
@@ -190,9 +189,23 @@ cosmoApp.prototype.setupUI = function() {
         });
 
         $("#parameters-hide-button").click(function() { 
-            $("#content-scroll").toggle();
+            $("#ui-container").toggleClass('hide');
         });
 
+        $("#info-button").click(function() { 
+            $("#page").toggleClass('slide');
+            that.resize();
+        });
+        
+        
+        $("#rotate-left").click(function() {
+            that.currentCamera.mouseY(0.05);
+        });
+
+        $("#rotate-right").click(function() {
+            that.currentCamera.mouseY(-0.05);
+        });
+                
         $("#zoom-plus").click(function() { 
             that.setZ(that.getZ()+1);
             $("#zoom-slider").slider('value',that.getZ());
@@ -523,7 +536,8 @@ cosmoApp.prototype.update = function(time) {
         }
         if (Ori.input.mouse.wheel) {
          this.currentCamera.mouseWheel(0.0, 0.0, Ori.input.mouse.z);
-         $("#Z > input").attr("value",Number( this.currentCamera.getZ() ));
+         $("#zoom-slider").slider('value',that.getZ());
+         //$("#Z > input").attr("value",Number( this.currentCamera.getZ() ));
         }
 
         // rotate with left button
@@ -625,8 +639,9 @@ cosmoApp.prototype.draw = function(time) {
 
 /** on resize adjust camera aspect and canvas size */
 cosmoApp.prototype.resize = function() {
-  var width = window.innerWidth,
-  height = window.innerHeight-35,
+  var 
+  width = this.domRoot.innerWidth(),
+  height = this.domRoot.innerHeight(), //-35,
   factor = Ori.gfxProfile.resolution;
   this.currentCamera.setAspect(width / height);
   this.canvas.setSize(width*factor, height*factor);
@@ -673,14 +688,14 @@ cosmoApp.prototype.getZ = function() {
  */
 cosmoApp.prototype.updateUI = function() {
   
-        $("#moonInfoContainer").fadeOut(500);
-        $("#sunInfoContainer").fadeOut(500);
-        $("#meanLongitudeBox").fadeOut(500);
+        $("#moonInfoContainer").hide();
+        $("#sunInfoContainer").hide();
+        $("#meanLongitudeBox").hide();
         
         
         if(this.model.ui === "ModelSun")  {
-            $("#sunInfoContainer").fadeIn(500);
-            $("#meanLongitudeBox").fadeIn(500);
+            $("#sunInfoContainer").show();
+            $("#meanLongitudeBox").show();
         }      
 
         $("#ptolemyInfoContainer").fadeOut(500);

@@ -236,14 +236,20 @@ var UI = {
 };
 
 UI.Label = function(params) {
-
-        this.ele = document.createElement("div"); 
-        this.ele.setAttribute("class","ori-label");
-        this.ele.setAttribute("unselectable","on");
-        document.body.appendChild(this.ele);
-        this.setPosition(params.pos || {x:0, y:0, z:-1});
-        this.ele.innerHTML = " ";
-        this.setText(params.text);
+        var
+        domElement = params.domElement || document.body;
+        
+        if(params.ele) {
+            this.ele = params.ele[0];        
+        } else {        
+            this.ele = document.createElement("div"); 
+            this.ele.setAttribute("class","ori-label");
+            this.ele.setAttribute("unselectable","on");
+            domElement.appendChild(this.ele);
+            this.setPosition(params.pos || {x:0, y:0, z:-1});
+            this.ele.innerHTML = " ";
+            this.setText(params.text);
+        }
 };
 
 UI.Label.prototype = {

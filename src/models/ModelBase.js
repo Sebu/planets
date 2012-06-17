@@ -168,6 +168,15 @@ ModelBase.prototype = {
             color: config.colors["Planet"] });
         
 
+        // create hull
+        this.hull = new Planet({ 
+            dist: 0.0,
+            emit: 0.0,
+            phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
+            scale: -config.sphereRadius-1,
+            inner_id: params.name+"Planet",
+            color: config.colors["S2"] });        
+
 
         // create ecliptic and attach to S2
         this.ecliptic = new Spherical({ 
@@ -225,6 +234,8 @@ ModelBase.prototype = {
         this.root.addNode(this.sphere[1]);
           // S1
           this.sphere[1].addNode( this.earth );
+//          this.sphere[1].addNode( this.hull );
+          
           this.sphere[1].anchor.addNode( this.stars ); 
           this.sphere[1].anchor.addNode( this.sphere[2] );
             // S2
