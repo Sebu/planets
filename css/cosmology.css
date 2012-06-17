@@ -355,7 +355,10 @@ select:focus,
 }
 
 #canvas-main {
-    background:  #222;
+    background: url("../images/book-left.png") repeat-y;
+    background-position: right; 
+    background-color:  #222;
+    
     position: relative;
     width: 100%;
     height: 100%;
@@ -509,7 +512,7 @@ select:focus,
 .bla1 {
     padding: 50px;
     width: 50%;
-    background: url("../images/paper.png") repeat-y;
+    background: url("../images/book-right.png") repeat-y;
 
 }
 
@@ -520,6 +523,7 @@ select:focus,
 }
 
 #page {
+  
   position: fixed;
   top:0px;
   left:0px;
