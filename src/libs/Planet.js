@@ -25,15 +25,24 @@ Planet = function(params) {
     this.gfx.glowMap =  params.glowMap;
     this.gfx.map = params.map;
     this.gfx.usePhong = params.phong;
+    this.gfx.opacity = params.opacity || 1.0;
 
     if(this.gfx.usePhong) 
       this.gfx.material =  new THREE.MeshPhongMaterial( {  
-//        color: rgbToHex(this.gfx.color),
+//        ambient: rgbToHex(this.gfx.color),
         ambient: 0x222222,
-        map: this.gfx.map,
+//        transparent: true,
+//        opacity: this.gfx.opacity,        
+        map: this.gfx.map
       });
     else 
-      this.gfx.material =  new THREE.MeshBasicMaterial({ color: rgbToHex(this.gfx.color), map: this.gfx.map });
+      this.gfx.material =  new THREE.MeshBasicMaterial({ 
+        color: rgbToHex(this.gfx.color),
+        transparent: true,
+        depthtest: false,        
+        opacity: this.gfx.opacity,
+        map: this.gfx.map
+    });
       
 
     this.gfx.glowGeo = new THREE.Geometry();

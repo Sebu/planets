@@ -159,7 +159,7 @@ ModelBase.prototype = {
         
 
 
-        // create and planet and attach to LAST S
+        // create planet
         this.planet = new Planet({ 
             dist: config.sphereRadius,
             emit: 0.5,
@@ -172,10 +172,10 @@ ModelBase.prototype = {
         this.hull = new Planet({ 
             dist: 0.0,
             emit: 0.0,
-            phong: (Ori.gfxProfile.shading >= Ori.Q.HIGH),
-            scale: -config.sphereRadius-1,
-            inner_id: params.name+"Planet",
-            color: config.colors["S2"] });        
+            phong: false, //(Ori.gfxProfile.shading >= Ori.Q.HIGH),
+            opacity: 0.1,
+            scale: config.sphereRadius,
+            color: config.colors["S1"] });        
 
 
         // create ecliptic and attach to S2
@@ -195,7 +195,7 @@ ModelBase.prototype = {
             emit: 0.5,
             scale: 0.3,
             dist: config.sphereRadius,
-            inner_id: this.name+"Sun",
+            inner_id: params.name+"Sun",
             color: config.colors["Sun"] });           
         
         this.updateList[this.sphere.length] = this.ecliptic;
@@ -206,7 +206,6 @@ ModelBase.prototype = {
         this.root.add( new THREE.AmbientLight(0xFFFFFF) );
         this.sunLight = new THREE.PointLight( 0xFFFFFF, 1, 0 );
         this.root.add( this.sunLight );
-
 
         // add stars
         this.stars = new Cloud({count:50})
@@ -234,7 +233,7 @@ ModelBase.prototype = {
         this.root.addNode(this.sphere[1]);
           // S1
           this.sphere[1].addNode( this.earth );
-//          this.sphere[1].addNode( this.hull );
+          this.sphere[1].addNode( this.hull );
           
           this.sphere[1].anchor.addNode( this.stars ); 
           this.sphere[1].anchor.addNode( this.sphere[2] );

@@ -190,10 +190,12 @@ cosmoApp.prototype.setupUI = function() {
 
         $("#parameters-hide-button").click(function() { 
             $("#ui-container").toggleClass('hide');
+            
         });
 
         $("#info-button").click(function() { 
             $("#page").toggleClass('slide');
+            $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
             that.resize();
         });
         
@@ -284,7 +286,7 @@ cosmoApp.prototype.setupCameras = function() {
       instance: new THREE.BallCamera(cameraParams)
     }
   };
-  this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -16});
+  this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -18});
   this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
   this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
   var ortho = 70;
@@ -472,7 +474,7 @@ cosmoApp.prototype.updateInfoBox = function() {
           UI.innerText(this.info.equationOfTime, this.model.getEquationOfTime().toFixed(6) );
           UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(11) );
           UI.innerText(this.info.latitude, this.model.planet.latitude.toFixed(3) );
-          UI.innerText(this.info.sunDaysPerYear,Utils.frac( this.model.getDaysPerYear() ) );
+          UI.innerText(this.info.sunDaysPerYear, Utils.frac( this.model.getDaysPerYear() ) );
         } else {
           UI.innerText(this.info.longitude, this.model.planet.longitude.toFixed(1) );
           UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(2) );

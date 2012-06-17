@@ -477,6 +477,10 @@ select:focus,
 .bla1 {
     padding: 50px;
     width: 50%;
+
+}
+
+.bla1:hover {
     -webkit-user-select:text;
     -moz-user-select:text;
     -khtml-user-select:text;

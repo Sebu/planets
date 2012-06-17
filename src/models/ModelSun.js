@@ -14,13 +14,13 @@ ModelSun = function() {
     this.setShowPath = null;
     
 
-    sunYears = 0;
+    this.sunYears = 0;
     this.setSunYears = function(speed) {
-        sunYears = speed;
+        this.sunYears = speed;
         this.sphere[3].setSpeed(this.sunYears*365);
     }
     this.getSunYears = function() {
-      return sunYears;
+      return this.sunYears;
     }
     
     this.getMeanLongitude = function() {

@@ -365,7 +365,7 @@ Callippus: {
 
 
 Yavetz: {
-  Test: {
+//  Test: {
 //    caption: "Yavetz",
     model: "ModelYavetz",
     ui: "ModelYavetz",  
@@ -375,7 +375,8 @@ Yavetz: {
       {AxisAngle: 24.0,  Speed: 365,  RotateStart: 0 },
       {AxisAngle: 90.0, Speed: 110,  RotateStart: 0 },
       {AxisAngle: 30.0, Speed: 110,  RotateStart: 95 },
-    ]}
+    ]
+    //}
 },
 
 
