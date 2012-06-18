@@ -241,7 +241,7 @@ cosmoApp.prototype.setupUI = function() {
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
           this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").addClass(\"hide\");' value='ok'>CONITUNE</div>");
         } else                       
-          $("#splash").hide();
+          $("#splash").addClass("hide");
 }
 /**
   setup input (mouse and keyboard)
