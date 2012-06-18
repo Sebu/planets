@@ -173,8 +173,9 @@ ModelBase.prototype = {
             dist: 0.0,
             emit: 0.0,
             phong: false, //(Ori.gfxProfile.shading >= Ori.Q.HIGH),
-            opacity: 0.1,
-            scale: -config.sphereRadius,
+            opacity: 0.6,
+            map: THREE.ImageUtils.loadTexture(config.rampTexture),
+            scale: -(config.sphereRadius),
             color: config.colors["S1"] });        
 
 

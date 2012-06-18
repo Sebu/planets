@@ -52,7 +52,11 @@ ModelCompareBase = function(params) {
         setRadiusEpicycle: "value",
         setDeviation : "value",
         setKM : "value",
-        setLambdaAN : "value"
+        setLambdaAN : "value",
+        toggleRunning:"",
+        reset: "",
+        adjustAnomaly: "",
+        adjustCrank : ""        
   });
   this.mergeGetFunctions({ 
         getSpeed1: "",
@@ -81,11 +85,7 @@ ModelCompareBase = function(params) {
         getDeviation : "",
         getKM : "",
         getLambdaAN : "",
-        getPreset : "",
-        toggleRunning:"",
-        reset: "",
-        adjustAnomaly: "",
-                adjustCrank : ""
+        getPreset : ""
 
   });
   

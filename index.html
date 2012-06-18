@@ -20,7 +20,7 @@
 </script>
 </head>
 <body>
-<table>
+<table id='book'>
     <td id='page'>
     
     <div id='splash'>
@@ -34,7 +34,7 @@
         <select class='select-models' id='preset-select'></select>
         <select class='select-models' id='moon-select'></select>    
         <span id='add-preset' class='button'>+</span><span id='remove-preset' class='button'>-</span>  
-        <span style="float: right;" class='button' id='info-button'>fullscreen</span>
+        <div style="position: absolute; top: 0px; right: 0px;" class='button' id='info-button'>fullscreen</div>
     </div>
     <div id="canvas-main">
 
@@ -142,8 +142,8 @@
     
     
 
-
-    <td id='bla' class='bla1'>
+    <td id='right-page'>
+    <section>
     <p>
 Eudoxos of Knidos was born approximately 395-390 BCE and lived 53 years. A polymath, he made important contributions to geography, metaphysics, and ethics. However, his most important work was in geometry, the theory of proportion, and astronomy. Our principal sources for his astronomy are Aristotle, Aratus (3rd cent. BCE), Hipparchus (2nd cent. BCE), and Simplicius (6th cent. CE), although the last is our principal source for his astronomical models. The first to present a general, geometrical model of celestial motion, Eudoxos started with five basic principles.
 </p>
@@ -156,7 +156,9 @@ The center of the path of any celestial motion is the same as the center of its 
 The center of all celestial motion is the center of the universe.<br>
 Since the apparent motion of all celestial bodies is neither circular nor regular, though it is about the earth, Eudoxos needed to construct models that preserved the five principles and the appearances. This means constructing the apparent motions as combinations of circular motions, the basic idea behind most subsequent Greek mathematical astronomy and the basis of mathematical astronomy from Ptolemy up to Kepler.
 </p>
+</section>
 
+<section>
 The apparent irregular and non-circular motions of celestial bodies is a result of the combinations of real, circular motions that satisfy principles (1) - (5). In other words, the models must preserve or save the phenomena.<br>
 The qualification in (4) is significant only in the context of Ptolemy's later introduction of models which distinguish the center of the motion from the center of the path of the motion. It would have been implicit in the astronomy of Eudoxos.
 
@@ -185,8 +187,10 @@ The next spheres only pertain to the five planets (Mercury, Venus, Mars, Jupiter
 The first sphere for the synodic period (here green). This sphere has as its period the time it takes for the planet to return to the same phase, e.g. last appearance in the evening or first appearance in the morning. Its poles are on the ecliptic (that is the equator of the second sphere) and it rotates south/north (the meaning here is a little unclear, since any south/north motion relative to some point on earth is also a north/south motion 1/2 day later from the same location on the earth, but our source, Simplicius, may just be bringing out the point that it must be of this sort). These are 110 days for Mercury, 19 months (570 days) for Venus, 8 months and 20 days or 260 days for Mars (almost certainly an error in the report of Simplicius, as the number should be 24-26 months), approximately 13 months (390 days) for Jupiter and Saturn.
 The second sphere for the synodic period (here red). This spherσe has the same period as the first. It rotates opposite to the first sphere, i.e., approximately north/south, although Simplicius actually describes this as east/west. The same issues arise as for the third sphere. The poles of the fourth sphere are distant from the poles of the third, but our sources do not say how distant. Since there was no standard way of measuring angles in the time of Eudoxus, except as parts of a circular-arc or a right angle, this is hardly surprising.
     </p>
-    </td>     
-    </table>
+    </section>
+    
+</td>     
+</table>
  
 
 

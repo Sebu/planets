@@ -628,7 +628,7 @@ Ptolemy: {
         ui: "ModelPtolemy"
     },  
 
-    2: { 
+    "2": { 
     caption: "2",
     model: "ModelPtolemyMoon2",
     ui: "ModelPtolemy",
@@ -652,7 +652,7 @@ Ptolemy: {
       {AxisAngle: 0.0, Step: "13;03,53,56,17,51,59", RotateStart: "268;49" }
     ] },
 
-    3: { 
+    "3": { 
     caption: "3",
     model: "ModelPtolemyMoon2",
     ui: "ModelPtolemy",

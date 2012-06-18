@@ -195,6 +195,7 @@ cosmoApp.prototype.setupUI = function() {
 
         $("#info-button").click(function() { 
             $("#page").toggleClass('slide');
+            $("#book").toggleClass('hide');
             $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
             $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
             that.resize();
@@ -238,7 +239,7 @@ cosmoApp.prototype.setupUI = function() {
           this.debugBox.show();
           this.splashStatus.empty();
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-          this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").fadeOut();' value='ok'>CONITUNE</div>");
+          this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").addClass(\"hide\");' value='ok'>CONITUNE</div>");
         } else                       
           $("#splash").hide();
 }
