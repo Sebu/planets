@@ -12,6 +12,7 @@ cosmoApp = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
         this.models = {};
+        this.views = {};
         
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
@@ -125,7 +126,9 @@ cosmoApp.prototype.setupUI = function() {
        
         this.modelSelect = $("#model-select");
         this.planetSelect = $("#planet-select");
-        this.presetSelect = $("#preset-select");                
+        this.presetSelect = $("#preset-select"); 
+        
+//        $(".select-models").chosen();                  
 
         this.modelSelect.change(function() { app.loadModel(this.options[this.selectedIndex].value); });  
         this.planetSelect.change(function() { app.loadPlanet(this.options[this.selectedIndex].value); }); 
@@ -191,13 +194,26 @@ cosmoApp.prototype.setupUI = function() {
         $("#parameters-hide-button").click(function() { 
              $("#content-scroll").toggleClass('hide');
              $("#ui-container").toggleClass('hide');
+
         });
 
+        document.getElementById("page").onresize = function(e) { that.resize(e) };
+        
         $("#info-button").click(function() { 
             $("#page").toggleClass('slide');
             $("#book").toggleClass('hide');
+            $("#canvas-main").toggleClass('page');
             $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
             $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
+            
+//            $('#page').animate({
+//                'min-width': '100%'
+//                }, {
+//              duration: 1000,  
+//              step: function(now, fx) {
+//                that.resize();
+//              }
+//            });
             that.resize();
         });
         
@@ -241,7 +257,7 @@ cosmoApp.prototype.setupUI = function() {
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
           this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").addClass(\"hide\");' value='ok'>CONITUNE</div>");
         } else                       
-          $("#splash").addClass("hide");
+        $("#splash").hide(); //addClass("hide");
 }
 /**
   setup input (mouse and keyboard)
@@ -471,12 +487,13 @@ cosmoApp.prototype.updateInfoBox = function() {
 //*
         //OPT: merge dom updates
         if(this.model.ui === "ModelSun") {
-          UI.innerText(this.info.longitude, this.model.planet.longitude.toFixed(6) );
-          UI.innerText(this.info.meanLongitude, this.model.getMeanLongitude().toFixed(6) );
-          UI.innerText(this.info.equationOfTime, this.model.getEquationOfTime().toFixed(6) );
-          UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(11) );
-          UI.innerText(this.info.latitude, this.model.planet.latitude.toFixed(3) );
-          UI.innerText(this.info.sunDaysPerYear, Utils.frac( this.model.getDaysPerYear() ) );
+          this.getView("SunView").update(this.model);  
+//          UI.innerText(this.info.longitude, this.model.planet.longitude.toFixed(6) );
+//          UI.innerText(this.info.meanLongitude, this.model.getMeanLongitude().toFixed(6) );
+//          UI.innerText(this.info.equationOfTime, this.model.getEquationOfTime().toFixed(6) );
+//          UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(11) );
+//          UI.innerText(this.info.latitude, this.model.planet.latitude.toFixed(3) );
+//          UI.innerText(this.info.sunDaysPerYear, Utils.frac( this.model.getDaysPerYear() ) );
         } else {
           UI.innerText(this.info.longitude, this.model.planet.longitude.toFixed(1) );
           UI.innerText(this.info.longitudeSpeed, this.model.planet.longitudeSpeed.toFixed(2) );
@@ -665,6 +682,22 @@ cosmoApp.prototype.getModel = function(name) {
     mod = this.models[name];
   };
   return mod;
+};
+
+
+/**
+ * @param name of the view/ui to get 
+ * @returns a view instance from cache or generates one (sort of a factory)
+ */
+cosmoApp.prototype.getView = function(name) {
+  // fetch existing model
+  var view = this.views[name];
+  // or create new
+  if(!view) {
+    this.views[name] = new window[name]();
+    view = this.views[name];
+  };
+  return view;
 };
 
 cosmoApp.prototype.setFov = function(val) {
@@ -950,15 +983,15 @@ cosmoApp.prototype.updateUI = function() {
            UI.slider({model: this.model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity"}).appendTo("#ecliptic");
            
             UI.box({id:"apsidal"}).appendTo("#parameters");
-//            UI.slider({model: this.model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.1, text: "Angle"}).appendTo("#apsidal");
-//            UI.slider({model: this.model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
+            UI.slider({model: this.model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.1, text: "Angle"}).appendTo("#apsidal");
+            UI.slider({model: this.model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
             UI.box({id:"deferent"}).appendTo("#parameters");
             UI.slider({model: this.model, id: "RadiusDeferent", max: 1000, step:0.05, text: "radius"}).appendTo("#deferent");
             UI.slider({model: this.model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#deferent");            
 
             UI.box({id:"epicycle"}).appendTo("#parameters");
-//            UI.slider({model: this.model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
+            UI.slider({model: this.model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
 
 
             $("#date-input").show();
@@ -1006,21 +1039,7 @@ cosmoApp.prototype.updateUI = function() {
             UI.slider({model: this.model, id:"Speed3",  max:1100, text:"S 3"}).appendTo("#speed");
 
         } else if (this.model.ui === "ModelSun") {
-
-
-            UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
-            UI.slider({model: this.model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
-            UI.slider({model: this.model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
-            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-//            UI.slider({model: this.model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({model: this.model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
-
-            UI.slider({model: this.model, id:"Speed2",  max:1100, text:"S 2 (zodiacal) in days"}).appendTo("#speed");
-            UI.slider({model: this.model, id: "SunYears", max:1100, text:"S 3 (synodic) in years"}).appendTo("#speed");
-            
-//            $("#Speed1 > input, #SunYears > input").change(function() {
-//              $("#sunDaysPerYear").html(Utils.frac( app.model.getDaysPerYear() ));
-//            });
+            this.getView("SunView").setupSliders(this.model);
         }
 
 

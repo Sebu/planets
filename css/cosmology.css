@@ -26,9 +26,13 @@ a {
 
 #splash {
   font-family: sans-serif;
+//  font-family: 'Cabin Sketch'; //, cursive;
+//  font-family: 'Fredericka the Great', cursive;
+//  font-family: 'Shadows Into Light Two', cursive;
+//  font-family: 'Delius Unicase', cursive;  
   text-align: center;
   position: absolute;
-  color: #000; // #FFF;
+  color: #FFF;
 //  top: 50%;
 //  left: 50%;
   font-size: 18px;
@@ -45,7 +49,12 @@ a {
 //  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
 //  border-radius: 5px;
   background: url("../images/splash-back.png");
-  background-color: rgba(255, 255, 255, 0.5);
+//  background-color: rgba(255, 255, 255, 0.5);
+  opacity: 0.9;
+//  -webkit-mask-image: url("../images/splash-back.png");
+// -webkit-background-clip: text;  
+  font-weight: bold;
+//  text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
 
 //  -webkit-transform: rotate(0deg);  
   -webkit-transition: -webkit-transform 1s;
@@ -134,23 +143,29 @@ select {
 .select-models {
   font-size: 18px;
   border-radius: 0px;
-//  color: #777;
   color: white;
-//  background: white;
-  background: #222;
+  float:left;
   padding: 0px;
+  overflow: hidden;
+  background: url("")  no-repeat right #222;
+}
+
+.select-models select {
+   font-size: 18px;
+   color: #fff;
+   background: transparent;
 }
 
 #model-select {
-  width: 190px;
+  width: 210px;
 }
 
 #planet-select {
-  width: 150px;
+  width: 180px;
 }
 
 #preset-select {
-  width: 36px;
+  width: 66px;
 }
 
 #camera-select {
@@ -363,13 +378,14 @@ select:focus,
 }
 
 #canvas-main {
-    background: url("../images/book-left.png") repeat-y;
-    background-position: right; 
     background-color:  #222;
-    
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+#canvas-main.page {
+    background: url("../images/book-left.png") repeat-y right #222;
 }
 
 .side-box {
@@ -711,3 +727,4 @@ select:focus,
   border-left: 12px solid #888;  
   
 }
+

@@ -29,14 +29,14 @@
     </div>
     
     <div id='top-container'>
-        <select class='select-models' id='model-select'></select>
-        <select class='select-models' id='planet-select'></select>
-        <select class='select-models' id='preset-select'></select>
-        <select class='select-models' id='moon-select'></select>    
+        <div class='select-models' style='width: 180px;'><select id='model-select'></select></div>
+        <div class='select-models' style='width: 150px;'><select id='planet-select'></select></div>
+        <div class='select-models' style='width: 36px;'><select id='preset-select'></select></div>
+        <div class='select-models'><select id='moon-select'></select></div>   
         <span id='add-preset' class='button'>+</span><span id='remove-preset' class='button'>-</span>  
         <div style="position: absolute; top: 0px; right: 0px;" class='button' id='info-button'>fullscreen</div>
     </div>
-    <div id="canvas-main">
+    <div id="canvas-main" class="page">
 
 
 
@@ -202,7 +202,6 @@ The second sphere for the synodic period (here red). This spherσe has the same 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 
-
 <!-- matrix/vector lib and 3d abstraction  
 <script type="text/javascript" src="src/vendor/Tween.js"></script>
 -->
@@ -249,6 +248,10 @@ The second sphere for the synodic period (here red). This spherσe has the same 
 <script type="text/javascript" src="src/models/ModelPtolemyMoon1.js"></script>
 <script type="text/javascript" src="src/models/ModelCompareBase.js"></script>
 
+
+<!-- views (all in one site for testing) -->
+<script type="text/javascript" src="src/views/BaseView.js"></script>
+<script type="text/javascript" src="src/views/SunView.js"></script>
 
 
 <!-- the app -->

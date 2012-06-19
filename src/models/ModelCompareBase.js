@@ -46,10 +46,10 @@ ModelCompareBase = function(params) {
         setAnimSpeed : "value",
         togglePause : "state",
         setApsidalAngle : "value",
-        setBaseRadius: "value",
+//        setRadiusEpicycle: "value",
+//        setBaseRadius: "value",
         setEquant: "value",
         setRadiusDeferent: "value",
-        setRadiusEpicycle: "value",
         setDeviation : "value",
         setKM : "value",
         setLambdaAN : "value",
@@ -78,10 +78,10 @@ ModelCompareBase = function(params) {
         getShowPath : "",
         getShowStars : "",
         getApsidalAngle : "",
-        getBaseRadius: "",
+//        getRadiusEpicycle: "",        
+//        getBaseRadius: "",
         getEquant: "",
         getRadiusDeferent: "",
-        getRadiusEpicycle: "",
         getDeviation : "",
         getKM : "",
         getLambdaAN : "",
@@ -104,6 +104,22 @@ ModelCompareBase.prototype.loadPreset = function(preset) {
   this.models[1].earth.setEnabled(false);
 }
 
+
+ModelCompareBase.prototype.setBaseRadius = function(value) {
+  return this.models[0].setBaseRadius(value);
+}
+
+ModelCompareBase.prototype.getBaseRadius = function() {
+  return this.models[0].getBaseRadius();
+}
+
+ModelCompareBase.prototype.setRadiusEpicycle = function(value) {
+  return this.models[1].setRadiusEpicycle(value);
+}
+
+ModelCompareBase.prototype.getRadiusEpicycle = function() {
+  return this.models[1].getRadiusEpicycle();
+}
 
 // for some convenience :)
 ModelCompareBase.prototype.mergeGetFunctions = function(list) {

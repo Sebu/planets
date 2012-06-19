@@ -165,6 +165,7 @@ ModelBase.prototype = {
             emit: 0.5,
             scale: 0.2,
             inner_id: params.name+"Planet",
+//            map: THREE.ImageUtils.loadTexture(config.rampTexture),
             color: config.colors["Planet"] });
         
 
