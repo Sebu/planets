@@ -90,7 +90,25 @@ BaseView.prototype = {
     },
     
     exportCSV : function(model) {
-    
+        // TODO: generate data
+        
+        var 
+        i=0,
+        data="";
+
+        for(i=0; i<this.updateList.length; ++i) {
+            key = this.updateList[i];
+   
+            if(this[key]) {
+                data += key + ";";
+                data += this[key](model).toString();
+                data += "\n";
+            }
+        }       
+        downloadDataURI({
+            filename: "test.csv", 
+            data:   "data:application/csv;charset/=utf-8," + data    
+        });
     },
     
     cleanUp : function() {},

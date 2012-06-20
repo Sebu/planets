@@ -121,6 +121,7 @@
                       <tr><td>egyptian date</td><td class=wert id='egyptianDate'>0</td></tr>
                       <tr><td></td><td class=wert id='egyptianEpoch'>0</td></tr>
                 </table>
+                <a style="float: right; color: #FFF;" href='javascript:void(0)' onclick='app.getView(app.model.ui).exportCSV(app.model);'>download</a>
             </div>
         </div>
         
@@ -137,7 +138,9 @@
     <p>
 <a href='javascript:void(0)' onclick='app.model.reset();'>reset_from_text</a>
 Eudoxos of Knidos was born approximately 395-390 BCE and lived 53 years. A polymath, he made important contributions to geography, metaphysics, and ethics. However, his most important work was in geometry, the theory of proportion, and astronomy. Our principal sources for his astronomy are Aristotle, Aratus (3rd cent. BCE), Hipparchus (2nd cent. BCE), and Simplicius (6th cent. CE), although the last is our principal source for his astronomical models. The first to present a general, geometrical model of celestial motion, Eudoxos started with five basic principles.
-<a href="data:application/csv;charset=utf-8,Col1%2CCol2%2CCol3%0AVal1%2CVal2%2CVal3%0AVal11%2CVal22%2CVal33%0AVal111%2CVal222%2CVal333">Example</a>
+
+
+
 </p>
 <br>
 <p>
@@ -193,6 +196,7 @@ The second sphere for the synodic period (here red). This spherσe has the same 
 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://download-data-uri.appspot.com/js/download-data-uri.js"></script>
 
 <!-- matrix/vector lib and 3d abstraction  
 <script type="text/javascript" src="src/vendor/Tween.js"></script>

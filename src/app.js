@@ -157,8 +157,11 @@ cosmoApp.prototype.setupUI = function() {
 
         $("#screenshot-button").click(function() {
             app.canvas.render(app.currentScene, app.currentCamera);
-//            saveAs("text/plain;charset=utf-8", "screenshot.jpg");
-            window.open(app.canvas.domElement.toDataURL("image/jpeg"));
+            downloadDataURI({
+                filename: "screenshot.jpeg", 
+                data: app.canvas.domElement.toDataURL("image/jpeg")
+            });
+        //    window.open(app.canvas.domElement.toDataURL("image/jpeg"));
         }); 
         
         $("#date-input").bind("keyup", function(e) { 
@@ -338,12 +341,8 @@ cosmoApp.prototype.loadPreset = function(preset) {
   this.model = this.getModel(planet.model);
   this.setCurrentScene(this.model.root);
   this.model.loadPreset(planet);
-  planetLabel.setText(this.model.currentPlanet.label);
   
-  // default camera
-  this.setCamera("Trackball");
-  this.currentCamera.reset();
-
+  
   // update UI 
   this.updateUI();
 };
@@ -631,33 +630,15 @@ cosmoApp.prototype.getZ = function() {
 cosmoApp.prototype.updateUI = function() {
   
     
-/*  
-        $("#moonInfoContainer").hide();
-        $("#sunInfoContainer").hide();
-        $("#meanLongitudeBox").hide();
-        
-        
-        if(this.model.ui === "SunView")  {
-            $("#sunInfoContainer").show();
-            $("#meanLongitudeBox").show();
-        }      
-
-        $("#ptolemyInfoContainer").hide();
-        if(this.model.ui == "PtolemyView" || this.model.ui == "PtolemySunView") 
-            $("#ptolemyInfoContainer").show();
-
-        $("#sunAngleBox").hide();
-        if (this.model.sun.getEnabled()) 
-            $("#sunAngleBox").show();
-        
-        $("#infoContainer2").hide();
 
 
-        
+       planetLabel.setText(this.model.currentPlanet.label);
+  
+       // default camera
+       this.setCamera("Trackball");
+       this.currentCamera.reset();
 
-        
-        
-*/      
+
         $("#date-input").hide();
         $("#moon-select").hide();  
         $("#info-container tr").hide();
