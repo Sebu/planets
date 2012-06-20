@@ -22,13 +22,11 @@ PtolemyView.prototype.updateOther = function(model, camera, canvas) {
 },  
         
 PtolemyView.prototype.setupSliders = function(model, camera) {
-           this.planetLabel2 = new UI.Label({text: APP_STRINGS.EN.MOON });
-           
            camera.rotateY((Math.PI*3)/2 - 0.1);
            camera.rotateRight(Math.PI/2);
-//           
+           
+           this.planetLabel2 = new UI.Label({text: APP_STRINGS.EN.MOON });
            this.planetLabel2.setText("Sun");   
-//borken    
 
 //*
            UI.box({id:"daily"}).appendTo("#parameters");
@@ -67,7 +65,7 @@ PtolemyView.prototype.updateList = [
     'epicycleLongitude',
     'deferentLongitude',
     'gregorianDate',
-//    'julianDate',
+    'julianDate',
     'egyptianDate',
     'egyptianEpoch'
 
@@ -96,20 +94,20 @@ PtolemyView.prototype.deferentLongitude  = function(model) {
 };
 
 PtolemyView.prototype.gregorianDate  = function(model) {
-    return Utils.dateToString( Utils.jdToMagic(model.date) );
+    return Utils.dateToString( Utils.jdToMagic(model.getDateValue()) );
 };
 
 PtolemyView.prototype.julianDate  = function(model) {
-    return model.date.toFixed(2);
+    return model.getDateValue().toFixed(2);
 };
 
 PtolemyView.prototype.egyptianDate = function(model) {
-    return Utils.dateToStringEgypt( Utils.jdToEgyptian(model.date) );
+    return Utils.dateToStringEgypt( Utils.jdToEgyptian(model.getDateValue()) );
 };
 
 
 PtolemyView.prototype.egyptianEpoch = function(model) {
-    return Utils.jdToEpoch( model.date );
+    return Utils.jdToEpoch(model.getDateValue());
 };
 
 
@@ -127,6 +125,7 @@ PtolemySunView.prototype.setupSliders = function(model, camera) {
            camera.rotateY((Math.PI*3)/2 - 0.1);
            camera.rotateRight(Math.PI/2);    
 
+           this.planetLabel2 = new UI.Label({text: APP_STRINGS.EN.MOON });
            this.planetLabel2.setText("Sun");
            
            $("<div id='visSuns'></div>").appendTo("#visSpheres");

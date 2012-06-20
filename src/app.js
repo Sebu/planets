@@ -654,10 +654,11 @@ cosmoApp.prototype.updateUI = function() {
 
 
         
-        $("#date-input").hide();
+
         
         
 */      
+        $("#date-input").hide();
         $("#moon-select").hide();  
         $("#info-container tr").hide();
         this.getView(this.model.ui).setupInfos();

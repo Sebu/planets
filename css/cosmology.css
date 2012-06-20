@@ -594,7 +594,7 @@ select:focus,
 #info-container {
   color: #FFF;
   position: absolute;
-//  display: none;
+  display: none;
   width: 240px;
   top: 5px;
   right: 5px; 

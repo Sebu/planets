@@ -105,6 +105,10 @@ ModelCompareBase.prototype.loadPreset = function(preset) {
 }
 
 
+ModelCompareBase.prototype.getDateValue = function() {
+    return this.models[0].date;
+}
+    
 ModelCompareBase.prototype.setBaseRadius = function(value) {
   return this.models[0].setBaseRadius(value);
 }

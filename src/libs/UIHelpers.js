@@ -221,7 +221,7 @@ var UI = {
         text = params.text || params.id,
         color = params.color || "#FFF",
         value = instance["get"+id](),
-        element =  $("<div class='checkbox tipable' style='color:" + color + "'>"  + text +  "</div>"),
+        element =  $("<div class='checkbox' style='color:" + color + "'>"  + text +  "</div>"),
         change = params.change || function()  { 
             $(this).toggleClass('checked'); 
             instance["set"+id]($(this).is(".checked"));
