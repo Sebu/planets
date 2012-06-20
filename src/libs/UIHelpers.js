@@ -236,8 +236,7 @@ var UI = {
 };
 
 UI.Label = function(params) {
-        var
-        domElement = params.domElement || document.body;
+        this.domRoot = params.domElement || document.body;
         
         if(params.ele) {
             this.ele = params.ele[0];        
@@ -245,7 +244,7 @@ UI.Label = function(params) {
             this.ele = document.createElement("div"); 
             this.ele.setAttribute("class","ori-label");
             this.ele.setAttribute("unselectable","on");
-            domElement.appendChild(this.ele);
+            this.domRoot.appendChild(this.ele);
             this.setPosition(params.pos || {x:0, y:0, z:-1});
             this.ele.innerHTML = " ";
             this.setText(params.text);
@@ -257,6 +256,10 @@ UI.Label.prototype = {
   
   setText : function(text) {
       this.ele.firstChild.nodeValue = text;
+  },
+  
+  remove : function() {
+      this.domRoot.removeChild(this.ele);        
   },
 
   setPosition : function(pos) {

@@ -46,7 +46,7 @@ Eudoxus: {
     1: {
 //    caption: "Eudoxus Mercury 1",
     model: "Model4",
-    ui: "Model4",
+    ui: "Model4View",
 //    color: colors['Mars'],
     label: "Mercury",  
     sphere: [
@@ -59,7 +59,7 @@ Eudoxus: {
     2: {
 //      caption: "Eudoxus Mercury 2",
       model: "Model4",
-      ui: "Model4",  
+      ui: "Model4View",  
       label: "Mercury",    
       sphere: [
         {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -72,7 +72,7 @@ Eudoxus: {
     1: {
 //    caption: "Eudoxus Venus 1",
     model: "Model4",
-    ui: "Model4",  
+    ui: "Model4View",  
     label: "Venus",    
     sphere: [
       {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -83,7 +83,7 @@ Eudoxus: {
     2: {
 //    caption: "Eudoxus Venus 2",
     model: "Model4",
-    ui: "Model4",  
+    ui: "Model4View",  
     label: "Venus",    
     sphere: [
       {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -96,7 +96,7 @@ Eudoxus: {
   1: {
 //  caption: "Eudoxus Mars 1",
   model: "Model4",
-  ui: "Model4",  
+  ui: "Model4View",  
   label: "Mars",
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -107,7 +107,7 @@ Eudoxus: {
   2: {
 //  caption: "Eudoxus Mars 2",
   model: "Model4",
-  ui: "Model4",  
+  ui: "Model4View",  
   label: "Mars",  
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -118,7 +118,7 @@ Eudoxus: {
   3: {
 //  caption: "Eudoxus Mars 3",
   model: "Model4",
-  ui: "Model4",  
+  ui: "Model4View",  
   label: "Mars",  
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -129,7 +129,7 @@ Eudoxus: {
   4: {
 //  caption: "Eudoxus Mars 4",
   model: "Model4",
-  ui: "Model4",  
+  ui: "Model4View",  
   label: "Mars",  
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -142,7 +142,7 @@ Eudoxus: {
   1: {
 //  caption: "Eudoxus Jupiter",
   model: "Model4",
-  ui: "Model4",  
+  ui: "Model4View",  
   label: "Jupiter",  
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -155,7 +155,7 @@ Eudoxus: {
   1: {
 //  caption: "Eudoxus Saturn",
   model: "Model4",
-  ui: "Model4",  
+  ui: "Model4View",  
   label: "Saturn",  
   sphere: [
     {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
@@ -167,7 +167,7 @@ Eudoxus: {
   Sun: { 
   caption: "Sun",
   model: "ModelSun",
-  ui: "ModelSun",     
+  ui: "SunView",     
   label: "Sun",
   showSun: false,
   sunYears: 99,  
@@ -179,7 +179,7 @@ Eudoxus: {
   Moon: {
   caption : "Moon",
   model: "ModelMoon",
-  ui: "ModelMoon",    
+  ui: "MoonView",    
   label: "Moon",
   showSun: true,  
   metonYear: 19,
@@ -196,7 +196,7 @@ Eudoxus: {
 MoonCompare: { 
   caption: "Moon comparision",
   model: "ModelMoonCompare",
-  ui: "ModelMoonCompare",     
+  ui: "MoonCompareView",     
   metonYear: 19,
   label: "Moon",
   showSun: true,  
@@ -212,7 +212,7 @@ MoonCompare: {
 Simple: { 
   caption: "Basic",
   model: "ModelSimple",
-  ui: "ModelSimple",  
+  ui: "SimpleView",  
   showSun: false,  
   sphere: [
     {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
@@ -223,7 +223,7 @@ Simple: {
 HippopedeIntroduction: {
   caption: "Hippopede introduction",
   model: "Model4",
-  ui: "ModelHippo",
+  ui: "HippoView",
   showStars: false,
   showSun: false,
   showPath: false,
@@ -244,7 +244,7 @@ Callippus: {
   1: { 
 //  caption: "Callippus Mercury 1",
   model: "Model5",
-  ui: "Model5",
+  ui: "Model5View",
   label: "Mercury",  
   Alpha:110,
   Beta:36.6667,
@@ -262,7 +262,7 @@ Callippus: {
   1: { 
 //  caption: "Callippus Mars 1",
   model: "Model5",
-  ui: "Model5",
+  ui: "Model5View",
   label: "Mars",  
   Alpha:780,
   Beta:260,
@@ -278,7 +278,7 @@ Callippus: {
   2: { 
 //  caption: "Callippus Mars 2",
   model: "Model5",
-  ui: "Model5",  
+  ui: "Model5View",  
   label: "Mars",  
   Alpha:780,
   Beta:260,
@@ -294,7 +294,7 @@ Callippus: {
   3: { 
 //  caption: "Callippus Mars 3",
   model: "Model5",
-  ui: "Model5",  
+  ui: "Model5View",  
   label: "Mars",
   Alpha:780,
   Beta:390,
@@ -312,7 +312,7 @@ Callippus: {
   1: {
 //  caption: "Callippus Venus", 
   model: "Model5",
-  ui: "Model5",  
+  ui: "Model5View",  
   label: "Venus",
   Alpha:570,
   Beta:95,
@@ -328,7 +328,7 @@ Callippus: {
   Sun: { 
   caption: "Sun",
   model: "Model5",
-  ui: "Model5",     
+  ui: "Model5View",     
   label: "Sun",
   showSun: false,
   sunYears: 99, 
@@ -347,7 +347,7 @@ Callippus: {
   Moon: { 
   caption : "Moon",
   model: "ModelMoon",
-  ui: "ModelMoon",     
+  ui: "MoonView",     
   label: "Moon",  
   metonYear: 76,
   metonSynodicMonths: 940,
@@ -366,7 +366,7 @@ Yavetz: {
 //  Test: {
 //    caption: "Yavetz",
     model: "ModelYavetz",
-    ui: "ModelYavetz",  
+    ui: "YavetzView",  
     betaRotate: 30.0,
     sphere: [
       {AxisAngle: 38.0, Speed: 0,  RotateStart: 0 },
@@ -404,7 +404,7 @@ Moon3: {
 Aristotle: {
   caption: "Aristotle",
   model: "ModelAristotle",
-  ui: "ModelAristotle",  
+  ui: "AristotleView",  
   showSun: false,
   showStars: false,
   sphere: [
@@ -422,7 +422,7 @@ Ptolemy: {
   Mars: {
     caption: "Mars",
     model: "ModelPtolemySuperior",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Mars",
     showStars: false,
     showHippo: false,
@@ -451,7 +451,7 @@ Ptolemy: {
   Jupiter: { 
     caption: "Jupiter",
     model: "ModelPtolemySuperior",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Jupiter",
     showStars: false,
     showHippo: false,
@@ -477,7 +477,7 @@ Ptolemy: {
   Saturn: {
     caption: "Saturn",
     model: "ModelPtolemySuperior",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Saturn",
     showStars: false,
     showHippo: false,
@@ -503,7 +503,7 @@ Ptolemy: {
   Mercury: {
     caption: "Mercury",
     model: "ModelPtolemyInferior",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Mercury",
     showStars: false,
     showHippo: false,
@@ -532,7 +532,7 @@ Ptolemy: {
   Venus: {
     caption: "Venus",
     model: "ModelPtolemyVenus",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Venus",
     showStars: false,
     showHippo: false,
@@ -558,7 +558,7 @@ Ptolemy: {
   Sun: {
     caption: "Sun",
     model: "ModelPtolemySun",
-    ui: "ModelPtolemySun",
+    ui: "PtolemySunView",
     label: "Sun", 
     showSun: false,
     showStars: false,
@@ -580,7 +580,7 @@ Ptolemy: {
     "1a": { 
     caption: "1a",
     model: "ModelPtolemyMoon1a",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Moon",
     showSun: false,  
     showStars: false,
@@ -603,7 +603,7 @@ Ptolemy: {
     "1b": { 
     caption: "1b",
     model: "ModelPtolemyMoon1b",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Moon",
     showSun: false,  
     showStars: false,
@@ -625,13 +625,13 @@ Ptolemy: {
     
     "1a+b": {
         model: "ModelCompareBase",
-        ui: "ModelPtolemy"
+        ui: "PtolemyView"
     },  
 
     "2": { 
     caption: "2",
     model: "ModelPtolemyMoon2",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Moon",
     showStars: false,
     showHippo: false,
@@ -655,7 +655,7 @@ Ptolemy: {
     "3": { 
     caption: "3",
     model: "ModelPtolemyMoon2",
-    ui: "ModelPtolemy",
+    ui: "PtolemyView",
     label: "Moon",
     showStars: false,
     showHippo: false,

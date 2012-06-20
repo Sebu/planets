@@ -7,7 +7,7 @@ ModelCompareBase = function(params) {
   this.app = params.renderer;
   
   this.models = [ this.app.getModel("ModelPtolemyMoon1a"), this.app.getModel("ModelPtolemyMoon1b")];
-  this.ui = "ModelPtolemy";
+  this.ui = "PtolemyView";
   this.models[0].loadPreset(planetPresets["Ptolemy"]["Moon"]["1a"]);  
   this.models[1].loadPreset(planetPresets["Ptolemy"]["Moon"]["1b"]);
   

@@ -10,10 +10,10 @@ SunView = function() {
 
 SunView.prototype = new BaseView;
 SunView.prototype.constructor = SunView;
-//SunView.prototype.name = "Model4";
 
 
-SunView.prototype.setupSliders = function(model) {
+        
+SunView.prototype.setupSliders = function(model, camera) {
         UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
         UI.slider({model: model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
         UI.slider({model: model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3"}).appendTo("#angle");
@@ -27,16 +27,31 @@ SunView.prototype.setupSliders = function(model) {
 //            });   
 };
 
-SunView.prototype.update = function(model) {
-        UI.innerText(this.info.longitude, model.planet.longitude.toFixed(6) );
-        UI.innerText(this.info.meanLongitude, model.getMeanLongitude().toFixed(6) );
-        UI.innerText(this.info.equationOfTime, model.getEquationOfTime().toFixed(6) );
-        UI.innerText(this.info.longitudeSpeed, model.planet.longitudeSpeed.toFixed(11) );
-        UI.innerText(this.info.latitude, model.planet.latitude.toFixed(3) );
-        UI.innerText(this.info.sunDaysPerYear, Utils.frac( model.getDaysPerYear() ) );
-        UI.innerText(this.info.days, Utils.daysToTime(model.getDays()) );          
-        if(model.sun.getEnabled()) 
-            UI.innerText(this.info.sunAngle, model.planet.sunAngle.toFixed(1) );
+
+/**
+ keep order!
+*/
+SunView.prototype.updateList = [
+    'days',
+    'equationOfTime',
+    'latitude',
+    'longitude',
+    'longitudeSpeed',
+    'meanLongitude',
+    'sunDaysPerYear',
+    'sunAngle'
+];
+
+SunView.prototype.longitude = function(model) {
+        return model.planet.longitude.toFixed(6);
+};
+
+SunView.prototype.longitudeSpeed = function(model) {
+        return model.planet.longitudeSpeed.toFixed(11);
+};
+    
+SunView.prototype.latitude = function(model) {
+        return model.planet.latitude.toFixed(3);
 };
 
 
