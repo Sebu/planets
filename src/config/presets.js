@@ -1,7 +1,7 @@
 
 
 var config = {
-  earthTexture : 'images/earthmap1k.jpg',
+  earthTexture : 'images/oikoumenemap1k.jpg',
   sunGlowTexture : 'images/sun.png',
   rampTexture : 'images/ramp.png',
   speedFactor : 100.0,

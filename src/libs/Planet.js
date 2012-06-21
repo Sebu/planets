@@ -34,7 +34,7 @@ Planet = function(params) {
     if(this.gfx.usePhong) 
       this.gfx.material =  new THREE.MeshPhongMaterial( {  
 //        ambient: rgbToHex(this.gfx.color),
-        ambient: 0x222222,
+        ambient: 0x999999, //222222,
 //        transparent: true,
 //        opacity: this.gfx.opacity,        
         map: this.gfx.map
