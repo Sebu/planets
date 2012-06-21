@@ -558,8 +558,9 @@ select:focus,
 }
 
 #right-page {
-    padding: 10px;
+    padding: 30px;
     width: 50%;
+  font-size: 14px;
     background: url("../images/book-right.png") repeat-y;
 
 }
@@ -576,6 +577,7 @@ select:focus,
   left:0px;
   width:50%;
   height:100%;
+
 }
 
 #page.slide {
