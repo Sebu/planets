@@ -1,12 +1,14 @@
 * { 
-  margin: 0; 
-  padding: 0; 
+//  margin: 0; 
+//  padding: 0; 
 }
 
 html,body {
   border: 0px;
   width: 100%;
   height: 100%;
+  margin: 0; 
+  padding: 0; 
   overflow: auto;
 
   -webkit-user-select:none;
@@ -565,6 +567,7 @@ select:focus,
 
 }
 
+
 #right-page:hover {
     -webkit-user-select:text;
     -moz-user-select:text;
@@ -578,6 +581,11 @@ select:focus,
   width:50%;
   height:100%;
 
+}
+
+#page * {
+  margin: 0px;
+  padding: 0px;
 }
 
 #page.slide {
