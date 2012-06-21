@@ -25,6 +25,17 @@ a {
   cursor: pointer;
 }
 
+#page {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top:0px;
+  left:0px;
+  width:50%;
+  height:100%;
+
+}
+
 
 #splash {
   font-family: sans-serif;
@@ -234,6 +245,7 @@ option  {
 }
 
 .slider { 
+  
     position: relative;
     margin: 8px 0 0 0;
     border-top: 1px solid #222;
@@ -574,19 +586,7 @@ select:focus,
     -khtml-user-select:text;
 }
 
-#page {
-  position: fixed;
-  top:0px;
-  left:0px;
-  width:50%;
-  height:100%;
 
-}
-
-#page * {
-  margin: 0px;
-  padding: 0px;
-}
 
 #page.slide {
     min-width: 100%;
@@ -602,6 +602,8 @@ select:focus,
 }
 
 #info-container {
+  margin: 0;
+  padding: 0;
   color: #FFF;
   position: absolute;
   display: none;
@@ -614,6 +616,8 @@ select:focus,
 
 .caption,
 h3 { 
+  margin: 0;
+  padding: 0;
   position:relative;
 	font-weight: bold;
 	font-size:16px;
@@ -637,7 +641,6 @@ h3 {
 #info-container table {
   width: 100%;
 }
-
 
 #info-container td {
   width: 120px;
