@@ -174,10 +174,10 @@ ModelBase.prototype = {
             dist: 0.0,
             emit: 0.0,
             phong: false, //(Ori.gfxProfile.shading >= Ori.Q.HIGH),
-            opacity: 0.6,
+            opacity: 0.8,
             map: THREE.ImageUtils.loadTexture(config.rampTexture),
             scale: -(config.sphereRadius),
-            color: config.colors["S1"] });        
+            color: config.colors["Hull"] });        
 
 
         // create ecliptic and attach to S2

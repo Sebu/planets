@@ -558,7 +558,7 @@ select:focus,
 }
 
 #right-page {
-    padding: 50px;
+    padding: 10px;
     width: 50%;
     background: url("../images/book-right.png") repeat-y;
 
@@ -603,11 +603,20 @@ select:focus,
 }
 
 .caption,
-#info-container h3 { 
+h3 { 
   position:relative;
 	font-weight: bold;
 	font-size:16px;
 }
+
+
+#info-container h3 { 
+  position:relative;
+  float: right;
+	font-weight: bold;
+	font-size:12px;
+}
+
 
 #info-container thead {
   color: #AAA;

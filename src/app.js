@@ -122,6 +122,7 @@ cosmoApp.prototype.setupUI = function() {
         this.loadCustomPresets();
         
         $("#ui-container h3").collapsible();
+        $("#info-container h3").collapsible();
         $("#ui-container, #info-container").show();
 
  
