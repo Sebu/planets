@@ -78,6 +78,8 @@ cosmoApp.prototype.setupUI = function() {
 */        
 
 
+
+
         // setupLabels
        
         //TODO: move labels to html code (style / rename etc.)
@@ -286,6 +288,12 @@ cosmoApp.prototype.setDate = function(date) {
 
 cosmoApp.prototype.loadModel = function(value) {
   $("#model-select option[value='"+value+"']").attr('selected',true);
+  
+  
+  // show section
+  $("section").hide();
+  $("#" +value).show();
+          
   this.currentModel = planetPresets[value];
   
   if(this.currentModel.model) {

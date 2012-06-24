@@ -1,6 +1,6 @@
 /* RESET
 ************/  
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+body,div,dl,dt,dd,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,th,td { 
 	margin:0;
 	padding:0;
 }
@@ -15,9 +15,7 @@ address,caption,cite,code,dfn,em,strong,th,var {
 	font-style:normal;
 	font-weight:normal;
 }
-ol,ul {
-	list-style:none;
-}
+
 caption,th {
 	text-align:left;
 }
@@ -601,12 +599,30 @@ select:focus,
     height: 200px;
 }
 
+
 #right-page {
     padding: 30px;
     width: 50%;
   font-size: 14px;
     background: url("../images/book-right.png") repeat-y;
 
+}
+
+#right-page .style1 {
+	color: #0000FF;
+	font-weight: bold;
+}
+#right-page .style2 {
+	color: #FFFF00;
+	font-weight: bold;
+}
+#right-page .style3 {
+	color: #00FF00;
+	font-weight: bold;
+}
+#right-page .style4 {
+	color: #FF0000;
+	font-weight: bold;
 }
 
 
@@ -616,7 +632,9 @@ select:focus,
     -khtml-user-select:text;
 }
 
-
+#right-page section {
+    display: none;
+}
 
 #page.slide {
     min-width: 100%;
