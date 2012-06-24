@@ -130,6 +130,32 @@
 
 <td id='right-page'>
 
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>
+   
+The red donkey
+<span class='selectBox' style='position:relative;'>
+    <span class='text1' style='color: #22F;'>text</span>
+    <ul style='display: none; padding: 3px; position:absolute; background: #fff; width:100px;'>
+        <li title='kicked'>Ross text</li>
+        <li title='bit'>codex 1: bit</li>
+        <li title='kissed'>codex 2: kissed</li>
+    </ul>
+</span>
+Joseph.
+
+<script>
+    $(".selectBox").click(
+        function() {
+            $('ul', this).toggle();
+    });
+    $(".selectBox li").click(
+        function() {
+            $('.selectBox .text1').text(this.title);
+    });
+</script>
+
+
 <ul><li> Eudoxos of Knidos (Eudoxus of Cnidus): astronomy and homocentric spheres&copy;</li>
   <li>By Henry Mendell and Sebastian Szczepanski</li>
 </ul>
@@ -342,7 +368,7 @@ It is now known that (2) is false, but the resulting models have movement in lat
 <script type="text/javascript" src="src/vendor/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="src/vendor/jquery-ui-1.8.20.custom.min.js"></script>
 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://download-data-uri.appspot.com/js/download-data-uri.js"></script>
 

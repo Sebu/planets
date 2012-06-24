@@ -28,11 +28,10 @@
 
         return this.each(function() {        
 
-            $(this).prepend("<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
-                           "<span class='ori-triangle ori-arrow-right' title='show'></span>");
+            $(this).append("<span class='ori-triangle ori-arrow-down ori-arrow-up'></span>");
                      
             $(this).click(function() {
-                $(".ori-triangle", this).toggle(); 
+                $(".ori-triangle", this).toggleClass('ori-arrow-up'); 
                 $(this).next().slideToggle(); 
                 return false;
            });
@@ -115,9 +114,8 @@ var UI = {
         text = params.element || params.text || APP_STRINGS.EN[params.id.toUpperCase() + "_TEXT"] || params.id,
         ele =  $("<div class='ORIbox'>" +
                      "<div  style='color: " + rgbToCSS(color) + ";' class='caption tipable' id='cap" +id+ "'" +
-                         "onclick='$(\".ori-triangle\", this).toggle(); $(this).next().slideToggle();'>" +
-                         "<span class='ori-triangle ori-arrow-down' title='hide'></span>" +
-                         "<span class='ori-triangle ori-arrow-right' title='show'></span>" +
+                         "onclick='$(\".ori-triangle\", this).toggleClass(\"ori-arrow-up\"); $(this).next().slideToggle();'>" +
+                         "<span class='ori-triangle ori-arrow-down ori-arrow-up'></span>" +
                      "</div>" +
                      "<div class='side-box' id='" + id + "'></div>" +
                  "</div>"),

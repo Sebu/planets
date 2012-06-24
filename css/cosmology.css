@@ -1,6 +1,34 @@
-* { 
-//  margin: 0; 
-//  padding: 0; 
+/* RESET
+************/  
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+	margin:0;
+	padding:0;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img { 
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul {
+	list-style:none;
+}
+caption,th {
+	text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-size:100%;
+	font-weight:normal;
+}
+q:before,q:after {
+	content:'';
+}
+abbr,acronym { border:0;
 }
 
 html,body {
@@ -25,6 +53,9 @@ a {
   cursor: pointer;
 }
 
+
+/* 
+************/  
 #page {
   margin: 0;
   padding: 0;
@@ -62,19 +93,18 @@ a {
 //  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
 //  border-radius: 5px;
   background: url("../images/splash-back.png");
-//  background-color: rgba(255, 255, 255, 0.5);
-  opacity: 0.9;
-//  -webkit-mask-image: url("../images/splash-back.png");
-// -webkit-background-clip: text;  
+
+  background-color: rgba(255, 255, 255, 0.5);
+//  opacity: 0.9;
   font-weight: bold;
 //  text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
 
-//  -webkit-transform: rotate(0deg);  
+  -webkit-transform: rotate(0deg);  
   -webkit-transition: -webkit-transform 1s;
 }
 
 #splash.hide{
-  //  left: -100%;
+//    left: -100%;
   -webkit-transform:translate(-110%,-7%) rotate(10deg);
   -webkit-transition: -webkit-transform 1s;
 
@@ -396,15 +426,15 @@ select:focus,
     position: relative;
     width: 100%;
     height: 100%;
+
 }
 
 #canvas-main.page {
+/*  -webkit-filter: blur(1px); */
     background: url("../images/book-left.png") repeat-y right #222;
 }
 
 .side-box {
-//   position: relative;
-//   width: 100%;
    background: #272727;
    background-color: rgba(39,39,39, 0.5);
    box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
@@ -727,7 +757,7 @@ h3 {
 
 
 .ori-triangle {
-  float:left;
+  float:right;
 }
 
 .ori-arrow-down {
@@ -737,10 +767,21 @@ h3 {
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 12px solid #888;
+  border-bottom: 0px;
+}
+
+.ori-arrow-up {
+  margin: 2px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 0;  
+  border-bottom: 12px solid #888;
 }
 
 .ori-arrow-right {
-  display: none;
+//  display: none;
   margin: 0 4px;
   width: 0;
   height: 0;

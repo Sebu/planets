@@ -49,7 +49,7 @@ cosmoApp = function(params) {
 
         // NO WEBGL error
         if(this.canvas.type==="canvas") {
-          this.debugBox.show();
+//          this.debugBox.show();
           this.splashStatus.empty();
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
           this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").addClass(\"hide\");' value='ok'>CONITUNE</div>");
