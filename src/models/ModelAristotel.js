@@ -58,7 +58,7 @@ ModelAristotle = function() {
       this.sphere[1].setGfx(["npole","spole"], state);
       this.sphere[8].setGfx(["sjoint","njoint","npole","spole"], state);
     }
-   this.getShowSphere18 = function() { return false; };
+   this.getShowSphere18 = function() { return true; };
 
    this.setShowSphere36 = function(state) {
       this.sphere[3].setGfx(["npole","spole"], state);
