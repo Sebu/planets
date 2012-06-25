@@ -63,7 +63,7 @@ Spherical = function(params) {
         this.gfx.equator =  new THREE.Line(equator, this.gfx.poleMaterial );      
         this.gfx.equator.rotation.x = Math.PI/2;
     }
-    var centerL = [ {x: 0,y: 0,z: 0}, {x: 0, y: 0,z: 1} ];
+    var centerL = [ new THREE.Vector3( 0, 0,0), new THREE.Vector3( 0, 0, 1) ];
     this.gfx.centerLine = new Curve({trails: false, pos: centerL, color: this.gfx.color }); 
     this.gfx.centerLine.visible = false;
     
