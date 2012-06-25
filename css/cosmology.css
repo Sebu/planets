@@ -737,7 +737,7 @@ h3 {
 
 
 
-#impressum-container {
+footer {
   text-align: right;
   position: absolute;
   font-size: 0.75em;
@@ -748,14 +748,14 @@ h3 {
 
 }
 
-#impressum-container a {
+footer a {
   color: #FFF;
   text-decoration:none;
 }
-#impressum-container a:hover {
+footer a:hover {
   text-decoration:underline;
 }
-#impressum-container:hover {
+footer:hover {
   opacity: 0.4;
 }
 

@@ -264,7 +264,7 @@ Ori.input = new Ori.Input();
  */
 Ori.App = function() {
   this.runningSlow = false;
-  this.targetFps = 10;
+  this.targetFps = 30;
   this.targetTime = 1.0/this.targetFps;
   this.elapsedTime = 0;
   this.timer = new Ori.Timer();
