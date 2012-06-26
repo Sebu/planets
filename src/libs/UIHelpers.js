@@ -11,11 +11,12 @@
 			  i=0,
 			  ele = $(this),
 			  data = criticalapparatus[this.id],
-			  text = $("<span>" + data[0][1] + "</span>"),
+			  text = $("<span>" + (ele.text() || data[0][1]) + "</span>"),
 			  list = $("<ul style=''></ul>"),
 						  func = function() {
 				  text.text(this.title);
 			  };
+        ele.empty();
 			
 			  ele.click( function() {
             list.toggle();
