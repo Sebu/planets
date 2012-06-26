@@ -602,7 +602,7 @@ select:focus,
 
 #right-page {
     font-family: times, serif;
-    padding: 30px;
+    padding: 15px;
     width: 50%;
   font-size: 14px;
     background: url("../images/book-right.png") repeat-y;
@@ -659,7 +659,6 @@ select:focus,
 .selectBox li {
   padding: 2px;
   margin: 0px;
-text-overflow:ellipsis;
 }
 .selectBox li:hover {
   
