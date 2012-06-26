@@ -657,6 +657,9 @@ select:focus,
   border: 1px solid #333;
 }
 .selectBox li {
+  padding: 2px;
+  margin: 0px;
+text-overflow:ellipsis;
 }
 .selectBox li:hover {
   
