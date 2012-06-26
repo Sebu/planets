@@ -183,6 +183,7 @@ cosmoApp.prototype.setupUI = function() {
         $("#info-button").click(function() { 
             $("#page").toggleClass('slide');
             $("#book").toggleClass('hide');
+            $("#right-page").toggle();
             $("#canvas-main").toggleClass('page');
             $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
             $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
