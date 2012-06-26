@@ -4,6 +4,39 @@
 (function( $ ){
 
 
+	  $.fn.selectReading = function() {
+
+		  return this.each(function() {
+			  var
+			  i=0,
+			  ele = $(this),
+			  data = criticalapparatus[this.id],
+			  text = $("<span>" + data[0][1] + "</span>"),
+			  list = $("<ul style=''></ul>"),
+						  func = function() {
+				  text.text(this.title);
+			  };
+			
+			  ele.click( function() {
+            list.toggle();
+     			});
+        ele.mouseleave( function() {
+            list.hide();
+        });
+			  ele.append(text);
+			  ele.append(list);
+			
+			  for(vi=0; i<data.length; ++i) {
+		          var ul = $("<li title=" +  data[i][1] + ">" + data[i][0] + " " + data[i][1] + "</li>");
+				  ul.click(func);	
+				  list.append(ul);
+				
+			  }
+			  return ele;	
+		  });
+	  };
+
+
     var topics = {};
 
     $.fn.Topic = function( id ) {

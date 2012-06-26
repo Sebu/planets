@@ -625,6 +625,35 @@ select:focus,
 	font-weight: bold;
 }
 
+#right-page h1 {  
+  font-size: 22px;
+}
+
+.selectBox { 
+  position: relative;
+  color: #0066FF;
+}
+.selectBox ul {
+  padding: 0;
+  margin: 0;
+  z-index: 1;
+  list-style-type: none;
+  display: none;
+  
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+.selectBox li {
+}
+.selectBox li:hover {
+  
+  background-color: #CCCC66;
+}
+
 
 #right-page:hover {
     -webkit-user-select:text;

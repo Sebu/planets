@@ -142,7 +142,7 @@ cosmoApp.prototype.setupUI = function() {
 
         
         // load default model
-        this.loadModel("Eudoxus");
+        this.loadModel("Aristotle");
 
        
         $("#reset-button").click(function() { 
@@ -218,6 +218,9 @@ cosmoApp.prototype.setupUI = function() {
                 step:1,
                 orientation: "vertical"
          });
+
+        $(".selectBox").selectReading();	
+  
  
 }
 /**
