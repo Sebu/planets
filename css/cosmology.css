@@ -631,18 +631,22 @@ select:focus,
 
 .selectBox { 
   position: relative;
+}
+
+.selectBox > span {
   color: #0066FF;
 }
 .selectBox ul {
 
-    display:-webkit-box;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack:justify;
+  
+  -webkit-box-orient: vertical;
+  -webkit-box-pack:justify;
   padding: 0;
   margin: 0;
   z-index: 1;
   list-style-type: none;
   display: none;
+//display: -webkit-box;
   
   left: 0px;
   top: 0px;
