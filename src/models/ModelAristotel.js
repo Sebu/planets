@@ -144,6 +144,13 @@ ModelAristotle = function() {
         this.sphere[6].setSpeed(-speed);
     }
 
+
+    this.setSpeed4 = function(speed) {
+        this.sphere[4].setSpeed(speed);
+        this.sphere[5].setSpeed(-speed);
+    }
+
+
     this.setRotateStart2 = function(start) {
       this.sphere[2].setRotateStart(start);
       this.sphere[7].setRotateStart(-start);

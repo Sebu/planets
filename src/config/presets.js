@@ -36,7 +36,7 @@ var criticalapparatus = {
 
 
 var config = {
-  earthTexture : 'images/oikoumenemap1k.jpg',
+  earthTexture : 'images/earthmap2.jpg',
   sunGlowTexture : 'images/sun.png',
   rampTexture : 'images/ramp.png',
   speedFactor : 100.0,
@@ -433,6 +433,18 @@ Moon3: {
 
     
 
+Tutorial: {
+  1: {
+//  caption: "Eudoxus Jupiter",
+  model: "ModelAristotle",
+  ui: "AristotleTutorialView",  
+  label: "Jupiter",  
+  sphere: [
+    {AxisAngle: 38.0, Speed: 1, RotateStart: 0 },
+    {AxisAngle: 24.0, Speed: 4380, RotateStart: 0 },
+    {AxisAngle: 90.0, Speed: 390, RotateStart: 0 },
+    {AxisAngle: 18.0, Speed: 390, RotateStart: 0 }] }
+  },
 
 
 

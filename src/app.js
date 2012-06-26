@@ -142,7 +142,7 @@ cosmoApp.prototype.setupUI = function() {
 
         
         // load default model
-        this.loadModel("Aristotle");
+        this.loadModel("Tutorial"); //Aristotle");
 
        
         $("#reset-button").click(function() { 
