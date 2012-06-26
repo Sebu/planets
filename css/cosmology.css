@@ -601,6 +601,7 @@ select:focus,
 
 
 #right-page {
+    font-family: times, serif;
     padding: 30px;
     width: 50%;
   font-size: 14px;
