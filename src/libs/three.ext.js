@@ -252,7 +252,7 @@ Cloud = function(params) {
        x = (Math.random() - 0.5);
        y = (Math.random() - 0.5);
        z = (Math.random() - 0.5);
-       norm = Math.sqrt(x * x + y * y + z * z) / 10.0;
+       norm = Math.sqrt(x * x + y * y + z * z) / config.sphereRadius;
        geo.vertices.push( new THREE.Vector3( x / norm, y / norm, z / norm ) );
     }
 //*

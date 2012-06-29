@@ -34,7 +34,7 @@ Curve.prototype.gen = function(pos) {
     this.geo.verticesNeedUpdate = true;
 
     // fill new data
-    for(var i = 0, len=this.curvePos.length; i < len-2; i++) {
+    for(var i = 0, len=this.curvePos.length; i < len; i++) {
         this.geo.vertices.push( new THREE.Vector3( this.curvePos[i].x, this.curvePos[i].y, this.curvePos[i].z ) );
         
         // add trail gradient

@@ -465,7 +465,7 @@ select:focus,
   z-index: 1;
   color: white;
   display: none;
-  font-size: 14px; //small;
+  font-size: 14px; 
   left: 0px;
   padding: 0;
   margin: 0;
@@ -718,6 +718,7 @@ h3 {
 
 #info-container table {
   width: 100%;
+  pointer-events: none;
 }
 
 #info-container td {
