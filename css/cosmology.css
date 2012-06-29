@@ -35,8 +35,7 @@ html,body {
   height: 100%;
   margin: 0; 
   padding: 0; 
-  overflow: auto;
-
+  overflow: hidden;
   -webkit-user-select:none;
   -moz-user-select:none;
   -khtml-user-select:none;
@@ -54,16 +53,7 @@ a {
 
 /* 
 ************/  
-#page {
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  top:0px;
-  left:0px;
-  width:50%;
-  height:100%;
 
-}
 
 
 #splash {
@@ -493,14 +483,14 @@ select:focus,
 
 #ui-container.hide {
     left: -200px; //max-width: 0px;
-    -moz-transition: left 1s; 
-    -webkit-transition: left 1s; 
+//    -moz-transition: left 1s; 
+//    -webkit-transition: left 1s; 
 }
 
 
 #content-scroll {
- -moz-transform: rotateY( 0deg );
- -webkit-transform: rotateY( 0deg );
+ -moz-transform: translateX(-50%)  rotateY( 0deg ) translateX(50%);
+ -webkit-transform: translateX(-50%)  rotateY( 0deg ) translateX(50%);
  -moz-transition: -moz-transform 1s; 
  -webkit-transition: -webkit-transform 1s;  
 
@@ -512,9 +502,9 @@ select:focus,
 }
 
 #content-scroll.hide {
- -moz-transform: rotateY( -90deg ) translateX(100px);
+ -moz-transform: translateX(-50%) rotateY( -120deg ) translateX(50%);
  -moz-transition: -moz-transform 1s;
- -webkit-transform: rotateY( -90deg ) translateX(100px);
+ -webkit-transform: translateX(-50%) rotateY( -120deg ) translateX(50%);
  -webkit-transition: -webkit-transform 1s;
 }
 
@@ -528,21 +518,6 @@ select:focus,
   width: 190px;
   height: 100%;   
 
-}
-
-
-#book {
-// -moz-transform: rotate(0deg);
-// -webkit-transform: rotate(0deg);
-// -webkit-transition: -webkit-transform 1s;
-
-}
-
-
-#book.hide {
-// -moz-transform: rotate(90deg) translate(-200px,0px);
-// -webkit-transform: rotate(90deg) translate(-200px,0px);
-// -webkit-transition: -webkit-transform 1s;      
 }
 
 #nav-container {
@@ -599,13 +574,27 @@ select:focus,
     height: 200px;
 }
 
+#page {
+  float: left;
+  margin: 0;
+  padding: 0;
+  width:50%;
+  height:100%;
+  overflow: hidden;
+}
+
 
 #right-page {
-    font-family: times, serif;
-    padding: 15px;
-    width: 50%;
+  float: left;
+  font-family: times, serif;
+  margin: 0;
+  padding: 1%;    
+  width: 48%;
+  height: 100%;
   font-size: 14px;
-    background: url("../images/book-right.png") repeat-y;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: url("../images/book-right.png") repeat-y;
 
 }
 
@@ -670,6 +659,7 @@ select:focus,
     -webkit-user-select:text;
     -moz-user-select:text;
     -khtml-user-select:text;
+   
 }
 
 #right-page section {
@@ -771,6 +761,7 @@ h3 {
 //  background: #FFF;//rgba(95, 93, 91, 0.4);
   background:  #222;
   font-size: small;
+
   width: 100%;
   height: 26px;
 }

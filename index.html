@@ -20,9 +20,7 @@
 </script>
 </head>
 <body>
-<table id='book'>
-    <td id='page'>
-    
+<div id='page'>
     <div id='splash'>
         <h1>Virtual Cosmology Sandbox</h1>
         <div id='splash-status'>loading ...</div>
@@ -34,7 +32,7 @@
         <div class='select-models' style='width: 36px;'><select id='preset-select'></select></div>
         <div class='select-models'><select id='moon-select'></select></div>   
         <span id='add-preset' class='button'>+</span><span id='remove-preset' class='button'>-</span>  
-        <div style="position: absolute; top: 0px; right: 0px;" class='button' id='info-button'>fullscreen</div>
+        <div style="float: right;" class='button' id='info-button'>fullscreen</div>
     </nav>
     <div id="canvas-main" class="page">
         <aside class='container hide' id='ui-container'>
@@ -46,7 +44,8 @@
                         <option value='Trackball'>Global</option>
                         <option value='FPS'>Local</option>
                         <option value='TrackballIso'>Flat</option>
-                    </select><select title='latitude presets' id='longitude-select'>
+                    </select>
+                    <select title='latitude presets' id='longitude-select'>
                         <option value='38'>Athens</option>
                         <option value='30.97'>Alexandria</option>
                         <option value='36.66'>Cnidus</option>
@@ -124,13 +123,10 @@
             <a>© 2012 Topoi</a> <a>+henry mendell</a> <a>+sebastian szczepanski</a>
         </footer>
     </div>
-    </td>
-    
-    
 
-<td id='right-page'>
+</div>
 
-
+<div id='right-page'>
 <section id='Tutorial'>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -179,6 +175,7 @@ SWITCH
 <p>So now to and <font color="red" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style4">(S</span><strong>5</strong>)</font> is to undo the rotation of <font color="green" style="BACKGROUND-COLOR: gray"><span class="style3">(S3)</span></font> and <font color="red" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style4">(S4</span>)</font>. When we rotate <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S7</span>)</font> opposite to <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>, the motion of a point on the equator of <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S7</span>)</font> appears to be at rest.</p>
 <p>We will not add the rotation of <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font></p>
 </section>
+
 
 <section  id='Aristotle'>
 <h1>Aristotle, Metaphysica Λ 1073b1-1074a17</h1>
@@ -611,8 +608,7 @@ It is now known that (2) is false, but the resulting models have movement in lat
 
 
     
-</td>     
-</table>
+</div>
  
 
 

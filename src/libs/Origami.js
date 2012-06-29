@@ -161,7 +161,7 @@ Ori.Input.prototype = {
     element.addEventListener('keyup', this.keyUp, false);
   },
   trackMouseOn : function(element) {
-    element.addEventListener('mousewheel', this.mouseWheel, true);
+    element.addEventListener('mousewheel', this.mouseWheel, false);
     element.addEventListener('DOMMouseScroll', this.mouseWheelFox, false);
     element.addEventListener('mousedown', this.mouseDown, false);
     element.addEventListener('mouseup', this.mouseUp, false);
