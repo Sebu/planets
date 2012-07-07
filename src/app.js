@@ -220,7 +220,7 @@ cosmoApp.prototype.setupUI = function() {
                 orientation: "vertical"
          });
 
-        $(".selectBox").selectReading();	
+        
   
  
 }
@@ -294,9 +294,11 @@ cosmoApp.prototype.loadModel = function(value) {
   $("#model-select option[value='"+value+"']").attr('selected',true);
   
   
-  // show section
-  $("section").hide();
-  $("#" +value).show();
+  // load text
+  $('#right-page').empty();
+  $('#right-page').load('text/' + value + '.html', function() {
+      $(".selectBox").selectReading();  
+  });
           
   this.currentModel = planetPresets[value];
   
