@@ -294,12 +294,7 @@ cosmoApp.prototype.loadModel = function(value) {
   $("#model-select option[value='"+value+"']").attr('selected',true);
   
   
-  // load text
-  $('#right-page').empty();
-  $('#right-page').load('text/' + value + '.html', function() {
-      $(".selectBox").selectReading();  
-  });
-          
+  
   this.currentModel = planetPresets[value];
   
   if(this.currentModel.model) {
@@ -358,8 +353,18 @@ cosmoApp.prototype.loadPreset = function(preset) {
   this.model.loadPreset(planet);
   
   
-  // update UI 
+  // load text
+  this.updateText(planet.text || preset);
+        
+  // load UI 
   this.updateUI();
+};
+
+cosmoApp.prototype.updateText = function(uri) {
+    $('#right-page').empty();
+    $('#right-page').load('texts/' + uri + '.html', function() {
+        $(".selectBox").selectReading();  
+    });
 };
 
 /**
