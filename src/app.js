@@ -343,7 +343,7 @@ cosmoApp.prototype.loadPreset = function(preset) {
 
   // 
   if(this.model)
-      this.getView(this.model.ui).cleanUp();
+      this.getView(this.model.view).cleanUp();
       
   // switch model
   this.currentPreset = preset;
@@ -403,7 +403,7 @@ cosmoApp.prototype.addPreset = function() {
 
     var text = prompt(APP_STRINGS.EN.CUSTOM_NEW, this.model.name + '1');
     if(text && (!vault.custom[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
-      var store = this.model.getPreset(); //{ model: model.name, ui: model.ui, writeable: true, sphere: [] };
+      var store = this.model.getPreset(); //{ model: model.name, ui: model.view, writeable: true, sphere: [] };
       store.caption = text;
       if(!vault.custom[text]) localStorage["presetCount"] = Number(localStorage["presetCount"]) + 1;      
       vault.custom[text] = store;
@@ -459,8 +459,8 @@ cosmoApp.prototype.setCurrentScene = function(scene) {
  * update the planet info box
  */
 cosmoApp.prototype.updateInfoBox = function() {
-        this.getView(this.model.ui).updateInfos(this.model);
-        this.getView(this.model.ui).updateOther(this.model, this.currentCamera, this.canvas);
+        this.getView(this.model.view).updateInfos(this.model);
+        this.getView(this.model.view).updateOther(this.model, this.currentCamera, this.canvas);
 }
 
 /** 
@@ -616,6 +616,7 @@ cosmoApp.prototype.getModel = function(name) {
 cosmoApp.prototype.getView = function(name) {
   // fetch existing model
   var view = this.views[name];
+  console.log(name);
   // or create new
   if(!view) {
     this.views[name] = new window[name]();
@@ -649,9 +650,6 @@ cosmoApp.prototype.getZ = function() {
  */
 cosmoApp.prototype.updateUI = function() {
   
-    
-
-
        planetLabel.setText(this.model.currentPlanet.label);
   
        // default camera
@@ -662,7 +660,9 @@ cosmoApp.prototype.updateUI = function() {
         $("#date-input").hide();
         $("#moon-select").hide();  
         $("#info-container tr").hide();
-        this.getView(this.model.ui).setupInfos();
+
+
+        this.getView(this.model.view).setupInfos();
         
         // clear old ui elements
         $("#parameters").empty();
@@ -748,7 +748,7 @@ cosmoApp.prototype.updateUI = function() {
         });
 
 
-        this.getView(this.model.ui).setupSliders(this.model, this.currentCamera);
+        this.getView(this.model.view).setupSliders(this.model, this.currentCamera);
 
 
         // initial update of sliders/state

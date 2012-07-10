@@ -10,14 +10,27 @@
   <script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
   <script type="text/javascript" src="lib/jasmine/jasmine-html.js"></script>
 
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/SpecHelper.js"></script>
-  <script type="text/javascript" src="spec/PlayerSpec.js"></script>
-
   <!-- include source files here... -->
-  <script type="text/javascript" src="../src/Player.js"></script>
-  <script type="text/javascript" src="../src/Song.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>  
+  <script type="text/javascript" src="../src/vendor/sylvester.js"></script>
+  <script type="text/javascript" src="../src/vendor/Three.js"></script>
+  <script type="text/javascript" src="../src/vendor/Stats.js"></script>  
+  <script type="text/javascript" src="../src/config/strings.js"></script>
+  <script type="text/javascript" src="../src/config/presets.js"></script>
+  <script type="text/javascript" src="../menu.js"></script>
+  <script type="text/javascript" src="../src/libs/Origami.js"></script> 
+  <script type="text/javascript" src="../src/libs/Utils.js"></script>
+  <script type="text/javascript" src="../src/libs/three.camera.ext.js"></script>
+  <script type="text/javascript" src="../src/libs/three.ext.js"></script>
+  <script type="text/javascript" src="../src/libs/Curve.js"></script>
+  <script type="text/javascript" src="../src/libs/Spherical.js"></script>
+  <script type="text/javascript" src="../src/libs/Planet.js"></script>  
+  <script type="text/javascript" src="../src/models/mixins/BaseMixin.js"></script>    
+  <script type="text/javascript" src="../src/models/ModelBase.js"></script>
 
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec/ModelSpec.js"></script>
+  
   <script type="text/javascript">
     (function() {
       var jasmineEnv = jasmine.getEnv();

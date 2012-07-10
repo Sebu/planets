@@ -264,7 +264,7 @@ ModelBase.prototype = {
         // extend default settings  
         $.extend(true, this.currentPlanet, preset);
         
-        this.ui = this.currentPlanet.ui;
+        this.view = this.currentPlanet.view;
         
         //TODO: better merge
         for(var i in this.currentPlanet.sphere) {
