@@ -87,7 +87,7 @@ myApp.prototype.loadPreset = function(planet) {
 //        this.currentPreset = preset;
 
         model = this.getModel(planet.model);
-        model.loadPreset(planet);
+        model.setPreset(planet.params);
 
 
 

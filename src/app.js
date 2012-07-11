@@ -356,7 +356,7 @@ cosmoApp.prototype.loadPreset = function(preset) {
   
   
   // load text
-  this.updateText(planet.text || preset);
+  this.updateText(planet.text || (preset + ".html") );
         
   // load view
   this.view = this.getViewByName(planet.view);
@@ -369,7 +369,7 @@ cosmoApp.prototype.loadPreset = function(preset) {
 
 cosmoApp.prototype.updateText = function(uri) {
     $('#right-page').empty();
-    $('#right-page').load('texts/' + uri + '.html', function() {
+    $('#right-page').load(config.textPath + uri, function() {
         $(".selectBox").selectReading();  
     });
 };
@@ -625,7 +625,6 @@ cosmoApp.prototype.getViewByName = function(name) {
   var view = this.views[name];
   // or create new
   if(!view) {
-    console.log(name);
     this.views[name] = new window[name]();
     view = this.views[name];
   };

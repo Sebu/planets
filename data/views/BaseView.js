@@ -95,6 +95,18 @@ BaseView.prototype = {
     
     updateOther : function(model, camera, canvas) {
     },
+    
+    
+    setVisibleSpheres : function(model, list) {
+        var i=0;
+        for(i=1; i<=model.sphere.length; ++i) {
+            model["setShowSphere" + i](false); 
+        }
+
+        for(i=0; i<list.length; ++i) {
+            model["setShowSphere" + list[i]](true); 
+        }
+    },
 
 
     

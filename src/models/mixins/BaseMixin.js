@@ -7,7 +7,7 @@ BaseMixin = function() {
     
         // TODO: hacky all over
     this.setSpeed1 = function(speed) {
-          if (this.sphere[1].getSpeed()==0 && speed == 1) {
+          if (this.sphere[1].getSpeed()==0 && speed != 0) {
             this.setAnimSpeed(this.getAnimSpeed()*config.speedFactor);
           } else if(this.sphere[1].getSpeed()!=0 && speed == 0) {
             this.setAnimSpeed(this.getAnimSpeed()/config.speedFactor);

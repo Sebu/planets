@@ -23,6 +23,7 @@ Eudoxus: {
     1: {
         model: "Model4",
         view: "Model4View",
+        text: "Eudoxus.html",
         viewParams: {
             label: "Mercury"
         },
@@ -437,7 +438,7 @@ Yavetz: {
 Aristotle: {
     common: {
         view: "AristotleView",
-        text: "Aristotle",
+        text: "Aristotle.html",
         viewParams: {
             showSun: false,
             showStars: false
@@ -456,7 +457,7 @@ Aristotle: {
   
   
   Tutorial: {
-    //  caption: "Eudoxus Jupiter",
+      text: "AristotleTutorial.html",
       model: "AristotleModel",
       view: "AristotleTutorialView",  
       viewParams : {
