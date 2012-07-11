@@ -436,26 +436,7 @@ Yavetz: {
 
 
 Aristotle: {
-    common: {
-        view: "AristotleView",
-        text: "Aristotle.html",
-        viewParams: {
-            showSun: false,
-            showStars: false
-        },  
-        model: "AristotleModel",
-        params: {
 
-          sphere: [
-            {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
-            {AxisAngle: 24.0, Speed: 365, RotateStart: 0 },
-            {AxisAngle: 90.0, Speed: 580, RotateStart: 0 },
-            {AxisAngle: 45.0, Speed: -580, RotateStart: 0 }
-          ]
-      }
-  },
-  
-  
   Tutorial: {
       text: "AristotleTutorial.html",
       model: "AristotleModel",
@@ -472,7 +453,29 @@ Aristotle: {
             {AxisAngle: 18.0, Speed: 390, RotateStart: 0 }
             ]
       }
+  },
+  
+  common: {
+        view: "AristotleView",
+        text: "Aristotle.html",
+        viewParams: {
+            showSun: false,
+            showStars: false
+        },  
+        model: "AristotleModel",
+        params: {
+
+          sphere: [
+            {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
+            {AxisAngle: 24.0, Speed: 365, RotateStart: 0 },
+            {AxisAngle: 90.0, Speed: 580, RotateStart: 0 },
+            {AxisAngle: 45.0, Speed: -580, RotateStart: 0 }
+          ]
+      }
   }
+  
+  
+
 },  
 
 Ptolemy: {

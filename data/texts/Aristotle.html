@@ -1,6 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../data/strings.js"></script>
+    <script type="text/javascript" src="../../src/libs/UIHelpers.js"></script>
+    <style>
+    
+    .selectBox { 
+  position: relative;
+}
+
+.selectBox > span {
+  color: #0066FF;
+}
+.selectBox ul {
+
+  
+  -webkit-box-orient: vertical;
+  -webkit-box-pack:justify;
+  padding: 0;
+  margin: 0;
+  z-index: 1;
+  list-style-type: none;
+  display: none;
+//display: -webkit-box;
+  
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+.selectBox li {
+  padding: 2px;
+  margin: 0px;
+}
+.selectBox li:hover {
+  
+  background-color: #CCCC66;
+}
+</style>
+</head>
+<body>
 <h1>Aristotle, Metaphysica Λ 1073b1-1074a17 test</h1>
 <h3>with Ross' and Jaeger's critical apparatus collated</h3>
-<table width="100%" style='border: 0;'>
+<table width="592" style='border: 0;'>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">1073b1</td>
     <td width="522">                                             – ὅτι μὲν οὖν εἰσὶν οὐσίαι,</td>
@@ -219,3 +267,8 @@
   <td>ἀναγκαῖον ἀφείσθω τοῖς ἰσχυροτέροις λέγειν)·</td>
 </tr>
 </table>
+<script>
+$(".selectBox").selectReading();  
+</script>
+</body>
+</html>
