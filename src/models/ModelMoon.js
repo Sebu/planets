@@ -27,13 +27,13 @@ ModelMoonBase.prototype.setCurrentMoonModel = function(name) {
 };
     
     
-ModelMoonBase.prototype.loadPreset = function(node) {
-        ModelBase.prototype.loadPreset.call(this,node);
-        this.setMetonYear(this.currentPlanet.metonYear);
-        this.setMetonSynodicMonths(this.currentPlanet.metonSynodicMonths);
-        this.setMetonDays(this.currentPlanet.metonDays);
-        this.setSarosDraconiticMonths(this.currentPlanet.sarosDraconiticMonths);
-        this.setSarosSynodicMonths(this.currentPlanet.sarosSynodicMonths);
+ModelMoonBase.prototype.setPreset = function(node) {
+        ModelBase.prototype.setPreset.call(this,node);
+        this.setMetonYear(this.state.metonYear);
+        this.setMetonSynodicMonths(this.state.metonSynodicMonths);
+        this.setMetonDays(this.state.metonDays);
+        this.setSarosDraconiticMonths(this.state.sarosDraconiticMonths);
+        this.setSarosSynodicMonths(this.state.sarosSynodicMonths);
 };
 
 ModelMoonBase.prototype.getPreset = function() {

@@ -36,9 +36,9 @@ ModelSun = function() {
     }
 
    
-    this.loadPreset = function(node) {
-        ModelBase.prototype.loadPreset.call(this,node);
-        this.setSunYears(this.currentPlanet.sunYears);
+    this.getPreset = function(node) {
+        ModelBase.prototype.getPreset.call(this,node);
+        this.setSunYears(this.state.sunYears);
     }
     
     this.getPreset = function() {

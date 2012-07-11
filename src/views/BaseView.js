@@ -66,6 +66,29 @@ BaseView.prototype = {
             
         }     
     },
+    
+    setPreset : function(model, pre) {
+    
+        // default planet settings
+        var preset = {};
+        
+        $.extend(true, preset, defaultPreset.viewParams);
+        // extend default settings  
+        $.extend(true, preset, pre);
+        
+        if(model.setShowStars) model.setShowStars(preset.showStars);
+        if(model.setShowPath) model.setShowPath(preset.showPath);
+        if(model.setShowHippo) model.setShowHippo(preset.showHippo);
+        if(model.sun) model.sun.setDist(preset.sunDist);
+        if(model.sun) model.sun.setEnabled(preset.showSun);
+//        this.sun.setGlow(this.state.showSun);
+        model.planet.setShade(preset.color);
+        // hide sun sphere / better never ever show aka don't generate
+        model.ecliptic.setShow(false);   
+        planetLabel.setText(preset.label);
+
+    },
+    
     setupSliders : function(model, camera) {
         
     },

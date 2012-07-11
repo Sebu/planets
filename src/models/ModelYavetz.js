@@ -33,10 +33,10 @@ ModelYavetz = function() {
         this.sphere[4].setSpeed(-speed/2);
     }
 
-    this.loadPreset = function(node) {
-      ModelBase.prototype.loadPreset.call(this,node);
-      this.setAlpha(this.currentPlanet.sphere[3].AxisAngle);
-      this.setBeta(this.currentPlanet.betaRotate);
+    this.setPreset = function(node) {
+      ModelBase.prototype.setPreset.call(this,node);
+      this.setAlpha(this.state.sphere[3].AxisAngle);
+      this.setBeta(this.state.betaRotate);
     }
 
     this.getPreset = function() {

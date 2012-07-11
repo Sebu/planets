@@ -227,6 +227,7 @@ cosmoApp.prototype.setupUI = function() {
 /**
   setup input (mouse and keyboard)
   @function
+  TODO: move to view
 */
 cosmoApp.prototype.setupInput = function() {
 
@@ -341,23 +342,29 @@ cosmoApp.prototype.loadPlanet = function(value) {
  */
 cosmoApp.prototype.loadPreset = function(preset) {
 
-  // 
+  // unload view
   if(this.model)
-      this.getView(this.model.view).cleanUp();
+      this.view.cleanUp();
       
   // switch model
   this.currentPreset = preset;
   var planet = this.currentPlanet[preset];
   this.model = this.getModel(planet.model);
   this.setCurrentScene(this.model.root);
-  this.model.loadPreset(planet);
+  // 
+  this.model.setPreset(planet.params);
   
   
   // load text
   this.updateText(planet.text || preset);
         
-  // load UI 
+  // load view
+  this.view = this.getViewByName(planet.view);
+  this.view.setPreset(this.model, planet.viewParams);
   this.updateUI();
+  // change view?
+
+  
 };
 
 cosmoApp.prototype.updateText = function(uri) {
@@ -459,8 +466,8 @@ cosmoApp.prototype.setCurrentScene = function(scene) {
  * update the planet info box
  */
 cosmoApp.prototype.updateInfoBox = function() {
-        this.getView(this.model.view).updateInfos(this.model);
-        this.getView(this.model.view).updateOther(this.model, this.currentCamera, this.canvas);
+        this.view.updateInfos(this.model);
+        this.view.updateOther(this.model, this.currentCamera, this.canvas);
 }
 
 /** 
@@ -613,16 +620,22 @@ cosmoApp.prototype.getModel = function(name) {
  * @param name of the view/ui to get 
  * @returns a view instance from cache or generates one (sort of a factory)
  */
-cosmoApp.prototype.getView = function(name) {
+cosmoApp.prototype.getViewByName = function(name) {
   // fetch existing model
   var view = this.views[name];
-  console.log(name);
   // or create new
   if(!view) {
+    console.log(name);
     this.views[name] = new window[name]();
     view = this.views[name];
   };
+  
+  this.view = view;
   return view;
+};
+
+cosmoApp.prototype.getView = function() {
+    return this.view;
 };
 
 cosmoApp.prototype.setFov = function(val) {
@@ -650,8 +663,10 @@ cosmoApp.prototype.getZ = function() {
  */
 cosmoApp.prototype.updateUI = function() {
   
-       planetLabel.setText(this.model.currentPlanet.label);
-  
+       
+       /**
+       * move to view
+       */
        // default camera
        this.setCamera("Trackball");
        this.currentCamera.reset();
@@ -662,7 +677,7 @@ cosmoApp.prototype.updateUI = function() {
         $("#info-container tr").hide();
 
 
-        this.getView(this.model.view).setupInfos();
+        this.view.setupInfos();
         
         // clear old ui elements
         $("#parameters").empty();
@@ -748,7 +763,7 @@ cosmoApp.prototype.updateUI = function() {
         });
 
 
-        this.getView(this.model.view).setupSliders(this.model, this.currentCamera);
+        this.view.setupSliders(this.model, this.currentCamera);
 
 
         // initial update of sliders/state

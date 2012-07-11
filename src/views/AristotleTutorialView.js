@@ -18,14 +18,14 @@ AristotleTutorialView.prototype.showSpheres = function(model, list) {
   }
 }
 
-AristotleTutorialView.prototype.switch1 = function(model) {
+AristotleTutorialView.prototype.state1 = function(model) {
   model.setSpeed1(1);
   model.setSpeed2(100);
   model.setSpeed3(100);
   this.showSpheres(model, [1,2,3,4]);
 }
 
-AristotleTutorialView.prototype.switch2 = function(model) {
+AristotleTutorialView.prototype.state2 = function(model) {
   model.setSpeed1(0);
   model.setSpeed2(5);
   model.setSpeed3(3);
@@ -37,7 +37,7 @@ AristotleTutorialView.prototype.switch2 = function(model) {
   model.setShowSphere8(false);
 }
 
-AristotleTutorialView.prototype.switch3 = function(model) {
+AristotleTutorialView.prototype.state3 = function(model) {
   model.setSpeed1(0);
   model.setSpeed2(0);
   model.setSpeed3(0);

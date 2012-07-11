@@ -337,16 +337,16 @@ ModelPtolemyBase.prototype.connectSpheres = function(params) {
 /** @override */
 ModelPtolemyBase.prototype.reset = function () {
         ModelBase.prototype.reset.call(this);
-        this.setEquant( Utils.toDec(this.currentPlanet.equant || 0 ));
-        this.setRadiusDeferent( Utils.toDec(this.currentPlanet.derefentRadius || 0) );
-        this.setRadiusEpicycle( Utils.toDec(this.currentPlanet.epicycleRadius || 0) );
-        this.setBaseRadius( Utils.toDec(this.currentPlanet.baseRadius || 0) );         
-        this.ptolemySphere.setApsidalAngle( Utils.toDec(this.currentPlanet.apsidalAngle || 0) );
-        this.ptolemySphere.setApsidalSpeed( Utils.toDec(this.currentPlanet.centuryStep || 0) );
-        this.ptolemySphere.setInclination( Utils.toDec(this.currentPlanet.inclination || 0) );
-        this.setDeviation( Utils.toDec(this.currentPlanet.deviation || 0) );
-        this.setKM( Utils.toDec(this.currentPlanet.km || 0) );        
-        this.setLambdaAN( Utils.toDec(this.currentPlanet.lambdaAN || 0) );
+        this.setEquant( Utils.toDec(this.state.equant || 0 ));
+        this.setRadiusDeferent( Utils.toDec(this.state.derefentRadius || 0) );
+        this.setRadiusEpicycle( Utils.toDec(this.state.epicycleRadius || 0) );
+        this.setBaseRadius( Utils.toDec(this.state.baseRadius || 0) );         
+        this.ptolemySphere.setApsidalAngle( Utils.toDec(this.state.apsidalAngle || 0) );
+        this.ptolemySphere.setApsidalSpeed( Utils.toDec(this.state.centuryStep || 0) );
+        this.ptolemySphere.setInclination( Utils.toDec(this.state.inclination || 0) );
+        this.setDeviation( Utils.toDec(this.state.deviation || 0) );
+        this.setKM( Utils.toDec(this.state.km || 0) );        
+        this.setLambdaAN( Utils.toDec(this.state.lambdaAN || 0) );
         this.wd = 0;
         
         this.adjustAnomaly();   
@@ -359,8 +359,8 @@ ModelPtolemyBase.prototype.reset = function () {
 
         this.realSun.setDist(0);
         this.realSunS[2].setScale(0);
-        this.realSunS[1].setSpeed(  this.currentPlanet.sunSpeed );
-        this.realSunS[2].setSpeed( -this.currentPlanet.sunSpeed );
+        this.realSunS[1].setSpeed(  this.state.sunSpeed );
+        this.realSunS[2].setSpeed( -this.state.sunSpeed );
 
 };
 

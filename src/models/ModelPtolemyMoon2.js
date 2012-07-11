@@ -41,7 +41,7 @@ ModelPtolemyMoonBase.prototype.create = function(params) {
 
       // mean anomaly correction
       //TODO: 2 disjoint models :)
-      if(this.currentPlanet.accurateMoon) {
+      if(this.state.accurateMoon) {
         var realAngle2 = tmp/PI_SCALE - Math.asin((this.sphere[2].radius/this.sphere[3].radius) * Math.sin(tmp/PI_SCALE));            
         var adjustment = realAngle2-realAngle;
       } else {
@@ -55,7 +55,7 @@ ModelPtolemyMoonBase.prototype.create = function(params) {
     this.oldSetBaseRadius = this.setBaseRadius;
     this.setBaseRadius = function(value) {
       this.oldSetBaseRadius(value);
-      if(this.currentPlanet.accurateMoon) this.sphere[2].crankPoint.position.z = -this.sphere[2].radius*this.factor;
+      if(this.state.accurateMoon) this.sphere[2].crankPoint.position.z = -this.sphere[2].radius*this.factor;
     }
 };
 

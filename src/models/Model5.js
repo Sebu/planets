@@ -46,11 +46,11 @@ Model5.prototype.name = "Model5";
 
 
     /** @override */
-Model5.prototype.loadPreset = function(node) {
-      ModelBase.prototype.loadPreset.call(this, node);
-      this.setAlpha(this.currentPlanet.Alpha);
-      this.setBeta(this.currentPlanet.Beta);
-      this.setGamma(this.currentPlanet.Gamma);
+Model5.prototype.setPreset = function(node) {
+      ModelBase.prototype.setPreset.call(this, node);
+      this.setAlpha(this.state.Alpha);
+      this.setBeta(this.state.Beta);
+      this.setGamma(this.state.Gamma);
     }
 
 Model5.prototype.getPreset = function() {

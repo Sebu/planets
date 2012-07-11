@@ -7,12 +7,11 @@ ModelCompareBase = function(params) {
   this.app = params.renderer;
   
   this.models = [ new ModelPtolemyMoon1a({renderer: this.app}), new ModelPtolemyMoon1b({renderer: this.app})];
-  this.ui = "PtolemyView";
-  this.models[0].loadPreset(planetPresets["Ptolemy"]["Moon"]["1a"]);  
-  this.models[1].loadPreset(planetPresets["Ptolemy"]["Moon"]["1b"]);
+  this.models[0].setPreset(planetPresets["Ptolemy"]["Moon"][1].params);  
+  this.models[1].setPreset(planetPresets["Ptolemy"]["Moon"][2].params);
   
   // TODO: extract into function
-  this.currentPlanet = this.models[0].currentPlanet;
+  this.state = this.models[0].state;
   this.earth = this.models[0].earth;
   this.planet = this.models[0].planet;
   this.earthPlane = this.models[0].earthPlane;  
@@ -25,7 +24,7 @@ ModelCompareBase = function(params) {
   
 
     
-  this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
+//  this.viewPresets = {"World": {from: "Free",at:"Earth"}, "Earth": {from: "Earth",at:"Free"}};
   this.realSun = this.models[0].realSun;
   this.sphere[1] = this.models[0].sphere[1];
   this.sphere[4] = this.models[0].sphere[4];
@@ -99,7 +98,7 @@ ModelCompareBase = function(params) {
 ModelCompareBase.prototype.constructor = ModelCompareBase;
 
     
-ModelCompareBase.prototype.loadPreset = function(preset) {
+ModelCompareBase.prototype.setPreset = function(preset) {
   this.models[0].earth.setEnabled(true);
   this.models[1].earth.setEnabled(false);
 }

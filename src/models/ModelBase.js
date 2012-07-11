@@ -26,7 +26,7 @@ ModelBase.prototype = {
         this.showCurve = [];            
         this.curves = [];
         this.updateList = [];
-        this.currentPlanet = {};
+        this.state = {};
 
         this.days = 0;
         this.setAnimSpeed(config.animSpeed);
@@ -250,48 +250,41 @@ ModelBase.prototype = {
               // Slast
               this.sphere[params.spheres].anchor.addNode( this.planet );
     },
+    
+    
     /**
      * load preset model data
      * @function
      * @param preset the preset to load
     */   
-    loadPreset : function(preset) {
+    setPreset : function(preset) {
 
     	 // default planet settings
-        this.currentPlanet = {};
-        $.extend(true, this.currentPlanet, defaultPreset);
-                
-        // extend default settings  
-        $.extend(true, this.currentPlanet, preset);
+        this.state = {};
         
-        this.view = this.currentPlanet.view;
+        $.extend(true, this.state, defaultPreset.params);
+        // extend default settings  
+        $.extend(true, this.state, preset);
+        
+//        this.view = this.state.view;
         
         //TODO: better merge
-        for(var i in this.currentPlanet.sphere) {
-            for(var j in this.currentPlanet.sphere[i]) {
-              this["set" + j + "" + (Number(i)+1)]( Utils.toDec( this.currentPlanet.sphere[i][j]) );
+        for(var i in this.state.sphere) {
+            for(var j in this.state.sphere[i]) {
+              this["set" + j + "" + (Number(i)+1)]( Utils.toDec( this.state.sphere[i][j]) );
             }
         }
-        
-        if(this.setShowStars) this.setShowStars(this.currentPlanet.showStars);
-        if(this.setShowPath) this.setShowPath(this.currentPlanet.showPath);
-        if(this.setShowHippo) this.setShowHippo(this.currentPlanet.showHippo);
 
-        if(this.sun) this.sun.setDist(this.currentPlanet.sunDist);
-        if(this.sun) this.sun.setEnabled(this.currentPlanet.showSun);
-//        this.sun.setGlow(this.currentPlanet.showSun);
-        if(this.setSunSpeed) this.setSunSpeed(this.currentPlanet.sunSpeed);
-
-        this.planet.setBeta(this.currentPlanet.betaRotate);
-        this.planet.setShade(this.currentPlanet.color);
-
-        if(this.sphere[4]) this.sphere[4].setArcBeta(this.currentPlanet.betaRotate);
-
-        // hide sun sphere / better never ever show aka don't generate
-        this.ecliptic.setShow(false); 
+        if(this.setSunSpeed) this.setSunSpeed(this.state.sunSpeed);
+        this.planet.setBeta(this.state.betaRotate);
+        if(this.sphere[4]) this.sphere[4].setArcBeta(this.state.betaRotate);
 
         // reset everything
         this.reset();
+
+      
+
+
     },
 
     /**
@@ -300,7 +293,7 @@ ModelBase.prototype = {
     */
     getPreset : function() {
         
-        var params = this.currentPlanet;
+        var params = this.state;
         //TODO: better merge
         for(var i in this.sphere) { 
           if(this["getAxisAngle"+i])   params.sphere[i-1].AxisAngle = this["getAxisAngle"+i]();
@@ -403,10 +396,10 @@ ModelBase.prototype = {
             planet.sunAngle = calcAngle(planetOnPlane, sunOnPlane);
 
             // shade planet if sun is in a 15deg region
-            if (this.sun.getEnabled() && this.sunAngle<=15)
-                planet.setShade({r: 0.4, g: 0.4, b: 0.4});
-            else
-                planet.setShade(this.currentPlanet.color);
+//            if (this.sun.getEnabled() && this.sunAngle<=15)
+//                planet.setShade({r: 0.4, g: 0.4, b: 0.4});
+//            else
+//                planet.setShade(this.state.params.color);
 
             // dot product angle fix > 90
             if (calcAngle(planetOnPlane, sunOnPlanePerp)<90)

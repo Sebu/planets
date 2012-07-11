@@ -3,7 +3,7 @@
  * @constructor
  * @extends ModelBase
  */
-ModelAristotle = function() {
+AristotleModel = function() {
 
     this.create();
     
@@ -200,7 +200,7 @@ ModelAristotle = function() {
 
 };
 
-ModelAristotle.prototype = new ModelBase;
-ModelAristotle.prototype.constructor = ModelAristotle;
-ModelAristotle.prototype.name = "ModelAristotle";
+AristotleModel.prototype = new ModelBase;
+AristotleModel.prototype.constructor = AristotleModel;
+AristotleModel.prototype.name = "AristotleModel";
 
