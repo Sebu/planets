@@ -9,9 +9,6 @@ AristotleModel = function() {
     
     this.genSpheres({spheres : 4});
     
-    BaseMixin.call(this);
-    
-
     // add unwinding spheres
     this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]});
     this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]});
@@ -29,8 +26,10 @@ AristotleModel = function() {
         this.sphere[6].anchor.addNode(this.sphere[7]);
           this.sphere[7].anchor.addNode(this.sphere[8]);
 
-
-
+    // add some more shortcuts
+    this.setupShortcuts();
+    BaseMixin.call(this);
+    
     // create nice joint gfx element and add it          
     this.createJoint = function(params) {
       var mat = new THREE.LineBasicMaterial( { linewidth: params.linewidth, color: rgbToHex(params.color) } );
@@ -77,19 +76,6 @@ AristotleModel = function() {
       this.sphere[5].setGfx(["sjoint","njoint","npole","spole"], state);
     }
    this.getShowSphere45 = function() { return false; };      
-   
-   this.setShowSphere5 = function(state) { this.sphere[5].setShow(state); } 
-   this.getShowSphere5 = function() { return this.sphere[5].getShow(); };
-
-   this.setShowSphere6 = function(state) { this.sphere[6].setShow(state); }
-   this.getShowSphere6 = function() { return this.sphere[6].getShow(); };
-
-   this.setShowSphere7 = function(state) { this.sphere[7].setShow(state); }
-   this.getShowSphere7 = function() { return this.sphere[7].getShow(); };
-
-   this.setShowSphere8 = function(state) { this.sphere[8].setShow(state); }
-   this.getShowSphere8 = function() { return this.sphere[8].getShow(); };
-   
    
     // ecliptic
     this.setAxisAngle2 = function(angle) {
@@ -166,16 +152,6 @@ AristotleModel = function() {
       this.sphere[5].setRotateStart(-start);
     }
 
-    /** @override */
-    this.reset = function() {
-        ModelBase.prototype.reset.call(this);
-        this.setShowSphere2(false);
-        this.setShowSphere3(false);   
-        this.setShowSphere4(false);
-        this.setShowSphere5(false);   
-        this.setShowSphere6(false);
-        this.setShowSphere7(false);   
-    }
 
     /** @override */
     this.update = function(time) {

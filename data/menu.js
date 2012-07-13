@@ -447,17 +447,20 @@ Aristotle: {
       params : {
       
           sphere: [
-            {AxisAngle: 38.0, Speed: 1, RotateStart: 0 },
-            {AxisAngle: 24.0, Speed: 4380, RotateStart: 0 },
-            {AxisAngle: 90.0, Speed: 390, RotateStart: 0 },
-            {AxisAngle: 18.0, Speed: 390, RotateStart: 0 }
+            {AxisAngle: 38.0, Speed: 1, RotateStart: 0, ShowSphere: true },
+            {AxisAngle: 24.0, Speed: 4380, RotateStart: 0, ShowSphere: false },
+            {AxisAngle: 90.0, Speed: 390, RotateStart: 0, ShowSphere: false },
+            {AxisAngle: 18.0, Speed: 390, RotateStart: 0, ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: true } 
             ]
       }
   },
   
-  common: {
+  Introduction: {
         view: "AristotleView",
-        text: "Aristotle.html",
         viewParams: {
             showSun: false,
             showStars: false
@@ -466,10 +469,14 @@ Aristotle: {
         params: {
 
           sphere: [
-            {AxisAngle: 38.0, Speed: 0, RotateStart: 0 },
-            {AxisAngle: 24.0, Speed: 365, RotateStart: 0 },
-            {AxisAngle: 90.0, Speed: 580, RotateStart: 0 },
-            {AxisAngle: 45.0, Speed: -580, RotateStart: 0 }
+            {AxisAngle: 38.0, Speed: 0, RotateStart: 0, ShowSphere: true },
+            {AxisAngle: 24.0, Speed: 365, RotateStart: 0, ShowSphere: false },
+            {AxisAngle: 90.0, Speed: 580, RotateStart: 0, ShowSphere: false },
+            {AxisAngle: 45.0, Speed: -580, RotateStart: 0, ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: true } 
           ]
       }
   }

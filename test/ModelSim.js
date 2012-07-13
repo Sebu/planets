@@ -12,7 +12,6 @@ myApp.prototype.constructor = myApp;
 
 myApp.prototype.init = function(params) {
 
-        setupCommonGeomerty();
         this.scenes = [];
         // create models
         models = {}; //new Object;

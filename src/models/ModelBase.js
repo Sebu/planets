@@ -53,6 +53,13 @@ ModelBase.prototype = {
     getShowSun : function() { return this.sun.getEnabled(); },
 
 
+    setCamera : function(cam) { 
+        this.root.remove(this.camera);
+        this.camera = cam; 
+        this.root.add(this.camera);
+    },
+    getCamera : function() { return this.camera; },
+
     /** 
     * set the speed of the animation
     * @param val duration of year revelation in seconds

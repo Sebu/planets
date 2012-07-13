@@ -17,10 +17,7 @@ cosmoApp = function(params) {
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
         
-        
-        //FIX: automate
-        setupCommonGeomerty();
-        
+       
         this.splashStatus = $("#splash-status");
 
         // add Canvas DOM Element & or error box
@@ -32,6 +29,8 @@ cosmoApp = function(params) {
           return;
         }
 
+
+        
         this.splashStatus.empty();
         this.splashStatus.append("setup cameras...");
         this.setupCameras();
@@ -47,6 +46,11 @@ cosmoApp = function(params) {
         this.splashStatus.append("setup UI...");
         this.setupUI();
 
+        // load default model
+        this.setPreset(planetPresets["Aristotle"]["Tutorial"]); //"Aristotle");
+        
+        this.resize();
+        
         // NO WEBGL error
         if(this.canvas.type==="canvas") {
 //          this.debugBox.show();
@@ -76,9 +80,6 @@ cosmoApp.prototype.setupUI = function() {
         Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
         this.debugBox.append( this.stats.domElement );
 */        
-
-
-
 
         // setupLabels
        
@@ -130,6 +131,7 @@ cosmoApp.prototype.setupUI = function() {
  
         $("#camera-select").change(function() {
             app.setCamera(this.value); 
+            app.resize();
         }); 
 
 
@@ -141,8 +143,7 @@ cosmoApp.prototype.setupUI = function() {
 
 
         
-        // load default model
-        this.loadModel("Aristotle");
+
 
        
         $("#reset-button").click(function() { 
@@ -159,7 +160,7 @@ cosmoApp.prototype.setupUI = function() {
         }); 
 
         $("#screenshot-button").click(function() {
-            app.canvas.render(app.currentScene, app.currentCamera);
+            app.canvas.render(app.currentScene, app.model.getCamera());
             downloadDataURI({
                 filename: "screenshot.jpeg", 
                 data: app.canvas.domElement.toDataURL("image/jpeg")
@@ -192,11 +193,11 @@ cosmoApp.prototype.setupUI = function() {
         
         
         $("#rotate-left").click(function() {
-            that.currentCamera.mouseY(0.1);
+            that.model.getCamera().mouseY(0.1);
         });
 
         $("#rotate-right").click(function() {
-            that.currentCamera.mouseY(-0.10);
+            that.model.getCamera().mouseY(-0.10);
         });
                 
         $("#zoom-plus").click(function() { 
@@ -283,7 +284,7 @@ cosmoApp.prototype.setupCameras = function() {
 
   // set trackball as default camera
   this.setCamera("Trackball");
-  this.resize();
+  //this.resize();
 
 }
 
@@ -341,31 +342,36 @@ cosmoApp.prototype.loadPlanet = function(value) {
  * @param preset the preset to load
  */
 cosmoApp.prototype.loadPreset = function(preset) {
+     
+  // switch model
+  this.currentPreset = preset;
+  var planet = this.currentPlanet[preset];
+  this.setPreset(planet);  
+};
 
+cosmoApp.prototype.setModel = function(model) {
+    this.model = model;
+    this.setCurrentScene(this.model.root);
+};
+
+cosmoApp.prototype.setPreset = function(preset) {
   // unload view
   if(this.model)
       this.view.cleanUp();
       
   // switch model
-  this.currentPreset = preset;
-  var planet = this.currentPlanet[preset];
-  this.model = this.getModel(planet.model);
-  this.setCurrentScene(this.model.root);
-  // 
-  this.model.setPreset(planet.params);
-  
-  
+  this.setModel( this.getModelById(preset.model) );
+  this.model.setPreset(preset.params);
   // load text
-  this.updateText(planet.text || (preset + ".html") );
+  this.updateText(preset.text); // || (preset + ".html") );
         
   // load view
-  this.view = this.getViewByName(planet.view);
-  this.view.setPreset(this.model, planet.viewParams);
+  this.view = this.getViewByName(preset.view);
+  this.view.setPreset(this.model, preset.viewParams);
   this.updateUI();
   // change view?
 
-  
-};
+}
 
 cosmoApp.prototype.updateText = function(uri) {
     $('#right-page').empty();
@@ -455,11 +461,14 @@ cosmoApp.prototype.removePreset = function() {
  * @param scene the scene from the model to set
  */
 cosmoApp.prototype.setCurrentScene = function(scene) {
-        if(this.currentScene) {
-            this.currentScene.remove( this.currentCamera );
-        }
+//        if(this.currentScene) {
+//            this.currentScene.remove( this.model.getCamera() );
+//        }
+        var
+        cam = this.model.getCamera();        
         this.currentScene = scene;
-        this.currentScene.add( this.currentCamera );
+        this.model.setCamera(cam);
+//        this.currentScene.add( this.model.getCamera() );
 };
 
 /**
@@ -467,7 +476,7 @@ cosmoApp.prototype.setCurrentScene = function(scene) {
  */
 cosmoApp.prototype.updateInfoBox = function() {
         this.view.updateInfos(this.model);
-        this.view.updateOther(this.model, this.currentCamera, this.canvas);
+        this.view.updateOther(this.model, this.model.getCamera(), this.canvas);
 }
 
 /** 
@@ -483,13 +492,13 @@ cosmoApp.prototype.update = function(time) {
         if (Ori.input.mouse.b2) {
            var y = Ori.input.mouse.y;
            var pitch = (y - Ori.input.drag.y) * time;
-           this.currentCamera.mouseWheel(0.0, 0.0, -pitch);
+           this.model.getCamera().mouseWheel(0.0, 0.0, -pitch);
            Ori.input.drag.y = y;
         }
         if (Ori.input.mouse.wheel) {
-         this.currentCamera.mouseWheel(0.0, 0.0, Ori.input.mouse.z);
+         this.model.getCamera().mouseWheel(0.0, 0.0, Ori.input.mouse.z);
          $("#zoom-slider").slider('value',that.getZ());
-         //$("#Z > input").attr("value",Number( this.currentCamera.getZ() ));
+         //$("#Z > input").attr("value",Number( this.model.getCamera().getZ() ));
         }
 
         // rotate with left button
@@ -498,8 +507,8 @@ cosmoApp.prototype.update = function(time) {
             var y = Ori.input.mouse.y;
             var pitch = (y - Ori.input.drag.y) * 0.2 * time;
             var yaw = (x - Ori.input.drag.x) * -0.2 * time;
-            this.currentCamera.mouseY(yaw);
-            this.currentCamera.mouseX(pitch);
+            this.model.getCamera().mouseY(yaw);
+            this.model.getCamera().mouseX(pitch);
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }
@@ -520,7 +529,7 @@ cosmoApp.prototype.update = function(time) {
 cosmoApp.prototype.handlePicking = function(time) {
     
 /* 
-        this.currentCamera.update();
+        this.model.getCamera().update();
         var x = ( Ori.input.mouse.x / window.innerWidth ) * 2 - 1;
 	      var y = -( Ori.input.mouse.y / window.innerHeight ) * 2 + 1;
         var vector = new THREE.Vector3( x, y, 0.5 );
@@ -529,11 +538,11 @@ cosmoApp.prototype.handlePicking = function(time) {
         model.sun.mesh.currentPosFast();        
         model.planet.mesh.currentPosFast();
 
-        vector = this.projector.unprojectVector( vector, this.currentCamera );
-//        model.dline[0] = this.currentCamera.position;     
+        vector = this.projector.unprojectVector( vector, this.model.getCamera() );
+//        model.dline[0] = this.model.getCamera().position;     
 //        model.dline[1] = vector.clone();
 //        model.dlineLine.setPos(model.dline);
-        var ray = new THREE.Ray( this.currentCamera.position, vector.subSelf( this.currentCamera.position ).normalize() );
+        var ray = new THREE.Ray( this.model.getCamera().position, vector.subSelf( this.model.getCamera().position ).normalize() );
         var cs = ray.intersectScene(model.root)[0];
         if(cs) { cs.object.material.color.setHex( 0xaa0000 ); }
 //*/ 
@@ -547,12 +556,13 @@ cosmoApp.prototype.handlePicking = function(time) {
 cosmoApp.prototype.setCamera = function(cam) {
 
   // fix some Three.js bogus  
-  if(this.currentCamera && this.currentScene) 
-    this.currentScene.remove(this.currentCamera);
-  this.currentCamera = this.cameras[cam].instance;
-  if(this.currentScene) this.currentScene.add(this.currentCamera);
+//  if(this.model.getCamera() && this.currentScene) 
+//    this.currentScene.remove(this.model.getCamera());
+//  this.model.setCamera( this.cameras[cam].instance );
+//  if(this.currentScene) this.currentScene.add(this.model.getCamera());
   
   if(!this.model) return;
+  this.model.setCamera( this.cameras[cam].instance );
   switch(cam) {
     case "Trackball":
     case "TrackballIso":
@@ -569,21 +579,21 @@ cosmoApp.prototype.setCamera = function(cam) {
 /** update the moving labels (north etc.)  */
 cosmoApp.prototype.updateLabels = function() {
   //OPT: merge dom updates
-  northLabel.setPosition( this.model.north.getPosCanvas(this.currentCamera, this.canvas) );
-  southLabel.setPosition( this.model.south.getPosCanvas(this.currentCamera, this.canvas) );
-  eastLabel.setPosition( this.model.east.getPosCanvas(this.currentCamera, this.canvas) );
-  westLabel.setPosition( this.model.west.getPosCanvas(this.currentCamera, this.canvas) );
-  equinoxLabel.setPosition( this.model.sphere[1].gfx.markerball.getPosCanvas(this.currentCamera, this.canvas) );
-  npoleLabel.setPosition( this.model.sphere[1].gfx.npole.getPosCanvas(this.currentCamera, this.canvas) );
-  spoleLabel.setPosition( this.model.sphere[1].gfx.spole.getPosCanvas(this.currentCamera, this.canvas) );
-  sunLabel.setPosition( this.model.sun.gfx.mesh.getPosCanvas(this.currentCamera, this.canvas) ); 
-  planetLabel.setPosition( this.model.planet.gfx.mesh.getPosCanvas(this.currentCamera, this.canvas) );
+  northLabel.setPosition( this.model.north.getPosCanvas(this.model.getCamera(), this.canvas) );
+  southLabel.setPosition( this.model.south.getPosCanvas(this.model.getCamera(), this.canvas) );
+  eastLabel.setPosition( this.model.east.getPosCanvas(this.model.getCamera(), this.canvas) );
+  westLabel.setPosition( this.model.west.getPosCanvas(this.model.getCamera(), this.canvas) );
+  equinoxLabel.setPosition( this.model.sphere[1].gfx.markerball.getPosCanvas(this.model.getCamera(), this.canvas) );
+  npoleLabel.setPosition( this.model.sphere[1].gfx.npole.getPosCanvas(this.model.getCamera(), this.canvas) );
+  spoleLabel.setPosition( this.model.sphere[1].gfx.spole.getPosCanvas(this.model.getCamera(), this.canvas) );
+  sunLabel.setPosition( this.model.sun.gfx.mesh.getPosCanvas(this.model.getCamera(), this.canvas) ); 
+  planetLabel.setPosition( this.model.planet.gfx.mesh.getPosCanvas(this.model.getCamera(), this.canvas) );
 };
 
 
 
 cosmoApp.prototype.draw = function(time) {
-  this.canvas.render(this.currentScene, this.currentCamera);
+  this.canvas.render(this.currentScene, this.model.getCamera() );
   this.updateInfoBox();
   this.updateLabels();        
 //  this.stats.update();
@@ -595,8 +605,9 @@ cosmoApp.prototype.resize = function() {
   width = this.domRoot.innerWidth(),
   height = this.domRoot.innerHeight(),
   factor = Ori.gfxProfile.resolution;
-  this.currentCamera.setAspect(width / height);
   this.canvas.setSize(width*factor, height*factor);
+  if(this.model) 
+    this.model.getCamera().setAspect(width / height);
 };
 
 
@@ -604,7 +615,7 @@ cosmoApp.prototype.resize = function() {
  * @param name of the model to get 
  * @returns a model instance from cache or generates one (sort of a factory)
  */
-cosmoApp.prototype.getModel = function(name) {
+cosmoApp.prototype.getModelById = function(name) {
   // fetch existing model
   var mod = this.models[name];
   // or create new
@@ -638,22 +649,22 @@ cosmoApp.prototype.getView = function() {
 };
 
 cosmoApp.prototype.setFov = function(val) {
-  this.currentCamera.setFov(val);
+  this.model.getCamera().setFov(val);
 };
 
 
 cosmoApp.prototype.getFov = function() {
-  return  this.currentCamera.getFov();
+  return  this.model.getCamera().getFov();
 };
 
 cosmoApp.prototype.setZ = function(val) {
-  this.currentCamera.setZ(val);
+  this.model.getCamera().setZ(val);
 };
 
 
 cosmoApp.prototype.getZ = function() {
-  if(!this.currentCamera) return 0;
-  return  this.currentCamera.getZ();
+  if(!this.model.getCamera()) return 0;
+  return  this.model.getCamera().getZ();
 };
 
 /**
@@ -668,7 +679,7 @@ cosmoApp.prototype.updateUI = function() {
        */
        // default camera
        this.setCamera("Trackball");
-       this.currentCamera.reset();
+       this.model.getCamera().reset();
 
 
         $("#date-input").hide();
@@ -681,7 +692,7 @@ cosmoApp.prototype.updateUI = function() {
         // clear old ui elements
         $("#parameters").empty();
         
-        this.currentCamera.rotateY(Math.PI + 0.1);
+        this.model.getCamera().rotateY(Math.PI + 0.1);
 
        
 
@@ -762,7 +773,7 @@ cosmoApp.prototype.updateUI = function() {
         });
 
 
-        this.view.setupSliders(this.model, this.currentCamera);
+        this.view.setupSliders(this.model, this.model.getCamera());
 
 
         // initial update of sliders/state
@@ -774,7 +785,7 @@ cosmoApp.prototype.updateUI = function() {
         $("#moon input, #angle  input, #speed input").change();
         $("#AxisAngle1 input").change();
         
-        this.currentCamera.rotateTarget({x: 0, y: 0, z: 0});
+        this.model.getCamera().rotateTarget({x: 0, y: 0, z: 0});
 
 
 

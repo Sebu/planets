@@ -272,7 +272,72 @@ Cloud.prototype = new THREE.ParticleSystem;
 Cloud.prototype.constructor = Cloud;
 
 
-function setupCommonGeomerty() {
+/*
+ * @constructor
+ */
+Circle = function(params) {
+    THREE.Geometry.call( this );
+
+    this.trails = (params.trails==undefined) ? false : params.trails;
+    
+    this.setAngle(params.angle);
+    this.setBeta(params.betaRotate || 90);
+
+};
+
+Circle.prototype = new THREE.Geometry;
+Circle.prototype.constructor = Circle;
+
+Circle.prototype.gen = function() {
+    var slices = Ori.gfxProfile.circleRes,
+    arc =  this.angle / PI_SCALE,
+    beta = this.beta  / PI_SCALE,
+    theta = 0,
+    sinTheta = 0,    
+    cosTheta = 0,
+    cosPhi = Math.cos(beta),
+    sinPhi = Math.sin(beta),
+    x = 0,y = 0,z = cosPhi,
+    sliceNum = 0;
+
+    this.vertices = [];
+    this.colors = [];
+    
+    for (sliceNum = 0; sliceNum <= slices; sliceNum++) {
+        theta = sliceNum * arc / slices;
+        sinTheta = Math.sin(theta);
+        cosTheta = Math.cos(theta);
+
+        x = sinTheta * sinPhi;
+        y = cosTheta * sinPhi;
+
+        this.vertices.push( new THREE.Vector3( x, y, z ) );
+//        this.vertices.push(  new THREE.Vector3( x*1.01, y*1.01, z ) );        
+        if(this.trails) {
+              var color = new THREE.Color( 0xFFFFFF );
+              color.setHSV( 0.5, 0.0, 1.0 - 0.8 * (sliceNum / slices) );
+              this.colors.push( color );
+        }
+
+    }
+//    this.__webglLineCount = slices;
+    this.verticesNeedUpdate = true;
+
+}
+
+Circle.prototype.setAngle = function(angle) {
+    this.angle = angle % 360;
+    this.dirty = true;
+    this.gen();
+}
+
+Circle.prototype.setBeta = function(angle) {
+    this.beta = angle % 360;
+    this.dirty = true;
+    this.gen();
+}
+
+//function setupCommonGeomerty() {
     geometryBall = new THREE.SphereGeometry( 0.1, 2, 2 );
     equator = new Circle({ angle : 359.9 });
     aLine = new THREE.Geometry();
@@ -290,7 +355,7 @@ function setupCommonGeomerty() {
     ];
 
     planetGeo = new THREE.SphereGeometry( 1 , 32, 32 );
-};  
+//};  
 
 
 /*
