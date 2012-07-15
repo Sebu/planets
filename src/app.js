@@ -17,7 +17,6 @@ cosmoApp = function(params) {
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
         
-       
         this.splashStatus = $("#splash-status");
 
         // add Canvas DOM Element & or error box
@@ -29,8 +28,7 @@ cosmoApp = function(params) {
           return;
         }
 
-
-        
+       
         this.splashStatus.empty();
         this.splashStatus.append("setup cameras...");
         this.setupCameras();
@@ -101,26 +99,26 @@ cosmoApp.prototype.setupUI = function() {
         
 
         this.modelSelect.change(function() { 
-            app.loadModel(this.options[this.selectedIndex].value);
+            that.loadModel(this.options[this.selectedIndex].value);
         });  
         
         this.planetSelect.change(function() { 
-            app.loadPlanet(this.options[this.selectedIndex].value);
+            that.loadPlanet(this.options[this.selectedIndex].value);
         }); 
         
         this.presetSelect.change(function() {
-            app.loadPreset(this.options[this.selectedIndex].value);
+            that.loadPreset(this.options[this.selectedIndex].value);
         }); 
 
         $("#moon-select").click(function() {
-            app.model.setCurrentMoonModel(this.options[this.selectedIndex].value);
-            app.model.reset(); 
+            that.model.setCurrentMoonModel(this.options[this.selectedIndex].value);
+            that.model.reset(); 
         });  
         
         UI.optionsFromHash("#moon-select", moonModels);
           
-        $("#add-preset").click(function() { app.addPreset(); } );  
-        $("#remove-preset").click(function() { app.removePreset(); } ); 
+        $("#add-preset").click(function() { that.addPreset(); } );  
+        $("#remove-preset").click(function() { that.removePreset(); } ); 
       
         this.loadCustomPresets();
         
@@ -130,8 +128,8 @@ cosmoApp.prototype.setupUI = function() {
 
  
         $("#camera-select").change(function() {
-            app.setCamera(this.value); 
-            app.resize();
+            that.setCamera(this.value); 
+            that.resize();
         }); 
 
 
@@ -147,12 +145,12 @@ cosmoApp.prototype.setupUI = function() {
 
        
         $("#reset-button").click(function() { 
-            app.model.reset();
+            that.model.reset();
         });
         
         $("#pause-button").click(function() { 
-            app.model.toggleRunning(); 
-            if(app.model.getRunning()) { 
+            that.model.toggleRunning(); 
+            if(that.model.getRunning()) { 
                 $("#pause-button").text("pause");
             } else { 
                 $("#pause-button").text("play");
@@ -160,10 +158,10 @@ cosmoApp.prototype.setupUI = function() {
         }); 
 
         $("#screenshot-button").click(function() {
-            app.canvas.render(app.currentScene, app.model.getCamera());
+            that.canvas.render(that.currentScene, that.model.getCamera());
             downloadDataURI({
                 filename: "screenshot.jpeg", 
-                data: app.canvas.domElement.toDataURL("image/jpeg")
+                data: that.canvas.domElement.toDataURL("image/jpeg")
             });
         //    window.open(app.canvas.domElement.toDataURL("image/jpeg"));
         }); 
@@ -555,13 +553,8 @@ cosmoApp.prototype.handlePicking = function(time) {
  */
 cosmoApp.prototype.setCamera = function(cam) {
 
-  // fix some Three.js bogus  
-//  if(this.model.getCamera() && this.currentScene) 
-//    this.currentScene.remove(this.model.getCamera());
-//  this.model.setCamera( this.cameras[cam].instance );
-//  if(this.currentScene) this.currentScene.add(this.model.getCamera());
-  
   if(!this.model) return;
+
   this.model.setCamera( this.cameras[cam].instance );
   switch(cam) {
     case "Trackball":
@@ -679,7 +672,8 @@ cosmoApp.prototype.updateUI = function() {
        */
        // default camera
        this.setCamera("Trackball");
-       this.model.getCamera().reset();
+
+       //this.model.getCamera().reset();
 
 
         $("#date-input").hide();
@@ -692,7 +686,7 @@ cosmoApp.prototype.updateUI = function() {
         // clear old ui elements
         $("#parameters").empty();
         
-        this.model.getCamera().rotateY(Math.PI + 0.1);
+        
 
        
 
@@ -785,7 +779,6 @@ cosmoApp.prototype.updateUI = function() {
         $("#moon input, #angle  input, #speed input").change();
         $("#AxisAngle1 input").change();
         
-        this.model.getCamera().rotateTarget({x: 0, y: 0, z: 0});
 
 
 

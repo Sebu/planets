@@ -87,6 +87,11 @@ BaseView.prototype = {
         model.ecliptic.setShow(false);   
         planetLabel.setText(preset.label);
 
+        model.getCamera().reset();
+        model.getCamera().rotateY(Math.PI + 0.1);
+        model.getCamera().rotateTarget({x: 0, y: 0, z: 0});
+
+
     },
     
     setupSliders : function(model, camera) {
