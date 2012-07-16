@@ -7,33 +7,35 @@
 	  $.fn.selectReading = function() {
 
 		  return this.each(function() {
-			  var
-			  i=0,
-			  ele = $(this),
-			  data = criticalapparatus[this.id],
-			  text = $("<span>" + (ele.text() || data[0][1]) + "</span>"),
-			  list = $("<ul style=''></ul>"),
-						  func = function() {
-				  text.text(this.title);
-			  };
-        ele.empty();
+                var
+                i=0,
+                ele = $(this),
+                data = criticalapparatus[this.id],
+                text = $("<span>")
+                .text(ele.text() || data[0][1]),
+                list = $("<ul>");
+
+                ele.empty()
+                .click( function() {
+                    list.toggle();
+                })
+                .mouseleave( function() {
+                    list.hide();
+                })
+                .append(text)
+                .append(list);
 			
-			  ele.click( function() {
-            list.toggle();
-     			});
-        ele.mouseleave( function() {
-            list.hide();
-        });
-			  ele.append(text);
-			  ele.append(list);
-			
-			  for(vi=0; i<data.length; ++i) {
-		          var ul = $("<li title=" +  data[i][1] + ">" + data[i][0] + " " + data[i][1] + "</li>");
-				  ul.click(func);	
-				  list.append(ul);
-				
-			  }
-			  return ele;	
+                for(i=0; i<data.length; ++i) {
+                      var 
+                      ul = $("<li>" + data[i][0].toString() + " " + data[i][1] + "</li>")
+                      .attr('title', data[i][1])
+                      .click( function() {
+                         text.text(this.title);
+                      });	
+                      list.append(ul);
+
+                }
+                return ele;	
 		  });
 	  };
 
@@ -61,11 +63,14 @@
 
 
         return this.each(function() {        
-
-            $(this).append("<span class='ori-triangle ori-arrow-down ori-arrow-up'></span>");
+            
+            var
+            span =  $("<span>")
+            .addClass("ori-triangle ori-arrow-down ori-arrow-up")
+            .appendTo(this);
                      
             $(this).click(function() {
-                $(".ori-triangle", this).toggleClass('ori-arrow-up'); 
+                $(span).toggleClass('ori-arrow-up'); 
                 $(this).next().slideToggle(); 
                 return false;
            });
@@ -91,7 +96,8 @@
             toggle = options.toggle || false,
             step = options.step  || 0.2,
             value = options.value ||  instance["get"+prop](),
-            sliderElement = $("<div class='slider'></div>"),
+            sliderElement = $("<div>")
+            .addClass('slider'),
             inputElement = $("<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>"),
             changeSlider = options.change || function(event, ui)  { 
                 instance["set"+prop](Number(Utils.toDec(ui.value))); 

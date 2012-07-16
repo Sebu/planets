@@ -31,8 +31,10 @@
         <div class='select-models' style='width: 150px;'><select id='planet-select'></select></div>
         <div class='select-models' style='width: 36px;'><select id='preset-select'></select></div>
         <div class='select-models'><select id='moon-select'></select></div>   
-        <span id='add-preset' class='button'>+</span><span id='remove-preset' class='button'>-</span>  
-        <div style="float: right;" class='button' id='info-button'>fullscreen</div>
+        <span id='add-preset' class='button'><img src='images/plus.png'></span>
+        <span id='remove-preset' class='button'><img src='images/minus.png'></span>  
+        <div style="float: right;" class='button' id='fullscreen-button'><img src='images/fullscreen.png'></img></div>
+        <div style="float: right; display: none;" class='button hide' id='info-button'><img src='images/info.png'></img></div>
     </nav>
     <div id="canvas-main" class="page">
         <aside class='container hide' id='ui-container'>
@@ -75,14 +77,14 @@
             </div>
             </div>
             <div id='nav-container'>
-              <div class='button' id='parameters-hide-button'>[<]</div>
+              <div id='sidebar-button'>[>]</div>
               <div id='nav-rotate'>
                 <div class='button' id='rotate-left'><</div>
                 <div class='button' id='rotate-right'>></div>
               </div>
-              <div class='button' id='zoom-plus'>+</div>
-              <div class='slider' id='zoom-slider'></div>
-              <div class='button' id='zoom-minus'>-</div>
+              <div class='button' id='zoom-plus'><img src='images/plus.png'></div>
+              <div id='zoom-slider'></div>
+              <div class='button' id='zoom-minus'><img src='images/minus.png'></div>
             </div>
         </aside>
         <div id='info-container'>

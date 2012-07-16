@@ -119,7 +119,36 @@ cosmoApp.prototype.setupUI = function() {
           
         $("#add-preset").click(function() { that.addPreset(); } );  
         $("#remove-preset").click(function() { that.removePreset(); } ); 
-      
+
+
+        document.getElementById("page").onresize = function(e) { that.resize(e) };
+ 
+ 
+        $("#info-button").click(function() { 
+            $(this).hide();
+            $("#fullscreen-button").show();
+            $("#page").toggleClass('slide');
+            $("#book").toggleClass('hide');
+            $("#right-page").toggle();
+            $("#canvas-main").toggleClass('page');
+            $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
+            $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
+            that.resize();
+        });
+               
+        $("#fullscreen-button").click(function() { 
+            $(this).hide();
+            $("#info-button").show();        
+            $("#page").toggleClass('slide');
+            $("#book").toggleClass('hide');
+            $("#right-page").toggle();
+            $("#canvas-main").toggleClass('page');
+            $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
+            $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
+            that.resize();
+        });
+        
+              
         this.loadCustomPresets();
         
         $("#ui-container h3").collapsible();
@@ -171,23 +200,13 @@ cosmoApp.prototype.setupUI = function() {
                 that.setDate(this.value); 
         });
 
-        $("#parameters-hide-button").click(function() { 
+        $("#sidebar-button").click(function() { 
              $("#content-scroll").toggleClass('hide');
              $("#ui-container").toggleClass('hide');
 
         });
 
-        document.getElementById("page").onresize = function(e) { that.resize(e) };
-        
-        $("#info-button").click(function() { 
-            $("#page").toggleClass('slide');
-            $("#book").toggleClass('hide');
-            $("#right-page").toggle();
-            $("#canvas-main").toggleClass('page');
-            $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
-            $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
-            that.resize();
-        });
+
         
         
         $("#rotate-left").click(function() {
@@ -209,14 +228,14 @@ cosmoApp.prototype.setupUI = function() {
         });
                 
         $("#zoom-slider").slider({
-                slide: function(event, ui) { that.setZ(ui.value); },
-                value: -17,
+                orientation: "vertical",
                 range: "min",
                 animate: "fast",
-                min:-60,
-                max: 1,
+                min: -60,
+                max: 0,
+                value: -17,
                 step:1,
-                orientation: "vertical"
+                slide: function(event, ui) { that.setZ(ui.value); }
          });
 
         
@@ -278,12 +297,6 @@ cosmoApp.prototype.setupCameras = function() {
       -10,
       1000
    );	
-
-
-  // set trackball as default camera
-  // this.setCamera("Trackball");
-  //this.resize();
-
 }
 
 cosmoApp.prototype.setDate = function(date) {
