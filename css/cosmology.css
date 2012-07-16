@@ -65,30 +65,30 @@ a {
   text-align: center;
   position: absolute;
   color: #FFF;
-//  top: 50%;
-//  left: 50%;
+  top: 50%;
+  left: 50%;
   font-size: 18px;
   
-  width: 100%;
-  height: 100%;
-//  width: 500px;
-//  margin-top: -120px;
-//  margin-left: -250px;
+//  width: 100%;
+//  height: 100%;
+  width: 500px;
+  margin-top: -120px;
+  margin-left: -250px;
   z-index: 5;
-#  margin: 15em auto 0;
-//  box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-//  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-//  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-//  border-radius: 5px;
+\\  margin: 15em auto 0;
+  box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+  border-radius: 5px;
   background: url("../images/splash-back.png");
 
   background-color: rgba(255, 255, 255, 0.5);
-//  opacity: 0.9;
+  opacity: 0.9;
   font-weight: bold;
-//  text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
+  text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
 
-  -webkit-transform: rotate(0deg);  
-  -webkit-transition: -webkit-transform 1s;
+//  -webkit-transform: rotate(0deg);  
+//  -webkit-transition: -webkit-transform 1s;
 }
 
 #splash.hide{
@@ -178,7 +178,7 @@ select {
   float:left;
   padding: 0px;
   overflow: hidden;
-  background: url("")  no-repeat right #222;
+  background: #222;
 }
 
 .select-models select {
@@ -584,7 +584,7 @@ select:focus,
   height:100%;
   overflow: hidden;
   z-index: 2;
-  box-shadow: 0px 0px 30px 15px #888;   
+//  box-shadow: 0px 0px 30px 15px #888;   
 }
 
 
@@ -592,7 +592,7 @@ select:focus,
   float: left;
   font-family: times, serif;
   margin: 0;
-  padding: 1%;    
+  padding: 0 1%;    
   width: 48%;
   height: 100%;
   font-size: 14px;

@@ -45,7 +45,7 @@ cosmoApp = function(params) {
         this.setupUI();
 
         // load default model
-        this.setPreset(planetPresets["Aristotle"]["Tutorial"]); //"Aristotle");
+        this.loadModel("Aristotle");
         
         this.resize();
         
@@ -268,7 +268,7 @@ cosmoApp.prototype.setupCameras = function() {
   };
   this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -18});
   this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
-  this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -10});
+  this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -21});
   var ortho = 70;
   this.cameras["TrackballIso"].instance.projectionMatrix.makeOrthographic( 
       window.innerWidth / - ortho,
@@ -281,7 +281,7 @@ cosmoApp.prototype.setupCameras = function() {
 
 
   // set trackball as default camera
-  this.setCamera("Trackball");
+  // this.setCamera("Trackball");
   //this.resize();
 
 }
@@ -360,11 +360,13 @@ cosmoApp.prototype.setPreset = function(preset) {
   // switch model
   this.setModel( this.getModelById(preset.model) );
   this.model.setPreset(preset.params);
+
   // load text
   this.updateText(preset.text); // || (preset + ".html") );
         
   // load view
   this.view = this.getViewByName(preset.view);
+  this.setCamera("Trackball");
   this.view.setPreset(this.model, preset.viewParams);
   this.updateUI();
   // change view?

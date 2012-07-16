@@ -1,12 +1,6 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
-
-<a href='javascript:void(0);' onclick="
-window.open('data/texts/Aristotle.html', '', 'top=0,left=0,height=' + window.innerWidth  + ',width='+ window.innerWidth/2 + ',scrollbars=yes');">show greek text</a>
-
-
-
 <p>Aristotle says that in each system of a planetary star, except for the moon's system, one needs 'unwinding' spheres, one less in number than the spheres of the system. It is crucial to this account that each sphere only affects the position of the poles of the next sphere below. In this discussion, we shall look at a planetary system of type of Jupiter or Saturn to see how the unwinders work and why they are one less than the number of 'winding' spheres.</p>
 
 
@@ -14,40 +8,44 @@ window.open('data/texts/Aristotle.html', '', 'top=0,left=0,height=' + window.inn
 <p>First let's look at the full system of Eudoxos and Kallippos for Jupiter. Here we have a daily rotation of the  outermost sphere <span style=" color: blue; background-color: #D9D6D6;" class="style1">(S1)</span>, the motion on the ecliptic in 12 years or 4380 days <font color="yellow" style="BACKGROUND-COLOR: gray" span class="style2">(S2</span>)</font>, the rotation of 390 days of the third sphere, whose poles are on the ecliptic <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font>, and finally the rotation of the fourth sphere in the same period <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S4</span>)</font>. Obviously, the daily rotation makes viewinng the other rotations somewhat difficult. So turn off the motion of  <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span class="style1">(S1</span>)</font>, to see the motionof the other three.</p>
 
 
-<a href='javascript:void(0);' onclick='app.getView().state1(app.model);'>SWITCH</a>
+<a href='javascript:void(0);' onclick='app.getView().state1(app.model);'>apply changes</a>
 
 <p>In fact, for convenience, we will speed up the rotations of <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>,  <font color="green" style="BACKGROUND-COLOR: gray" span="span" class="style3">(S3</span>)</font>, and <font color="red" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style4">(S</span><strong>4</strong>)</font>. This will make it easy to see all four motions. Here, <font color="yellow" style="BACKGROUND-COLOR: gray" span class="style2">(S2</span>)</font>, will rotate once in five days, and <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font> and   <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span class="style1">(S1</span>)</font>, once in 3 days. Now, we can see all four rotations.</p>
 
-<a href='javascript:void(0);' onclick='app.getView().state2(app.model);'>SWITCH</a>
+<a href='javascript:void(0);' onclick='app.getView().state2(app.model);'>apply changes</a>
 
 <p>Let's follow Aristotle. Suppose we just look at the <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S4</span>)</font>.  We'll also stop the motion of the other spheres. If we put in another sphere  <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S</span><strong>5</strong>)</font> and have it rotate with exactly as fast in the opposite direction, a point on its equator will appear to be still.</p>
 
-<a href='javascript:void(0);' onclick='app.getView().state3(app.model);'>SWITCH</a>
+<a href='javascript:void(0);' onclick='app.getView().state3(app.model);'>apply changes</a>
 
 
 <p>Let's now start up  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font> so that we now have working,   <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font>,  <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S4</span>)</font>, and  <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S</span><strong>5</strong>)</font>. Notice how the poles of  <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S</span><strong>5</strong>)</font> keep that same position as the poles of  <font color="red" style="BACKGROUND-COLOR: D9D6D6" span class="style4">(S</span><strong>4</strong>)</font>. So we now add a sphere <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S6</span>)</font>. Here, the poles of  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S6</span>)</font> are placed just under the poles of  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font> and that they stay fixed there. Now, we have  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S6</span>)</font> rotate  exactly as fast as  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font>, but also in the opposite direction. A point on the equator of  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S6</span>)</font> will appear to be at rest while the point on  <font color="green" style="BACKGROUND-COLOR: gray" span class="style3">(S3</span>)</font> rotates.</p>
 
-SWITCH
+<a href='javascript:void(0);' onclick='app.getView().state4(app.model);'>apply changes</a>
 
 <p>We can now start up  <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>. So a point on sphere of   <font color="green" style="BACKGROUND-COLOR: gray" span="span" class="style3">(S6</span>)</font> will appear to fixed with respect to any point on   <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>.</p>
 
-SWITCH
+<a href='javascript:void(0);' onclick='app.getView().state5(app.model);'>apply changes</a>
 
 
 <p>Perphaps, you now have the idea. We now add <font color="yellow" style="BACKGROUND-COLOR: gray" span class="style2">(S7</span>)</font>, whose poles will be under <font color="yellow" style="BACKGROUND-COLOR: gray" span class="style2">(S2</span>)</font> and have it rotate equally fast but opposite to <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>. It poles will keep that same position as the poles of <font color="yellow" style="BACKGROUND-COLOR: gray" span class="style2">(S2</span>)</font>, becausef <font color="green" style="BACKGROUND-COLOR: gray"><span class="style3">(S6)</span></font> isat rest relative to <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>. That is the full planetary system.</p>
 
-SWITCH
+<a href='javascript:void(0);' onclick='app.getView().state6(app.model);'>apply changes</a>
 
 <p>So we start up <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>. Here we can add <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S8)</font>, but we won't give it any motion of its own yet. Notice that because  <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S7</span>)</font> is fixed relative to points on  <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>, if we place a sphere <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S8)</font> on  <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S7</span>)</font> with its poles under <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>, its poles will also remain fixed under the poles of <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>.</p>
 
-SWITCH
+<a href='javascript:void(0);' onclick='app.getView().state7(app.model);'>apply changes</a>
 
 <p>But wait. Doesn't <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S8)</font> have to unwind the motion of <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>? Well, here is one of the many beautiful things in the account. Remember that each sphere only affect the position of the poles of the sphere under it. So now that <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S8)</font> has its poles fixed under <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>, all it has to do is provide the daily motion of the next planetary system. And this is exactly what it does.What about <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font>?</p>
 <p>So here is the 7 spheres of Jupiter with the first sphere of Mars.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
-SWITCH
+<a href='javascript:void(0);' onclick='app.getView().state8(app.model);'>apply changes</a>
 
 <p>So now to and <font color="red" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style4">(S</span><strong>5</strong>)</font> is to undo the rotation of <font color="green" style="BACKGROUND-COLOR: gray"><span class="style3">(S3)</span></font> and <font color="red" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style4">(S4</span>)</font>. When we rotate <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S7</span>)</font> opposite to <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S2</span>)</font>, the motion of a point on the equator of <font color="yellow" style="BACKGROUND-COLOR: gray" span="span" class="style2">(S7</span>)</font> appears to be at rest.</p>
 <p>We will not add the rotation of <font color="blue" style="BACKGROUND-COLOR: D9D6D6" span="span" class="style1">(S1</span>)</font></p>
+<a href='javascript:void(0);' onclick='app.getView().state9(app.model);'>apply changes</a>
+
+
+

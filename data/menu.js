@@ -5,7 +5,7 @@ var defaultPreset = {
         sunDist: 8,
         color: config.colors["Planet"],
         label: "Planet",
-        showStars: true,
+        showStars: false,
         showHippo: true,
         showPath: true,
         showSun: true
@@ -437,30 +437,9 @@ Yavetz: {
 
 Aristotle: {
 
-  Tutorial: {
-      text: "AristotleTutorial.html",
-      model: "AristotleModel",
-      view: "AristotleTutorialView",  
-      viewParams : {
-          label: "Jupiter"
-      },
-      params : {
-      
-          sphere: [
-            {AxisAngle: 38.0, Speed: 1, RotateStart: 0, ShowSphere: true },
-            {AxisAngle: 24.0, Speed: 4380, RotateStart: 0, ShowSphere: false },
-            {AxisAngle: 90.0, Speed: 390, RotateStart: 0, ShowSphere: false },
-            {AxisAngle: 18.0, Speed: 390, RotateStart: 0, ShowSphere: false },
-            { ShowSphere: false },
-            { ShowSphere: false },
-            { ShowSphere: false },
-            { ShowSphere: true } 
-            ]
-      }
-  },
-  
   Introduction: {
         view: "AristotleView",
+        text: "AristotleIntro.html",
         viewParams: {
             showSun: false,
             showStars: false
@@ -479,9 +458,29 @@ Aristotle: {
             { ShowSphere: true } 
           ]
       }
+  },
+  
+  Tutorial: {
+      text: "AristotleTutorial.html?v=2",
+      model: "AristotleModel",
+      view: "AristotleTutorialView",  
+      viewParams : {
+          label: "Jupiter"
+      },
+      params : {
+      
+          sphere: [
+            {AxisAngle: 38.0, Speed: 1, RotateStart: 0, ShowSphere: true },
+            {AxisAngle: 24.0, Speed: 4380, RotateStart: 0, ShowSphere: true },
+            {AxisAngle: 90.0, Speed: 390, RotateStart: 0, ShowSphere: true },
+            {AxisAngle: 18.0, Speed: -390, RotateStart: 0, ShowSphere: true },
+            { ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: false },
+            { ShowSphere: false } 
+            ]
+      }
   }
-  
-  
 
 },  
 

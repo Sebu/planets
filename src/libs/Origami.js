@@ -33,7 +33,7 @@ Ori.GfxProfiles = {
     geometry : Ori.Q.LOW,
     alpha : Ori.Q.NONE,
     shading : Ori.Q.LOW,
-    circleRes : 25
+    circleRes : 50
     },   
   canvas: {
     resolution : 1.0,
