@@ -176,7 +176,7 @@ select {
   float:left;
   padding: 0px;
   overflow: hidden;
-  background: #222;
+  background: #333;
 }
 
 .select-models select {
@@ -561,7 +561,7 @@ select:focus,
     padding: 0;
     width: 32px;
     height: 24px;
-    background: #111;
+    background: #333;
     -webkit-border-radius: 0 0 0 6px;
     //    background: url("../images/open-sidebar.png");
 }
@@ -571,7 +571,7 @@ select:focus,
     padding: 0;
     width: 32px;
     height: 24px;
-    background: #111;
+    background: #333;
     -webkit-border-radius: 0 0 0 6px;
     //    background: url("../images/open-sidebar.png");
 }
@@ -579,10 +579,10 @@ select:focus,
 #sidebar-button {
     margin: 0;
     padding: 0;
-    width: 32px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     background: #111;
-    -webkit-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 6px 6px 0;
     //    background: url("../images/open-sidebar.png");
 }
 
@@ -645,6 +645,7 @@ select:focus,
 
 #zoom-slider {
     position: absolute;
+    background: #fff;
     left: 22px;
     top: 120px;
     height: 200px;
@@ -838,7 +839,7 @@ h3 {
   color: black;
   z-index: 4;
 //  background: #FFF;//rgba(95, 93, 91, 0.4);
-  background:  #222;
+  background:  #333;
   font-size: small;
 
   width: 100%;

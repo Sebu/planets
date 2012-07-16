@@ -27,14 +27,14 @@
     </div>
     
     <nav id='top-container'>
-        <div class='select-models' style='width: 180px;'><select id='model-select'></select></div>
-        <div class='select-models' style='width: 150px;'><select id='planet-select'></select></div>
-        <div class='select-models' style='width: 36px;'><select id='preset-select'></select></div>
+        <div class='select-models' title='select model' style='width: 180px;'><select id='model-select'></select></div>
+        <div class='select-models' title='select chapter' style='width: 150px;'><select id='planet-select'></select></div>
+        <div class='select-models' title='select preset' style='width: 36px;'><select id='preset-select'></select></div>
         <div class='select-models'><select id='moon-select'></select></div>   
-        <span id='add-preset' class='button'><img src='images/plus.png'></span>
-        <span id='remove-preset' class='button'><img src='images/minus.png'></span>  
-        <div style="float: right;" class='button' id='fullscreen-button'><img src='images/fullscreen.png'></img></div>
-        <div style="float: right; display: none;" class='button hide' id='info-button'><img src='images/info.png'></img></div>
+        <span id='add-preset' title='add preset' class='button'><img src='images/plus.png'></span>
+        <span id='remove-preset' title='remove preset' class='button'><img src='images/minus.png'></span>  
+        <div style="float: right;" class='button' title='fullscreen' id='fullscreen-button'><img src='images/fullscreen.png' alt='fullscreen'></img></div>
+        <div style="float: right; display: none;" title='show text' class='button hide' id='info-button'><img src='images/info.png' alt='text'></img></div>
     </nav>
     <div id="canvas-main" class="page">
         <aside class='container hide' id='ui-container'>
@@ -77,14 +77,14 @@
             </div>
             </div>
             <div id='nav-container'>
-              <div id='sidebar-button'>[>]</div>
+              <div id='sidebar-button' title='show settings'>[>]</div>
               <div id='nav-rotate'>
                 <div class='button' id='rotate-left'><</div>
                 <div class='button' id='rotate-right'>></div>
               </div>
-              <div class='button' id='zoom-plus'><img src='images/plus.png'></div>
-              <div id='zoom-slider'></div>
-              <div class='button' id='zoom-minus'><img src='images/minus.png'></div>
+              <div id='zoom-plus' title='zoom in'><img src='images/plus.png' alt='+'></div>
+              <div id='zoom-slider' title='change zoom level'></div>
+              <div id='zoom-minus' title='zoom out'><img src='images/minus.png' alt='-'></div>
             </div>
         </aside>
         <div id='info-container'>

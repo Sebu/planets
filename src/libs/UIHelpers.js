@@ -274,7 +274,7 @@ var UI = {
 };
 
 UI.Label = function(params) {
-        this.domRoot = params.domElement || document.body;
+        this.domRoot = params.domElement || document.getElementById("canvas-main"); //.body;
         
         if(params.ele) {
             this.ele = params.ele[0];        

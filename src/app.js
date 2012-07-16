@@ -229,7 +229,7 @@ cosmoApp.prototype.setupUI = function() {
                 
         $("#zoom-slider").slider({
                 orientation: "vertical",
-                range: "min",
+//                range: "min",
                 animate: "fast",
                 min: -60,
                 max: 0,
@@ -238,7 +238,11 @@ cosmoApp.prototype.setupUI = function() {
                 slide: function(event, ui) { that.setZ(ui.value); }
          });
 
-        
+        $("#canvas-main").hover(function() {
+            $("#nav-container").fadeIn();
+        }, function() {
+                    $("#nav-container").fadeOut();
+        });
   
  
 }
