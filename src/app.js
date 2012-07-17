@@ -45,18 +45,32 @@ cosmoApp = function(params) {
         this.setupUI();
 
         // load default model
-        this.loadModel("Aristotle");
+
+
+        that.loadModel("Aristotle");
+        that.resize();
         
-        this.resize();
+        
         
         // NO WEBGL error
         if(this.canvas.type === "canvas") {
 //          this.debugBox.show();
-          this.splashStatus.empty();
-          this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-          this.splashStatus.append("<br><div class='button right' onclick='$(\"#splash\").addClass(\"hidden\");' value='ok'>let's go ></div>");
+            this.splashStatus.empty();
+            this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
+            this.splashStatus.append("<br>");
+            $("<div>")
+                .addClass("button right")
+                .click( function() {
+                    $("#splash").addClass("hidden");
+                    $(".page").addClass("open");
+                })
+                .text("let's go >")
+                .attr('value','ok')
+                .appendTo(this.splashStatus);
+          
         } else                       
         $("#splash").hide();  
+        $(".page").addClass("open");
         
 };
 cosmoApp.prototype = new Ori.App;
@@ -748,7 +762,16 @@ cosmoApp.prototype.updateUI = function() {
         }
         
         $("#visOther").empty();
-        if(this.model.setShowPath) 
+                
+        if(this.model.setShowStars) 
+            UI.checkbox({
+                model: this.model,
+                id:"ShowStars",
+                text:"stars"
+            }).appendTo("#visOther");
+            
+
+        if(this.model.setShowSun) 
             UI.checkbox({
                 model: this.model,
                 id:"ShowSun",
@@ -773,12 +796,7 @@ cosmoApp.prototype.updateUI = function() {
                 color:  rgbToCSS(config.colors["Hippo"]) 
             }).appendTo("#visOther");
             
-        if(this.model.setShowStars) 
-            UI.checkbox({
-                model: this.model,
-                id:"ShowStars",
-                text:"stars"
-            }).appendTo("#visOther");
+
 
 
         $("#anim-speed").empty().inputSlider({ 

@@ -43,6 +43,7 @@ html,body {
   font-size:100%;
   line-height:1.125em;
   color: #000;
+  background:  rgb(223, 221, 222);
 }
 
 a { 
@@ -76,6 +77,7 @@ a {
   
 //  width: 100%;
 //  height: 100%;
+  min-height: 225px;
   width: 500px;
   margin-top: -120px;
   margin-left: -250px;
@@ -120,6 +122,11 @@ a {
 
 #splash .button {
     padding: 10px;
+}
+
+
+#splash .button:hover {
+    background: #555;
 }
 
 #splash #splash-status {
@@ -466,34 +473,34 @@ select:focus,
 }
 
 .side-box {
-   background: #272727;
+   background: #1111; //#272727;
    background-color: rgba(39,39,39, 0.5);
-   box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
-   -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
-   -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+//   box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+//   -moz-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
+//   -webkit-box-shadow: inset 0 0 10px #070707, inset 0 0 5px #070707, 0 1px 0 #4B4947;
 }
 
 
 /* Let's get this party started */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
     height: 10px;
 }
  
 /* Track */
 ::-webkit-scrollbar-track {
-    background-color: #1b1b1b;
+    background-color: #333;
     -webkit-border-radius: 6px;
 }
 
 ::-webkit-scrollbar-track-piece  {
-    background-color: #1b1b1b;
+    background-color: #333;
     -webkit-border-radius: 6px;
 }
  
 ::-webkit-scrollbar-thumb {
     height: 50px;
-    background-color: #666;
+    background-color: #444;
     border: 0px solid #eee;
     -webkit-border-radius: 6px;
 }
@@ -536,9 +543,8 @@ select:focus,
 #content-scroll {
  -moz-transform-origin: left; 
  -webkit-transform-origin: right; 
- -moz-transition: -moz-transform 1s; 
- -webkit-transition: -webkit-transform 1s;  
-
+ -moz-transition: left1s; 
+ -webkit-transition: left 1s;  
   overflow-y: hidden;
   overflow-x: none;
 //  width: 200px;
@@ -546,24 +552,23 @@ select:focus,
 //  float: left; 
   background: #111; 
   margin-top: 28px;
+  -webkit-box-shadow: inset -3px 0 10px 2px #222;
 }
 
 #content-scroll.hide {
- -moz-transform: rotateY( -120deg );
- -webkit-transform: rotateY( -90deg );
- -moz-transition: -moz-transform 1s;
- -webkit-transition: -webkit-transform 1s;
+ left: 200px;
+ -moz-transition: left 1s;
+ -webkit-transition: left 1s;
 }
 
 #content-scroll:hover {
-  overflow-y: scroll;
+  overflow-y: auto; //scroll;
 }
 
 #content {
-  background: #111; //rgba(95, 93, 91, 0.4);
-//  background: #222;
-  width: 190px;
-  height: 100%;   
+  background: #111;
+  width: 200px;
+//  height: 100%;   
 
 }
 
@@ -621,6 +626,7 @@ select:focus,
     height: 80px;
     background: #111;
     -webkit-border-radius: 0 6px 6px 0;
+    -webkit-box-shadow: inset -3px 0 10px 2px #222;
     //    background: url("../images/open-sidebar.png");
 }
 
@@ -689,15 +695,28 @@ select:focus,
     height: 200px;
 }
 
+.book {
+    margin: 0 auto;
+    width: 50%;
+    height: 100%;
+}
+
 #left-page {
+  position: absolute;
+  left: 25%;
   float: left;
   margin: 0;
   padding: 0;
-  width:50%;
+  width: 50%;
   height:100%;
   overflow: hidden;
-//  z-index: 2;
-//  box-shadow: 0px 0px 30px 15px #888;   
+  z-index: 1;
+  -webkit-transition: left 1s;
+  box-shadow: -4px 0px 12px 2px #AAA;
+}
+
+#left-page.open {
+    left: 0;
 }
 
 #left-page.slide {
@@ -706,17 +725,27 @@ select:focus,
 
 
 #right-page {
+  position: absolute;
   float: left;
+  right: 25%;
   font-family: times, serif;
   margin: 0;
   padding: 0 1%;    
   width: 48%;
   height: 100%;
+  background: #fff;
   font-size: 14px;
   z-index: 2;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+   -webkit-transition: right 1s;
+   box-shadow: 4px 0px 12px 2px #AAA; 
 }
+
+#right-page.open {
+    right: 0;
+}
+
 
 #right-page:hover {
     -webkit-user-select:text;
@@ -796,11 +825,13 @@ select:focus,
 
 .caption,
 h3 { 
-  margin: 0;
-  padding: 0;
+  margin: 2px 0;
+  padding: 4px 0;
   position:relative;
-	font-weight: bold;
-	font-size:16px;
+  font-weight: bold;
+  font-size:16px;
+  background: #222;
+
 }
 
 
@@ -919,7 +950,7 @@ footer:hover {
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 12px solid #888;
+  border-top: 12px solid #444;
   border-bottom: 0px;
 }
 
@@ -930,7 +961,7 @@ footer:hover {
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 0;  
-  border-bottom: 12px solid #888;
+  border-bottom: 12px solid #444;
 }
 
 .ori-arrow-right {
@@ -940,7 +971,7 @@ footer:hover {
   height: 0;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  border-left: 12px solid #888;  
+  border-left: 12px solid #444;  
   
 }
 
