@@ -11,6 +11,7 @@ MoonView = function() {
 
 MoonView.prototype = new BaseView;
 MoonView.prototype.constructor = MoonView;
+MoonView.prototype.name = "MoonView";
 
 
         
@@ -97,6 +98,7 @@ MoonCompareView = function() {
 
 MoonCompareView.prototype = new MoonView;
 MoonCompareView.prototype.constructor = MoonCompareView;
+MoonCompareView.prototype.view = "MoonCompareView";
 
 
 MoonCompareView.prototype.cleanUp = function(model) {

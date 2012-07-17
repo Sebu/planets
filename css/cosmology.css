@@ -1,6 +1,6 @@
 /* RESET
 ************/  
-body,div,dl,dt,dd,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,th,td { 
+body,div,dl,dt,dd,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,figure,input,textarea,blockquote,th,td { 
 	margin:0;
 	padding:0;
 }
@@ -51,8 +51,15 @@ a {
 }
 
 
-/* 
+/* BASICS
 ************/  
+
+
+
+
+/* RESET
+************/
+
 
 #splash {
   font-family: sans-serif;
@@ -74,23 +81,24 @@ a {
   margin-left: -250px;
   z-index: 5;
 \\  margin: 15em auto 0;
-  box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
-  border-radius: 5px;
-  background: url("../images/splash-back.png");
+//  box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+//  -moz-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+//  -webkit-box-shadow: inset 0 1px 0 #5B5957, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px #111;
+//  border-radius: 5px;
+//  background: url("../images/splash-back.png");
 
-  background-color: rgba(255, 255, 255, 0.5);
-  opacity: 0.9;
-  font-weight: bold;
+  background-color: rgba(29, 144, 221, 0.88); //rgba(35, 35, 105, 0.9);
+//  opacity: 0.9;
+    border: 0;
+//  font-weight: bold;
   text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
 
 //  -webkit-transform: rotate(0deg);  
 //  -webkit-transition: -webkit-transform 1s;
 }
 
-#splash.hide{
-//    left: -100%;
+#splash.hidden {
+    left: -100%;
   -webkit-transform:translate(-110%,-7%) rotate(10deg);
   -webkit-transition: -webkit-transform 1s;
 
@@ -103,6 +111,15 @@ a {
  font-weight:bold;
  padding: 20px;
  text-shadow: 0px 2px 0px #666;
+}
+
+#splash a {
+    color: #fff;
+    font-weight: bold;
+}
+
+#splash .button {
+    padding: 10px;
 }
 
 #splash #splash-status {
@@ -176,17 +193,18 @@ select {
   float:left;
   padding: 0px;
   overflow: hidden;
-  background: #333;
+  background: transparent; //#333;
 }
 
 .select-models select {
    font-size: 18px;
    color: #fff;
+  background: transparent; //#333;
    background: transparent;
 }
 
 #model-select {
-  width: 210px;
+  width: 130px;
 }
 
 #planet-select {
@@ -442,7 +460,6 @@ select:focus,
 
 }
 
-
 #canvas-main.page {
 /*  -webkit-filter: blur(1px); */
 //    background: url("../images/book-left.png") repeat-y right #222;
@@ -492,7 +509,7 @@ select:focus,
 //  border-radius: 5px;  
   z-index: 1;
   color: white;
-  display: none;
+//  display: none;
   font-size: 14px; 
   left: 0px;
   padding: 0;
@@ -528,6 +545,7 @@ select:focus,
   height: 100%;
 //  float: left; 
   background: #111; 
+  margin-top: 28px;
 }
 
 #content-scroll.hide {
@@ -549,38 +567,58 @@ select:focus,
 
 }
 
-#nav-container {
-  position: absolute;
-  right: -32px;
-  top: 0px;
-}
+
 
 
 #info-button {
+
+    float: right; 
     margin: 0;
     padding: 0;
     width: 32px;
     height: 24px;
     background: #333;
     -webkit-border-radius: 0 0 0 6px;
-    //    background: url("../images/open-sidebar.png");
 }
 
+
+
+
 #fullscreen-button {
+//    position: absolute;
+//    top: 0;
+//    right: 50%;
+    float: right;
     margin: 0;
     padding: 0;
     width: 32px;
     height: 24px;
     background: #333;
     -webkit-border-radius: 0 0 0 6px;
-    //    background: url("../images/open-sidebar.png");
+}
+
+
+
+#nav-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+//  width: 100%;
+}
+
+#nav-container .button {
+    background: transparent;
+    padding: 0;
 }
 
 #sidebar-button {
+    position: absolute;
     margin: 0;
     padding: 0;
-    width: 30px;
-    height: 30px;
+    bottom: 50%;
+    width: 12px;
+    height: 80px;
     background: #111;
     -webkit-border-radius: 0 6px 6px 0;
     //    background: url("../images/open-sidebar.png");
@@ -651,15 +689,19 @@ select:focus,
     height: 200px;
 }
 
-#page {
+#left-page {
   float: left;
   margin: 0;
   padding: 0;
   width:50%;
   height:100%;
   overflow: hidden;
-  z-index: 2;
+//  z-index: 2;
 //  box-shadow: 0px 0px 30px 15px #888;   
+}
+
+#left-page.slide {
+    min-width: 100%;
 }
 
 
@@ -671,10 +713,15 @@ select:focus,
   width: 48%;
   height: 100%;
   font-size: 14px;
+  z-index: 2;
   overflow-y: scroll;
   overflow-x: hidden;
-//  background: url("../images/book-right.png") repeat-y;
+}
 
+#right-page:hover {
+    -webkit-user-select:text;
+    -moz-user-select:text;
+    -khtml-user-select:text;
 }
 
 #right-page .style1 {
@@ -706,8 +753,6 @@ select:focus,
   color: #0066FF;
 }
 .selectBox ul {
-
-  
   -webkit-box-orient: vertical;
   -webkit-box-pack:justify;
   padding: 0;
@@ -715,8 +760,7 @@ select:focus,
   z-index: 1;
   list-style-type: none;
   display: none;
-//display: -webkit-box;
-  
+ 
   left: 0px;
   top: 0px;
   position: absolute;
@@ -729,29 +773,8 @@ select:focus,
   margin: 0px;
 }
 .selectBox li:hover {
-  
   background-color: #CCCC66;
 }
-
-
-#right-page:hover {
-    -webkit-user-select:text;
-    -moz-user-select:text;
-    -khtml-user-select:text;
-   
-}
-
-#right-page section {
-    display: none;
-}
-
-#page.slide {
-    min-width: 100%;
-//    -webkit-transition: min-width 1s;
-
-}
-
-
 
 .wert {
 # -webkit-user-select:auto;
@@ -765,7 +788,7 @@ select:focus,
   position: absolute;
   display: none;
   width: 240px;
-  top: 5px;
+  top: 30px;
   right: 5px; 
   z-index: 4;
   font-size: 12px;
@@ -836,14 +859,15 @@ h3 {
 }
 
 #top-container {
+  position: absolute;
   color: black;
   z-index: 4;
-//  background: #FFF;//rgba(95, 93, 91, 0.4);
-  background:  #333;
+  background: transparent; 
   font-size: small;
-
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 26px;
+  height: 28px;
 }
 
 
@@ -920,3 +944,11 @@ footer:hover {
   
 }
 
+
+.hidden {
+    display: none;
+}
+
+.right {
+    float: right;
+}

@@ -38,11 +38,11 @@ ModelMoonBase.prototype.setPreset = function(node) {
 
 ModelMoonBase.prototype.getPreset = function() {
       var params = ModelBase.prototype.getPreset.call(this);
-      params.metonYear = this.getMetonYear();
-      params.metonSynodicMonths = this.getMetonSynodicMonths();
-      params.metonDays = this.getMetonDays();
-      params.sarosDraconiticMonths  = this.getSarosDraconiticMonths();
-      params.sarosSynodicMonths = this.getSarosSynodicMonths();
+      params.params.metonYear = this.getMetonYear();
+      params.params.metonSynodicMonths = this.getMetonSynodicMonths();
+      params.params.metonDays = this.getMetonDays();
+      params.params.sarosDraconiticMonths  = this.getSarosDraconiticMonths();
+      params.params.sarosSynodicMonths = this.getSarosSynodicMonths();
       return params;
 };
 

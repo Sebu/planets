@@ -20,66 +20,70 @@
 </script>
 </head>
 <body>
-<div id='page'>
-    <div id='splash'>
-        <h1>Virtual Cosmology Sandbox</h1>
-        <div id='splash-status'>loading ...</div>
-    </div>
+<div id='left-page'>
+
     
-    <nav id='top-container'>
-        <div class='select-models' title='select model' style='width: 180px;'><select id='model-select'></select></div>
-        <div class='select-models' title='select chapter' style='width: 150px;'><select id='planet-select'></select></div>
-        <div class='select-models' title='select preset' style='width: 36px;'><select id='preset-select'></select></div>
-        <div class='select-models'><select id='moon-select'></select></div>   
-        <span id='add-preset' title='add preset' class='button'><img src='images/plus.png'></span>
-        <span id='remove-preset' title='remove preset' class='button'><img src='images/minus.png'></span>  
-        <div style="float: right;" class='button' title='fullscreen' id='fullscreen-button'><img src='images/fullscreen.png' alt='fullscreen'></img></div>
-        <div style="float: right; display: none;" title='show text' class='button hide' id='info-button'><img src='images/info.png' alt='text'></img></div>
-    </nav>
-    <div id="canvas-main" class="page">
-        <aside class='container hide' id='ui-container'>
+    <article id='text-left' class='hidden'></article>
+    <figure id='figure-left' class='hidden'></figure>
+    <figure id="canvas-main">
+        <div id='splash'>
+            <h1>Virtual Cosmology Sandbox</h1>
+            <div id='splash-status'>loading ...</div>
+        </div>
+        <nav id='top-container'>
+            <div class='select-models' title='select model' style='width: 100px;'><select id='model-select'></select></div>
+            <div class='select-models' title='select chapter' style='width: 150px;'><select id='planet-select'></select></div>
+            <div class='select-models' title='select preset' style='width: 36px;'><select id='preset-select'></select></div>
+            <div class='select-models'><select id='moon-select'></select></div>   
+            <span id='remove-preset' title='remove preset' class='button'><img src='images/minus.png'></span>  
+            <span id='add-preset' title='add preset' class='button'><img src='images/plus.png'></span>
+            <div class='button' id='fullscreen-button' title='fullscreen'><img src='images/fullscreen.png' alt='fullscreen'></img></div>
+            <div class='button hidden' id='info-button' title='show text' ><img src='images/info.png' alt='text'></img></div>
+        </nav>
+        <aside id='ui-container' class='container hide'>
             <div id='content-scroll' class='hide'>
-            <div id='content'>
-                <h3 id='view-header'>View</h3>
-                <div id='view' class='side-box'>
-                    <select title='current position' id='camera-select'>
-                        <option value='Trackball'>Global</option>
-                        <option value='FPS'>Local</option>
-                        <option value='TrackballIso'>Flat</option>
-                    </select>
-                    <select title='latitude presets' id='longitude-select'>
-                        <option value='38'>Athens</option>
-                        <option value='30.97'>Alexandria</option>
-                        <option value='36.66'>Cnidus</option>
-                        <option value='30'>Heliopolis</option>
-                        <option value='40.23'>Cyzicus</option>
-                        <option value='0'>Equator</option>
-                        <option value='90'>North pole</option>
-                    </select>
-                    <div id='view-sliders'></div>
-                    <div id='visSpheres' class='center'></div>
-                    <div id='visOther' class='center'></div>
+                <div id='content'>
+                    <h3 id='view-header'>View</h3>
+                    <div id='view' class='side-box'>
+                        <select title='current position' id='camera-select'>
+                            <option value='Trackball'>Global</option>
+                            <option value='FPS'>Local</option>
+                            <option value='TrackballIso'>Flat</option>
+                        </select>
+                        <select title='latitude presets' id='longitude-select'>
+                            <option value='38'>Athens</option>
+                            <option value='30.97'>Alexandria</option>
+                            <option value='36.66'>Cnidus</option>
+                            <option value='30'>Heliopolis</option>
+                            <option value='40.23'>Cyzicus</option>
+                            <option value='0'>Equator</option>
+                            <option value='90'>North pole</option>
+                        </select>
+                        <div id='view-sliders'></div>
+                        <div id='visSpheres' class='center'></div>
+                        <div id='visOther' class='center'></div>
+                    </div>
+                    
+                    <div id='parameters'>
+                        <!-- elements are created on demand -->
+                    </div>
+                    
+                    <h3>Playback</h3>
+                    <div id='playback' class='side-box'>
+                        <h4>Animation Speed</h4>
+                        <div class='sliderBox' id='anim-speed' title='Animation Speed'></div>
+                            <span class='button' id='reset-button'>RESET</span>
+                            <span class='button' id='pause-button' title='pause animation'>PAUSE</span>
+                            <span class='button' id='screenshot-button'><img src='images/camera2.png' alt='screenshot'></span>
+                            <input id='date-input' style='display:none;' type='text' placeholder='date' class='text'></input>     
+                    </div>
                 </div>
-                
-                <div id='parameters'>
-                    <!-- elements are created on demand -->
-                </div>
-                
-                <h3>Playback</h3>
-                <div id='playback' class='side-box'>
-                    <h4>Animation Speed</h4>
-                    <div class='sliderBox' id='anim-speed' title='Animation Speed'></div>
-                        <span class='button' id='reset-button'>RESET</span>
-                        <span class='button' id='pause-button' title='pause animation'>PAUSE</span>
-                        <span class='button' id='screenshot-button'><img src='images/camera2.png' alt='screenshot'></span>
-                        <input id='date-input' style='display:none;' type='text' placeholder='date' class='text'></input>     
-                </div>
-            </div>
             </div>
             <div id='nav-container'>
-              <div id='sidebar-button' title='show settings'>[>]</div>
+              <div id='sidebar-button' title='show settings'></div>
               <div id='nav-rotate'>
                 <div class='button' id='rotate-left'><</div>
+                <div class='button' id='rotate-reset'>o</div>
                 <div class='button' id='rotate-right'>></div>
               </div>
               <div id='zoom-plus' title='zoom in'><img src='images/plus.png' alt='+'></div>
@@ -124,11 +128,13 @@
         <footer>
             <a>© 2012 Topoi</a> <a>+henry mendell</a> <a>+sebastian szczepanski</a>
         </footer>
-    </div>
+    </figure>
 
 </div>
 
-<div id='right-page'></div>
+<div id='right-page'>
+    <article id='text-right'></article>
+</div>
  
 
 

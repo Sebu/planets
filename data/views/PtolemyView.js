@@ -10,6 +10,7 @@ PtolemyView = function() {
 
 PtolemyView.prototype = new BaseView;
 PtolemyView.prototype.constructor = PtolemyView;
+PtolemyView.prototype.name = "PtolemyView";
 
 
 PtolemyView.prototype.cleanUp = function(model) {
@@ -120,6 +121,7 @@ PtolemySunView = function() {
 
 PtolemySunView.prototype = new PtolemyView;
 PtolemySunView.prototype.constructor = PtolemySunView;
+PtolemySunView.prototype.name = "PtolemySunView";
 
 PtolemySunView.prototype.setupSliders = function(model, camera) {
            camera.rotateY((Math.PI*3)/2 - 0.1);

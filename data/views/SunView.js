@@ -10,6 +10,7 @@ SunView = function() {
 
 SunView.prototype = new BaseView;
 SunView.prototype.constructor = SunView;
+SunView.prototype.name = "SunView";
 
 
         

@@ -50,13 +50,13 @@ cosmoApp = function(params) {
         this.resize();
         
         // NO WEBGL error
-        if(this.canvas.type==="canvas") {
+        if(this.canvas.type === "canvas") {
 //          this.debugBox.show();
           this.splashStatus.empty();
           this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-          this.splashStatus.append("<br><div class='button' onclick='$(\"#splash\").addClass(\"hide\");' value='ok'>CONITUNE</div>");
+          this.splashStatus.append("<br><div class='button right' onclick='$(\"#splash\").addClass(\"hidden\");' value='ok'>let's go ></div>");
         } else                       
-        $("#splash").hide(); //addClass("hide");        
+        $("#splash").hide();  
         
 };
 cosmoApp.prototype = new Ori.App;
@@ -121,30 +121,30 @@ cosmoApp.prototype.setupUI = function() {
         $("#remove-preset").click(function() { that.removePreset(); } ); 
 
 
-        document.getElementById("page").onresize = function(e) { that.resize(e) };
+        document.getElementById("left-page").onresize = function(e) { that.resize(e) };
  
  
         $("#info-button").click(function() { 
             $(this).hide();
             $("#fullscreen-button").show();
-            $("#page").toggleClass('slide');
+            $("#left-page").toggleClass('slide');
             $("#book").toggleClass('hide');
             $("#right-page").toggle();
             $("#canvas-main").toggleClass('page');
-            $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
-            $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
+            $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
+            $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));
             that.resize();
         });
                
         $("#fullscreen-button").click(function() { 
             $(this).hide();
             $("#info-button").show();        
-            $("#page").toggleClass('slide');
+            $("#left-page").toggleClass('slide');
             $("#book").toggleClass('hide');
             $("#right-page").toggle();
             $("#canvas-main").toggleClass('page');
-            $("#content-scroll").toggleClass('hide', !$("#page").hasClass('slide'));
-            $("#ui-container").toggleClass('hide', !$("#page").hasClass('slide'));
+            $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
+            $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));
             that.resize();
         });
         
@@ -310,8 +310,8 @@ cosmoApp.prototype.setDate = function(date) {
 cosmoApp.prototype.loadModel = function(value) {
   $("#model-select option[value='"+value+"']").attr('selected',true);
   
-  
-  
+  $("#remove-preset").toggle( value === 'custom' );
+    
   this.currentModel = planetPresets[value];
   
   if(this.currentModel.model) {
@@ -391,8 +391,8 @@ cosmoApp.prototype.setPreset = function(preset) {
 }
 
 cosmoApp.prototype.updateText = function(uri) {
-    $('#right-page').empty();
-    $('#right-page').load(config.textPath + uri, function() {
+    $('#text-right').empty();
+    $('#text-right').load(config.textPath + uri, function() {
         $(".selectBox").selectReading();  
     });
 };
@@ -432,10 +432,15 @@ cosmoApp.prototype.addPreset = function() {
     var vault = this.getVault();
 
     var text = prompt(APP_STRINGS.EN.CUSTOM_NEW, this.model.name + '1');
-    if(text && (!vault.custom[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
-      var store = this.model.getPreset(); //{ model: model.name, ui: model.view, writeable: true, sphere: [] };
+    if( text && 
+        (!vault.custom[text] || confirm('Preset "' + text + '" already exists. Overwrite?'))) {
+        
+      var store = this.model.getPreset();
       store.caption = text;
-      if(!vault.custom[text]) localStorage["presetCount"] = Number(localStorage["presetCount"]) + 1;      
+      store.view = this.getView().name;
+      if( !vault.custom[text] ) 
+          localStorage["presetCount"] = Number(localStorage["presetCount"]) + 1;      
+          
       vault.custom[text] = store;
       localStorage.setJson("customPresets", vault);
 
@@ -455,6 +460,7 @@ cosmoApp.prototype.removePreset = function() {
   if(!planetPresets.custom[text]) { 
     alert('Preset "' + text + '" is locked.'); return;
   }
+  
   if(confirm('Delete preset "' + text + '"?')) {
     var vault = this.getVault();
     delete planetPresets.custom;

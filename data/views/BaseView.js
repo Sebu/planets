@@ -246,6 +246,7 @@ Model4View = function() {
 };
 Model4View.prototype = new BaseView;
 Model4View.prototype.constructor = Model4View;
+Model4View.prototype.name = "Model4View";
 Model4View.prototype.setupSliders = function(model, camera) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({ model: model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -274,6 +275,7 @@ SimpleView = function() {
 };
 SimpleView.prototype = new BaseView;
 SimpleView.prototype.constructor = SimpleView;
+SimpleView.prototype.name = "SimpleView";
 SimpleView.prototype.setupSliders = function(model, camera) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model: model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -286,6 +288,7 @@ HippoView = function() {
 };
 HippoView.prototype = new BaseView;
 HippoView.prototype.constructor = HippoView;
+HippoView.prototype.name = "HippoView";
 HippoView.prototype.setupSliders = function(model, camera) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model: model, id: "AxisAngle3", max: 360, step:0.05, text: "S 3"}).appendTo("#angle");
@@ -300,6 +303,7 @@ Model5View = function() {
 };
 Model5View.prototype = new BaseView;
 Model5View.prototype.constructor = Model5View;
+Model5View.prototype.name = "Model5View";
 Model5View.prototype.setupSliders = function(model, camera) {
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
             UI.slider({model: model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
@@ -328,6 +332,7 @@ AristotleView = function() {
 };
 AristotleView.prototype = new BaseView;
 AristotleView.prototype.constructor = AristotleView;
+AristotleView.prototype.name = "AristotleView";
 AristotleView.prototype.setupSliders = function(model, camera) {
             $("#visSpheres > *").remove();
             UI.checkbox({model: model, id:"ShowSphere1", text:"S1", color: rgbToCSS(config.colors["S1"]) }).appendTo("#visSpheres");
@@ -377,6 +382,7 @@ YavetzView = function() {
 };
 YavetzView.prototype = new BaseView;
 YavetzView.prototype.constructor = YavetzView;
+YavetzView.prototype.name = "YavetzView";
 YavetzView.prototype.setupSliders = function(model, camera) {
 
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
