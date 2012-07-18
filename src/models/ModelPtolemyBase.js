@@ -143,12 +143,12 @@ ModelPtolemyBase.prototype.create = function() {
     }
     
     // show/hide modifications    
-    this.sphere[1].setVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"]);
-    this.sphere[2].setVisuals(["equator","centerLine"]);
-    this.sphere[3].setVisuals(["equator"]);
-    this.sphere[4].setVisuals(["crankLine", "crankRadius","crank","disc","equator","centerLine"]);
-    this.realSunS[1].setVisuals([]);
-    this.realSunS[2].setVisuals([]);
+    this.sphere[1].defaultVisuals(["equator","npole","spole","rotationarc","markerarc","markerball"]);
+    this.sphere[2].defaultVisuals(["equator","centerLine"]);
+    this.sphere[3].defaultVisuals(["equator"]);
+    this.sphere[4].defaultVisuals(["crankLine", "crankRadius","crank","disc","equator","centerLine"]);
+    this.realSunS[1].defaultVisuals([]);
+    this.realSunS[2].defaultVisuals([]);
 
     /** @override */
     this.updateMovement = function(time) {

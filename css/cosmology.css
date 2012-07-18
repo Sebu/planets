@@ -1,6 +1,6 @@
 /* RESET
 ************/  
-body,div,dl,dt,dd,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,figure,input,textarea,blockquote,th,td { 
+body,div,dl,dt,dd,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,figure,article,input,textarea,blockquote,th,td { 
 	margin:0;
 	padding:0;
 }
@@ -723,12 +723,11 @@ select:focus,
     min-width: 100%;
 }
 
-
 #right-page {
   position: absolute;
   float: left;
   right: 25%;
-  font-family: times, serif;
+//  font-family: times, serif;
   margin: 0;
   padding: 0 1%;    
   width: 48%;
@@ -742,8 +741,10 @@ select:focus,
    box-shadow: 4px 0px 12px 2px #AAA; 
 }
 
+
 #right-page.open {
     right: 0;
+    box-shadow: none; 
 }
 
 
@@ -770,9 +771,9 @@ select:focus,
 	font-weight: bold;
 }
 
-#right-page h1 {  
-  font-size: 22px;
-}
+//#right-page h1 {  
+//  font-size: 22px;
+//}
 
 .selectBox { 
   position: relative;
@@ -832,6 +833,11 @@ h3 {
   font-size:16px;
   background: #222;
 
+}
+
+.caption:hover,
+h3:hover {
+    background: #333;
 }
 
 

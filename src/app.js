@@ -15,7 +15,7 @@ cosmoApp = function(params) {
         this.views = {};
         
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
+        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 0});
         
         this.splashStatus = $("#splash-status");
 
@@ -47,8 +47,8 @@ cosmoApp = function(params) {
         // load default model
 
 
-        that.loadModel("Aristotle");
-        that.resize();
+        this.loadModel("Aristotle");
+        this.resize();
         
         
         
@@ -387,9 +387,15 @@ cosmoApp.prototype.setPreset = function(preset) {
   // unload view
   if(this.model)
       this.view.cleanUp();
+  
       
   // switch model
   this.setModel( this.getModelById(preset.model) );
+  $("#left-page > *").hide();
+  if(this.model)
+    $("#canvas-main").show();
+  
+
   this.model.setPreset(preset.params);
 
   // load text

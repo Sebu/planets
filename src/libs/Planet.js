@@ -21,7 +21,7 @@ Planet = function(params) {
     var 
     PI2 = Math.PI * 2,
     program = function ( context ) {
- 	    	context.globalAlpha = opacity;
+ 	    	context.globalAlpha = opacity/2;
  	    	context.beginPath();
 		  	context.arc( 0, 0, 1, 0, PI2, true );
 		  	context.closePath();
@@ -72,7 +72,7 @@ Planet = function(params) {
       }));
     this.gfx.mesh.scale.set( this.gfx.scale, this.gfx.scale, this.gfx.scale );
     this.gfx.mesh.cPos = new THREE.Vector3();
-    this.gfx.mesh.overdraw = true;
+    this.gfx.mesh.overdraw = false;
     this.gfx.mesh.rotation.z = Math.PI;
     this.gfx.mesh.rotation.y = Math.PI/2;
     

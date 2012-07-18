@@ -29,7 +29,7 @@ Spherical = function(params) {
     this.anchor = new Node();
     this.gfx = new Object();
     
-    
+    this.gfx.show = true;
     this.gfx.trails = (Ori.gfxProfile.shading>=Ori.Q.MEDIUM) ? true : false;
     this.gfx.color = params.color || { r: 0.5, g: 0.5, b: 0.5};
     this.gfx.vortex = params.vortex;
@@ -102,7 +102,7 @@ Spherical = function(params) {
         this.anchor.addNode(this.gfx.markerball);    
     
     
-    this.setVisuals(["northArc","southArc","equator","npole","spole","rotationarc","markerball"]);
+    this.defaultVisuals(["northArc","southArc","equator","npole","spole","rotationarc","markerball"]);
 
     this.setScale(params.scale);
     this.setMoving(true);
@@ -122,7 +122,7 @@ Spherical.prototype.constructor = Spherical;
 Spherical.prototype.DEFAULT_VISUALS = ["disc","northArc","southArc","equator","npole","spole","rotationarc","markerball","markerarc"];
 
 // set visible elements
-Spherical.prototype.setVisuals = function(vis) {
+Spherical.prototype.defaultVisuals = function(vis) {
   this.setGfx(this.DEFAULT_VISUALS, false); // reset all elements to invisible
   this.gfx.visuals = vis;
   this.setShow(this.getShow()); // only show the new selection
@@ -135,11 +135,11 @@ Spherical.prototype.setGfx = function(vis, state) {
 };
 
 Spherical.prototype.setShow = function(state) {
-  this.visible = state;
+  this.gfx.show = state;
   this.setGfx(this.gfx.visuals, state);
 }
 Spherical.prototype.getShow = function() {
-  return this.visible;
+  return this.gfx.show;
 }
 
 Spherical.prototype.setMoving = function(state) {

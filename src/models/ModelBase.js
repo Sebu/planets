@@ -140,7 +140,7 @@ ModelBase.prototype = {
         
         this.updateList[0] = this.sphere[1];
         // default visuals for sphere1        
-        this.sphere[1].setVisuals( ["equator","npole","spole","rotationarc","markerball"] );
+        this.sphere[1].defaultVisuals( ["equator","npole","spole","rotationarc","markerball"] );
 
 
         // add additional spheres
@@ -194,7 +194,7 @@ ModelBase.prototype = {
             speed: 0.0,
             color: config.colors["S4"] });    
         
-        this.ecliptic.setVisuals([]); 
+        this.ecliptic.defaultVisuals([]); 
         
         // create SUN and attach to ECLIPTIC
         this.sun = new Planet({
@@ -242,7 +242,10 @@ ModelBase.prototype = {
         this.root.addNode(this.sphere[1]);
           // S1
           this.sphere[1].addNode( this.earth );
-          this.sphere[1].addNode( this.hull );
+ 
+ 
+          if(Ori.gfxProfile.geometry > Ori.Q.LOW) // TODO: work around for canvas bug
+           this.sphere[1].addNode( this.hull );
           
           this.sphere[1].anchor.addNode( this.stars ); 
           this.sphere[1].anchor.addNode( this.sphere[2] );
@@ -278,7 +281,10 @@ ModelBase.prototype = {
         //TODO: better merge
         for(var i in this.state.sphere) {
             for(var j in this.state.sphere[i]) {
-              this["set" + j + "" + (Number(i)+1)]( Utils.toDec( this.state.sphere[i][j]) );
+              if(this.state.sphere[i][j] == true || this.state.sphere[i][j] == false)
+                  this["set" + j + "" + (Number(i)+1)]( this.state.sphere[i][j] );
+              else 
+                  this["set" + j + "" + (Number(i)+1)]( Utils.toDec( this.state.sphere[i][j]) );
             }
         }
 
