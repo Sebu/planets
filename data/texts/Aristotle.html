@@ -9,38 +9,36 @@
     <script type="text/javascript" src="../../src/libs/UIHelpers.js"></script>
     <style>
     
-    .selectBox { 
-  position: relative;
-}
 
-.selectBox > span {
+.selectBox  {
+  position: relative;  
+  display: inline-block;  
   color: #0066FF;
 }
 .selectBox ul {
-
-  
-  -webkit-box-orient: vertical;
-  -webkit-box-pack:justify;
   padding: 0;
   margin: 0;
   z-index: 1;
   list-style-type: none;
   display: none;
-//display: -webkit-box;
-  
   left: 0px;
-  top: 0px;
+  top: 100%; 
   position: absolute;
-  width: 200px;
   background-color: #fff;
   border: 1px solid #333;
+  width: auto;
+  float: left;  
 }
+
 .selectBox li {
   padding: 2px;
   margin: 0px;
+  width: auto;
+  display: block;
+  float: none;
+  white-space: nowrap;  
 }
 .selectBox li:hover {
-  
   background-color: #CCCC66;
 }
 </style>
@@ -55,7 +53,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>καὶ τούτων <span class='selectBox' id='Met1073b2'>τις</span> πρώτη καὶ δευτέρα κατὰ τὴν αὐτὴν τάξιν</td>
+    <td>καὶ τούτων <select class='selectBox' name='Met1073b2'>τις</select> πρώτη καὶ δευτέρα κατὰ τὴν αὐτὴν τάξιν</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -63,7 +61,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td><span class='selectBox' id='Met1073b4a'>φορῶν</span> ἐκ τῆς <span class='selectBox' id='Met1073b4b'>οἰκειοτάτης</span> <span class='selectBox' id='Met1073b4c'>φιλοσοφίᾳ</span> τῶν μαθηματικῶν</td>
+    <td><select class='selectBox'name='Met1073b4a'>φορῶν</select> ἐκ τῆς <select class='selectBox'name='Met1073b4b'>οἰκειοτάτης</select> <select class='selectBox'name='Met1073b4c'>φιλοσοφίᾳ</select> τῶν μαθηματικῶν</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">5</td>
@@ -103,7 +101,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>τας αὐτοὺς δεῖ τὰ δὲ πυνθανομένους παρὰ <span class='selectBox' id='Met1073b14'>τῶν ζητούντων,</span></td>
+    <td>τας αὐτοὺς δεῖ τὰ δὲ πυνθανομένους παρὰ <select class='selectBox'name='Met1073b14'>τῶν ζητούντων,</select></td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">15</td>
@@ -111,7 +109,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>τευομένοις, φιλεῖν μὲν ἀμφοτέρους, πείθεσθαι <span class='selectBox' id='Met1073b16'>δὲ</span> τοῖς ἀκρι- </td>
+    <td>τευομένοις, φιλεῖν μὲν ἀμφοτέρους, πείθεσθαι <select class='selectBox'name='Met1073b16'>δὲ</select> τοῖς ἀκρι- </td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -151,7 +149,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td><span class='selectBox' id='Met1073b26a'>εἶναι</span>, καὶ τὴν ὑπὸ <span class='selectBox' id='Met1073b26b'>ταύτῃ</span> τεταγμένην καὶ κατὰ <span class='selectBox' id='Met1073b26c'>τὸν</span> διὰ</td>
+    <td><select class='selectBox'name='Met1073b26a'>εἶναι</select>, καὶ τὴν ὑπὸ <select class='selectBox'name='Met1073b26b'>ταύτῃ</select> τεταγμένην καὶ κατὰ <select class='selectBox'name='Met1073b26c'>τὸν</select> διὰ</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -171,31 +169,31 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>ρας τοὺς πόλους τῶν μὲν ἄλλων ἰδίους, <span class='selectBox' id='Met1073b31'>τοὺς δὲ</span> τῆς Ἀφροδί-</td>
+    <td>ρας τοὺς πόλους τῶν μὲν ἄλλων ἰδίους, <select class='selectBox'name='Met1073b31'>τοὺς δὲ</select> τῆς Ἀφροδί-</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>της καὶ τοῦ Ἑρμοῦ τοὺς αὐτούς· Κάλλιππος δὲ τὴν μὲν<span class='selectBox' id='Met1073b32'> θέσιν </span></td>
+    <td>της καὶ τοῦ Ἑρμοῦ τοὺς αὐτούς· Κάλλιππος δὲ τὴν μὲν<select class='selectBox'name='Met1073b32'> θέσιν </select></td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>τῶν σφαιρῶν τὴν αὐτὴν ἐτίθετο Εὐδόξῳ <span class='selectBox' id='Met1073b33'>[τοῦτ' ἔστι τῶν ἀπο-</span></td>
+    <td>τῶν σφαιρῶν τὴν αὐτὴν ἐτίθετο Εὐδόξῳ <select class='selectBox'name='Met1073b33'>[τοῦτ' ἔστι τῶν ἀπο-</select></td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-<td><span class='selectBox' id='Met1073b34'>στημάτων τὴν τάξιν]</span> τὸ δὲ πλῆθος τῷ μὲν τοῦ Διὸς καὶ</td>
+<td><select class='selectBox'name='Met1073b34'>στημάτων τὴν τάξιν]</select> τὸ δὲ πλῆθος τῷ μὲν τοῦ Διὸς καὶ</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">35</td>
-    <td>τῷ τοῦ Κρόνου τὸ αὐτὸ <span class='selectBox' id='Met1073b35a'>ἐκείνῳ</span> ἀπεδίδου, τῷ δ' <span class='selectBox' id='Met1073b35b'>ἡλίῳ καὶ τῇ</span></td>
+    <td>τῷ τοῦ Κρόνου τὸ αὐτὸ <select class='selectBox'name='Met1073b35a'>ἐκείνῳ</select> ἀπεδίδου, τῷ δ' <select class='selectBox'name='Met1073b35b'>ἡλίῳ καὶ τῇ</select></td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td><span class='selectBox' id='Met1073b36a'>σελήνῃ</span> δύο ᾤετο <span class='selectBox' id='Met1073b36b'>ἔτι προσθετέας</span> εἶναι σφαίρας, τὰ φαι-</td>
+    <td><select class='selectBox'name='Met1073b36a'>σελήνῃ</select> δύο ᾤετο <select class='selectBox'name='Met1073b36b'>ἔτι προσθετέας</select> εἶναι σφαίρας, τὰ φαι-</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>νόμενα εἰ <span class='selectBox' id='Met1073b37'>μέλλει</span> τις ἀποδώσειν, τοῖς δὲ λοιποῖς τῶν πλα-</td>
+    <td>νόμενα εἰ <select class='selectBox'name='Met1073b37'>μέλλει</select> τις ἀποδώσειν, τοῖς δὲ λοιποῖς τῶν πλα-</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -203,7 +201,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">1074a1</td>
-    <td><span class='selectBox' id='Met1074a1'>πᾶσαι</span> τὰ φαινόμενα ἀποδώσειν, καθ' ἕκαστον τῶν πλανω-</td>
+    <td><select class='selectBox'name='Met1074a1'>πᾶσαι</select> τὰ φαινόμενα ἀποδώσειν, καθ' ἕκαστον τῶν πλανω-</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -211,7 +209,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>σας καὶ εἰς τὸ αὐτὸ <span class='selectBox' id='Met1074a3'>ἀποκαθιστάσας</span> τῇ θέσει τὴν πρώτην</td>
+    <td>σας καὶ εἰς τὸ αὐτὸ <select class='selectBox'name='Met1074a3'>ἀποκαθιστάσας</select> τῇ θέσει τὴν πρώτην</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -223,7 +221,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td><span class='selectBox' id='Met1074a6'>ἐπεὶ οὖν</span> ἐν αἷς μὲν αὐτὰ φέρεται σφαίραις αἱ μὲν ὀκτὼ</td>
+    <td><select class='selectBox'name='Met1074a6'>ἐπεὶ οὖν</select> ἐν αἷς μὲν αὐτὰ φέρεται σφαίραις αἱ μὲν ὀκτὼ</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -231,7 +229,7 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>λιχθῆναι ἐν αἷς <span class='selectBox' id='Met1074a8'>τὸ κατωτάτω τεταγμένον</span> φέρεται, αἱ μὲν</td>
+    <td>λιχθῆναι ἐν αἷς <select class='selectBox'name='Met1074a8'>τὸ κατωτάτω τεταγμένον</select> φέρεται, αἱ μὲν</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
@@ -239,28 +237,28 @@
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">10</td>
-    <td>τῶν ὕστερον τεττάρων ἑκκαίδεκα· ὁ <span class='selectBox' id='Met1074a10'>δὴ</span> ἁπασῶν ἀριθμὸς τῶν</td>
+    <td>τῶν ὕστερον τεττάρων ἑκκαίδεκα· ὁ <select class='selectBox'name='Met1074a10'>δὴ</select> ἁπασῶν ἀριθμὸς τῶν</td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>τε φερουσῶν καὶ τῶν ἀνελιττουσῶν ταύτας πεντήκοντά <span class='selectBox' id='Met1074a11'>τε</span> </td>
+    <td>τε φερουσῶν καὶ τῶν ἀνελιττουσῶν ταύτας πεντήκοντά <select class='selectBox'name='Met1074a11'>τε</select> </td>
   </tr>
   <tr>
     <td width="60" nowrap="nowrap" scope="row">&nbsp;</td>
-    <td>καὶ πέντε. εἰ <span class='selectBox' id='Met1074a12'>δὲ τῇ</span> σελήνῃ τε καὶ τῷ ἡλίῳ μὴ προστιθείη</td>
+    <td>καὶ πέντε. εἰ <select class='selectBox'name='Met1074a12'>δὲ τῇ</select> σελήνῃ τε καὶ τῷ ἡλίῳ μὴ προστιθείη</td>
   </tr>
   <tr>     <td width=60 nowrap=“nowrap” scope=“row”>&nbsp;</td>     
-    <td>τις ἃς εἴπομεν κινήσεις, αἱ πᾶσαι σφαῖραι ἔσονται <span class='selectBox' id='Met1074a13'>ἑπτά</span></td>
+    <td>τις ἃς εἴπομεν κινήσεις, αἱ πᾶσαι σφαῖραι ἔσονται <select class='selectBox'name='Met1074a13'>ἑπτά</select></td>
   </tr>
 <tr>     <td width=60 nowrap=“nowrap” scope=“row”>&nbsp;</td>     
-  <td>τε καὶ τεσσαράκοντα.  – τὸ μὲν οὖν πλῆθος τῶν <span class='selectBox' id='Met1074a13'>σφαιρῶν</span> ἔστω</td>
+  <td>τε καὶ τεσσαράκοντα.  – τὸ μὲν οὖν πλῆθος τῶν <select class='selectBox'name='Met1074a13'>σφαιρῶν</select> ἔστω</td>
 </tr>
 <tr>     <td width=60 nowrap=“nowrap” scope=“row”>15</td>     
   <td>τοσοῦτον, ὥστε καὶ τὰς οὐσίας καὶ τὰς ἀρχὰς τὰς ἀκινήτους</td>
 </tr>
 <tr>
   <td nowrap=“nowrap” scope=“row”>&nbsp;</td>
-  <td><span class='selectBox' id='Met1074a16'>[καὶ τὰς αἰσθητὰς]</span> τοσαύτας εὔλογον ὑπολαβεῖν (τὸ γὰρ </td>
+  <td><select class='selectBox'name='Met1074a16'>[καὶ τὰς αἰσθητὰς]</select> τοσαύτας εὔλογον ὑπολαβεῖν (τὸ γὰρ </td>
 </tr>
 <tr>
   <td nowrap=“nowrap” scope=“row”>&nbsp;</td>

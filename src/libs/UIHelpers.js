@@ -10,31 +10,36 @@
                 var
                 i=0,
                 ele = $(this),
-                data = criticalapparatus[this.id],
+                select = ele.hide(),
+                data = criticalapparatus[ ele.attr('name') ],
+                wrapper = $("<span>")
+                    .addClass( "selectBox" )
+                    .insertAfter( select ),
                 text = $("<span>")
-                .text(ele.text() || data[0][1]),
-                list = $("<ul>");
+                    .text(ele.text() || data[0][1])
+                    .appendTo( wrapper ),
+                list = $("<ul>")
+                    .appendTo( wrapper );
 
-                ele.empty()
-                .click( function() {
+                wrapper.click( function() {
+                    list.empty();
+                    for(i=0; i<data.length; ++i) {
+                    var 
+                    ul = $("<li>" + data[i][0].toString() + " " + data[i][1] + "</li>")
+                        .attr('title', data[i][1])
+                        .click( function() {
+                            text.text(this.title);
+                        }); 
+                    list.append(ul);
+
+                    }
                     list.toggle();
                 })
                 .mouseleave( function() {
                     list.hide();
                 })
-                .append(text)
-                .append(list);
 			
-                for(i=0; i<data.length; ++i) {
-                      var 
-                      ul = $("<li>" + data[i][0].toString() + " " + data[i][1] + "</li>")
-                      .attr('title', data[i][1])
-                      .click( function() {
-                         text.text(this.title);
-                      });	
-                      list.append(ul);
 
-                }
                 return ele;	
 		  });
 	  };
@@ -66,8 +71,8 @@
             
             var
             span =  $("<span>")
-            .addClass("ori-triangle ori-arrow-down ori-arrow-up")
-            .appendTo(this);
+                .addClass("ori-triangle ori-arrow-down ori-arrow-up")
+                .appendTo(this);
                      
             $(this).click(function() {
                 $(span).toggleClass('ori-arrow-up'); 
@@ -97,7 +102,7 @@
             step = options.step  || 0.2,
             value = options.value ||  instance["get"+prop](),
             sliderElement = $("<div>")
-            .addClass('slider'),
+               .addClass('slider'),
             inputElement = $("<input type='text' min="+min+" max="+max+" step="+step+" value='" + value + "'  class='range'/>"),
             changeSlider = options.change || function(event, ui)  { 
                 instance["set"+prop](Number(Utils.toDec(ui.value))); 
@@ -127,7 +132,7 @@
         });     
     };
     
-      
+    
 })( jQuery );
 
 
