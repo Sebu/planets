@@ -107,12 +107,12 @@ cosmoApp.prototype.setupUI = function() {
         planetLabel = new UI.Label({text: APP_STRINGS.EN.PLANET });
         
        
-        this.modelSelect = $("#model-select");
-        this.planetSelect = $("#planet-select");
-        this.presetSelect = $("#preset-select"); 
+        this.modelSelect = $("#model-select").selectBox();
+        this.planetSelect = $("#planet-select").selectBox();
+        this.presetSelect = $("#preset-select").selectBox(); 
         
 
-        this.modelSelect.change(function() { 
+        this.modelSelect.change(function(value) { 
             that.loadModel(this.options[this.selectedIndex].value);
         });  
         
@@ -169,11 +169,13 @@ cosmoApp.prototype.setupUI = function() {
         $("#info-container h3").collapsible();
         $("#ui-container, #info-container").show();
 
- 
-        $("#camera-select").change(function() {
-            that.setCamera(this.value); 
-            that.resize();
-        }); 
+        
+        $("#camera-select")
+            //.selectBox()
+            .change(function() {
+                that.setCamera(this.value); 
+                that.resize();
+            }); 
 
 
         $("#longitude-select").change(function() { 
@@ -322,7 +324,9 @@ cosmoApp.prototype.setDate = function(date) {
 }
 
 cosmoApp.prototype.loadModel = function(value) {
-  $("#model-select option[value='"+value+"']").attr('selected',true);
+  this.modelSelect.selectBox('setText', value);
+  //.setText(value);
+  //$("#model-select option[value='"+value+"']").attr('selected',true);
   
   $("#remove-preset").toggle( value === 'custom' );
     
@@ -330,14 +334,14 @@ cosmoApp.prototype.loadModel = function(value) {
   
   if(this.currentModel.model) {
     this.currentPlanet = planetPresets;
-    this.planetSelect.hide();
-    this.presetSelect.hide();      
+    //this.planetSelect.hide();
+    //this.presetSelect.hide();      
     this.loadPreset(value);
     return;
   }
   
   UI.optionsFromHash("#planet-select", this.currentModel);
-  this.planetSelect.show();
+  //this.planetSelect.show();
   for(var i in this.currentModel) {
     if(i=="caption") continue;
     this.loadPlanet(i);
@@ -347,21 +351,26 @@ cosmoApp.prototype.loadModel = function(value) {
 };
 
 cosmoApp.prototype.loadPlanet = function(value) {
-  $("#planet-select option[value='"+value+"']").attr('selected',true);
+  //$("#planet-select option[value='"+value+"']").attr('selected',true);
+  this.planetSelect.selectBox('setText', value);
+
   this.currentPlanet = this.currentModel[value];
 
   if(this.currentPlanet.model) {
     this.currentPlanet = this.currentModel;
-    this.presetSelect.hide();
+    //this.presetSelect.hide();
+    this.presetSelect.selectBox('setText', '');
     this.loadPreset(value);
     return;
   }
 
   UI.optionsFromHash("#preset-select", this.currentPlanet);
-  this.presetSelect.show();
+
+  //this.presetSelect.show();
   for(var i in this.currentPlanet) {
     if(i=="caption") continue;    
     this.loadPreset(i);
+    this.presetSelect.selectBox('setText', i);
     break;
   }    
 };
@@ -412,9 +421,10 @@ cosmoApp.prototype.setPreset = function(preset) {
 
 cosmoApp.prototype.updateText = function(uri) {
     $('#text-right').empty();
-    $('#text-right').load(config.textPath + uri, function() {
-        $(".selectBox").selectReading();  
-    });
+    $('#text-right').load(config.textPath + uri);
+    //, function() {
+    //    $(".selectBox").selectReading();  
+    //});
 };
 
 /**

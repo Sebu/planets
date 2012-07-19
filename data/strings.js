@@ -1,5 +1,5 @@
 
-var criticalapparatus = {
+var criticalApparatus = {
 "Met1073b2" : [["Ross Jaeger Christ Al<sup>c</sup>", "τις"] , ["codd.",  "τίς"]],
 "Met1073b4a" :[["Ross Jaeger codd.", "φορῶν"] , ["Al<sup>c</sup>",  "σφαιρῶν"]],
 "Met1073b4b" :[["Ross Jaeger", "οἰκειοτάτης"] , ["γρ. J",  "οἰκειότητος"]],
