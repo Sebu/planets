@@ -38,7 +38,7 @@
   background: #0066FF;  
   width: auto;
   float: left; 
-  //box-shadow: 0 3px 10px rgb(136, 136, 136); 
+  box-shadow: 0 3px 10px rgb(136, 136, 136); 
 }
 
 .selectBox li {
@@ -287,7 +287,7 @@
       data[key][i] = [ date[0].toString() + "  <b>" + date[1].toString() + "</b>", date[1]];  
     }
   };
-$(".selectBox").selectBox(data);  
+$(".selectBox").selectBox({ dataSource: data });  
 </script>
 </body>
 </html>

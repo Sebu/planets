@@ -5,13 +5,16 @@
 
 
     $.widget( "ui.selectBox", {
-          
-		_create: function(dataSource) {
-
+        options: {
+            dataSource : 0
+        },  
+		_create: function() {
+            
                 var
                 i=0,
                 ele = this.element = $(this.element),
                 select = ele.hide(),
+                dataSource = this.option('dataSource'),
                 selected = select.children( ":selected" ),
                 data = 0,
                 wrapper = this.wrapper = $("<span>")
@@ -22,7 +25,8 @@
                 list = $("<ul>")
                     .appendTo( wrapper );
 
-                if(dataSource) {
+
+                if( dataSource ) {
                     data = dataSource[ ele.attr('name') ];
                     text.text(ele.text() || data[0][1]);
                     console.log(data);
