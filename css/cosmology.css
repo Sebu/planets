@@ -769,7 +769,7 @@ select:focus,
   z-index: 2;
   //overflow-y: auto;
   //overflow-x: hidden;
-   -webkit-transition: right 1s;
+   -webkit-transition: right 0.5s;
    box-shadow: 4px 0px 12px 2px #AAA; 
 }
 
