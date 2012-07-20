@@ -752,7 +752,7 @@ select:focus,
 }
 
 #left-page.slide {
-    min-width: 90%;
+    max-width: 100%;
 }
 
 #right-page {
