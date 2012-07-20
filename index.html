@@ -22,9 +22,6 @@
 <body>
 <div class='book'>
     <div id='left-page' class='page'>
-
-
-
         <article id='text-left' class='hidden'></article>
         <figure id='figure-left' class='hidden'></figure>
         <figure id="canvas-main">
@@ -43,7 +40,7 @@
                 <div class='button hidden' id='info-button' title='show text' ><img src='images/info.png' alt='text'></img></div>
             </nav>
             <aside id='ui-container' class='container hidden'>
-                <div id='content-scroll' class='hide'>
+                <div id='content-scroll' class='scrollable hide'>
                     <div id='content'>
                         <h3 id='view-header'>View</h3>
                         <div id='view' class='side-box'>
@@ -134,12 +131,14 @@
             </footer>
         </figure>
 
+
     </div>
 
     <div id='right-page' class='page'>
       <div id='sidebar-button' title='show settings'></div>
-        <article id='text-right'>
-        </article>
+      <div class='scrollable'>
+          <article id='text-right'></article>
+      </div>  
     </div>
 </div>
 

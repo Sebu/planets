@@ -100,10 +100,11 @@ a {
   width: 30em; //500px;
   margin-top: -10em; //-120px;
   margin-left: -15em; //250px;
-  z-index: 2;
-  background-color: rgba(29, 144, 221, 0.88); //rgba(35, 35, 105, 0.9);
+  z-index: 3;
+  background-color: rgb(165, 165, 165); //rgba(36, 163, 248, 0.94); //rgba(29, 144, 221, 0.88); //rgba(35, 35, 105, 0.9);
   border: 0;
-  text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
+  text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6); //0px 0px 30px rgba(30, 28, 28, 0.6);
+  box-shadow:  inset 0 0 70px 0px rgb(219, 219, 219); //inset 0 0 70px 0px rgb(75, 75, 75);
 
 //  -webkit-transform: rotate(0deg);  
 //  -webkit-transition: -webkit-transform 1s;
@@ -490,13 +491,13 @@ select:focus,
 }
 
 
-/* Let's get this party started */
+/* Let's get this party started 
 ::-webkit-scrollbar {
     width: 6px;
     height: 10px;
 }
  
-/* Track */
+/* Track 
 ::-webkit-scrollbar-track {
     background-color: #333;
     -webkit-border-radius: 6px;
@@ -519,10 +520,10 @@ select:focus,
     display: block;
     background-color: transparent;
 }
-
+*/
 
 #ui-container {
-  z-index: 4;
+  z-index: 1;
   color: white;
   font-size: 0.8em;
   left: 100%;
@@ -547,14 +548,26 @@ select:focus,
 //    -webkit-transition: left 1s; 
 }
 
+.scrollable {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.scrollable:hover {
+  overflow-y: auto;
+}
 
 #content-scroll {
-  -moz-transform-origin: left; 
-  -webkit-transform-origin: right; 
-  -moz-transition: left 1s; 
-  -webkit-transition: left 1s;  
-  overflow-y: hidden;
-  overflow-x: none;
+//  -moz-transform-origin: left; 
+//  -webkit-transform-origin: right; 
+//  -moz-transition: left 1s; 
+//  -webkit-transition: left 1s;  
+//  overflow-y: hidden;
+//  overflow-x: hidden;
   height: 100%;
   background: #222; 
 }
@@ -565,9 +578,6 @@ select:focus,
  -webkit-transition: left 1s;
 }
 
-#content-scroll:hover {
-  overflow-y: auto;
-}
 
 #content {
   background: #111;
@@ -608,7 +618,7 @@ select:focus,
 
 #nav-container {
   position: absolute;
-  z-index: 1;
+//  z-index: ;
   left: 0;
   top: 0;
   height: 100%;
@@ -625,7 +635,7 @@ select:focus,
     padding: 0;
     bottom: 50%;
     left: 0;
-    z-index: 4;
+//    z-index: ;
     width: 12px;
     height: 80px;
     background: #111;
@@ -714,7 +724,7 @@ select:focus,
   width: 50%;
   height:100%;
   overflow: visible;
-  z-index: 1;
+//  z-index: 1;
   -webkit-transition: left 1s;
   box-shadow: -4px 0px 12px 2px #AAA;
 }
@@ -734,8 +744,8 @@ select:focus,
   right: 25%;
 //  font-family: times, serif;
   margin: 0;
-  padding: 0 1%;    
-  width: 48%;
+  padding: 0;    
+  width: 50%;
   height: 100%;
   background: #fff;
   font-size: 14px;
@@ -743,8 +753,9 @@ select:focus,
   //overflow-y: auto;
   //overflow-x: hidden;
    -webkit-transition: right 0.5s;
-   box-shadow: 4px 0px 12px 2px #AAA; 
-   box-shadow: inset 0px 0px 81px 0px #CCA;  
+//   box-shadow: 4px 0px 12px 2px #AAA; 
+//   box-shadow: inset 0px 0px 81px 0px #CCA;
+   box-shadow: inset 0px 0px 313px 0px rgb(209, 209, 209);  
 }
 
 
@@ -769,9 +780,10 @@ select:focus,
 }
 
 #text-right {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
+//  overflow-y: auto;
+//  overflow-x: hidden;
+  padding: 1em;
+//  height: 100%;
 }
 #right-page:hover {
     //right: 0;
@@ -808,18 +820,7 @@ select:focus,
 # -moz-user-select:auto;  
 }
 
-#info-container {
-  margin: 0;
-  padding: 0;
-  color: #FFF;
-  position: absolute;
-  display: none;
-  width: 20em; //240px;
-  top: 2em; //30px;
-  right: .5em; 
-  z-index: 4;
-  font-size: 0.8em; //12px;
-}
+
 
 .caption,
 h3 { 
@@ -837,6 +838,18 @@ h3:hover {
     background: #333;
 }
 
+#info-container {
+  margin: 0;
+  padding: 0;
+  color: #FFF;
+  position: absolute;
+  display: none;
+  width: 22em; //240px;
+  top: 2em; //30px;
+  right: .5em; 
+  z-index: 1;
+  font-size: 0.8em; //12px;
+}
 
 #info-container h3 { 
   position:relative;
@@ -857,8 +870,25 @@ h3:hover {
   pointer-events: none;
 }
 
-#info-container td {
-  width: 5em; //120px;
+
+
+#info-container tr:nth-child(2n+1) {
+    background: rgba(80,80,80,0.1);
+}
+
+#info-container tr:nth-child(2n) {
+    background: rgba(110,110,110,0.1);
+}
+
+#info-container td:first-child {
+    color: #AAA;
+    vertical-align: bottom; 
+    
+}
+
+
+#info-container td:last-child {
+  width: 6em; //120px;
   text-align: right;
   vertical-align: bottom; 
 }
@@ -895,7 +925,7 @@ h3:hover {
 #top-container {
   position: absolute;
   color: black;
-  z-index: 4;
+  z-index: 1;
   background: transparent; 
   font-size: small;
   margin: 0;

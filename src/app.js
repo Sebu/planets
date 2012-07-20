@@ -229,9 +229,17 @@ cosmoApp.prototype.setupUI = function() {
         });
 
 
+                
+        $("#rotate-reset").click(function() {
+           var 
+           cam = that.model.getCamera();
+           cam.setZ(-18);
+           cam.reset();
+           cam.rotateY(Math.PI + 0.1);
+           cam.rotateTarget({x: 0, y: 0, z: 0});
+        });
         
-        
-        $("#rotate-left").click(function() {
+        $("#rotate-left").mousedown(function() {
            tween = new TWEEN.Tween( { rot : 0.05 } )
             .to( { rot: 0.0 }, 200 )
             .easing( TWEEN.Easing.Quadratic.InOut )
