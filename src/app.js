@@ -15,7 +15,7 @@ cosmoApp = function(params) {
         this.views = {};
         
         // create canvas (WebGL if possible)
-        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 0});
+        this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
         
         this.splashStatus = $("#splash-status");
 
@@ -68,8 +68,9 @@ cosmoApp = function(params) {
                 .attr('value','ok')
                 .appendTo(this.splashStatus);
           
-        } else                       
-        $("#splash").hide();  
+        } else {                     
+            $("#splash").hide();  
+        }
         $(".page").addClass("open");
         
 };
@@ -142,12 +143,13 @@ cosmoApp.prototype.setupUI = function() {
             $(this).hide();
             $("#fullscreen-button").show();
             $("#left-page").toggleClass('slide');
+//            $("#left-page").animate({ width : (window.innerWidth/2) }, 500);
             $("#left-page").width(window.innerWidth/2);
             $("#book").toggleClass('hide');
-            $("#right-page").toggle();
+            $("#right-page").toggleClass('hide');
             $("#canvas-main").toggleClass('page');
-            $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
-            $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));
+//            $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
+//            $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));
             that.resize();
         });
                
@@ -156,9 +158,10 @@ cosmoApp.prototype.setupUI = function() {
             $("#info-button").show();   
             console.log(window.innerWidth);
             $("#left-page").toggleClass('slide');
-            $("#left-page").width(window.innerWidth-200); //toggleClass('slide');
+//            $("#left-page").animate({ width : (window.innerWidth-200) }, 500);
+            $("#left-page").width(window.innerWidth-$("#ui-container").width()); //toggleClass('slide');
             $("#book").toggleClass('hide');
-            $("#right-page").toggle();
+            $("#right-page").toggleClass('hide');
             $("#canvas-main").toggleClass('page');
             $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
             $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));

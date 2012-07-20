@@ -29,7 +29,6 @@
                 if( dataSource ) {
                     data = dataSource[ ele.attr('name') ];
                     text.text(ele.text() || data[0][1]);
-                    console.log(data);
                 } else {
                     text.text("");
                 }
@@ -111,7 +110,7 @@
                      
             $(this).click(function() {
                 $(span).toggleClass('ori-arrow-up'); 
-                $(this).next().slideToggle(); 
+                $(this).next().slideToggle('fast'); 
                 return false;
            });
         
@@ -194,7 +193,7 @@ var UI = {
         text = params.element || params.text || APP_STRINGS.EN[params.id.toUpperCase() + "_TEXT"] || params.id,
         ele =  $("<div class='ORIbox'>" +
                      "<div  style='color: " + rgbToCSS(color) + ";' class='caption tipable' id='cap" +id+ "'" +
-                         "onclick='$(\".ori-triangle\", this).toggleClass(\"ori-arrow-up\"); $(this).next().slideToggle();'>" +
+                         "onclick='$(\".ori-triangle\", this).toggleClass(\"ori-arrow-up\"); $(this).next().slideToggle(\"fast\");'>" +
                          "<span class='ori-triangle ori-arrow-down ori-arrow-up'></span>" +
                      "</div>" +
                      "<div class='side-box' id='" + id + "'></div>" +
