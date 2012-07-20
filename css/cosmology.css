@@ -542,11 +542,10 @@ select:focus,
 
 #ui-container {
 //  border-radius: 5px;  
-  z-index: 1;
+  z-index: 4;
   color: white;
-//  display: none;
   font-size: 14px; 
-  left: 0px;
+  left: 100%;
   padding: 0;
   margin: 0;
   top: 0px;
@@ -562,7 +561,8 @@ select:focus,
 }
 
 #ui-container.hide {
-    left: -200px; //max-width: 0px;
+    //display:none;
+    //left: -200px; //max-width: 0px;
 //    -moz-transition: left 1s; 
 //    -webkit-transition: left 1s; 
 }
@@ -578,9 +578,9 @@ select:focus,
 //  width: 200px;
   height: 100%;
 //  float: left; 
-  background: #111; 
-  margin-top: 28px;
-  -webkit-box-shadow: inset -3px 0 10px 2px #222;
+  background: #222; 
+  //margin-top: 28px;
+  //-webkit-box-shadow: inset -3px 0 10px 2px #222;
 }
 
 #content-scroll.hide {
@@ -634,7 +634,8 @@ select:focus,
 
 #nav-container {
   position: absolute;
-  right: 0;
+  z-index: 1;
+  left: 0;
   top: 0;
   height: 100%;
 //  width: 100%;
@@ -650,6 +651,8 @@ select:focus,
     margin: 0;
     padding: 0;
     bottom: 50%;
+    left: 0;
+    z-index: 4;
     width: 12px;
     height: 80px;
     background: #111;
@@ -737,7 +740,7 @@ select:focus,
   padding: 0;
   width: 50%;
   height:100%;
-  overflow: hidden;
+  overflow: visible;
   z-index: 1;
   -webkit-transition: left 1s;
   box-shadow: -4px 0px 12px 2px #AAA;
@@ -745,10 +748,11 @@ select:focus,
 
 #left-page.open {
     left: 0;
+    box-shadow: none;
 }
 
 #left-page.slide {
-    min-width: 100%;
+    min-width: 90%;
 }
 
 #right-page {
@@ -763,8 +767,8 @@ select:focus,
   background: #fff;
   font-size: 14px;
   z-index: 2;
-  overflow-y: auto;
-  overflow-x: hidden;
+  //overflow-y: auto;
+  //overflow-x: hidden;
    -webkit-transition: right 1s;
    box-shadow: 4px 0px 12px 2px #AAA; 
 }
@@ -775,8 +779,19 @@ select:focus,
     box-shadow: none; 
 }
 
+#right-page.sidebared {
+    right: -200px;
+    box-shadow: 4px 0px 12px 2px #AAA; 
+}
 
+#text-right {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
 #right-page:hover {
+    //right: 0;
+    box-shadow: none; 
     -webkit-user-select:text;
     -moz-user-select:text;
     -khtml-user-select:text;
@@ -829,7 +844,7 @@ h3 {
   position:relative;
   font-weight: bold;
   font-size:16px;
-  background: #222;
+  background: #333;
 
 }
 

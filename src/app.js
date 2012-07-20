@@ -142,6 +142,7 @@ cosmoApp.prototype.setupUI = function() {
             $(this).hide();
             $("#fullscreen-button").show();
             $("#left-page").toggleClass('slide');
+            $("#left-page").width(window.innerWidth/2);
             $("#book").toggleClass('hide');
             $("#right-page").toggle();
             $("#canvas-main").toggleClass('page');
@@ -152,8 +153,10 @@ cosmoApp.prototype.setupUI = function() {
                
         $("#fullscreen-button").click(function() { 
             $(this).hide();
-            $("#info-button").show();        
+            $("#info-button").show();   
+            console.log(window.innerWidth);
             $("#left-page").toggleClass('slide');
+            $("#left-page").width(window.innerWidth-200); //toggleClass('slide');
             $("#book").toggleClass('hide');
             $("#right-page").toggle();
             $("#canvas-main").toggleClass('page');
@@ -217,6 +220,7 @@ cosmoApp.prototype.setupUI = function() {
         });
 
         $("#sidebar-button").click(function() { 
+             $("#right-page").toggleClass('sidebared');
              $("#content-scroll").toggleClass('hide');
              $("#ui-container").toggleClass('hide');
 
@@ -335,7 +339,9 @@ cosmoApp.prototype.loadModel = function(value) {
   if(this.currentModel.model) {
     this.currentPlanet = planetPresets;
     //this.planetSelect.hide();
-    //this.presetSelect.hide();      
+    //this.presetSelect.hide();   
+    this.planetSelect.selectBox('setText', '');
+    this.presetSelect.selectBox('setText', '');   
     this.loadPreset(value);
     return;
   }
