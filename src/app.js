@@ -28,7 +28,6 @@ cosmoApp = function(params) {
           return;
         }
 
-       
         this.splashStatus.empty();
         this.splashStatus.append("setup cameras...");
         this.setupCameras();
@@ -233,21 +232,53 @@ cosmoApp.prototype.setupUI = function() {
         
         
         $("#rotate-left").click(function() {
-            that.model.getCamera().mouseY(0.1);
+           tween = new TWEEN.Tween( { rot : 0.05 } )
+            .to( { rot: 0.0 }, 200 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate( function () {
+                that.model.getCamera().mouseY(this.rot);
+            } )
+            .start();
+            //that.model.getCamera().mouseY(0.1);
         });
 
         $("#rotate-right").click(function() {
-            that.model.getCamera().mouseY(-0.10);
+           tween = new TWEEN.Tween( { rot : -0.05 } )
+            .to( { rot: 0.0 }, 200 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate( function () {
+                that.model.getCamera().mouseY(this.rot);
+            } )
+            .start();        
+            //that.model.getCamera().mouseY(-0.10);
         });
                 
         $("#zoom-plus").click(function() { 
-            that.setZ(that.getZ()+1);
-            $("#zoom-slider").slider('value',that.getZ());
+           tween = new TWEEN.Tween( { rot : that.getZ() } )
+            .to( { rot: that.getZ()+2 }, 100 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate( function () {
+//                that.model.getCamera().mouseY(this.rot);
+                that.setZ(this.rot);
+                $("#zoom-slider").slider('value',that.getZ());
+            } )
+            .start();          
+            //that.setZ(that.getZ()+1);
+            
         });
         
         $("#zoom-minus").click(function() { 
-            that.setZ(that.getZ()-1);
-            $("#zoom-slider").slider('value',that.getZ());
+           tween = new TWEEN.Tween( { rot : that.getZ() } )
+            .to( { rot: that.getZ()-2 }, 100 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate( function () {
+//                that.model.getCamera().mouseY(this.rot);
+                that.setZ(this.rot);
+                $("#zoom-slider").slider('value',that.getZ());
+            } )
+            .start();          
+           // that.setZ(that.getZ()-1);
+           // $("#zoom-slider").slider('value',that.getZ());
         });
                 
         $("#zoom-slider").slider({
@@ -577,6 +608,7 @@ cosmoApp.prototype.update = function(time) {
         
         // update model, info, labels
         this.model.update(time);
+        TWEEN.update();
         
         //this.handlePicking(time);
 
@@ -837,6 +869,17 @@ cosmoApp.prototype.updateUI = function() {
 
         this.view.setupSliders(this.model, this.model.getCamera());
 
+/*
+        var 
+        tween = new TWEEN.Tween( { z : -60 } )
+            .to( { z : -18 }, 2000 )
+            .easing( TWEEN.Easing.Elastic.InOut )
+            .onUpdate( function () {
+                console.log(this.y);
+                that.setZ(this.z);
+            } )
+            .start();
+*/            
 
         // initial update of sliders/state
         this.model.toggleRunning();

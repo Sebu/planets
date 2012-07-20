@@ -744,13 +744,13 @@ select:focus,
   //overflow-x: hidden;
    -webkit-transition: right 0.5s;
    box-shadow: 4px 0px 12px 2px #AAA; 
-   
+   box-shadow: inset 0px 0px 81px 0px #CCA;  
 }
 
 
 #right-page.open {
     right: 0;
-    box-shadow: none; 
+//    box-shadow: none; 
        -webkit-transition: right 0.5s;
 }
 
@@ -758,13 +758,13 @@ select:focus,
 
 #right-page.sidebared {
     right: -200px;
-    box-shadow: 4px 0px 12px 2px #AAA; 
+//    box-shadow: 4px 0px 12px 2px #AAA; 
        -webkit-transition: right 0.5s;
 }
 
 #right-page.hide {
     right: -50%;
-    box-shadow: none; 
+//    box-shadow: none; 
        -webkit-transition: right 0.5s;
 }
 
@@ -775,7 +775,7 @@ select:focus,
 }
 #right-page:hover {
     //right: 0;
-    box-shadow: none; 
+//    box-shadow: none; 
     -webkit-user-select:text;
     -moz-user-select:text;
     -khtml-user-select:text;
