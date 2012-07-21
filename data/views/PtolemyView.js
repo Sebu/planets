@@ -30,21 +30,21 @@ PtolemyView.prototype.setupSliders = function(model, camera) {
            this.planetLabel2.setText("Sun");   
 
 //*
-           UI.box({id:"daily"}).appendTo("#parameters");
-           UI.checkbox({model: model, id:"Speed1", text:"movement"}).appendTo("#daily");           
+           UI.box({id:"daily", color: config.colors["S1"]}).appendTo("#parameters");
+           UI.checkbox({model: model, id:"Speed1", text:"enable"}).appendTo("#daily");           
 
-           UI.box({id:"ecliptic"}).appendTo("#parameters");
+           UI.box({id:"ecliptic", color: config.colors["S2"]}).appendTo("#parameters");
            UI.slider({model: model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity"}).appendTo("#ecliptic");
            
-            UI.box({id:"apsidal"}).appendTo("#parameters");
+            UI.box({id:"apsidal", color: config.colors["S3"], text : "apsidal line"}).appendTo("#parameters");
             UI.slider({model: model.ptolemySphere, id: "ApsidalAngle", max: 360, step:0.1, text: "Angle"}).appendTo("#apsidal");
             UI.slider({model: model.ptolemySphere, id: "ApsidalSpeed", max: 100, step:0.05, text: "degrees per century"}).appendTo("#apsidal");
 
-            UI.box({id:"deferent"}).appendTo("#parameters");
+            UI.box({id:"deferent", color: config.colors["S3"]}).appendTo("#parameters");
             UI.slider({model: model, id: "RadiusDeferent", max: 1000, step:0.05, text: "radius"}).appendTo("#deferent");
             UI.slider({model: model, id: "Equant", max: 30, step:0.05, text: "earth to deferent"}).appendTo("#deferent");            
 
-            UI.box({id:"epicycle"}).appendTo("#parameters");
+            UI.box({id:"epicycle", color: config.colors["S4"]}).appendTo("#parameters");
             UI.slider({model: model, id: "RadiusEpicycle", max: 1000, step:0.01, text: "radius"}).appendTo("#epicycle");
 
 

@@ -170,7 +170,8 @@ a {
 .checkbox {
   display: inline-block;
 //  position: relative;
-  padding: 1px 10px;
+  padding: 0.2em 0.5em;
+  font-size: 1.2em;
   cursor: pointer;
   font-weight:bold;
   background: #4B4947;
@@ -233,14 +234,15 @@ select {
   background: #DDD; /* #444; */
 }
 
-
+/*
 #camera-select {
-  width:85px;
+  width:100px;
 }
 
 #longitude-select {
-  width:105px;
+  width:100px;
 }
+*/
 
 #screenshot-button {
  height:11px; 
@@ -528,7 +530,7 @@ select:focus,
   padding: 0;
   margin: 0;
   top: 0em;
-  width: 16em;
+  width: 17em;
   height: 100%;
 //  max-height:100%;
 // -moz-transform-style: preserve-3d;
@@ -644,23 +646,42 @@ select:focus,
 
 #nav-rotate {
 //    background-image: url("../images/nav-rotate.png");
-    position: absolute;
-    top: 30px;
-    left: 0px;
-    width: 59px;
-    height: 59px;
+    position: relative; //absolute;
+    top: 2.2em;
+    left: 0.1em;
+    width: 3em;
+    height: 3em;
     
 }
 #rotate-left {
-    position: relative;
-    top:18px;
-    left:0px;
+    position: absolute;
+    top:1em;
+    left: 0em;
 }
 
 #rotate-right {
-    position: relative;
-    top:18px;
-    left:2px;
+    position: absolute;
+    top: 1em;
+    left:2em;
+}
+
+#rotate-up {
+    position: absolute;
+    top: 0.1em;
+    left: 1.1em;
+}
+
+#rotate-reset {
+    position: absolute;
+    top: 0.9em;
+    left: 1em;
+}
+
+
+#rotate-down {
+    position: absolute;
+    top: 2em;
+    left: 1.1em;
 }
 
 #add-preset {
@@ -835,8 +856,8 @@ box-shadow: inset 0 1px 0 rgb(91, 89, 87), 0 -1px 0 black, 0 1px 0 black, -1px 0
 
 .caption:hover,
 h3:hover {
-    background: #222;
-    text-shadow: 0 0 24px rgb(197, 197, 197);
+    background: #444;
+    text-shadow: 0 0 24px rgb(17, 17, 17);
 }
 
 #info-container {
@@ -911,7 +932,6 @@ h3:hover {
 }
 
 #playback .button {
-    float: left;
     line-height: 27px;
     margin: 7px 0 0 7px; 
 }

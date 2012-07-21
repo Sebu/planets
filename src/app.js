@@ -13,6 +13,7 @@ cosmoApp = function(params) {
         this.currentScene = null;
         this.models = {};
         this.views = {};
+        this.mouseDrag = { x: 0, y: 0};
         
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
@@ -158,7 +159,7 @@ cosmoApp.prototype.setupUI = function() {
             console.log(window.innerWidth);
             $("#left-page").toggleClass('slide');
 //            $("#left-page").animate({ width : (window.innerWidth-200) }, 500);
-            $("#left-page").width(window.innerWidth-$("#ui-container").width()); //toggleClass('slide');
+            $("#left-page").width(window.innerWidth-$("#content").width()); //toggleClass('slide');
             $("#book").toggleClass('hide');
             $("#right-page").toggleClass('hide');
             $("#canvas-main").toggleClass('page');
@@ -183,17 +184,13 @@ cosmoApp.prototype.setupUI = function() {
             }); 
 
 
-        $("#longitude-select").change(function() { 
+        $("#latitude-select").change(function() { 
             $("#AxisAngle1 > input")
                 .attr("value",this.value)
                 .change(); 
         }); 
 
 
-        
-
-
-       
         $("#reset-button").click(function() { 
             that.model.reset();
         });
@@ -251,15 +248,35 @@ cosmoApp.prototype.setupUI = function() {
         });
 
         $("#rotate-right").click(function() {
-           tween = new TWEEN.Tween( { rot : -0.05 } )
+           tween = new TWEEN.Tween( { rot : 0.05 } )
             .to( { rot: 0.0 }, 200 )
             .easing( TWEEN.Easing.Quadratic.InOut )
             .onUpdate( function () {
-                that.model.getCamera().mouseY(this.rot);
+                that.model.getCamera().mouseY(-this.rot);
             } )
             .start();        
             //that.model.getCamera().mouseY(-0.10);
         });
+        
+        $("#rotate-up").click(function() {
+           tween = new TWEEN.Tween( { rot : 0.05 } )
+            .to( { rot: 0.0 }, 200 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate( function () {
+                that.model.getCamera().mouseX(-this.rot);
+            } )
+            .start();        
+        });
+        
+        $("#rotate-down").click(function() {
+           tween = new TWEEN.Tween( { rot : 0.05 } )
+            .to( { rot: 0.0 }, 200 )
+            .easing( TWEEN.Easing.Quadratic.InOut )
+            .onUpdate( function () {
+                that.model.getCamera().mouseX(this.rot);
+            } )
+            .start();        
+        });        
                 
         $("#zoom-plus").click(function() { 
            tween = new TWEEN.Tween( { rot : that.getZ() } )
@@ -300,10 +317,12 @@ cosmoApp.prototype.setupUI = function() {
                 slide: function(event, ui) { that.setZ(ui.value); }
          });
 
+        $("#camera, #view, #playback").hide(); // #pauseButton
+
         $("#canvas-main").hover(function() {
             $("#nav-container").fadeIn();
         }, function() {
-                    $("#nav-container").fadeOut();
+            $("#nav-container").fadeOut();
         });
   
  
@@ -591,8 +610,10 @@ cosmoApp.prototype.update = function(time) {
 
         // zoom with middle button or wheel      
         if (Ori.input.mouse.b2) {
-           var y = Ori.input.mouse.y;
-           var pitch = (y - Ori.input.drag.y) * time;
+           var 
+           y = Ori.input.mouse.y,
+           pitch = (y - Ori.input.drag.y) * time;
+           
            this.model.getCamera().mouseWheel(0.0, 0.0, -pitch);
            Ori.input.drag.y = y;
         }
@@ -891,11 +912,13 @@ cosmoApp.prototype.updateUI = function() {
 
         // initial update of sliders/state
         this.model.toggleRunning();
-        $("#view-header, #caprotateStart").click(); // #pauseButton
+//        $("#view-header, #caprotateStart").click(); // #pauseButton
+//        $("#camera, #view, #playback").hide(); // #pauseButton
         this.model.toggleRunning();
 
 
-        $("#moon input, #angle  input, #speed input").change();
+        $("#parameters input").change();
+//        $("#moon input, #angle  input, #speed input").change();
         $("#AxisAngle1 input").change();
         
 

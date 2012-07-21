@@ -42,14 +42,17 @@
             <aside id='ui-container' class='container hidden'>
                 <div id='content-scroll' class='scrollable hide'>
                     <div id='content'>
-                        <h3 id='view-header'>View</h3>
-                        <div id='view' class='side-box'>
+      
+                        <h3>Camera</h3>
+                        <div id='camera' class='side-box'>
+                            Point of View
                             <select title='current position' id='camera-select'>
                                 <option value='Trackball'>World</option>
                                 <option value='FPS'>Horizon</option>
                                 <option value='TrackballIso'>Flat</option>
                             </select>
-                            <select title='latitude presets' id='longitude-select'>
+                            Latitude<br>
+                            <select title='latitude presets' id='latitude-select'>
                                 <option value='38'>Athens</option>
                                 <option value='30.97'>Alexandria</option>
                                 <option value='36.66'>Cnidus</option>
@@ -57,24 +60,28 @@
                                 <option value='40.23'>Cyzicus</option>
                                 <option value='0'>Equator</option>
                                 <option value='90'>North pole</option>
+                                <option value='0'>custom</option>
                             </select>
+                            <input type='text' min="0" max="360" class='range'/>
                             <div id='view-sliders'></div>
+                        </div>
+                        <h3>visible Elements</h3>
+                        <div id='view' class='side-box'>
                             <div id='visSpheres' class='center'></div>
                             <div id='visOther' class='center'></div>
                         </div>
-                        
-                        <div id='parameters'>
-                            <!-- elements are created on demand -->
-                        </div>
-                        
-                        <h3>Playback</h3>
+                       <h3>Playback</h3>
                         <div id='playback' class='side-box'>
                             <h4>Animation Speed</h4>
                             <div class='sliderBox' id='anim-speed' title='Animation Speed'></div>
-                                <span class='button' id='reset-button'>RESET</span>
-                                <span class='button' id='pause-button' title='pause animation'>PAUSE</span>
-                                <span class='button' id='screenshot-button'><img src='images/camera2.png' alt='screenshot'></span>
-                                <input id='date-input' style='display:none;' type='text' placeholder='date' class='text'></input>     
+                            <span class='button' id='reset-button'>RESET</span>
+                            <span class='button' id='pause-button' title='pause animation'>PAUSE</span>
+                            <span class='button' id='screenshot-button'><img src='images/camera2.png' alt='screenshot'></span>
+                            <input id='date-input' style='display:none;' type='text' placeholder='date' class='text'></input>     
+                        </div>                        
+                        
+                        <div id='parameters'>
+                            <!-- elements are created on demand -->
                         </div>
                     </div>
                 </div>
@@ -87,10 +94,12 @@
                     <div class='button' id='rotate-left'><</div>
                     <div class='button' id='rotate-reset'>o</div>
                     <div class='button' id='rotate-right'>></div>
+                    <div class='button' id='rotate-up'>^</div>
+                    <div class='button' id='rotate-down'>v</div>
                   </div>
-                  <div id='zoom-plus' title='zoom in'><img src='images/plus.png' alt='+'></div>
+                  <div id='zoom-plus'  class='button' title='zoom in'><img src='images/plus.png' alt='+'></div>
                   <div id='zoom-slider' title='change zoom level'></div>
-                  <div id='zoom-minus' title='zoom out'><img src='images/minus.png' alt='-'></div>
+                  <div id='zoom-minus' class='button' title='zoom out'><img src='images/minus.png' alt='-'></div>
                 </div>            
             <div id='info-container'>
                 <h3>Infos</h3>

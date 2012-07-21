@@ -276,6 +276,7 @@ Ori.App.prototype = {
   constructor : Ori.App,
 
   loop : function() {
+  
     var time = this.timer.tick();
     this.elapsedTime += time;
 //    if(this.elapsedTime >= this.targetTime) {

@@ -248,17 +248,36 @@ Model4View.prototype = new BaseView;
 Model4View.prototype.constructor = Model4View;
 Model4View.prototype.name = "Model4View";
 Model4View.prototype.setupSliders = function(model, camera) {
+            UI.box({id:"daily", color: config.colors["S1"], text:"Daily (S1)"}).appendTo("#parameters");
+            UI.checkbox({ model:model, id:"Speed1", text:"enable"}).appendTo("#daily");
+            UI.slider({model: model, id:"RotateStart1", max: 360, step:0.05, text:"S 1 (right ascension)"}).appendTo("#daily");
+            
+            UI.box({id:"ecliptic", color: config.colors["S2"], text:"Ecliptic (S2)"}).appendTo("#parameters");
+            UI.slider({ model: model, id: "AxisAngle2", max: 360, step:0.05, text: "obliquity of ecliptic"}).appendTo("#ecliptic");
+            UI.slider({ model: model, id:"Speed2",  max:12000, text:"period in days"}).appendTo("#ecliptic");
+            UI.slider({model: model, id:"RotateStart2", max: 360, step:0.05, text:"start in degrees"}).appendTo("#ecliptic");
+            
+            UI.box({id:"sun", color: config.colors["S2"], text:"Sun"}).appendTo("#parameters");
+            UI.slider({ model: model, id:"SunSpeed",  max:1000, text:"period in days"}).appendTo("#sun");
+            
+            UI.box({id:"s3", color: config.colors["S3"], text:"S3"}).appendTo("#parameters");
+            UI.slider({ model: model, id: "AxisAngle3", max: 360, step:0.05, text: "right angle"}).appendTo("#s3");
+            UI.slider({ model: model, id: "Speed3", max:1100, text:"synodic period in days"}).appendTo("#s3");
+            UI.slider({model: model, id:"RotateStart3", max: 360, step:0.05, text:"synodic start"}).appendTo("#s3");
+
+            UI.box({id:"s4",color: config.colors["S4"], text:"S4"}).appendTo("#parameters");
+            UI.slider({ model: model, id: "AxisAngle4", max: 360, step:0.05, text: "angle"}).appendTo("#s4");            
+            UI.slider({model: model, id:"RotateStart4", max: 360, step:0.05, text:"start in degrees"}).appendTo("#s4"); 
+/*
             UI.box({id:"angle", text:"Angle (degrees)"}).appendTo("#parameters");
+             
             UI.slider({ model: model, id: "AxisAngle2", max: 360, step:0.05, text: "S 1-2 (obliquity of ecliptic)"}).appendTo("#angle");
 //            color: model.sphere[2].gfx.color,
-            
-            
             UI.slider({ model: model, id: "AxisAngle3", max: 360, step:0.05, text: "S 2-3 (right angle)"}).appendTo("#angle");
             UI.slider({ model: model, id: "AxisAngle4", max: 360, step:0.05, text: "S 3-4 (unknown)"}).appendTo("#angle");
-            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
-//            UI.slider({model: model, id:"Speed0",  max:1, text:"S 1 (daily)"}).appendTo("#speed");
-            UI.checkbox({ model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
 
+            UI.box({id:"speed", text:"Sphere Period (days)"}).appendTo("#parameters");
+            UI.checkbox({ model:model, id:"Speed1", text:"S 1 (daily)"}).appendTo("#speed");
             UI.slider({ model: model, id:"Speed2",  max:12000, text:"S 2 (zodiacal)"}).appendTo("#speed");
             UI.slider({ model: model, id: "Speed3", max:1100, text:"S 3,4 (synodic)"}).appendTo("#speed");
             UI.slider({ model: model, id:"SunSpeed",  max:1000, text:"S 2 Sun"}).appendTo("#speed");
@@ -268,6 +287,7 @@ Model4View.prototype.setupSliders = function(model, camera) {
             UI.slider({model: model, id:"RotateStart2", max: 360, step:0.05, text:"S 2 (longitude)"}).appendTo("#rotateStart");
             UI.slider({model: model, id:"RotateStart3", max: 360, step:0.05, text:"S 3 (synodic)"}).appendTo("#rotateStart");
             UI.slider({model: model, id:"RotateStart4", max: 360, step:0.05, text:"S 4"}).appendTo("#rotateStart");
+*/            
 };
 
 
