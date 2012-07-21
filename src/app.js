@@ -319,11 +319,11 @@ cosmoApp.prototype.setupUI = function() {
 
         $("#camera, #view, #playback").hide(); // #pauseButton
 
-        $("#canvas-main").hover(function() {
-            $("#nav-container").fadeIn();
-        }, function() {
-            $("#nav-container").fadeOut();
-        });
+//        $("#canvas-main").hover(function() {
+//            $("#nav-container").fadeIn();
+//        }, function() {
+//            $("#nav-container").fadeOut();
+//        });
   
  
 }

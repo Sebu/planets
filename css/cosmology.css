@@ -40,7 +40,7 @@ html,body {
   -moz-user-select:none;
   -khtml-user-select:none;
   font-family: 'Open Sans', monospace;
-  font-size:100%;
+  font-size: 100%;
   line-height:1.125em;
   color: #000;
   background:  rgb(223, 221, 222);
@@ -618,11 +618,19 @@ select:focus,
 
 #nav-container {
   position: absolute;
-//  z-index: ;
   left: 0;
   top: 0;
   height: 100%;
+//  display: none;
+  opacity: 0.0;
+  -webkit-transition: opacity 0.2s;
 }
+
+#canvas-main:hover #nav-container {
+    opacity: 1.0;
+   -webkit-transition: opacity 0.2s;    
+}
+
 
 #nav-container .button {
     background: transparent;
@@ -688,7 +696,14 @@ select:focus,
     background: transparent;
     padding: 0;
     width: 32px;
-    height: 24px;   
+    height: 24px;  
+    opacity: 0.0; 
+   -webkit-transition: opacity 0.5s;    
+}
+
+#top-container:hover #add-preset {
+  opacity: 1.0; 
+  -webkit-transition: opacity 0.5s;    
 }
 
 #remove-preset {
@@ -867,14 +882,14 @@ h3:hover {
   position: absolute;
   display: none;
   width: 22em; //240px;
-  top: 2em; //30px;
-  right: .5em; 
+  bottom: 0.5em; //30px;
+  right: 0.5em; 
   z-index: 1;
   font-size: 0.8em; //12px;
 }
 
 #info-container h3 { 
-  position:relative;
+  //position:relative;
   float: right;
   font-weight: bold;
   font-size: 1em; 
@@ -963,7 +978,7 @@ footer {
   opacity: 0.15;
   float: right;
   bottom: 0.5em;
-  right: 0.5em;
+  left: 0.5em;
 
 }
 
