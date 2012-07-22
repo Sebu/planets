@@ -316,6 +316,7 @@ ModelPtolemyBase.prototype.connectSpheres = function(params) {
         this.root.addNode(this.sphere[1]);
           //S1
           this.sphere[1].addNode( this.earth );
+          this.sphere[1].addNode( this.hull );
           this.sphere[1].anchor.addNode( this.stars );
           this.sphere[1].anchor.addNode( this.ptolemySphere ); 
             this.ptolemySphere.addNode(this.ecliptic);                          

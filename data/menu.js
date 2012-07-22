@@ -23,7 +23,7 @@ Eudoxus: {
     1: {
         model: "Model4",
         view: "Model4View",
-        text: "Eudoxus.html",
+        text: "Eudoxus.html?v=2",
         viewParams: {
             label: "Mercury"
         },
@@ -439,7 +439,7 @@ Aristotle: {
 
   Introduction: {
         view: "AristotleView",
-        text: "AristotleIntro.html",
+        text: "AristotleIntro.html?v=2",
         viewParams: {
             showSun: false,
             showStars: false
@@ -461,7 +461,7 @@ Aristotle: {
   },
   
   Tutorial: {
-      text: "AristotleTutorial.html?v=2",
+      text: "AristotleTutorial.html?v=3",
       model: "AristotleModel",
       view: "AristotleTutorialView",  
       viewParams : {
