@@ -161,8 +161,8 @@ Ori.Input.prototype = {
     element.addEventListener('keyup', this.keyUp, false);
   },
   trackMouseOn : function(element) {
-    element.addEventListener('mousewheel', this.mouseWheel, false);
-    element.addEventListener('DOMMouseScroll', this.mouseWheelFox, false);
+//    element.addEventListener('mousewheel', this.mouseWheel, false);
+//    element.addEventListener('DOMMouseScroll', this.mouseWheelFox, false);
     element.addEventListener('mousedown', this.mouseDown, false);
     element.addEventListener('mouseup', this.mouseUp, false);
     element.addEventListener('mousemove', this.mouseMove, false);    
@@ -264,7 +264,7 @@ Ori.input = new Ori.Input();
  */
 Ori.App = function() {
   this.runningSlow = false;
-  this.targetFps = 30;
+  this.targetFps = 25;
   this.targetTime = 1.0/this.targetFps;
   this.elapsedTime = 0;
   this.timer = new Ori.Timer();
@@ -280,17 +280,18 @@ Ori.App.prototype = {
     var time = this.timer.tick();
     this.elapsedTime += time;
     if(this.elapsedTime >= this.targetTime) {
-//      this.runningSlow = false;
-//      if(time >= this.targetTime) {
-//        this.runningSlow = true;
-//      }
-      this.update(time);
+      this.runningSlow = false;
+      if(time >= this.targetTime) {
+        this.runningSlow = true;
+      }
+      this.update(this.elapsedTime);
 //      if(!this.runningSlow)
-        this.draw(time);
+          this.draw(this.elapsedTime);
+
 
       this.elapsedTime = 0;
     }
-    Ori.input.reset();
+//    Ori.input.reset();
   },
   
   /** @interface */

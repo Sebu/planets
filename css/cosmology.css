@@ -39,8 +39,9 @@ html,body {
   -webkit-user-select:none;
   -moz-user-select:none;
   -khtml-user-select:none;
-//  font-family: 'Open Sans', monospace;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
+//  font-family: sans-serif;
+//  font-family: 'Muli', sans-serif;  
   font-size: 100%;
   line-height:1.125em;
   color: #000;
@@ -206,6 +207,8 @@ select {
 
 
 .select-models  {
+  opacity: 0.8;
+  text-shadow: 1px 2px 0px #111;
   font-size: 1.5em;
   color: #fff;
   color: white;
@@ -218,6 +221,8 @@ select {
 
 
 .select-models:hover {
+  opacity: 1.0;
+  text-shadow: none;
   background: #666;
   background: #FFF;
   color: #333;
@@ -232,7 +237,7 @@ select {
   box-shadow: 0 3px 10px #111; 
 }
 .select-models  li {
-  padding: 0.2em;
+    padding: 0.2em 0.5em;
 }
 .select-models  li:hover {
   background: #DDD; /* #444; */
@@ -361,6 +366,24 @@ option  {
   padding: 0 0 0 0.4em;
 }
 
+.tooltip {
+    display:none;
+    height:70px;
+    width:200px;
+    padding: 1em;
+    color:#eee;
+  z-index: 21;
+  position: absolute;
+    background: rgba(140,140,140,0.9);
+  left: 0;
+  top: 0;
+  -webkit-transition-property: opacity margin; 
+  -webkit-transition-duration: 0.5s;
+  font-size: 0.8;
+  color: white;
+  border-radius: 5px;  
+}
+  
 /*
 .tipable {
   overflow: hidden;
@@ -481,6 +504,8 @@ select:focus,
     position: relative;
     width: 100%;
     height: 100%;
+//  background: #ccc;
+//   box-shadow: inset 0px 0px 313px 0px rgb(209, 209, 209);      
 
 }
 
@@ -492,7 +517,7 @@ select:focus,
 .side-box {
     padding: 6px 0;
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(41, 41, 41, 1)), color-stop(50%,rgba(45, 45, 45, 1)), color-stop(100%,rgba(43, 43, 43, 1)));
-    box-shadow: inset 0 1px 0 rgb(91, 89, 87), 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px rgb(17, 17, 17);
+    //box-shadow: inset 0 1px 0 rgb(91, 89, 87), 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black, 1px 0 0 black, 0 1px 1px rgb(17, 17, 17);
 }
 
 
@@ -759,7 +784,7 @@ select:focus,
   overflow: visible;
 //  z-index: 1;
   -webkit-transition: left 1s;
-  box-shadow: -4px 0px 12px 2px #AAA;
+//  box-shadow: -4px 0px 12px 2px #AAA;
 }
 
 #left-page.open {
@@ -780,7 +805,7 @@ select:focus,
   padding: 0;    
   width: 50%;
   height: 100%;
-  background: #fff;
+
   font-size: 14px;
   z-index: 2;
   //overflow-y: auto;
@@ -788,7 +813,8 @@ select:focus,
    -webkit-transition: right 0.5s;
 //   box-shadow: 4px 0px 12px 2px #AAA; 
 //   box-shadow: inset 0px 0px 81px 0px #CCA;
-   box-shadow: inset 0px 0px 313px 0px rgb(209, 209, 209);  
+  background: #fff;
+//   box-shadow: inset 0px 0px 313px 0px rgb(209, 209, 209);  
 }
 
 
@@ -892,7 +918,7 @@ h3:hover {
   color: #FFF;
   position: absolute;
   display: none;
-  width: 22em; //240px;
+  width: 16em; //240px;
   bottom: 0.5em; //30px;
   right: 0.5em; 
   z-index: 1;
@@ -931,12 +957,13 @@ h3:hover {
 #info-container td:first-child {
     color: #DDD;
     vertical-align: bottom; 
+//    width: 50%; 
     
 }
 
 
 #info-container td:last-child {
-  width: 6em; //120px;
+  width: 100%; //50%; //120px;
   text-align: right;
   vertical-align: bottom; 
 }

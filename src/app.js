@@ -171,7 +171,7 @@ cosmoApp.prototype.setupUI = function() {
               
         this.loadCustomPresets();
         
-        $("#ui-container h3").collapsible();
+        $("#ui-container h3").collapsible(); //.tooltip();
         $("#info-container h3").collapsible();
         $("#ui-container, #info-container").show();
 
@@ -183,7 +183,7 @@ cosmoApp.prototype.setupUI = function() {
                 that.resize();
             }); 
 
-
+        
         $("#latitude-select").change(function() { 
             $("#AxisAngle1 > input")
                 .attr("value",this.value)
@@ -306,7 +306,7 @@ cosmoApp.prototype.setupUI = function() {
            // $("#zoom-slider").slider('value',that.getZ());
         });
                 
-        $("#zoom-slider").slider({
+        this.zoomSlider = $("#zoom-slider").slider({
                 orientation: "vertical",
 //                range: "min",
                 animate: "fast",
@@ -317,6 +317,47 @@ cosmoApp.prototype.setupUI = function() {
                 slide: function(event, ui) { that.setZ(ui.value); }
          });
 
+        this.canvas.domElement.addEventListener('mousewheel', function mouseWheel(e) {
+            that.model.getCamera().mouseWheel(0.0, 0.0, e.wheelDelta/120);
+            //this.zoomSlider.slider('value',that.getZ());            
+        });
+        this.canvas.domElement.addEventListener('DOMMouseScroll', function mouseWheelFirefox(e) {
+            that.model.getCamera().mouseWheel(0.0, 0.0, -e.detail);
+            //this.zoomSlider.slider('value',that.getZ());            
+        });        
+        
+        var 
+        mouse = {
+            x: 0,
+            y: 0,
+            button: false
+        };
+        
+        this.canvas.domElement.addEventListener('mousedown', function mouseDown(e) {
+            mouse.button = (e.button == 0);                   
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        this.canvas.domElement.addEventListener('mouseup', function mouseUp(e) {
+            mouse.button = !(e.button == 0);                    
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        
+        this.canvas.domElement.addEventListener('mousemove', function mouseMove(e) {
+            if(mouse.button) {
+                var 
+                yaw = (e.clientX - mouse.x) * - 0.005,
+                pitch = (e.clientY - mouse.y) * 0.005;
+                that.model.getCamera().mouseY(yaw);
+                that.model.getCamera().mouseX(pitch);
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;            
+            }
+  
+        });
+                
+  
         $("#camera, #view, #playback").hide(); // #pauseButton
 
 //        $("#canvas-main").hover(function() {
@@ -337,8 +378,8 @@ cosmoApp.prototype.setupInput = function() {
         // track inputs
         Ori.input.trackMouseOn(this.canvas.domElement);
 //        Ori.input.trackKeysOn(window);
-        Ori.input.register(Ori.KEY.DOWN, "DOWN");
-        Ori.input.register(Ori.KEY.UP, "UP");
+//        Ori.input.register(Ori.KEY.DOWN, "DOWN");
+//        Ori.input.register(Ori.KEY.UP, "UP");
 }
 
 /**
@@ -608,6 +649,7 @@ cosmoApp.prototype.update = function(time) {
        
 //        if(Ori.input.isDown("DEBUG")) debugBox.toggle();
 
+/*
         // zoom with middle button or wheel      
         if (Ori.input.mouse.b2) {
            var 
@@ -619,11 +661,12 @@ cosmoApp.prototype.update = function(time) {
         }
         if (Ori.input.mouse.wheel) {
          this.model.getCamera().mouseWheel(0.0, 0.0, Ori.input.mouse.z);
-         $("#zoom-slider").slider('value',that.getZ());
+         this.zoomSlider.slider('value',that.getZ());
          //$("#Z > input").attr("value",Number( this.model.getCamera().getZ() ));
         }
-
+*/
         // rotate with left button
+/*        
         if (Ori.input.mouse.b1) {
             var x = Ori.input.mouse.x;
             var y = Ori.input.mouse.y;
@@ -634,7 +677,7 @@ cosmoApp.prototype.update = function(time) {
             Ori.input.drag.x = x;
             Ori.input.drag.y = y;
         }
-        
+*/        
         // update model, info, labels
         this.model.update(time);
         TWEEN.update();

@@ -220,6 +220,7 @@ ModelPtolemyBase.prototype.create = function() {
       var scale = (this.sphere[3].radius+this.sphere[4].radius)*this.factor;
       this.sphere[1].setScale(scale); 
       this.equator.scale  = new THREE.Vector3( scale, scale, scale );
+//      this.hull.scale =   new THREE.Vector3( scale/this.factor, scale/this.factor, scale/this.factor );
       this.apsidal = [ 
           {x: 0,y: 0, z: -(this.sphere[3].radius-this.sphere[3].equant)*this.factor},
           {x: 0, y: 0,z: (this.sphere[3].radius+this.sphere[3].equant)*this.factor} ];

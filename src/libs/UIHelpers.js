@@ -4,6 +4,52 @@
 (function( $ ){
 
 
+    $.widget( "ui.tooltip", {
+        options: {
+            dataSource : 0
+        },  
+		_create: function() {
+           
+                var
+                ele = this.element = $(this.element),
+                text = ele.attr('title');
+                if(text) {
+                    var
+                    tooltip = this.tooltip = $("<div>")
+                        .addClass( "tooltip" )
+                        .text(text);
+
+
+                    ele.mouseover( function() {
+                        $(document).append(tooltip);
+//                        tooltip.style.left = ele.offset().left;
+//                        tooltip.style.top = ele.offset().top;                        
+                        tooltip.show();
+                    })
+                    .mouseleave( function() {
+//                        document.removeChild(tooltip[0]);
+                        tooltip.hide();
+                    })
+                }
+
+
+
+                return ele;	
+		},
+
+        setText : function(value) {
+            this.text.text(value);
+        },
+
+        destroy: function() {
+            this.text.remove();
+            this.wrapper.remove();
+            this.element.show();
+            $.Widget.prototype.destroy.call( this );
+        }
+	});
+
+
     $.widget( "ui.selectBox", {
         options: {
             dataSource : 0
@@ -66,6 +112,7 @@
                 //return ele;	
 		},
 
+ 
         setText : function(value) {
             this.text.text(value);
         },
@@ -323,6 +370,7 @@ UI.Label = function(params) {
             this.ele.setAttribute("unselectable","on");
             this.domRoot.appendChild(this.ele);
             this.setPosition(params.pos || {x:0, y:0, z:-1});
+            this.style = this.ele.style;
             this.ele.innerHTML = " ";
             this.setText(params.text);
         }
@@ -340,14 +388,15 @@ UI.Label.prototype = {
   },
 
   setPosition : function(pos) {
+    
       if(pos.z<0) { 
         this.ele.style.display = "none"; 
         return; 
       }
-      this.ele.style.display = "block";
       this.pos = pos;
-      this.ele.style.left = pos.x + "px";
-      this.ele.style.top = pos.y + "px";  
+      this.style.display = "block";
+      this.style.left = pos.x + "px";
+      this.style.top = pos.y + "px";  
   }
 };
 
