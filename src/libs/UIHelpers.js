@@ -395,6 +395,7 @@ UI.Label.prototype = {
       }
       this.pos = pos;
       this.style.display = "block";
+//      this.style.WebkitTransform = "translate(" + pos.x + "px," + pos.y + "px)";
       this.style.left = pos.x + "px";
       this.style.top = pos.y + "px";  
   }

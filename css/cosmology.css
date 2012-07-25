@@ -483,6 +483,7 @@ select:focus,
   -moz-user-select:none;
   position: fixed;
   color: #fff;
+  -webkit-transform: translate(0,0);
   background: rgba(150,150,150,0.5);
   background: -ms-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    
   background: -o-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    

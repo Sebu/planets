@@ -123,12 +123,20 @@ Ori.Timer.prototype.constructor = Ori.Timer;
   @returns delta time since last call in milliseconds
 */
 Ori.Timer.prototype.tick = function() {
-  var currentTime = Date.now();
-  var deltaTmp = (currentTime - this.lastTime) / 1000;
+  var 
+  detla = 0,
+//  currentTime = Date.now();
+  currentTime = window.performance.now ?
+                    (performance.now() + performance.timing.navigationStart) : 
+                    Date.now(),
+  
+  deltaTmp = (currentTime - this.lastTime) / 1000;
+  
   this.lastTime = currentTime;
 
-  var delta = Math.min(deltaTmp, this.maxStep);
-  this.time += delta;
+  var 
+  delta = Math.min(deltaTmp, this.maxStep);
+//  this.time += delta;
   return delta;
 };
 
@@ -278,19 +286,20 @@ Ori.App.prototype = {
   loop : function() {
   
     var time = this.timer.tick();
-    this.elapsedTime += time;
-    if(this.elapsedTime >= this.targetTime) {
-      this.runningSlow = false;
-      if(time >= this.targetTime) {
-        this.runningSlow = true;
-      }
+    
+    this.elapsedTime = time;
+//    if(this.elapsedTime >= this.targetTime) {
+//      this.runningSlow = false;
+//      if(time >= this.targetTime) {
+//        this.runningSlow = true;
+//      }
       this.update(this.elapsedTime);
 //      if(!this.runningSlow)
-          this.draw(this.elapsedTime);
+      this.draw(this.elapsedTime);
 
 
-      this.elapsedTime = 0;
-    }
+//      this.elapsedTime = 0;
+//    }
 //    Ori.input.reset();
   },
   
