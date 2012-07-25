@@ -636,8 +636,8 @@ cosmoApp.prototype.setCurrentScene = function(scene) {
  * update the planet info box
  */
 cosmoApp.prototype.updateInfoBox = function() {
-//        this.view.updateInfos(this.model);
-//        this.view.updateOther(this.model, this.model.getCamera(), this.canvas);
+        this.view.updateInfos(this.model);
+        this.view.updateOther(this.model, this.model.getCamera(), this.canvas);
 }
 
 /** 
@@ -754,9 +754,9 @@ cosmoApp.prototype.updateLabels = function() {
 
 
 cosmoApp.prototype.draw = function(time) {
-  this.updateInfoBox();
-//  this.updateLabels(); 
   this.canvas.render(this.currentScene, this.model.getCamera() );
+  this.updateInfoBox();
+  this.updateLabels(); 
 //  this.stats.update();
 };
 

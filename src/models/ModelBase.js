@@ -137,6 +137,18 @@ ModelBase.prototype = {
             inner_id: this.name+"S1", 
             scale: config.sphereRadius,  
             color: config.colors["S1"] });
+
+
+/*           
+        var tex = new THREE.ParticleBasicMaterial( { size: 50, sizeAttenuation: false, map: THREE.ImageUtils.loadTexture("images/north_pole.png") } );
+        var geometry = new THREE.Geometry();
+        geometry.vertices.push( new THREE.Vector3(0,0,0) );
+
+    	var sprite = new THREE.ParticleSystem( geometry, tex );            
+//        var sprite =  new THREE.Sprite( { useScreenCoordinates: true, map:  , color: 0xffffff } );
+        this.sphere[1].gfx.npole.addNode( sprite );
+*/
+
         
         this.updateList[0] = this.sphere[1];
         // default visuals for sphere1        
