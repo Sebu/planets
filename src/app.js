@@ -151,7 +151,7 @@ cosmoApp.prototype.setupUI = function() {
             $(this).hide();
             $('#fullscreen-button').show();
             $('#left-page, #right-page, #canvas-main').removeClass('fullscreen');            
-            $('#left-page').width( window.innerWidth/2 );            
+//            $('#left-page').width( window.innerWidth/2 );            
             that.resize();
         });
                
@@ -159,7 +159,7 @@ cosmoApp.prototype.setupUI = function() {
             $(this).hide();
             $('#info-button').show();   
             $('#left-page, #right-page, #canvas-main').addClass('fullscreen');
-            $('#left-page').width( window.innerWidth - $('#content').width() );
+//            $('#left-page').width( window.innerWidth - $('#content').width() );
             that.resize();
         });
         

@@ -483,7 +483,11 @@ select:focus,
   -moz-user-select:none;
   position: fixed;
   color: #fff;
-  -webkit-transform: translate(0,0);
+  display: block;
+  left: 0;
+  top: 0;
+  -webkit-transform: translate(0px, 0px);
+//  -webkit-transition: -webkit-transform;
   background: rgba(150,150,150,0.5);
   background: -ms-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    
   background: -o-linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.0));    
@@ -795,6 +799,9 @@ select:focus,
 
 #left-page.fullscreen {
     left: 0;
+	width: calc(100% - 200px);
+    width: -moz-calc(100% - 200px);
+    width: -webkit-calc(100% - 200px); 
     box-shadow: none;
 }
 
@@ -834,14 +841,15 @@ select:focus,
 
 #right-page.sidebared {
     right: -200px;
+    right: -webkit-calc(0% - 200px);
 //    box-shadow: 4px 0px 12px 2px #AAA; 
-       -webkit-transition: right 0.5s;
+    -webkit-transition: right 0.5s;
 }
 
 #right-page.fullscreen {
     right: -50%;
 //    box-shadow: none; 
-       -webkit-transition: right 0.5s;
+    -webkit-transition: right 0.5s;
 }
 
 #text-right {
