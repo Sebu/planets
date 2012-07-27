@@ -16,6 +16,9 @@ BaseView.prototype = {
     setupInfos : function() {
         this.domElements = { 
             // default
+
+            container : document.getElementById("info-table"),
+            parent: document.getElementById("info-box"),
             days : document.getElementById("days"),
             sunAngle : document.getElementById("sunAngle"),            
             longitude : document.getElementById("longitude"),
@@ -121,12 +124,14 @@ BaseView.prototype = {
         key='',
         mapping=0;
         
+        this.domElements.parent.removeChild(this.domElements.container);
         for(i=0; i<this.updateList.length; ++i) {
             key = this.updateList[i];
             if(this[key])
                 UI.innerText(this.domElements[key], this[key](model) );
             
-        }    
+        }   
+        this.domElements.parent.appendChild(this.domElements.container);        
     },
     
     exportCSV : function(model) {

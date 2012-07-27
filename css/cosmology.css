@@ -479,9 +479,13 @@ select:focus,
 }
 
 
+.hiddenLabel {
+    display: none;
+}
+
 .ori-label {
   -moz-user-select:none;
-  position: fixed;
+  position: absolute;
   color: #fff;
   display: block;
   left: 0;
@@ -779,13 +783,14 @@ select:focus,
 }
 
 .book.open {
+    margin: 0;
     width: 100%;
 }
 
 
 #left-page {
-//  position: absolute;
-  left: 25%;
+//  position: relative;
+//  left: 25%;
   float: left;
   margin: 0;
   padding: 0;
@@ -933,16 +938,13 @@ h3:hover {
   color: #FFF;
   position: absolute;
   display: none;
-//  height: 10em;
-  width: 16em; //240px;
-  bottom: 0.5em; //30px;
+  width: 16em; 
+  bottom: 0.5em;
   right: 0.5em; 
-//  z-index: 4;
-  font-size: 0.8em; //12px;
+  font-size: 0.8em;
 }
 
 #info-container h3 { 
-  //position:relative;
   float: right;
   font-weight: bold;
   font-size: 1em; 

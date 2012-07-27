@@ -366,19 +366,15 @@ UI.Label = function(params) {
             this.ele = params.ele[0];        
         } else {        
             this.ele = document.createElement("div"); 
-            this.ele.setAttribute("class","ori-label");
+//            this.ele.className = setAttribute("class","ori-label");
             this.ele.setAttribute("unselectable","on");
-            this.domRoot.appendChild(this.ele);
-            this.setPosition(params.pos || {x:0, y:0, z:-1});
             this.style = this.ele.style;
+            this.setPosition(params.pos || {x:0, y:0, z:-1});
             this.ele.innerHTML = " ";
             this.setText(params.text);
+            this.domRoot.appendChild(this.ele);
         }
-        this.style.transform = 
-            this.style.msTransform = 
-            this.style.OTransform = 
-            this.style.MozTransform = 
-            this.style.WebkitTransform = "translate(0px,0px)";
+
 };
 
 UI.Label.prototype = {
@@ -394,17 +390,17 @@ UI.Label.prototype = {
 
   setPosition : function(pos) {
     
-      if(pos.z<0) { 
-        this.ele.style.display = "none"; 
-        return; 
+      if(pos.z<0) {
+        this.ele.className = 'hiddenLabel'; 
+      } else {
+          this.ele.className = 'ori-label';
+          this.style.transform = 
+                this.style.msTransform = 
+                this.style.OTransform = 
+                this.style.MozTransform = 
+                this.style.WebkitTransform = "translate(" + pos.x + "px, " + pos.y + "px)";
+      
       }
-      this.pos = pos;
-      this.style.display = "block";
-      this.style.transform = 
-            this.style.msTransform = 
-            this.style.OTransform = 
-            this.style.MozTransform = 
-            this.style.WebkitTransform = "translate(" + pos.x + "px, " + pos.y + "px)";
 //      this.style.left = pos.x + "px";
 //      this.style.top = pos.y + "px";  
   }

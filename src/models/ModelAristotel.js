@@ -7,27 +7,29 @@ AristotleModel = function() {
 
     this.create();
     
-    this.genSpheres({spheres : 4});
     
-    // add unwinding spheres
-    this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]});
-    this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]});
-    this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]});
-    this.sphere[8] = new Spherical({ vortex: false, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
-    
-    this.updateList.push(this.sphere[5]);
-    this.updateList.push(this.sphere[6]);    
-    this.updateList.push(this.sphere[7]);    
-    this.updateList.push(this.sphere[8]);  
-
+    this.connectSpheres = function(params) {
+        ModelBase.prototype.connectSpheres.call(this, params);    
+            // add unwinding spheres
+        this.sphere[5] = new Spherical({ scale: 7.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S4"]});
+        this.sphere[6] = new Spherical({ scale: 6.5, axisAngle: 0.0, speed: 0.0, color: config.colors["S3"]});
+        this.sphere[7] = new Spherical({ scale: 6.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S2"]});
+        this.sphere[8] = new Spherical({ vortex: false, scale: 5.0, axisAngle: 0.0, speed: 0.0, color: config.colors["S1"]});
         
-    this.sphere[4].anchor.addNode(this.sphere[5]);
-      this.sphere[5].anchor.addNode(this.sphere[6]);
-        this.sphere[6].anchor.addNode(this.sphere[7]);
-          this.sphere[7].anchor.addNode(this.sphere[8]);
+        this.updateList.push(this.sphere[5]);
+        this.updateList.push(this.sphere[6]);    
+        this.updateList.push(this.sphere[7]);    
+        this.updateList.push(this.sphere[8]);  
 
-    // add some more shortcuts
-    this.setupShortcuts();
+            
+        this.sphere[4].anchor.addNode(this.sphere[5]);
+          this.sphere[5].anchor.addNode(this.sphere[6]);
+            this.sphere[6].anchor.addNode(this.sphere[7]);
+              this.sphere[7].anchor.addNode(this.sphere[8]);
+
+    };
+
+    this.genSpheres({spheres : 4});
     BaseMixin.call(this);
     
     // create nice joint gfx element and add it          
