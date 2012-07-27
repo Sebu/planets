@@ -140,14 +140,17 @@ ModelBase.prototype = {
 
 
 /*           
-        var tex = new THREE.ParticleBasicMaterial( { size: 50, sizeAttenuation: false, map: THREE.ImageUtils.loadTexture("images/north_pole.png") } );
+        var tex = new THREE.ParticleBasicMaterial( { map: THREE.ImageUtils.loadTexture("images/north_pole.png") } );
         var geometry = new THREE.Geometry();
         geometry.vertices.push( new THREE.Vector3(0,0,0) );
 
-    	var sprite = new THREE.ParticleSystem( geometry, tex );            
-//        var sprite =  new THREE.Sprite( { useScreenCoordinates: true, map:  , color: 0xffffff } );
+    	var sprite = new THREE.ParticleSystem( geometry, tex );      
+/*    	      
+        var sprite =  new THREE.Sprite( { alignment: THREE.SpriteAlignment.bottomLeft, useScreenCoordinates: false, map:  THREE.ImageUtils.loadTexture("images/north_pole.png"), color: 0xffffff } );
+        sprite.scale.set(0.0015,0.0002,1);
+//        sprite.uvScale.set(0.,0.1);
         this.sphere[1].gfx.npole.addNode( sprite );
-*/
+//*/
 
         
         this.updateList[0] = this.sphere[1];

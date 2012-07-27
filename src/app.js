@@ -13,12 +13,12 @@ cosmoApp = function(params) {
         this.currentScene = null;
         this.models = {};
         this.views = {};
-        this.mouseDrag = { x: 0, y: 0};
+//        this.mouseDrag = { x: 0, y: 0};
         
         // create canvas (WebGL if possible)
         this.canvas = new Ori.Canvas({forceCanvas: 0, clearAlpha: 0, antialias: 1});
         
-        this.splashStatus = $("#splash-status");
+        this.splashStatus = $('#splash-status');
 
         // add Canvas DOM Element & or error box
         this.splashStatus.empty();
@@ -30,53 +30,60 @@ cosmoApp = function(params) {
         }
 
         this.splashStatus.empty();
-        this.splashStatus.append("setup cameras...");
+        this.splashStatus.append('setup cameras...');
         this.setupCameras();
         
         this.splashStatus.empty();
-        this.splashStatus.append("register input...");        
+        this.splashStatus.append('register input...');        
         this.setupInput();
 
         // setupPicking  for collision
         this.projector = new THREE.Projector();
         
         this.splashStatus.empty();
-        this.splashStatus.append("setup UI...");
+        this.splashStatus.append('setup UI...');
         this.setupUI();
 
         // load default model
 
 
-        this.loadModel("Aristotle");
+        this.loadModel('Aristotle');
         this.resize();
         
+        var openPage = function() {
         
+        };
         
         // NO WEBGL error
-        if(this.canvas.type === "canvas") {
+        if(this.canvas.type === 'canvas') {
 //          this.debugBox.show();
             this.splashStatus.empty();
             this.splashStatus.append(APP_STRINGS.EN.NO_WEBGL);
-            this.splashStatus.append("<br>");
-            $("<div>")
-                .addClass("button right")
+            this.splashStatus.append('<br>');
+            $('<div>')
+                .addClass('button right')
                 .click( function() {
-                    $("#splash").addClass("hidden");
-                    $(".page").addClass("open");
+                    that.openBook();
                 })
-                .text("let's go >")
+                .text('let\'s go >')
                 .attr('value','ok')
                 .appendTo(this.splashStatus);
           
-        } else {                     
-            $("#splash").hide();  
+        } else {
+            this.openBook();                     
         }
-        $(".page").addClass("open");
+
         
 };
 cosmoApp.prototype = new Ori.App;
 cosmoApp.prototype.constructor = cosmoApp;
 
+
+cosmoApp.prototype.openBook = function() {
+    $('#splash').hide();
+    $('.page, .book').addClass('open');
+    this.resize();
+};
 
 /**
  * 
@@ -90,144 +97,132 @@ cosmoApp.prototype.setupUI = function() {
         this.debugBox = $("<div class='container' id='debugContainer'>\
                      </div>").appendTo(this.domRoot);        
         this.stats = new Stats();
-        Ori.input.register(Ori.KEY.SCROLL, "DEBUG");
+        Ori.input.register(Ori.KEY.SCROLL, 'DEBUG');
         this.debugBox.append( this.stats.domElement );
 */        
 
         // setupLabels
        
         //TODO: move labels to html code (style / rename etc.)
+        
         equinoxLabel = new UI.Label({text: APP_STRINGS.EN.VERNAL});
         npoleLabel = new UI.Label({text: APP_STRINGS.EN.NORTH_POLE });
         spoleLabel = new UI.Label({text: APP_STRINGS.EN.SOUTH_POLE});
-        northLabel = new UI.Label({text: "North"});
-        southLabel = new UI.Label({text: "South"});
-        eastLabel = new UI.Label({text: "East"});
-        westLabel = new UI.Label({text: "West"});
+        northLabel = new UI.Label({text: 'North'});
+        southLabel = new UI.Label({text: 'South'});
+        eastLabel = new UI.Label({text: 'East'});
+        westLabel = new UI.Label({text: 'West'});
         sunLabel = new UI.Label({text: APP_STRINGS.EN.SUN });
         planetLabel = new UI.Label({text: APP_STRINGS.EN.PLANET });
         
        
-        this.modelSelect = $("#model-select").selectBox();
-        this.planetSelect = $("#planet-select").selectBox();
-        this.presetSelect = $("#preset-select").selectBox(); 
+        this.modelSelect = $('#model-select').selectBox();
+        this.planetSelect = $('#planet-select').selectBox();
+        this.presetSelect = $('#preset-select').selectBox(); 
         
 
-        this.modelSelect.change(function(value) { 
+        this.modelSelect.change(function modelSelectChange(value) { 
             that.loadModel(this.options[this.selectedIndex].value);
         });  
         
-        this.planetSelect.change(function() { 
+        this.planetSelect.change(function planetSelectChange() { 
             that.loadPlanet(this.options[this.selectedIndex].value);
         }); 
         
-        this.presetSelect.change(function() {
+        this.presetSelect.change(function presetSelectChange() {
             that.loadPreset(this.options[this.selectedIndex].value);
         }); 
 
-        $("#moon-select").click(function() {
+        $('#moon-select').click(function moonSelectClick() {
             that.model.setCurrentMoonModel(this.options[this.selectedIndex].value);
             that.model.reset(); 
         });  
         
-        UI.optionsFromHash("#moon-select", moonModels);
+        UI.optionsFromHash('#moon-select', moonModels);
           
-        $("#add-preset").click(function() { that.addPreset(); } );  
-        $("#remove-preset").click(function() { that.removePreset(); } ); 
+        $('#add-preset').click(function addPresetClick() { that.addPreset(); } );  
+        $('#remove-preset').click(function removePresetClick() { that.removePreset(); } ); 
 
 
-        document.getElementById("left-page").onresize = function(e) { that.resize(e) };
+//        document.getElementById('left-page').onresize = function(e) { that.resize(e) };
  
  
-        $("#info-button").click(function() { 
+        $('#info-button').click(function infoButtonClick() { 
             $(this).hide();
-            $("#fullscreen-button").show();
-            $("#left-page").toggleClass('slide');
-//            $("#left-page").animate({ width : (window.innerWidth/2) }, 500);
-            $("#left-page").width(window.innerWidth/2);
-            $("#book").toggleClass('hide');
-            $("#right-page").toggleClass('hide');
-            $("#canvas-main").toggleClass('page');
-//            $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
-//            $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));
+            $('#fullscreen-button').show();
+            $('#left-page, #right-page, #canvas-main').removeClass('fullscreen');            
+            $('#left-page').width( window.innerWidth/2 );            
             that.resize();
         });
                
-        $("#fullscreen-button").click(function() { 
+        $('#fullscreen-button').click(function fullscreenButtonClick() { 
             $(this).hide();
-            $("#info-button").show();   
-            console.log(window.innerWidth);
-            $("#left-page").toggleClass('slide');
-//            $("#left-page").animate({ width : (window.innerWidth-200) }, 500);
-            $("#left-page").width(window.innerWidth-$("#content").width()); //toggleClass('slide');
-            $("#book").toggleClass('hide');
-            $("#right-page").toggleClass('hide');
-            $("#canvas-main").toggleClass('page');
-            $("#content-scroll").toggleClass('hide', !$("#left-page").hasClass('slide'));
-            $("#ui-container").toggleClass('hide', !$("#left-page").hasClass('slide'));
+            $('#info-button').show();   
+            $('#left-page, #right-page, #canvas-main').addClass('fullscreen');
+            $('#left-page').width( window.innerWidth - $('#content').width() );
             that.resize();
         });
         
               
         this.loadCustomPresets();
         
-        $("#ui-container h3").collapsible(); //.tooltip();
-        $("#info-container h3").collapsible();
-        $("#ui-container, #info-container").show();
+        $('#ui-container h3').collapsible(); //.tooltip();
+        $('#info-container h3').collapsible();
+        $('#ui-container, #info-container').show();
 
         
-        $("#camera-select")
+        $('#camera-select')
             //.selectBox()
-            .change(function() {
+            .change(function camera_select_change() {
                 that.setCamera(this.value); 
                 that.resize();
             }); 
 
         
-        $("#latitude-select").change(function() { 
-            $("#AxisAngle1 > input")
-                .attr("value",this.value)
+        $('#latitude-select').change(function latitudeSelectChange() { 
+            $('#AxisAngle1 > input')
+                .attr('value', this.value)
                 .change(); 
         }); 
 
 
-        $("#reset-button").click(function() { 
+        $('#reset-button').click(function resetButtonClick() { 
             that.model.reset();
         });
         
-        $("#pause-button").click(function() { 
+        $('#pause-button').click(function pauseButtonClick() { 
             that.model.toggleRunning(); 
             if(that.model.getRunning()) { 
-                $("#pause-button").text("pause");
+                $('#pause-button').text('pause');
             } else { 
-                $("#pause-button").text("play");
+                $('#pause-button').text('play');
             }
         }); 
 
-        $("#screenshot-button").click(function() {
+        $('#screenshot-button').click(function screenshotButtonClick() {
             that.canvas.render(that.currentScene, that.model.getCamera());
             downloadDataURI({
-                filename: "screenshot.jpeg", 
-                data: that.canvas.domElement.toDataURL("image/jpeg")
+                filename: 'screenshot.jpeg', 
+                data: that.canvas.domElement.toDataURL('image/jpeg')
             });
-        //    window.open(app.canvas.domElement.toDataURL("image/jpeg"));
+        //    window.open(app.canvas.domElement.toDataURL('image/jpeg'));
         }); 
         
-        $("#date-input").bind("keyup", function(e) { 
+        $('#date-input').bind('keyup', function dateInputReturn(e) { 
             if(e.keyCode == 13) 
                 that.setDate(this.value); 
         });
 
-        $("#sidebar-button").click(function() { 
-             $("#right-page").toggleClass('sidebared');
-             $("#content-scroll").toggleClass('hide');
-             $("#ui-container").toggleClass('hide');
+        $('#sidebar-button').click(function sidebarButtonClick() { 
+             $('#right-page').toggleClass('sidebared');
+             $('#content-scroll').toggleClass('hide');
+             $('#ui-container').toggleClass('hide');
 
         });
 
 
                 
-        $("#rotate-reset").click(function() {
+        $('#rotate-reset').click(function rotateResetClick() {
            var 
            cam = that.model.getCamera();
            cam.setZ(-18);
@@ -236,7 +231,7 @@ cosmoApp.prototype.setupUI = function() {
            cam.rotateTarget({x: 0, y: 0, z: 0});
         });
         
-        $("#rotate-left").mousedown(function() {
+        $('#rotate-left').click(function rotateLeftClick() {
            tween = new TWEEN.Tween( { rot : 0.05 } )
             .to( { rot: 0.0 }, 200 )
             .easing( TWEEN.Easing.Quadratic.InOut )
@@ -247,7 +242,7 @@ cosmoApp.prototype.setupUI = function() {
             //that.model.getCamera().mouseY(0.1);
         });
 
-        $("#rotate-right").click(function() {
+        $('#rotate-right').click(function rotate_right_click() {
            tween = new TWEEN.Tween( { rot : 0.05 } )
             .to( { rot: 0.0 }, 200 )
             .easing( TWEEN.Easing.Quadratic.InOut )
@@ -258,7 +253,7 @@ cosmoApp.prototype.setupUI = function() {
             //that.model.getCamera().mouseY(-0.10);
         });
         
-        $("#rotate-up").click(function() {
+        $('#rotate-up').click(function rotate_up_click() {
            tween = new TWEEN.Tween( { rot : 0.05 } )
             .to( { rot: 0.0 }, 200 )
             .easing( TWEEN.Easing.Quadratic.InOut )
@@ -268,7 +263,7 @@ cosmoApp.prototype.setupUI = function() {
             .start();        
         });
         
-        $("#rotate-down").click(function() {
+        $('#rotate-down').click(function rotate_down_click() {
            tween = new TWEEN.Tween( { rot : 0.05 } )
             .to( { rot: 0.0 }, 200 )
             .easing( TWEEN.Easing.Quadratic.InOut )
@@ -278,43 +273,43 @@ cosmoApp.prototype.setupUI = function() {
             .start();        
         });        
                 
-        $("#zoom-plus").click(function() { 
+        $('#zoom-plus').click(function zoom_plus_click() { 
            tween = new TWEEN.Tween( { rot : that.getZ() } )
             .to( { rot: that.getZ()+2 }, 100 )
             .easing( TWEEN.Easing.Quadratic.InOut )
             .onUpdate( function () {
 //                that.model.getCamera().mouseY(this.rot);
                 that.setZ(this.rot);
-                $("#zoom-slider").slider('value',that.getZ());
+                $('#zoom-slider').slider('value',that.getZ());
             } )
             .start();          
             //that.setZ(that.getZ()+1);
             
         });
         
-        $("#zoom-minus").click(function() { 
+        $('#zoom-minus').click(function zoom_minus_click() { 
            tween = new TWEEN.Tween( { rot : that.getZ() } )
             .to( { rot: that.getZ()-2 }, 100 )
             .easing( TWEEN.Easing.Quadratic.InOut )
             .onUpdate( function () {
 //                that.model.getCamera().mouseY(this.rot);
                 that.setZ(this.rot);
-                $("#zoom-slider").slider('value',that.getZ());
+                $('#zoom-slider').slider('value',that.getZ());
             } )
             .start();          
            // that.setZ(that.getZ()-1);
-           // $("#zoom-slider").slider('value',that.getZ());
+           // $('#zoom-slider').slider('value',that.getZ());
         });
                 
-        this.zoomSlider = $("#zoom-slider").slider({
-                orientation: "vertical",
-//                range: "min",
-                animate: "fast",
+        this.zoomSlider = $('#zoom-slider').slider({
+                orientation: 'vertical',
+//                range: 'min',
+                animate: 'fast',
                 min: -60,
                 max: 0,
                 value: -17,
                 step:1,
-                slide: function(event, ui) { that.setZ(ui.value); }
+                slide: function zoom_slider_slide(event, ui) { that.setZ(ui.value); }
          });
 
         this.canvas.domElement.addEventListener('mousewheel', function mouseWheel(e) {
@@ -358,15 +353,7 @@ cosmoApp.prototype.setupUI = function() {
         });
                 
   
-        $("#camera, #view, #playback").hide(); // #pauseButton
-
-//        $("#canvas-main").hover(function() {
-//            $("#nav-container").fadeIn();
-//        }, function() {
-//            $("#nav-container").fadeOut();
-//        });
-  
- 
+        $('#camera, #view, #playback').hide();
 }
 /**
   setup input (mouse and keyboard)
@@ -378,8 +365,8 @@ cosmoApp.prototype.setupInput = function() {
         // track inputs
         Ori.input.trackMouseOn(this.canvas.domElement);
 //        Ori.input.trackKeysOn(window);
-//        Ori.input.register(Ori.KEY.DOWN, "DOWN");
-//        Ori.input.register(Ori.KEY.UP, "UP");
+//        Ori.input.register(Ori.KEY.DOWN, 'DOWN');
+//        Ori.input.register(Ori.KEY.UP, 'UP');
 }
 
 /**
@@ -399,23 +386,23 @@ cosmoApp.prototype.setupCameras = function() {
   
   this.cameras = { 
     Trackball: { 
-      caption: "Global",
+      caption: 'Global',
       instance: new THREE.BallCamera(cameraParams)
     },
     FPS: { 
-      caption: "Local",
+      caption: 'Local',
       instance: new THREE.FPSCamera(cameraParams)
     },
     TrackballIso: { 
-      caption: "Isometric",
+      caption: 'Isometric',
       instance: new THREE.BallCamera(cameraParams)
     }
   };
-  this.cameras["Trackball"].instance.setEye({x: 0, y: 0, z: -18});
-  this.cameras["FPS"].instance.setEye({x: 0, y: 0.5, z: 0});
-  this.cameras["TrackballIso"].instance.setEye({x: 0, y: 0, z: -21});
+  this.cameras['Trackball'].instance.setEye({x: 0, y: 0, z: -18});
+  this.cameras['FPS'].instance.setEye({x: 0, y: 0.5, z: 0});
+  this.cameras['TrackballIso'].instance.setEye({x: 0, y: 0, z: -21});
   var ortho = 70;
-  this.cameras["TrackballIso"].instance.projectionMatrix.makeOrthographic( 
+  this.cameras['TrackballIso'].instance.projectionMatrix.makeOrthographic( 
       window.innerWidth / - ortho,
       window.innerWidth / ortho,
       window.innerHeight / ortho,
@@ -432,9 +419,9 @@ cosmoApp.prototype.setDate = function(date) {
 cosmoApp.prototype.loadModel = function(value) {
   this.modelSelect.selectBox('setText', value);
   //.setText(value);
-  //$("#model-select option[value='"+value+"']").attr('selected',true);
+  //$('#model-select option[value=''+value+'']').attr('selected',true);
   
-  $("#remove-preset").toggle( value === 'custom' );
+  $('#remove-preset').toggle( value === 'custom' );
     
   this.currentModel = planetPresets[value];
   
@@ -448,10 +435,10 @@ cosmoApp.prototype.loadModel = function(value) {
     return;
   }
   
-  UI.optionsFromHash("#planet-select", this.currentModel);
+  UI.optionsFromHash('#planet-select', this.currentModel);
   //this.planetSelect.show();
   for(var i in this.currentModel) {
-    if(i=="caption") continue;
+    if(i === 'caption') continue;
     this.loadPlanet(i);
     break;
   }
@@ -459,7 +446,7 @@ cosmoApp.prototype.loadModel = function(value) {
 };
 
 cosmoApp.prototype.loadPlanet = function(value) {
-  //$("#planet-select option[value='"+value+"']").attr('selected',true);
+  //$('#planet-select option[value=''+value+'']').attr('selected',true);
   this.planetSelect.selectBox('setText', value);
 
   this.currentPlanet = this.currentModel[value];
@@ -472,11 +459,11 @@ cosmoApp.prototype.loadPlanet = function(value) {
     return;
   }
 
-  UI.optionsFromHash("#preset-select", this.currentPlanet);
+  UI.optionsFromHash('#preset-select', this.currentPlanet);
 
   //this.presetSelect.show();
   for(var i in this.currentPlanet) {
-    if(i=="caption") continue;    
+    if(i=='caption') continue;    
     this.loadPreset(i);
     this.presetSelect.selectBox('setText', i);
     break;
@@ -508,19 +495,19 @@ cosmoApp.prototype.setPreset = function(preset) {
       
   // switch model
   this.setModel( this.getModelById(preset.model) );
-  $("#left-page > *").hide();
+  $('#left-page > *').hide();
   if(this.model)
-    $("#canvas-main").show();
+    $('#canvas-main').show();
   
 
   this.model.setPreset(preset.params);
 
   // load text
-  this.updateText(preset.text); // || (preset + ".html") );
+  this.updateText(preset.text); // || (preset + '.html') );
         
   // load view
   this.view = this.getViewByName(preset.view);
-  this.setCamera("Trackball");
+  this.setCamera('Trackball');
   this.view.setPreset(this.model, preset.viewParams);
   this.updateUI();
   // change view?
@@ -531,7 +518,7 @@ cosmoApp.prototype.updateText = function(uri) {
     $('#text-right').empty();
     $('#text-right').load(config.textPath + uri);
     //, function() {
-    //    $(".selectBox").selectReading();  
+    //    $('.selectBox').selectReading();  
     //});
 };
 
@@ -541,12 +528,12 @@ cosmoApp.prototype.updateText = function(uri) {
  */
 cosmoApp.prototype.getVault = function() {
   // be able to update the format
-  if(!localStorage["version"]) {
+  if(!localStorage['version']) {
      localStorage['version'] = 1;
-     localStorage["presetCount"] = 0;
-     localStorage.setJson("customPresets", { custom: {} });
+     localStorage['presetCount'] = 0;
+     localStorage.setJson('customPresets', { custom: {} });
   }
-  var vault = localStorage.getJson("customPresets");
+  var vault = localStorage.getJson('customPresets');
   return vault;
 };
 
@@ -557,8 +544,8 @@ cosmoApp.prototype.getVault = function() {
 cosmoApp.prototype.loadCustomPresets = function() {
   var vault = this.getVault();
   vault.custom.caption = APP_STRINGS.EN.CUSTOM;
-  if(localStorage["presetCount"] && localStorage["presetCount"]>0) $.extend(true, planetPresets, vault);
-  UI.optionsFromHash("#model-select", planetPresets);
+  if(localStorage['presetCount'] && localStorage['presetCount']>0) $.extend(true, planetPresets, vault);
+  UI.optionsFromHash('#model-select', planetPresets);
 };
 
 
@@ -577,13 +564,13 @@ cosmoApp.prototype.addPreset = function() {
       store.caption = text;
       store.view = this.getView().name;
       if( !vault.custom[text] ) 
-          localStorage["presetCount"] = Number(localStorage["presetCount"]) + 1;      
+          localStorage['presetCount'] = Number(localStorage['presetCount']) + 1;      
           
       vault.custom[text] = store;
-      localStorage.setJson("customPresets", vault);
+      localStorage.setJson('customPresets', vault);
 
       this.loadCustomPresets();
-      this.loadModel("custom"); 
+      this.loadModel('custom'); 
       this.loadPlanet(text);
     }
 };
@@ -603,14 +590,14 @@ cosmoApp.prototype.removePreset = function() {
     var vault = this.getVault();
     delete planetPresets.custom;
     delete vault.custom[text];
-    localStorage["presetCount"] = Number(localStorage["presetCount"]) - 1;
-    localStorage.setJson("customPresets", vault);
+    localStorage['presetCount'] = Number(localStorage['presetCount']) - 1;
+    localStorage.setJson('customPresets', vault);
   
     this.loadCustomPresets();
-    if(Number(localStorage["presetCount"])>0)   
-      this.loadModel("custom"); 
+    if(Number(localStorage['presetCount'])>0)   
+      this.loadModel('custom'); 
     else {
-      this.loadModel("Eudoxus");   
+      this.loadModel('Eudoxus');   
     }
   }
 };
@@ -647,7 +634,7 @@ cosmoApp.prototype.updateInfoBox = function() {
 cosmoApp.prototype.update = function(time) {
 
        
-//        if(Ori.input.isDown("DEBUG")) debugBox.toggle();
+//        if(Ori.input.isDown('DEBUG')) debugBox.toggle();
 
 /*
         // zoom with middle button or wheel      
@@ -662,7 +649,7 @@ cosmoApp.prototype.update = function(time) {
         if (Ori.input.mouse.wheel) {
          this.model.getCamera().mouseWheel(0.0, 0.0, Ori.input.mouse.z);
          this.zoomSlider.slider('value',that.getZ());
-         //$("#Z > input").attr("value",Number( this.model.getCamera().getZ() ));
+         //$('#Z > input').attr('value',Number( this.model.getCamera().getZ() ));
         }
 */
         // rotate with left button
@@ -725,12 +712,12 @@ cosmoApp.prototype.setCamera = function(cam) {
 
   this.model.setCamera( this.cameras[cam].instance );
   switch(cam) {
-    case "Trackball":
-    case "TrackballIso":
+    case 'Trackball':
+    case 'TrackballIso':
       this.model.earth.setEnabled(true);
       this.model.earthPlane.setEnabled(false);       
       break;
-    case "FPS":
+    case 'FPS':
       this.model.earth.setEnabled(false);
       this.model.earthPlane.setEnabled(true);          
   };
@@ -839,103 +826,103 @@ cosmoApp.prototype.updateUI = function() {
        * move to view
        */
        // default camera
-       this.setCamera("Trackball");
+       this.setCamera('Trackball');
 
        //this.model.getCamera().reset();
 
 
-        $("#date-input").hide();
-        $("#moon-select").hide();  
-        $("#info-container tr").hide();
+        $('#date-input').hide();
+        $('#moon-select').hide();  
+        $('#info-container tr').hide();
 
 
         this.view.setupInfos();
         
         // clear old ui elements
-        $("#parameters").empty();
+        $('#parameters').empty();
         
         
 
        
 
-        $("#view-sliders").empty();
+        $('#view-sliders').empty();
         UI.slider({
             model: this.model,
-            id: "AxisAngle1",
+            id: 'AxisAngle1',
             max: 360,
             step:0.01,
-            text: "view latitude",
-            tooltip: "change latitude"
-        }).appendTo("#view-sliders");
+            text: 'view latitude',
+            tooltip: 'change latitude'
+        }).appendTo('#view-sliders');
         
         UI.slider({
             model: this,
-            id: "Fov",
+            id: 'Fov',
             max: 160,
             step:1,
-            text: "field of view",
-            tooltip: "set field of view"
-        }).appendTo("#view-sliders");
+            text: 'field of view',
+            tooltip: 'set field of view'
+        }).appendTo('#view-sliders');
 
 
-        $("#visSpheres").empty();
+        $('#visSpheres').empty();
         
         for (i in this.model.sphere) {
-            if(this.model["setShowSphere" + i]) 
+            if(this.model['setShowSphere' + i]) 
                 UI.checkbox({
                    model: this.model,
-                   id:"ShowSphere" + i,
-                   text:"S" + ( Number(i) ),
+                   id:'ShowSphere' + i,
+                   text:'S' + ( Number(i) ),
                    color:  rgbToCSS( this.model.sphere[i].gfx.color ) 
-                }).appendTo("#visSpheres");
+                }).appendTo('#visSpheres');
         }
         
-        $("#visOther").empty();
+        $('#visOther').empty();
                 
         if(this.model.setShowStars) 
             UI.checkbox({
                 model: this.model,
-                id:"ShowStars",
-                text:"stars"
-            }).appendTo("#visOther");
+                id:'ShowStars',
+                text:'stars'
+            }).appendTo('#visOther');
             
 
         if(this.model.setShowSun) 
             UI.checkbox({
                 model: this.model,
-                id:"ShowSun",
-                text:"sun",
-                tooltip: "toggle sun visibilty",
-                color: rgbToCSS(config.colors["Sun"])
-            }).appendTo("#visOther");
+                id:'ShowSun',
+                text:'sun',
+                tooltip: 'toggle sun visibilty',
+                color: rgbToCSS(config.colors['Sun'])
+            }).appendTo('#visOther');
             
         if(this.model.setShowPath) 
             UI.checkbox({
                 model: this.model,
-                id:"ShowPath",
-                text:"path",
-                color: rgbToCSS(config.colors["Path"])
-            }).appendTo("#visOther");
+                id:'ShowPath',
+                text:'path',
+                color: rgbToCSS(config.colors['Path'])
+            }).appendTo('#visOther');
             
         if(this.model.setShowHippo) 
             UI.checkbox({model: this.model,
-                id:"ShowHippo",
-                text:"hippopede",
-                tooltip: "toggle hippopede visibilty",
-                color:  rgbToCSS(config.colors["Hippo"]) 
-            }).appendTo("#visOther");
+                id:'ShowHippo',
+                text:'hippopede',
+                tooltip: 'toggle hippopede visibilty',
+                color:  rgbToCSS(config.colors['Hippo']) 
+            }).appendTo('#visOther');
             
 
 
 
-        $("#anim-speed").empty().inputSlider({ 
+        $('#anim-speed').empty().inputSlider({ 
             object: this.model,
-            property: "AnimSpeed",
+            property: 'AnimSpeed',
             min: -1000,
             max: 20000, 
             step: 0.1,
-            text: "Animation Speed",
-            tooltip:"duration of a year in seconds"
+            text: 'Animation Speed',
+            tooltip: 'duration of a year in seconds'
         });
 
 
@@ -955,14 +942,14 @@ cosmoApp.prototype.updateUI = function() {
 
         // initial update of sliders/state
         this.model.toggleRunning();
-//        $("#view-header, #caprotateStart").click(); // #pauseButton
-//        $("#camera, #view, #playback").hide(); // #pauseButton
+//        $('#view-header, #caprotateStart').click(); // #pauseButton
+//        $('#camera, #view, #playback').hide(); // #pauseButton
         this.model.toggleRunning();
 
 
-        $("#parameters input").change();
-//        $("#moon input, #angle  input, #speed input").change();
-        $("#AxisAngle1 input").change();
+        $('#parameters input').change();
+//        $('#moon input, #angle  input, #speed input').change();
+        $('#AxisAngle1 input').change();
         
 
 
@@ -974,7 +961,7 @@ cosmoApp.prototype.updateUI = function() {
 
 // setup site
 // TODO: maybe move to index.html
-app = new cosmoApp({domRoot: $("#canvas-main")});
+app = new cosmoApp({domRoot: $('#canvas-main')});
 if(app) {
   window.onresize = function(e) { app.resize(e) };
   app.run();
