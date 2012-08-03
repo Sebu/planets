@@ -125,10 +125,10 @@ Ori.Timer.prototype.constructor = Ori.Timer;
 Ori.Timer.prototype.tick = function() {
   var 
   detla = 0,
-//  currentTime = Date.now();
-  currentTime = window.performance.now ?
-                    (performance.now() + performance.timing.navigationStart) : 
-                    Date.now(),
+  currentTime = Date.now();
+//  currentTime = window.performance.now ?
+//                    (performance.now() + performance.timing.navigationStart) : 
+//                    Date.now(),
   
   deltaTmp = (currentTime - this.lastTime) / 1000;
   
@@ -283,6 +283,28 @@ Ori.App.prototype = {
 
   constructor : Ori.App,
 
+  /** @interface */
+  create : function(deltaTime) {},
+ 
+  /** @interface */
+  update : function(deltaTime) {},
+  
+  /** @interface */
+  draw : function(deltaTime) {},
+
+  /** @interface */
+  resize : function() {},  
+  
+  pause : function() {},
+
+  run : function() {
+      var self = this;
+      (function requestLoop() {
+        self.loop();
+        requestAnimationFrame(requestLoop);
+      })();   
+  },
+  
   loop : function() {
   
     var time = this.timer.tick();
@@ -301,21 +323,6 @@ Ori.App.prototype = {
 //      this.elapsedTime = 0;
 //    }
 //    Ori.input.reset();
-  },
-  
-  /** @interface */
-  update : function(deltaTime) {},
-  
-  /** @interface */
-  draw : function(deltaTime) {},
-  
-
-  run : function() {
-      var self = this;
-      (function requestLoop() {
-        self.loop();
-        requestAnimationFrame(requestLoop);
-      })();   
   }
 
 };
@@ -337,4 +344,15 @@ Storage.prototype.getJson = function(key)
   }
 };
 
+
+if (!Object.create) {  
+    Object.create = function (o) {  
+        if (arguments.length > 1) {  
+            throw new Error('Object.create implementation only accepts the first parameter.');  
+        }  
+        function F() {}  
+        F.prototype = o;  
+        return new F();  
+    };  
+}  
 

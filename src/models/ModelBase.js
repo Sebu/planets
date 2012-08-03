@@ -603,10 +603,11 @@ ModelBase.prototype = {
         maxSegments = (params.segments || 80) * Ori.gfxProfile.curveRes,
         j =  -10, // start segment of curve (-10 points before current state)
         i = 0, // universal loop counter
+        ii = 0, // uni loop start
         step = 0; // default step width
 
         
-        for (i = 1; i < this.sphere.length; i++) {
+        for (i=1, ii=this.sphere.length; i < ii; i++) {
           this.sphere[i].visUpdate = false;              
         }
         
@@ -629,7 +630,7 @@ ModelBase.prototype = {
         // RESTORE
         this.updateMovement(-maxSegments*step);
 
-        for (i = 1; i < this.sphere.length; i++) {
+        for (i = 1, ii=this.sphere.length; i < ii; i++) {
           this.sphere[i].visUpdate = true;              
         }
         

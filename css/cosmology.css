@@ -804,9 +804,12 @@ select:focus,
 
 #left-page.fullscreen {
     left: 0;
+/*
 	width: calc(100% - 200px);
     width: -moz-calc(100% - 200px);
     width: -webkit-calc(100% - 200px); 
+*/    
+    
     box-shadow: none;
 }
 
@@ -846,6 +849,8 @@ select:focus,
 
 #right-page.sidebared {
     right: -200px;
+	width: calc(0% - 200px);
+    width: -moz-calc(0% - 200px);
     right: -webkit-calc(0% - 200px);
 //    box-shadow: 4px 0px 12px 2px #AAA; 
     -webkit-transition: right 0.5s;
