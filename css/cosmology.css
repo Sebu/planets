@@ -487,9 +487,10 @@ select:focus,
   -moz-user-select:none;
   position: absolute;
   color: #fff;
-  display: block;
+  display: inline; //block;
   left: 0;
   top: 0;
+  padding: 1px;
   -webkit-transform: translate(0px, 0px);
 //  -webkit-transition: -webkit-transform;
   background: rgba(150,150,150,0.5);
