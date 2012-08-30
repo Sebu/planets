@@ -45,9 +45,7 @@ cosmoApp = function(params) {
         this.setupUI();
 
         // load default model
-
-
-        this.loadModel('Aristotle');
+        this.loadModel('Eudoxus');
         this.resize();
         
         var openPage = function() {

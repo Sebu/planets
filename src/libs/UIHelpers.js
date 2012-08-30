@@ -394,7 +394,7 @@ UI.Label.prototype = {
         this.ele.className = 'hiddenLabel'; 
       } else {
           this.ele.className = 'ori-label';
-          this.style.zIndex = Math.round(1000-pos.z*10.0);
+//          this.style.zIndex = Math.round(1000-pos.z*10.0);
 //          this.style.fontSize = (30-pos.z) + "pt";
           this.style.transform = 
                 this.style.msTransform = 
