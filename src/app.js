@@ -8,6 +8,8 @@
  @param params
  @param params.domRoot dom element to add the canvas to
 */
+
+
 cosmoApp = function(params) {
         this.domRoot = params.domRoot;
         this.currentScene = null;
@@ -36,7 +38,7 @@ cosmoApp = function(params) {
         this.splashStatus.empty();
         this.splashStatus.append('register input...');        
         this.setupInput();
-
+        
         // setupPicking  for collision
         this.projector = new THREE.Projector();
         

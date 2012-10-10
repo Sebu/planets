@@ -107,7 +107,7 @@ a {
   margin-top: -10em;
   margin-left: -15em;
   z-index: 3;
-  background-color: rgba(36, 163, 248, 0.94);
+  background-color: rgba(26, 143, 228, 0.94);
   border: 0;
   text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
 }
@@ -144,6 +144,9 @@ a {
   padding: 1em;
 }
 
+#splash-status {
+    font-style: italic;
+}
 
 .button {
     background: #222; //#FFF;//#666;
